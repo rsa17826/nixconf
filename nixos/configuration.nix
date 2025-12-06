@@ -47,7 +47,7 @@ in
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
     update = "sudo nixos-rebuild switch --flake /etc/nixos#${uname}";
-    udpate = "sudo nixos-rebuild switch --flake /etc/nixos#${uname}";
+    udpate = "update";
   };
 
   i18n.extraLocaleSettings = {
