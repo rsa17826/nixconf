@@ -20,11 +20,6 @@
           inherit system;
           modules = [
             ./configuration.nix
-            # ({
-            # services.xserver.enable = true;
-            # services.xserver.windowManager.i3.enable = true;
-            # environment.systemPackages = with pkgs; [ i3status ];
-            # })
           ];
           specialArgs = {
             inherit inputs;
