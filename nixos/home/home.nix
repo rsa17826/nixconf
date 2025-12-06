@@ -6,7 +6,7 @@
   home.username = "nyx";
   home.homeDirectory = "/home/nyx";
 
-wayland.windowManager.hyprland = {
+  wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
     # The hyprland package to use
@@ -25,20 +25,19 @@ wayland.windowManager.hyprland = {
     package = pkgs.vscodium;
     mutableExtensionsDir = false;
 
-    profiles.default={
-      extensions=[
+    profiles.default = {
+      extensions = [
 
       ];
-    userSettings = {
-    force=true;
-      "editor.tabSizea" = 30;
-      "files.trimTrailingWhitespace" = true;
-    };
+      userSettings = {
+        force = true;
+        "editor.tabSizea" = 30;
+        "files.trimTrailingWhitespace" = true;
+      };
     };
   };
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs.kitty.enable = true; # required for the default Hyprland config
-  wayland.windowManager.hyprland.enable = true; # enable Hyprland
 
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -46,8 +45,8 @@ wayland.windowManager.hyprland = {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-  pkgs.opensnitch-ui
-  pkgs.vscodium
+    pkgs.opensnitch-ui
+    pkgs.vscodium
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
