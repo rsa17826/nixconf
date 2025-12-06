@@ -19,7 +19,8 @@ in
 {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
+    # ./hardware-configuration.nix
   ];
   programs.zsh.enable = true;
   programs.hyprland.enable = true;
