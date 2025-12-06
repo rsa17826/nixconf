@@ -58,7 +58,7 @@ boot.loader.grub.device = "/dev/sda" ;
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname}";
+    update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname} --impure";
     udpate = "update";
   };
 
