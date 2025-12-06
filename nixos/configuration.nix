@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, uname, ... }:
+{
+  config,
+  pkgs,
+  uname,
+  ...
+}:
 let
   unstable =
     import
@@ -26,9 +31,14 @@ in
   programs.hyprland.enable = true;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub = {
+    # enable = true;
+    # device = "/dev/sda"; # Install GRUB into the MBR
+  # };
+  
+  boot.loader.grub.enable = true;
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -47,7 +57,7 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake /etc/nixos#${uname}";
+    update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname}";
     udpate = "update";
   };
 
