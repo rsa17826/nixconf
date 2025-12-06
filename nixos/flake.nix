@@ -28,7 +28,7 @@
           ];
           specialArgs = {
             inherit inputs;
-            inherit nyx;
+            inherit uname;
           };
         };
       };
