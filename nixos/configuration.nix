@@ -4,22 +4,25 @@
 
 { config, pkgs, ... }:
 let
-  unstable = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-    # optional: pin for reproducibility
-    # sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=";
-  }) {
-    config = config.nixpkgs.config;
-    system = pkgs.system;
-  };
+  unstable =
+    import
+      (builtins.fetchTarball {
+        url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+        # optional: pin for reproducibility
+        # sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=";
+      })
+      {
+        config = config.nixpkgs.config;
+        system = pkgs.system;
+      };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-programs.zsh.enable = true;
-programs.hyprland.enable = true;
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
+  programs.zsh.enable = true;
+  programs.hyprland.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -27,7 +30,6 @@ programs.hyprland.enable = true;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -43,10 +45,10 @@ programs.hyprland.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-programs.zsh.shellAliases = {
+  programs.zsh.shellAliases = {
     update = "sudo nixos-rebuild switch --flake /etc/nixos#nyx";
- udpate= "sudo nixos-rebuild switch --flake /etc/nixos#nyx";
- };
+    udpate = "sudo nixos-rebuild switch --flake /etc/nixos#nyx";
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -59,16 +61,16 @@ programs.zsh.shellAliases = {
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-nix.settings.experimental-features = "nix-command flakes";
-# nix run home-manager/master -- init --switch
+  nix.settings.experimental-features = "nix-command flakes";
+  # nix run home-manager/master -- init --switch
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-#   services.xserver.enable = true;
-#services.displayManager.cosmic-greeter.enable = true;
+  #   services.xserver.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
 
   # Enable the COSMIC desktop environment
- # services.desktopManager.cosmic.enable = true;
+  # services.desktopManager.cosmic.enable = true;
   #programs.hyprland = {
   #  # Install the packages from nixpkgs
   #  enable = true;
@@ -109,7 +111,7 @@ nix.settings.experimental-features = "nix-command flakes";
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.nyx = {
+  users.users.nyx = {
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "nyx";
@@ -143,15 +145,15 @@ nix.settings.experimental-features = "nix-command flakes";
 
   services.system76-scheduler.enable = true;
 
-#environment.cosmic.excludePackages = with pkgs; [
-#    cosmic-edit
-#  ];
-# services.xserver.windowManager.i3.enable = false;
+  #environment.cosmic.excludePackages = with pkgs; [
+  #    cosmic-edit
+  #  ];
+  # services.xserver.windowManager.i3.enable = false;
 
-# Optional: make i3 auto-selected on login
-# services.xserver.displayManager.defaultSession = "none+i3";
+  # Optional: make i3 auto-selected on login
+  # services.xserver.displayManager.defaultSession = "none+i3";
 
-# programs.twm.enable=true;
+  # programs.twm.enable=true;
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "nyx";
   programs.firefox.enable = true;
