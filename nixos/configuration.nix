@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, uname, ... }:
 let
   unstable =
     import
@@ -46,8 +46,8 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake /etc/nixos#nyx";
-    udpate = "sudo nixos-rebuild switch --flake /etc/nixos#nyx";
+    update = "sudo nixos-rebuild switch --flake /etc/nixos#${uname}";
+    udpate = "sudo nixos-rebuild switch --flake /etc/nixos#${uname}";
   };
 
   i18n.extraLocaleSettings = {
@@ -111,10 +111,10 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nyx = {
+  users.users."${uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    description = "nyx";
+    description = "${uname}";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -155,7 +155,7 @@ in
 
   # programs.twm.enable=true;
   services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "nyx";
+  services.displayManager.autoLogin.user = "${uname}";
   programs.firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
@@ -180,8 +180,8 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  # sudo codium --no-sandbox --user-data-dir "/home/nyx/.config/VSCodium/"
-  networking.hostName = "nyx";
+  # sudo codium --no-sandbox --user-data-dir "/home/${uname}/.config/VSCodium/"
+  networking.hostName = "${uname}";
   system.stateVersion = "25.05"; # Did you read the comment?
   services.opensnitch.enable = true;
   security.sudo.enable = true;

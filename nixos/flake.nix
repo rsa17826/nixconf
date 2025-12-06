@@ -12,10 +12,11 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      uname = "nyx";
     in
     {
       nixosConfigurations = {
-        nyx = inputs.nixpkgs.lib.nixosSystem {
+        ${uname} = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./configuration.nix
@@ -27,11 +28,12 @@
           ];
           specialArgs = {
             inherit inputs;
+            inherit nyx;
           };
         };
       };
 
-      homeConfigurations."nyx" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."${uname}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           ./home/home.nix

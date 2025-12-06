@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, uname, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "nyx";
-  home.homeDirectory = "/home/nyx";
+  home.username = uname;
+  home.homeDirectory = "/home/${uname}";
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
