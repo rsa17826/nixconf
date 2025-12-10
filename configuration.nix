@@ -201,6 +201,23 @@ in
       Environment = "DISPLAY=:0";  # Ensures it runs in the X session
     };
   };
+systemd.user.services.albert = {
+    description = "Albert Launcher";
+    after = [ "graphical.target" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.albert}/bin/albert";  # Full path to Albert
+      Restart = "always";
+
+      # Ensure GUI apps can connect to X
+      Environment = ''
+        DISPLAY=:0
+        XAUTHORITY=${config.home.homeDirectory}/.Xauthority
+      '';
+    };
+
+    wantedBy = [ "default.target" ];  # Starts when user session starts
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
