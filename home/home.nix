@@ -5,7 +5,7 @@
   # manage.
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
-
+xsession.numlock.enable = true;   
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
