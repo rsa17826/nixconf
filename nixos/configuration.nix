@@ -134,6 +134,7 @@ boot.loader.grub.device = "/dev/sda" ;
     ];
     packages = with pkgs; [
       kdePackages.kate
+      keepass
       python313
       python313Packages.py7zr
       godot
