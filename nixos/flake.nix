@@ -35,4 +35,7 @@
         ];
       };
     };
+#https://linuxunplugged.com/634
+#https://linuxunplugged.com/640
+#628 hyprvibe
 }
