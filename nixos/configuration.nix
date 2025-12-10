@@ -98,6 +98,35 @@ boot.loader.grub.device = "/dev/sda" ;
 #'';
 #rm ~/.config/BraveSoftware/Brave-Browser/Last\ Version
 
+## Kill Brave before each nixos-rebuild
+#system.activationScripts.killBraveBeforeRebuild.text = ''
+#  if pgrep brave >/dev/null 2>&1; then
+#    echo "Stopping Brave..."
+#    pkill brave
+#  fi
+#'';
+
+#system.activationScripts.cleanBraveLock.text = ''
+#  LAST_VERSION_FILE="$HOME/.config/BraveSoftware/Brave-Browser/Last Version"
+#  if [ -f "$LAST_VERSION_FILE" ]; then
+#    echo "Removing Brave Last Version lock..."
+#    rm -f "$LAST_VERSION_FILE"
+#  fi
+#'';
+
+#security.chromiumSuidSandbox.enable = true;
+
+#programs.zsh.initExtra = ''
+#  update() {
+#    echo "Stopping Brave..."
+#    pkill brave 2>/dev/null || true
+#    LAST_VERSION_FILE="$HOME/.config/BraveSoftware/Brave-Browser/Last Version"
+#    [ -f "$LAST_VERSION_FILE" ] && rm -f "$LAST_VERSION_FILE"
+
+#    echo "Rebuilding NixOS..."
+#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#${1:-${uname}}
+#  }
+#'';
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
