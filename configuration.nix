@@ -186,6 +186,8 @@ services.keyd = {
       nix-tree
       kid3
       yt-dlp
+      syncthingtray
+      syncthing
       # ulauncher
     ];
   };
