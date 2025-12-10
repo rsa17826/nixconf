@@ -43,10 +43,23 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
 services.xserver = {
   enable = true;
-  xkb={options = "caps:none, none:caps";
+  xkb={
     layout = "us";
 #    variant = "";
 };
+  };
+services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ];
+        settings = {
+          main = {
+            capslock = "overload(control, esc)";
+          };
+        };
+      };
+    };
   };
 
   console.useXkbConfig = true;
@@ -223,6 +236,7 @@ services.xserver = {
     # rofi
     albert
     waybar
+    keyd
     # xmodmap
   ];
 
