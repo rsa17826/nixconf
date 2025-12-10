@@ -61,6 +61,12 @@ boot.loader.grub.device = "/dev/sda" ;
     update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname} --impure";
     udpate = "update";
   };
+#programs.zsh.initExtra = ''
+#  update() {
+#    local host="${1:-${uname}}"
+#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#"$host"
+#  }
+#'';
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
