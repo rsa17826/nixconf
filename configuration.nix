@@ -60,7 +60,7 @@ in
   programs.zsh.shellAliases = {
     update = "sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
-    push = "git add . && git add * && git commit -m a && git push";
+    push = "git add -A && git commit -m a && git push";
   };
 
   i18n.extraLocaleSettings = {
@@ -159,7 +159,7 @@ in
       firejail
       motrix
       nix-tree
-      ulauncher
+      # ulauncher
     ];
   };
   programs.appimage.enable = true;
