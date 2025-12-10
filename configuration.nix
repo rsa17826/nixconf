@@ -58,7 +58,7 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname} --impure";
+    update = "sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
     push = "git add . && git add * && git commit -m a && git push";
   };
@@ -76,6 +76,22 @@ in
   };
   nix.settings.experimental-features = "nix-command flakes";
   # nix run home-manager/master -- init --switch
+ # services.xserver.displayManager.autoNumLock = true;
+  #services.xserver.xkbOptions = "ctrl:nocaps";
+  #services.xserver.xkbOptions = "caps:off";
+  #services.xserver.displayManager.autoNumLock = true;
+  # Example for remapping Caps Lock and Num Lock to no-op
+
+# Create a custom script to prevent toggling
+#systemd.services.lock-keyboard = {
+#  description = "Prevent Caps Lock and Num Lock Toggling";
+#  wantedBy = [ "graphical.target" ];
+#
+#  serviceConfig.ExecStart = ''
+#    xmodmap -e "keycode 66 = NoSymbol"     # Disable Caps Lock
+#    xmodmap -e "keycode 77 = NoSymbol"     # Disable Num Lock
+#  '';
+#};
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -200,6 +216,7 @@ in
     p7zip
     nix-ld
     kitty
+    # xmodmap
   ];
 
   # This value determines the NixOS release from which the default
