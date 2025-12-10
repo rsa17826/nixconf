@@ -31,15 +31,15 @@ in
   programs.hyprland.enable = true;
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
+   boot.loader.systemd-boot.enable = true;
+   boot.loader.efi.canTouchEfiVariables = true;
   # boot.loader.grub = {
-    # enable = true;
-    # device = "/dev/sda"; # Install GRUB into the MBR
+  #   enable = true;
+  #   device = "/dev/sda"; # Install GRUB into the MBR
   # };
   
-  boot.loader.grub.enable = true;
-boot.loader.grub.device = "/dev/sda" ; 
+#  boot.loader.grub.enable = true;
+#boot.loader.grub.device = "/dev/sda" ; 
 # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
