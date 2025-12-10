@@ -43,7 +43,7 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
 services.xserver = {
   enable = true;
-  xkb={options = "caps:none";
+  xkb={options = "caps:none, none:caps";
     layout = "us";
 #    variant = "";
 };
