@@ -43,9 +43,12 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
 services.xserver = {
   enable = true;
-  xkb.layout = "en";
   xkb.options = "caps:none";
-};   
+    layout = "us";
+    variant = "";
+  };
+
+  
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -116,11 +119,6 @@ services.xserver = {
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
