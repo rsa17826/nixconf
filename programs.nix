@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, uname, ... }:
 {
   programs.appimage = {
     enable = true;
