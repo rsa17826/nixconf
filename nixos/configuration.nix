@@ -67,6 +67,36 @@ boot.loader.grub.device = "/dev/sda" ;
 #    sudo nixos-rebuild switch --flake ~/nixconf/nixos#"$host"
 #  }
 #'';
+#systemd.user.services."kill-brave-before-rebuild" = {
+#  Description = "Stop Brave before NixOS rebuild";
+#  Service = {
+#    Type = "oneshot";
+#    ExecStart = "${pkgs.procps}/bin/pkill brave || true";
+#  };
+#  WantedBy = [ "default.target" ];
+#};
+#programs.zsh.initExtra = ''
+#  update() {
+#    echo "Stopping Brave..."
+#    pkill brave 2>/dev/null || true
+#
+#    echo "Rebuilding NixOS..."
+#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#"$1"
+#  }
+#'';
+#Then you need to use an activation script in /etc/nixos/:
+
+#/etc/nixos/activation.sh:
+##!/bin/sh
+#pkill brave 2>/dev/null || true
+
+
+#Then import it from configuration.nix:
+
+#system.activationScripts.killBrave.text = ''
+#  pkill brave 2>/dev/null || true
+#'';
+#rm ~/.config/BraveSoftware/Brave-Browser/Last\ Version
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
