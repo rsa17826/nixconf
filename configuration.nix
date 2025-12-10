@@ -45,7 +45,7 @@ services.xserver = {
   enable = true;
   xkb.options = "caps:none";
     layout = "us";
-    variant = "";
+#    variant = "";
   };
 
   
