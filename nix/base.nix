@@ -1,4 +1,4 @@
-{ ... }:
+{ uname, ... }:
 {
   nixpkgs.config.allowUnfree = true;
   services.xserver = {
