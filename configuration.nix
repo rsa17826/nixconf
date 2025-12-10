@@ -160,6 +160,7 @@ in
       motrix
       nix-tree
       kid3
+      yt-dlp
       # ulauncher
     ];
   };
