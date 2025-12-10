@@ -216,6 +216,8 @@ in
     p7zip
     nix-ld
     kitty
+    rofi
+    albert
     # xmodmap
   ];
 
