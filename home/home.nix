@@ -64,6 +64,18 @@
     pkgs.opensnitch-ui
     pkgs.vscodium
   ];
+systemd.user.services.albert = {
+  description = "Albert Launcher";
+  after = [ "graphical.target" ];
+
+  serviceConfig = {
+    ExecStart = "${pkgs.makeWrapper}/bin/makeWrapper ${pkgs.albert}/bin/albert /home/username/bin/albert-launch.sh --set QT_QPA_PLATFORMTHEME gtk2 --set QT_STYLE_OVERRIDE Fusion";
+    Restart = "always";
+    Environment = "DISPLAY=:0";
+  };
+
+  wantedBy = [ "default.target" ];
+};
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
