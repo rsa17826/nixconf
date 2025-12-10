@@ -61,7 +61,7 @@ in
     update = "cd ~/nixconf && push && cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
-    vim="nvim";
+    # vim="nvim";
   };
 
   i18n.extraLocaleSettings = {
@@ -207,6 +207,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
+    vim
     sxhkd
     rofi
     albert
