@@ -41,7 +41,11 @@ in
 #boot.loader.grub.device = "/dev/sda" ; 
 # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
+services.xserver = {
+  enable = true;
+  xkb.layout = "en";
+  xkb.options = "caps:none";
+};   
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
