@@ -246,6 +246,7 @@ services.keyd = {
     albert
     waybar
     keyd
+    numlockx
     # xmodmap
   ];
 
