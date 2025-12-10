@@ -62,15 +62,15 @@ services.keyd = {
       };
     };
   };
-systemd.services.numlock = {
-  description = "Enable NumLock at startup";
-  wantedBy = [ "multi-user.target" ];
-  serviceConfig = {
-    Type = "oneshot";
-    RemainAfterExit = "yes";
-    ExecStart = "setleds +num";
-  };
-};   
+# systemd.services.numlock = {
+  # description = "Enable NumLock at startup";
+  # wantedBy = [ "multi-user.target" ];
+  # serviceConfig = {
+    # Type = "oneshot";
+    # RemainAfterExit = "yes";
+    # ExecStart = "setleds +num";
+  # };
+# };   
   console.useXkbConfig = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
