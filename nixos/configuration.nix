@@ -61,72 +61,7 @@ boot.loader.grub.device = "/dev/sda" ;
     update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname} --impure";
     udpate = "update";
   };
-#programs.zsh.initExtra = ''
-#  update() {
-#    local host="${1:-${uname}}"
-#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#"$host"
-#  }
-#'';
-#systemd.user.services."kill-brave-before-rebuild" = {
-#  Description = "Stop Brave before NixOS rebuild";
-#  Service = {
-#    Type = "oneshot";
-#    ExecStart = "${pkgs.procps}/bin/pkill brave || true";
-#  };
-#  WantedBy = [ "default.target" ];
-#};
-#programs.zsh.initExtra = ''
-#  update() {
-#    echo "Stopping Brave..."
-#    pkill brave 2>/dev/null || true
-#
-#    echo "Rebuilding NixOS..."
-#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#"$1"
-#  }
-#'';
-#Then you need to use an activation script in /etc/nixos/:
 
-#/etc/nixos/activation.sh:
-##!/bin/sh
-#pkill brave 2>/dev/null || true
-
-
-#Then import it from configuration.nix:
-
-#system.activationScripts.killBrave.text = ''
-#  pkill brave 2>/dev/null || true
-#'';
-#rm ~/.config/BraveSoftware/Brave-Browser/Last\ Version
-
-## Kill Brave before each nixos-rebuild
-#system.activationScripts.killBraveBeforeRebuild.text = ''
-#  if pgrep brave >/dev/null 2>&1; then
-#    echo "Stopping Brave..."
-#    pkill brave
-#  fi
-#'';
-
-#system.activationScripts.cleanBraveLock.text = ''
-#  LAST_VERSION_FILE="$HOME/.config/BraveSoftware/Brave-Browser/Last Version"
-#  if [ -f "$LAST_VERSION_FILE" ]; then
-#    echo "Removing Brave Last Version lock..."
-#    rm -f "$LAST_VERSION_FILE"
-#  fi
-#'';
-
-#security.chromiumSuidSandbox.enable = true;
-
-#programs.zsh.initExtra = ''
-#  update() {
-#    echo "Stopping Brave..."
-#    pkill brave 2>/dev/null || true
-#    LAST_VERSION_FILE="$HOME/.config/BraveSoftware/Brave-Browser/Last Version"
-#    [ -f "$LAST_VERSION_FILE" ] && rm -f "$LAST_VERSION_FILE"
-
-#    echo "Rebuilding NixOS..."
-#    sudo nixos-rebuild switch --flake ~/nixconf/nixos#${1:-${uname}}
-#  }
-#'';
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
