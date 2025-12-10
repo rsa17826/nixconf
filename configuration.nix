@@ -188,6 +188,7 @@ services.keyd = {
       yt-dlp
       syncthingtray
       syncthing
+mp3gain
       # ulauncher
     ];
   };
