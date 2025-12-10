@@ -68,7 +68,7 @@ systemd.services.numlock = {
   serviceConfig = {
     Type = "oneshot";
     RemainAfterExit = "yes";
-    ExecStart = "${pkgs.kbd}/bin/setleds +num";
+    ExecStart = "setleds +num";
   };
 };   
   console.useXkbConfig = true;
@@ -87,7 +87,7 @@ systemd.services.numlock = {
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   programs.zsh.shellAliases = {
-    update = "cd ~/nixconf && push && cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
+    update = "cd ~/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
     vim="nvim";
