@@ -56,7 +56,7 @@ services.keyd = {
         settings = {
           main = {
             capslock = "overload(control, esc)";
-	    #numlock = "overload(control, esc)";
+	    numlock = "overload(control, esc)";
           };
         };
       };
@@ -246,7 +246,6 @@ services.keyd = {
     albert
     waybar
     keyd
-    numlockx
     # xmodmap
   ];
 
