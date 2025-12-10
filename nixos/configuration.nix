@@ -60,6 +60,7 @@ in
   programs.zsh.shellAliases = {
     update = "sudo nixos-rebuild switch --flake ~/nixconf/nixos#${uname} --impure";
     udpate = "update";
+    push = "git add . && git add * && git commit -m a && git push";
   };
 
   i18n.extraLocaleSettings = {
@@ -172,11 +173,25 @@ in
   programs.firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  systemd.services.sxhkd = {
+    description = "Simple X Hotkey Daemon (sxhkd)";
+    after = [ "graphical.target" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.sxhkd}/bin/sxhkd";
+      Restart = "always";
+      User = "${uname}";  # Replace "your-user" with your actual username
+      Environment = "DISPLAY=:0";  # Ensures it runs in the X session
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    sxhkd
+    rofi
+    albert
     wget
     brave
     nixfmt-rfc-style
