@@ -60,7 +60,7 @@ in
     update = "cd ~/nixconf && push && cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
-    # vim="nvim";
+    vim="nvim";
   };
 
   i18n.extraLocaleSettings = {
@@ -182,7 +182,7 @@ in
   # services.xserver.windowManager.i3.enable = false;
 
   # Optional: make i3 auto-selected on login
-  # services.xserver.displayManager.defaultSession = "none+i3";
+  services.xserver.displayManager.defaultSession = "none+hyprland";
 
   # programs.twm.enable=true;
   services.displayManager.autoLogin.enable = true;
@@ -190,26 +190,24 @@ in
   programs.firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  systemd.services.sxhkd = {
-    description = "Simple X Hotkey Daemon (sxhkd)";
-    after = [ "graphical.target" ];
+  # systemd.services.sxhkd = {
+    # description = "Simple X Hotkey Daemon (sxhkd)";
+    # after = [ "graphical.target" ];
 
-    serviceConfig = {
-      ExecStart = "${pkgs.sxhkd}/bin/sxhkd";
-      Restart = "always";
-      User = "${uname}";  # Replace "your-user" with your actual username
-      Environment = "DISPLAY=:0";  # Ensures it runs in the X session
-    };
-  };
+    # serviceConfig = {
+      # ExecStart = "${pkgs.sxhkd}/bin/sxhkd";
+      # Restart = "always";
+      # User = "${uname}";  # Replace "your-user" with your actual username
+      # Environment = "DISPLAY=:0";  # Ensures it runs in the X session
+    # };
+  # };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
-    vim
+    # vim
     sxhkd
-    rofi
-    albert
     wget
     brave
     nixfmt-rfc-style
