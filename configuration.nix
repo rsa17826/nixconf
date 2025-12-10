@@ -61,6 +61,7 @@ in
     update = "cd ~/nixconf && push && cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
+    vim="nvim";
   };
 
   i18n.extraLocaleSettings = {
@@ -159,6 +160,7 @@ in
       firejail
       motrix
       nix-tree
+      kid3
       # ulauncher
     ];
   };
@@ -204,7 +206,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
+    nvim
     sxhkd
     rofi
     albert
