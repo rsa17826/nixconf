@@ -29,7 +29,10 @@ in
   ];
   programs.zsh.enable = true;
   programs.hyprland.enable = true;
-
+  programs.hyprland.extraSessionCommands = ''
+    ${pkgs.waybar}/bin/waybar &
+    ${pkgs.networkmanager_applet}/bin/nm-applet &
+  '';
   # Bootloader.
    boot.loader.systemd-boot.enable = true;
    boot.loader.efi.canTouchEfiVariables = true;
@@ -221,6 +224,7 @@ in
     kitty
     # rofi
     albert
+    waybar
     # xmodmap
   ];
 

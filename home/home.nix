@@ -38,7 +38,19 @@
   };
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs.kitty.enable = true; # required for the default Hyprland config
+  programs.hyprland = {
+    enable = true;
 
+    # Extra commands to run on startup
+    extraSessionCommands = ''
+      # Start Waybar
+      ${pkgs.waybar}/bin/waybar &
+      # Network manager tray
+      ${pkgs.networkmanager_applet}/bin/nm-applet &
+      # Volume tray (if installed)
+      ${pkgs.pavucontrol}/bin/pavucontrol &
+    '';
+  };
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
