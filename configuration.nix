@@ -56,7 +56,7 @@ services.keyd = {
         settings = {
           main = {
             capslock = "overload(control, esc)";
-	    numlock = "overload(control, esc)";
+	    numlock = "on";
           };
         };
       };
