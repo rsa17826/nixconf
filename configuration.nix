@@ -182,7 +182,7 @@ in
   # services.xserver.windowManager.i3.enable = false;
 
   # Optional: make i3 auto-selected on login
-  services.xserver.displayManager.defaultSession = "none+hyprland";
+  services.xserver.displayManager.defaultSession = "hyprland";
 
   # programs.twm.enable=true;
   services.displayManager.autoLogin.enable = true;
