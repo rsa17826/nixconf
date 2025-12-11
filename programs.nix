@@ -54,8 +54,12 @@
       mp3gain
       vscodium
       python314
+      eww
       # ulauncher
     ];
+  };
+  programs.eww = {
+    enable = true;
   };
   environment.systemPackages = with pkgs; [
     neovim
