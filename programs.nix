@@ -58,9 +58,6 @@
       # ulauncher
     ];
   };
-  programs.eww = {
-    enable = true;
-  };
   environment.systemPackages = with pkgs; [
     neovim
     # vim
