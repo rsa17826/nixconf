@@ -6,7 +6,7 @@
     package = pkgs.appimage-run.override {
       extraPkgs = pkgs: [
         pkgs.python312
-	pkgs.python314
+        pkgs.python314
       ];
     };
   };

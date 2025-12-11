@@ -1,11 +1,16 @@
-{ config, pkgs, uname, ... }:
+{
+  config,
+  pkgs,
+  uname,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
-xsession.numlock.enable = true;   
+  xsession.numlock.enable = true;
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
@@ -18,43 +23,40 @@ xsession.numlock.enable = true;
     # Whether to enable hyprland-session.target on hyprland startup
     systemd.enable = true;
   };
-#xdg.configFile."hypr/autostart.conf".text = ''
-#  ${pkgs.waybar}/bin/waybar &
-#  ${pkgs.networkmanagerapplet}/bin/nm-applet &
-#'';
+  #xdg.configFile."hypr/autostart.conf".text = ''
+  #  ${pkgs.waybar}/bin/waybar &
+  #  ${pkgs.networkmanagerapplet}/bin/nm-applet &
+  #'';
 
   # VS Code
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscodium;
-    mutableExtensionsDir = false;
 
-    profiles.default = {
-      extensions = [
+  home.stateVersion = "25.11"; # Please read the comment before changing.
+  programs = {
+    kitty = {
+      enable = true; # required for the default Hyprland config
+    };
+    hyprland = {
+      enable = true;
+    };
+    home-manager.enable = true;
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      mutableExtensionsDir = false;
 
-      ];
-      userSettings = {
-        force = true;
-        "editor.tabSizea" = 30;
-        "files.trimTrailingWhitespace" = true;
+      profiles.default = {
+        extensions = [
+
+        ];
+        userSettings = {
+          # force = true;
+          "editor.tabSizea" = 30;
+          "files.trimTrailingWhitespace" = true;
+        };
       };
     };
   };
-  home.stateVersion = "25.11"; # Please read the comment before changing.
-  programs.kitty.enable = true; # required for the default Hyprland config
-  programs.hyprland = {
-    enable = true;
-# 
-    # # Extra commands to run on startup
-    extraSessionCommands = ''
-      # Start Waybar
-      ${pkgs.waybar}/bin/waybar &
-      # Network manager tray
-      ${pkgs.networkmanager_applet}/bin/nm-applet &
-      # Volume tray (if installed)
-      ${pkgs.pavucontrol}/bin/pavucontrol &
-    '';
-  };
+
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -64,18 +66,18 @@ xsession.numlock.enable = true;
     pkgs.opensnitch-ui
     pkgs.vscodium
   ];
-systemd.user.services.albert = {
-  description = "Albert Launcher";
-  after = [ "graphical.target" ];
+  # systemd.user.services.albert = {
+  #   description = "Albert Launcher";
+  #   after = [ "graphical.target" ];
 
-  serviceConfig = {
-    ExecStart = "${pkgs.makeWrapper}/bin/makeWrapper ${pkgs.albert}/bin/albert /home/username/bin/albert-launch.sh --set QT_QPA_PLATFORMTHEME gtk2 --set QT_STYLE_OVERRIDE Fusion";
-    Restart = "always";
-    Environment = "DISPLAY=:0";
-  };
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.makeWrapper}/bin/makeWrapper ${pkgs.albert}/bin/albert /home/username/bin/albert-launch.sh --set QT_QPA_PLATFORMTHEME gtk2 --set QT_STYLE_OVERRIDE Fusion";
+  #     Restart = "always";
+  #     Environment = "DISPLAY=:0";
+  #   };
 
-  wantedBy = [ "default.target" ];
-};
+  #   wantedBy = [ "default.target" ];
+  # };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -113,5 +115,5 @@ systemd.user.services.albert = {
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+
 }
