@@ -6,6 +6,7 @@
     package = pkgs.appimage-run.override {
       extraPkgs = pkgs: [
         pkgs.python312
+	pkgs.python314
       ];
     };
   };
@@ -52,6 +53,7 @@
       syncthing
       mp3gain
       vscodium
+      python314
       # ulauncher
     ];
   };
