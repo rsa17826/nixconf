@@ -37,7 +37,7 @@
   };
   services.system76-scheduler.enable = true;
   services.displayManager = {
-    defaultSession = "hyprland";
+    # defaultSession = "hyprland";
 
     # programs.twm.enable=true;
     autoLogin.enable = true;
