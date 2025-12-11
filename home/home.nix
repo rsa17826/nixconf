@@ -49,7 +49,7 @@
 
         ];
         userSettings = {
-          # force = true;
+          force = true;
           "editor.tabSizea" = 30;
           "files.trimTrailingWhitespace" = true;
         };
