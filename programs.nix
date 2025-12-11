@@ -14,7 +14,7 @@
     zsh = {
       enable = true;
       shellAliases = {
-        update = "cd ~/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
+        update = "sudo cd ~/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
         udpate = "update";
         push = "git add -A && git commit -m a && git push";
         vim = "nvim";
@@ -55,6 +55,7 @@
       vscodium
       python314
       eww
+      anyrun
       # ulauncher
     ];
   };
