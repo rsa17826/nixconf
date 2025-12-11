@@ -55,7 +55,6 @@
       vscodium
       python314
       eww
-      grim
       # ulauncher
     ];
   };
