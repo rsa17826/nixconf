@@ -14,7 +14,7 @@
     zsh = {
       enable = true;
       shellAliases = {
-        update = "sudo ecno a && cd ~/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
+        update = "sudo echo a && cd ~/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
         udpate = "update";
         push = "git add -A && git commit -m a && git push";
         vim = "nvim";
