@@ -814,7 +814,7 @@
   home.file = {
     ".config/VSCodium/User/settings.json"={
       source = ./vscode/settings.json;
-      mutable = true;                    
+      # mutable = true;                    
     };
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
