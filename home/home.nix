@@ -812,11 +812,13 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-  text = builtins.readFile ./vscode/settings.json;
+    ".config/VSCodium/User/settings.json" = {
+      text = builtins.readFile ./vscode/settings.json;
+    };
 
     # ".config/VSCodium/User/settings.json"={
     #   source = ./vscode/settings.json;
-    #   # mutable = true;                    
+    #   # mutable = true;
     #       force = true;
     # mutable = true;
     # };
