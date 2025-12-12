@@ -789,6 +789,11 @@
 
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
+  home.activation.copy-vscode-settings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "Copying VSCode settings.json to $HOME..."
+    mkdir -p "$HOME/.config/VSCodium/User"
+    cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
+  '';
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -812,9 +817,9 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/VSCodium/User/settings.json" = {
-      text = builtins.readFile ./vscode/settings.json;
-    };
+    # ".config/VSCodium/User/settings.json" = {
+    #   text = builtins.readFile ./vscode/settings.json;
+    # };
 
     # ".config/VSCodium/User/settings.json"={
     #   source = ./vscode/settings.json;
