@@ -783,7 +783,7 @@
 
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
-  home.activation.copy-vscode-settings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.copy-vscode-settings = pkgs.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p "/home/${uname}/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "/home/${uname}/.config/VSCodium/User/settings.json"
   '';
