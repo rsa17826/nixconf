@@ -35,9 +35,9 @@
     kitty = {
       enable = true; # required for the default Hyprland config
     };
-    hyprland = {
-      enable = true;
-    };
+   # hyprland = {
+   #   enable = true;
+   # };
     home-manager.enable = true;
     vscode = {
       enable = true;
