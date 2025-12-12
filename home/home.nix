@@ -477,12 +477,12 @@
               version = "0.1.46";
               hash = "sha256-cgA5nrEdah6Dae8TJE4r3yKfF6/G/4rjkVlwtG0ZU4E=";
             }
-            {
-              name = "doki-theme";
-              publisher = "unthrottled";
-              version = "88.1.18";
-              hash = "sha256-7Ditwj7U26t3v4ofpqw/sHar6uE46E4DWVwGZjziZfM=";
-            }
+            # {
+            #   name = "doki-theme";
+            #   publisher = "unthrottled";
+            #   version = "88.1.18";
+            #   hash = "sha256-7Ditwj7U26t3v4ofpqw/sHar6uE46E4DWVwGZjziZfM=";
+            # }
             {
               name = "autolink";
               publisher = "usernamehw";
