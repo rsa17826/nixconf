@@ -1,0 +1,46 @@
+
+[Arrow]
+Path=Mew - Normal Select.ani
+
+[Help]
+Path=Mew - Help Select.ani
+
+[AppStarting]
+Path=Mew - Working in the Background.ani
+
+[Wait]
+Path=Mew - Busy.ani
+
+[Crosshair]
+Path=Mew - Precision Select.cur
+
+[IBeam]
+Path=Mew - Text Select.ani
+
+[NWPen]
+Path=Mew - Handwriting.cur
+
+[No]
+Path=Mew - Unavailable.ani
+
+[SizeNS]
+Path=Mew - Vertical.ani
+
+[SizeWE]
+Path=Mew - Horizontal.ani
+
+[SizeNWSE]
+Path=Mew - Diagonal Resize 1.ani
+
+[SizeNESW]
+Path=Mew - Diagonal Resize 2.ani
+
+[SizeAll]
+Path=Mew - Move.ani
+
+[UpArrow]
+Path=Mew - Alternative Select.ani
+
+[Hand]
+Path=Mew - Link Select.ani
+
