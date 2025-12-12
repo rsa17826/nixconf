@@ -38,7 +38,7 @@ function get_vsixpkg() {
     EXTTMP=$(mktemp -d -t vscode_exts_XXXXXXXX)
 
     URL="https://$1.gallery.vsassets.io/_apis/public/gallery/publisher/$1/extension/$2/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-
+    echo $URL
     # Quietly but delicately curl down the file, blowing up at the first sign of trouble.
     curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"
     # Unpack the file we need to stdout then pull out the version
@@ -79,7 +79,6 @@ trap clean_up SIGINT
 printf '{ extensions = [/n'
 text="
 adamraichu.font-viewer
-alexanderius.language-hosts
 apinix.indent-jump
 avoonix.furry-language
 bbenoist.nix
@@ -135,16 +134,10 @@ oracle.oracle-java
 oxideops.vscode-code-jump
 prismlink.lunar-theme
 qcz.text-power-tools
-ramonjaspers.neon-extra-dark
 rectcircle.str-conv
-redhat.java
 rioj7.regex-text-gen
 robertostermann.inline-parameters-extended
 rodolphebarbanneau.python-docstring-highlighter
-rssaromeo.4-to-2-formatter
-rssaromeo.auto-regex
-rssaromeo.simple-auto-formatter
-rssaromeo.simpledatastorage
 rust-lang.rust-analyzer
 rvest.vs-code-prettier-eslint
 s-nlf-fh.glassit
@@ -156,8 +149,6 @@ solomonkinard.chrome-extension-api
 solomonkinard.chrome-extensions
 soyreneon.themeeditor
 tekumara.typos-vscode
-thomaswebb.ardalive
-thqby.vscode-autohotkey2-lsp
 unthrottled.doki-theme
 usernamehw.autolink
 usernamehw.errorlens
@@ -166,21 +157,29 @@ vscjava.vscode-java-debug
 wix.vscode-import-cost
 xabikos.javascriptsnippets
 yoavbls.pretty-ts-errors
-zero-plusplus.vscode-autohotkey-debug
-zuban.zubanls"
+zero-plusplus.vscode-autohotkey-debug"
 
 # Note that we are only looking to update extensions that are already installed.
-IFS=$'\n' read -d '' -r -a lines <<< "$text"
+# IFS=$'\n' read -d '' -r -a lines <<< "$text"
 #   echo "LINE: $line"
 # done <<< "$text"
 
 # for i in  "${lines[@]}";
 while IFS= read -r i; do
-# do
+    # Skip blank lines
+    [ -z "$i" ] && continue
+
+    # Skip invalid lines
+    if ! [[ "$i" == *.* ]]; then
+        echo "Skipping invalid line: $i" >&2
+        continue
+    fi
+
     OWNER=$(echo "$i" | cut -d. -f1)
     EXT=$(echo "$i" | cut -d. -f2)
 
     get_vsixpkg "$OWNER" "$EXT"
 done <<< "$text"
+
 # Close off the nix expression.
 printf '];/n}'
