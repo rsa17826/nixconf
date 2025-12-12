@@ -110,7 +110,7 @@ redhat.java
 rioj7.regex-text-gen
 robertostermann.inline-parameters-extended
 rodolphebarbanneau.python-docstring-highlighter
-rssaromeo.4-to-2-formatter
+"rssaromeo.4-to-2-formatter"
 rssaromeo.auto-regex
 rssaromeo.simple-auto-formatter
 rssaromeo.simpledatastorage
