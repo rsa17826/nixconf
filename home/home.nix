@@ -138,7 +138,7 @@
 "zero-plusplus.vscode-autohotkey-debug"
 "zuban.zubanls"
         ];
-        programs.vscode.userSettings = {
+        userSettings = {
   force = true;
 
   "doki.wallpaper.path" = "PATH DESCRIPTION";
