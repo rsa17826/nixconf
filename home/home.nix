@@ -46,7 +46,7 @@
       mutableExtensionsDir = true;
 
       profiles.default = {
-        extensions = with pkgs.vscode-extensions;
+        extensions = with pkgs.vscode-extensions;[]++pkgs.vscode-utils.extensionsFromVscodeMarketplace
 [{
     name = "font-viewer";
     publisher = "adamraichu";
