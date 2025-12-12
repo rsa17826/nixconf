@@ -34,11 +34,11 @@
         };
       };
 
-      homeConfigurations."${uname}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home/home.nix
-        ];
-      };
+      #homeConfigurations."${uname}" = home-manager.lib.homeManagerConfiguration {
+      #  inherit pkgs;
+      #  modules = [
+      #    ./home/home.nix
+      #  ];
+      #};
     };
 }
