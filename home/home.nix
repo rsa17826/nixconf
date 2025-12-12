@@ -8,7 +8,6 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home-manager.backupFileExtension = "backup";
 
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
