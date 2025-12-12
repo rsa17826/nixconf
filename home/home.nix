@@ -46,7 +46,7 @@
       mutableExtensionsDir = false;
 
       profiles.default = {
-        extensions = with pkgs.vscode-extensions[
+        extensions = with pkgs.vscode-extensions;[
 "adamraichu.font-viewer"
 "alexanderius.language-hosts"
 "apinix.indent-jump"
