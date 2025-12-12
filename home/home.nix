@@ -43,7 +43,7 @@
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      mutableExtensionsDir = true;
+      mutableExtensionsDir = false;
 
       profiles.default = {
         extensions = with pkgs.vscode-extensions;[]++pkgs.vscode-utils.extensionsFromVscodeMarketplace
