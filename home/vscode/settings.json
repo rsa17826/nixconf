@@ -1,0 +1,690 @@
+{
+  // "doki.sticker.path": "C:/Users/User/Downloads/Media/Images/tunc.png",
+  // "doki.sticker.path": "C:/Users/User/Downloads/Media/Gifs/o_1ilp245rk89sthnekokt3ilh10.gif",
+  // "doki.sticker.path": "C:/Users/User/Downloads/Media/Images/FyG4v_BaUAUDti1,jpg_ori-Picsart-BackgroundRemover.jpg",
+  // "doki.wallpaper.path": "D:/Downloads/Videos/animator ar/Cute Furry Foxgirl in slime tells you she streams on Twitch.gif",
+  "doki.wallpaper.path": "C:/Users/User/Downloads/Media/Images/purple dragon - Copy.png",
+  "doki.background.path": "C:/Users/User/Downloads/Media/Images/purple dragon - Copy.png",
+  // "doki.sticker.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/purple fox 400px 80a.png",
+  // "doki.background.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/panky bg 60a.png",
+  // "doki.wallpaper.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/gdColon 40a wide.png",
+  // "doki.wallpaper.path": "C:/Users/User/Downloads/Media/Images/wallhaven-1peepw.png",
+  "doki.background.anchor": "center",
+  "window.titleBarStyle": "custom",
+  "window.customMenuBarAltFocus": false,
+  "window.enableMenuBarMnemonics": false,
+  "terminal.integrated.autoReplies": {
+    "Terminate batch job (Y/N)": "Y\r",
+  },
+  "editor.pasteAs.enabled": false,
+  "debug.focusWindowOnBreak": false,
+  "files.exclude": {
+    // "addons": true,
+    "**/maps": true,
+    // "**/scenes": true,
+    // "**/scenes/blocks": true,
+
+    "themes": true,
+    "**/custom blocks": true,
+    "**/.vscode": true,
+    "**/*.tscn": true,
+    "**/*.uid": true,
+    "**/docs": true,
+    "**/icon.ico": true,
+    "**/js globals": true,
+    "**/node_modules": true,
+    "**/images": true,
+    ".gitattributes": true,
+    "VERSION": true,
+    // remove all folders but no files from res://scenes/blocks
+    "**/scenes/blocks/[!.]": true,
+    "**/scenes/blocks/[!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/scenes/blocks/[!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.][!.]": true,
+    "**/GLOBAL/menu things": true,
+    "**/saves": true,
+    "**/*.import": true,
+    "**/project.godot": true,
+    // "**/.godot": true,
+    "**/.editorconfig": true,
+    "**/*.tmp": true,
+    "**/*.TMp": true,
+    "**/export_presets.cfg": true,
+    "tabby_explorer_main_pref.tres": true,
+    "process": true,
+    "downloaded maps": true,
+    "override.cfg": true,
+    "exports": true
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "workbench.startupEditor": "none",
+  "editor.detectIndentation": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "Jota0222.multi-formatter",
+    "editor.tabSize": 2,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.lightbulb.enabled": "onCode",
+    "editor.linkedEditing": true,
+    "multiFormatter.formatterList": [
+      "ms-python.black-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter"
+    ]
+  },
+  "python.formatting.provider": "black",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.language.brackets": [],
+    "editor.language.colorizedBracketPairs": [],
+    "editor.suggest.insertMode": "insert",
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.lightbulb.enabled": "onCode"
+    // "editor.linkedEditing": true
+  },
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove",
+  "prettier.semi": false,
+  "files.autoSave": "onFocusChange",
+  "[css]": {
+    "editor.suggest.insertMode": "insert"
+  },
+  "[scss]": {
+    "editor.suggest.insertMode": "insert"
+  },
+  "[less]": {
+    "editor.suggest.insertMode": "insert"
+  },
+  "[handlebars]": {
+    "editor.suggest.insertMode": "insert"
+  },
+  "[json]": {
+    "editor.suggest.insertMode": "insert"
+  },
+  "[jsonc]": {
+    "editor.suggest.insertMode": "insert",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[ahk2]": {},
+  "files.associations": {
+    "*.ahk": "ahk2",
+    "*.gd": "gdscript",
+    "*.js": "javascript",
+    "*.ts": "typescript",
+    "*.slang": "hlsl"
+  },
+  "workbench.settings.applyToAllProfiles": [
+    "editor.fontFamily",
+    "editor.wordWrap"
+  ],
+  "AutoHotkey2.InterpreterPath": "C:\\Program Files\\AutoHotkey\\UX\\AutoHotkeyUX.exe",
+  "editor.accessibilitySupport": "off",
+  "explorer.confirmDelete": false,
+  "workbench.editorAssociations": {
+    "{hexdiff}:/**/*.*": "hexEditor.hexedit",
+    "*.dat": "hexEditor.hexedit",
+    "*.sol": "hexEditor.hexedit",
+    "*.vscdb": "hexEditor.hexedit",
+    "*.exe": "hexEditor.hexedit",
+    "*.bin": "hexEditor.hexedit",
+    "*.class": "hexEditor.hexedit",
+    "*.cha": "hexEditor.hexedit",
+    "*.dmp": "hexEditor.hexedit",
+    "*.jar": "hexEditor.hexedit"
+  },
+  "[powershell]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "workbench.preferredLightColorTheme": "Visual Studio Dark",
+  "workbench.preferredHighContrastLightColorTheme": "Visual Studio Dark",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "window.confirmSaveUntitledWorkspace": false,
+  "[gdscript]": {
+    // "editor.suggest.insertMode": "replace",
+    // "editor.defaultFormatter": "geequlim.godot-tools"
+    "editor.defaultFormatter": "Jota0222.multi-formatter",
+    "editor.tabSize": 2,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.lightbulb.enabled": "onCode",
+    "editor.linkedEditing": true,
+    "multiFormatter.formatterList": [
+      // "DoHe.godot-format",
+      "geequlim.godot-tools",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex",
+      "rssaromeo.auto-regex"
+    ]
+  },
+  "godotTools.editorPath.godot4": "d:\\programs\\godot\\Godot_v4.2.2-stable_win64.exe",
+  "ahk++.file.interpreterPathV2": "D:\\Program Files\\AutoHotkey\\v2\\AutoHotkey64.exe",
+  "files.autoSaveWhenNoErrors": true,
+  "vscode-ahk-plus.compilePath": "c:\\Program Files\\AutoHotkey\\Compiler\\Ahk2Exe.exe",
+  "ahk++.file.compilerPath": "D:\\Program Files\\AutoHotkey\\Compiler\\Ahk2Exe.exe",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "cmake.options.statusBarVisibility": "compact",
+  "cmake.pinnedCommands": [
+    "workbench.action.tasks.configureTaskRunner",
+    "workbench.action.tasks.runTask"
+  ],
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "cmake.configureOnOpen": true,
+  "cmake.showOptionsMovedNotification": false,
+  "clangd.path": "c:\\Users\\User\\Downloads\\programs\\VSCodium\\data\\user-data\\User\\globalStorage\\llvm-vs-code-extensions.vscode-clangd\\install\\18.1.3\\clangd_18.1.3\\bin\\clangd.exe",
+  "cmake.exportCompileCommandsFile": false,
+  "cmake.showConfigureWithDebuggerNotification": false,
+  "git.openRepositoryInParentFolders": "never",
+  "ahk++.file.interpreterPathV1": "D:\\Program Files\\AutoHotkey\\v1.1.37.01\\AutoHotkeyU64.exe",
+  "[ahk]": {
+    "editor.defaultFormatter": "mark-wiemer.vscode-autohotkey-plus-plus"
+  },
+  "diffEditor.experimental.useTrueInlineView": true,
+  "workbench.iconTheme": "vscode-icons",
+  "AutoHotkey2.ActionWhenV1IsDetected": "SwitchToV1",
+  "AutoHotkey2.CompletionCommitCharacters": {
+    "Class": "("
+  },
+  "AutoHotkey2.FormatOptions": {
+    "wrap_line_length": 0,
+    "brace_style": "One True Brace",
+    "array_style": "none",
+    // "break_chained_methods": true,
+    "ignore_comment": false,
+    "indent_string": "  ",
+    "indent_between_hotif_directive": true,
+    "keyword_start_with_uppercase": false,
+    "max_preserve_newlines": 2,
+    "object_style": "none",
+    "preserve_newlines": true,
+    "space_before_conditional": true,
+    "space_after_double_colon": false,
+    "space_in_empty_paren": true,
+    "space_in_other": true,
+    "space_in_paren": false,
+    "switch_case_alignment": false,
+    "symbol_with_same_case": false,
+    "white_space_before_inline_comment": " "
+  },
+  "AutoHotkey2.Warn.CallWithoutParentheses": "On",
+  "AutoHotkey2.Warn.LocalSameAsGlobal": false,
+  "ahk++.file.templateSnippetNameV2": "ahkmainv2",
+  "AutoHotkey2.SymbolFoldingFromOpenBrace": true,
+  "AutoHotkey2.CommentTags": "^$",
+  "editor.tabSize": 2,
+  "explorer.confirmDragAndDrop": false,
+  "AHK++.v2.formatter": {
+    "objectStyle": "expand",
+    "maxPreserveNewlines": 2,
+    "wrapLineLength": 1999999,
+    "indentString": "  ",
+    "arrayStyle": "expand",
+    "spaceAfterDoubleColon": false,
+    "whitespaceBeforeInlineComment": " "
+  },
+  "eslint.rules.customizations": [
+    {
+      "rule": "semi",
+      "severity": "off"
+    },
+    {
+      "rule": "curly",
+      "severity": "off"
+    },
+    {
+      "rule": "eqeqeq",
+      "severity": "off"
+    }
+  ],
+  "prettier.useEditorConfig": false,
+  "explorer.confirmPasteNative": false,
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "AutoHotkey2.AutoLibInclude": "All",
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "editor.semanticHighlighting.enabled": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "regex.replacetext",
+        "settings": {
+          "foreground": "#3e5a56",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.tag.optional",
+        "settings": {
+          "foreground": "#009faade"
+        }
+      },
+      {
+        "scope": "regex.tag.noregex",
+        "settings": {
+          "foreground": "#b46000f8",
+          "fontStyle": "bold strikethrough"
+        }
+      },
+      {
+        "scope": "regex.tag.name",
+        "settings": {
+          "foreground": "#2ab400f8"
+        }
+      },
+      {
+        "scope": "regex.tag.forced",
+        "settings": {
+          "foreground": "#00b496f8"
+        }
+      },
+      {
+        "scope": "regex.anytext",
+        "settings": {
+          "foreground": "#afa9897e",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.any",
+        "settings": {
+          "foreground": "#be8211b9",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.repeater",
+        "settings": {
+          "foreground": "#00a8dbb9",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.specialescape",
+        "settings": {
+          "foreground": "#acdb00b9",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.escaped",
+        "settings": {
+          "foreground": "#8100ccab",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.text",
+        "settings": {
+          "foreground": "#646c77",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "regex.error",
+        "settings": {
+          "foreground": "#d10000ec",
+          "fontStyle": "strikethrough"
+        }
+      },
+      {
+        "scope": "regex.group",
+        "settings": {
+          "foreground": "#006b20ee",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "name": "for ahk multiline string",
+        "scope": "string.continuation",
+        "settings": {
+          "foreground": "#006b20ee",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "escaper.sds",
+        "settings": {
+          "foreground": "#6f6f6f00",
+          "fontStyle": ""
+        }
+      },
+      {
+        "scope": "error.sds",
+        "settings": {
+          "foreground": "#d10000ec",
+          "fontStyle": "strikethrough"
+        }
+      },
+      {
+        "scope": "unsettype.sds",
+        "settings": {
+          "foreground": "#c400b7ee"
+        }
+      },
+      {
+        "scope": "containers.sds",
+        "settings": {
+          "foreground": "#7fa7a4ee"
+        }
+      },
+      {
+        "scope": "type.str.sds",
+        "settings": {
+          "foreground": "#bc8d00"
+        }
+      },
+      {
+        "scope": "type.strname.sds",
+        "settings": {
+          "foreground": "#8b4100"
+        }
+      },
+      {
+        "scope": "type.int.sds",
+        "settings": {
+          "foreground": "#007007ee"
+        }
+      },
+      {
+        "scope": "type.float.sds",
+        "settings": {
+          "foreground": "#00b35aee"
+        }
+      },
+      {
+        "scope": "type.bool.sds",
+        "settings": {
+          "foreground": "#0020d2ee"
+        }
+      },
+      {
+        "scope": "separator.comma.sds",
+        "settings": {
+          "foreground": "#767676"
+        }
+      },
+      {
+        "scope": "type.name.sds",
+        "settings": {
+          "foreground": "#767676"
+        }
+      },
+      {
+        "scope": "escaped.sds",
+        "settings": {
+          "foreground": "#ff7700"
+        }
+      }
+    ]
+  },
+  "prettier.printWidth": 70,
+  "auto-regex.show regex errors as popup": false,
+  "editor.inlineSuggest.showToolbar": "always",
+  "workspace.autoInferEnabled": true,
+  "files.autoSaveDelay": 10,
+  "workspace.localModelEnabled": true,
+  "terminal.integrated.localEchoLatencyThreshold": -1,
+  "python.createEnvironment.trigger": "off",
+  "editor.rulers": [],
+  // "accessibility.verbosity.terminal": false,
+  "debug.terminal.clearBeforeReusing": true,
+  "shed.useIntegratedTerminal": true,
+  "black-formatter.showNotifications": "always",
+  "python.analysis.typeCheckingMode": "basic",
+  "continue.showInlineTip": false,
+  "godotTools.formatter.denseFunctionParameters": true,
+  "godotTools.inlayHints.gdscript": false,
+  "godotTools.scenePreview.previewRelatedScenes": "anyFolder",
+  "godotTools.formatter.maxEmptyLines": "1",
+  "geode.geodeCliPath": "C:\\Users\\User\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GeodeSDK.GeodeCLI_Microsoft.Winget.Source_8wekyb3d8bbwe\\geode.exe",
+  "geode.geodeSdkPath": "C:\\Users\\User\\Documents\\Geode",
+  "cmake.buildTask": true,
+  "cmake.configureArgs": ["-G", "MinGW Makefiles"],
+  "cmake.configureSettings": {},
+  "typescript.suggest.completeFunctionCalls": true,
+  "workbench.colorCustomizations": {},
+  "godotFiles.documentation.viewer": "godot-tools",
+  "python.defaultInterpreterPath": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+  "redhat.telemetry.enabled": false,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "editor.fontFamily": "'nerd font', Consolas, 'Courier New', monospaced ",
+  "chat.commandCenter.enabled": false,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
+  "editor.lightbulb.enabled": "onCode",
+  "editor.linkedEditing": true,
+  "editor.renderWhitespace": "all",
+  "python.analysis.inlayHints.variableTypes": true,
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "shadered.executablePath": "D:\\programs\\shadered\\SHADERed.exe",
+  "[csharp]": {
+    "editor.defaultFormatter": "muhammad-sammy.csharp"
+  },
+  "roo-cline.allowedCommands": [
+    "npm test",
+    "npm install",
+    "tsc",
+    "git log",
+    "git diff",
+    "git show"
+  ],
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "AHK++.v1.formatter": {
+    "allowedNumberOfEmptyLines": 1,
+    "trimExtraSpaces": true
+  },
+  "AHK++.v2.general": {
+    "completeFunctionCalls": true,
+    "librarySuggestions": "User and Standard"
+  },
+  "AHK++.v2.warn": {
+    "callWithoutParentheses": "Parentheses"
+  },
+  "AHK++.v1.file": {
+    "interpreterPath": "C:\\Program Files\\AutoHotkey\\v1.1.37.02\\AutoHotkeyU64.exe"
+  },
+  "workbench.colorTheme": "Lunar Dark Theme",
+  "powershell.startAutomatically": false,
+  "powershell.integratedConsole.showOnStartup": false,
+  "terminal.integrated.hideOnStartup": "whenEmpty",
+  "[gdscene]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "godotTools.lsp.autoReconnect.attempts": 110000,
+  "godotTools.lsp.autoReconnect.cooldown": 7000,
+  "files.watcherExclude": {
+    "addons/**": true
+  },
+  // "editor.quickSuggestions": {
+  //   "other": "off"
+  // },
+  "window.zoomLevel": -1.75,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "[bat]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "[hlsl]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "cheerleader.productivity.monitoringEnabled": false,
+  "cheerleader.paste.monitoringEnabled": true,
+  "cheerleader.health.breakReminderIntervalMinutes": 1e30,
+  "cheerleader.health.breakDurationMinutes": 1e22,
+  "cheerleader.health.breakReminderEnabled": false,
+  "cheerleader.encouragement.enabled": false,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  // "editor.suggest.preview": true,
+  // "git.confirmSync": false,
+  // "git.autofetch": false
+  "rust-analyzer.check.command": "clippy",
+  "[gdshader]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "BracketHighlighter.activeInDebugMode": false,
+  "BracketHighlighter.outline": "2px dashed blue",
+  "BracketHighlighter.outlineSymbol": "2px dashed red",
+  "editor.autoIndentOnPaste": true,
+  "editor.wordWrap": "off",
+  "diffEditor.wordWrap": "off",
+  "editor.wordWrapMinified": false,
+  "workbench.editor.wrapTabs": true,
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": true,
+  "totalTypeScript.hiddenTips": [
+    "variable-type-annotation",
+    "array-type",
+    "any-type",
+    "passing-generics-to-types",
+    "typing-function-parameters",
+    "function-return-type",
+    "tuple-type"
+  ],
+  "doki.sticker.css": "z-index:100;background-position:100% calc(100% - 10px)",
+  "[sds]": {
+    "editor.defaultFormatter": "rssaromeo.simpledatastorage"
+  },
+  "debug.onTaskErrors": "debugAnyway",
+  "continue.enableNextEdit": false,
+  "glassit.alpha": 255,
+  "[sql]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "arena.codePrivacySettings": "Private",
+  // "autolink.queries": [
+  //   {
+  //     "linkPattern": "github#(\\d{1,6})", // RegExp. Will match `github#202` text
+  //     "linkText": "https://github.com/Microsoft/vscode/issues/${0}" // will replace `${0}` with matched group
+  //   },
+  //   {
+  //     "linkPattern": "this#(\\d{1,6})", // RegExp. Will redirect `this#1` to `https://github.com/usernamehw/vscode-autolink/issues/1`
+  //     // will replace `${0}` with matched group
+  //     // will replace `${workspaceFolderBasename}` with opened folder basename
+  //     "linkText": "https://github.com/usernamehw/${workspaceFolderBasename}/issues/${0}"
+  //   }
+  // ],
+  // "editor.largeFileOptimizations": false
+  // "vscode-highlight-text.rules": {
+  //   "markdown": {
+  //     "dark": {
+  //       "red": [".+"],
+  //       "#49baff": {
+  //         "match": [".+"]
+  //       },
+  //       // "#49baff": {
+  //       //   "match": ["^# .*"]
+  //       // },
+  //       "#b5e3ff": {
+  //         "match": ["^## .*"]
+  //       },
+  //       "#edf8ff": {
+  //         "match": ["^### .*"]
+  //       },
+  //       "#49bafa": {
+  //         "match": ["(\\[)([^\\]]*)(\\])\\s*\\(([^)]*)\\)"],
+  //         "colors": ["#b5e3ff", "#0777ff", "#b5e3ff", "#43e599"]
+  //       }
+  //     }
+  //   }
+  // },
+  "godotFormatter.indentSize": 2,
+  "godotFormatter.useSpaces": true,
+  "godotFormatter.linterIgnoredRules": "variable-name,constant-name,loop-variable-name,function-name,function-argument-name,signal-name,enum-member-name",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "Workspace_Formatter.excludePattern": [
+    "**/build",
+    "**/.*",
+    "**/.vscode",
+    "**/*.{png,ico,jpg,jpeg,tscn,tres,godot,txt,sds,cfg,import,svg,tet,ahk}",
+    "**/*.cfg",
+    "*.{png,ico,jpg,jpeg,tscn,tres,godot,txt,sds,cfg,import,svg,te,ahk}",
+    "*.cfg",
+    "*.uid",
+    "*.env",
+    "*.md",
+    "*.csv",
+    "**/license",
+    "license",
+    "*.tet"
+  ],
+  "godotFormatter.gdscriptFormatterPath": "C:\\Users\\User\\Downloads\\Applications\\Windows\\gdscript-formatter-0.17.0-windows-x86_64.exe",
+  "godotFormatter.useBuiltInBinary": false,
+  "godotFormatter.safe": false,
+  "godotFormatter.reorderCode": true,
+  "prettier.tabWidth": 2,
+  "prettier.experimentalTernaries": true,
+  "godotFormatter.linterMaxLineLength": 1000,
+  "editor.unicodeHighlight.includeComments": true,
+  "security.workspace.trust.enabled": false,
+  "workbench.settings.editor": "json"
+}
