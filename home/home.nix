@@ -496,12 +496,6 @@
               hash = "sha256-pAkk3QURnlLNMZ2cFBks2lAEl/Hk8Z2i/QgvjUv+u2Y=";
             }
             {
-              name = "vscode-lldb";
-              publisher = "vadimcn";
-              version = "1.12.0";
-              hash = "sha256-pHVoFTm2UaXCjGhDNBIbFsfjJc1GB+ugNeSsPSULthQ=";
-            }
-            {
               name = "vscode-java-debug";
               publisher = "vscjava";
               version = "0.58.2025112507";
@@ -790,9 +784,8 @@
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
   home.activation.copy-vscode-settings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "Copying VSCode settings.json to $HOME..."
-    mkdir -p "$HOME/.config/VSCodium/User"
-    cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
+    mkdir -p "/home/${uname}/.config/VSCodium/User"
+    cp -f ${./vscode/settings.json} "/home/${uname}/.config/VSCodium/User/settings.json"
   '';
 
   # The home.packages option allows you to install Nix packages into your
