@@ -783,13 +783,12 @@
 
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
-home.activation.copy-vscode-settings = {
-  text = ''
+home.activation.copy-vscode-settings =  ''
     echo "Copying VSCode settings.json..."
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
   '';
-};
+
 
 
   # The home.packages option allows you to install Nix packages into your
