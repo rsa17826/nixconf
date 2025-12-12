@@ -43,15 +43,13 @@
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      mutableExtensionsDir = false;
+      mutableExtensionsDir = true;
 
       profiles.default = {
         extensions = with pkgs.vscode-extensions;[
 
         ];
         userSettings = {
-  force = true;
-
   "doki.wallpaper.path" = "PATH DESCRIPTION";
   "doki.background.path" = "PATH DESCRIPTION";
   "doki.background.anchor" = "center";
