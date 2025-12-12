@@ -21,11 +21,11 @@
           modules = [
             ./configuration.nix
             inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.${uname} = import ./home/home.nix;
-      }
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${uname} = import ./home/home.nix {uname};
+            }
           ];
           specialArgs = {
             inherit inputs;
