@@ -24,7 +24,10 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.${uname} = import ./home/home.nix {uname};
+              home-manager.extraSpecialArgs = {
+                inherit uname;
+              };
+              home-manager.users.${uname} = import ./home/home.nix;
             }
           ];
           specialArgs = {
