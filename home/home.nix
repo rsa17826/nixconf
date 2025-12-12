@@ -442,7 +442,7 @@
     name = "slang-language-extension";
     publisher = "shader-slang";
     version = "2.0.3";
-    hash = "sha256-j4ZS7hm3mo/zRjXtneeIU0hlTG6CXCblZBX2Fo6AW6Q=";
+    hash = "sha256-7Dr4+6IwpgpuXX5qPU/ZpwBLPMl+ckqqIBc7Vja2Apc=";
   }
   {
     name = "vscode-highlight-text";
