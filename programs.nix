@@ -40,6 +40,7 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
+      typos
       keepass
       python313
       python313Packages.py7zr
