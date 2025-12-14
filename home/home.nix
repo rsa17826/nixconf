@@ -795,7 +795,11 @@
     size = 48; # Default cursor size (you can adjust this)
     gtk.enable = true;
     x11.enable = true;
-    package=null;
+    package=pkgs.runCommand "default" {} ''
+      mkdir -p $out/share/icons
+      ln -s ${./output} $out/share/icons/default
+    '';
+
   };
 
   # wayland.windowManager.hyprland.settings = {
