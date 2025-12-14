@@ -787,7 +787,7 @@
     echo "Copying VSCode settings.json..."
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
-    sed -i 's/$\{uname}/${uname}/g' "$SETTINGS_DEST"
+    sed -i 's/$\{uname}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
 
   # The home.packages option allows you to install Nix packages into your
