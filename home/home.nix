@@ -790,15 +790,15 @@
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     sed -i 's/$\{uname}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
-  home.file.".icons/default".source = lib.mkForce ../output;
+  home.file.".icons/mew".source = ./cursors;
   home.pointerCursor = {
-    name = "default"; # The name of the cursor theme
+    name = "mew"; # The name of the cursor theme
     size = 48; # Default cursor size (you can adjust this)
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.runCommand "default" { } ''
+    package = pkgs.runCommand "mew" { } ''
       mkdir -p $out/share/icons
-      ln -s ${../output} $out/share/icons/default
+      ln -s ${./cursors} $out/share/icons/mew
     '';
 
   };
