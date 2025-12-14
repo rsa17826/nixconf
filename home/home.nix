@@ -789,6 +789,21 @@
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     sed -i 's/$\{uname}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
+  home.file.".icons/default".source = ./output;
+  home.pointerCursor = {
+    name = "default"; # The name of the cursor theme
+    size = 48; # Default cursor size (you can adjust this)
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
+  # wayland.windowManager.hyprland.settings = {
+  #   exec-once = [
+  #     # This ensures the cursor theme is set on Hyprland
+  #     "gsettings set org.gnome.desktop.interface cursor-theme 'MyCursor'"
+  #     "gsettings set org.gnome.desktop.interface cursor-size 48"
+  #   ];
+  # };
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
