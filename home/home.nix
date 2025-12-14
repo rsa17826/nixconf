@@ -789,7 +789,7 @@
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     sed -i 's/$\{uname}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
-  home.file.".icons/default".source = ./output;
+  home.file.".icons/default".source = lib.mkForce ./output;
   home.pointerCursor = {
     name = "default"; # The name of the cursor theme
     size = 48; # Default cursor size (you can adjust this)
@@ -801,43 +801,7 @@
     '';
 
   };
-building the system configuration...
-error:
-       … while calling the 'head' builtin
-         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/attrsets.nix:1696:13:
-         1695|           if length values == 1 || pred here (elemAt values 1) (head values) then
-         1696|             head values
-             |             ^
-         1697|           else
 
-       … while evaluating the attribute 'value'
-         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:1118:7:
-         1117|     // {
-         1118|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
-             |       ^
-         1119|       inherit (res.defsFinal') highestPrio;
-
-       … while evaluating the option `system.build.toplevel':
-
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
-
-       … while evaluating the option `warnings':
-
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/boot/systemd.nix':
-
-       … while evaluating the option `systemd.services.home-manager-nyx.serviceConfig':
-
-       … while evaluating definitions from `/nix/store/r8c38iw9ck396yi2xj56zya0wvky4z8g-source/nixos':
-
-       … while evaluating the option `home-manager.users.nyx.home.file.".icons/default".source':
-
-       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
-
-       error: The option `home-manager.users.nyx.home.file.".icons/default".source' has conflicting definition values:
-       - In `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix': /nix/store/3n7679n5p64pz3yjwh8mfialigyfyzkm-source/home/output
-       - In `/nix/store/r8c38iw9ck396yi2xj56zya0wvky4z8g-source/modules/config/home-cursor.nix': "/nix/store/1ld1gxdxs8c5b0bclc39c809say4di2y-default/share/icons/default"
-       Use `lib.mkForce value` or `lib.mkDefault value` to change the priority on any of these definitions.
-Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '/home/nyx/nixconf#nixosConfigurations."nyx".config.system.build.toplevel' --no-link --impure' returned non-zero exit status 1.
   # wayland.windowManager.hyprland.settings = {
   #   exec-once = [
   #     # This ensures the cursor theme is set on Hyprland
