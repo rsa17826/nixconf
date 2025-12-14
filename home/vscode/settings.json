@@ -14,10 +14,11 @@
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
   "terminal.integrated.autoReplies": {
-    "Terminate batch job (Y/N)": "Y\r",
+    "Terminate batch job (Y/N)": "Y\r"
   },
   "editor.pasteAs.enabled": false,
   "debug.focusWindowOnBreak": false,
+  "typos.path": "/etc/profiles/per-user/${uname}/bin/typos",
   "files.exclude": {
     // "addons": true,
     "**/maps": true,
@@ -686,5 +687,8 @@
   "godotFormatter.linterMaxLineLength": 1000,
   "editor.unicodeHighlight.includeComments": true,
   "security.workspace.trust.enabled": false,
-  "workbench.settings.editor": "json"
+  "workbench.settings.editor": "json",
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  }
 }
