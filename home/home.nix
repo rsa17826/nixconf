@@ -788,7 +788,7 @@
     echo "Copying VSCode settings.json..."
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
-    sed -i 's/$\{uname}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
+    sed -i 's/$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
   home.file.".icons/mew".source = lib.mkForce ./cursors;
   home.pointerCursor = {
