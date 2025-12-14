@@ -2,6 +2,7 @@
   config,
   pkgs,
   uname,
+  lib,
   ...
 }:
 
