@@ -19,6 +19,7 @@
         push = "git add -A && git commit -m a && git push";
         vim = "nvim";
         "nix-env" = "echo wrong command";
+        clearcache = "nix-collect-garbage";
       };
     };
     hyprland = {
