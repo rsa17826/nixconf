@@ -796,7 +796,47 @@
     gtk.enable = true;
     x11.enable = true;
   };
+To github.com:rsa17826/nixos-conf.git
+   aaf4a81..566da06  main -> main
+~/nixconf/mew-animated
+building the system configuration...
+error:
+       … while calling the 'head' builtin
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/attrsets.nix:1696:13:
+         1695|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1696|             head values
+             |             ^
+         1697|           else
 
+       … while evaluating the attribute 'value'
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:1118:7:
+         1117|     // {
+         1118|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1119|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
+
+       … while evaluating the option `warnings':
+
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/boot/systemd.nix':
+
+       … while evaluating the option `systemd.services.home-manager-nyx.serviceConfig':
+
+       … while evaluating definitions from `/nix/store/r8c38iw9ck396yi2xj56zya0wvky4z8g-source/nixos':
+
+       … while evaluating the option `home-manager.users.nyx.home.file.".icons/default".source':
+
+       … while evaluating definitions from `/nix/store/r8c38iw9ck396yi2xj56zya0wvky4z8g-source/modules/config/home-cursor.nix':
+
+       … while evaluating the option `home-manager.users.nyx.home.pointerCursor.package':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.nyx.home.pointerCursor.package' was accessed but has no value defined. Try setting the option.
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '/home/nyx/nixconf#nixosConfigurations."nyx".config.system.build.toplevel' --no-link --impure' returned non-zero exit status 1.
   # wayland.windowManager.hyprland.settings = {
   #   exec-once = [
   #     # This ensures the cursor theme is set on Hyprland
