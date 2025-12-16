@@ -64,6 +64,7 @@
       opensnitch-ui
       vscodium
       wineWowPackages.unstableFull
+      autokey
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
