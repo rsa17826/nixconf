@@ -838,7 +838,6 @@
 [Icon Theme]
 Name=mew
 Comment=Custom cursor theme
-Inherits=default
 Hidden=false
 Directories=cursors
 EOF
