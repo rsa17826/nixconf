@@ -320,7 +320,7 @@
               name = "python";
               publisher = "ms-python";
               version = "2025.20.0";
-              hash = "sha256-nYy6Sk6KGsbpboJBdo2geWXqaF9FiXHmSEQjsbJkm84=";
+              hash = "sha256-+VaAABB3/AgSTg2JzoqUtTz8fRNFr0aQjwzBYYFLhYE=";
             }
             {
               name = "vscode-pylance";
