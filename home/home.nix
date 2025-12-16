@@ -37,6 +37,43 @@
     kitty = {
       enable = true; # required for the default Hyprland config
     };
+  
+  anyrun = {
+    enable = true;
+    config = {
+      x = { fraction = 0.5; };
+      y = { fraction = 0.3; };
+      width = { fraction = 0.3; };
+      hideIcons = false;
+      ignoreExclusiveZones = false;
+      layer = "overlay";
+      hidePluginInfo = false;
+      closeOnClick = false;
+      showResultsImmediately = true;
+      maxEntries = null;
+
+      plugins = [
+        "${pkgs.anyrun}/lib/libapplications.so"
+        "${pkgs.anyrun}/lib/libsymbols.so"
+      ];
+    };
+
+    # Inline comments are supported for language injection into
+    # multi-line strings with Treesitter! (Depends on your editor)
+    extraCss = /*css */ ''
+      .some_class {
+        background: red;
+      }
+    '';
+
+    extraConfigFiles."some-plugin.ron".text = ''
+      Config(
+        // for any other plugin
+        // this file will be put in ~/.config/anyrun/some-plugin.ron
+        // refer to docs of xdg.configFile for available options
+      )
+    '';
+  };
     # hyprland = {
     #   enable = true;
     # };
@@ -476,7 +513,7 @@
               name = "typos-vscode";
               publisher = "tekumara";
               version = "0.1.46";
-              hash = "sha256-cgA5nrEdah6Dae8TJE4r3yKfF6/G/4rjkVlwtG0ZU4E=";
+              hash = "sha256-J4dXECKOq+EF4JnzpyWg6GQI9EAL8YlMtbR0zaX3dUU=";
             }
             # {
             #   name = "doki-theme";
