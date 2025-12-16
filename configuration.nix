@@ -58,7 +58,8 @@ in
       };
     };
   };
-  security.polkit.extraConfig = ''
+  security.polkit.enable = true;
+security.polkit.extraConfig = ''
   polkit.addRule(function (action, subject) {
     if (subject.isInGroup("users") &&
         [
