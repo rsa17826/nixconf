@@ -61,6 +61,9 @@
       filen-desktop
       javaPackages.compiler.temurin-bin.jre-25
       file
+      opensnitch-ui
+      vscodium
+      wineWowPackages.unstableFull
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];

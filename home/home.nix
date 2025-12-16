@@ -861,11 +861,8 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    opensnitch-ui
-    vscodium
-    wineWowPackages.unstableFull
-  ];
+  # home.packages = with pkgs; [
+  # ];
   # systemd.user.services.albert = {
   #   description = "Albert Launcher";
   #   after = [ "graphical.target" ];
