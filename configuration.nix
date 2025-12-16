@@ -39,8 +39,6 @@ in
    device = "/dev/sda"; # Install GRUB into the MBR
   };
 
-  #  boot.loader.grub.enable = true;
-  #boot.loader.grub.device = "/dev/sda" ;
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
