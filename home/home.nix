@@ -31,45 +31,51 @@
     kitty = {
       enable = true; # required for the default Hyprland config
     };
-  
-  anyrun = {
-    enable = true;
-    config = {
-      x = { fraction = 0.5; };
-      y = { fraction = 0.3; };
-      width = { fraction = 0.3; };
-      hideIcons = false;
-      ignoreExclusiveZones = false;
-      layer = "overlay";
-      hidePluginInfo = false;
-      closeOnClick = false;
-      showResultsImmediately = true;
-      maxEntries = null;
 
-      plugins = [
-        "${pkgs.anyrun}/lib/libapplications.so"
-        "${pkgs.anyrun}/lib/libsymbols.so"
-        #"${pkgs.anyrun}/lib/libshell.so"
-        #"${pkgs.anyrun}/lib/libdictionary.so"
-      ];
+    anyrun = {
+      enable = true;
+      config = {
+        x = {
+          fraction = 0.5;
+        };
+        y = {
+          fraction = 0.3;
+        };
+        width = {
+          fraction = 0.3;
+        };
+        hideIcons = false;
+        ignoreExclusiveZones = false;
+        layer = "overlay";
+        hidePluginInfo = false;
+        closeOnClick = false;
+        showResultsImmediately = true;
+        maxEntries = null;
+
+        plugins = [
+          "${pkgs.anyrun}/lib/libapplications.so"
+          "${pkgs.anyrun}/lib/libsymbols.so"
+          #"${pkgs.anyrun}/lib/libshell.so"
+          #"${pkgs.anyrun}/lib/libdictionary.so"
+        ];
+      };
+
+      # Inline comments are supported for language injection into
+      # multi-line strings with Treesitter! (Depends on your editor)
+      extraCss = /* css */ ''
+        .some_class {
+          background: red;
+        }
+      '';
+
+      extraConfigFiles."some-plugin.ron".text = ''
+        Config(
+          // for any other plugin
+          // this file will be put in ~/.config/anyrun/some-plugin.ron
+          // refer to docs of xdg.configFile for available options
+        )
+      '';
     };
-
-    # Inline comments are supported for language injection into
-    # multi-line strings with Treesitter! (Depends on your editor)
-    extraCss = /*css */ ''
-      .some_class {
-        background: red;
-      }
-    '';
-
-    extraConfigFiles."some-plugin.ron".text = ''
-      Config(
-        // for any other plugin
-        // this file will be put in ~/.config/anyrun/some-plugin.ron
-        // refer to docs of xdg.configFile for available options
-      )
-    '';
-  };
     # hyprland = {
     #   enable = true;
     # };
@@ -822,7 +828,7 @@
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     cp -f ${./vscode/keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
-    sed -r 's/\$\{uname\}/a/g' "$HOME/.config/VSCodium/User/settings.json"
+    sed -ri 's/\$\{uname\}/a/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
   #home.file.".icons/mew".source = lib.mkForce ./cursors;
   home.pointerCursor = {
@@ -830,19 +836,19 @@
     size = 48; # Default cursor size (you can adjust this)
     gtk.enable = true;
     x11.enable = true;
-  enable = true;
+    enable = true;
 
-  package = pkgs.runCommand "mew" {} ''
-  mkdir -p $out/share/icons/mew
-  cp -r ${./cursors} $out/share/icons/mew/cursors
-  cat > $out/share/icons/mew/index.theme <<EOF
-[Icon Theme]
-Name=mew
-Comment=Custom cursor theme
-Hidden=false
-Directories=cursors
-EOF
-'';   
+    package = pkgs.runCommand "mew" { } ''
+        mkdir -p $out/share/icons/mew
+        cp -r ${./cursors} $out/share/icons/mew/cursors
+        cat > $out/share/icons/mew/index.theme <<EOF
+      [Icon Theme]
+      Name=mew
+      Comment=Custom cursor theme
+      Hidden=false
+      Directories=cursors
+      EOF
+    '';
   };
 
   # wayland.windowManager.hyprland.settings = {

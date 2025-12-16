@@ -49,12 +49,10 @@ in
       groups = [ "users" ];
       commands = [
         {
-
           command = "/run/current-system/sw/bin/reboot";
           options = [ "NOPASSWD" ];
         }
         {
-
           command = "/run/current-system/sw/bin/nixos-rebuild";
           options = [ "NOPASSWD" ];
         }
