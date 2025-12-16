@@ -7,9 +7,6 @@
 }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
@@ -29,9 +26,6 @@
   #  ${pkgs.waybar}/bin/waybar &
   #  ${pkgs.networkmanagerapplet}/bin/nm-applet &
   #'';
-
-  # VS Code
-
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs = {
     kitty = {
@@ -839,6 +833,7 @@
       mkdir -p $out/share/icons
       ln -s ${./cursors} $out/share/icons/mew
     '';
+  enable = true;
 
   };
 
