@@ -44,6 +44,12 @@ in
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  security.sudo.extraRules = [{ groups = [ "users" ]; commands = [ {
+
+  command = "reboot";
+options=["NOPASSWD"];
+  } ]; }];
+
   services.keyd = {
     enable = true;
     keyboards = {
