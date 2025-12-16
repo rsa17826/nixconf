@@ -823,7 +823,7 @@
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     sed -r "s/\$\{uname\}/${uname}/g" "$HOME/.config/VSCodium/User/settings.json"
   '';
-  home.file.".icons/mew".source = lib.mkForce ./cursors;
+  #home.file.".icons/mew".source = lib.mkForce ./cursors;
   home.pointerCursor = {
     name = "mew"; # The name of the cursor theme
     size = 48; # Default cursor size (you can adjust this)
