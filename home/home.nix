@@ -861,9 +861,9 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    pkgs.opensnitch-ui
-    pkgs.vscodium
+  home.packages = with pkgs; [
+    opensnitch-ui
+    vscodium
     proton-ge-bin
   ];
   # systemd.user.services.albert = {
