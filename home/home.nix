@@ -864,7 +864,6 @@
   home.packages = with pkgs; [
     opensnitch-ui
     vscodium
-    proton-ge-bin
   ];
   # systemd.user.services.albert = {
   #   description = "Albert Launcher";

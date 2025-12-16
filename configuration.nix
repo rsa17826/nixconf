@@ -43,6 +43,10 @@ in
   #boot.loader.grub.device = "/dev/sda" ;
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+programs.proton = {
+  enable = true;
+  package = pkgs.proton-ge-bin;
+};
 
   security.sudo.extraRules = [
     {
