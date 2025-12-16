@@ -830,9 +830,18 @@
     gtk.enable = true;
     x11.enable = true;
   enable = true;
-package = pkgs.runCommand "mew-cursors" {} ''
-  mkdir -p $out/share/icons
-  cp -r ${./cursors} $out/share/icons/mew
+
+  package = pkgs.runCommand "mew-cursors" {} ''
+  mkdir -p $out/share/icons/mew
+  cp -r ${./cursors} $out/share/icons/mew/cursors
+  cat > $out/share/icons/mew/index.theme <<EOF
+[Icon Theme]
+Name=mew
+Comment=Custom cursor theme
+Inherits=default
+Hidden=false
+Directories=cursors
+EOF
 '';   
   };
 
