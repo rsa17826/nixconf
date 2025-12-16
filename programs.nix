@@ -61,6 +61,7 @@
       anyrun
       filen-desktop
       javaPackages.compiler.temurin-bin.jre-25
+      file
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
