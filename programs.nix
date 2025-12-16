@@ -59,6 +59,7 @@
       python314
       eww
       anyrun
+      filen-desktop
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
