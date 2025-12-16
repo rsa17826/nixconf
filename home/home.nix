@@ -864,6 +864,7 @@
   home.packages = with pkgs; [
     opensnitch-ui
     vscodium
+    wineWowPackages.unstableFull
   ];
   # systemd.user.services.albert = {
   #   description = "Albert Launcher";
