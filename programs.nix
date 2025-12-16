@@ -58,7 +58,6 @@
       vscodium
       python314
       eww
-      anyrun
       filen-desktop
       javaPackages.compiler.temurin-bin.jre-25
       file
@@ -79,9 +78,10 @@
     nix-ld
     kitty
     # rofi
-    albert
+    # albert
     waybar
     keyd
+    anyrun
     # xmodmap
   ];
 }
