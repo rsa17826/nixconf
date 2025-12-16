@@ -829,12 +829,11 @@
     size = 48; # Default cursor size (you can adjust this)
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.runCommand "mew" { } ''
-      mkdir -p $out/share/icons
-      ln -s ${./cursors} $out/share/icons/mew
-    '';
   enable = true;
-
+package = pkgs.runCommand "mew-cursors" {} ''
+  mkdir -p $out/share/icons
+  cp -r ${./cursors} $out/share/icons/mew
+'';   
   };
 
   # wayland.windowManager.hyprland.settings = {
