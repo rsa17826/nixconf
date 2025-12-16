@@ -831,7 +831,7 @@
     x11.enable = true;
   enable = true;
 
-  package = pkgs.runCommand "mew-cursors" {} ''
+  package = pkgs.runCommand "mew" {} ''
   mkdir -p $out/share/icons/mew
   cp -r ${./cursors} $out/share/icons/mew/cursors
   cat > $out/share/icons/mew/index.theme <<EOF
