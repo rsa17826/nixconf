@@ -65,6 +65,7 @@
       vscodium
       wineWowPackages.unstableFull
       autokey
+      espanso-wayland
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
