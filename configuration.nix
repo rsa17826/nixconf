@@ -35,12 +35,14 @@ in
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
-   enable = true;
-   device = "/dev/sda"; # Install GRUB into the MBR
+    enable = true;
+    device = "/dev/sda"; # Install GRUB into the MBR
   };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  environment.variables.EDITOR = "nvim";
+  environment.variables.VISUAL = "nvim";
 
   security.sudo.extraRules = [
     {
