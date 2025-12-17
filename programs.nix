@@ -67,6 +67,9 @@
       wineWowPackages.unstableFull
       autokey
       espanso-wayland
+      unixtools.watch
+      htop
+      htop-vim
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
