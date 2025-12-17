@@ -39,6 +39,9 @@ in
     device = "/dev/sda"; # Install GRUB into the MBR
   };
 
+  nix.gc.automatic = true;
+  nix.gc.dates = "weekly"; # or "daily"
+
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
   environment.variables.EDITOR = "nvim";
