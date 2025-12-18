@@ -824,11 +824,16 @@
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
   home.activation.copy-vscode-settings = ''
-    echo "Copying VSCode settings.json..."
+    echo "Copying VSCode settings..."
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
     cp -f ${./vscode/keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
     sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
+  '';
+  home.activation.copy-hyprland-settings = ''
+    echo "Copying hyprland settings..."
+    mkdir -p "$HOME/.config/VSCodium/User"
+    cp -f ${./hyprland/hyprland.conf} "$HOME/.config/hypr/hyprland.conf"
   '';
   #home.file.".icons/mew".source = lib.mkForce ./cursors;
   home.pointerCursor = {
