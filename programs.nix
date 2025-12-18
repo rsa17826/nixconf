@@ -20,7 +20,7 @@
         vim = "nvim";
         "nix-env" = "echo wrong command";
         clearcache = "nix-collect-garbage";
-        clearallache = "sudo nix-collect-garbage --delete-older-than 3d";
+        clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
       };
     };
     hyprland = {
