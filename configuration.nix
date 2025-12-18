@@ -46,12 +46,6 @@ in
     xorg.libXcursor
     xorg.libxcb
     xorg.libXi
-    glibc   # For libc.so.6 and related libraries
-  glibc.bin   # Sometimes you also need the binaries package for compatibility
-  libpthread  # For libpthread.so.0
-  librt       # For librt.so.1
-  libdl       # For libdl.so.2
-  libm
   ];
   nix.gc.automatic = true;
   nix.gc.dates = "weekly"; # or "daily"
