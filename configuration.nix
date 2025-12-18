@@ -43,6 +43,7 @@ in
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
     xorg.libX11
+    xorg.xcursor
   ];
   nix.gc.automatic = true;
   nix.gc.dates = "weekly"; # or "daily"
