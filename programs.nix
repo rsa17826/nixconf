@@ -70,6 +70,7 @@
       unixtools.watch
       htop
       htop-vim
+      vlc
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
