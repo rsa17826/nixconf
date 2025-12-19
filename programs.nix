@@ -42,35 +42,35 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
-      typos
-      keepass
+      typos #spellchecker
+      keepass #password manager
       python313
       python313Packages.py7zr
-      godot
+      godot #programing
       appimage-run
       firejail
-      motrix
+      motrix #download manager
       nix-tree
-      kid3
-      yt-dlp
+      kid3 #audio tagger
+      yt-dlp #downloader
       syncthingtray
-      syncthing
-      mp3gain
-      vscodium
+      syncthing #file sync
+      mp3gain #audio volume normilizer
       python314
-      eww
-      filen-desktop
-      javaPackages.compiler.temurin-bin.jre-25
-      file
-      opensnitch-ui
-      vscodium
-      wineWowPackages.unstableFull
+      eww #status bar
+      filen-desktop #cloud storage
+      javaPackages.compiler.temurin-bin.jre-25 #for running java apps
+      file #like die
+      opensnitch-ui #firewall
+      vscodium #text editor
+      wineWowPackages.unstableFull #windows apps
       autokey
-      espanso-wayland
-      unixtools.watch
-      htop
-      htop-vim
-      vlc
+      espanso-wayland #typo correction
+      unixtools.watch #watch cmd
+      htop #process info
+      # htop-vim
+      vlc #media player
+      slskd #soulseek
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
@@ -80,18 +80,18 @@
     # vim
     sxhkd
     wget
-    brave
-    nixfmt-rfc-style
-    git
+    brave #web browser
+    nixfmt-rfc-style #nix language formatter
+    git #git is required
     kdePackages.kget
-    p7zip
+    p7zip #archival tool
     nix-ld
-    kitty
+    kitty #terminal emulator
     # rofi
     # albert
     waybar
-    keyd
-    anyrun
+    keyd #disables capslock?
+    anyrun #application launcher
     # xmodmap
   ];
 }
