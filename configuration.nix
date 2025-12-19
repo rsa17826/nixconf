@@ -46,9 +46,15 @@ in
     xorg.libXcursor
     xorg.libxcb
     xorg.libXi
+    fontconfig
+    libxkbcommon
+    xorg.libXext
+    wayland
+    libGL
+    vulkan-loader
   ];
   nix.gc.automatic = true;
-  nix.gc.dates = "weekly"; # or "daily"
+  nix.gc.dates = "daily"; # or "daily"
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
