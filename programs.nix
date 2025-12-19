@@ -43,6 +43,7 @@
     packages = with pkgs; [
       kdePackages.kate
       typos #spellchecker
+      typos-lsp
       keepass #password manager
       python313
       python313Packages.py7zr
