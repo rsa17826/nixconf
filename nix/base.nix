@@ -1,6 +1,6 @@
 { uname, ... }:
 {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = false;
   services.xserver = {
     enable = true;
     xkb = {
