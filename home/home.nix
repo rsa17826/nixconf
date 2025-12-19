@@ -110,31 +110,6 @@
     '';
   };
 
-  # wayland.windowManager.hyprland.settings = {
-  #   exec-once = [
-  #     # This ensures the cursor theme is set on Hyprland
-  #     "gsettings set org.gnome.desktop.interface cursor-theme 'MyCursor'"
-  #     "gsettings set org.gnome.desktop.interface cursor-size 48"
-  #   ];
-  # };
-
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  # home.packages = with pkgs; [
-  # ];
-  # systemd.user.services.albert = {
-  #   description = "Albert Launcher";
-  #   after = [ "graphical.target" ];
-
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.makeWrapper}/bin/makeWrapper ${pkgs.albert}/bin/albert /home/username/bin/albert-launch.sh --set QT_QPA_PLATFORMTHEME gtk2 --set QT_STYLE_OVERRIDE Fusion";
-  #     Restart = "always";
-  #     Environment = "DISPLAY=:0";
-  #   };
-
-  #   wantedBy = [ "default.target" ];
-  # };
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
