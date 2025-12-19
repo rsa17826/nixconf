@@ -10,9 +10,9 @@
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
-    imports=[
-./vscode/conf.nix;
-    ];
+  imports = [
+    ./vscode/conf.nix
+  ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
   #  enable = true;
