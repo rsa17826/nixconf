@@ -11,7 +11,7 @@
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
   imports = [
-    ./vscode/conf.nix
+    # ./vscode/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
