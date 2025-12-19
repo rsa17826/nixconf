@@ -10,9 +10,6 @@
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
-  specialArgs = {
-    inherit uname;
-  };
   imports = [
     ./vscode/conf.nix
   ];
