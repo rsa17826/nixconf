@@ -39,20 +39,29 @@ in
     device = "/dev/sda"; # Install GRUB into the MBR
   };
   programs.nix-ld.enable = true;
+
   programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
+    # Core X11
     xorg.libX11
     xorg.libXcursor
-    xorg.libxcb
-    xorg.libXi
-    fontconfig
-    libxkbcommon
     xorg.libXext
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libxcb
+
+    # Input & fonts
+    libxkbcommon
+    fontconfig
+
+    # Wayland (fallback)
     wayland
+
+    # Graphics
     libGL
     vulkan-loader
   ];
+
   nix.gc.automatic = true;
   nix.gc.dates = "daily"; # or "daily"
 

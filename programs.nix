@@ -41,7 +41,6 @@
       "opensnitch"
     ];
     packages = with pkgs; [
-      kdePackages.kate
       typos #spellchecker
       typos-lsp
       keepass #password manager
