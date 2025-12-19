@@ -12,6 +12,7 @@
   xsession.numlock.enable = true;
   imports = [
     ./vscode/conf.nix
+    ./hyprland/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -88,11 +89,6 @@
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  home.activation.copy-hyprland-settings = ''
-    echo "Copying hyprland settings..."
-    mkdir -p "$HOME/.config/VSCodium/User"
-    cp -f ${./hyprland/hyprland.conf} "$HOME/.config/hypr/hyprland.conf"
-  '';
   #home.file.".icons/mew".source = lib.mkForce ./cursors;
   home.pointerCursor = {
     name = "mew"; # The name of the cursor theme
