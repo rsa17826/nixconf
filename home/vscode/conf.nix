@@ -493,8 +493,8 @@
   home.activation.copy-vscode-settings = ''
     echo "Copying VSCode settings..."
     mkdir -p "$HOME/.config/VSCodium/User"
-    cp -f ${./vscode/settings.json} "$HOME/.config/VSCodium/User/settings.json"
-    cp -f ${./vscode/keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
+    cp -f ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
+    cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
     sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
 }
