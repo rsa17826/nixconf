@@ -70,7 +70,7 @@
       htop #process info
       # htop-vim
       vlc #media player
-      slskd #soulseek
+      nicotine-plus #soulseek
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];

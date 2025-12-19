@@ -53,6 +53,8 @@ in
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
   environment.variables.EDITOR = "nvim";
+
+  # don't think that this does anything
   environment.variables.VISUAL = "nvim";
 
   security.sudo.extraRules = [
