@@ -95,7 +95,7 @@ in
     git # git is required
     kdePackages.kget
     p7zip # archival tool
-    nix-ld
+    nix-ld # run linux programs
     kitty # terminal emulator
     # rofi
     # albert
