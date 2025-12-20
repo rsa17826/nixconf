@@ -121,10 +121,6 @@ in
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 services.espanso.enable = true;
-programs.espanso = {
-      enable = true;
-      package = pkgs.espanso-wayland;
-    };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
