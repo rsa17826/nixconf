@@ -5,7 +5,12 @@
   lib,
   ...
 }:
-
+let
+  nixEnvBlocker = pkgs.writeShellScriptBin "nix-env" ''
+    echo "nix-env is deprecated. Use nix profile or Home Manager."
+    exit 1
+  '';
+in
 {
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
@@ -133,17 +138,9 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    ".local/bin/nix-env" = {
-      executable = true;
-      text = ''
-        #!/usr/bin/env sh
-        echo "nix-env is deprecated. Use nix profile or Home Manager."
-        exit 1
-      '';
-    };
 
   };
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.packages = [ nixEnvBlocker ];
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
