@@ -48,6 +48,7 @@ in
       "networkmanager"
       "wheel"
       "opensnitch"
+      "input"
     ];
     packages = with pkgs; [
       typos # spellchecker
