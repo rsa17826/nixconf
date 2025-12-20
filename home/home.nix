@@ -5,12 +5,6 @@
   lib,
   ...
 }:
-let
-  nixEnvBlocker = pkgs.writeShellScriptBin "nix-env" ''
-    echo "nix-env is deprecated. Use nix profile or Home Manager."
-    exit 1
-  '';
-in
 {
   home.username = uname;
   home.homeDirectory = "/home/${uname}";
@@ -118,29 +112,14 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # ".config/VSCodium/User/settings.json" = {
-    #   text = builtins.readFile ./vscode/settings.json;
-    # };
-
-    # ".config/VSCodium/User/settings.json"={
-    #   source = ./vscode/settings.json;
-    #   # mutable = true;
-    #       force = true;
-    # mutable = true;
-    # };
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
 
   };
-  home.packages = [ nixEnvBlocker ];
+  # home.packages = [
+  #   (pkgs.writeShellScriptBin "nix-env" ''
+  #     echo "nix-env is deprecated. Use nix profile or Home Manager."
+  #     exit 1
+  #   '')
+  # ];
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
