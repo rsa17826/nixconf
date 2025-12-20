@@ -84,6 +84,10 @@
     # };
     home-manager.enable = true;
   };
+programs.espanso = {
+      enable = true;
+      package = pkgs.espanso-wayland;
+    };
 
   # Optional, hint Electron apps to use Wayland:
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
