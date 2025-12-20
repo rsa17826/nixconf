@@ -30,12 +30,11 @@
       enable = true;
     };
   };
-  nix-shell {
-  shellHook = ''
-    alias nix-env='echo "nix-env is deprecated; use nix profile"'
-  '';
-};
-
+  nix-shell = {
+    shellHook = ''
+      alias nix-env='echo "nix-env is deprecated; use nix profile"'
+    '';
+  };
 
   users.users."${uname}" = {
     shell = pkgs.zsh;
@@ -47,36 +46,36 @@
       "opensnitch"
     ];
     packages = with pkgs; [
-      typos #spellchecker
+      typos # spellchecker
       typos-lsp
-      keepass #password manager
+      keepass # password manager
       python313
       python313Packages.py7zr
-      godot #programing
+      godot # programing
       appimage-run
       firejail
-      motrix #download manager
+      motrix # download manager
       nix-tree
-      kid3 #audio tagger
-      yt-dlp #downloader
+      kid3 # audio tagger
+      yt-dlp # downloader
       syncthingtray
-      syncthing #file sync
-      mp3gain #audio volume normilizer
+      syncthing # file sync
+      mp3gain # audio volume normilizer
       python314
-      eww #status bar
-      filen-desktop #cloud storage
-      javaPackages.compiler.temurin-bin.jre-25 #for running java apps
-      file #like die
-      opensnitch-ui #firewall
-      vscodium #text editor
-      wineWowPackages.unstableFull #windows apps
+      eww # status bar
+      filen-desktop # cloud storage
+      javaPackages.compiler.temurin-bin.jre-25 # for running java apps
+      file # like die
+      opensnitch-ui # firewall
+      vscodium # text editor
+      wineWowPackages.unstableFull # windows apps
       autokey
-      espanso-wayland #typo correction
-      unixtools.watch #watch cmd
-      htop #process info
+      espanso-wayland # typo correction
+      unixtools.watch # watch cmd
+      htop # process info
       # htop-vim
-      vlc #media player
-      nicotine-plus #soulseek
+      vlc # media player
+      nicotine-plus # soulseek
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
@@ -86,18 +85,18 @@
     # vim
     sxhkd
     wget
-    brave #web browser
-    nixfmt-rfc-style #nix language formatter
-    git #git is required
+    brave # web browser
+    nixfmt-rfc-style # nix language formatter
+    git # git is required
     kdePackages.kget
-    p7zip #archival tool
+    p7zip # archival tool
     nix-ld
-    kitty #terminal emulator
+    kitty # terminal emulator
     # rofi
     # albert
     waybar
-    keyd #disables capslock?
-    anyrun #application launcher
+    keyd # disables capslock?
+    anyrun # application launcher
     # xmodmap
   ];
 }
