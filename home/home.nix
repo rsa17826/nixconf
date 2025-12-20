@@ -133,7 +133,7 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    home.file.".local/bin/nix-env" = {
+    ".local/bin/nix-env" = {
       executable = true;
       text = ''
         #!/usr/bin/env sh
