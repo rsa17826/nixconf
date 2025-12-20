@@ -84,9 +84,6 @@
     #   enable = true;
     # };
     home-manager.enable = true;
-    (writeShellScriptBin "nix-env" ''
-        echo aaaa
-    '')
   };
 
   # Optional, hint Electron apps to use Wayland:
@@ -136,7 +133,17 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    home.file.".local/bin/nix-env" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env sh
+        echo "nix-env is deprecated. Use nix profile or Home Manager."
+        exit 1
+      '';
+    };
+
   };
+  home.sessionPath = [ "$HOME/.local/bin" ];
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
