@@ -84,9 +84,9 @@
     #   enable = true;
     # };
     home-manager.enable = true;
-    writeShellScriptBin "nix-env" ''
+    (writeShellScriptBin "nix-env" ''
         echo aaaa
-    '';
+    '')
   };
 
   # Optional, hint Electron apps to use Wayland:
