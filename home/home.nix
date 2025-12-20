@@ -138,7 +138,8 @@
   #  /etc/profiles/per-user/nyx/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "codium";
+    VISUAL = "codium";
   };
 
   # Let Home Manager install and manage itself.
