@@ -30,6 +30,12 @@
       enable = true;
     };
   };
+  nix-shell {
+  shellHook = ''
+    alias nix-env='echo "nix-env is deprecated; use nix profile"'
+  '';
+};
+
 
   users.users."${uname}" = {
     shell = pkgs.zsh;
