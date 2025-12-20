@@ -5,6 +5,8 @@ let
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
     vim = "nvim";
+    vi = "nvim";
+    nano = "nvim";
     "nix-env" = "echo wrong command";
     clearcache = "nix-collect-garbage";
     clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
@@ -101,6 +103,5 @@ in
     keyd # disables capslock?
     anyrun # application launcher
     # xmodmap
-    vkbasalt
   ];
 }
