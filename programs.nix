@@ -1,4 +1,15 @@
 { pkgs, uname, ... }:
+let
+  shellAliases = {
+    update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
+    udpate = "update";
+    push = "git add -A && git commit -m a && git push";
+    vim = "nvim";
+    "nix-env" = "echo wrong command";
+    clearcache = "nix-collect-garbage";
+    clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
+  };
+in
 {
   programs.appimage = {
     enable = true;
@@ -13,27 +24,11 @@
   programs = {
     bash = {
       enable = true;
-      shellAliases = {
-        update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
-        udpate = "update";
-        push = "git add -A && git commit -m a && git push";
-        vim = "nvim";
-        "nix-env" = "echo wrong command";
-        clearcache = "nix-collect-garbage";
-        clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
-      };
+      shellAliases = shellAliases;
     };
     zsh = {
       enable = true;
-      shellAliases = {
-        update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure";
-        udpate = "update";
-        push = "git add -A && git commit -m a && git push";
-        vim = "nvim";
-        "nix-env" = "echo wrong command";
-        clearcache = "nix-collect-garbage";
-        clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
-      };
+      shellAliases = shellAliases;
     };
     hyprland = {
       enable = true;
