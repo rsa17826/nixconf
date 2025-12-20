@@ -80,7 +80,7 @@ in
       # htop-vim
       vlc # media player
       nicotine-plus # soulseek
-      conky #like rainmeter
+      conky # like rainmeter
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
@@ -103,5 +103,6 @@ in
     keyd # disables capslock?
     anyrun # application launcher
     # xmodmap
+    kdotool
   ];
 }
