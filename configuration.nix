@@ -140,5 +140,3 @@ in
   services.opensnitch.enable = true;
   security.sudo.enable = true;
 }
-# v4.5.1.stable.nixpkgs [f62fdbde1]
-# Godot v4.5.1.stable (f62fdbde1) - cpe:/o:nixos:nixos:26.05 #1-NixOS SMP PREEMPT_DYNAMIC Fri Dec 12 17:42:47 UTC 2025 on Wayland - X11 display driver, Multi-window, 1 monitor - Vulkan (Forward+) - (software emulation on CPU) llvmpipe (LLVM 21.1.2, 128 bits) - AMD Ryzen 5 5600X 6-Core Processor (6 threads) - 8.15 GiB memory
