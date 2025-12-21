@@ -140,3 +140,4 @@ in
   services.opensnitch.enable = true;
   security.sudo.enable = true;
 }
+# v4.5.1.stable.nixpkgs [f62fdbde1]
