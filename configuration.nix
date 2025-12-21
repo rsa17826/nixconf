@@ -121,7 +121,7 @@ in
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.espanso = {
-    enable = true;
+    enable = false;
     package = pkgs.espanso-wayland;
   };
 
