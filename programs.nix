@@ -82,6 +82,8 @@ in
       vlc # media player
       nicotine-plus # soulseek
       conky # like rainmeter
+      wl-clipboard # clipboard cli tool
+      # wl-clipboard-rs # what is the difference?
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
