@@ -102,7 +102,7 @@
         cat > $out/share/icons/mew/index.theme <<EOF
       [Icon Theme]
       Name=mew
-      Comment=Custom cursor theme
+      Comment=mew
       Hidden=false
       Directories=cursors
       EOF
