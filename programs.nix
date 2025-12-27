@@ -86,6 +86,8 @@ in
       # wl-clipboard-rs # what is the difference?
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
+      lutris-free
+      # bottles
       # https://github.com/anyrun-org/anyrun
       # ulauncher
     ];
