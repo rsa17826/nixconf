@@ -87,6 +87,7 @@ in
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
       lutris-free
+      faugus-launcher
       # bottles
       # https://github.com/anyrun-org/anyrun
       # ulauncher
