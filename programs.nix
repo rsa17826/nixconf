@@ -67,7 +67,7 @@ in
       motrix # download manager
       nix-tree
       kid3 # audio tagger
-      yt-dlp # downloader
+      yt-dlp # media downloader
       syncthingtray
       syncthing # file sync
       mp3gain # audio volume normilizer
@@ -93,7 +93,7 @@ in
       # see if can change to scrolllock/z
 
       magic-wormhole
-      
+
       # testing
       lutris-free
       faugus-launcher
