@@ -506,7 +506,9 @@
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
-  "editor.fontFamily": "'Cascadia Code Bold', '0xProto Nerd Font Propo'",
+  // "editor.fontFamily": "",
+  "editor.fontFamily": "'Cascadia Mono NF', 'Hack Nerd Font Propo'",
+  // "editor.fontFamily": "'Cascadia Mono', 'Hack Nerd Font Propo', '0xProto Nerd Font Propo'",
   "chat.commandCenter.enabled": false,
   "editor.guides.bracketPairs": true,
   "editor.guides.bracketPairsHorizontal": true,
