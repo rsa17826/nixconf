@@ -13,6 +13,7 @@ let
     worm = "magic-wormhole send";
     hole = "magic-wormhole receive";
     q = "exit";
+    testpkg = "nix-shell -p %0 --run fish"
   };
 in
 {
