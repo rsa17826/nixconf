@@ -34,36 +34,36 @@ in
         with pkgs.vscode-extensions;
         [ ]
         ++ [
-          (buildLocalEx {
-            name = "4-to-2-formatter";
-            publisher = "rssaromeo";
-            version = "7.0.0";
-            filename = "4-to-2-formatter-7.0.0.vsix";
-          })
-          (buildLocalEx {
-            name = "auto-regex";
-            publisher = "rssaromeo";
-            version = "49.0.0";
-            filename = "auto-regex-49.0.0.vsix";
-          })
-          (buildLocalEx {
-            name = "multi-formatter";
-            publisher = "Jota0222";
-            version = "6.0.0";
-            filename = "multi-formatter-6.0.0.vsix";
-          })
-          (buildLocalEx {
-            name = "simple-auto-formatter";
-            publisher = "rssaromeo";
-            version = "22.0.0";
-            filename = "simple-auto-formatter-22.0.0.vsix";
-          })
-          (buildLocalEx {
-            name = "simpledatastorage";
-            publisher = "rssaromeo";
-            version = "9.0.0";
-            filename = "simpledatastorage-9.0.0.vsix";
-          })
+          # (buildLocalEx {
+          #   name = "4-to-2-formatter";
+          #   publisher = "rssaromeo";
+          #   version = "7.0.0";
+          #   filename = "4-to-2-formatter-7.0.0.vsix";
+          # })
+          # (buildLocalEx {
+          #   name = "auto-regex";
+          #   publisher = "rssaromeo";
+          #   version = "49.0.0";
+          #   filename = "auto-regex-49.0.0.vsix";
+          # })
+          # (buildLocalEx {
+          #   name = "multi-formatter";
+          #   publisher = "Jota0222";
+          #   version = "6.0.0";
+          #   filename = "multi-formatter-6.0.0.vsix";
+          # })
+          # (buildLocalEx {
+          #   name = "simple-auto-formatter";
+          #   publisher = "rssaromeo";
+          #   version = "22.0.0";
+          #   filename = "simple-auto-formatter-22.0.0.vsix";
+          # })
+          # (buildLocalEx {
+          #   name = "simpledatastorage";
+          #   publisher = "rssaromeo";
+          #   version = "9.0.0";
+          #   filename = "simpledatastorage-9.0.0.vsix";
+          # })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
