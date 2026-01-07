@@ -88,6 +88,8 @@ in
       # see if can change to scrolllock/z
       lutris-free
       faugus-launcher
+
+      thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
       # ulauncher
@@ -112,5 +114,12 @@ in
     anyrun # application launcher
     # xmodmap
     kdotool
+
+    waybar
+    nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
+    font-awesome              # For additional icons
+    swaynotificationcenter    # For the notification icon click
+    wlogout                   # For the power menu click
+    pavucontrol               # For audio control
   ];
 }

@@ -12,6 +12,7 @@
   imports = [
     ./vscode/conf.nix
     ./hyprland/conf.nix
+    ./waybar/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
