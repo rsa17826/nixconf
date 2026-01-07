@@ -32,6 +32,10 @@ in
       enable = true;
       shellAliases = shellAliases;
     };
+    fish = {
+      enable = true;
+      shellAliases = shellAliases;
+    };
     hyprland = {
       enable = true;
     };
@@ -41,7 +45,8 @@ in
   };
 
   users.users."${uname}" = {
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
+    # shell = pkgs.zsh;
     isNormalUser = true;
     description = "${uname}";
     extraGroups = [
@@ -86,6 +91,8 @@ in
       # wl-clipboard-rs # what is the difference?
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
+
+      # testing
       lutris-free
       faugus-launcher
 
