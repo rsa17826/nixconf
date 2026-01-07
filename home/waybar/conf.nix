@@ -137,11 +137,20 @@ in
         background-color: rgba(0, 0, 0, 0.0);
       }
 
-      #clock {
-        color: rgba(157, 0, 0, 0.643);
-        background-color: rgba(0, 0, 0, 0.9);
-        font-weight: 600;
-      }
+#clock {
+  /* This creates the dark capsule background */
+  background-color: #0b0b0b; 
+  color: #8b0000; /* Darker red for the text to match img 2 */
+  
+  /* Create the rounded ends */
+  border-radius: 20px 0px 20px 0px; /* Adjust these values to match the slant/curve */
+  
+  padding: 2px 0px; 
+  margin: 4px 0px;
+}
+
+/* Optional: If the separators don't look right, you can target them specifically 
+   by putting them in a span in the format and styling that span here. */
 
       #custom-github {
         color: red;
