@@ -83,7 +83,6 @@ in
       vscodium # text editor
       wineWowPackages.unstableFull # windows apps
       autokey
-      espanso-wayland # typo correction
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim
