@@ -58,11 +58,10 @@ in
           };
         };
 
-        "clock" = {
-          format = "<span color='#ff4d4d'></span> {:%A %d %B %Y %H:%M} <span color='#ff4d4d'></span>";
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        };
-
+"clock" = {
+  format = "<span color='#ff4d4d'> </span>{:%A %d %B %Y %H:%M}<span color='#ff4d4d'> </span>";
+  tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+};
         "disk" = {
           interval = 60;
           format = " {percentage_used}%";
