@@ -86,8 +86,11 @@ in
         };
 
         "custom/github" = {
-          format = "";
+          format = "{output}"; # output from the script
+          interval = 300; # refresh every 5 minutes
+          exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
+          tooltip = "GitHub Notifications";
         };
 
         "custom/notifications" = {
