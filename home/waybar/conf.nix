@@ -139,8 +139,7 @@ in
 
       #clock {
         color: rgba(157, 0, 0, 0.8);
-        background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 0px 24px 0px 24px;
+        background-color: rgba(0, 0, 0, 0.9);
       }
 
       #workspaces button.active {
