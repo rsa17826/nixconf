@@ -10,8 +10,9 @@ let
     "nix-env" = "echo wrong command";
     clearcache = "nix-collect-garbage";
     clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
-    worm="magic-wormhole send";
-    hole="magic-wormhole receive";
+    worm = "magic-wormhole send";
+    hole = "magic-wormhole receive";
+    q = "exit";
   };
 in
 {
@@ -99,7 +100,7 @@ in
       # testing
       lutris-free
       faugus-launcher
-      
+
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
@@ -110,7 +111,7 @@ in
     neovim # tui text editor
     # vim
     sxhkd
-    wget #cmd dl util
+    wget # cmd dl util
     brave # web browser
     nixfmt-rfc-style # nix language formatter
     git # git is required
@@ -125,13 +126,13 @@ in
     # xmodmap
     kdotool
 
-    swaynotificationcenter #notification daemon
+    swaynotificationcenter # notification daemon
 
     waybar
     nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
-    font-awesome              # For additional icons
-    swaynotificationcenter    # For the notification icon click
-    wlogout                   # For the power menu click
-    pavucontrol               # For audio control
+    font-awesome # For additional icons
+    swaynotificationcenter # For the notification icon click
+    wlogout # For the power menu click
+    pavucontrol # For audio control
   ];
 }

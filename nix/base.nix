@@ -8,7 +8,10 @@
       #    variant = "";
     };
   };
-  networking.nameservers = [ "9.9.9.9" "149.112.112.112" ];
+  networking.nameservers = [
+    "9.9.9.9"
+    "149.112.112.112"
+  ];
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
