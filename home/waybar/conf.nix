@@ -4,23 +4,7 @@
   uname,
   ...
 }:
-let
-  updateCheck = pkgs.writeShellScriptBin "check-flake-updates" ''
-    # Navigate to your config directory
-    cd /home/${uname}/nixconf # or wherever your flake.nix is
-
-    # Check if any inputs can be updated without actually writing to the lockfile
-    UPDATES=$(nix flake check --no-build 2>&1 | wc -l)
-
-    if [ "$UPDATES" -gt 0 ]; then
-       echo "Update Available"
-    else
-       echo ""
-    fi
-  '';
-in
 {
-  home.packages = [ updateCheck ];
   programs.waybar = {
     enable = true;
     systemd.enable = true; # Automatically starts waybar with the session
@@ -41,7 +25,6 @@ in
           "pulseaudio"
           "custom/github"
           "custom/notifications"
-          "custom/update"
           "custom/power"
         ];
 
@@ -98,13 +81,6 @@ in
           on-click = "swaync-client -t -sw";
         };
 
-        "custom/update" = {
-          format = " {}";
-          interval = 3600;
-          exec = "check-flake-updates"; # Basic NixOS update check
-          on-click = "check-flake-updates";
-        };
-
         "custom/power" = {
           format = "";
           on-click = "wlogout";
@@ -131,7 +107,7 @@ in
       }
 
       #workspaces, #clock, #disk, #pulseaudio, #custom-github, 
-      #custom-notifications, #custom-power, #custom-update, #custom-notes {
+      #custom-notifications, #custom-power, #custom-notes {
         padding: 0 2px;
         margin: 0 2px;
         background-color: rgba(0, 0, 0, 0.0);
