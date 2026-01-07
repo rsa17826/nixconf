@@ -49,11 +49,11 @@
             version = "22.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "auto regex";
+            name = "SimpleDataStorage";
             src = ./vsix/simpledatastorage-9.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "auto regex";
-            vscodeExtUniqueId = "rssaromeo.auto-regex";
+            vscodeExtName = "SimpleDataStorage";
+            vscodeExtUniqueId = "rssaromeo.simpledatastorage";
             version = "9.0.0";
           })
         ]
