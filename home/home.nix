@@ -14,7 +14,7 @@
     ./hyprland/conf.nix
     ./waybar/conf.nix
     ./fish/conf.nix
-    ./shellScripts/er/conf.nix
+    ./shellScripts/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor

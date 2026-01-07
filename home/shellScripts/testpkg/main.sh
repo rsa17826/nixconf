@@ -1,0 +1,1 @@
+nix-shell -p %0 --run fish
