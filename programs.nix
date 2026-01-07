@@ -100,7 +100,8 @@ in
       lutris-free
       faugus-launcher
       cascadia-code
-      nerd-fonts.0xProto
+      nerd-fonts.hack
+      nerd-fonts-complete
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
