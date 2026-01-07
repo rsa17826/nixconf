@@ -98,6 +98,7 @@ in
       magic-wormhole # file transfer
 
       # testing
+    cascadia-code # font
       gpu-screen-recorder # screen recorder
       lutris-free
       faugus-launcher
