@@ -17,42 +17,42 @@
         [ ]
         ++ [
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "4 to 2 Formatter";
+            name = "4-to-2-formatter";
             src = ./vsix/4-to-2-formatter-7.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "4 to 2 Formatter";
+            vscodeExtName = "4-to-2-formatter";
             vscodeExtUniqueId = "rssaromeo.4-to-2-formatter";
             version = "7.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "auto regex";
+            name = "auto-regex";
             src = ./vsix/auto-regex-49.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "auto regex";
+            vscodeExtName = "auto-regex";
             vscodeExtUniqueId = "rssaromeo.auto-regex";
             version = "49.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "Multiple Formatters";
+            name = "multi-formatter";
             src = ./vsix/multi-formatter-6.0.0.vsix;
             vscodeExtPublisher = "Jota0222";
-            vscodeExtName = "Multiple Formatters";
+            vscodeExtName = "multi-formatter";
             vscodeExtUniqueId = "Jota0222.multi-formatter";
             version = "6.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "Simple Auto Formatter";
+            name = "simple-auto-formatter";
             src = ./vsix/simple-auto-formatter-22.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "Simple Auto Formatter";
+            vscodeExtName = "simple-auto-formatter";
             vscodeExtUniqueId = "rssaromeo.simple-auto-formatter";
             version = "22.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
-            name = "SimpleDataStorage";
+            name = "simpledatastorage";
             src = ./vsix/simpledatastorage-9.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "SimpleDataStorage";
+            vscodeExtName = "simpledatastorage";
             vscodeExtUniqueId = "rssaromeo.simpledatastorage";
             version = "9.0.0";
           })
