@@ -23,6 +23,7 @@
             vscodeExtName = "4-to-2-formatter";
             vscodeExtUniqueId = "rssaromeo.4-to-2-formatter";
             version = "7.0.0";
+            hash = "sha256-0000000000000000000000000000000000000000000=";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
             name = "auto-regex";
@@ -30,9 +31,11 @@
             vscodeExtPublisher = "rssaromeo";
             vscodeExtName = "auto-regex";
             vscodeExtUniqueId = "rssaromeo.auto-regex";
+            hash = "sha256-0000000000000000000000000000000000000000000=";
             version = "49.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
+            hash = "sha256-0000000000000000000000000000000000000000000=";
             name = "multi-formatter";
             src = ./vsix/multi-formatter-6.0.0.vsix;
             vscodeExtPublisher = "Jota0222";
@@ -41,6 +44,7 @@
             version = "6.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
+            hash = "sha256-0000000000000000000000000000000000000000000=";
             name = "simple-auto-formatter";
             src = ./vsix/simple-auto-formatter-22.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
@@ -49,6 +53,7 @@
             version = "22.0.0";
           })
           (pkgs.vscode-utils.buildVscodeExtension {
+            hash = "sha256-0000000000000000000000000000000000000000000=";
             name = "simpledatastorage";
             src = ./vsix/simpledatastorage-9.0.0.vsix;
             vscodeExtPublisher = "rssaromeo";
