@@ -4,7 +4,25 @@
   uname,
   ...
 }:
-
+let
+  # Helper function to reduce boilerplate
+  buildLocalEx =
+    {
+      name,
+      publisher,
+      version,
+      filename,
+    }:
+    pkgs.vscode-utils.buildVscodeExtension {
+      inherit name version;
+      src = ./vsix/${filename};
+      vscodeExtName = name;
+      vscodeExtPublisher = publisher;
+      vscodeExtUniqueId = "${publisher}.${name}";
+      # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
+      hash = pkgs.lib.fakeHash;
+    };
+in
 {
   programs.vscode = {
     enable = true;
@@ -16,50 +34,35 @@
         with pkgs.vscode-extensions;
         [ ]
         ++ [
-          (pkgs.vscode-utils.buildVscodeExtension {
+          (buildLocalEx {
             name = "4-to-2-formatter";
-            src = ./vsix/4-to-2-formatter-7.0.0.vsix;
-            vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "4-to-2-formatter";
-            vscodeExtUniqueId = "rssaromeo.4-to-2-formatter";
+            publisher = "rssaromeo";
             version = "7.0.0";
-            hash = "sha256-0000000000000000000000000000000000000000000=";
+            filename = "4-to-2-formatter-7.0.0.vsix";
           })
-          (pkgs.vscode-utils.buildVscodeExtension {
+          (buildLocalEx {
             name = "auto-regex";
-            src = ./vsix/auto-regex-49.0.0.vsix;
-            vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "auto-regex";
-            vscodeExtUniqueId = "rssaromeo.auto-regex";
-            hash = "sha256-0000000000000000000000000000000000000000000=";
+            publisher = "rssaromeo";
             version = "49.0.0";
+            filename = "auto-regex-49.0.0.vsix";
           })
-          (pkgs.vscode-utils.buildVscodeExtension {
-            hash = "sha256-0000000000000000000000000000000000000000000=";
+          (buildLocalEx {
             name = "multi-formatter";
-            src = ./vsix/multi-formatter-6.0.0.vsix;
-            vscodeExtPublisher = "Jota0222";
-            vscodeExtName = "multi-formatter";
-            vscodeExtUniqueId = "Jota0222.multi-formatter";
+            publisher = "Jota0222";
             version = "6.0.0";
+            filename = "multi-formatter-6.0.0.vsix";
           })
-          (pkgs.vscode-utils.buildVscodeExtension {
-            hash = "sha256-0000000000000000000000000000000000000000000=";
+          (buildLocalEx {
             name = "simple-auto-formatter";
-            src = ./vsix/simple-auto-formatter-22.0.0.vsix;
-            vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "simple-auto-formatter";
-            vscodeExtUniqueId = "rssaromeo.simple-auto-formatter";
+            publisher = "rssaromeo";
             version = "22.0.0";
+            filename = "simple-auto-formatter-22.0.0.vsix";
           })
-          (pkgs.vscode-utils.buildVscodeExtension {
-            hash = "sha256-0000000000000000000000000000000000000000000=";
+          (buildLocalEx {
             name = "simpledatastorage";
-            src = ./vsix/simpledatastorage-9.0.0.vsix;
-            vscodeExtPublisher = "rssaromeo";
-            vscodeExtName = "simpledatastorage";
-            vscodeExtUniqueId = "rssaromeo.simpledatastorage";
+            publisher = "rssaromeo";
             version = "9.0.0";
+            filename = "simpledatastorage-9.0.0.vsix";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
