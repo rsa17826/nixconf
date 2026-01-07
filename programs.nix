@@ -94,10 +94,10 @@ in
       # wl-clipboard-rs # what is the difference?
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
-
-      magic-wormhole
+      magic-wormhole # file transfer
 
       # testing
+      gpu-screen-recorder # screen recorder
       lutris-free
       faugus-launcher
       # thunar # wiztree
