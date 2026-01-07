@@ -23,6 +23,10 @@ let
       hash = pkgs.lib.fakeHash;
       pname = name;             # Add this line specifically
       sourceRoot = ".";
+      installPhase = ''
+        mkdir -p $out/share/vscode/extensions/${publisher}.${name}
+        cp -r . $out/share/vscode/extensions/${publisher}.${name}
+      '';
     };
 in
 {
