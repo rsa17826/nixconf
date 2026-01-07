@@ -23,7 +23,7 @@
             vscodeExtName = "4 to 2 Formatter";
             vscodeExtUniqueId = "rssaromeo.4-to-2-formatter";
             version = "7.0.0";
-          });
+          })
           (pkgs.vscode-utils.buildVscodeExtension {
             name = "auto regex";
             src = ./vsix/auto-regex-49.0.0.vsix;
@@ -31,7 +31,7 @@
             vscodeExtName = "auto regex";
             vscodeExtUniqueId = "rssaromeo.auto-regex";
             version = "49.0.0";
-          });
+          })
           (pkgs.vscode-utils.buildVscodeExtension {
             name = "Multiple Formatters";
             src = ./vsix/multi-formatter-6.0.0.vsix;
@@ -39,7 +39,7 @@
             vscodeExtName = "Multiple Formatters";
             vscodeExtUniqueId = "Jota0222.multi-formatter";
             version = "6.0.0";
-          });
+          })
           (pkgs.vscode-utils.buildVscodeExtension {
             name = "Simple Auto Formatter";
             src = ./vsix/simple-auto-formatter-22.0.0.vsix;
@@ -47,7 +47,7 @@
             vscodeExtName = "Simple Auto Formatter";
             vscodeExtUniqueId = "rssaromeo.simple-auto-formatter";
             version = "22.0.0";
-          });
+          })
           (pkgs.vscode-utils.buildVscodeExtension {
             name = "auto regex";
             src = ./vsix/simpledatastorage-9.0.0.vsix;
@@ -55,7 +55,7 @@
             vscodeExtName = "auto regex";
             vscodeExtUniqueId = "rssaromeo.auto-regex";
             version = "9.0.0";
-          });
+          })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
