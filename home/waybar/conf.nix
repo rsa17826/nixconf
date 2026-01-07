@@ -86,7 +86,7 @@ in
         };
 
         "custom/github" = {
-          format = "{output}"; # output from the script
+          format = "{output}"; # output from the script
           interval = 300; # refresh every 5 minutes
           exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
@@ -134,12 +134,12 @@ in
       #custom-notifications, #custom-power, #custom-update, #custom-notes {
         padding: 0 10px;
         margin: 0 4px;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.0);
       }
 
       #clock {
         color: rgba(157, 0, 0, 0.8);
-        background-color: rgba(0, 0, 0, 0.9);
+        background-color: rgba(0, 0, 0, 0.6);
         border-radius: 0px 24px 0px 24px;
       }
 
