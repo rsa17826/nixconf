@@ -1,13 +1,17 @@
-
-{ config, pkgs, uname, ... }:
+{
+  config,
+  pkgs,
+  uname,
+  ...
+}:
 let
   updateCheck = pkgs.writeShellScriptBin "check-flake-updates" ''
     # Navigate to your config directory
     cd /home/${uname}/nixconf # or wherever your flake.nix is
-    
+
     # Check if any inputs can be updated without actually writing to the lockfile
     UPDATES=$(nix flake check --no-build 2>&1 | wc -l)
-    
+
     if [ "$UPDATES" -gt 0 ]; then
        echo "Update Available"
     else
@@ -16,20 +20,30 @@ let
   '';
 in
 {
-  home.packages=[updateCheck];
-programs.waybar = {
+  home.packages = [ updateCheck ];
+  programs.waybar = {
     enable = true;
     systemd.enable = true; # Automatically starts waybar with the session
-    
+
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
         height = 30;
-        
-        modules-left = [ "hyprland/workspaces" "custom/notes" ];
+
+        modules-left = [
+          "hyprland/workspaces"
+          "custom/notes"
+        ];
         modules-center = [ "clock" ];
-        modules-right = [ "disk" "pulseaudio" "custom/github" "custom/notifications" "custom/power" "custom/update" ];
+        modules-right = [
+          "disk"
+          "pulseaudio"
+          "custom/github"
+          "custom/notifications"
+          "custom/power"
+          "custom/update"
+        ];
 
         # Hyprland Workspaces (New addition for Linux)
         "hyprland/workspaces" = {
@@ -59,7 +73,11 @@ programs.waybar = {
         "pulseaudio" = {
           format = "{icon} {volume}%";
           format-muted = "󰝟 Muted";
-          format-icons = ["󰕿" "󰖀" "󰕾"];
+          format-icons = [
+            "󰕿"
+            "󰖀"
+            "󰕾"
+          ];
           on-click = "pavucontrol";
         };
 
@@ -132,4 +150,5 @@ programs.waybar = {
         color: #f38ba8;
       }
     '';
-  };}
+  };
+}
