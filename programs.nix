@@ -10,6 +10,8 @@ let
     "nix-env" = "echo wrong command";
     clearcache = "nix-collect-garbage";
     clearallcache = "sudo nix-collect-garbage --delete-older-than 3d";
+    worm="magic-wormhole send";
+    hole="magic-wormhole receive";
   };
 in
 {
