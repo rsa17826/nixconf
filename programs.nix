@@ -96,7 +96,7 @@ in
       lutris-free
       faugus-launcher
 
-      thunar # wiztree
+      # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
       # ulauncher
