@@ -41,8 +41,8 @@ in
           "pulseaudio"
           "custom/github"
           "custom/notifications"
-          "custom/power"
           "custom/update"
+          "custom/power"
         ];
 
         # Hyprland Workspaces (New addition for Linux)
@@ -138,9 +138,14 @@ in
       }
 
       #clock {
-        color: rgba(157, 0, 0, 0.8);
+        color: rgba(157, 0, 0, 0.643);
         background-color: rgba(0, 0, 0, 0.9);
         font-weight: 600;
+      }
+
+      #custom-github {
+        color: red;
+        font-weight: bold;
       }
 
       #workspaces button.active {
