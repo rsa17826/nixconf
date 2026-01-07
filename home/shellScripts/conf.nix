@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 let
-  newsh = { name }:
-    pkgs.writeShellScriptBin name
-      (builtins.readFile (./. + "/${name}/main.sh"));
+  newsh = { name }: pkgs.writeShellScriptBin name (builtins.readFile (./${name}/main.sh));
 in
 {
   home.packages = [
