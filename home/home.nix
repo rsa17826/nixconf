@@ -13,6 +13,7 @@
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
+    ./fish/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -99,7 +100,7 @@
 
     package = pkgs.runCommand "mew" { } ''
         mkdir -p $out/share/icons/mew
-        cp -r ${./cursors} $out/share/icons/mew/cursors
+        cp -r ${./STATIC/cursors} $out/share/icons/mew/cursors
         cat > $out/share/icons/mew/index.theme <<EOF
       [Icon Theme]
       Name=mew

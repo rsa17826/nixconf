@@ -5649,7 +5649,6 @@ MoveCaret() { ; V1toV2: Added bracket
 ::thuogh::though
 ::tihnk::think
 ::tohught::thought
-::usb::USB
 ::werent::weren't
 ::whats::what's
 ::whne::when
@@ -5799,3 +5798,5 @@ javaerr() {
 ::fucntions::functions
 ::fucntion::function
 ::update::update
+::increadable::incredible
+::asycn::async
