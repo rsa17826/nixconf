@@ -100,7 +100,6 @@ in
       # testing
       lutris-free
       faugus-launcher
-      cascadia-code
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
@@ -124,14 +123,13 @@ in
     keyd # disables capslock?
     anyrun # application launcher
     # xmodmap
-    kdotool
 
+    cascadia-code # font
     swaynotificationcenter # notification daemon
 
     waybar
     nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
     font-awesome # For additional icons
-    swaynotificationcenter # For the notification icon click
     wlogout # For the power menu click
     pavucontrol # For audio control
   ];
