@@ -7,5 +7,6 @@ in
   home.packages = [
     (newsh { name = "testpkg"; })
     (newsh { name = "er"; })
+    (newsh { name = "github-widget"; })
   ];
 }
