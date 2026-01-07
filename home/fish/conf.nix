@@ -1,19 +1,24 @@
-{ config, pkgs, uname, ... }:
+{
+  config,
+  pkgs,
+  uname,
+  ...
+}:
 
 {
   programs.fish = {
-  enable = true;
+    enable = true;
 
-  interactiveShellInit = ''
-    function __fix_typos_preexec --on-event fish_preexec
-      set cmd (commandline)
+    interactiveShellInit = ''
+      function __fix_typos_preexec --on-event fish_preexec
+        set cmd (commandline)
 
-      if string match -rq '\b(udpa|upda|udpate)\b' -- $cmd
-        set cmd (string replace -ra '\budpa' upda $cmd)
-        commandline -r $cmd
+        if string match -rq '\b(udpa|upda|udpate)\b' -- $cmd
+          set cmd (string replace -ra '\budpa' upda $cmd)
+          commandline -r $cmd
+        end
       end
-    end
-  '';
+    '';
 
     shellAbbrs = {
       abreviat = "abbreviat";
