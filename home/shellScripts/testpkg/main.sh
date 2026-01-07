@@ -1,2 +1,2 @@
 #/usr/bin/env sh
-nix-shell -p "$@" --run fish
+nix-shell -p "$0" --run fish
