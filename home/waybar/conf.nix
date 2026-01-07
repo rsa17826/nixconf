@@ -59,7 +59,7 @@ in
         };
 
         "clock" = {
-          format = "<span color='#000000e6'></span> {:%A %d %B %Y %H:%M} <span color='#000000e6'></span>";
+          format = "<span color='#000000e6'></span> {:%A %d %B %Y %H:%M:%S} <span color='#000000e6'></span>";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
@@ -136,7 +136,9 @@ in
         margin: 0 2px;
         background-color: rgba(0, 0, 0, 0.0);
       }
-
+      #custom-power{
+        margin-right:10px;
+      }
       #clock {
         color: rgba(157, 0, 0, 0.643);
         background-color: rgba(0, 0, 0, 0.9);
