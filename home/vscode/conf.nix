@@ -1,4 +1,9 @@
-{ config, pkgs, uname, ... }:
+{
+  config,
+  pkgs,
+  uname,
+  ...
+}:
 
 {
   programs.vscode = {
@@ -10,6 +15,48 @@
       extensions =
         with pkgs.vscode-extensions;
         [ ]
+        ++ pkgs.vscode-utils.buildVscodeExtension [
+          {
+            name = "4 to 2 Formatter";
+            src = ./vsix/4-to-2-formatter-7.0.0.vsix;
+            vscodeExtPublisher = "rssaromeo";
+            vscodeExtName = "4 to 2 Formatter";
+            vscodeExtUniqueId = "rssaromeo.4-to-2-formatter";
+            version = "7.0.0";
+          }
+          {
+            name = "auto regex";
+            src = ./vsix/auto-regex-49.0.0.vsix;
+            vscodeExtPublisher = "rssaromeo";
+            vscodeExtName = "auto regex";
+            vscodeExtUniqueId = "rssaromeo.auto-regex";
+            version = "49.0.0";
+          }
+          {
+            name = "Multiple Formatters";
+            src = ./vsix/multi-formatter-6.0.0.vsix;
+            vscodeExtPublisher = "Jota0222";
+            vscodeExtName = "Multiple Formatters";
+            vscodeExtUniqueId = "Jota0222.multi-formatter";
+            version = "6.0.0";
+          }
+          {
+            name = "Simple Auto Formatter";
+            src = ./vsix/simple-auto-formatter-22.0.0.vsix;
+            vscodeExtPublisher = "rssaromeo";
+            vscodeExtName = "Simple Auto Formatter";
+            vscodeExtUniqueId = "rssaromeo.simple-auto-formatter";
+            version = "22.0.0";
+          }
+          {
+            name = "auto regex";
+            src = ./vsix/simpledatastorage-9.0.0.vsix;
+            vscodeExtPublisher = "rssaromeo";
+            vscodeExtName = "auto regex";
+            vscodeExtUniqueId = "rssaromeo.auto-regex";
+            version = "9.0.0";
+          }
+        ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "font-viewer";
@@ -498,9 +545,9 @@
     sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
   home.file.".config/Code/User/locale.json".text = ''
-  {
-    "locale": "furry-owo"
-  }
-'';
+    {
+      "locale": "furry-owo"
+    }
+  '';
 
 }
