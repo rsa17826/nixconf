@@ -37,6 +37,8 @@
     "**/images": true,
     ".gitattributes": true,
     "VERSION": true,
+    "**/__pycache__": true,
+    "**/.venv": true,
     // remove all folders but no files from res://scenes/blocks
     "**/scenes/blocks/[!.]": true,
     "**/scenes/blocks/[!.][!.]": true,
@@ -504,7 +506,7 @@
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
-  "editor.fontFamily": "'nerd font', Consolas, 'Courier New', monospaced ",
+  "editor.fontFamily": "'Cascadia Code Bold', '0xProto Nerd Font Propo'",
   "chat.commandCenter.enabled": false,
   "editor.guides.bracketPairs": true,
   "editor.guides.bracketPairsHorizontal": true,
@@ -688,7 +690,13 @@
   "editor.unicodeHighlight.includeComments": true,
   "security.workspace.trust.enabled": false,
   "workbench.settings.editor": "json",
+  "codeglow.scrollDebounceDelay": 0,
+  "codeglow.disableWhileScrolling": false,
+  "debugpy.debugJustMyCode": false,
   "[nix]": {
     "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
   }
 }

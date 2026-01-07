@@ -103,10 +103,10 @@ in
     ];
   };
   environment.systemPackages = with pkgs; [
-    neovim
+    neovim # tui text editor
     # vim
     sxhkd
-    wget
+    wget #cmd dl util
     brave # web browser
     nixfmt-rfc-style # nix language formatter
     git # git is required
@@ -116,11 +116,12 @@ in
     kitty # terminal emulator
     # rofi
     # albert
-    waybar
     keyd # disables capslock?
     anyrun # application launcher
     # xmodmap
     kdotool
+
+    swaynotificationcenter #notification daemon
 
     waybar
     nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP

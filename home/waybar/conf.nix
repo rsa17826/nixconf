@@ -46,13 +46,13 @@ programs.waybar = {
 
         "clock" = {
           # Matches your YASB:  {Date} 
-          format = "<span color='#ff4d4d'></span> {:%A %d %B %Y %H:%M} <span color='#ff4d4d'></span>";
+          format = "<span color='#ff4d4d'>\ue0c2</span> {:%A %d %B %Y %H:%M} <span color='#ff4d4d'>\ue0c0</span>";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
         "disk" = {
           interval = 60;
-          format = "󰋳 {percentage_used}%";
+          format = "\uf473 {percentage_used}%";
           path = "/";
         };
 
@@ -69,7 +69,7 @@ programs.waybar = {
         };
 
         "custom/github" = {
-          format = "ﮡ";
+          format = "\ueba1";
           on-click = "xdg-open https://github.com/notifications";
         };
 
@@ -81,8 +81,8 @@ programs.waybar = {
         "custom/update" = {
           format = " {}";
           interval = 3600;
-          exec = "nix-channel --list | wc -l"; # Basic NixOS update check
-          on-click = "foot -e nixos-rebuild switch";
+          exec = "updateCheck"; # Basic NixOS update check
+          on-click = "updateCheck";
         };
 
         "custom/power" = {
