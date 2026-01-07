@@ -99,7 +99,8 @@ in
       # testing
       lutris-free
       faugus-launcher
-
+      cascadia-code
+      nerd-fonts.0xProto
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
