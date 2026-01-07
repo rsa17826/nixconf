@@ -22,7 +22,7 @@ let
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
       hash = pkgs.lib.fakeHash;
       pname = name; # Add this line specifically
-      sourceRoot = "extension";
+      sourceRoot = ".";
     };
 in
 {
