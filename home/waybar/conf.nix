@@ -101,8 +101,8 @@ in
         "custom/update" = {
           format = " {}";
           interval = 3600;
-          exec = "updateCheck"; # Basic NixOS update check
-          on-click = "updateCheck";
+          exec = "check-flake-updates"; # Basic NixOS update check
+          on-click = "check-flake-updates";
         };
 
         "custom/power" = {
