@@ -140,6 +140,7 @@ in
       #clock {
         color: rgba(157, 0, 0, 0.8);
         background-color: rgba(0, 0, 0, 0.9);
+        font-weight: 600;
       }
 
       #workspaces button.active {
