@@ -132,8 +132,8 @@ in
 
       #workspaces, #clock, #disk, #pulseaudio, #custom-github, 
       #custom-notifications, #custom-power, #custom-update, #custom-notes {
-        padding: 0 10px;
-        margin: 0 4px;
+        padding: 0 2px;
+        margin: 0 2px;
         background-color: rgba(0, 0, 0, 0.0);
       }
 
