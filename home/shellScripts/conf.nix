@@ -1,20 +1,13 @@
-{
-  uname,
-  pkgs,
-  lib,
-  ...
-}:
-let 
-  newsh = {
-    name
-  }:
-  (pkgs.writeShellScriptBin name (builtins.readFile ./${name}/main.sh))
-  ;
-  in
+{ pkgs, ... }:
+
+let
+  newsh = { name }:
+    pkgs.writeShellScriptBin name
+      (builtins.readFile (./. + "/${name}/main.sh"));
+in
 {
   home.packages = [
-    newsh {name="testpkg"}
-    newsh {name="er"}
+    (newsh { name = "testpkg"; })
+    (newsh { name = "er"; })
   ];
 }
-
