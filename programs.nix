@@ -82,10 +82,11 @@ in
       opensnitch-ui # firewall
       vscodium # text editor
       wineWowPackages.unstableFull # windows apps
-      autokey
+      # autokey # x11 only
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim
+      mission-center # task manager
       vlc # media player
       nicotine-plus # soulseek
       conky # like rainmeter
