@@ -115,7 +115,7 @@ in
     sxhkd
     wget # cmd dl util
     brave # web browser
-    nixfmt-rfc-style # nix language formatter
+    nixfmt # nix language formatter
     git # git is required
     kdePackages.kget
     p7zip # archival tool
