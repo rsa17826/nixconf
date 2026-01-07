@@ -101,7 +101,6 @@ in
       faugus-launcher
       cascadia-code
       nerd-fonts.hack
-      nerd-fonts-complete
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
