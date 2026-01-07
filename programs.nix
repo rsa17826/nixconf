@@ -92,10 +92,12 @@ in
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
 
+      magic-wormhole
+      
       # testing
       lutris-free
       faugus-launcher
-
+      
       # thunar # wiztree
       # bottles
       # https://github.com/anyrun-org/anyrun
