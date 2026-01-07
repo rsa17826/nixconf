@@ -121,7 +121,7 @@ in
       * {
         font-family: "JetBrainsMono NFP";
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 900;
         border: none;
       }
 
