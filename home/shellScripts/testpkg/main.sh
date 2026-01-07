@@ -1,3 +1,2 @@
 #/usr/bin/env sh
-# nix-shell -p "$0" --run fish
-which update
+nix-shell-alias -p "$0" --run fish
