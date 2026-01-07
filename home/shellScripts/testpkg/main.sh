@@ -1,3 +1,3 @@
 #/usr/bin/env sh
-which nix-shell-alias
-nix-shell-alias -p "$0" --run fish
+which nix-shell
+(which nix-shell) -p "$0" --run fish
