@@ -59,7 +59,7 @@ in
         };
 
         "clock" = {
-          format = "<span color='rgba(0, 0, 0, 0.9)'></span> {:%A %d %B %Y %H:%M} <span color='rgba(0, 0, 0, 0.9)'></span>";
+          format = "<span color='#000000e6'></span> {:%A %d %B %Y %H:%M} <span color='#000000e6'></span>";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
