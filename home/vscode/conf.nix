@@ -22,11 +22,7 @@ let
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
       hash = pkgs.lib.fakeHash;
       pname = name;             # Add this line specifically
-      sourceRoot = ".";
-      installPhase = ''
-        mkdir -p $out/share/vscode/extensions/${publisher}.${name}
-        cp -r . $out/share/vscode/extensions/${publisher}.${name}
-      '';
+      sourceRoot = "extension";
     };
 in
 {
