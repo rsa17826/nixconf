@@ -61,7 +61,7 @@
         };
 
         "custom/github" = {
-          format = "<span letter_spacing='-13000' color='#ff4d4d' rise='-8000' font_size='small'>{}</span>";
+          format = "<span letter_spacing='-13000' color='#ff4d4d' rise='-6000' font_size='small'>{}</span>";
           interval = 300;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
