@@ -25,7 +25,7 @@ let
       pname = name; # Add this line specifically
       sourceRoot = ".";
     };
-    dlExt = {name. publisher, version, domain}:
+    dlExt = {name, publisher, version, domain}:
     pkgs.vscode-utils.extensionFromVscodeMarketplace {
       inherit name publisher version
       sha256 = lib.fakeSha256;
