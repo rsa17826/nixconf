@@ -27,11 +27,11 @@ let
     };
     dlExt = {name, publisher, version, domain}:
     pkgs.vscode-utils.extensionFromVscodeMarketplace {
-      inherit name publisher version
+      inherit name publisher version;
       sha256 = lib.fakeSha256;
 
       src = pkgs.fetchurl {
-        url = "https://${domain}/${publisher}/${name}/${version}/${name}-${version}.vsix";
+        url = "https://${domain}/${publisher}/${name}/${version}/${publisher}${name}-${version}.vsix";
         sha256 = lib.fakeSha256;
       };
     };
