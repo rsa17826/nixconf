@@ -25,6 +25,17 @@ let
       pname = name; # Add this line specifically
       sourceRoot = ".";
     };
+    dlExt = {name. publisher, version, domain}:
+    pkgs.vscode-utils.extensionFromVscodeMarketplace {
+      inherit name publisher version
+      sha256 = lib.fakeSha256;
+
+      src = pkgs.fetchurl {
+        url = "https://${domain}/${publisher}/${name}/${version}/${name}-${version}.vsix";
+        sha256 = lib.fakeSha256;
+      };
+    };
+
 in
 {
   programs.vscode = {
@@ -35,7 +46,12 @@ in
     profiles.default = {
       extensions =
         with pkgs.vscode-extensions;
-        [ ]
+        [ (dlExt {
+          name="nix-embedded-languages";
+          version="1.0.1";
+          publisher="coopmoney";
+          domain="openvsx.eclipsecontent.org";
+        })]
         ++ [
           (buildLocalEx {
             name = "4-to-2-formatter";
