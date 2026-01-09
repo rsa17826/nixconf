@@ -73,16 +73,10 @@ in
             name = "nix-embedded-languages";
             publisher = "coopmoney";
             version = "1.1.1";
-            hash = lib.fakeHash;
+            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
           }
         ]
         ++ [
-          {
-            name = "nix-embedded-languages";
-            publisher = "coopmoney";
-            version = "1.1.1";
-            hash = lib.fakeHash;
-          }
           {
             name = "font-viewer";
             publisher = "adamraichu";
