@@ -63,15 +63,10 @@
           on-click = "pavucontrol";
         };
 
-        "custom/notes" = {
-          format = "󰔌";
-          on-click = "thunar ~/Documents/notes"; # Replacement for Windows notes
-        };
-
         "custom/github" = {
           format = "{output}"; # output from the script
           interval = 300; # refresh every 5 minutes
-          exec = "github-widget"; # run your script
+          exec = "sudo github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
         };
