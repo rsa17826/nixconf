@@ -95,7 +95,7 @@ in
             name = "nix-embedded-languages";
             publisher = "coopmoney";
             version = "1.0.1";
-            filename = "coopmoney.nix-embedded-languages-1.0.1";
+            filename = "coopmoney.nix-embedded-languages-1.0.1.vsix";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
