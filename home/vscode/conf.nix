@@ -68,7 +68,15 @@ in
             filename = "simpledatastorage-9.0.0.vsix";
           })
         ]
-        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        ++ pkgs.vscode-utils.extensionsFromOpenVSX [
+          {
+            name = "nix-embedded-languages";
+            publisher = "coopmoney";
+            version = "1.1.1";
+            hash = lib.fakeHash;
+          }
+        ]
+        ++ [
           {
             name = "nix-embedded-languages";
             publisher = "coopmoney";
