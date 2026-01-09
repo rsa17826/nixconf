@@ -76,7 +76,7 @@ in
             hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
           }
         ]
-        ++ [
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "font-viewer";
             publisher = "adamraichu";
