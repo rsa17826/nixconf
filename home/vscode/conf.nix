@@ -84,14 +84,6 @@ in
             filename = "simpledatastorage-9.0.0.vsix";
           })
         ]
-        ++ pkgs.vscode-utils.extensionsFromOpenVSX [
-          {
-            name = "nix-embedded-languages";
-            publisher = "coopmoney";
-            version = "1.1.1";
-            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
-          }
-        ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "font-viewer";
