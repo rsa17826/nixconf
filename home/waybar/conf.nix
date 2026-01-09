@@ -65,7 +65,7 @@
 
         "custom/github" = {
           format = "{output}"; # output from the script
-          interval = 300; # refresh every 5 minutes
+          interval = 30;
           exec = "sudo github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
