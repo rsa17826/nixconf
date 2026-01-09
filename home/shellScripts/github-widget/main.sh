@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# Load token safely via root helper
-if ! source <(sudo /usr/local/bin/github-token-helper); then
+# Load token
+if [ -f /etc/mysecrets/github_token.env ]; then
+    source /etc/mysecrets/github_token.env
+else
     echo "Token missing"
     exit 1
 fi
@@ -12,7 +14,6 @@ UNREAD=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
 
 MAX=20
 DISPLAY_COUNT=$((UNREAD>MAX ? MAX : UNREAD))
-
 DOT=$([ "$UNREAD" -gt 0 ] && echo "●" || echo "")
 
 # Output for Waybar
