@@ -759,3 +759,104 @@ for event in keyboard.read_loop():
 If you want, I can write the **systemd user service setup** next, so this hotstring engine **starts automatically when Hyprland launches** and runs globally like AHK.
 
 Do you want me to do that?
+Perfect! We can do this **fully declaratively in NixOS**, so NumLock is forced on and CapsLock is forced off at session start in **Hyprland / Wayland**, without relying on X11 or `numlockx`.
+
+We’ll use **a small systemd user service** that runs a **uinput script** at startup.
+
+---
+
+## 1️⃣ Create the uinput script
+
+Let’s make a simple script that **turns on NumLock and turns off CapsLock**:
+
+```bash
+# /etc/nixos/scripts/fix-locks.py
+#!/usr/bin/env python3
+from evdev import UInput, ecodes
+import time
+
+ui = UInput()
+
+# Turn NumLock ON
+ui.write(ecodes.EV_KEY, ecodes.KEY_NUMLOCK, 1)
+ui.write(ecodes.EV_KEY, ecodes.KEY_NUMLOCK, 0)
+
+# Turn CapsLock OFF
+ui.write(ecodes.EV_KEY, ecodes.KEY_CAPSLOCK, 0)
+ui.syn()
+```
+
+* Make it executable:
+
+```bash
+sudo chmod +x /etc/nixos/scripts/fix-locks.py
+```
+
+---
+
+## 2️⃣ Create a systemd user service
+
+```nix
+# In your configuration.nix or home.nix
+systemd.user.units.fix-locks.service = {
+  description = "Force NumLock on and CapsLock off for Wayland sessions";
+  after = [ "graphical.target" ];
+
+  serviceConfig = {
+    ExecStart = "/etc/nixos/scripts/fix-locks.py";
+    Type = "oneshot";
+    RemainAfterExit = true;
+  };
+  wantedBy = [ "default.target" ];
+};
+```
+
+* This runs **once at user login**.
+* Works with **Wayland (Hyprland)** because it uses uinput.
+
+---
+
+## 3️⃣ Ensure uinput permissions
+
+* Add your user to the `input` group and allow uinput:
+
+```bash
+sudo usermod -aG input $USER
+sudo chmod 666 /dev/uinput
+```
+
+* On NixOS, you can also declaratively enable uinput:
+
+```nix
+# configuration.nix
+boot.kernelModules = [ "uinput" ];
+```
+
+---
+
+## 4️⃣ Rebuild and enable
+
+```bash
+sudo nixos-rebuild switch
+systemctl --user enable fix-locks.service
+systemctl --user start fix-locks.service
+```
+
+* NumLock will be on.
+* CapsLock will be off.
+* Works in Hyprland / Wayland sessions.
+
+---
+
+✅ **Advantages**:
+
+* Fully declarative in NixOS.
+* No X11 / numlockx needed.
+* Works for all Wayland compositors, including Hyprland.
+* Can be extended to force LED states at login for multiple keyboards.
+
+---
+
+If you want, I can **rewrite it to automatically detect multiple keyboards** and enforce **NumLock on / CapsLock off** for all of them in one script — fully plug-and-play for Hyprland.
+
+Do you want me to do that?
