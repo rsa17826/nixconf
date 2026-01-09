@@ -589,7 +589,7 @@ in
   home.file.".vscode-oss/argv.json".text = ''
     {
       "enable-crash-reporter": false,
-      "crash-reporter-id": "RANDOM UUID HERE"
+      "crash-reporter-id": "RANDOM UUID HERE",
       "locale": "furry-owo"
     }
   '';
