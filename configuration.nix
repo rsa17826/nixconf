@@ -3,24 +3,24 @@
 # and in the NixOS manual (accessible by running 'nixos-help’).
 
 {
-  config,
+  # config,
   pkgs,
   uname,
   ...
 }:
-let
-  unstable =
-    import
-      (builtins.fetchTarball {
-        url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-        # optional: pin for reproducibility
-        # sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=";
-      })
-      {
-        config = config.nixpkgs.config;
-        system = pkgs.system;
-      };
-in
+# let
+#   unstable =
+#     import
+#       (builtins.fetchTarball {
+#         url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+#         # optional: pin for reproducibility
+#         # sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=";
+#       })
+#       {
+#         config = config.nixpkgs.config;
+#         system = pkgs.system;
+#       };
+# in
 {
   imports = [
     # Include the results of the hardware scan.
