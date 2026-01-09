@@ -15,4 +15,4 @@ UNREAD=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
 DOT=$([ "$UNREAD" -gt 0 ] && echo "●" || echo "")
 
 # Output for Waybar
-echo "$DOT $UNREAD"
+echo "$DOT $UNREAD 234"
