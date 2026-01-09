@@ -61,7 +61,7 @@
         };
 
         "custom/github" = {
-          format = "<span class='github-dot'>{}</span>";
+          format = "<span style='color:red;'>{}</span>";
           interval = 300;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
@@ -119,9 +119,9 @@
       }
       .github-dot {
         color: red;
-        font-size: 10px;         /* Make the dot smaller than the icon */
-        margin-left: -14px;      /* Pull it back to the left (adjust based on font size) */
-        margin-right: 4px;       /* Keep space from the number */
+        font-size: 10px;
+        margin-left: -14px;
+        margin-right: 4px;
       }
 
       #workspaces button.active {
