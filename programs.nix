@@ -13,6 +13,7 @@ let
     worm = "magic-wormhole send";
     hole = "magic-wormhole receive";
     q = "exit";
+    c = "clear";
     nix-shell-alias = "nix-shell";
   };
 in

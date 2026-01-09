@@ -53,12 +53,12 @@ in
       extensions =
         with pkgs.vscode-extensions;
         [
-          (dlExt {
-            name = "nix-embedded-languages";
-            version = "1.0.1";
-            publisher = "coopmoney";
-            domain = "openvsx.eclipsecontent.org";
-          })
+          # (dlExt {
+          #   name = "nix-embedded-languages";
+          #   version = "1.0.1";
+          #   publisher = "coopmoney";
+          #   domain = "openvsx.eclipsecontent.org";
+          # })
         ]
         ++ [
           (buildLocalEx {
@@ -90,6 +90,12 @@ in
             publisher = "rssaromeo";
             version = "9.0.0";
             filename = "simpledatastorage-9.0.0.vsix";
+          })
+          (buildLocalEx {
+            name = "nix-embedded-languages";
+            publisher = "coopmoney";
+            version = "1.0.1";
+            filename = "coopmoney.nix-embedded-languages-1.0.1";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
