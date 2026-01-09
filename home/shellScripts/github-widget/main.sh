@@ -15,4 +15,4 @@ UNREAD=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
 DOT=$([ "$UNREAD" -gt 0 ] && echo "●" || echo "")
 
 # Output for Waybar
-echo "<span letter_spacing='-13000' color='#ff4d4d' rise='-6000' font_size='small'>$DOT</span> $UNREAD 234"
+echo "<span letter_spacing='-13000' color='#ff4d4d' rise='-6000' font_size='small'>$DOT  </span> $UNREAD 234"
