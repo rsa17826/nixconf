@@ -64,8 +64,8 @@
         };
 
         "custom/github" = {
-          format = "<span color='#FF0000'>{output}</span>"; # output from the script
-          interval = 30;
+          format = "{output}"; # output from the script
+          interval = 300;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
@@ -103,7 +103,7 @@
 
       #workspaces, #clock, #disk, #pulseaudio, #custom-github, 
       #custom-notifications, #custom-power, #custom-notes {
-        padding: 0 2px;
+        padding: 0 8px;
         margin: 0 2px;
         background-color: rgba(0, 0, 0, 0.0);
       }
