@@ -76,88 +76,9 @@ fi
 trap clean_up SIGINT
 
 # Begin the printing of the nix expression that will house the list of extensions.
-printf '{ extensions = [/n'
+printf '{ extensions = [\n'
 text="
-adamraichu.font-viewer
-apinix.indent-jump
-avoonix.furry-language
-bbenoist.nix
-betterthantomorrow.paste-replaced
-blueglassblock.better-json5
-britesnow.vscode-toggle-quotes
-bvpav.rcdbg
-chamboug.js-auto-backticks
-cheshirekow.cmake-format
-christian-kohler.npm-intellisense
-dbaeumer.vscode-eslint
-debugpyattacher.debugpy-attacher
-dinopitstudios.dinoscan-vscode
-dohe.godot-format
-donjayamanne.githistory
-dotjoshjohnson.xml
-durzn.brackethighlighter
-eclipse-cdt.memory-inspector
-ericsia.pythonsnippets3pro
-esbenp.prettier-vscode
-exodiusstudios.comment-anchors
-fernandoescolar.vscode-solution-explorer
-franneck94.c-cpp-runner
-franneck94.workspace-formatter
-geequlim.godot-tools
-gydunhn.javascript-essentials
-gydunhn.nodejs-essentials
-gydunhn.typescript-essentials
-gydunhn.vsc-essentials
-iliazeus.vscode-ansi
-ionutvmi.path-autocomplete
-jnoortheen.nix-ide
-jota0222.multi-formatter
-lujstn.synthwave-fluoromachine-cursor
-mark-wiemer.vscode-autohotkey-plus-plus
-mattpocock.ts-error-translator
-mechatroner.rainbow-csv
-mgesbert.indent-nested-dictionary
-mhutchie.git-graph
-mikestead.dotenv
-ms-mssql.mssql
-ms-python.black-formatter
-ms-python.debugpy
-ms-python.python
-ms-python.vscode-pylance
-ms-vscode.hexeditor
-ms-vscode.powershell
-ms-vscode.vscode-js-profile-flame
-naumovs.color-highlight
-njpwerner.autodocstring
-oliversturm.fix-json
-oracle.oracle-java
-oxideops.vscode-code-jump
-prismlink.lunar-theme
-qcz.text-power-tools
-rectcircle.str-conv
-rioj7.regex-text-gen
-robertostermann.inline-parameters-extended
-rodolphebarbanneau.python-docstring-highlighter
-rust-lang.rust-analyzer
-rvest.vs-code-prettier-eslint
-s-nlf-fh.glassit
-saidtorres3.dark-plus-material-saidtorres3
-se-dev-pion.rainbow-struct-field-tags
-shader-slang.slang-language-extension
-simonhe.vscode-highlight-text
-solomonkinard.chrome-extension-api
-solomonkinard.chrome-extensions
-soyreneon.themeeditor
-tekumara.typos-vscode
-unthrottled.doki-theme
-usernamehw.autolink
-usernamehw.errorlens
-vadimcn.vscode-lldb
-vscjava.vscode-java-debug
-wix.vscode-import-cost
-xabikos.javascriptsnippets
-yoavbls.pretty-ts-errors
-zero-plusplus.vscode-autohotkey-debug"
+coopmoney.nix-embedded-languages"
 
 # Note that we are only looking to update extensions that are already installed.
 # IFS=$'\n' read -d '' -r -a lines <<< "$text"
@@ -182,4 +103,4 @@ while IFS= read -r i; do
 done <<< "$text"
 
 # Close off the nix expression.
-printf '];/n}'
+printf '];\n}'

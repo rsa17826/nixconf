@@ -69,6 +69,12 @@ in
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
+            name = "nix-embedded-languages";
+            publisher = "coopmoney";
+            version = "1.1.1";
+            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
+          }
+          {
             name = "font-viewer";
             publisher = "adamraichu";
             version = "1.1.1";
@@ -554,6 +560,7 @@ in
     cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
     sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
+  # language jsonc
   home.file.".vscode-oss/argv.json".text = ''
     {
       "enable-crash-reporter": false,
@@ -561,5 +568,4 @@ in
       "locale": "furry-owo"
     }
   '';
-
 }
