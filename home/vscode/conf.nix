@@ -72,7 +72,7 @@ in
             name = "nix-embedded-languages";
             publisher = "coopmoney";
             version = "1.1.1";
-            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
+            hash = hash.fakeHash;
           }
           {
             name = "font-viewer";
