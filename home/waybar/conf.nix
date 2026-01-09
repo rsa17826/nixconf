@@ -53,7 +53,7 @@
         };
 
         "pulseaudio" = {
-          format = "<span color='#89B4FA'>{icon}</span> {volume}%";
+          format = "{icon} {volume}%";
           format-muted = "󰝟 Muted";
           format-icons = [
             "󰕿"
@@ -65,7 +65,7 @@
 
         "custom/github" = {
           format = "{output}"; # output from the script
-          interval = 300;
+          interval = 30;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
@@ -103,7 +103,7 @@
 
       #workspaces, #clock, #disk, #pulseaudio, #custom-github, 
       #custom-notifications, #custom-power, #custom-notes {
-        padding: 0 8px;
+        padding: 0 2px;
         margin: 0 2px;
         background-color: rgba(0, 0, 0, 0.0);
       }
@@ -117,6 +117,7 @@
       }
 
       #custom-github {
+        color: red;
         font-weight: bold;
       }
 
