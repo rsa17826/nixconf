@@ -80,12 +80,7 @@ in
           command = "/run/current-system/sw/bin/nixos-rebuild";
           options = [ "NOPASSWD" ];
         }
-      ];
-    }
-    {
-      commands = [
         {
-          users = [ "nyx" ];
           command = "/etc/profiles/per-user/nyx/bin/github-widget";
           options = [
             "NOPASSWD"
