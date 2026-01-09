@@ -554,8 +554,10 @@ in
     cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
     sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
-  home.file.".config/Code/User/locale.json".text = ''
+  home.file.".vscode-oss/argv.json".text = ''
     {
+      "enable-crash-reporter": false,
+      "crash-reporter-id": "RANDOM UUID HERE"
       "locale": "furry-owo"
     }
   '';
