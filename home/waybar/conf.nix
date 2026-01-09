@@ -66,7 +66,7 @@
         "custom/github" = {
           format = "{output}"; # output from the script
           interval = 30;
-          exec = "sudo github-widget > /tmp/github-widget.log 2>&1"; # run your script
+          exec = "sudo github-widget |tee > /tmp/github-widget.log 2>&1"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
         };
