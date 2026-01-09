@@ -96,6 +96,7 @@ in
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
       magic-wormhole # file transfer
+      jq # json parser
 
       # testing
       cascadia-code # font
