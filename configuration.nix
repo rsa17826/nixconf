@@ -122,14 +122,14 @@
   # };
   console.useXkbConfig = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal-gtk # Necessary for fallback
-    ];
-    config.common.default = "*"; # Or "hyprland;gtk"
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [
+  #     pkgs.xdg-desktop-portal-hyprland
+  #     pkgs.xdg-desktop-portal-gtk # Necessary for fallback
+  #   ];
+  #   config.common.default = "*"; # Or "hyprland;gtk"
+  # };
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
