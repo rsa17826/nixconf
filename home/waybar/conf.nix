@@ -53,7 +53,7 @@
         };
 
         "pulseaudio" = {
-          format = "{icon} {volume}%";
+          format = "<span color='#89B4FA'>{icon}</span> {volume}%";
           format-muted = "󰝟 Muted";
           format-icons = [
             "󰕿"
@@ -64,7 +64,7 @@
         };
 
         "custom/github" = {
-          format = "{output}"; # output from the script
+          format = "<span color='#FF0000'>{output}</span>"; # output from the script
           interval = 30;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
@@ -117,7 +117,6 @@
       }
 
       #custom-github {
-        color: red;
         font-weight: bold;
       }
 
