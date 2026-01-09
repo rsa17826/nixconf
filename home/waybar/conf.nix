@@ -61,7 +61,7 @@
         };
 
         "custom/github" = {
-          format = "<span color='#FF0000'>{output}</span>"; # output from the script
+          format = "<span color='#FF0000'>{}</span>";
           interval = 300;
           exec = "sudo -n github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
