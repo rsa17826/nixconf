@@ -97,9 +97,10 @@ in
   ];
   environment.etc."mysecrets/github_token.env" = {
     source = "/etc/mysecrets/github_token.env"; # do not overwrite
-    owner = "root";
+    user = "root";
     group = "root";
     mode = "0400"; # root-only read
+    enable = true;
   };
   services.keyd = {
     enable = true;
