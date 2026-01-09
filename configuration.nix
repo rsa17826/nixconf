@@ -84,7 +84,7 @@ in
           command = "/etc/profiles/per-user/nyx/bin/github-widget";
           options = [
             "NOPASSWD"
-            "NOEXEC"
+            # "NOEXEC"
           ];
         }
       ];
