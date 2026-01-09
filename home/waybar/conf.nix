@@ -117,6 +117,12 @@
         color: @text;
         font-weight: bold;
       }
+      .github-dot {
+        color: red;
+        font-size: 10px;         /* Make the dot smaller than the icon */
+        margin-left: -14px;      /* Pull it back to the left (adjust based on font size) */
+        margin-right: 4px;       /* Keep space from the number */
+      }
 
       #workspaces button.active {
         color: @red;
