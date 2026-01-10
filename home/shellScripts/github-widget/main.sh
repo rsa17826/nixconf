@@ -16,4 +16,4 @@ fi
 TOOLTIP=$(echo "$NOTIFS_JSON" | jq -r '.[0:5] | map(.title) | join("\n")')
 
 # Output for Waybar
-echo "<span letter_spacing='-13000' color='red' rise='-9000' font_size='small'>$DOT  </span>   <span rise='-3000' margin-right='-20px'>$UNREAD</span>"
+echo "<span letter_spacing='-13000' color='red' rise='-9000' font_size='small'>$DOT  </span>   <span rise='-3000'>$UNREAD</span>"
