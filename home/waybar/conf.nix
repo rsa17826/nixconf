@@ -65,7 +65,9 @@
           interval = 300;
           exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
-          tooltip = "GitHub Notifications";
+          tooltip = true;
+          tooltip-format = "{}";
+          tooltip-command = "cat /tmp/github-widget-tooltip.txt";
         };
 
         "custom/notifications" = {
