@@ -134,7 +134,7 @@
     };
   };
   nixpkgs.overlays = [
-    (import ./overlays/vscode.nix)
+    (import ./overlays/vscodium.nix)
   ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
