@@ -101,7 +101,7 @@ in
             name = "qt-python";
             publisher = "theqtcompany";
             version = "1.11.1";
-            hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
+            hash = "sha256-yeZ67XitNgUaqEL0NCk8tsKuADit/kXmZ2q75R03nlQ=";
           }
           {
             name = "qt-core";
