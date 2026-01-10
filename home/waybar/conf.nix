@@ -36,6 +36,7 @@
             "active" = "";
             "default" = "";
           };
+          tooltip = false;
         };
 
         "clock" = {
@@ -46,6 +47,7 @@
         "disk" = {
           interval = 60;
           format = " {percentage_used}%";
+          tooltip = false;
           path = "/";
         };
 
@@ -57,6 +59,7 @@
             "󰖀"
             "󰕾"
           ];
+          tooltip = false;
           on-click = "pavucontrol";
         };
 
@@ -72,11 +75,13 @@
 
         "custom/notifications" = {
           format = "";
+          tooltip = false;
           on-click = "swaync-client -t -sw";
         };
 
         "custom/power" = {
           format = "";
+          tooltip = false;
           on-click = "wlogout";
         };
       };
