@@ -64,7 +64,7 @@
         };
 
         "custom/github" = {
-          format = "<span rise='-4000'></span>{}";
+          format = "<span rise='-6000'></span>{}";
           interval = 300;
           exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
