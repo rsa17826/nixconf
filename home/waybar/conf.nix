@@ -64,12 +64,12 @@
         };
 
         "custom/github" = {
-          format = "{text}";
+          format = "<span rise='-6000'></span>{}";
           interval = 300;
           exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
-          tooltip = true;
-          tooltip-format = "{tooltip}";
+          tooltip = false;
+          # tooltip-format = "{tooltip}";
         };
 
         "custom/notifications" = {
