@@ -63,7 +63,7 @@
         "custom/github" = {
           format = "{}";
           interval = 300;
-          exec = "sudo -n github-widget"; # run your script
+          exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = "GitHub Notifications";
         };
