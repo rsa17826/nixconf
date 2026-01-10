@@ -64,13 +64,12 @@
         };
 
         "custom/github" = {
-          format = "{}";
+          format = "{text}";
           interval = 300;
           exec = "github-widget"; # run your script
           on-click = "xdg-open https://github.com/notifications";
           tooltip = true;
-          tooltip-format = "{}";
-          tooltip-command = "cat /tmp/github-widget-tooltip.txt";
+          tooltip-format = "{tooltip}";
         };
 
         "custom/notifications" = {

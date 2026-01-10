@@ -16,6 +16,8 @@ fi
 TOOLTIP=$(echo "$NOTIFS_JSON" | jq -r '.[0:5] | map(.title) | join("\n")')
 
 # Output for Waybar
-echo "<span letter_spacing='-13000' color='red' rise='-6000' font_size='small'>$DOT  </span>   $UNREAD"
-# Set tooltip (Waybar will use it if configured)
-echo "$TOOLTIP" > /tmp/github-widget-tooltip.txt
+# Waybar uses the 'tooltip' property if we include it as JSON
+jq -n --arg dot "$DOT" \
+      --arg unread "$UNREAD" \
+      --arg tooltip "$TOOLTIP" \
+      '{text: "<span letter_spacing=\"-13000\" color=\"red\" rise=\"-6000\" font_size=\"small\">\($dot)  </span>   \($unread)", tooltip: $tooltip}'
