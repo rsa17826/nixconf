@@ -122,6 +122,7 @@
       #custom-github {
         color: @text;
         font-weight: bold;
+        margin-right: -20px;
       }
       .github-dot {
         color: red;
