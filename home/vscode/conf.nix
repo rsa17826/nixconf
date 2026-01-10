@@ -98,6 +98,12 @@ in
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
+            name = "qt-qml";
+            publisher = "theqtcompany";
+            version = "1.10.0";
+            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
+          }
+          {
             name = "font-viewer";
             publisher = "adamraichu";
             version = "1.1.1";
