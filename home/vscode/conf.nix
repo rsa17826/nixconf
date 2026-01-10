@@ -98,10 +98,16 @@ in
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
-            name = "qt-core";
+            name = "qt-python";
             publisher = "theqtcompany";
             version = "1.10.0";
             hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
+          }
+          {
+            name = "qt-core";
+            publisher = "theqtcompany";
+            version = "1.10.0";
+            hash = "sha256-jMXC9UqvVxlvNSAMoInv3wCKyDwL/1I0TbftYjJphdU=";
           }
           {
             name = "qt-ui";
