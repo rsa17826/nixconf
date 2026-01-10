@@ -101,7 +101,7 @@ in
             name = "qml-format";
             publisher = "Delgan";
             version = "1.1.0";
-            hash = "sha256-yeZ67XitNgUaqEL0NCk8tsKuADit/kXmZ2q75R03nlQ=";
+            hash = "sha256-QOovj9loSWAgaBCwW3HBPD/Wr7GwVppSRcCJ4R5X/as=";
           }
           {
             name = "qt-python";
