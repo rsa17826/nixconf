@@ -101,7 +101,7 @@ in
             name = "qt-qml";
             publisher = "theqtcompany";
             version = "1.10.0";
-            hash = "sha256-0T5gxxFkb+Muf65aoU4ONtEbhsqE5H5W9BhVhsqTySM=";
+            hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
           }
           {
             name = "font-viewer";
