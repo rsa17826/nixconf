@@ -98,6 +98,12 @@ in
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
+            name = "qml-format";
+            publisher = "Delgan";
+            version = "1.1.0";
+            hash = "sha256-yeZ67XitNgUaqEL0NCk8tsKuADit/kXmZ2q75R03nlQ=";
+          }
+          {
             name = "qt-python";
             publisher = "theqtcompany";
             version = "1.11.1";
