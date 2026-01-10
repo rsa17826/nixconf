@@ -120,6 +120,7 @@
   #     ExecStart = "setleds +num";
   #   };
   # };
+  virtualisation.virtualbox.guest.enable = true;
   console.useXkbConfig = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # xdg.portal = {
