@@ -120,6 +120,8 @@
   #     ExecStart = "setleds +num";
   #   };
   # };
+  # TODO
+  # might do something
   virtualisation.virtualbox.guest.enable = true;
   console.useXkbConfig = true;
   fonts.fontconfig = {

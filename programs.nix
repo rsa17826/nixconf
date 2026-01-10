@@ -61,6 +61,8 @@ in
       "input"
     ];
     packages = with pkgs; [
+      # TODO
+      quickshell # widget thing
       typos # spellchecker
       typos-lsp
       keepass # password manager
