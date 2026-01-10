@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fetch unread notifications
-NOTIFICATIONS = sudo -n githubNotifications
+NOTIFICATIONS=$(sudo -n githubNotifications)
 echo $NOTIFICATIONS
 UNREAD=$($NOTIFICATIONS | jq '. | length')
 
