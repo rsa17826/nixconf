@@ -107,7 +107,7 @@ in
             name = "qt-ui";
             publisher = "theqtcompany";
             version = "1.10.0";
-            hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
+            hash = "sha256-a3/O1do1SSgfHpXTjc7VBV/Tg2KuB8QB2hKcatt2ZGw=";
           }
           {
             name = "qt-qml";
