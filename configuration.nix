@@ -122,6 +122,16 @@
   # };
   virtualisation.virtualbox.guest.enable = true;
   console.useXkbConfig = true;
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
+      serif = [ "JetBrainsMono Nerd Font Propo" ];
+      monospace = [ "JetBrainsMono Nerd Font Mono" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # xdg.portal = {
   #   enable = true;
