@@ -2,7 +2,7 @@
 
 # Fetch unread notifications
 NOTIFICATIONS=$(sudo -n githubNotifications)
-echo $NOTIFICATIONS
+# echo $NOTIFICATIONS
 UNREAD=$($NOTIFICATIONS | jq '. | length')
 
 DOT=$([ "$UNREAD" -gt 0 ] && echo "●" || echo "")
