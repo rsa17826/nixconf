@@ -111,6 +111,7 @@ in
       # bottles
       # https://github.com/anyrun-org/anyrun
       # ulauncher
+      qt6.qtdeclarative
     ];
   };
   environment.systemPackages = with pkgs; [
