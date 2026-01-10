@@ -100,7 +100,7 @@ in
           {
             name = "qt-python";
             publisher = "theqtcompany";
-            version = "1.10.0";
+            version = "1.11.1";
             hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
           }
           {
