@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
-# Fetch unread notifications
-NOTIFICATIONS=$(sudo -n githubNotifications)
-# echo $NOTIFICATIONS
-UNREAD=$($NOTIFICATIONS | jq '. | length')
+# Fetch notifications JSON
+NOTIFS_JSON=$(sudo -n githubNotifications 2>/dev/null) || NOTIFS_JSON="[]"
 
-DOT=$([ "$UNREAD" -gt 0 ] && echo "●" || echo "")
+# Count unread notifications
+UNREAD=$(echo "$NOTIFS_JSON" | jq 'length')
+
+# Prepare red dot if any unread
+DOT=""
+if [ "$UNREAD" -gt 0 ]; then
+    DOT="●"
+fi
+
+# Prepare tooltip with latest 5 notification titles
+TOOLTIP=$(echo "$NOTIFS_JSON" | jq -r '.[0:5] | map(.title) | join("\n")')
 
 # Output for Waybar
 echo "<span letter_spacing='-13000' color='red' rise='-6000' font_size='small'>$DOT  </span>   $UNREAD"
+# Set tooltip (Waybar will use it if configured)
+echo "$TOOLTIP" > /tmp/github-widget-tooltip.txt
