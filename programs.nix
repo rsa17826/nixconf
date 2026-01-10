@@ -29,7 +29,6 @@ in
     };
   };
   programs = {
-    quickshell.enable = true;
     bash = {
       enable = true;
       shellAliases = shellAliases;
