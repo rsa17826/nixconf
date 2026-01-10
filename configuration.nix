@@ -81,7 +81,7 @@
           options = [ "NOPASSWD" ];
         }
         {
-          command = "/etc/profiles/per-user/nyx/bin/github-widget";
+          command = "/etc/profiles/per-user/nyx/bin/githubNotifications";
           options = [
             "NOPASSWD"
             # "NOEXEC"
