@@ -9,9 +9,8 @@ else
 fi
 
 # Fetch unread notifications
-$NOTIFICATIONS = curl -s -H "Authorization: token $GITHUB_TOKEN" \
-  https://api.github.com/notifications?all=false
-echo $NOTIFICATIONS|jq '.[0] | {
+curl -s -H "Authorization: token $GITHUB_TOKEN" \
+  https://api.github.com/notifications?all=false|jq '.[0] | {
         updated_at: .updated_at,
         title: .subject.title,
         url: .subject.url
