@@ -14,16 +14,15 @@ Scope {
     delegate: Component {
       PanelWindow {
         required property var modelData
+
+        implicitHeight: 30
         screen: modelData
 
         anchors {
-          top: true
           left: true
           right: true
+          top: true
         }
-
-        implicitHeight: 30
-
         Text {
           // remove the id as we don't need it anymore
 
@@ -35,9 +34,9 @@ Scope {
       }
     }
   }
-
   Process {
     id: dateProc
+
     command: ["date"]
     running: true
 
@@ -46,11 +45,11 @@ Scope {
       onStreamFinished: root.time = this.text
     }
   }
-
   Timer {
     interval: 1000
-    running: true
     repeat: true
+    running: true
+
     onTriggered: dateProc.running = true
   }
 }
