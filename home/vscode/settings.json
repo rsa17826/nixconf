@@ -18,7 +18,7 @@
   },
   "editor.pasteAs.enabled": false,
   "debug.focusWindowOnBreak": false,
-  "typos.path": "/etc/profiles/per-user/${uname}/bin/typos-lsp",
+  "typos.path": "/etc/profiles/per-user/nyx/bin/typos-lsp",
   "files.exclude": {
     // "addons": true,
     "**/maps": true,
@@ -702,5 +702,12 @@
   "[toml]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
   },
-  "nix.enableLanguageServer": true
+  "nix.enableLanguageServer": true,
+  "qt-qml.qmlls.traceLsp": "verbose",
+  "qt-qml.qmlls.verboseOutput": true,
+  "qt-qml.qmlls.useQmlImportPathEnvVar": true,
+  "[qml]": {
+    "editor.defaultFormatter": "Delgan.qml-format"
+  },
+  "qmlFormat.extraArguments": ["-n", "--semicolon-rule", "essential"]
 }
