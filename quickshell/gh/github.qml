@@ -7,14 +7,13 @@ ShellRoot {
 
   // Data variables
   property string repoName: "github.com"
-  property string updateTitle: "Waiting for data..."
   property string timeStamp: ""
+  property string updateTitle: "Waiting for data..."
 
   // Listen for lines from stdin
   // You can send data via: echo '{"title": "...", ...}' > /proc/<pid>/fd/0
   // or by piping tail -f into quickshell.
   Connections {
-    target: Quickshell.stdin
     function onLine(data) {
       try {
         for (var thing of JSON.parse(data)) {
@@ -23,36 +22,37 @@ ShellRoot {
           updateTitle = thing.title;
 
           // Handling date
-          let rawDate = thing?.updated_at || "";
+          let rawDate = thing?.updated_at || ""
           timeStamp = rawDate ? "Updated " + rawDate.split('T')[0] : "recently";
 
           // Extracting repo from URL
-          let url = (thing.url) ? thing.url : (thing.url || "");
+          let url = (thing.url) ? thing.url : (thing.url || "")
         }
       } catch (e) {
-        console.log("Error parsing incoming data: " + e);
+        console.log("Error parsing incoming data: " + e)
       }
     }
-  }
 
+    target: Quickshell.stdin
+  }
   PanelWindow {
     id: win
 
-    implicitWidth: 412
     implicitHeight: mainLayout.implicitHeight
+    implicitWidth: 412
 
     anchors {
-      top: true
       right: true
+      top: true
     }
-
     Rectangle {
       id: mainLayout
+
       anchors.fill: parent
-      implicitHeight: 100
-      color: "#121212"
       border.color: "#333333"
       border.width: 1
+      color: "#121212"
+      implicitHeight: 100
 
       Column {
         anchors.fill: parent
@@ -60,28 +60,28 @@ ShellRoot {
 
         // Header Bar (22px)
         Rectangle {
-          width: parent.width
-          height: 22
           color: "#a38b8b"
+          height: 22
+          width: parent.width
 
           Text {
             anchors.left: parent.left
             anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            text: "GitHub Notifications"
             color: "white"
+            font.bold: true
             font.family: "Monospace"
             font.pixelSize: 11
-            font.bold: true
             renderType: Text.NativeRendering
+            text: "GitHub Notifications"
           }
         }
 
         // Notification Body (56px)
         Item {
-          width: parent.width
-          height: 56
           anchors.leftMargin: 10
+          height: 56
+          width: parent.width
 
           // Text Content
           Column {
@@ -91,57 +91,57 @@ ShellRoot {
             spacing: 2
 
             Text {
-              text: updateTitle
               color: "#ebc08d"
+              elide: Text.ElideRight
+              font.bold: true
               font.family: "Monospace"
               font.pixelSize: 15
-              font.bold: true
-              width: 340
-              elide: Text.ElideRight
               renderType: Text.NativeRendering
+              text: updateTitle
+              width: 340
             }
-
             Text {
-              text: "Release · " + repoName + " · " + timeStamp
               color: "#d1a77b"
               font.family: "Monospace"
               font.pixelSize: 12
               renderType: Text.NativeRendering
+              text: "Release · " + repoName + " · " + timeStamp
             }
           }
         }
 
         // Footer Bar (22px)
         Rectangle {
-          width: parent.width
-          height: 22
           color: "#a38b8b"
+          height: 22
+          width: parent.width
 
           Text {
             anchors.left: parent.left
             anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            text: "Sync Active"
             color: "#e0e0e0"
             font.family: "Monospace"
             font.pixelSize: 11
             renderType: Text.NativeRendering
+            text: "Sync Active"
           }
-
           Text {
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            text: "Close"
             color: closeArea.containsMouse ? "white" : "#e0e0e0"
             font.family: "Monospace"
             font.pixelSize: 11
             renderType: Text.NativeRendering
+            text: "Close"
 
             MouseArea {
               id: closeArea
+
               anchors.fill: parent
               hoverEnabled: true
+
               onClicked: Qt.quit()
             }
           }
