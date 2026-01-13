@@ -4,46 +4,47 @@ import Quickshell.Io
 import QtQuick
 
 Scope {
-    id: root
-    property string time
+  id: root
 
-    Variants {
-        model: Quickshell.screens
+  property string time
 
-        PanelWindow {
-            required property var modelData
-            screen: modelData
+  Variants {
+    model: Quickshell.screens
 
-            anchors {
-                top: true
-                left: true
-                right: true
-            }
+    PanelWindow {
+      required property var modelData
 
-            implicitHeight: 30
+      implicitHeight: 30
+      screen: modelData
 
-            // the ClockWidget type we just created
-            ClockWidget {
-                anchors.centerIn: parent
-                time: root.time
-            }
-        }
+      anchors {
+        left: true
+        right: true
+        top: true
+      }
+
+      // the ClockWidget type we just created
+      ClockWidget {
+        anchors.centerIn: parent
+        time: root.time
+      }
     }
+  }
+  Process {
+    id: dateProc
 
-    Process {
-        id: dateProc
-        command: ["date"]
-        running: true
+    command: ["date"]
+    running: true
 
-        stdout: StdioCollector {
-            onStreamFinished: root.time = this.text
-        }
+    stdout: StdioCollector {
+      onStreamFinished: root.time = this.text
     }
+  }
+  Timer {
+    interval: 1000
+    repeat: true
+    running: true
 
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: dateProc.running = true
-    }
+    onTriggered: dateProc.running = true
+  }
 }
