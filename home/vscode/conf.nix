@@ -26,16 +26,17 @@ let
     };
   buildFromGh =
     {
-      name,
+      # name,
       version,
       ghName,
       ghRev,
       ghSha ? "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
       ghRepo,
       sourceRoot ? ".",
+      vscodeExtName,
+      vscodeExtPublisher,
     }:
     pkgs.vscode-utils.buildVscodeExtension {
-      pname = name;
       inherit version sourceRoot;
 
       src = pkgs.fetchFromGitHub {
@@ -46,9 +47,8 @@ let
         sha256 = ghSha;
       };
       npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-      vscodeExtUniqueId = "Jota0222.multi-formatter";
-      vscodeExtName = "multi-formatter";
-      vscodeExtPublisher = "Jota0222";
+      vscodeExtUniqueId = "${vscodeExtPublisher}.${vscodeExtName}";
+      inherit vscodeExtName vscodeExtPublisher;
       meta = {
         description = "Run multiple formatters sequentially in VS Code";
         platforms = pkgs.lib.platforms.all;
@@ -96,7 +96,8 @@ in
             filename = "4-to-2-formatter-7.0.0.vsix";
           })
           (buildFromGh {
-            name = "auto-regex";
+            vscodeExtName = "auto-regex";
+            vscodeExtPublisher = "rssaromeo";
             version = "49.0.0";
             ghName = "rsa17826";
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
@@ -104,20 +105,22 @@ in
             ghRepo = "auto-regex-vscode-extension";
           })
           (buildFromGh {
-            name = "multi-formatter";
             version = "6.0.0";
             ghName = "rsa17826";
             ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
             ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
             ghRepo = "MultiFormatterVSCode";
+            vscodeExtName = "multi-formatter";
+            vscodeExtPublisher = "Jota0222";
           })
           (buildFromGh {
             ghName = "coopmoney";
-            name = "nix-embedded-languages";
+            vscodeExtName = "nix-embedded-languages";
             ghRepo = "vscode-nix-embedded-languages";
             version = "1.1.1";
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
+            vscodeExtPublisher = "coopermaruyama";
           })
 
           # (buildLocalEx {
