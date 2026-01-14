@@ -115,6 +115,7 @@ in
             ghRepo = "vscode-nix-embedded-languages";
             version = "1.1.1";
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
+            ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
           })
 
           # (buildLocalEx {
@@ -134,7 +135,6 @@ in
             publisher = "rssaromeo";
             version = "9.0.0";
             filename = "simpledatastorage-9.0.0.vsix";
-            ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
