@@ -80,7 +80,7 @@ in
               repo = "MultiFormatterVSCode";
               # git ls-remote https://github.com/rsa17826/MultiFormatterVSCode HEAD
               rev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d"; # pin this
-              sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+              sha256 = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
             };
 
             npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
