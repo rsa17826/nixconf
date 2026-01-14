@@ -24,6 +24,36 @@ let
       pname = name; # Add this line specifically
       sourceRoot = ".";
     };
+  buildFromGh =
+    {
+      name,
+      version,
+      ghName,
+      ghRev,
+      ghSha,
+      ghRepo,
+      sourceRoot ? ".",
+    }:
+    pkgs.vscode-utils.buildVscodeExtension {
+      pname = name;
+      inherit version sourceRoot;
+
+      src = pkgs.fetchFromGitHub {
+        owner = ghName;
+        repo = ghRepo;
+        # git ls-remote https://github.com/rsa17826/MultiFormatterVSCode HEAD
+        rev = ghRev; # pin this
+        sha256 = ghSha;
+      };
+      npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+      vscodeExtUniqueId = "Jota0222.multi-formatter";
+      vscodeExtName = "multi-formatter";
+      vscodeExtPublisher = "Jota0222";
+      meta = {
+        description = "Run multiple formatters sequentially in VS Code";
+        platforms = pkgs.lib.platforms.all;
+      };
+    };
   # dlExt =
   #   {
   #     name,
@@ -71,26 +101,13 @@ in
             version = "49.0.0";
             filename = "auto-regex-49.0.0.vsix";
           })
-          (pkgs.vscode-utils.buildVscodeExtension {
-            pname = "multi-formatter";
-            version = "6.0.0"; # match package.json
-
-            src = pkgs.fetchFromGitHub {
-              owner = "rsa17826";
-              repo = "MultiFormatterVSCode";
-              # git ls-remote https://github.com/rsa17826/MultiFormatterVSCode HEAD
-              rev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d"; # pin this
-              sha256 = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
-            };
-            sourceRoot = ".";
-            npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-            vscodeExtUniqueId = "Jota0222.multi-formatter";
-            vscodeExtName = "multi-formatter";
-            vscodeExtPublisher = "Jota0222";
-            meta = {
-              description = "Run multiple formatters sequentially in VS Code";
-              platforms = pkgs.lib.platforms.all;
-            };
+          (buildFromGh {
+            name = "multi-formatter";
+            version = "6.0.0";
+            ghName = "rsa17826";
+            ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
+            ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+            ghRepo = "MultiFormatterVSCode";
           })
 
           # (buildLocalEx {
