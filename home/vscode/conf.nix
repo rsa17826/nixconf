@@ -38,7 +38,7 @@ let
     }:
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version sourceRoot;
-
+      pname = vscodeExtName;
       src = pkgs.fetchFromGitHub {
         owner = ghName;
         repo = ghRepo;
@@ -96,31 +96,37 @@ in
             filename = "4-to-2-formatter-7.0.0.vsix";
           })
           (buildFromGh {
+            ghName = "rsa17826";
+            ghRepo = "auto-regex-vscode-extension";
+
             vscodeExtName = "auto-regex";
             vscodeExtPublisher = "rssaromeo";
             version = "49.0.0";
-            ghName = "rsa17826";
+
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
             ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
-            ghRepo = "auto-regex-vscode-extension";
           })
           (buildFromGh {
-            version = "6.0.0";
             ghName = "rsa17826";
-            ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
-            ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
             ghRepo = "MultiFormatterVSCode";
+
             vscodeExtName = "multi-formatter";
             vscodeExtPublisher = "Jota0222";
+            version = "6.0.0";
+
+            ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
+            ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
           })
           (buildFromGh {
             ghName = "coopmoney";
-            vscodeExtName = "nix-embedded-languages";
             ghRepo = "vscode-nix-embedded-languages";
+
+            vscodeExtName = "nix-embedded-languages";
+            vscodeExtPublisher = "coopermaruyama";
             version = "1.1.1";
+
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-            vscodeExtPublisher = "coopermaruyama";
           })
 
           # (buildLocalEx {
