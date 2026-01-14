@@ -6,7 +6,7 @@
 }:
 let
   shellAliases = {
-    update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure |& nom";
+    update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure  --log-format internal-json -v |& nom --json";
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
     vim = "nvim";
