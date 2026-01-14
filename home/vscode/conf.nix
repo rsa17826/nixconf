@@ -100,6 +100,7 @@ in
 
             ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
             ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
+            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -111,6 +112,7 @@ in
 
             ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
             ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
+            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -122,6 +124,7 @@ in
 
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
             ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
+            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -146,13 +149,6 @@ in
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
             pathFix = "/source";
           })
-
-          # (buildLocalEx {
-          #   name = "multi-formatter";
-          #   publisher = "Jota0222";
-          #   version = "6.0.0";
-          #   filename = "multi-formatter-6.0.0.vsix";
-          # })
           (buildFromGh {
             ghName = "rsa17826";
             ghRepo = "sds-vscode-language";
