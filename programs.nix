@@ -39,7 +39,12 @@ in
     };
     fish = {
       enable = true;
-      shellAliases = shellAliases;
+      shellAliases = (
+        shellAliases
+        // {
+          update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure &| nom";
+        }
+      );
     };
     hyprland = {
       enable = true;
@@ -132,7 +137,7 @@ in
     anyrun # application launcher
     # xmodmap
 
-nix-output-monitor # nix update formatter
+    nix-output-monitor # nix update formatter
     cascadia-code # font
     swaynotificationcenter # notification daemon
 
