@@ -16,8 +16,8 @@ let
     pkgs.vscode-utils.buildVscodeExtension {
       inherit name version;
       src = ./vsix/${filename};
-      vscodeExtName = name;
-      vscodeExtPublisher = publisher;
+      extName = name;
+      extCreator = publisher;
       vscodeExtUniqueId = "${publisher}.${name}";
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
       hash = pkgs.lib.fakeHash;
@@ -26,19 +26,18 @@ let
     };
   buildFromGh =
     {
-      # name,
       version,
       ghName,
       ghRev,
       ghSha ? "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
       ghRepo,
       sourceRoot ? ".",
-      vscodeExtName,
-      vscodeExtPublisher,
+      extName,
+      extCreator,
     }:
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version sourceRoot;
-      pname = vscodeExtName;
+      pname = extName;
       src = pkgs.fetchFromGitHub {
         owner = ghName;
         repo = ghRepo;
@@ -47,8 +46,9 @@ let
         sha256 = ghSha;
       };
       npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-      vscodeExtUniqueId = "${vscodeExtPublisher}.${vscodeExtName}";
-      inherit vscodeExtName vscodeExtPublisher;
+      vscodeExtUniqueId = "${extCreator}.${extName}";
+      vscodeExtName = extName;
+      vscodeExtPublisher = extCreator;
       meta = {
         description = "Run multiple formatters sequentially in VS Code";
         platforms = pkgs.lib.platforms.all;
@@ -99,8 +99,8 @@ in
             ghName = "rsa17826";
             ghRepo = "auto-regex-vscode-extension";
 
-            vscodeExtName = "auto-regex";
-            vscodeExtPublisher = "rssaromeo";
+            extName = "auto-regex";
+            extCreator = "rssaromeo";
             version = "49.0.0";
 
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
@@ -110,8 +110,8 @@ in
             ghName = "rsa17826";
             ghRepo = "MultiFormatterVSCode";
 
-            vscodeExtName = "multi-formatter";
-            vscodeExtPublisher = "Jota0222";
+            extName = "multi-formatter";
+            extCreator = "Jota0222";
             version = "6.0.0";
 
             ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
@@ -121,8 +121,8 @@ in
             ghName = "coopmoney";
             ghRepo = "vscode-nix-embedded-languages";
 
-            vscodeExtName = "nix-embedded-languages";
-            vscodeExtPublisher = "coopermaruyama";
+            extName = "nix-embedded-languages";
+            extCreator = "coopermaruyama";
             version = "1.1.1";
 
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
