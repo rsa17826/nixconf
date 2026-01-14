@@ -1,7 +1,13 @@
-{ pkgs, uname, ... }:
+{
+  pkgs,
+  uname,
+  lib,
+  ...
+}:
 let
+  updateCommand = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure |& nom";
   shellAliases = {
-    update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure |& nom";
+    update = updateCommand;
     udpate = "update";
     push = "git add -A && git commit -m a && git push";
     vim = "nvim";
@@ -42,7 +48,7 @@ in
       shellAliases = (
         shellAliases
         // {
-          update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure &| nom";
+          update = lib.strings.replaceStrings [ "|&" ] [ "&|" ] updateCommand;
         }
       );
     };
