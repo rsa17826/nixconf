@@ -34,7 +34,7 @@ let
       sourceRoot ? ".",
       extName,
       extCreator,
-      t ? "",
+      pathFix ? "",
     }:
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version sourceRoot;
@@ -47,7 +47,7 @@ let
         sha256 = ghSha;
       };
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-      vscodeExtUniqueId = "${extCreator}.${extName}${t}";
+      vscodeExtUniqueId = "${extCreator}.${extName}${pathFix}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
       meta = {
@@ -128,7 +128,7 @@ in
 
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-            t = "/source";
+            pathFix = "/source";
           })
 
           # (buildLocalEx {
@@ -143,11 +143,17 @@ in
             version = "22.0.0";
             filename = "simple-auto-formatter-22.0.0.vsix";
           })
-          (buildLocalEx {
-            name = "simpledatastorage";
-            publisher = "rssaromeo";
+          (buildFromGh {
+            ghName = "rsa17826";
+            ghRepo = "sds-vscode-language";
+
+            extName = "simpledatastorage";
+            extCreator = "rssaromeo";
             version = "9.0.0";
-            filename = "simpledatastorage-9.0.0.vsix";
+
+            ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
+            # ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
+            pathFix = "/source";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
