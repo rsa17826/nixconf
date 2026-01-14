@@ -134,12 +134,7 @@ in
             publisher = "rssaromeo";
             version = "9.0.0";
             filename = "simpledatastorage-9.0.0.vsix";
-          })
-          (buildLocalEx {
-            name = "nix-embedded-languages";
-            publisher = "coopmoney";
-            version = "1.0.1";
-            filename = "coopmoney.nix-embedded-languages-1.0.1.vsix";
+            ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
