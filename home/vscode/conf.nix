@@ -30,7 +30,7 @@ let
       version,
       ghName,
       ghRev,
-      ghSha,
+      ghSha ? "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
       ghRepo,
       sourceRoot ? ".",
     }:
@@ -108,6 +108,12 @@ in
             ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
             ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
             ghRepo = "MultiFormatterVSCode";
+          })
+          (buildFromGh {
+            ghName = "coopmoney";
+            ghRepo = "vscode-nix-embedded-languages";
+            version = "1.1.1";
+            ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
           })
 
           # (buildLocalEx {
