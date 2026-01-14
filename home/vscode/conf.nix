@@ -83,8 +83,8 @@ in
             };
 
             npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-            vscodeExtUniqueId = "Jota0222.MultiFormatterVSCode";
-
+            vscodeExtUniqueId = "Jota0222.multi-formatter";
+            vscodeExtName = "multi-formatter";
             meta = {
               description = "Run multiple formatters sequentially in VS Code";
               platforms = pkgs.lib.platforms.all;
