@@ -71,12 +71,31 @@ in
             version = "49.0.0";
             filename = "auto-regex-49.0.0.vsix";
           })
-          (buildLocalEx {
-            name = "multi-formatter";
-            publisher = "Jota0222";
-            version = "6.0.0";
-            filename = "multi-formatter-6.0.0.vsix";
+          (pkgs.vscode-utils.buildVscodeExtension {
+            pname = "multi-formatter";
+            version = "6.0.0"; # match package.json
+
+            src = pkgs.fetchFromGitHub {
+              owner = "rsa17826";
+              repo = "MultiFormatterVSCode";
+              rev = "COMMIT_SHA"; # pin this
+              sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+            };
+
+            npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+
+            meta = {
+              description = "Run multiple formatters sequentially in VS Code";
+              platforms = pkgs.lib.platforms.all;
+            };
           })
+
+          # (buildLocalEx {
+          #   name = "multi-formatter";
+          #   publisher = "Jota0222";
+          #   version = "6.0.0";
+          #   filename = "multi-formatter-6.0.0.vsix";
+          # })
           (buildLocalEx {
             name = "simple-auto-formatter";
             publisher = "rssaromeo";
