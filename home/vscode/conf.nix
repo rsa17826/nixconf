@@ -100,7 +100,7 @@ in
             version = "49.0.0";
             ghName = "rsa17826";
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
-            # ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+            ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
             ghRepo = "auto-regex-vscode-extension";
           })
           (buildFromGh {
