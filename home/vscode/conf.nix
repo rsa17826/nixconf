@@ -45,12 +45,12 @@ let
         rev = ghRev; # pin this
         sha256 = ghSha;
       };
-      npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+      # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
       meta = {
-        description = "Run multiple formatters sequentially in VS Code";
+        # description = "Run multiple formatters sequentially in VS Code";
         platforms = pkgs.lib.platforms.all;
       };
     };
