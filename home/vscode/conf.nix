@@ -34,6 +34,7 @@ let
       sourceRoot ? ".",
       extName,
       extCreator,
+      t ? "",
     }:
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version sourceRoot;
@@ -46,7 +47,7 @@ let
         sha256 = ghSha;
       };
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-      vscodeExtUniqueId = "${extCreator}.${extName}";
+      vscodeExtUniqueId = "${extCreator}.${extName}${t}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
       meta = {
@@ -127,6 +128,7 @@ in
 
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
+            t = "/source";
           })
 
           # (buildLocalEx {
