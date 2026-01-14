@@ -34,7 +34,6 @@ let
       sourceRoot ? ".",
       extName,
       extCreator,
-      pathFix ? "",
     }:
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version sourceRoot;
@@ -47,7 +46,7 @@ let
         sha256 = ghSha;
       };
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-      vscodeExtUniqueId = "${extCreator}.${extName}${pathFix}";
+      vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
       meta = {
@@ -100,7 +99,6 @@ in
 
             ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
             ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
-            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -112,7 +110,6 @@ in
 
             ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
             ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
-            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -124,7 +121,6 @@ in
 
             ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
             ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
-            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -147,7 +143,6 @@ in
 
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
             ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-            pathFix = "/source";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -159,7 +154,6 @@ in
 
             ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
             ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
-            pathFix = "/simpledatastorage-9.0.0";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
