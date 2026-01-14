@@ -95,11 +95,13 @@ in
             version = "7.0.0";
             filename = "4-to-2-formatter-7.0.0.vsix";
           })
-          (buildLocalEx {
+          (buildFromGh {
             name = "auto-regex";
-            publisher = "rssaromeo";
             version = "49.0.0";
-            filename = "auto-regex-49.0.0.vsix";
+            ghName = "rsa17826";
+            ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
+            # ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+            ghRepo = "auto-regex-vscode-extension";
           })
           (buildFromGh {
             name = "multi-formatter";
