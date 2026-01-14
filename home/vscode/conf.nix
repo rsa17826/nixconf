@@ -153,12 +153,6 @@ in
           #   version = "6.0.0";
           #   filename = "multi-formatter-6.0.0.vsix";
           # })
-          (buildLocalEx {
-            name = "simple-auto-formatter";
-            publisher = "rssaromeo";
-            version = "22.0.0";
-            filename = "simple-auto-formatter-22.0.0.vsix";
-          })
           (buildFromGh {
             ghName = "rsa17826";
             ghRepo = "sds-vscode-language";
