@@ -16,8 +16,8 @@ let
     pkgs.vscode-utils.buildVscodeExtension {
       inherit name version;
       src = ./vsix/${filename};
-      extName = name;
-      extCreator = publisher;
+      vscodeExtName = name;
+      vscodeExtPublisher = publisher;
       vscodeExtUniqueId = "${publisher}.${name}";
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
       hash = pkgs.lib.fakeHash;
