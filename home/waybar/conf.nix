@@ -85,7 +85,7 @@
         };
       };
     };
-
+    # syntax: css
     style = ''
       @define-color red #ff4d4d;
       @define-color yellow #f9e2af;
