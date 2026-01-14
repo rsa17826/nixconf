@@ -78,7 +78,8 @@ in
             src = pkgs.fetchFromGitHub {
               owner = "rsa17826";
               repo = "MultiFormatterVSCode";
-              rev = "COMMIT_SHA"; # pin this
+              # git ls-remote https://github.com/rsa17826/MultiFormatterVSCode HEAD
+              rev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d"; # pin this
               sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
             };
 
