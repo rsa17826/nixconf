@@ -45,12 +45,7 @@ in
     };
     fish = {
       enable = true;
-      shellAliases = (
-        shellAliases
-        // {
-          update = lib.strings.replaceStrings [ "|&" ] [ "&|" ] updateCommand;
-        }
-      );
+      shellAliases = lib.mapAttrs (_k: v: lib.strings.replaceStrings [ "|&" ] [ "&|" ] v) shellAliases;
     };
     hyprland = {
       enable = true;
