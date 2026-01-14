@@ -92,6 +92,17 @@ in
         ++ [
           (buildFromGh {
             ghName = "rsa17826";
+            ghRepo = "simple-auto-formatter";
+
+            extName = "simple-auto-formatter";
+            extCreator = "rssaromeo";
+            version = "22.0.0";
+
+            ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
+            # ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
+          })
+          (buildFromGh {
+            ghName = "rsa17826";
             ghRepo = "4-to-2-formatter";
 
             extName = "4-to-2-formatter";
@@ -99,7 +110,7 @@ in
             version = "7.0.0";
 
             ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
-            # ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
+            ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
           })
           (buildFromGh {
             ghName = "rsa17826";
