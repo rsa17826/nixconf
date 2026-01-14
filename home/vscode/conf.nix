@@ -90,11 +90,16 @@ in
           # })
         ]
         ++ [
-          (buildLocalEx {
-            name = "4-to-2-formatter";
-            publisher = "rssaromeo";
+          (buildFromGh {
+            ghName = "rsa17826";
+            ghRepo = "4-to-2-formatter";
+
+            extName = "4-to-2-formatter";
+            extCreator = "rssaromeo";
             version = "7.0.0";
-            filename = "4-to-2-formatter-7.0.0.vsix";
+
+            ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
+            # ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
           })
           (buildFromGh {
             ghName = "rsa17826";
@@ -152,8 +157,8 @@ in
             version = "9.0.0";
 
             ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
-            # ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-            pathFix = "/source";
+            ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
+            pathFix = "/simpledatastorage-9.0.0";
           })
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
