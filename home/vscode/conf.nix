@@ -111,6 +111,7 @@ in
           })
           (buildFromGh {
             ghName = "coopmoney";
+            name = "nix-embedded-languages";
             ghRepo = "vscode-nix-embedded-languages";
             version = "1.1.1";
             ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
