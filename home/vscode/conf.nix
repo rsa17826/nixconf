@@ -82,7 +82,7 @@ in
               rev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d"; # pin this
               sha256 = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
             };
-
+            sourceRoot = ".";
             npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
             vscodeExtUniqueId = "Jota0222.multi-formatter";
             vscodeExtName = "multi-formatter";
