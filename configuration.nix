@@ -102,8 +102,7 @@
 
     keyboards.default = {
       devices = [
-        "/dev/input/by-id/*-event-kbd"
-        # "/dev/input/by-id/usb-*-event-kbd"
+        "/dev/input/by-path/*-event-kbd"
       ];
 
       config = ''
@@ -117,14 +116,8 @@
         )
 
         (deflayer base
-          ;; typo fixes
           i n s s t e a d space (instead space)
           s u j e s t i o n s space (suggestions space)
-          s u j e s t i o n space (suggestion space)
-          b u t i f i e r space (beautifier space)
-          p r o p i g a t o r space (propagator space)
-          m u n i t e s space (minutes space)
-          m i n i t s space (minutes space)
         )
       '';
     };
