@@ -117,15 +117,14 @@
           spc bspc
         )
 
-        ;; AHK-style text expansion
         (defseq
-          (i n s s t e a d spc) (instead spc)
-          (s u j e s t i o n s spc) (suggestions spc)
-          (s u j e s t i o n spc) (suggestion spc)
-          (b u t i f i e r spc) (beautifier spc)
-          (p r o p i g a t o r spc) (propagator spc)
-          (m u n i t e s spc) (minutes spc)
-          (m i n i t s spc) (minutes spc)
+          insstead_exp  (i n s s t e a d spc) (instead spc)
+          suggestions_exp  (s u j e s t i o n s spc) (suggestions spc)
+          suggestion_exp  (s u j e s t i o n spc) (suggestion spc)
+          beautifier_exp  (b u t i f i e r spc) (beautifier spc)
+          propagator_exp  (p r o p i g a t o r spc) (propagator spc)
+          minutes_exp1  (m u n i t e s spc) (minutes spc)
+          minutes_exp2  (m i n i t s spc) (minutes spc)
         )
       '';
     };
