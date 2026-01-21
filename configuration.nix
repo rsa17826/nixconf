@@ -108,12 +108,12 @@
       config = ''
         (defsrc
           a b c d e f g h i j k l m n o p q r s t u v w x y z
-          space backspace
+          spc bspc
         )
 
         (deflayer base
-          i n s s t e a d space (instead space)
-          s u j e s t i o n s space (suggestions space)
+          i n s s t e a d spc (instead spc)
+          s u j e s t i o n s spc (suggestions spc)
         )
       '';
     };
