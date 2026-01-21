@@ -111,9 +111,14 @@
           spc bspc
         )
 
-        (deflayer base
-          i n s s t e a d spc (instead spc)
-          s u j e s t i o n s spc (suggestions spc)
+        (defseq
+          (i n s s t e a d spc) (instead spc)
+          (s u j e s t i o n s spc) (suggestions spc)
+          (s u j e s t i o n spc) (suggestion spc)
+          (b u t i f i e r spc) (beautifier spc)
+          (p r o p i g a t o r spc) (propagator spc)
+          (m u n i t e s spc) (minutes spc)
+          (m i n i t s spc) (minutes spc)
         )
       '';
     };
