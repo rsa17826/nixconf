@@ -106,10 +106,6 @@
       ];
 
       config = ''
-        (defcfg
-          process-unmapped-keys yes
-        )
-
         (defsrc
           a b c d e f g h i j k l m n o p q r s t u v w x y z
           space backspace
@@ -147,7 +143,7 @@
   # };
   # TODO
   # might do something
-  virtualisation.virtualbox.guest.enable = true;
+  # virtualisation.virtualbox.guest.enable = true;
   console.useXkbConfig = true;
   fonts.fontconfig = {
     enable = true;
