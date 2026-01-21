@@ -97,6 +97,38 @@
     mode = "0400"; # root-only read
     enable = true;
   };
+  services.kanata = {
+    enable = true;
+
+    keyboards.default = {
+      devices = [
+        "/dev/input/by-id/*-event-kbd"
+        # "/dev/input/by-id/usb-*-event-kbd"
+      ];
+
+      config = ''
+        (defcfg
+          process-unmapped-keys yes
+        )
+
+        (defsrc
+          a b c d e f g h i j k l m n o p q r s t u v w x y z
+          space backspace
+        )
+
+        (deflayer base
+          ;; typo fixes
+          i n s s t e a d space (instead space)
+          s u j e s t i o n s space (suggestions space)
+          s u j e s t i o n space (suggestion space)
+          b u t i f i e r space (beautifier space)
+          p r o p i g a t o r space (propagator space)
+          m u n i t e s space (minutes space)
+          m i n i t s space (minutes space)
+        )
+      '';
+    };
+  };
   services.keyd = {
     enable = true;
     keyboards = {
