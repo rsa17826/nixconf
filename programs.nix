@@ -117,6 +117,8 @@ in
       # https://github.com/anyrun-org/anyrun
       # ulauncher
       qt6.qtdeclarative
+
+      niri
     ];
   };
   environment.systemPackages = with pkgs; [
