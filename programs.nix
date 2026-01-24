@@ -52,17 +52,6 @@ in
     firefox = {
       enable = true;
     };
-    sway = {
-      enable = true;
-      extraConfig = ''
-        set $mod Mod4
-        set $term kitty
-
-        bindsym $mod+Return exec $term
-        bindsym $mod+d exec wofi --show drun
-        bindsym $mod+Shift+e exit
-      '';
-    };
   };
 
   users.users."${uname}" = {
@@ -128,8 +117,7 @@ in
       # https://github.com/anyrun-org/anyrun
       # ulauncher
       qt6.qtdeclarative
-
-      sway
+      # sway
     ];
   };
   environment.systemPackages = with pkgs; [
