@@ -118,7 +118,7 @@ in
       # ulauncher
       qt6.qtdeclarative
 
-      niri
+sway
     ];
   };
   environment.systemPackages = with pkgs; [
