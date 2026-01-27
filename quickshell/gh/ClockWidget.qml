@@ -10,6 +10,6 @@ Text {
 
   font {
     // family:
-    pointSize: 12
+    pointSize: 10
   }
 }

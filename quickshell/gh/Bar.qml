@@ -26,7 +26,7 @@ Scope {
         Rectangle {
           anchors.centerIn: parent
           anchors.fill: par
-          color: "#000000"
+          color: '#bf000000'
           implicitHeight: clock.implicitHeight + 12
           implicitWidth: clock.implicitWidth + 12
           radius: 0
