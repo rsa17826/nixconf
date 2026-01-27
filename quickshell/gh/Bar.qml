@@ -5,7 +5,6 @@ import Quickshell.Io
 
 Scope {
   property int ghNotifCount
-
   // no more time object
   Process {
     id: updateGhNotifCount
@@ -31,57 +30,30 @@ Scope {
       color: "#00000000"
       implicitHeight: 30
       screen: modelData
+      Rectangle {
+        anchors.centerIn: parent
+        anchors.fill: parent
+        color: "#00000000"
 
-      PanelWindow {
         Rectangle {
           anchors.centerIn: parent
-          anchors.fill: parent
-          color: "#00000000"
+          anchors.fill: par
+          color: '#bf000000'
+          implicitHeight: clock.implicitHeight + 12
+          implicitWidth: clock.implicitWidth + 12
+          radius: 0
 
-          Rectangle {
+          ClockWidget {
+            id: clock
+
             anchors.centerIn: parent
-            anchors.fill: par
-            color: '#bf000000'
-            implicitHeight: clock.implicitHeight + 12
-            implicitWidth: clock.implicitWidth + 12
-            radius: 0
-
-            ClockWidget {
-              id: clock
-
-              anchors.centerIn: parent
-            }
           }
-        }
-        anchors {
-          left: true
-          right: true
-          top: true
         }
       }
-      Scope {
-        Rectangle {
-          id: badge
-
-          anchors.centerIn: parent
-          color: ghNotifCount > 0 ? "red" : "lightgray"
-          height: 40
-          radius: 8
-          width: 100
-
-          Text {
-            anchors.centerIn: parent
-            color: "white"
-            font.bold: true
-            text: ghNotifCount > 0 ? ghNotifCount : "No notifications"
-          }
-          
-        }
-        anchors {
-            left: true
-            right: true
-            top: true
-          }
+      anchors {
+        left: true
+        right: true
+        top: true
       }
     }
   }
