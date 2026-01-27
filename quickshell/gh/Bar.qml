@@ -26,7 +26,7 @@ Scope {
         if (!data)
           return
         // append each line to buffer
-        ghBuffer += data
+        onStreamFinished:ghNotifCount=JSON.parse(data).length
       }
     }
 
