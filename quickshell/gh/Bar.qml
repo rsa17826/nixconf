@@ -4,7 +4,7 @@ import QtQuick.Controls
 import Quickshell.Io
 
 Scope {
-  property string ghNotifCount
+  property int ghNotifCount
 
   // Timer {
   //   interval: 60000   // 60 seconds
