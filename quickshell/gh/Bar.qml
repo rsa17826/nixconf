@@ -24,7 +24,6 @@ Scope {
       onRead: data => {
         if (!data)
           return
-        
         ghNotifCount = data
       }
     }
@@ -62,20 +61,28 @@ Scope {
         }
         // Right-aligned rectangle (notification badge)
         Rectangle {
-          color: "red"
-          height: 30
-          radius: 6
-          width: 50
+          id: ghBadge
+
+          color: ghNotifCount > 0 ? "#d73a49" : "#888888"
+          height: 20
+          radius: 10
+          // Width grows/shrinks based on number of digits
+          width: Math.max(20, textItem.width + 10)
 
           anchors {
             right: parent.right
             rightMargin: 10
             verticalCenter: parent.verticalCenter
           }
+
+          // Text showing number of notifications
           Text {
+            id: textItem
+
             anchors.centerIn: parent
             color: "white"
             font.bold: true
+            font.pixelSize: 12
             text: ghNotifCount > 0 ? ghNotifCount : ""
           }
         }
