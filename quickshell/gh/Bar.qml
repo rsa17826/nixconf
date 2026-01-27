@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Scope {
   property int ghNotifCount
+  property string ghNotifData
 
   // Timer {
   //   interval: 60000   // 60 seconds
@@ -22,7 +23,7 @@ Scope {
 
     stdout: StdioCollector {
       onStreamFinished: _ => {
-        console.log(text)
+        ghNotifData = text
         ghNotifCount = JSON.parse(text).length
       }
     }
