@@ -21,6 +21,17 @@ Scope {
     }
 
     Component.onCompleted: running = true
+
+    Timer {
+      interval: 60000   // 60 seconds
+      repeat: true
+      running: true
+
+      onTriggered: {
+        // Restart the process to fetch fresh notifications
+        updateGhNotifCount.running = true
+      }
+    }
   }
   Variants {
     model: Quickshell.screens
