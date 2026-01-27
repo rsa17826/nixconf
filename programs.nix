@@ -66,7 +66,6 @@ in
       "input"
     ];
     packages = with pkgs; [
-      # TODO
       quickshell # widget thing
       typos # spellchecker
       typos-lsp
@@ -147,5 +146,7 @@ in
     font-awesome # For additional icons
     wlogout # For the power menu click
     pavucontrol # For audio control
+    ly
+    lynx
   ];
 }
