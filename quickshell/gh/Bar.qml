@@ -63,7 +63,7 @@ Scope {
         Rectangle {
           id: ghBadge
 
-          color: ghNotifCount > 0 ? "#d73a49" : "#888888"
+          color: ghNotifCount > 0 ? '#d31f31' : "#888888"
           height: 20
           radius: 10
           // Width grows/shrinks based on number of digits
