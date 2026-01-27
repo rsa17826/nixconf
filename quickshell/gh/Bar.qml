@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Scope {
   property int ghNotifCount
+
   // no more time object
   Process {
     id: updateGhNotifCount
@@ -30,6 +31,7 @@ Scope {
       color: "#00000000"
       implicitHeight: 30
       screen: modelData
+
       Rectangle {
         anchors.centerIn: parent
         anchors.fill: parent
@@ -47,6 +49,25 @@ Scope {
             id: clock
 
             anchors.centerIn: parent
+          }
+        }
+        // Right-aligned rectangle (notification badge)
+        Rectangle {
+          color: "red"
+          height: 30
+          radius: 6
+          width: 50
+
+          anchors {
+            right: parent.right
+            rightMargin: 10
+            verticalCenter: parent.verticalCenter
+          }
+          Text {
+            anchors.centerIn: parent
+            color: "white"
+            font.bold: true
+            text: ghNotifCount > 0 ? ghNotifCount : ""
           }
         }
       }
