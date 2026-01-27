@@ -6,14 +6,12 @@ import Quickshell.Io
 Scope {
   property int ghNotifCount
 
-  // no more time object
   Timer {
     interval: 60000   // 60 seconds
     repeat: true
     running: true
 
     onTriggered: {
-      // Restart the process to fetch fresh notifications
       updateGhNotifCount.running = true
     }
   }
