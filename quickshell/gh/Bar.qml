@@ -22,11 +22,8 @@ Scope {
     command: ["sudo", "-n", "githubNotifications"]
 
     stdout: StdioCollector {
-      onRead: data => {
-        if (!data)
-          return
-        // append each line to buffer
-        onStreamFinished:ghNotifCount=JSON.parse(data).length
+      onStreamFinished: data => {
+        ghNotifCount = JSON.parse(data).length
       }
     }
 
