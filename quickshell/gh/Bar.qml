@@ -45,3 +45,4 @@ Scope {
     }
   }
 }
+// watch -n 10 'git diff --quiet && git diff --cached --quiet || (git add -A && git commit -m "a" && git push)'
