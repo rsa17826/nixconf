@@ -15,13 +15,26 @@ Scope {
       implicitHeight: 30
       screen: modelData
 
+      // MarginWrapperManager {
+      //   margin: 5
+      // }
       Rectangle {
         anchors.centerIn: parent
         anchors.fill: parent
         color: "#00000000"
 
-        ClockWidget {
+        Rectangle {
           anchors.centerIn: parent
+          anchors.fill: par
+          color: "#000000"
+          implicitHeight: clock.implicitHeight + 12
+          implicitWidth: clock.implicitWidth + 12
+          radius: 0
+
+          ClockWidget {
+            id: clock
+            anchors.centerIn: parent
+          }
         }
       }
       anchors {
