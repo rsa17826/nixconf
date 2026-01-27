@@ -67,7 +67,7 @@ Scope {
           radius: 20
           height: 20
           // Width grows/shrinks based on number of digits
-          width: Math.max(height, textItem.width)
+          width: Math.max(height, textItem.width+18)
 
           anchors {
             right: parent.right
