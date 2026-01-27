@@ -64,8 +64,8 @@ Scope {
           id: ghBadge
 
           color: ghNotifCount > 0 ? '#d31f31' : "#888888"
-          radius: 8
-          height: 18
+          radius: 20
+          height: 17
           // Width grows/shrinks based on number of digits
           width: Math.max(height, textItem.width + radius)
 
