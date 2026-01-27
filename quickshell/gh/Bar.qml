@@ -6,15 +6,15 @@ import Quickshell.Io
 Scope {
   property string ghNotifCount
 
-  Timer {
-    interval: 60000   // 60 seconds
-    repeat: true
-    running: true
+  // Timer {
+  //   interval: 60000   // 60 seconds
+  //   repeat: true
+  //   running: true
 
-    onTriggered: {
-      updateGhNotifCount.running = true
-    }
-  }
+  //   onTriggered: {
+  //     updateGhNotifCount.running = true
+  //   }
+  // }
   Process {
     id: updateGhNotifCount
 
