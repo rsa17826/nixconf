@@ -64,8 +64,8 @@ Scope {
           id: ghBadge
 
           color: ghNotifCount > 0 ? '#d31f31' : "#888888"
-          height: 20
-          radius: 10
+          height: 16
+          radius: 8
           // Width grows/shrinks based on number of digits
           width: Math.max(20, textItem.width + 10)
 
@@ -82,7 +82,7 @@ Scope {
             anchors.centerIn: parent
             color: "white"
             font.bold: true
-            font.pixelSize: 7
+            font.pixelSize: 8
             text: ghNotifCount > 0 ? ghNotifCount : ""
           }
         }
