@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Controls
+import Quickshell.Io
 
 Scope {
   // no more time object
