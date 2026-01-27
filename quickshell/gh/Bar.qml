@@ -22,8 +22,8 @@ Scope {
 
     stdout: StdioCollector {
       onStreamFinished: data => {
-        console.log(data)
-        ghNotifCount = JSON.parse(data).length
+        console.log(text)
+        ghNotifCount = JSON.parse(text).length
       }
     }
 
