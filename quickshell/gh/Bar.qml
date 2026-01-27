@@ -24,7 +24,7 @@ Scope {
       onRead: data => {
         if (!data)
           return
-        ghNotifCount = data
+        ghNotifCount = JSON.parse(data).length
       }
     }
 
