@@ -31,9 +31,6 @@ Scope {
       implicitHeight: 30
       screen: modelData
 
-      // MarginWrapperManager {
-      //   margin: 5
-      // }
       Rectangle {
         anchors.centerIn: parent
         anchors.fill: parent
