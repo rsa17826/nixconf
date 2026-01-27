@@ -27,7 +27,6 @@ Scope {
     }
 
     Component.onCompleted: running = true
-    }
   }
   Variants {
     model: Quickshell.screens
