@@ -60,7 +60,8 @@ Scope {
           }
         }
         // Right-aligned rectangle (notification badge)
-        GithubNotif{}
+        GithubNotif {
+        }
       }
       anchors {
         left: true
