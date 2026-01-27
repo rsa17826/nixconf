@@ -21,7 +21,7 @@ Scope {
 
     command: ["sudo", "-n", "githubNotifications"]
 
-    stdout: SplitParser {
+    stdout: StdioCollector {
       onRead: data => {
         if (!data)
           return
