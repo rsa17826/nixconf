@@ -67,7 +67,7 @@ Scope {
           radius: 20
           height: 20
           // Width grows/shrinks based on number of digits
-          width: Math.max(height, textItem.width+18)
+          width: Math.max(height, textItem.width+8)
 
           anchors {
             right: parent.right
@@ -82,7 +82,7 @@ Scope {
             anchors.centerIn: parent
             color: "white"
             font.bold: true
-            font.pixelSize: 18
+            font.pixelSize: 8
             text: ghNotifCount > 0 ? ghNotifCount : ""
           }
         }
