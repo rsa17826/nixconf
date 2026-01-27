@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell.Io
 
 Scope {
+  property string ghBuffer: ""
   property int ghNotifCount
 
   // Timer {
@@ -24,11 +25,25 @@ Scope {
       onRead: data => {
         if (!data)
           return
-        ghNotifCount = JSON.parse(data).length
+        // append each line to buffer
+        ghBuffer += data
       }
     }
 
     Component.onCompleted: running = true
+    onFinished: (exitCode, exitStatus) => {
+      if (exitStatus === Process.NormalExit && ghBuffer.length > 0) {
+        try {
+          // parse the entire buffer as JSON
+          ghNotifCount = JSON.parse(ghBuffer).length
+        } catch (e) {
+          console.warn("Failed to parse multi-line JSON:", e)
+          ghNotifCount = 0
+        }
+      }
+      // clear buffer for next run
+      ghBuffer = ""
+    }
   }
   Variants {
     model: Quickshell.screens
