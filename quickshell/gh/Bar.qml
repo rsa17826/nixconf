@@ -82,7 +82,7 @@ Scope {
             anchors.centerIn: parent
             color: "white"
             font.bold: true
-            font.pixelSize: 8
+            font.pixelSize: 18
             text: ghNotifCount > 0 ? ghNotifCount : ""
           }
         }
