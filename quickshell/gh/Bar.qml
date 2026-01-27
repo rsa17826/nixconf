@@ -52,8 +52,8 @@ Scope {
         }
       }
       anchors {
-        left: false
-        right: false
+        left: true
+        right: true
         top: true
       }
     }
