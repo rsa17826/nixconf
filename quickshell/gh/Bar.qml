@@ -4,9 +4,10 @@ import QtQuick.Controls
 import Quickshell.Io
 
 Scope {
+  property int ghNotifCount
   // no more time object
   Process {
-    id: getGhNotifCount
+    id: updateGhNotifCount
 
     command: ["sudo", "-n", "githubNotifications"]
 
@@ -14,14 +15,7 @@ Scope {
       onRead: data => {
         if (!data)
           return
-        var p = data.trim().split(/\s+/)
-        var idle = parseInt(p[4]) + parseInt(p[5])
-        var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
-        if (lastCpuTotal > 0) {
-          cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)))
-        }
-        lastCpuTotal = total
-        lastCpuIdle = idle
+        ghNotifCount = JSON.parse(data).length
       }
     }
 
