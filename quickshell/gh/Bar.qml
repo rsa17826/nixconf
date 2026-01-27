@@ -8,7 +8,7 @@ Scope {
   Process {
     id: getGhNotifCount
 
-    command: [""]
+    command: ["sudo", "-n", "githubNotifications"]
 
     stdout: SplitParser {
       onRead: data => {
