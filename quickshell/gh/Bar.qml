@@ -27,7 +27,7 @@ Scope {
     PanelWindow {
       required property var modelData
 
-      color: '#b8a21818'
+      color: "#00000000"
       implicitHeight: 30
       screen: modelData
 
