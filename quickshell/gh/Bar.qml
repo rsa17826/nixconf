@@ -32,7 +32,7 @@ Scope {
       implicitHeight: 30
       screen: modelData
 
-      Rectangle {
+      PanelWindow {
         Rectangle {
           anchors.centerIn: parent
           anchors.fill: parent
