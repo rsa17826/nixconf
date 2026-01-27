@@ -32,7 +32,7 @@ Scope {
       implicitHeight: 30
       screen: modelData
 
-      Scope {
+      Rectangle {
         Rectangle {
           anchors.centerIn: parent
           anchors.fill: parent
@@ -75,12 +75,13 @@ Scope {
             font.bold: true
             text: ghNotifCount > 0 ? ghNotifCount : "No notifications"
           }
-          anchors {
+          
+        }
+        anchors {
             left: true
             right: true
             top: true
           }
-        }
       }
     }
   }
