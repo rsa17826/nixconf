@@ -21,7 +21,7 @@ Scope {
     command: ["sudo", "-n", "githubNotifications"]
 
     stdout: StdioCollector {
-      onStreamFinished: data => {
+      onStreamFinished: _ => {
         console.log(text)
         ghNotifCount = JSON.parse(text).length
       }
