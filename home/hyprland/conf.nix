@@ -16,9 +16,7 @@
   home.activation.copy-hyprland-settings = ''
     echo "Linking hyprland settings..."
     mkdir -p "$HOME/.config/hypr"
-    mkdir -p "$HOME/.config/hypr/shaders"
 
     ln -sf ${./hyprland.conf} "$HOME/.config/hypr/hyprland.conf"
-    ln -sfn ${./shaders} "$HOME/.config/hypr/shaders"
   '';
 }
