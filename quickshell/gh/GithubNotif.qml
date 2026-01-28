@@ -6,7 +6,7 @@ Rectangle {
   height: 10
   radius: 20
   // Width grows/shrinks based on number of digits
-  width: Math.max(height, textItem.width + 8)
+  width: Math.max(height, ghNotifCountTextItem.width + 8)
 
   anchors {
     right: parent.right
@@ -16,7 +16,7 @@ Rectangle {
 
   // Text showing number of notifications
   Text {
-    id: textItem
+    id: ghNotifCountTextItem
 
     anchors.centerIn: parent
     color: "white"
