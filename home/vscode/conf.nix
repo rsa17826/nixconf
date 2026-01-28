@@ -678,7 +678,8 @@ in
     {
       "enable-crash-reporter": false,
       "crash-reporter-id": "RANDOM UUID HERE",
-      "locale": "furry-owo"
+      "locale": "furry-owo",
+      "password-store": "basic"
     }
   '';
 }
