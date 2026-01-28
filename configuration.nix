@@ -32,12 +32,12 @@
   ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda"; # Install GRUB into the MBR
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub = {
+  #   enable = true;
+  #   device = "/dev/sda"; # Install GRUB into the MBR
+  # };
   programs.nix-ld.enable = true;
 
   programs.nix-ld.libraries = with pkgs; [
