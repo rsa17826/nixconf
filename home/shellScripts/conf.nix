@@ -8,6 +8,7 @@ in
     (newsh { name = "testpkg"; })
     (newsh { name = "er"; })
     (newsh { name = "github-widget"; })
+    (newsh { name = "reboot"; })
     (
       newsh { name = "githubNotifications"; }
       // {
