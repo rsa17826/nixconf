@@ -17,10 +17,6 @@
     ./impermanence/conf.nix
     ./cursors/conf.nix
     ./disko/conf.nix
-
-    /etc/nixos/hardware-configuration.nix
-    ./programs.nix
-    ./base.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor

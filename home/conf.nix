@@ -1,5 +1,10 @@
 { uname, pkgs, ... }:
 {
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    ./programs.nix
+    ./base.nix
+  ];
   boot.loader.grub = {
     enable = true;
     device = "/dev/sda"; # Install GRUB into the MBR
