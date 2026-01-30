@@ -21,8 +21,7 @@
 
     /etc/nixos/hardware-configuration.nix
     ./programs.nix
-    ./nix/base.nix
-    ./nix/plasma.nix
+    ./base.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -269,10 +268,6 @@
       emoji = [ "Noto Color Emoji" ];
     };
   };
-  nixpkgs.overlays = [
-    (import ./overlays/vscodium.nix)
-    (import ./overlays/vscodium-dokitheme.nix)
-  ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # xdg.portal = {

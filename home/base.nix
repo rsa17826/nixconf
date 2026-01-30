@@ -12,6 +12,9 @@
     "9.9.9.9"
     "149.112.112.112"
   ];
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
