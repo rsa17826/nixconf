@@ -1,15 +1,23 @@
 { pkgs, ... }:
 
 let
-  # Define the newsh function
-  newsh = { name }: pkgs.writeShellScriptBin name (builtins.readFile (./${name}/main.sh));
+  # The directory to scan (current directory)
+  baseDir = ./.;
 
-  # Get all directories that contain a 'main.sh' file
-  scriptDirs = builtins.filter (dir: builtins.isFile (./${dir}/main.sh)) (builtins.attrNames ./.);
+  # Your existing script builder
+  newsh = { name }: pkgs.writeShellScriptBin name (builtins.readFile (baseDir + "/${name}/main.sh"));
 
-  # Generate a list of packages dynamically from these directories
-  packages = builtins.map (dir: newsh { name = dir; }) scriptDirs;
+  # 1. Get all files/directories in the current folder
+  # Returns a set: { "testpkg" = "directory"; "default.nix" = "regular"; ... }
+  contents = builtins.readDir baseDir;
+
+  # 2. Filter to find only directories that actually contain main.sh
+  scriptNames = builtins.filter (
+    name: contents.${name} == "directory" && builtins.pathExists (baseDir + "/${name}/main.sh")
+  ) (builtins.attrNames contents);
+
 in
 {
-  home.packages = packages;
+  # 3. Map the list of names to your newsh function
+  home.packages = map (name: newsh { inherit name; }) scriptNames;
 }
