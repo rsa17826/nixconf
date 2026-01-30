@@ -1,5 +1,6 @@
 {
   pkgs,
+  uname,
   ...
 }:
 
@@ -21,5 +22,5 @@ in
     };
   };
 
-  packages = [ cleanupScript ];
+  users.users."${uname}".packages = [ cleanupScript ];
 }

@@ -8,6 +8,7 @@ DAYS=7
 KEEP_PATHS=(
   "$HOME/Documents/keep"
   "$HOME/Projects"
+  "$HOME/nixconf"
 )
 
 # ===== HELPERS =====
