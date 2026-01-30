@@ -9,6 +9,7 @@ in
     (newsh { name = "er"; })
     (newsh { name = "github-widget"; })
     (newsh { name = "reboot"; })
+    (newsh { name = "admin"; })
     (
       newsh { name = "githubNotifications"; }
       // {

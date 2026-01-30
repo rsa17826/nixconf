@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+source admin && admin "$@"
 # Load token
 if [ -f /etc/mysecrets/github_token.env ]; then
   source /etc/mysecrets/github_token.env
