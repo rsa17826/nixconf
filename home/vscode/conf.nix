@@ -73,8 +73,10 @@ let
 in
 {
   nixpkgs.overlays = [
-    (import ./overlays/toLocaleStringFix.nix)
-    # (import ./overlays/dokitheme.nix)
+    (lib.foldl' lib.composeExtensions (_: _: { }) [
+      (import ./overlays/toLocaleStringFix.nix)
+      (import ./overlays/dokitheme.nix)
+    ])
   ];
   programs.vscode = {
     enable = true;
