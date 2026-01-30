@@ -27,7 +27,7 @@ cutoff=$((DAYS * 86400))
 mapfile -t OLD_DIRS < <(
   find "$ROOT" -type d -mtime "+$DAYS" 2>/dev/null
 )
-echo OLD_DIRS
+echo $OLD_DIRS
 # ===== PROCESS DIRECTORIES =====
 for dir in "${OLD_DIRS[@]}"; do
   is_protected "$dir" && continue
@@ -55,6 +55,7 @@ done
 mapfile -t OLD_FILES < <(
   find "$ROOT" -type f -mtime "+$DAYS" 2>/dev/null
 )
+echo $OLD_FILES
 
 for file in "${OLD_FILES[@]}"; do
   is_protected "$file" && continue
