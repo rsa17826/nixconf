@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, uname, ... }:
 
 let
   # The directory to scan (current directory)
@@ -19,5 +19,5 @@ let
 in
 {
   # 3. Map the list of names to your newsh function
-  packages = map (name: newsh { inherit name; }) scriptNames;
+  users.users."${uname}".packages = map (name: newsh { inherit name; }) scriptNames;
 }
