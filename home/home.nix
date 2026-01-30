@@ -18,6 +18,11 @@
     ./impermanence/conf.nix
     ./cursors/conf.nix
     ./disko/conf.nix
+
+    /etc/nixos/hardware-configuration.nix
+    ./programs.nix
+    ./nix/base.nix
+    ./nix/plasma.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -128,16 +133,6 @@
     EDITOR = "codium";
     VISUAL = "codium";
   };
-
-  # Let Home Manager install and manage itself.
-  imports = [
-    # Include the results of the hardware scan.
-    /etc/nixos/hardware-configuration.nix
-    ./programs.nix
-    ./nix/base.nix
-    ./nix/plasma.nix
-    # ./hardware-configuration.nix
-  ];
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;
