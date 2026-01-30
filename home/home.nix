@@ -16,7 +16,6 @@
     ./shellScripts/conf.nix
     ./impermanence/conf.nix
     ./cursors/conf.nix
-    ./disko/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor

@@ -4,6 +4,7 @@
     /etc/nixos/hardware-configuration.nix
     ./programs.nix
     ./base.nix
+    ./disko/conf.nix
   ];
   boot.loader.grub = {
     enable = true;
