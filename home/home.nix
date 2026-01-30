@@ -21,7 +21,6 @@
     /etc/nixos/hardware-configuration.nix
     ./programs.nix
     ./base.nix
-    ./conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor

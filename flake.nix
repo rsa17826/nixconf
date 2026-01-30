@@ -43,7 +43,7 @@
         ${uname} = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            # ./configuration.nix
+            ./home/conf.nix
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.backupFileExtension = "backup";
