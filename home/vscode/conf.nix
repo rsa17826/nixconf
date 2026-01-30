@@ -74,7 +74,7 @@ in
 {
   nixpkgs.overlays = [
     (import ./overlays/toLocaleStringFix.nix)
-    (import ./overlays/dokitheme.nix)
+    # (import ./overlays/dokitheme.nix)
   ];
   programs.vscode = {
     enable = true;
