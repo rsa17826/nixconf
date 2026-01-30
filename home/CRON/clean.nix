@@ -4,7 +4,7 @@
 }:
 
 let
-  cleanupScript = pkgs.writeShellScriptBin "cleanup-script" builtins.readFile ./clean.sh;
+  cleanupScript = pkgs.writeShellScriptBin "cleanup-script" (builtins.readFile ./clean.sh);
 in
 {
   systemd.timers.cleanup = {
