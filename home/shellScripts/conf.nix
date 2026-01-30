@@ -2,21 +2,13 @@
 
 let
   newsh = { name }: pkgs.writeShellScriptBin name (builtins.readFile (./${name}/main.sh));
+
+  # Get all directories that contain a 'main.sh' file
+  scriptDirs = builtins.filter (dir: builtins.isFile (dir + "/main.sh")) (builtins.attrNames ./.);
+
+  # Generate a list of packages dynamically from these directories
+  packages = builtins.map (dir: newsh { name = dir; }) scriptDirs;
 in
 {
-  home.packages = [
-    (newsh { name = "testpkg"; })
-    (newsh { name = "er"; })
-    (newsh { name = "github-widget"; })
-    (newsh { name = "reboot"; })
-    (newsh { name = "admin"; })
-    (
-      newsh { name = "githubNotifications"; }
-      // {
-        owner = "root";
-        group = "root";
-        mode = "0500"; # root-only execute
-      }
-    )
-  ];
+  home.packages = packages;
 }
