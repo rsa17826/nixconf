@@ -19,5 +19,5 @@ let
 in
 {
   # 3. Map the list of names to your newsh function
-  home.packages = map (name: newsh { inherit name; }) scriptNames;
+  packages = map (name: newsh { inherit name; }) scriptNames;
 }

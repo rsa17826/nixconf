@@ -13,7 +13,6 @@
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
-    ./shellScripts/conf.nix
     ./cursors/conf.nix
   ];
   #wayland.windowManager.hyprland = {
