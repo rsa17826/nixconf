@@ -1,6 +1,6 @@
-final: prev: {
-  vscode = prev.vscode.overrideAttrs (oldAttrs: {
-    postInstall = (oldAttrs.postInstall or "") + ''
+self: super: {
+  vscodium = super.vscodium.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
       # Find the workbench HTML file
       target=$(find $out -name "workbench.html")
       # target="resources/app/out/vs/code/electronbrowser/workbench/workbench.html"
