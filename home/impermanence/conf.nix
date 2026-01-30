@@ -1,7 +1,7 @@
 { uname, ... }:
 {
   environment.persistence."/persist" = {
-    hideMounts = true;
+    hideMounts = false;
     directories = [
       "/var/lib"
       "/var/log"
