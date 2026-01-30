@@ -14,7 +14,6 @@
     ./hyprland/conf.nix
     ./waybar/conf.nix
     ./shellScripts/conf.nix
-    ./impermanence/conf.nix
     ./cursors/conf.nix
   ];
   #wayland.windowManager.hyprland = {

@@ -5,6 +5,7 @@
     ./programs.nix
     ./base.nix
     ./disko/conf.nix
+    ./impermanence/conf.nix
   ];
   boot.loader.grub = {
     enable = true;
