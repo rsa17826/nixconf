@@ -13,7 +13,6 @@
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
-    ./fish/conf.nix
     ./shellScripts/conf.nix
     ./impermanence/conf.nix
     ./cursors/conf.nix
