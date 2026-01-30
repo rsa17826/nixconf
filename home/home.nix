@@ -15,6 +15,7 @@
     ./waybar/conf.nix
     ./fish/conf.nix
     ./shellScripts/conf.nix
+    ./impermanence/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -92,25 +93,7 @@
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   #home.file.".icons/mew".source = lib.mkForce ./cursors;
-  home.pointerCursor = {
-    name = "mew"; # The name of the cursor theme
-    size = 48; # Default cursor size (you can adjust this)
-    gtk.enable = true;
-    x11.enable = true;
-    enable = true;
-
-    package = pkgs.runCommand "mew" { } ''
-        mkdir -p $out/share/icons/mew
-        cp -r ${./STATIC/cursors} $out/share/icons/mew/cursors
-        cat > $out/share/icons/mew/index.theme <<EOF
-      [Icon Theme]
-      Name=mew
-      Comment=mew
-      Hidden=false
-      Directories=cursors
-      EOF
-    '';
-  };
+  
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

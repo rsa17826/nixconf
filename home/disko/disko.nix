@@ -2,7 +2,7 @@
 {
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/nvme0n1"; # adjust your target
+    device = "/dev/nvme0n1"; # TODO adjust your target
     content = {
       type = "gpt";
       partitions = {
