@@ -7,6 +7,7 @@
     # ./disko/conf.nix
     # ./impermanence/conf.nix
     ./shellScripts/conf.nix
+    ./CRON/clean.nix
   ];
   boot.loader.grub = {
     enable = true;
