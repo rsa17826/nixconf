@@ -2,8 +2,8 @@ self: super: {
   vscodium = super.vscodium.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
       # Find the workbench HTML file
-      target=$(find $out -name "workbench.html")
-      # target="resources/app/out/vs/code/electronbrowser/workbench/workbench.html"
+      # target=$(find $out -name "workbench.html")
+      target="resources/app/out/vs/code/electronbrowser/workbench/workbench.html"
 
       if [ ! -f "$target" ]; then
         echo "ERROR: VS Code bundle not found: $target"
