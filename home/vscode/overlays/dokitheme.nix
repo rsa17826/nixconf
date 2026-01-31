@@ -3,7 +3,7 @@ self: super: {
     postPatch = (old.postPatch or "") + ''
       # Find the workbench HTML file
       # target=$(find $out -name "workbench.html")
-      target="resources/app/out/vs/code/electronbrowser/workbench/workbench.html"
+      target="resources/app/out/vs/workbench/workbench.desktop.main.html"
 
       if [ ! -f "$target" ]; then
         echo "ERROR: VS Code bundle not found: $target"
