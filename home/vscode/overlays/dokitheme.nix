@@ -10,7 +10,7 @@ self: super: {
       # 2. Download the sticker to the resources directory
       # We place it in 'resources/app/out/vs/workbench' so it's accessible relative to the HTML
       mkdir -p resources/app/out/vs/workbench
-      copy -f ${./bg.png} resources/app/out/vs/workbench/sticker.png
+      cp -f ${./bg.png} resources/app/out/vs/workbench/sticker.png
 
       # 3. Define the CSS to inject
       # This mimics the Doki Theme CSS:
