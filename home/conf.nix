@@ -13,6 +13,9 @@
     enable = true;
     device = "/dev/sda"; # Install GRUB into the MBR
   };
+  # boot.loader.systemd-boot.configurationLimit = 35;
+  boot.loader.grub.configurationLimit = 35;
+
   programs.nix-ld.enable = true;
 
   programs.nix-ld.libraries = with pkgs; [
