@@ -42,7 +42,7 @@ EOF
 
         # Inject the CSS before the closing </head> tag
         # We use the 'r' (read) command which is more standard for multi-line injection
-        sed -i '/<\/head>/e cat doki_sticker.css' "\$html_file"
+        sed -i '/<\/head>/e cat doki_sticker.css' "$html_file"
       done
 
       rm doki_sticker.css
