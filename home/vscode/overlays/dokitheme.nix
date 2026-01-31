@@ -33,8 +33,8 @@ EOF
       # This handles different VSCodium versions/structures
       find resources/app/out/vs -name "workbench.html" -or -name "workbench.esm.html" | while read html_file; do
         target_dir=$(dirname "$html_file")
-        echo "Patching HTML at: \$html_file"
-        echo "Placing assets in: \$target_dir"
+        echo "Patching HTML at: $html_file"
+        echo "Placing assets in: $target_dir"
 
         # Copy images directly next to the HTML file so url('file.png') works
         cp -f ${./bg.png} "\$target_dir/bg.png"
