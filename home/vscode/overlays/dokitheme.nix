@@ -1,5 +1,10 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (old: rec {
+    img = {
+      bg = ./bg.png;
+      emptyEditor = ./emptyEditor.png;
+      sticker = ./senko_light.png;
+    };
     backgroundAnchoring = "center";
     stickerStyle = ''
       background-position:100% calc(100% - 10px);
@@ -163,9 +168,9 @@ self: super: {
               echo "Placing assets in: $target_dir"
 
               # Copy images directly next to the HTML file so url('file.png') works
-              cp -f ${./bg.png} "$target_dir/bg.png"
-              cp -f ${./emptyEditor.png} "$target_dir/emptyEditor.png"
-              cp -f ${./sticker.png} "$target_dir/sticker.png"
+              cp -f ${img.bg} "$target_dir/bg.png"
+              cp -f ${img.emptyEditor} "$target_dir/emptyEditor.png"
+              cp -f ${img.sticker} "$target_dir/sticker.png"
 
               sed -i '/<\/head>/e cat doki_sticker.css' "$html_file"
             done
