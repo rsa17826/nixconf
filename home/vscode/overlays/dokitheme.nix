@@ -37,8 +37,8 @@ EOF
         echo "Placing assets in: $target_dir"
 
         # Copy images directly next to the HTML file so url('file.png') works
-        cp -f ${./bg.png} "\$target_dir/bg.png"
-        cp -f ${./sticker.png} "\$target_dir/sticker.png"
+        cp -f ${./bg.png} "$target_dir/bg.png"
+        cp -f ${./sticker.png} "$target_dir/sticker.png"
 
         # Inject the CSS before the closing </head> tag
         # We use the 'r' (read) command which is more standard for multi-line injection
