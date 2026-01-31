@@ -117,6 +117,9 @@ in
       # ulauncher
       qt6.qtdeclarative
       # sway
+      # 
+      zenity
+      libnotify
     ];
   };
   environment.systemPackages = with pkgs; [

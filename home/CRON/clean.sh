@@ -42,8 +42,7 @@ mapfile -t raw_list < <(
 zenity_args=()
 for item in "${raw_list[@]}"; do
   if [[ -e "$item" ]] && ! is_protected "$item"; then
-    # Defaulting to FALSE (unchecked) so you don't accidentally delete everything
-    zenity_args+=( "FALSE" "$item" )
+    zenity_args+=( "TRUE" "$item" )
   fi
 done
 
@@ -58,7 +57,7 @@ selected_items=$(zenity --list --checklist \
   --title="Cleanup Manager" \
   --column="Delete?" --column="Path" \
   --width=800 --height=600 \
-  --text="Select the items you want to PERMANENTLY delete. Unselected items will be 'touched' (kept)." \
+  --text="Select the items you want to PERMANENTLY delete. Unselected items will be kept." \
   "${zenity_args[@]}")
 
 # If user hits Cancel or closes window, exit to be safe
