@@ -20,7 +20,6 @@ KEEP_PATHS=(
   "$HOME/.icons"
 )
 
-# ===== HELPERS =====
 is_protected() {
   local path="$1"
   for kp in "${KEEP_PATHS[@]}"; do
@@ -29,13 +28,8 @@ is_protected() {
   return 1
 }
 
-# ===== COLLECT OLD ITEMS (PRUNED & EXCLUDING GIT) =====
-echo "Scanning for old items (excluding .git)..."
-
-# Logic:
-# 1. -path "*/.git/*" -prune : If it finds a .git folder, it ignores everything inside.
-# 2. -o : "Or" (if the first part didn't match...)
-# 3. \( -type d -o -type f \) -mtime "+$DAYS" -prune : Find old files/dirs and stop at the top level.
+# ===== 1. COLLECT ITEMS (FASTER) =====
+echo "Scanning... please wait."
 mapfile -t raw_list < <(
   find "$ROOT" \
     -path "*/.git/*" -prune -o \
@@ -43,56 +37,53 @@ mapfile -t raw_list < <(
     \( -type d -o -type f \) -mtime "+$DAYS" -prune -print 2>/dev/null
 )
 
-queue=()
+# Prepare the list for Zenity
+# Format: TRUE/FALSE (status), Path
+zenity_args=()
 for item in "${raw_list[@]}"; do
-  # Double check protection list and ensure the item still exists
   if [[ -e "$item" ]] && ! is_protected "$item"; then
-    queue+=("$item")
+    # Defaulting to FALSE (unchecked) so you don't accidentally delete everything
+    zenity_args+=( "FALSE" "$item" )
   fi
 done
 
-total_items=${#queue[@]}
-
-if [[ $total_items -eq 0 ]]; then
-  echo "No old items found."
+if [[ ${#zenity_args[@]} -eq 0 ]]; then
+  zenity --info --text="No old items found."
   exit 0
 fi
 
-# ===== PROCESS DECISIONS =====
-declare -A decisions
+# ===== 2. SINGLE INTERACTIVE LIST =====
+# This is where the speed comes from. One window for everything.
+selected_items=$(zenity --list --checklist \
+  --title="Cleanup Manager" \
+  --column="Delete?" --column="Path" \
+  --width=800 --height=600 \
+  --text="Select the items you want to PERMANENTLY delete. Unselected items will be 'touched' (kept)." \
+  "${zenity_args[@]}")
 
-for index in "${!queue[@]}"; do
-  path="${queue[$index]}"
+# If user hits Cancel or closes window, exit to be safe
+[[ $? -ne 0 ]] && echo "Cancelled." && exit 0
+
+# ===== 3. PROCESS RESULTS =====
+# Convert pipe-separated string to array
+IFS="|" read -ra TO_DELETE <<< "$selected_items"
+
+# Create a temporary associative array for fast lookup
+declare -A delete_map
+for item in "${TO_DELETE[@]}"; do
+  delete_map["$item"]=1
+done
+
+# Run through the original queue to handle Keep vs Delete
+for ((i=1; i<${#zenity_args[@]}; i+=2)); do
+  path="${zenity_args[$i]}"
   
-  zenity --question \
-    --title="Action Required: Old Item" \
-    --text="Item: $path\n\nThis is older than $DAYS days. Delete it?" \
-    --ok-label="Delete" \
-    --cancel-label="Keep (Touch)" 2>/dev/null
-  
-  exit_code=$?
-  
-  if [[ $exit_code -eq 0 ]]; then
-    decisions["$path"]=1
+  if [[ ${delete_map["$path"]} ]]; then
+    # DELETE
+    rm -rf -- "$path"
+    echo "DELETED: $path"
   else
-    decisions["$path"]=0
-  fi
-
-  current=$((index + 1))
-  percent=$((current * 100 / total_items))
-  echo "$percent"
-  echo "# Processing $current of $total_items..."
-done | zenity --progress --title="Cleanup" --auto-close --percentage=0
-
-# ===== EXECUTE DECISIONS =====
-for path in "${!decisions[@]}"; do
-  if [[ "${decisions[$path]}" -eq 1 ]]; then
-    if [[ -e "$path" ]]; then
-      rm -rf -- "$path"
-      echo "DELETED: $path"
-    fi
-  else
-    # Update timestamp
+    # KEEP (Touch)
     if [[ -d "$path" ]]; then
       find "$path" -exec touch {} +
     else
@@ -102,4 +93,4 @@ for path in "${!decisions[@]}"; do
   fi
 done
 
-echo "Cleanup complete."
+notify-send "Cleanup Complete" "Finished processing all items."
