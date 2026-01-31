@@ -1,24 +1,35 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (old: rec {
     backgroundAnchoring = "center";
+    stickerStyle = "";
     postPatch = (old.postPatch or "") + ''
             # 1. Create the CSS block
             cat <<EOF > doki_sticker.css
       <style>
-        body > .monaco-workbench > .monaco-grid-view > .monaco-grid-branch-node > .monaco-split-view2 > .monaco-scrollable-element > .split-view-container::after {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 400px; /* Adjusted size */
-          height: 400px;
-          z-index: 99999;
-          background-image: url('sticker.png');
-          background-position: bottom right;
-          background-repeat: no-repeat;
-          background-size: contain;
-          opacity: 0.2;
+        body > .monaco-workbench > .monaco-grid-view > .monaco-grid-branch-node > .monaco-split-view2 > .split-view-container::after,
+        body > .monaco-workbench > .monaco-grid-view > .monaco-grid-branch-node > .monaco-split-view2 > .monaco-scrollable-element > .split-view-container::after
+        {
+        background-image: url('sticker.png');
+        content:"";
+        pointer-events:none;
+        position:absolute;
+        z-index:100;
+        width:100%;
+        height:100%;
+        background-repeat:no-repeat;
+        opacity:1;
+        ${stickerStyle}
+        }
+
+        /* Makes sure notification shows on top of sticker */
+        .monaco-workbench>.notifications-center,
+        .notifications-toasts {
+          z-index: 9002 !important;
+        }
+
+        /* glass pane to show sticker */
+        .notification-toast {
+          backdrop-filter: blur(2px) !important;
         }
         /* Hide Watermark */
         .monaco-workbench .part.editor.has-watermark>.content.empty .editor-group-container>.editor-group-letterpress,
