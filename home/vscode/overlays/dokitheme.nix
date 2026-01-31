@@ -1,7 +1,9 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (old: rec {
     backgroundAnchoring = "center";
-    stickerStyle = "";
+    stickerStyle = ''
+      background-position:100% calc(100% - 10px);
+    '';
     postPatch = (old.postPatch or "") + ''
             # 1. Create the CSS block
             cat <<EOF > doki_sticker.css
