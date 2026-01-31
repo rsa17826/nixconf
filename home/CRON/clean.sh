@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# set -euo pipefail
 
 # ===== CONFIG =====
 ROOT="$HOME"
@@ -11,6 +10,14 @@ KEEP_PATHS=(
   "$HOME/nixconf"
   "$HOME/.ssh"
   "$HOME/.var"
+  "$HOME/.zsh_history"
+  "$HOME/.cache"
+  "$HOME/.gitconfig"
+  "$HOME/.local"
+  "$HOME/.zshrc"
+  "$HOME/Desktop"
+  "$HOME/.config"
+  "$HOME/.icons"
 )
 
 # ===== HELPERS =====
@@ -22,95 +29,77 @@ is_protected() {
   return 1
 }
 
-now=$(date +%s)
-cutoff=$((DAYS * 86400))
+# ===== COLLECT OLD ITEMS (PRUNED & EXCLUDING GIT) =====
+echo "Scanning for old items (excluding .git)..."
 
-# ===== COLLECT OLD DIRECTORIES AND FILES =====
-mapfile -t OLD_DIRS < <(
-  find "$ROOT" -type d -mtime "+$DAYS" 2>/dev/null
+# Logic:
+# 1. -path "*/.git/*" -prune : If it finds a .git folder, it ignores everything inside.
+# 2. -o : "Or" (if the first part didn't match...)
+# 3. \( -type d -o -type f \) -mtime "+$DAYS" -prune : Find old files/dirs and stop at the top level.
+mapfile -t raw_list < <(
+  find "$ROOT" \
+    -path "*/.git/*" -prune -o \
+    -path "*/.git" -prune -o \
+    \( -type d -o -type f \) -mtime "+$DAYS" -prune -print 2>/dev/null
 )
 
-mapfile -t OLD_FILES < <(
-  find "$ROOT" -type f -mtime "+$DAYS" 2>/dev/null
-)
-
-# ===== QUEUE FILES/FOLDERS FOR NOTIFICATIONS =====
-declare -A decisions  # Associative array to store decisions (1=delete, 0=keep)
 queue=()
-
-# Add directories to the queue
-for dir in "${OLD_DIRS[@]}"; do
-  if ! is_protected "$dir"; then
-    queue+=("$dir")
+for item in "${raw_list[@]}"; do
+  # Double check protection list and ensure the item still exists
+  if [[ -e "$item" ]] && ! is_protected "$item"; then
+    queue+=("$item")
   fi
 done
 
-# Add files to the queue
-for file in "${OLD_FILES[@]}"; do
-  if ! is_protected "$file"; then
-    queue+=("$file")
-  fi
-done
+total_items=${#queue[@]}
 
-# ===== SHOW NOTIFICATIONS =====
-for path in "${queue[@]}"; do
-  echo "Showing notification for: $path"  # Debug log
-
-  # Show Zenity dialog for each item
-  zenity --question \
-    --title="Old item detected" \
-    --text="$path is older than $DAYS days.\n\nDelete this item?"
-
-  exit_code=$?
-
-  # Handle unexpected exit codes (like window close)
-  if [[ "$exit_code" -ne 0 && "$exit_code" -ne 1 ]]; then
-    echo "Zenity closed unexpectedly (exit code: $exit_code). Skipping this item."  # Debug log
-    continue
-  fi
-
-  # Store the decision (1 for delete, 0 for keep)
-  if [[ "$exit_code" -eq 0 ]]; then
-    decisions["$path"]=1  # Delete
-  else
-    decisions["$path"]=0  # Keep
-  fi
-
-  echo "Zenity finished for $path with exit code: $exit_code"  # Debug log
-done
+if [[ $total_items -eq 0 ]]; then
+  echo "No old items found."
+  exit 0
+fi
 
 # ===== PROCESS DECISIONS =====
-for path in "${!decisions[@]}"; do
-  decision="${decisions[$path]}"
-  echo "Processing decision for $path: $decision"  # Debug log
+declare -A decisions
 
-  if [[ "$decision" -eq 1 ]]; then
-    # DELETE: User clicked "OK"
-    if [[ -d "$path" ]]; then
-      rm -rf -- "$path"
-      echo "Deleted folder: $path"  # Debug log
-      notify-send "Cleanup" "Deleted folder: $path"
-    else
-      rm -f -- "$path"
-      echo "Deleted file: $path"  # Debug log
-      notify-send "Cleanup" "Deleted file: $path"
-    fi
+for index in "${!queue[@]}"; do
+  path="${queue[$index]}"
+  
+  zenity --question \
+    --title="Action Required: Old Item" \
+    --text="Item: $path\n\nThis is older than $DAYS days. Delete it?" \
+    --ok-label="Delete" \
+    --cancel-label="Keep (Touch)" 2>/dev/null
+  
+  exit_code=$?
+  
+  if [[ $exit_code -eq 0 ]]; then
+    decisions["$path"]=1
   else
-    # KEEP: User clicked "Cancel"
-    if [[ -d "$path" ]]; then
-      find "$path" -exec touch {} +
-      echo "Kept folder for another $DAYS days: $path"  # Debug log
-      notify-send "Cleanup" "Kept folder for another $DAYS days"
-    else
-      touch -- "$path"
-      echo "Kept file for another $DAYS days: $path"  # Debug log
-      notify-send "Cleanup" "Kept file for another $DAYS days"
-    fi
+    decisions["$path"]=0
   fi
 
-  # Print logs after action
-  echo "Completed cleanup for: $path"
+  current=$((index + 1))
+  percent=$((current * 100 / total_items))
+  echo "$percent"
+  echo "# Processing $current of $total_items..."
+done | zenity --progress --title="Cleanup" --auto-close --percentage=0
+
+# ===== EXECUTE DECISIONS =====
+for path in "${!decisions[@]}"; do
+  if [[ "${decisions[$path]}" -eq 1 ]]; then
+    if [[ -e "$path" ]]; then
+      rm -rf -- "$path"
+      echo "DELETED: $path"
+    fi
+  else
+    # Update timestamp
+    if [[ -d "$path" ]]; then
+      find "$path" -exec touch {} +
+    else
+      touch -- "$path"
+    fi
+    echo "KEPT: $path"
+  fi
 done
 
-# Final confirmation/logging step after all actions
-echo "Cleanup complete! All old files and folders processed."
+echo "Cleanup complete."
