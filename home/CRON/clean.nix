@@ -1,6 +1,5 @@
 {
   pkgs,
-  uname,
   ...
 }:
 
@@ -21,6 +20,4 @@ in
       Type = "oneshot";
     };
   };
-
-  users.users."${uname}".packages = [ cleanupScript ];
 }
