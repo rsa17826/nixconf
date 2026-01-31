@@ -9,13 +9,11 @@ self: super: {
         sticker = ./senko_light.png;
       };
       backgroundAnchoring = "center";
-      stickerStyle = "background-position:100% calc(100% - 10px);";
-    in
-    {
-      backgroundAnchoring = "center";
       stickerStyle = ''
         background-position:100% calc(100% - 10px);
       '';
+    in
+    {
       postPatch = (old.postPatch or "") + ''
               # 1. Create the CSS block
               cat <<EOF > doki_sticker.css
