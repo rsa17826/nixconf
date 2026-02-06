@@ -120,6 +120,7 @@ in
       # 
       zenity
       libnotify
+      simplex-chat-desktop # chat
     ];
   };
   environment.systemPackages = with pkgs; [
