@@ -75,6 +75,15 @@
     mode = "0400"; # root-only read
     enable = true;
   };
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
+  security.sudo.extraConfig = ''
+    Defaults env_keep += "EDITOR VISUAL"
+  '';
+
   # services.kanata = {
   #   enable = true;
 

@@ -8,7 +8,7 @@ let
   shellAliases = {
     update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure --log-format internal-json -v --show-trace |& nom --json";
     udpate = "update";
-    push = "git add -A && git commit -m a && git push";
+    sd = "shutdown";
     vim = "nvim";
     vi = "nvim";
     nano = "nvim";
@@ -33,6 +33,7 @@ in
       ];
     };
   };
+  environment.shellAliases = shellAliases;
   programs = {
     bash = {
       enable = true;
@@ -117,7 +118,7 @@ in
       # ulauncher
       qt6.qtdeclarative
       # sway
-      # 
+      #
       zenity
       libnotify
       simplex-chat-desktop # chat
