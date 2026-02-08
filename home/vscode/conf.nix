@@ -124,9 +124,9 @@ in
 
             extName = "auto-regex";
             extCreator = "rssaromeo";
-            version = "49.0.0";
+            version = "51.0.0";
 
-            ghRev = "b392bf45406370473d3d9ba9945fda09ddf5f4aa";
+            ghRev = "0f482c0e9b63892ae4f593ff990a04b2cefa9ab0";
             ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
           })
           (buildFromGh {
