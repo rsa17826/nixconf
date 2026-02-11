@@ -18,7 +18,7 @@
     echo "Linking hyprland settings..."
     mkdir -p "$HOME/.config/hypr"
     rm "$HOME/.config/hypr/hyprland.conf"
-    ln -sf "${./hyprland.conf}" "$HOME/.config/hypr/hyprland.conf"
+    ln -f "${./hyprland.conf}" "$HOME/.config/hypr/hyprland.conf"
   '';
   # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
   
