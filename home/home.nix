@@ -15,6 +15,7 @@
     ./waybar/conf.nix
     ./cursors/conf.nix
   ];
+  home.file."$HOME/t.txt".source = ./t.txt;
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
   #  enable = true;

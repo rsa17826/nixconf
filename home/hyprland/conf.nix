@@ -21,4 +21,5 @@
   #   ln -sf "${./hyprland.conf}" "$HOME/.config/hypr/hyprland.conf"
   # '';
   home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
+  
 }
