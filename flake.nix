@@ -39,21 +39,34 @@
       uname = "nyx";
     in
     {
+      homeConfigurations.${uname} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs uname; };
+        modules = [
+          ./home/home.nix
+          {
+            # This bit ensures the home-manager command is actually installed
+            programs.home-manager.enable = true;
+            home.username = uname;
+            home.homeDirectory = "/home/${uname}";
+          }
+        ];
+      };
       nixosConfigurations = {
         ${uname} = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./home/conf.nix
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager.backupFileExtension = "backup";
-              # home-manager.useGlobalPkgs = true;
-              # home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit uname;
-              };
-              home-manager.users.${uname} = import ./home/home.nix;
-            }
+            # inputs.home-manager.nixosModules.home-manager
+            # {
+            #   home-manager.backupFileExtension = "backup";
+            #   # home-manager.useGlobalPkgs = true;
+            #   # home-manager.useUserPackages = true;
+            #   home-manager.extraSpecialArgs = {
+            #     inherit uname;
+            #   };
+            #   home-manager.users.${uname} = import ./home/home.nix;
+            # }
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
           ];
