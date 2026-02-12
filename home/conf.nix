@@ -9,15 +9,15 @@
     ./shellScripts/conf.nix
     ./CRON/clean.nix
   ];
-  # boot.loader.grub = {
-  #   enable = true;
-  #   device = "/dev/sda"; # Install GRUB into the MBR
-  # };
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda"; # Install GRUB into the MBR
+  };
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.systemd-boot.configurationLimit = 35;
-  # boot.loader.grub.configurationLimit = 35;
+  boot.loader.grub.configurationLimit = 35;
 
   programs.nix-ld.enable = true;
 

@@ -36,7 +36,9 @@
     kitty = {
       enable = true; # required for the default Hyprland config
     };
-
+    home-manager = {
+      enable = true;
+    };
     anyrun = {
       enable = true;
       config = {
@@ -81,10 +83,6 @@
         )
       '';
     };
-    # hyprland = {
-    #   enable = true;
-    # };
-    home-manager.enable = true;
   };
 
   # Optional, hint Electron apps to use Wayland:
