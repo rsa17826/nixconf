@@ -31,6 +31,10 @@
   #  ${pkgs.waybar}/bin/waybar &
   #  ${pkgs.networkmanagerapplet}/bin/nm-applet &
   #'';
+  xdg.enable = true;
+  xdg.dataHome = "/home/${uname}/.local/share";
+  xdg.configHome = "/home/${uname}/.config";
+  xdg.cacheHome = "/home/${uname}/.cache";
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs = {
     kitty = {
