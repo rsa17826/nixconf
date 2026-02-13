@@ -3,7 +3,7 @@
   pkgs,
   uname,
   lib,
-  # sops-nix,
+  sops-nix,
   ...
 }:
 {
@@ -11,7 +11,7 @@
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
   imports = [
-    # sops-nix.homeManagerModules.sops
+    sops-nix.homeManagerModules.sops
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
