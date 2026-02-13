@@ -39,9 +39,12 @@
       uname = "nyx";
     in
     {
+      nix.registry.home-manager.flake = inputs.home-manager;
       homeConfigurations.${uname} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs uname; };
+        extraSpecialArgs = {
+          inherit inputs uname;
+        };
         modules = [
           ./home/home.nix
           {
