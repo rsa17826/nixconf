@@ -128,5 +128,6 @@
     lynx
     sops # secrets manager
     direnv
+    home-manager
   ];
 }
