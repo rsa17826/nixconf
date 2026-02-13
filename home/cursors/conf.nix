@@ -20,7 +20,19 @@
       Comment=mew
       Hidden=false
       Directories=cursors
+      Inherits=Adwaita
+      Example=default
       EOF
+
+        # Fix permissions just in case
+        chmod -R +r $out/share/icons/mew
     '';
   };
+  # ???
+  # dconf.settings = {
+  #   "org/gnome/desktop/interface" = {
+  #     cursor-theme = "mew";
+  #     cursor-size = 48;
+  #   };
+  # };
 }
