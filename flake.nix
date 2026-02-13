@@ -23,6 +23,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -31,6 +35,7 @@
       home-manager,
       impermanence,
       disko,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -80,6 +85,7 @@
             }
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
+            sops-nix.nixosModules.sops
           ];
         };
       };
