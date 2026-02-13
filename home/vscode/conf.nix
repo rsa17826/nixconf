@@ -690,3 +690,4 @@ in
     }
   '';
 }
+# Cannot activate da 'C/C++ Runner' extension because it depends on an unknown 'ms-vscode.cpptools' extension .
