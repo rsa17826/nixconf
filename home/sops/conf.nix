@@ -8,6 +8,10 @@
     defaultSopsFile = "${rootDir}/secrets/secrets.yaml";
 
     # 3. Define the secrets you want to symlink
-    secrets.github_token = { };
+    secrets = {
+      github_token = {
+        owner = "${uname}"; # Automatically makes it readable by your user ONLY
+      };
+    };
   };
 }

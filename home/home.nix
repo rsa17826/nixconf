@@ -99,14 +99,7 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-    test.text = "asd";
-  };
-  sops.secrets = {
-    github_token = {
-      owner = "${uname}"; # Automatically makes it readable by your user ONLY
-    };
-  };
+  
   # home.packages = [
   #   (pkgs.writeShellScriptBin "nix-env" ''
   #     echo "nix-env is deprecated. Use nix profile or Home Manager."
