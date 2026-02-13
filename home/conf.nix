@@ -43,9 +43,12 @@
     vulkan-loader
   ];
 
-  nix.gc.automatic = true;
-  nix.gc.dates = "daily"; # or "daily"
-
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 7d";
+  };
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
