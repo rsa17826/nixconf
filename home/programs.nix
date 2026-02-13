@@ -4,6 +4,7 @@
   ...
 }:
 {
+  imports = [ ./alias.nix ];
   programs.appimage = {
     enable = true;
     binfmt = true;
