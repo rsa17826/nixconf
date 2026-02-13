@@ -3,6 +3,7 @@
   pkgs,
   uname,
   lib,
+  inputs,
   ...
 }:
 {
@@ -10,10 +11,12 @@
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
   imports = [
+    inputs.sops-nix.homeManagerModules.sops
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
     ./cursors/conf.nix
+    ./sops/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor

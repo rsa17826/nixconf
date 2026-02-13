@@ -31,6 +31,7 @@
       home-manager,
       impermanence,
       disko,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -44,6 +45,7 @@
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs uname;
+          rootDir = "/home/${uname}/nixconf";
         };
         modules = [
           ./home/home.nix
@@ -74,10 +76,11 @@
             impermanence.nixosModules.impermanence
           ];
           specialArgs = {
-            inherit inputs;
-            inherit uname;
+            inherit inputs uname;
+            rootDir = "/home/${uname}/nixconf";
           };
         };
       };
     };
 }
+# nix run .#homeConfigurations.nyx.activationPackage -- switch --flake .
