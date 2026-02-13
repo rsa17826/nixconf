@@ -153,5 +153,6 @@ in
     pavucontrol # For audio control
     ly
     lynx
+    sops # secrets manager
   ];
 }
