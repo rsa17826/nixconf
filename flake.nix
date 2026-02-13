@@ -76,7 +76,7 @@
             impermanence.nixosModules.impermanence
           ];
           specialArgs = {
-            inherit inputs uname;
+            inherit inputs uname sops-nix;
             rootDir = "/home/${uname}/nixconf";
           };
         };
