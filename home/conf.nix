@@ -51,7 +51,9 @@
   };
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
+  programs.fish.interactiveShellInit = ''
+    ${pkgs.pay-respects}/bin/pay-respects fish --alias f | source
+  '';
   security.sudo.extraRules = [
     {
       groups = [ "users" ];
