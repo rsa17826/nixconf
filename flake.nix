@@ -59,30 +59,29 @@
       nixosConfigurations = {
         ${uname} = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [
-            ./home/conf.nix
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager.backupFileExtension = "backup";
-              # home-manager.useGlobalPkgs = true;
-              # home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit uname;
-              };
-              home-manager.users.${uname} = import ./home/home.nix;
-            }
-            disko.nixosModules.disko
-            impermanence.nixosModules.impermanence
-          ];
           specialArgs = {
             inherit inputs uname;
             rootDir = "/home/${uname}/nixconf";
           };
+          modules = [
+            ./home/conf.nix
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                backupFileExtension = "backup";
+                # home-manager.useGlobalPkgs = true;
+                # home-manager.useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit inputs uname;
+                  rootDir = "/home/${uname}/nixconf";
+                };
+                users.${uname} = import ./home/home.nix;
+              };
+            }
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+          ];
         };
-      };
-      home-manager.extraSpecialArgs = {
-        inherit inputs uname; # Added 'inputs' here so sops works
-        rootDir = "/home/${uname}/nixconf"; # Added this line
       };
     };
 }
