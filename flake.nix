@@ -31,7 +31,6 @@
       home-manager,
       impermanence,
       disko,
-      sops-nix,
       ...
     }@inputs:
     let
@@ -76,10 +75,14 @@
             impermanence.nixosModules.impermanence
           ];
           specialArgs = {
-            inherit inputs uname sops-nix;
+            inherit inputs uname;
             rootDir = "/home/${uname}/nixconf";
           };
         };
+      };
+      home-manager.extraSpecialArgs = {
+        inherit inputs uname; # Added 'inputs' here so sops works
+        rootDir = "/home/${uname}/nixconf"; # Added this line
       };
     };
 }
