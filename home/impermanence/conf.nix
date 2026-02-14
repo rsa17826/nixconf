@@ -1,15 +1,27 @@
 { uname, ... }:
 {
   environment.persistence."/persist" = {
-    hideMounts = false;
+    hideMounts = true; # Usually set to true to keep 'df -h' clean
     directories = [
-      "/var/lib"
       "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
       "/etc/ssh"
-      "/home/${uname}/nixconf"
     ];
     files = [
       "/etc/machine-id"
     ];
+    
+    # Use the 'users' attribute within the system persistence 
+    # to handle home directory permissions automatically
+    users.${uname} = {
+      directories = [
+        "nixconf" # Path is relative to the user's home
+        "Downloads"
+        "Documents"
+        ".local/share/direnv"
+      ];
+    };
   };
 }
