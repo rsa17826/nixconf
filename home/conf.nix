@@ -4,7 +4,7 @@
     /etc/nixos/hardware-configuration.nix
     ./programs.nix
     ./base.nix
-    # ./disko/conf.nix
+    ./disko/conf.nix
     # ./impermanence/conf.nix
     ./shellScripts/conf.nix
     ./CRON/clean.nix
