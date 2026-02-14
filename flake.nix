@@ -49,7 +49,6 @@
       #   inherit pkgs;
       #   extraSpecialArgs = {
       #     inherit inputs uname;
-      #     rootDir = "/home/${uname}/nixconf";
       #   };
       #   modules = [
       #     ./home/home.nix
@@ -66,7 +65,6 @@
           inherit system;
           specialArgs = {
             inherit inputs uname;
-            rootDir = "/home/${uname}/nixconf";
           };
           modules = [
             ./home/conf.nix
@@ -78,7 +76,6 @@
                 # home-manager.useUserPackages = true;
                 extraSpecialArgs = {
                   inherit inputs uname;
-                  rootDir = "/home/${uname}/nixconf";
                 };
                 users.${uname} = import ./home/home.nix;
               };
