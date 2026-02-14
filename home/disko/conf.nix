@@ -23,7 +23,7 @@
             name = "cryptroot";
             content = {
               type = "btrfs";
-              extraFormatArgs = [ "--label disk-main-luks" ]; # Add this if it keeps failing
+              extraArgs = [ "--label disk-main-luks" ]; # Add this if it keeps failing
               subvolumes = {
                 "@root" = {
                   mountpoint = "/";
