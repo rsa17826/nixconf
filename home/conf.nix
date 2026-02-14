@@ -5,7 +5,7 @@
     ./programs.nix
     ./base.nix
     ./disko/conf.nix
-    ./impermanence/conf.nix
+    # ./impermanence/conf.nix
     ./shellScripts/conf.nix
     ./CRON/clean.nix
   ];
