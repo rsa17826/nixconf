@@ -127,7 +127,7 @@ in
             version = "51.0.0";
 
             ghRev = "0f482c0e9b63892ae4f593ff990a04b2cefa9ab0";
-            ghSha = "sha256-qUsu8Mack/SD+2/hq8MzqmaoJCmxW4sp3SidiiSPsHo=";
+            ghSha = "sha256-UX2e0cP/GDA81+vU0pHAxDSJYSYsOdjBfqoJdHgLC2c=";
           })
           (buildFromGh {
             ghName = "rsa17826";
