@@ -2,7 +2,7 @@
 {
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/nvme0n1"; # TODO adjust your target
+    device = "/dev/disk/by-id/ata-VBOX_HARDDISK_VB2C6885fc-f3c0c4ad"; # TODO adjust your target
     content = {
       type = "gpt";
       partitions = {
