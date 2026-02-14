@@ -2,13 +2,13 @@
 {
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/sda"; # TODO adjust your target
+    device = "/dev/sda";  # TODO adjust your target
     content = {
       type = "gpt";
       partitions = {
         esp = {
           size = "2G";
-          type = "EF00";
+          type = "EF00";  # UEFI partition
           content = {
             type = "filesystem";
             format = "vfat";
@@ -16,41 +16,38 @@
           };
         };
 
-        luks = {
-          size = "100%";
+        root = {
+          size = "100%";  # Use all remaining space for the root partition
           content = {
-            type = "luks";
-            name = "cryptroot";
-            content = {
-              type = "ext4";
-              extraArgs = [ "--label disk-main-luks" ]; # Add this if it keeps failing
-              subvolumes = {
-                "@root" = {
-                  mountpoint = "/";
-                  #mountOptions = [
-                  #  "compress=zstd"
-                  #  "noatime"
-                  #];
-                };
-                "@home" = {
-                  mountpoint = "/home";
-                };
-                "@persist" = {
-                  mountpoint = "/persist";
-                };
-                "@nix" = {
-                  mountpoint = "/nix";
-                };
-"@swap" = {
-  mountpoint = "/.swapvol";
-  swap = {
-    swapfile = {
-      size = "8G"; # Matches your RAM to help with heavy builds
-    };
-  };
-};
-              };
-            };
+            type = "filesystem";
+            format = "ext4";  # Or you can use "xfs" or any other filesystem type
+            mountpoint = "/";
+            # You can add extra arguments here like "noatime", "compress=zstd", etc.
+          };
+        };
+
+        home = {
+          size = "50G";  # Specify a size for /home or adjust as needed
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/home";
+          };
+        };
+
+        nix = {
+          size = "20G";  # Specify a size for /nix or adjust as needed
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/nix";
+          };
+        };
+
+        swap = {
+          size = "8G";  # Size for swap (same as the one in your original setup)
+          content = {
+            type = "swap";
           };
         };
       };
