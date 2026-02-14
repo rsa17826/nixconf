@@ -22,15 +22,15 @@
             type = "luks";
             name = "cryptroot";
             content = {
-              type = "btrfs";
+              type = "ext4";
               extraArgs = [ "--label disk-main-luks" ]; # Add this if it keeps failing
               subvolumes = {
                 "@root" = {
                   mountpoint = "/";
-                  mountOptions = [
-                    "compress=zstd"
-                    "noatime"
-                  ];
+                  #mountOptions = [
+                  #  "compress=zstd"
+                  #  "noatime"
+                  #];
                 };
                 "@home" = {
                   mountpoint = "/home";
