@@ -126,7 +126,7 @@ in
             extCreator = "rssaromeo";
             version = "51.0.0";
 
-            ghRev = "0f482c0e9b63892ae4f593ff990a04b2cefa9ab0";
+            ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
             ghSha = "sha256-UX2e0cP/GDA81+vU0pHAxDSJYSYsOdjBfqoJdHgLC2c=";
           })
           (buildFromGh {
