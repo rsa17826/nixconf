@@ -47,7 +47,7 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 7d --keep 10";
   };
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
