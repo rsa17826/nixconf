@@ -41,6 +41,14 @@
                 "@nix" = {
                   mountpoint = "/nix";
                 };
+"@swap" = {
+  mountpoint = "/.swapvol";
+  swap = {
+    swapfile = {
+      size = "8G"; # Matches your RAM to help with heavy builds
+    };
+  };
+};
               };
             };
           };
