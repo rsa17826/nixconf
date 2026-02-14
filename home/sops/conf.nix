@@ -9,7 +9,7 @@
 
     # 3. Define the secrets you want to symlink
     secrets = {
-      github_token = {
+      GITHUB_TOKEN = {
       };
     };
   };
