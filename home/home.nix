@@ -30,10 +30,6 @@
   #    # Whether to enable hyprland-session.target on hyprland startup
   #    systemd.enable = true;
   #  };
-  #xdg.configFile."hypr/autostart.conf".text = ''
-  #  ${pkgs.waybar}/bin/waybar &
-  #  ${pkgs.networkmanagerapplet}/bin/nm-applet &
-  #'';
   xdg.enable = true;
   xdg.dataHome = "/home/${uname}/.local/share";
   xdg.configHome = "/home/${uname}/.config";

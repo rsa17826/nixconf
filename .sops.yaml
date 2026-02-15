@@ -1,5 +1,5 @@
 keys:
-  - &nyx age18mvtl2589kg2aape62zk9nzwyj69k0cc4wp7nnz73ewn84lwzg3qx9gflx
+  - &nyx age12kl0dmlpcwuw2c6uq5c8dzhyg34cl7r2qzylxzte0ewe8eemz9jqfq4hl8
 creation_rules:
   - path_regex: secrets\.yaml$
     key_groups:
