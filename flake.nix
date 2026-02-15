@@ -87,12 +87,12 @@
             # impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
             /etc/nixos/hardware-configuration.nix
-            ./programs.nix
-            ./base.nix
+            ./home/programs.nix
+            ./home/base.nix
             # ./disko/conf.nix
             # ./impermanence/conf.nix
-            ./shellScripts/conf.nix
-            ./CRON/clean.nix
+            ./home/shellScripts/conf.nix
+            ./home/CRON/clean.nix
           ];
         };
       };
