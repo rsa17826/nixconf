@@ -42,6 +42,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       uname = "nyx";
+      email = "nyx@nyx.com";
     in
     {
       nix.registry.home-manager.flake = inputs.home-manager;
@@ -64,7 +65,7 @@
         ${uname} = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs uname;
+            inherit inputs uname email;
           };
           modules = [
             ./home/conf.nix

@@ -76,13 +76,6 @@
       ];
     }
   ];
-  environment.etc."mysecrets/github_token.env" = {
-    source = "/etc/mysecrets/github_token.env"; # do not overwrite
-    user = "root";
-    group = "root";
-    mode = "0400"; # root-only read
-    enable = true;
-  };
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
