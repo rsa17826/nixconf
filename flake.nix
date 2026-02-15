@@ -62,39 +62,41 @@
       #   ];
       # };
       nixosConfigurations = {
-        "${uname}_vbox" = inputs.nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs uname email;
-            hostName = "${uname}_vbox";
-          };
-          modules = [
-            ./home/conf.nix
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                backupFileExtension = "backup";
-                # home-manager.useGlobalPkgs = true;
-                # home-manager.useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit inputs uname;
-                  hostName = "${uname}_vbox";
+        "${uname}_vbox" = inputs.nixpkgs.lib.nixosSystem (
+          let
+            args = {
+              inherit inputs uname email;
+              hostName = "${uname}_vbox";
+            };
+          in
+          {
+            inherit system;
+            specialArgs = args;
+            modules = [
+              ./home/conf.nix
+              inputs.home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  backupFileExtension = "backup";
+                  # home-manager.useGlobalPkgs = true;
+                  # home-manager.useUserPackages = true;
+                  extraSpecialArgs = args;
+                  users.${uname} = import ./home/home.nix;
                 };
-                users.${uname} = import ./home/home.nix;
-              };
-            }
-            # disko.nixosModules.disko
-            # impermanence.nixosModules.impermanence
-            sops-nix.nixosModules.sops
-            /etc/nixos/hardware-configuration.nix
-            ./home/programs.nix
-            ./home/base.nix
-            # ./disko/conf.nix
-            # ./impermanence/conf.nix
-            ./home/shellScripts/conf.nix
-            ./home/CRON/clean.nix
-          ];
-        };
+              }
+              # disko.nixosModules.disko
+              # impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+              /etc/nixos/hardware-configuration.nix
+              ./home/programs.nix
+              ./home/base.nix
+              # ./disko/conf.nix
+              # ./impermanence/conf.nix
+              ./home/shellScripts/conf.nix
+              ./home/CRON/clean.nix
+            ];
+          }
+        );
       };
     };
 }
