@@ -68,6 +68,7 @@
           specialArgs = {
             inherit inputs uname email;
             rootDir = self;
+            hostName = "${uname}_vbox";
           };
           modules = [
             ./home/conf.nix
