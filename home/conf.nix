@@ -1,4 +1,9 @@
-{ hostName, pkgs, ... }:
+{
+  uname,
+  hostName,
+  pkgs,
+  ...
+}:
 {
   boot.loader = {
     efi = {
@@ -75,6 +80,7 @@
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    SECRETS = "/home/${uname}/.config/sops-nix/secrets";
   };
 
   security.sudo.extraConfig = ''
