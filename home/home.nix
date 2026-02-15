@@ -11,7 +11,7 @@
   home.homeDirectory = "/home/${uname}";
   xsession.numlock.enable = true;
   imports = [
-    inputs.sops-nix.homeManagerModules.sops
+    # inputs.sops-nix.homeManagerModules.sops
     ./vscode/conf.nix
     ./hyprland/conf.nix
     ./waybar/conf.nix
