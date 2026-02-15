@@ -62,7 +62,7 @@
       #   ];
       # };
       nixosConfigurations = {
-        ${uname} = inputs.nixpkgs.lib.nixosSystem {
+        "${uname}_vbox" = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs uname email;

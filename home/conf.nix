@@ -84,7 +84,7 @@
   };
 
   security.sudo.extraConfig = ''
-    Defaults env_keep += "EDITOR VISUAL"
+    Defaults env_keep += "EDITOR VISUAL SECRETS"
   '';
 
   # services.kanata = {
