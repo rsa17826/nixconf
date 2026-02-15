@@ -31,7 +31,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       impermanence,
@@ -67,7 +66,6 @@
           inherit system;
           specialArgs = {
             inherit inputs uname email;
-            rootDir = self;
             hostName = "${uname}_vbox";
           };
           modules = [
@@ -80,7 +78,6 @@
                 # home-manager.useUserPackages = true;
                 extraSpecialArgs = {
                   inherit inputs uname;
-                  rootDir = self;
                   hostName = "${uname}_vbox";
                 };
                 users.${uname} = import ./home/home.nix;
