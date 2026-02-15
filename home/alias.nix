@@ -1,7 +1,6 @@
 { lib, uname, ... }:
 let
   shellAliases = {
-    update = "cd /home/${uname}/nixconf && push ; cd - && sudo nixos-rebuild switch --flake ~/nixconf#${uname} --impure --log-format internal-json -v --show-trace |& nom --json";
     udpate = "update";
     sd = "shutdown";
     vim = "nvim";

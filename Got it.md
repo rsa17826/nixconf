@@ -860,3 +860,6 @@ systemctl --user start fix-locks.service
 If you want, I can **rewrite it to automatically detect multiple keyboards** and enforce **NumLock on / CapsLock off** for all of them in one script — fully plug-and-play for Hyprland.
 
 Do you want me to do that?
+
+
+mkdir -p /home/nyx/.config/sops/age/ ; nix-shell -p age --run "age-keygen -o /home/nyx/.config/sops/age/keys.txt"

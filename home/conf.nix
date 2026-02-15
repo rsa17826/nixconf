@@ -1,23 +1,19 @@
-{ uname, pkgs, ... }:
+{ hostName, pkgs, ... }:
 {
-  imports = [
-    /etc/nixos/hardware-configuration.nix
-    ./programs.nix
-    ./base.nix
-    # ./disko/conf.nix
-    # ./impermanence/conf.nix
-    ./shellScripts/conf.nix
-    ./CRON/clean.nix
-  ];
-  # boot.loader.grub = {
-  #   enable = true;
-  #   device = "/dev/sda"; # Install GRUB into the MBR
-  # };
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.loader.systemd-boot.configurationLimit = 35;
-  boot.loader.grub.configurationLimit = 35;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+    };
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 35;
+    };
+    grub = {
+      # enable = true;
+      # device = "/dev/sda"; # Install GRUB into the MBR
+      # configurationLimit = 35;
+    };
+  };
 
   programs.nix-ld.enable = true;
 
@@ -189,7 +185,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   # sudo codium --no-sandbox --user-data-dir "/home/${uname}/.config/VSCodium/"
-  networking.hostName = "${uname}";
+  networking.hostName = "${hostName}";
   system.stateVersion = "25.05"; # Did you read the comment?
   services.opensnitch.enable = true;
   security.sudo.enable = true;

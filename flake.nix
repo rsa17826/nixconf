@@ -31,6 +31,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       home-manager,
       impermanence,
@@ -66,6 +67,7 @@
           inherit system;
           specialArgs = {
             inherit inputs uname email;
+            rootDir = self;
           };
           modules = [
             ./home/conf.nix
@@ -81,9 +83,16 @@
                 users.${uname} = import ./home/home.nix;
               };
             }
-            disko.nixosModules.disko
-            impermanence.nixosModules.impermanence
+            # disko.nixosModules.disko
+            # impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
+            /etc/nixos/hardware-configuration.nix
+            ./programs.nix
+            ./base.nix
+            # ./disko/conf.nix
+            # ./impermanence/conf.nix
+            ./shellScripts/conf.nix
+            ./CRON/clean.nix
           ];
         };
       };
