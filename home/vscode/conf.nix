@@ -622,12 +622,12 @@ in
           #   version = "1.8.0";
           #   hash = "sha256-ht6Wm1X7zien+fjMv864qP+Oz4M6X6f2RXjrThURr6c=";
           # }
-          {
-            name = "pretty-ts-errors";
-            publisher = "yoavbls";
-            version = "0.6.3";
-            hash = "sha256-7yoNuYg31hbtU4HATG4VAERcMk5KPRA3WLouSJo3rxs=";
-          }
+          #{
+          #  name = "pretty-ts-errors";
+          #  publisher = "yoavbls";
+          #  version = "0.6.3";
+          #  hash = "sha256-7yoNuYg31hbtU4HATG4VAERcMk5KPRA3WLouSJo3rxs=";
+          #}
           # {
           #   name = "vscode-autohotkey-debug";
           #   publisher = "zero-plusplus";
