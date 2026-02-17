@@ -30,11 +30,11 @@ fi
 # Save current directory and move to nixconf
 # We use pushd/popd because it's cleaner for directory management in scripts
 pushd "$HOME/nixconf" > /dev/null || { echo "❌ Could not find ~/nixconf"; exit 1; }
-
+export NIXPKGS_ALLOW_INSECURE=0
 if [ "$DRY_RUN" = true ]; then
     echo "🧪 DRY RUN: Building #$TARGET (No commit, no push, no switch)"
     
-    sudo nixos-rebuild build --flake ".#$TARGET" --impure --log-format internal-json -v |& nom --json
+    sudo nixos-rebuild build --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null
