@@ -48,12 +48,12 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 7d --keep 10";
+    options = "--delete-older-than 7d";
   };
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
   programs.fish.interactiveShellInit = ''
-    ${pkgs.pay-respects}/bin/pay-respects fish --alias f | source
+    pay-respects fish --alias f | source
   '';
   security.sudo.extraRules = [
     {
