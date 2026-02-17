@@ -95,6 +95,7 @@
       zenity
       libnotify
       simplex-chat-desktop # chat
+      copyq # clipboard manager
     ];
   };
   environment.systemPackages = with pkgs; [
