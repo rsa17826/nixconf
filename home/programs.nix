@@ -97,6 +97,7 @@
       simplex-chat-desktop # chat
       copyq # clipboard manager
       # openshot-qt #vid editor
+      pay-respects
     ];
   };
   environment.systemPackages = with pkgs; [
