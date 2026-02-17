@@ -42,7 +42,9 @@ if [ "$DRY_RUN" = true ]; then
 else
     # Real update logic
     git add .
-    git commit -m "Update config: $TARGET"
+    now=$(date +%Y-%m-%d_%H-%M)
+    export NIXOS_LABEL_VERSION="$TARGET - $now"
+    git commit -m "$NIXOS_LABEL_VERSION"
     git push
 
     echo "🚀 Switching to #$TARGET..."
