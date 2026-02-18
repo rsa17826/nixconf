@@ -1432,3 +1432,159 @@ Since `nixos-rebuild` evaluates the *entire* system, it can be slow if you have 
 *Note: This only works if you've already added the typos to your `configuration.nix` once. For the very first time you add a new typo, you still need a full `nixos-rebuild` to make sure Nix knows about the new string.*
 
 **Would you like me to help you verify the `systemd` service name for Kanata on your machine so the reloads become nearly instantaneous?**
+
+
+Yes — instead of injecting CSS in a browser with `@-moz-document`, you can apply a **system-wide overlay in Hyprland** much more cleanly.
+
+Since Hyprland is a Wayland compositor, the easiest approaches are:
+
+---
+
+## ✅ Option 1 — Use Hyprland’s built-in blur/decoration (if you just want visual effect)
+
+If your goal is aesthetic (like tinting or styling), you can modify:
+
+```
+~/.config/hypr/hyprland.conf
+```
+
+Example:
+
+```ini
+decoration {
+    blur {
+        enabled = true
+        size = 8
+        passes = 2
+    }
+}
+
+layerrule = blur, waybar
+```
+
+But this won’t let you overlay an image like your CSS does.
+
+---
+
+## ✅ Option 2 — Create a fullscreen Wayland layer overlay (Best replacement)
+
+Your CSS is basically creating:
+
+* A fullscreen fixed overlay
+* Always on top
+* Non-interactive
+* With a PNG background
+
+On Wayland, the proper way to do this is using a **layer-shell overlay**.
+
+The easiest tool for this:
+
+### 🔹 Use `gtk-layer-shell` via a small GTK app
+
+or
+
+### 🔹 Use `wlr-layer-shell` tools like `swaybg`
+
+The simplest drop-in solution is:
+
+---
+
+## 🔥 Easiest Method: Use `swaybg` as a top layer overlay
+
+Install:
+
+```bash
+sudo pacman -S swaybg
+```
+
+Run:
+
+```bash
+swaybg -i yourimage.png -m stretch
+```
+
+But that sets background — not overlay.
+
+---
+
+## ⭐ Cleanest Real Solution: `gtk-layer-shell` overlay window
+
+Install:
+
+```bash
+sudo pacman -S gtk-layer-shell
+```
+
+Then create a tiny GTK Python script:
+
+```python
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+import gtk_layer_shell
+
+win = Gtk.Window()
+win.set_decorated(False)
+win.set_app_paintable(True)
+
+gtk_layer_shell.init_for_window(win)
+gtk_layer_shell.set_layer(win, gtk_layer_shell.Layer.TOP)
+gtk_layer_shell.set_anchor(win, gtk_layer_shell.Edge.TOP, True)
+gtk_layer_shell.set_anchor(win, gtk_layer_shell.Edge.BOTTOM, True)
+gtk_layer_shell.set_anchor(win, gtk_layer_shell.Edge.LEFT, True)
+gtk_layer_shell.set_anchor(win, gtk_layer_shell.Edge.RIGHT, True)
+
+win.set_opacity(0.5)
+win.show_all()
+Gtk.main()
+```
+
+That gives you:
+
+* Fullscreen overlay
+* Always on top
+* Adjustable opacity
+* System-wide
+
+You can add your base64 PNG as a background.
+
+---
+
+## 🧠 Even Simpler Hack (No coding)
+
+Use Hyprland’s window rules to float and pin an image viewer:
+
+Example:
+
+```ini
+windowrulev2 = float, class:^(imv)$
+windowrulev2 = fullscreen, class:^(imv)$
+windowrulev2 = pin, class:^(imv)$
+windowrulev2 = noblur, class:^(imv)$
+```
+
+Then run:
+
+```bash
+imv yourimage.png
+```
+
+Set transparency inside the image or compositor.
+
+Very quick. No scripting needed.
+
+---
+
+# 🎯 Recommendation
+
+If you want:
+
+| Goal                       | Best Method              |
+| -------------------------- | ------------------------ |
+| Permanent system watermark | gtk-layer-shell overlay  |
+| Quick test                 | Float + pin image viewer |
+| Just aesthetic effect      | Hyprland blur/tint       |
+
+---
+
+If you tell me what the overlay is for (watermark? eye filter? meme? burn-in test?), I can give you the cleanest possible solution specifically for that.
