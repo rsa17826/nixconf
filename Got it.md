@@ -1596,3 +1596,10 @@ https://aylur.github.io/ags/guide/nix.html
 
 https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html
 https://github.com/Aylur/ags/tree/main/example/simple-bar
+
+
+"editor.quickSuggestions": {
+  "other": true,
+  "comments": false,
+  "strings": true
+}
