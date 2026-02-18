@@ -1588,3 +1588,6 @@ If you want:
 ---
 
 If you tell me what the overlay is for (watermark? eye filter? meme? burn-in test?), I can give you the cleanest possible solution specifically for that.
+
+
+https://aylur.github.io/ags/guide/nix.html
