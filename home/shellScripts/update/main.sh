@@ -52,7 +52,7 @@ else
     # else
     #   next_generation=$((highest_generation + 1))
     # fi
-    now=$(date +%Y%m%d)
+    now=$(date +%Y_%m_%d)
     prev_generation=$(git show -s --format=%B|sed -E 's/Generation: ([0-9]+) -.*/\1/')
     if [ -z "$prev_generation" ]; then
       next_generation=1
