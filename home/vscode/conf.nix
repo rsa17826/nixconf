@@ -77,8 +77,7 @@ in
     #   (import ./overlays/toLocaleStringFix.nix)
     #   (import ./overlays/dokitheme.nix)
     # ])
-    lib.composeManyExtensions
-    [
+    lib.composeManyExtensions [
       (import ./overlays/dokiTheme/conf.nix)
       (import ./overlays/owoify/conf.nix)
       (import ./overlays/toLocaleStringFix/conf.nix)
