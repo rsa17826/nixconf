@@ -73,7 +73,7 @@ else
 
     # Clean the label: remove spaces and replace them with underscores
     NIXOS_LABEL_VERSION="$TARGET - $now"
-    # NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
+    NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
 
     export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
