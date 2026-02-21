@@ -72,15 +72,12 @@ else
     git push
 
     # Clean the label: remove spaces and replace them with underscores
-    NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
+    NIXOS_LABEL_VERSION="$TARGET - $now"
+    # NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
 
-    # Now the label is ready to be used, without invalid characters like spaces or colons
-    echo "Cleaned NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
-
-    # Export the cleaned version
     export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
-    sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    sudo -E nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
