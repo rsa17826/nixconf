@@ -76,7 +76,7 @@ else
     git commit -m "$NIXOS_LABEL_VERSION"
     git push
 
-    NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')
+    # NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')
 
     export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
