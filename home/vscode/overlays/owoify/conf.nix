@@ -1,5 +1,8 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (old: {
+    # 1. Pass the file content via an environment variable to avoid shell escaping issues
+    owoify_content = builtins.readFile ./owoify.js;
+
     postPatch = (old.postPatch or "") + ''
       target="resources/app/out/vs/workbench/workbench.desktop.main.js"
 
@@ -8,11 +11,9 @@ self: super: {
         exit 1
       fi
 
-      # Read owoify.js script and inject it
-      owoify_script=${builtins.readFile ./owoify.js}
       echo "Injecting owoify.js script into VS Code"
-      echo "$owoify_script"
-      echo "$owoify_script" >> "$target"
+      # 2. Reference the variable we defined above using shell syntax
+      echo "$owoify_content" >> "$target"
     '';
   });
 }
