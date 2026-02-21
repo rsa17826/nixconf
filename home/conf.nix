@@ -85,7 +85,7 @@
   };
 
   security.sudo.extraConfig = ''
-    Defaults env_keep += "EDITOR VISUAL SECRETS"
+    Defaults env_keep += "EDITOR VISUAL SECRETS NIXOS_LABEL_VERSION"
   '';
 
   # services.kanata = {
