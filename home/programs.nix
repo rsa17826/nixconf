@@ -98,6 +98,7 @@
       copyq # clipboard manager
       # openshot-qt # vid editor
       # pay-respects
+      imagemagick
     ];
   };
   environment.systemPackages = with pkgs; [
