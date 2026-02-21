@@ -54,21 +54,31 @@ else
     # fi
     now=$(date +%Y_%m_%d)
     prev_generation=$(git show -s --format=%B|sed -E 's/Generation: ([0-9]+) -.*/\1/')
-    if [ -z "$prev_generation" ]; then
+    if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
       next_generation=1
     else
       next_generation=$((prev_generation + 1))
     fi
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
-    export NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
-    echo NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION
-    # echo $NIXOS_LABEL_VERSION
-    # echo $NIXOS_LABEL_VERSION|sed -E 's/ /_/g'
+    NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+
+    # Output the label to verify
+    echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
+
+    # Commit and push changes
     git add -A
     git commit -m "$NIXOS_LABEL_VERSION"
     git push
 
+    # Clean the label: remove spaces and replace them with underscores
+    NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
+
+    # Now the label is ready to be used, without invalid characters like spaces or colons
+    echo "Cleaned NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
+
+    # Export the cleaned version
+    export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
     nixos-rebuild switch --sudo --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
