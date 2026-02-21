@@ -131,6 +131,5 @@
     sops # secrets manager
     direnv
     home-manager
-    veracrypt
   ];
 }
