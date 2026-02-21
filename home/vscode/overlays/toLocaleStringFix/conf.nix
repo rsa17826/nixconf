@@ -2,23 +2,11 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
-      # In newer VSCodium, we might need to look in different spots
-      # Use find to be safe, or check the specific 1.108 path
-      target="resources/app/out/vs/workbench/workbench.desktop.main.js"
+      # Define the patch in a variable (Nix will handle the string safely here)
+      patch_code=';[Number, String].map((e) => { var temp = e.prototype.toLocaleString.bind(e.prototype); e.prototype.toLocaleString = function (...a) { return this; } });'
 
-      if [ -f "$target" ]; then
-        echo "Patching VS Code: injecting toLocaleString override"
-        
-        # Using a heredoc with 'EOF' (quoted) prevents Bash variable expansion
-      cat << 'EOF' >> "$target"
-
-      ;[Number, String].map((e) => {
-        var temp = e.prototype.toLocaleString.bind(e.prototype)
-        e.prototype.toLocaleString = function (...a) {
-          return this
-        }
-      });
-      EOF
+      # Prepend using a temporary file (The most robust way in a Nix builder)
+      echo "$patch_code" | cat - "$target" > "$target.tmp" && mv "$target.tmp" "$target"
     '';
   });
 }
