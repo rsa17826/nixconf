@@ -43,13 +43,13 @@ else
     # Real update logic
     git add .
     now=$(date +%Y-%m-%d_%H-%M)
-    NIXOS_LABEL_VERSION="$TARGET - $now"
+    export NIXOS_LABEL_VERSION="$TARGET - $now"
     git commit -m "$NIXOS_LABEL_VERSION"
     git push
 
     echo "🚀 Switching to #$TARGET..."
-    # I kept --show-trace as you added it; it's helpful for debugging sops errors
-    sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    nixos-rebuild switch --sudo --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null
