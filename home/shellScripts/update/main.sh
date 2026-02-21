@@ -41,9 +41,19 @@ if [ "$DRY_RUN" = true ]; then
     echo "✅ Dry run complete. If no errors appeared, it's safe to update."
 else
     # Real update logic
-    git add .
     now=$(date +%Y-%m-%d_%H-%M)
-    export NIXOS_LABEL_VERSION="$TARGET - $now"
+    # Path to the system profiles directory
+    directory="/nix/var/nix/profiles/system-profiles/"
+
+    # Extract generation numbers, then sort them numerically and get the highest one
+    highest_generation=$(ls -l "$directory" | grep -oP 'Generation: \K[0-9]+' | sort -n | tail -n 1)
+    if [ -z "$highest_generation" ]; then
+      next_generation=1
+    else
+      next_generation=$((highest_generation + 1))
+    fi
+    export NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+    git add -A
     git commit -m "$NIXOS_LABEL_VERSION"
     git push
 

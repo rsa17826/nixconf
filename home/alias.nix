@@ -15,6 +15,7 @@ let
     c = "clear";
     nix-shell-alias = "nix-shell";
     repairStore = "sudo nix-store --verify --check-contents --repair";
+    reb = "reboot";
   };
 in
 {

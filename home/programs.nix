@@ -47,8 +47,8 @@
       python313
       python313Packages.py7zr
       godot # programing
-      appimage-run
-      firejail
+      # appimage-run
+      # firejail
       motrix # download manager
       nix-tree
       kid3 # audio tagger
@@ -57,7 +57,7 @@
       syncthing # file sync
       mp3gain # audio volume normilizer
       python314
-      eww # status bar
+      # eww # status bar
       filen-desktop # cloud storage
       javaPackages.compiler.temurin-bin.jre-25 # for running java apps
       file # like die
@@ -108,7 +108,7 @@
     brave # web browser
     nixfmt # nix language formatter
     git # git is required
-    kdePackages.kget
+    # kdePackages.kget
     p7zip # archival tool
     nix-ld # run linux programs
     kitty # terminal emulator
@@ -128,9 +128,9 @@
     wlogout # For the power menu click
     pavucontrol # For audio control
     ly
-    lynx
     sops # secrets manager
     direnv
     home-manager
+    veracrypt
   ];
 }
