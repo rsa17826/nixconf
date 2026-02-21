@@ -80,7 +80,7 @@ else
     # Export the cleaned version
     export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
-    nixos-rebuild switch --sudo --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
