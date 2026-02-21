@@ -61,23 +61,23 @@ else
     fi
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
-    NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+    NIXOS_LABEL="Generation: $next_generation - $TARGET - $now"
 
     # Output the label to verify
-    echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
+    echo "NIXOS_LABEL: $NIXOS_LABEL"
 
     # Commit and push changes
     git add -A
-    git commit -m "$NIXOS_LABEL_VERSION"
+    git commit -m "$NIXOS_LABEL"
     git push
 
     # Clean the label: remove spaces and replace them with underscores
-    # NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /_/g')
+    # NIXOS_LABEL=$(echo "$NIXOS_LABEL" | sed -E 's/ /_/g')
 
-    export NIXOS_LABEL_VERSION
+    export NIXOS_LABEL
     echo "🚀 Switching to #$TARGET..."
     sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
-    # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null

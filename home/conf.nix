@@ -88,11 +88,6 @@
   security.sudo.extraConfig = ''
     Defaults env_keep += "EDITOR VISUAL SECRETS NIXOS_LABEL_VERSION"
   '';
-  system.nixos.label = lib.mkOption {
-    type = lib.types.str;
-    default = "";
-    description = "Custom NixOS label with spaces";
-  };
 
   # services.kanata = {
   #   enable = true;

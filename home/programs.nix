@@ -103,7 +103,6 @@
   };
   environment.systemPackages = with pkgs; [
     neovim # tui text editor
-    # vim
     sxhkd
     wget # cmd dl util
     brave # web browser
