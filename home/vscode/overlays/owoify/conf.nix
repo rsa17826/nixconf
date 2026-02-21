@@ -11,6 +11,7 @@ self: super: {
       # Read owoify.js script and inject it
       owoify_script=${builtins.readFile ./owoify.js}
       echo "Injecting owoify.js script into VS Code"
+      echo "$owoify_script"
       echo "$owoify_script" >> "$target"
     '';
   });

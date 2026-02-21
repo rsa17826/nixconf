@@ -10,6 +10,7 @@ self: super: {
 
       echo "Patching VS Code: injecting toLocaleString override"
 
+      echo "$owoify_script" >> "$target"
       sed -i '1i\
 ;[Number, String].map((e) => {\
   var temp = e.prototype.toLocaleString.bind(e.prototype)\
