@@ -54,7 +54,7 @@ else
     # fi
     now=$(date +%Y_%m_%d)
     for i in $(seq 10 10 100); do
-      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation: [0-9]+' | head -n 1 | sed -E 's/Generation: ([0-9]+) -.*/\1/')
+      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation [0-9]+' | head -n 1 | sed -E 's/Generation: ([0-9]+) -.*/\1/')
       if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
         break
       fi
@@ -66,7 +66,7 @@ else
     fi
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
-    NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+    NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
 
     # Output the label to verify
     echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
