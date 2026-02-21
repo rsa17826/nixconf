@@ -41,18 +41,29 @@ if [ "$DRY_RUN" = true ]; then
     echo "✅ Dry run complete. If no errors appeared, it's safe to update."
 else
     # Real update logic
-    now=$(date +%Y-%m-%d_%H-%M)
+    # now=$(date +%Y-%m-%d_%H-%M)
     # Path to the system profiles directory
-    directory="/nix/var/nix/profiles/system-profiles/"
+    # directory="/nix/var/nix/profiles/system-profiles/"
 
     # Extract generation numbers, then sort them numerically and get the highest one
-    highest_generation=$(ls -l "$directory" | grep -oP 'Generation: \K[0-9]+' | sort -n | tail -n 1)
-    if [ -z "$highest_generation" ]; then
+    # highest_generation=$(ls -l "$directory" | grep -oP 'Generation:_\K[0-9]+' | sort -n | tail -n 1)
+    # if [ -z "$highest_generation" ]; then
+    #   next_generation=1
+    # else
+    #   next_generation=$((highest_generation + 1))
+    # fi
+    now=$(date +%Y%m%d)
+    prev_generation=$(git show -s --format=%B|sed -E 's/Generation: ([0-9]+) -.*/\1/')
+    if [ -z "$prev_generation" ]; then
       next_generation=1
     else
-      next_generation=$((highest_generation + 1))
+      next_generation=$((prev_generation + 1))
     fi
+    # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
+    # revision=$(git rev-parse HEAD)
     export NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+    # echo $NIXOS_LABEL_VERSION
+    # echo $NIXOS_LABEL_VERSION|sed -E 's/ /_/g'
     git add -A
     git commit -m "$NIXOS_LABEL_VERSION"
     git push
