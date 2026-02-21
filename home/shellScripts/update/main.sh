@@ -61,7 +61,8 @@ else
     fi
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
-    export NIXOS_LABEL_VERSION="Generation: $next_generation - $TARGET - $now"
+    export NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
+    echo NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION
     # echo $NIXOS_LABEL_VERSION
     # echo $NIXOS_LABEL_VERSION|sed -E 's/ /_/g'
     git add -A
