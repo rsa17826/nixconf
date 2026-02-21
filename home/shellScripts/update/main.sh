@@ -53,7 +53,12 @@ else
     #   next_generation=$((highest_generation + 1))
     # fi
     now=$(date +%Y_%m_%d)
-    prev_generation=$(git show -s --format=%B|sed -E 's/Generation: ([0-9]+) -.*/\1/')
+    for i in $(seq 10 10 100); do
+      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation: [0-9]+' | head -n 1 | sed -E 's/Generation: ([0-9]+) -.*/\1/')
+      if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
+        break
+      fi
+    done
     if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
       next_generation=1
     else
@@ -75,8 +80,8 @@ else
 
     export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
-    sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
-    # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    # sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null

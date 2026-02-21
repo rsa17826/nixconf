@@ -77,7 +77,10 @@ in
     #   (import ./overlays/toLocaleStringFix.nix)
     #   (import ./overlays/dokitheme.nix)
     # ])
-    (import ./overlays/dokitheme.nix)
+    (import ./overlays/dokitheme/conf.nix)
+    (import ./overlays/toLocaleStringFix/conf.nix)
+    (import ./overlays/owoify/conf.nix)
+    (import ./overlays/updateHash/conf.nix)
   ];
   programs.vscode = {
     enable = true;
