@@ -1,4 +1,4 @@
-{ uname, ... }:
+{ userConfig, ... }:
 {
   nixpkgs.config.allowUnfree = false;
   services.xserver = {
@@ -51,7 +51,7 @@
     # programs.twm.enable=true;
     autoLogin = {
       enable = true;
-      user = "${uname}";
+      user = "${userConfig.uname}";
     };
   };
 }

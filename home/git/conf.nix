@@ -1,4 +1,4 @@
-{ uname, email }:
+{ userConfig }:
 {
   programs.git.config = {
     init = {
@@ -13,8 +13,8 @@
       };
     };
     user = {
-      email = email;
-      name = uname;
+      email = userConfig.email;
+      name = userConfig.uname;
     };
   };
 }

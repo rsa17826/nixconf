@@ -1,7 +1,7 @@
-{ uname, ... }:
+{ userConfig, ... }:
 {
   sops = {
-    age.keyFile = "/home/${uname}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${userConfig.uname}/.config/sops/age/keys.txt";
     defaultSopsFile = ./secrets.yaml;
     secrets = {
       GITHUB_TOKEN = {

@@ -1,4 +1,4 @@
-{ lib, uname, ... }:
+{ lib, ... }:
 let
   shellAliases = {
     udpate = "update";

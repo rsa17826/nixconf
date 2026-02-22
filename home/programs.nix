@@ -1,6 +1,6 @@
 {
   pkgs,
-  uname,
+  userConfig,
   ...
 }:
 {
@@ -28,11 +28,11 @@
     };
   };
 
-  users.users."${uname}" = {
+  users.users."${userConfig.uname}" = {
     shell = pkgs.fish;
     # shell = pkgs.zsh;
     isNormalUser = true;
-    description = "${uname}";
+    description = "${userConfig.uname}";
     extraGroups = [
       "networkmanager"
       "wheel"

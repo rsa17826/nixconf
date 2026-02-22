@@ -1,8 +1,7 @@
 {
-  uname,
+  userConfig,
   hostName,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -82,7 +81,7 @@
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-    SECRETS = "/home/${uname}/.config/sops-nix/secrets";
+    SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
   };
 
   security.sudo.extraConfig = ''
@@ -189,7 +188,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  # sudo codium --no-sandbox --user-data-dir "/home/${uname}/.config/VSCodium/"
+  # sudo codium --no-sandbox --user-data-dir "/home/${userConfig.uname}/.config/VSCodium/"
   networking.hostName = "${hostName}";
   system.stateVersion = "25.05"; # Did you read the comment?
   services.opensnitch.enable = true;

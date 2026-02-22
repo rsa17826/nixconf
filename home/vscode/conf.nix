@@ -1,7 +1,6 @@
 {
   pkgs,
-  uname,
-  lib,
+  userConfig,
   ...
 }:
 let
@@ -641,7 +640,7 @@ in
     mkdir -p "$HOME/.config/VSCodium/User"
     cp -f ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
     cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
-    sed -ri 's/\$\{uname\}/${uname}/g' "$HOME/.config/VSCodium/User/settings.json"
+    sed -ri 's/\$\{userConfig.uname\}/${userConfig.uname}/g' "$HOME/.config/VSCodium/User/settings.json"
   '';
   # language jsonc
   home.file.".vscode-oss/argv.json".text = ''

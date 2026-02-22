@@ -50,74 +50,56 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      cfg = {
-        "nyx_vbox" = {
-          uname = "nyx";
-          email = "nyx@nyx.com";
-        };
-        all = {
-          args = {
-            inherit inputs;
-          };
-          homeFile = ./home/home.nix;
-          modules = [
-            ./home/conf.nix
 
+      # Helper function to generate a host configuration
+      mkHost =
+        hostName: userConfig:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs hostName userConfig;
+          };
+          modules = userConfig.modules ++ [
+            ./home/conf.nix
             # disko.nixosModules.disko
             # ./disko/conf.nix
             # impermanence.nixosModules.impermanence
             # ./impermanence/conf.nix
-            sops-nix.nixosModules.sops
-            /etc/nixos/hardware-configuration.nix
             ./home/programs.nix
             ./home/base.nix
             ./home/shellScripts/conf.nix
             ./home/CRON/clean.nix
+
             ./hardware-configuration/${hostName}/hardware-configuration.nix
+
+            inputs.sops-nix.nixosModules.sops
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                # useGlobalPkgs = true;
+                # useUserPackages = true;
+                backupFileExtension = "backup";
+                extraSpecialArgs = {
+                  inherit inputs hostName userConfig;
+                };
+                users.${userConfig.uname} = import userConfig.homeFile;
+              };
+            }
           ];
+        };
+
+      # Define your hosts here
+      hosts = {
+        nyx_vbox = {
+          uname = "nyx";
+          email = "nyx@nyx.com";
+          homeFile = ./home/home.nix;
         };
       };
     in
     {
-      nix.registry.home-manager.flake = inputs.home-manager;
-      # homeConfigurations.${uname} = home-manager.lib.homeManagerConfiguration {
-      #   inherit pkgs;
-      #   extraSpecialArgs = {
-      #     inherit inputs uname;
-      #   };
-      #   modules = [
-      #     ./home/home.nix
-      #     {
-      #       # This bit ensures the home-manager command is actually installed
-      #       programs.home-manager.enable = true;
-      #       home.username = uname;
-      #       home.homeDirectory = "/home/${uname}";
-      #     }
-      #   ];
-      # };
-
-      nixosConfigurations = {
-        map ${hostName} = inputs.nixpkgs.lib.nixosSystem ({
-          inherit system;
-          specialArgs = args;
-          modules =
-            cfg.${hostName}
-            ++ cfg.all
-            ++ [
-              inputs.home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  backupFileExtension = "backup";
-                  # home-manager.useGlobalPkgs = true;
-                  # home-manager.useUserPackages = true;
-                  extraSpecialArgs = args;
-                  users.${args.uname} = import homeFile;
-                };
-              }
-            ];
-        });
-      };
+      # Map the hosts defined above into nixosConfigurations
+      nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
     };
 }
-# nix run .#homeConfigurations.nyx.activationPackage -- switch --flake .

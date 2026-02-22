@@ -1,4 +1,4 @@
-{ uname, ... }:
+{ userConfig, ... }:
 {
   environment.persistence."/persist" = {
     hideMounts = true; # Usually set to true to keep 'df -h' clean
@@ -15,7 +15,7 @@
     
     # Use the 'users' attribute within the system persistence 
     # to handle home directory permissions automatically
-    users.${uname} = {
+    users.${userConfig.uname} = {
       directories = [
         "nixconf" # Path is relative to the user's home
         "Downloads"

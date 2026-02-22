@@ -1,14 +1,14 @@
 {
   config,
   pkgs,
-  uname,
+  userConfig,
   lib,
   inputs,
   ...
 }:
 {
-  home.username = uname;
-  home.homeDirectory = "/home/${uname}";
+  home.username = userConfig.uname;
+  home.homeDirectory = "/home/${userConfig.uname}";
   xsession.numlock.enable = true;
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -31,9 +31,9 @@
   #    systemd.enable = true;
   #  };
   xdg.enable = true;
-  xdg.dataHome = "/home/${uname}/.local/share";
-  xdg.configHome = "/home/${uname}/.config";
-  xdg.cacheHome = "/home/${uname}/.cache";
+  xdg.dataHome = "/home/${userConfig.uname}/.local/share";
+  xdg.configHome = "/home/${userConfig.uname}/.config";
+  xdg.cacheHome = "/home/${userConfig.uname}/.cache";
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs = {
     kitty = {
