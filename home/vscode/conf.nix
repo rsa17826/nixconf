@@ -163,6 +163,12 @@ in
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
+            name = "shell-tidy-vscode";
+            publisher = "xqvvu";
+            version = "1.1.2";
+            hash = "sha256-wi2JDzeWbJpzYlp224XZ7wDXRy09V+VEaXVubAfbuZw=";
+          }
+          {
             name = "qml-format";
             publisher = "Delgan";
             version = "1.1.0";

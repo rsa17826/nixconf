@@ -78,7 +78,7 @@ trap clean_up SIGINT
 # Begin the printing of the nix expression that will house the list of extensions.
 printf '{ extensions = [\n'
 text="
-coopmoney.nix-embedded-languages"
+xqvvu.shell-tidy-vscode"
 
 # Note that we are only looking to update extensions that are already installed.
 # IFS=$'\n' read -d '' -r -a lines <<< "$text"

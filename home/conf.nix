@@ -52,7 +52,8 @@
     options = "--delete-older-than 7d";
   };
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages;
   # programs.fish.interactiveShellInit = ''
   #   pay-respects fish --alias f | source
   # '';
