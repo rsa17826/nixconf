@@ -131,5 +131,6 @@
     sops # secrets manager
     direnv
     home-manager
+    ags # tsx widget maker
   ];
 }
