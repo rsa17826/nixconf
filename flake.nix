@@ -60,16 +60,6 @@
             inherit inputs hostName userConfig;
           };
           modules = userConfig.modules ++ [
-            ./home/conf.nix
-            # disko.nixosModules.disko
-            # ./disko/conf.nix
-            # impermanence.nixosModules.impermanence
-            # ./impermanence/conf.nix
-            ./home/programs.nix
-            ./home/base.nix
-            ./home/shellScripts/conf.nix
-            ./home/CRON/clean.nix
-
             ./hardware-configuration/${hostName}/hardware-configuration.nix
 
             inputs.sops-nix.nixosModules.sops
@@ -95,6 +85,17 @@
           uname = "nyx";
           email = "nyx@nyx.com";
           homeFile = ./home/home.nix;
+          modules = [
+            ./home/conf.nix
+            # disko.nixosModules.disko
+            # ./disko/conf.nix
+            # impermanence.nixosModules.impermanence
+            # ./impermanence/conf.nix
+            ./home/programs.nix
+            ./home/base.nix
+            ./home/shellScripts/conf.nix
+            ./home/CRON/clean.nix
+          ];
         };
       };
     in
