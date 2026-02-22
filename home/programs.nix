@@ -63,7 +63,7 @@
       file # like die
       opensnitch-ui # firewall
       vscodium # text editor
-      wineWowPackages.unstableFull # windows apps
+      # wineWowPackages.unstableFull # windows apps
       # autokey # x11 only
       unixtools.watch # watch cmd
       htop # process info

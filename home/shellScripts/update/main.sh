@@ -53,29 +53,44 @@ else
     #   next_generation=$((highest_generation + 1))
     # fi
     now=$(date +%Y_%m_%d)
-    for i in $(seq 10 10 100); do
-      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation [0-9]+' | head -n 1 | sed -E 's/Generation ([0-9]+) -.*/\1/')
-      if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
-        break
-      fi
-    done
-    echo $prev_generation
-    if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
-      next_generation=1
+    # for i in $(seq 10 10 100); do
+    #   prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation [0-9]+' | head -n 1 | sed -E 's/Generation ([0-9]+) -.*/\1/')
+    #   if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
+    #     break
+    #   fi
+    # done
+# 1. Fetch remote status without merging
+    echo "📡 Checking remote for updates..."
+    git fetch --quiet
+
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "@{u}" 2>/dev/null || echo "$LOCAL")
+BASE=$(git merge-base @ "@{u}" 2>/dev/null || echo "$LOCAL")
+    if [ "$LOCAL" = "$REMOTE" ]; then
+        echo "✅ Local is up to date with remote."
+    elif [ "$LOCAL" = "$BASE" ]; then
+        echo "⚠️ Remote has new changes! Pulling now..."
+        git pull --rebase
+    elif [ "$REMOTE" = "$BASE" ]; then
+        echo "⬆️ Local has unpushed commits."
     else
+        echo "❌ Diverged! You have local and remote changes that conflict."
+        echo "Please resolve manually in ~/nixconf before running this script."
+        exit 1
+    fi
+prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+')
+[[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
+    # Fallback to 0 if no generation is found in history
       if git diff-index --quiet HEAD --; then
           echo "0️⃣ No changes detected. Staying on current generation."
-          next_generation=$prev_generation
+              next_generation=$prev_generation
+
           SKIP_GIT=true
       else
           echo "📝 Changes detected. Incrementing generation."
-          if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
-              next_generation=1
-          else
               next_generation=$((prev_generation + 1))
-          fi
           SKIP_GIT=false
-      fi
     fi
     echo $next_generation
     
