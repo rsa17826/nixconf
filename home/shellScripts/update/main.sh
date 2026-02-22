@@ -63,7 +63,19 @@ else
     if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
       next_generation=1
     else
-      next_generation=$((prev_generation + 1))
+      if git diff-index --quiet HEAD --; then
+          echo "0️⃣ No changes detected. Staying on current generation."
+          next_generation=$prev_generation
+          SKIP_GIT=true
+      else
+          echo "📝 Changes detected. Incrementing generation."
+          if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
+              next_generation=1
+          else
+              next_generation=$((prev_generation + 1))
+          fi
+          SKIP_GIT=false
+      fi
     fi
     echo $next_generation
     
@@ -75,9 +87,11 @@ else
     echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
 
     # Commit and push changes
-    git add -A
-    git commit -m "$NIXOS_LABEL_VERSION"
-    git push
+      if [ "$SKIP_GIT" = false ]; then
+          git add -A
+          git commit -m "$NIXOS_LABEL_VERSION"
+          git push
+      fi
 
     # NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')
 
