@@ -46,7 +46,7 @@ else
     # directory="/nix/var/nix/profiles/system-profiles/"
 
     # Extract generation numbers, then sort them numerically and get the highest one
-    # highest_generation=$(ls -l "$directory" | grep -oP 'Generation:_\K[0-9]+' | sort -n | tail -n 1)
+    # highest_generation=$(ls -l "$directory" | grep -oP 'Generation:_\K\d+' | sort -n | tail -n 1)
     # if [ -z "$highest_generation" ]; then
     #   next_generation=1
     # else
@@ -54,12 +54,12 @@ else
     # fi
     now=$(date +%Y_%m_%d)
     for i in $(seq 10 10 100); do
-      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation [0-9]+' | head -n 1 | sed -E 's/Generation: ([0-9]+) -.*/\1/')
-      if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
+      prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation \d+' | head -n 1 | sed -E 's/Generation (\d+) -.*/\1/')
+      if [[ "$prev_generation" =~ ^\d+$ ]]; then
         break
       fi
     done
-    if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
+    if [[ ! "$prev_generation" =~ ^\d+$ ]]; then
       next_generation=1
     else
       next_generation=$((prev_generation + 1))

@@ -1,6 +1,5 @@
 {
   description = "NixOS configuration";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -27,6 +26,15 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.astal.follows = "astal";
+    };
   };
 
   outputs =
@@ -36,13 +44,40 @@
       impermanence,
       disko,
       sops-nix,
+      ags,
+      astal,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      uname = "nyx";
-      email = "nyx@nyx.com";
+      cfg = {
+        "nyx_vbox" = {
+          uname = "nyx";
+          email = "nyx@nyx.com";
+        };
+        all = {
+          args = {
+            inherit inputs;
+          };
+          homeFile = ./home/home.nix;
+          modules = [
+            ./home/conf.nix
+
+            # disko.nixosModules.disko
+            # ./disko/conf.nix
+            # impermanence.nixosModules.impermanence
+            # ./impermanence/conf.nix
+            sops-nix.nixosModules.sops
+            /etc/nixos/hardware-configuration.nix
+            ./home/programs.nix
+            ./home/base.nix
+            ./home/shellScripts/conf.nix
+            ./home/CRON/clean.nix
+            ./hardware-configuration/${hostName}/hardware-configuration.nix
+          ];
+        };
+      };
     in
     {
       nix.registry.home-manager.flake = inputs.home-manager;
@@ -61,19 +96,15 @@
       #     }
       #   ];
       # };
+
       nixosConfigurations = {
-        "${uname}_vbox" = inputs.nixpkgs.lib.nixosSystem (
-          let
-            args = {
-              inherit inputs uname email;
-              hostName = "${uname}_vbox";
-            };
-          in
-          {
-            inherit system;
-            specialArgs = args;
-            modules = [
-              ./home/conf.nix
+        map ${hostName} = inputs.nixpkgs.lib.nixosSystem ({
+          inherit system;
+          specialArgs = args;
+          modules =
+            cfg.${hostName}
+            ++ cfg.all
+            ++ [
               inputs.home-manager.nixosModules.home-manager
               {
                 home-manager = {
@@ -81,22 +112,11 @@
                   # home-manager.useGlobalPkgs = true;
                   # home-manager.useUserPackages = true;
                   extraSpecialArgs = args;
-                  users.${uname} = import ./home/home.nix;
+                  users.${args.uname} = import homeFile;
                 };
               }
-              # disko.nixosModules.disko
-              # impermanence.nixosModules.impermanence
-              sops-nix.nixosModules.sops
-              /etc/nixos/hardware-configuration.nix
-              ./home/programs.nix
-              ./home/base.nix
-              # ./disko/conf.nix
-              # ./impermanence/conf.nix
-              ./home/shellScripts/conf.nix
-              ./home/CRON/clean.nix
             ];
-          }
-        );
+        });
       };
     };
 }
