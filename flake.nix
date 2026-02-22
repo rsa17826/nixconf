@@ -26,15 +26,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    astal = {
-      url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ags = {
-      url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.astal.follows = "astal";
-    };
   };
 
   outputs =
@@ -44,8 +35,6 @@
       impermanence,
       disko,
       sops-nix,
-      ags,
-      astal,
       ...
     }@inputs:
     let
@@ -103,32 +92,5 @@
     {
       # Map the hosts defined above into nixosConfigurations
       nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
-      devShells.${system}.default = pkgs.mkShell {
-        name = "ags-shell";
-
-        buildInputs = [
-          inputs.ags.packages.${system}.default
-          inputs.astal.packages.${system}.io
-          inputs.astal.packages.${system}.apps
-          inputs.astal.packages.${system}.battery
-          inputs.astal.packages.${system}.network
-          pkgs.gobject-introspection
-          pkgs.gtk3
-        ];
-
-        shellHook = ''
-          # Ensures GObject Introspection can find the libraries in the Nix Store
-          export GI_TYPELIB_PATH="${
-            pkgs.lib.makeSearchPath "lib/girepository-1.0" [
-              pkgs.gtk3
-              pkgs.glib
-              pkgs.pango
-              pkgs.gdk-pixbuf
-              pkgs.atk
-            ]
-          }"
-          echo "AGS Development Environment Loaded"
-        '';
-      };
     };
 }

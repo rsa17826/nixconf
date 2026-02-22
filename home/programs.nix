@@ -127,10 +127,9 @@
     font-awesome # For additional icons
     wlogout # For the power menu click
     pavucontrol # For audio control
-    ly
+    ly # tui login manager
     sops # secrets manager
     direnv
     home-manager
-    ags # tsx widget maker
   ];
 }
