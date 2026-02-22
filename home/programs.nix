@@ -94,11 +94,12 @@
       #
       zenity
       libnotify
-      simplex-chat-desktop # chat
+      simplex-chat-desktop # simple x chat
       copyq # clipboard manager
       # openshot-qt # vid editor
       # pay-respects
       imagemagick
+      shfmt # .sh formatter
     ];
   };
   environment.systemPackages = with pkgs; [

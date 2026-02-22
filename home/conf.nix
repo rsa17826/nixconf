@@ -24,13 +24,13 @@
 
   programs.nix-ld.libraries = with pkgs; [
     # Core X11
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXext
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libxcb
+    libX11
+    libXcursor
+    libXext
+    libXi
+    libXinerama
+    libXrandr
+    libxcb
 
     # Input & fonts
     libxkbcommon
