@@ -60,7 +60,7 @@
             inherit inputs hostName userConfig;
           };
           modules = userConfig.modules ++ [
-            ./hardware-configuration/${hostName}/hardware-configuration.nix
+            ./hardware-configurations/${hostName}.nix
 
             inputs.sops-nix.nixosModules.sops
 

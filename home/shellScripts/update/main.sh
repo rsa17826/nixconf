@@ -34,7 +34,7 @@ export NIXPKGS_ALLOW_INSECURE=0
 if [ "$DRY_RUN" = true ]; then
     echo "🧪 DRY RUN: Building #$TARGET (No commit, no push, no switch)"
     
-    sudo nixos-rebuild build --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    sudo nixos-rebuild build --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null
@@ -59,11 +59,13 @@ else
         break
       fi
     done
+    echo $prev_generation
     if [[ ! "$prev_generation" =~ ^[0-9]+$ ]]; then
       next_generation=1
     else
       next_generation=$((prev_generation + 1))
     fi
+    echo $next_generation
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
     NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
@@ -80,8 +82,8 @@ else
 
     # export NIXOS_LABEL_VERSION
     echo "🚀 Switching to #$TARGET..."
-    # sudo nixos-rebuild switch --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
-    sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --impure --log-format internal-json -v --show-trace |& nom --json
+    # sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
+    sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
     
     # Return to original directory
     popd > /dev/null
