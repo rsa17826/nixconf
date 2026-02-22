@@ -66,6 +66,7 @@ else
       next_generation=$((prev_generation + 1))
     fi
     echo $next_generation
+    
     # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
     # revision=$(git rev-parse HEAD)
     NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
