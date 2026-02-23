@@ -1,83 +1,52 @@
-self: super: {
-  vscode = super.vscode.overrideAttrs (oldAttrs: {
-    # We add python3 to nativeBuildInputs to handle the JSON patching
-    nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ self.python3 ];
-
+final: prev: {
+  vscodium = prev.vscodium.overrideAttrs (oldAttrs: {
+    # We use postFixup to ensure we're modifying the final binaries
     postFixup = (oldAttrs.postFixup or "") + ''
-      # The path to product.json varies by platform; this finds it automatically
-      PRODUCT_JSON=$(find $out -name product.json)
+      # Path to product.json inside the nix store output
+      PRODUCT_JSON="$out/lib/vscode/resources/app/product.json"
+      
+      # Check if jq is available (it usually is in the build env, or add to nativeBuildInputs)
+      # This script recreates the checksums for all files currently in the workbench
+      echo "Patching VSCodium checksums..."
+      
+      # We need to find the files that were modified. 
+      # The Doki theme usually modifies:
+      # out/vs/workbench/workbench.desktop.main.css
+      # out/vs/workbench/workbench.desktop.main.js
+      
+      APP_DIR="$out/lib/vscode/resources/app"
+      
+      # Helper function to get base64 md5 hash (VS Code's format)
+      get_hash() {
+        local file=$1
+        # VS Code uses MD5 hashed then base64 encoded
+        md5sum "$file" | cut -d' ' -f1 | xxd -r -p | base64 | tr -d '\n'
+      }
 
-      python3 <<EOF
-      import json
-      import hashlib
-      import base64
-      import os
+      # List of files to re-hash (add any others modified by your theme)
+      FILES=(
+        "out/vs/workbench/workbench.desktop.main.css"
+        "out/vs/workbench/workbench.desktop.main.js"
+      )
 
-      def compute_checksum(filename):
-          with open(filename, "rb") as f:
-              content = f.read()
-          # SHA256 in Base64 without padding
-          sha256_hash = hashlib.sha256(content).digest()
-          return base64.b64encode(sha256_hash).decode('utf-8').replace('=', ${"'"}')
+      # Create a temporary product.json
+      cp "$PRODUCT_JSON" "$PRODUCT_JSON.tmp"
+      chmod +w "$PRODUCT_JSON.tmp"
 
-      with open('$PRODUCT_JSON', 'r') as f:
-          data = json.load(f)
-
-      if 'checksums' in data:
-          app_dir = os.path.dirname('$PRODUCT_JSON')
-          # The app root is usually one level up from the 'out' directory
-          # Adjusting path to find the actual source files
-          base_path = os.path.join(os.path.dirname(app_dir), 'out')
+      for FILE in "''${FILES[@]}"; do
+        if [ -f "$APP_DIR/$FILE" ]; then
+          HASH=$(get_hash "$APP_DIR/$FILE")
+          echo "New hash for $FILE: $HASH"
           
-          for file_path, old_hash in data['checksums'].items():
-              full_path = os.path.join(base_path, file_path)
-              if os.path.exists(full_path):
-                  new_hash = compute_checksum(full_path)
-                  data['checksums'][file_path] = new_hash
-          
-          with open('$PRODUCT_JSON', 'w') as f:
-              json.dump(data, f, indent='\t')
-      EOF
+          # Use jq to update the specific file hash in the checksums object
+          # Note: we use --arg to safely pass strings to jq
+          ${prev.jq}/bin/jq --arg file "$FILE" --arg hash "$HASH" \
+            '.checksums[$file] = $hash' "$PRODUCT_JSON.tmp" > "$PRODUCT_JSON.tmp.2" && mv "$PRODUCT_JSON.tmp.2" "$PRODUCT_JSON.tmp"
+        fi
+      done
+
+      # Overwrite the original product.json
+      mv "$PRODUCT_JSON.tmp" "$PRODUCT_JSON"
     '';
   });
 }
-# final: prev: {
-#   vscodium = prev.vscodium.overrideAttrs (oldAttrs: {
-#     nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ prev.python3 ];
-
-#     postFixup = (oldAttrs.postFixup or "") + ''
-#       # VSCodium usually stores product.json in resources/app/
-#       PRODUCT_JSON=$(find $out -name product.json | grep "resources/app/product.json" | head -n 1)
-
-#       if [ -n "$PRODUCT_JSON" ]; then
-#         echo "Patching VSCodium checksums in $PRODUCT_JSON"
-#         python3 <<EOF
-# import json, hashlib, base64, os
-
-# def compute_checksum(filename):
-#     with open(filename, "rb") as f:
-#         return base64.b64encode(hashlib.sha256(f.read()).digest()).decode('utf-8').replace('=', '')
-
-# with open('$PRODUCT_JSON', 'r') as f:
-#     data = json.load(f)
-
-# if 'checksums' in data:
-#     # Path logic: checksums are relative to the 'out' directory in VS Code,
-#     # but in VSCodium/Nixpkgs they are relative to the app root.
-#     app_dir = os.path.dirname('$PRODUCT_JSON')
-
-#     for file_path, _ in data['checksums'].items():
-#         # Search for the file in the package output
-#         full_path = os.path.join(app_dir, file_path)
-#         if os.path.exists(full_path):
-#             data['checksums'][file_path] = compute_checksum(full_path)
-
-#     with open('$PRODUCT_JSON', 'w') as f:
-#         json.dump(data, f, indent='\t')
-# EOF
-#       else
-#         echo "Warning: product.json not found, skipping checksum patch."
-#       fi
-#     '';
-#   });
-# }
