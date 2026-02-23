@@ -17,6 +17,7 @@
     ./waybar/conf.nix
     ./cursors/conf.nix
     ./sops/conf.nix
+    ./zsh/plugins.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -95,7 +96,7 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  
+
   # home.packages = [
   #   (pkgs.writeShellScriptBin "nix-env" ''
   #     echo "nix-env is deprecated. Use nix profile or Home Manager."
