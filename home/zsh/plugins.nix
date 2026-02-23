@@ -11,6 +11,10 @@ in
   #   plugins = with pkgs; [
   #   ];
   # };
+  programs.thefuck = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.zsh = {
     enable = true;
 
@@ -36,8 +40,10 @@ in
             zsh-syntax-highlighting
             zsh-autosuggestions
             zsh-z
+            zsh-forgit
+            zsh-f-sy-h
+            zsh-autopair
           ]
         );
-
   };
 }
