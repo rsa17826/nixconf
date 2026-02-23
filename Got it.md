@@ -1484,3 +1484,6 @@ If you want:
   "comments": false,
   "strings": true
 }
+
+
+hbyecoding.claude-dev
