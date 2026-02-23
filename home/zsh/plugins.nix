@@ -1,11 +1,9 @@
-{ userConfig, pkgs, ... }:
-let
-  mkZshPlugin = name: pkg: {
-    inherit name;
-    src = pkg;
-    file = "share/${name}/${name}.zsh";
-  };
-in
+{
+  userConfig,
+  config,
+  pkgs,
+  ...
+}:
 {
   # users.users."${userConfig.uname}" = {
   #   plugins = with pkgs; [
@@ -16,6 +14,7 @@ in
     enableZshIntegration = true;
   };
   programs.zsh = {
+    dotDir = "${config.xdg.configHome}/zsh";
     enable = true;
 
     # plugins = [

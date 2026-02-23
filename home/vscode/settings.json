@@ -715,5 +715,8 @@
       "path": "/run/current-system/sw/bin/fish",
       "args": ["-l"]
     }
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "xqvvu.shell-tidy-vscode"
   }
 }

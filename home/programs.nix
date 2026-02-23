@@ -29,7 +29,7 @@
   };
 
   users.users."${userConfig.uname}" = {
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     # shell = pkgs.zsh;
     isNormalUser = true;
     description = "${userConfig.uname}";

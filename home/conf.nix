@@ -4,7 +4,19 @@
   pkgs,
   ...
 }:
+let
+  sudoKeepVars = [
+    "EDITOR"
+    "VISUAL"
+    "SECRETS"
+    "NIXOS_LABEL_VERSION"
+    "NIXOS_LABEL"
+  ];
+in
 {
+  security.sudo.extraConfig = ''
+    Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
+  '';
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -54,9 +66,6 @@
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages;
-  # programs.fish.interactiveShellInit = ''
-  #   pay-respects fish --alias f | source
-  # '';
   security.sudo.extraRules = [
     {
       groups = [ "users" ];
@@ -84,10 +93,6 @@
     VISUAL = "nvim";
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
   };
-
-  security.sudo.extraConfig = ''
-    Defaults env_keep += "EDITOR VISUAL SECRETS NIXOS_LABEL_VERSION NIXOS_LABEL"
-  '';
 
   # services.kanata = {
   #   enable = true;
