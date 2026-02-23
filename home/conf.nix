@@ -1,6 +1,7 @@
 {
   userConfig,
   hostName,
+  lib,
   pkgs,
   ...
 }:
