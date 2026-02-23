@@ -14,33 +14,30 @@ in
   programs.zsh = {
     enable = true;
 
-    plugins = [
-      (mkZshPlugin "zsh-abbr" pkgs.zsh-abbr)
-      (mkZshPlugin "zsh-autosuggestions" pkgs.zsh-autosuggestions)
-      (mkZshPlugin "zsh-syntax-highlighting" pkgs.zsh-syntax-highlighting)
-    ];
+    # plugins = [
+    #   (mkZshPlugin "zsh-abbr" pkgs.zsh-abbr)
+    #   (mkZshPlugin "zsh-autosuggestions" pkgs.zsh-autosuggestions)
+    #   (mkZshPlugin "zsh-syntax-highlighting" pkgs.)
+    # ];
     history.size = 10000;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    plugins = [
-      {
-        name = "nix-shell";
-        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-      }
-      {
-        name = "you-should-use";
-        src = "${pkgs.zsh-you-should-use}/share/zsh/plugins/you-should-use";
-      }
-      {
-        name = "zsh-vi-mode";
-        src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
-      }
-      {
-        name = "zsh-z";
-        src = "${pkgs.zsh-z}/share/zsh-z";
-      }
-    ];
+    plugins =
+      map
+        (pkg: {
+          name = pkg.pname;
+          src = pkg;
+          file = "share/${pkg.pname}/${pkg.pname}.zsh";
+        })
+        (
+          with pkgs;
+          [
+            zsh-syntax-highlighting
+            zsh-autosuggestions
+            zsh-z
+          ]
+        );
 
   };
 }
