@@ -11,7 +11,7 @@ in
   #   plugins = with pkgs; [
   #   ];
   # };
-  programs.thefuck = {
+  programs.pay-respects = {
     enable = true;
     enableZshIntegration = true;
   };
