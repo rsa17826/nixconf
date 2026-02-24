@@ -1527,3 +1527,146 @@ setTimeout(()=>{
 [data-testid="platform-board-kit.ui.swimlane.swimlane-wrapper"]>div>div{
     pointer-events:none;
 }
+
+
+// ==UserScript==
+// @name         Universal Video Shader
+// @version      1
+// @author       Gemini
+// @match        *://*/*
+// @grant        none
+// ==/UserScript==
+;(function () {
+  "use strict"
+
+  const VERTEX_SHADER = `
+      attribute vec2 position;
+      varying vec2 vUv;
+      void main() {
+          vUv = position * 0.5 + 0.5;
+          gl_Position = vec4(position, 0.0, 1.0);
+      }
+  `
+
+  const FRAGMENT_SHADER = `
+      precision highp float;
+      uniform sampler2D u_texture; // Renamed from Source
+      varying vec2 vUv;           // Renamed from vTexCoord
+      uniform float u_time;
+
+      float rerange(float val, float low1, float high1, float low2, float high2){
+          return ((val - low1) / (high1 - low1)) * (high2 - low2) + low2;
+      }
+
+      float mapToDarkeningFactor(float x) {
+          return rerange(x, 0.5, 1.0, 0.8, 0.15);
+      }
+
+      void main() {
+          // WebGL 1 uses texture2D() and gl_FragColor
+          vec3 color = texture2D(u_texture, vUv).rgb;
+
+          float averageIntensity = (color.r + color.g + color.b) / 3.0;
+          float darkeningFactor = mapToDarkeningFactor(averageIntensity);
+
+          gl_FragColor = vec4(color * darkeningFactor, 1.0);
+      }
+  `
+  function setupShader(video) {
+    if (video.dataset.shaderActive) return
+    video.dataset.shaderActive = "true"
+
+    const canvas = document.createElement("canvas")
+    // Ensure canvas perfectly overlays the video
+    canvas.style.position = "absolute"
+    canvas.style.pointerEvents = "none"
+    canvas.style.zIndex = "9999"
+
+    // Add canvas to the body
+    document.body.appendChild(canvas)
+
+    const gl = canvas.getContext("webgl")
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true) // Fixes upside down
+
+    const compile = (type, src) => {
+      const s = gl.createShader(type)
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      return s
+    }
+
+    const program = gl.createProgram()
+    gl.attachShader(program, compile(gl.VERTEX_SHADER, VERTEX_SHADER))
+    gl.attachShader(
+      program,
+      compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER),
+    )
+    gl.linkProgram(program)
+    gl.useProgram(program)
+
+    const buffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    )
+    const pos = gl.getAttribLocation(program, "position")
+    gl.enableVertexAttribArray(pos)
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0)
+
+    const texture = gl.createTexture()
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.texParameteri(
+      gl.TEXTURE_2D,
+      gl.TEXTURE_WRAP_S,
+      gl.CLAMP_TO_EDGE,
+    )
+    gl.texParameteri(
+      gl.TEXTURE_2D,
+      gl.TEXTURE_WRAP_T,
+      gl.CLAMP_TO_EDGE,
+    )
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+
+    function render(time) {
+      const rect = video.getBoundingClientRect()
+
+      // Sync canvas size and position to the video element
+      canvas.style.top = rect.top + window.scrollY + "px"
+      canvas.style.left = rect.left + window.scrollX + "px"
+      canvas.style.width = rect.width + "px"
+      canvas.style.height = rect.height + "px"
+
+      if (video.readyState >= 2) {
+        canvas.width = video.videoWidth
+        canvas.height = video.videoHeight
+        gl.viewport(0, 0, canvas.width, canvas.height)
+
+        gl.bindTexture(gl.TEXTURE_2D, texture)
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.RGBA,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          video,
+        )
+
+        gl.uniform1f(
+          gl.getUniformLocation(program, "u_time"),
+          time * 0.001,
+        )
+        gl.drawArrays(gl.TRIANGLES, 0, 6)
+      }
+      requestAnimationFrame(render)
+    }
+    render(0)
+  }
+
+  // Scan for any video every second
+  // setInterval(() => {
+  //   const videos = document.querySelectorAll("video")
+  //   videos.forEach(setupShader)
+  // }, 1000)
+})()
