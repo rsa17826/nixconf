@@ -1984,3 +1984,4 @@ if (document.body) {
     const titleElem = document.querySelector("title") || document.head.appendChild(document.createElement("title"));
     titleObserver.observe(titleElem, { childList: true, characterData: true });
 })();
+Is there a specific site that still feels slow, or should we look into making the regex even more aggressive for specific "leetspeak" (like phuck or sh!t)?
