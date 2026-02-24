@@ -1905,3 +1905,82 @@ if (document.body) {
 })();
 
 
+// ==UserScript==
+// @name         no * anywhere (Ultra Optimized)
+// @version      16
+// @match        *://*/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    // 1. The Cache - Stores { "f*ck": "fuck" }
+    const textCache = new Map();
+    const MAX_CACHE_SIZE = 1000; // Prevents memory leaks on infinite-scroll sites
+
+    const rawWords = `fuck,shitshow,fucks,shitposts,pornstar,sucked,bisexual,cumdump,vagina,crap,shitload,shithole,stupidness,fuckery,retardation,horshit,smut,bitching,stupids,bumfucks,bumblefuck,fuckin,fucktard,licked,crotch,hitler,crotchless,incestuous,batshit,penis,masturbate,Goddamn,damn,enslave,slavery,socked,enslavement,murderess,molest,molestation,dicks,cockblock,scrape,perverts,cock,stupidest,boobs,stupidity,slavery,sadist,stupid,trashest,fag,bitchybitchy,erotic,cockroach,tits,murdering,bitchy,trashing,trashiest,bullshitting,cocky,cockiness,murderous,Hancock,trashy,trashcan,horny,suicide,retard,clicked,incestual,basement,rapes,thorny,virgin,murderers,murderer,murder,virgins,assholes,rapest,whore,slut,bitchest,raped,morons,amusement,cocks,incest,fingerfuck,molested,murders,trash,cockroaches,monsterfucker,intersex,Futanari,trashhero,fucked,motherfucker,bitches,bastard,fucking,hell,nasty,scum,pissed,bastards,raping,bitch,shit,fucker,scumbag,shitless,ass,badass,virginity,slave,pervert,futanari,sex,futa,Impregnating,Impregnated,trashes,murderfest,Impregnate,rapey,retards,fuckk,Cunnilingus,slaves,sexual,edgefuckfests,anal,stupider,assed,Intercourse,Fallatio,Handjob,Masturbation,Masturbating,Orgy,Prostitutes,rape,enslaved,perverted,stupidly,prostitution,sexually,bullshits,shits,porn,dick,shitty,dicking,bullshit,sexuality,retardedness,Futadomworld,asshole,pussy,sexy,murdered,cocktail,trAshed,virginal,retarded,hentai,dogshit,fricking,frick,fricker,niri,rust,webtoon`.split(',');
+
+    const masterRegex = new RegExp(`\\b(${rawWords.join('|')})\\b`, 'gi');
+    const symbolRegex = /[a-z0-9]*[%#*♥][a-z0-9%#*♥]*/gi;
+
+    const specialReplacements = [
+        [/(?<=^|[^\d\w])\*(\w+( \w+)*)\*(?=[^\w\d]|$)/gi, "$1"],
+        [/what( ?ever)? the duck/gi, "what$1 the fuck"],
+        [/duck(ed)? up/gi, "fuck$1 up"],
+        [/R4P3/gi, "rape"],
+        [/fked/gi, "fucked"],
+        [/borked/gi, "fucked"],
+        [/f\*ing/gi, "fucking"],
+        [/b\*\*\*/gi, "bitch"],
+        [/F\**CK/gi, "fuck"],
+        [/(?<!\w)NSFW(?!\w)/gi, "porn"]
+    ];
+
+    function replaceText(text) {
+        if (!text || text.length < 2) return text;
+
+        // CHECK CACHE: If we've seen this exact string before, return the result immediately
+        if (textCache.has(text)) {
+            return textCache.get(text);
+        }
+
+        let processedText = text;
+
+        // Pass 1: Master word list
+        processedText = processedText.replace(masterRegex, (matched) => matched.toLowerCase());
+
+        // Pass 2: Special hardcoded overrides
+        for (const [reg, rep] of specialReplacements) {
+            processedText = processedText.replace(reg, rep);
+        }
+
+        // Pass 3: Symbol strip
+        processedText = processedText.replace(symbolRegex, (matched) => matched.replace(/[%#*♥]/g, ''));
+
+        // SAVE TO CACHE:
+        if (textCache.size > MAX_CACHE_SIZE) {
+            const firstKey = textCache.keys().next().value;
+            textCache.delete(firstKey); // Remove oldest entry to keep memory low
+        }
+        textCache.set(text, processedText);
+
+        return processedText;
+    }
+
+    // --- Title Observer (Kept separate because titles are unique) ---
+    function updateTitle() {
+        const oldTitle = document.title;
+        const newTitle = replaceText(oldTitle.replace(/(^| )\[URL\] .*/gi, ""));
+        if (oldTitle !== newTitle) {
+            document.title = newTitle;
+        }
+    }
+
+    // Library Integration
+    if (typeof loadlib === "function") {
+        loadlib("textjack")(replaceText);
+    }
+
+    const titleObserver = new MutationObserver(updateTitle);
+    const titleElem = document.querySelector("title") || document.head.appendChild(document.createElement("title"));
+    titleObserver.observe(titleElem, { childList: true, characterData: true });
+})();
