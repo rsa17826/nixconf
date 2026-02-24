@@ -1706,3 +1706,202 @@ setTimeout(()=>{
   document.querySelectorAll("video, img, canvas").forEach(setupShader)
 
 })()
+
+
+
+// ==UserScript==
+// @name        lib:textjack
+// @version     8
+// @match       *://*/*
+// @run-at      document-start
+// @author      rssaromeo
+// @license     GPLv3
+// @grant       none
+// ==/UserScript==
+
+let isProcessing = false
+const textJackList = []
+const observedRoots = new WeakSet()
+
+// 1. Efficient Text Processing
+function processTextNode(node) {
+  const originalText = node.textContent
+  let newText = originalText
+
+  // Run through all callbacks in a single pass to avoid recursion loops
+  for (const cb of textJackList) {
+    newText = cb(newText)
+  }
+
+  if (newText !== originalText) {
+    isProcessing = true // Prevent the observer from reacting to our own change
+    node.textContent = newText
+    isProcessing = false
+  }
+}
+
+// 2. High-speed DOM Traversal
+function scan(root) {
+  // TreeWalker is significantly faster than manual recursive childNodes loops
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT,
+    null,
+    false,
+  )
+  let currentNode
+
+  while ((currentNode = walker.nextNode())) {
+    if (currentNode.nodeType === Node.TEXT_NODE) {
+      processTextNode(currentNode)
+    } else if (
+      currentNode.shadowRoot &&
+      !observedRoots.has(currentNode.shadowRoot)
+    ) {
+      // Automatically catch Shadow DOMs during the scan
+      observe(currentNode.shadowRoot)
+      scan(currentNode.shadowRoot)
+    }
+  }
+}
+
+// 3. Optimized Mutation Handler
+function handleMutations(mutations) {
+  if (isProcessing) return
+
+  for (const mutation of mutations) {
+    if (mutation.type === "childList") {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          processTextNode(node)
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          scan(node)
+        }
+      })
+    } else if (mutation.type === "characterData") {
+      processTextNode(mutation.target)
+    }
+  }
+}
+
+// 4. Centralized Observer logic
+function observe(target) {
+  if (observedRoots.has(target)) return
+
+  const observer = new MutationObserver(handleMutations)
+  observer.observe(target, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  })
+  observedRoots.add(target)
+}
+
+// --- Library Integration ---
+
+const a = loadlib("allfuncs")
+
+loadlib("libloader").savelib("textjack", function newTextJack(cb) {
+  textJackList.push(cb)
+
+  // Initial run if body exists
+  if (document.body) {
+    setup()
+  }
+})
+
+function setup() {
+  if (observedRoots.has(document.documentElement)) return
+
+  // Start observing from the root HTML element to catch head/body changes
+  observe(document.documentElement)
+  scan(document.documentElement)
+}
+
+// Safety check for early-loading
+if (document.body) {
+  setup()
+} else {
+  a.bodyload().then(setup)
+}
+
+
+
+// ==UserScript==
+// @name         no * anywhere (Optimized)
+// @version      15
+// @match        *://*/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    const rawWords = `fuck,shitshow,fucks,shitposts,pornstar,sucked,bisexual,cumdump,vagina,crap,shitload,shithole,stupidness,fuckery,retardation,horshit,smut,bitching,stupids,bumfucks,bumblefuck,fuckin,fucktard,licked,crotch,hitler,crotchless,incestuous,batshit,penis,masturbate,Goddamn,damn,enslave,slavery,socked,enslavement,murderess,molest,molestation,dicks,cockblock,scrape,perverts,cock,stupidest,boobs,stupidity,slavery,sadist,stupid,trashest,fag,bitchybitchy,erotic,cockroach,tits,murdering,bitchy,trashing,trashiest,bullshitting,cocky,cockiness,murderous,Hancock,trashy,trashcan,horny,suicide,retard,clicked,incestual,basement,rapes,thorny,virgin,murderers,murderer,murder,virgins,assholes,rapest,whore,slut,bitchest,raped,morons,amusement,cocks,incest,fingerfuck,molested,murders,trash,cockroaches,monsterfucker,intersex,Futanari,trashhero,fucked,motherfucker,bitches,bastard,fucking,hell,nasty,scum,pissed,bastards,raping,bitch,shit,fucker,scumbag,shitless,ass,badass,virginity,slave,pervert,futanari,sex,futa,Impregnating,Impregnated,trashes,murderfest,Impregnate,rapey,retards,fuckk,Cunnilingus,slaves,sexual,edgefuckfests,anal,stupider,assed,Intercourse,Fallatio,Handjob,Masturbation,Masturbating,Orgy,Prostitutes,rape,enslaved,perverted,stupidly,prostitution,sexually,bullshits,shits,porn,dick,shitty,dicking,bullshit,sexuality,retardedness,Futadomworld,asshole,pussy,sexy,murdered,cocktail,trAshed,virginal,retarded,hentai,dogshit,fricking,frick,fricker,niri,rust,webtoon`.split(',');
+
+    // 1. Compile simple word list into ONE regex
+    // This replaces all standard words in a single pass.
+    const masterRegex = new RegExp(`\\b(${rawWords.join('|')})\\b`, 'gi');
+
+    // 2. Specialized replacements (Complex logic)
+    const specialReplacements = [
+        [/(?<=^|[^\d\w])\*(\w+( \w+)*)\*(?=[^\w\d]|$)/gi, "$1"],
+        [/what( ?ever)? the duck/gi, "what$1 the fuck"],
+        [/duck(ed)? up/gi, "fuck$1 up"],
+        [/R4P3/gi, "rape"],
+        [/fked/gi, "fucked"],
+        [/borked/gi, "fucked"],
+        [/f\*ing/gi, "fucking"],
+        [/b\*\*\*/gi, "bitch"],
+        [/F\**CK/gi, "fuck"],
+        [/(?<!\w)NSFW(?!\w)/gi, "porn"],
+        // Add more manual overrides here...
+    ];
+
+    // 3. The Symbol Decoder
+    // Instead of a regex for every word, we use one regex that finds 
+    // words containing symbols and cleans them.
+    const symbolRegex = /[a-z0-9]*[%#*♥][a-z0-9%#*♥]*/gi;
+
+    function replaceText(text) {
+        if (!text || text.length < 2) return text;
+
+        // Pass 1: Master word list
+        text = text.replace(masterRegex, (matched) => matched.toLowerCase());
+
+        // Pass 2: Special hardcoded overrides
+        for (const [reg, rep] of specialReplacements) {
+            text = text.replace(reg, rep);
+        }
+
+        // Pass 3: Clean symbol-censored words (e.g., f*ck -> fuck)
+        // This is much faster than your original map() logic
+        text = text.replace(symbolRegex, (matched) => {
+            let clean = matched.replace(/[%#*♥]/g, '');
+            // Optional: check if 'clean' is in our dictionary before replacing
+            return clean;
+        });
+
+        return text;
+    }
+
+    // --- Title Logic ---
+    function updateTitle() {
+        const oldTitle = document.title;
+        const newTitle = replaceText(oldTitle.replace(/(^| )\[URL\] .*/gi, ""));
+        if (oldTitle !== newTitle) {
+            document.title = newTitle;
+        }
+    }
+
+    // Integrate with your textjack library
+    if (typeof loadlib === "function") {
+        loadlib("textjack")(replaceText);
+    }
+
+    // Title Observer
+    const titleObserver = new MutationObserver(updateTitle);
+    const titleElem = document.querySelector("title") || document.head.appendChild(document.createElement("title"));
+    titleObserver.observe(titleElem, { childList: true });
+
+})();
+
+
