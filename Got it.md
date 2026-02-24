@@ -1528,14 +1528,17 @@ setTimeout(()=>{
     pointer-events:none;
 }
 
-
 // ==UserScript==
-// @name         Universal Video Shader
-// @version      1
+// @name         Universal Shader (Instant Mutation Detection)
+// @namespace    http://tampermonkey.net/
+// @version      1.6
+// @description  MutationObserver for instant detection + Safe CORS Fallback
 // @author       Gemini
 // @match        *://*/*
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @connect      *
 // ==/UserScript==
+
 ;(function () {
   "use strict"
 
@@ -1550,8 +1553,8 @@ setTimeout(()=>{
 
   const FRAGMENT_SHADER = `
       precision highp float;
-      uniform sampler2D u_texture; // Renamed from Source
-      varying vec2 vUv;           // Renamed from vTexCoord
+      uniform sampler2D u_texture;
+      varying vec2 vUv;
       uniform float u_time;
 
       float rerange(float val, float low1, float high1, float low2, float high2){
@@ -1563,30 +1566,47 @@ setTimeout(()=>{
       }
 
       void main() {
-          // WebGL 1 uses texture2D() and gl_FragColor
           vec3 color = texture2D(u_texture, vUv).rgb;
-
-          float averageIntensity = (color.r + color.g + color.b) / 3.0;
-          float darkeningFactor = mapToDarkeningFactor(averageIntensity);
-
-          gl_FragColor = vec4(color * darkeningFactor, 1.0);
+          float avg = (color.r + color.g + color.b) / 3.0;
+          gl_FragColor = vec4(color * mapToDarkeningFactor(avg), 1.0);
       }
   `
-  function setupShader(video) {
-    if (video.dataset.shaderActive) return
-    video.dataset.shaderActive = "true"
+
+  function fetchSafeSource(el) {
+    if (el.dataset.corsFixed || el.tagName !== "IMG") return
+    el.dataset.corsFixed = "true"
+
+    GM_xmlhttpRequest({
+      method: "GET",
+      url: el.src,
+      responseType: "blob",
+      onload: function (response) {
+        const blobUrl = URL.createObjectURL(response.response)
+        const img = new Image()
+        img.onload = () => {
+          el._safeImage = img
+        }
+        img.src = blobUrl
+      },
+    })
+  }
+
+  function setupShader(el) {
+    if (el.dataset.shaderActive || el.classList.contains("shader-overlay")) return
+    el.dataset.shaderActive = "true"
 
     const canvas = document.createElement("canvas")
-    // Ensure canvas perfectly overlays the video
-    canvas.style.position = "absolute"
-    canvas.style.pointerEvents = "none"
-    canvas.style.zIndex = "9999"
-
-    // Add canvas to the body
+    canvas.classList.add("shader-overlay")
+    Object.assign(canvas.style, {
+      position: "absolute",
+      pointerEvents: "none",
+      zIndex: "9999",
+      backgroundColor: "#000",
+    })
     document.body.appendChild(canvas)
 
     const gl = canvas.getContext("webgl")
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true) // Fixes upside down
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
 
     const compile = (type, src) => {
       const s = gl.createShader(type)
@@ -1597,76 +1617,92 @@ setTimeout(()=>{
 
     const program = gl.createProgram()
     gl.attachShader(program, compile(gl.VERTEX_SHADER, VERTEX_SHADER))
-    gl.attachShader(
-      program,
-      compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER),
-    )
+    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER))
     gl.linkProgram(program)
     gl.useProgram(program)
 
     const buffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW,
-    )
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW)
+
     const pos = gl.getAttribLocation(program, "position")
     gl.enableVertexAttribArray(pos)
     gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0)
 
     const texture = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, texture)
-    gl.texParameteri(
-      gl.TEXTURE_2D,
-      gl.TEXTURE_WRAP_S,
-      gl.CLAMP_TO_EDGE,
-    )
-    gl.texParameteri(
-      gl.TEXTURE_2D,
-      gl.TEXTURE_WRAP_T,
-      gl.CLAMP_TO_EDGE,
-    )
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
 
     function render(time) {
-      const rect = video.getBoundingClientRect()
+      if (!el.isConnected) {
+        canvas.remove()
+        return
+      }
 
-      // Sync canvas size and position to the video element
+      const rect = el.getBoundingClientRect()
       canvas.style.top = rect.top + window.scrollY + "px"
       canvas.style.left = rect.left + window.scrollX + "px"
       canvas.style.width = rect.width + "px"
       canvas.style.height = rect.height + "px"
 
-      if (video.readyState >= 2) {
-        canvas.width = video.videoWidth
-        canvas.height = video.videoHeight
-        gl.viewport(0, 0, canvas.width, canvas.height)
+      let drawSource = el._safeImage || el
+      let isReady = false
 
-        gl.bindTexture(gl.TEXTURE_2D, texture)
-        gl.texImage2D(
-          gl.TEXTURE_2D,
-          0,
-          gl.RGBA,
-          gl.RGBA,
-          gl.UNSIGNED_BYTE,
-          video,
-        )
+      if (el.tagName === "VIDEO") isReady = el.readyState >= 2
+      else if (el.tagName === "IMG") isReady = drawSource.complete && drawSource.naturalWidth !== 0
+      else if (el.tagName === "CANVAS") isReady = true
 
-        gl.uniform1f(
-          gl.getUniformLocation(program, "u_time"),
-          time * 0.001,
-        )
-        gl.drawArrays(gl.TRIANGLES, 0, 6)
+      if (isReady) {
+        try {
+          canvas.width = el.tagName === "VIDEO" ? el.videoWidth : (el.naturalWidth || el.width)
+          canvas.height = el.tagName === "VIDEO" ? el.videoHeight : (el.naturalHeight || el.height)
+          gl.viewport(0, 0, canvas.width, canvas.height)
+
+          gl.bindTexture(gl.TEXTURE_2D, texture)
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, drawSource)
+
+          gl.uniform1f(gl.getUniformLocation(program, "u_time"), time * 0.001)
+          gl.drawArrays(gl.TRIANGLES, 0, 6)
+          canvas.style.backgroundColor = "#0000"
+        } catch (e) {
+          if (e.name === "SecurityError") {
+            canvas.style.backgroundColor = "#000"
+            fetchSafeSource(el)
+          }
+        }
       }
       requestAnimationFrame(render)
     }
     render(0)
   }
 
-  // Scan for any video every second
-  // setInterval(() => {
-  //   const videos = document.querySelectorAll("video")
-  //   videos.forEach(setupShader)
-  // }, 1000)
+  // --- MUTATION OBSERVER LOGIC ---
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== 1) continue // Skip text nodes
+
+        // Check if the added node itself is a target
+        if (["VIDEO", "IMG", "CANVAS"].includes(node.tagName)) {
+            setupShader(node)
+        }
+        // Check if the added node contains any targets (Subtree)
+        else {
+            node.querySelectorAll?.("video, img, canvas").forEach(setupShader)
+        }
+      }
+    }
+  })
+
+  // Start observing the whole document
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  })
+
+  // Run once for elements already on the page when script loads
+  document.querySelectorAll("video, img, canvas").forEach(setupShader)
+
 })()
