@@ -1988,3 +1988,135 @@ Is there a specific site that still feels slow, or should we look into making th
 
 
 xcursorgen
+
+
+        function createProcessor(canvas, width, height) {
+          const gl = canvas.getContext("webgl", {
+            premultipliedAlpha: false,
+          })
+
+          canvas.width = width
+          canvas.height = height
+          gl.viewport(0, 0, width, height)
+
+          function compile(type, source) {
+            const shader = gl.createShader(type)
+            gl.shaderSource(shader, source)
+            gl.compileShader(shader)
+            return shader
+          }
+
+          const program = gl.createProgram()
+          gl.attachShader(
+            program,
+            compile(gl.VERTEX_SHADER, VERTEX_SHADER),
+          )
+          gl.attachShader(
+            program,
+            compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER),
+          )
+          gl.linkProgram(program)
+          gl.useProgram(program)
+
+          // Fullscreen quad
+          const buffer = gl.createBuffer()
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+          gl.bufferData(
+            gl.ARRAY_BUFFER,
+            new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+            gl.STATIC_DRAW,
+          )
+
+          const position = gl.getAttribLocation(program, "position")
+          gl.enableVertexAttribArray(position)
+          gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
+
+          // Create texture ONCE
+          const texture = gl.createTexture()
+          gl.bindTexture(gl.TEXTURE_2D, texture)
+          gl.texParameteri(
+            gl.TEXTURE_2D,
+            gl.TEXTURE_WRAP_S,
+            gl.CLAMP_TO_EDGE,
+          )
+          gl.texParameteri(
+            gl.TEXTURE_2D,
+            gl.TEXTURE_WRAP_T,
+            gl.CLAMP_TO_EDGE,
+          )
+          gl.texParameteri(
+            gl.TEXTURE_2D,
+            gl.TEXTURE_MIN_FILTER,
+            gl.LINEAR,
+          )
+          gl.texParameteri(
+            gl.TEXTURE_2D,
+            gl.TEXTURE_MAG_FILTER,
+            gl.LINEAR,
+          )
+
+          // Allocate texture memory once (null data)
+          gl.texImage2D(
+            gl.TEXTURE_2D,
+            0,
+            gl.RGBA,
+            width,
+            height,
+            0,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            null,
+          )
+
+          const uTexture = gl.getUniformLocation(program, "u_texture")
+          gl.uniform1i(uTexture, 0)
+
+          async function process(bitmap) {
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+
+            // 🔥 Fast path: replace pixels only
+            gl.texSubImage2D(
+              gl.TEXTURE_2D,
+              0,
+              0,
+              0,
+              gl.RGBA,
+              gl.UNSIGNED_BYTE,
+              bitmap,
+            )
+
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+
+            return new Promise((resolve) =>
+              canvas.toBlob(resolve, "image/jpeg", 0.95),
+            )
+          }
+
+          return { process }
+        }
+        async function processAll(blobs) {
+          // Decode in parallel (CPU side)
+          const bitmaps = await Promise.all(
+            blobs.map((b) =>
+              createImageBitmap(b, { imageOrientation: "flipY" }),
+            ),
+          )
+
+          const width = bitmaps[0].width
+          const height = bitmaps[0].height
+
+          const processor = createProcessor(canvas, width, height)
+
+          const results = []
+
+          for (const bitmap of bitmaps) {
+            const output = await processor.process(bitmap)
+            results.push(output)
+          }
+
+          return results
+        }
+
+        return (await processAll([res.response])).map(
+          URL.createObjectURL,
+        )
