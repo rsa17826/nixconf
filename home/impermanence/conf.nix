@@ -12,8 +12,8 @@
     files = [
       "/etc/machine-id"
     ];
-    
-    # Use the 'users' attribute within the system persistence 
+
+    # Use the 'users' attribute within the system persistence
     # to handle home directory permissions automatically
     users.${userConfig.uname} = {
       directories = [

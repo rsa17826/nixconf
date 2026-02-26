@@ -42,7 +42,7 @@ mapfile -t raw_list < <(
 zenity_args=()
 for item in "${raw_list[@]}"; do
   if [[ -e "$item" ]] && ! is_protected "$item"; then
-    zenity_args+=( "TRUE" "$item" )
+    zenity_args+=("TRUE" "$item")
   fi
 done
 
@@ -65,7 +65,7 @@ selected_items=$(zenity --list --checklist \
 
 # ===== 3. PROCESS RESULTS =====
 # Convert pipe-separated string to array
-IFS="|" read -ra TO_DELETE <<< "$selected_items"
+IFS="|" read -ra TO_DELETE <<<"$selected_items"
 
 # Create a temporary associative array for fast lookup
 declare -A delete_map
@@ -74,9 +74,9 @@ for item in "${TO_DELETE[@]}"; do
 done
 
 # Run through the original queue to handle Keep vs Delete
-for ((i=1; i<${#zenity_args[@]}; i+=2)); do
+for ((i = 1; i < ${#zenity_args[@]}; i += 2)); do
   path="${zenity_args[$i]}"
-  
+
   if [[ ${delete_map["$path"]} ]]; then
     # DELETE
     rm -rf -- "$path"

@@ -95,10 +95,10 @@ in
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
   };
 
-  fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/A801-0866";
-      fsType = "ext4";
-    };
+  #  fileSystems."/data" =
+  #    { device = "/dev/disk/by-uuid/A801-0866";
+  #      fsType = "ext4";
+  #    };
   # services.kanata = {
   #   enable = true;
 

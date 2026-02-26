@@ -9,7 +9,7 @@ UNREAD=$(echo "$NOTIFS_JSON" | jq 'length')
 # Prepare red dot if any unread
 DOT=""
 if [ "$UNREAD" -gt 0 ]; then
-    DOT="●"
+  DOT="●"
 fi
 
 # Prepare tooltip with latest 5 notification titles

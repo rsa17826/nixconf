@@ -1,4 +1,5 @@
 import QtQuick
+
 Rectangle {
   id: ghBadge
 
