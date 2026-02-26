@@ -94,21 +94,11 @@ in
     VISUAL = "nvim";
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
   };
-  boot.initrd.luks.devices."my_data_drive" = {
-    device = "/dev/sda";
-    preLVM = true; # Optional, ensures it opens before LVM looks for volumes
-  };
 
-  # 2. Tell NixOS where to mount the unlocked drive
-  fileSystems."/mnt/data" = {
-    device = "/data";
-    fsType = "ext4"; # Or "xfs", "btrfs" depending on your format
-    options = [
-      "defaults"
-      "nofail"
-    ];
-  };
-
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/A801-0866";
+      fsType = "ext4";
+    };
   # services.kanata = {
   #   enable = true;
 

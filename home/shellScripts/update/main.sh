@@ -55,7 +55,8 @@ else
   # else
   #   next_generation=$((highest_generation + 1))
   # fi
-  now=$(date +%Y_%m_%d)
+  now=$(date +"%Y_%m_%d_%H_%M_%S")
+
   # for i in $(seq 10 10 100); do
   #   prev_generation=$(git log -n $i --skip $((i - 10)) --format=%B | grep -E 'Generation [0-9]+' | head -n 1 | sed -E 's/Generation ([0-9]+) -.*/\1/')
   #   if [[ "$prev_generation" =~ ^[0-9]+$ ]]; then
