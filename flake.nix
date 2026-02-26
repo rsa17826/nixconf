@@ -87,8 +87,9 @@
             ./home/CRON/clean.nix
           ];
         };
-        user = {
-          uname = "user";
+        # nyix
+        tunyic = {
+          uname = "tunyic";
           email = "rsa17826@email.vccs.edu";
           homeFile = ./home/home.nix;
           modules = [
