@@ -2,7 +2,6 @@
 let
   shellAliases = {
     udpate = "update";
-    sd = "shutdown";
     vim = "nvim";
     vi = "nvim";
     nano = "nvim";
@@ -15,6 +14,7 @@ let
     c = "clear";
     nix-shell-alias = "nix-shell";
     repairStore = "sudo nix-store --verify --check-contents --repair";
+    sd = "shutdown";
     reb = "reboot";
   };
 in

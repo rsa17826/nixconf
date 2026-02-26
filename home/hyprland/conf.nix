@@ -2,7 +2,9 @@
   config,
   ...
 }:
-
+let
+  ln = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   # home.activation.copy-hyprland-settings = ''
   #   echo "Copying hyprland settings..."
@@ -14,7 +16,7 @@
   # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
   # home.file.".config/hypr/shaders".source = ./shaders;
   # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
-  home.file."hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink ./hyprland.conf;
+  home.file."hypr/hyprland.conf".source = ln ./hyprland.conf;
   # home.activation.copy-hyprland-settings = ''
   #   echo "Linking hyprland settings..."
   #   mkdir -p "$HOME/.config/hypr"
