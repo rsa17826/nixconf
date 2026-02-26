@@ -9,7 +9,9 @@
   home.username = userConfig.uname;
   home.homeDirectory = "/home/${userConfig.uname}";
   xsession.numlock.enable = true;
-  _module.args.ln = config.lib.file.mkOutOfStoreSymlink;
+  _module.args = {
+    ln = config.lib.file.mkOutOfStoreSymlink;
+  };
   imports = [
     inputs.sops-nix.homeManagerModules.sops
     ./vscode/conf.nix
