@@ -87,6 +87,17 @@
             ./home/CRON/clean.nix
           ];
         };
+        user = {
+          uname = "user";
+          email = "rsa17826@email.vccs.edu";
+          homeFile = ./home/home.nix;
+          modules = [
+            ./home/conf.nix
+            ./home/programs.nix
+            ./home/base.nix
+            ./home/shellScripts/conf.nix
+          ];
+        };
       };
     in
     {
