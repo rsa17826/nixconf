@@ -1,10 +1,7 @@
 {
-  config,
+  ln,
   ...
 }:
-let
-  ln = config.lib.file.mkOutOfStoreSymlink;
-in
 {
   # home.activation.copy-hyprland-settings = ''
   #   echo "Copying hyprland settings..."
