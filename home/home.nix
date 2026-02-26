@@ -20,7 +20,7 @@
     ./cursors/conf.nix
     ./sops/conf.nix
     ./zsh/plugins.nix
-    ./keepass/conf.nix
+    # ./keepass/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
