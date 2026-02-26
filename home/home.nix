@@ -20,7 +20,7 @@
     ./cursors/conf.nix
     ./sops/conf.nix
     ./zsh/plugins.nix
-    ./git/conf.nix
+    # ./git/conf.nix
     ./keepass/conf.nix
   ];
   #wayland.windowManager.hyprland = {
