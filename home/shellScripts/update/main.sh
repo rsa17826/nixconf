@@ -64,41 +64,41 @@ else
   #   fi
   # done
   # 1. Fetch remote status without merging
-  SKIP_GIT=true
-  next_generation=40
-  # echo "📡 Checking remote for updates..."
-  # git fetch --quiet
+  # SKIP_GIT=true
+  # next_generation=40
+  echo "📡 Checking remote for updates..."
+  git fetch --quiet
 
-  # UPSTREAM=${1:-'@{u}'}
-  # LOCAL=$(git rev-parse @)
-  # REMOTE=$(git rev-parse "@{u}" 2>/dev/null || echo "$LOCAL")
-  # BASE=$(git merge-base @ "@{u}" 2>/dev/null || echo "$LOCAL")
-  # if [ "$LOCAL" = "$REMOTE" ]; then
-  #   echo "✅ Local is up to date with remote."
-  # elif [ "$LOCAL" = "$BASE" ]; then
-  #   echo "⚠️ Remote has new changes! Pulling now..."
-  #   git pull --rebase
-  # elif [ "$REMOTE" = "$BASE" ]; then
-  #   echo "⬆️ Local has unpushed commits."
-  # else
-  #   echo "❌ Diverged! You have local and remote changes that conflict."
-  #   echo "Please resolve manually in ~/nixconf before running this script."
-  #   exit 1
-  # fi
-  # prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+')
-  # [[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
-  # # Fallback to 0 if no generation is found in history
-  # if git diff-index --quiet HEAD --; then
-  #   echo "0️⃣ No changes detected. Staying on current generation."
-  #   next_generation=$prev_generation
+  UPSTREAM=${1:-'@{u}'}
+  LOCAL=$(git rev-parse @)
+  REMOTE=$(git rev-parse "@{u}" 2>/dev/null || echo "$LOCAL")
+  BASE=$(git merge-base @ "@{u}" 2>/dev/null || echo "$LOCAL")
+  if [ "$LOCAL" = "$REMOTE" ]; then
+    echo "✅ Local is up to date with remote."
+  elif [ "$LOCAL" = "$BASE" ]; then
+    echo "⚠️ Remote has new changes! Pulling now..."
+    git pull --rebase
+  elif [ "$REMOTE" = "$BASE" ]; then
+    echo "⬆️ Local has unpushed commits."
+  else
+    echo "❌ Diverged! You have local and remote changes that conflict."
+    echo "Please resolve manually in ~/nixconf before running this script."
+    exit 1
+  fi
+  prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+')
+  [[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
+  # Fallback to 0 if no generation is found in history
+  if git diff-index --quiet HEAD --; then
+    echo "0️⃣ No changes detected. Staying on current generation."
+    next_generation=$prev_generation
 
-  #   SKIP_GIT=true
-  # else
-  #   echo "📝 Changes detected. Incrementing generation."
-  #   next_generation=$((prev_generation + 1))
-  #   SKIP_GIT=false
-  # fi
-  # echo $next_generation
+    SKIP_GIT=true
+  else
+    echo "📝 Changes detected. Incrementing generation."
+    next_generation=$((prev_generation + 1))
+    SKIP_GIT=false
+  fi
+  echo $next_generation
 
   # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
   # revision=$(git rev-parse HEAD)
