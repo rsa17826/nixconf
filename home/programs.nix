@@ -101,6 +101,7 @@
       imagemagick
       shfmt # sh formatter
       cfm # tui file manager
+      keepassxc
     ];
   };
   environment.systemPackages = with pkgs; [
