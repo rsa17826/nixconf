@@ -2120,3 +2120,151 @@ xcursorgen
         return (await processAll([res.response])).map(
           URL.createObjectURL,
         )
+
+
+
+
+// ==UserScript==
+// @name         WebGL Video Shader Filter
+// @namespace    shader.filter
+// @version      1.0
+// @match        *://*.youtube.com/*
+// @match        *://*.twitch.tv/*
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  function waitForVideo() {
+    return new Promise(resolve => {
+      const check = () => {
+        const v = document.querySelector("video");
+        if (v && v.readyState >= 2) resolve(v);
+        else requestAnimationFrame(check);
+      };
+      check();
+    });
+  }
+
+  waitForVideo().then(video => {
+
+    const canvas = document.createElement("canvas");
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "999999";
+
+    document.body.appendChild(canvas);
+
+    const gl = canvas.getContext("webgl", {
+      premultipliedAlpha: false
+    });
+
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
+    const VERTEX_SHADER = `
+      attribute vec2 position;
+      varying vec2 vUv;
+      void main() {
+          vUv = position * 0.5 + 0.5;
+          gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
+
+    const FRAGMENT_SHADER = `
+      precision highp float;
+      uniform sampler2D u_texture;
+      varying vec2 vUv;
+
+      float rerange(float val, float low1, float high1, float low2, float high2){
+          return ((val - low1) / (high1 - low1)) * (high2 - low2) + low2;
+      }
+
+      float mapToDarkeningFactor(float x) {
+          return rerange(x, 0.5, 1.0, 0.8, 0.15);
+      }
+
+      void main() {
+          vec3 color = texture2D(u_texture, vUv).rgb;
+          float avg = (color.r + color.g + color.b) / 3.0;
+          gl_FragColor = vec4(color * mapToDarkeningFactor(avg), 1.0);
+      }
+    `;
+
+    function compile(type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      return shader;
+    }
+
+    const program = gl.createProgram();
+    gl.attachShader(program, compile(gl.VERTEX_SHADER, VERTEX_SHADER));
+    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER));
+    gl.linkProgram(program);
+    gl.useProgram(program);
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1,
+      ]),
+      gl.STATIC_DRAW
+    );
+
+    const position = gl.getAttribLocation(program, "position");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+    const uTexture = gl.getUniformLocation(program, "u_texture");
+    gl.uniform1i(uTexture, 0);
+
+    function render() {
+      if (video.videoWidth === 0) {
+        requestAnimationFrame(render);
+        return;
+      }
+
+      if (canvas.width !== video.videoWidth ||
+          canvas.height !== video.videoHeight) {
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        video
+      );
+
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  });
+
+})();
