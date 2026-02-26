@@ -99,7 +99,8 @@
       # openshot-qt # vid editor
       # pay-respects
       imagemagick
-      shfmt # .sh formatter
+      shfmt # sh formatter
+      cfm # tui file manager
     ];
   };
   environment.systemPackages = with pkgs; [
