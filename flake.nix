@@ -106,3 +106,4 @@
       nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
     };
 }
+# error: flake 'git+file:///home/user/nixconf' does not provide attribute 'packages.x86_64-linux.homeConfigurations."nyix".activationPackage', 'legacyPackages.x86_64-linux.homeConfigurations."nyix".activationPackage' or 'homeConfigurations."nyix".activationPackage'
