@@ -125,6 +125,7 @@
   home.sessionVariables = {
     EDITOR = "codium";
     VISUAL = "codium";
+    HYPRCURSOR_THEME = "mew";
   };
 
   # Bootloader.

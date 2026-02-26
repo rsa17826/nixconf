@@ -27,6 +27,8 @@
         chmod -R +r $out/share/icons/mew
     '';
   };
+  environment.etc."icons/mew".source = ./cursorImages;
+
   # ???
   # dconf.settings = {
   #   "org/gnome/desktop/interface" = {
