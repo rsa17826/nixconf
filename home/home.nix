@@ -122,6 +122,16 @@
   #
   #  /etc/profiles/per-user/nyx/etc/profile.d/hm-session-vars.sh
   #
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark"; # Or any dark theme like "catppuccin-mocha"
+      package = pkgs.gnome-themes-extra;
+    };
+    # This line tells apps to "Prefer Dark" via dconf
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+  };
   home.sessionVariables = {
     EDITOR = "codium";
     VISUAL = "codium";
