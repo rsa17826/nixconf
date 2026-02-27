@@ -1,4 +1,4 @@
-{ ... }:
+{ sops, ... }:
 {
   services.copyparty = {
     enable = true;
@@ -20,7 +20,8 @@
 
     # create users
     accounts = {
-      admin.passwordFile = "/run/keys/copyparty/k_password";
+      # admin.passwordFile = "/run/keys/copyparty/k_password";
+      admin.password = (sops.decryptFile ./passwords.yaml).admin;
     };
 
     # create a volume
