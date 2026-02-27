@@ -141,5 +141,11 @@
     copyparty
     home-manager
     pulseaudio
+    pipewire
+    wireplumber
   ];
+  services.pipewire.enable = true;
+  services.pipewire.wireplumber.enable = true;
+  # Enable PipeWire PulseAudio compatibility
+  services.pipewire.pulse.enable = true;
 }
