@@ -33,7 +33,6 @@
     {
       nixpkgs,
       home-manager,
-      impermanence,
       disko,
       sops-nix,
       ...
