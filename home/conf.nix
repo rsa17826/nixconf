@@ -93,6 +93,10 @@ in
     EDITOR = "nvim";
     VISUAL = "nvim";
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
+    HYPRCURSOR_THEME = "mew";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
+    PULSE_SERVER = "tcp:127.0.0.1:4713";
+
   };
 
   #  fileSystems."/data" =
@@ -189,7 +193,6 @@ in
   # uinput things
   hardware.uinput.enable = true;
   programs.mouse-actions.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
