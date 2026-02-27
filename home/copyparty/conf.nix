@@ -1,4 +1,4 @@
-{ ... }:
+{ userConfig, ... }:
 {
   services.copyparty = {
     enable = true;
@@ -27,7 +27,7 @@
     # create a volume
     volumes = {
       "/" = {
-        path = "~/copyparty";
+        path = "${userConfig.uname}/copyparty";
         access = {
           r = "*";
           A = [
