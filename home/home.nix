@@ -126,24 +126,31 @@
   #
   gtk = {
     enable = true;
+
     theme = {
-      name = "Adwaita-dark"; # Or any dark theme like "catppuccin-mocha"
-      package = pkgs.gnome-themes-extra;
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
     };
-    # This line tells apps to "Prefer Dark" via dconf
+
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
+
   qt = {
     enable = true;
-    platformTheme = "gtk";
-    style = "adwaita-dark";
+
+    platformTheme.name = "gtk";
+
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
   };
+
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-
   home.sessionVariables = {
     EDITOR = "codium";
     VISUAL = "codium";
