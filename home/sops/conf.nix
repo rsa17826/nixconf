@@ -7,7 +7,7 @@
       GITHUB_TOKEN = {
       };
       copypartyAdmin = {
-        restartUnits = [ "copyparty.service" ];
+        reloadUnits = [ "copyparty.service" ];
         path = "/home/${userConfig.uname}/.config/sops-nix/secrets";
       };
     };
