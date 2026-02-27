@@ -174,7 +174,6 @@
     VISUAL = "codium";
     HYPRCURSOR_THEME = "mew";
     QT_STYLE_OVERRIDE = "adwaita-dark";
-    PULSE_SERVER = "tcp:127.0.0.1:4713";
   };
 
   # Bootloader.
