@@ -1,4 +1,4 @@
-{ _sops, ... }:
+{ ... }:
 {
   services.copyparty = {
     enable = true;
