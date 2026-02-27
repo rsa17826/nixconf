@@ -12,8 +12,7 @@
       i = "0.0.0.0";
       # use lists to set multiple values
       p = [
-        3210
-        3211
+        8086
       ];
       # use booleans to set binary flags
       no-reload = true;
