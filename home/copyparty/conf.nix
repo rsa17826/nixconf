@@ -20,7 +20,7 @@
 
     # create users
     accounts = {
-      # admin.passwordFile = "/run/keys/copyparty/k_password";
+      admin.passwordFile = "/run/keys/copyparty/k_password";
       # admin.password = (_sops.decryptFile ./passwords.yaml).admin;
     };
 
