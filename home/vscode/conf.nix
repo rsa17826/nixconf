@@ -1,6 +1,7 @@
 {
   pkgs,
   userConfig,
+  ln,
   ...
 }:
 let
@@ -361,12 +362,12 @@ in
             version = "1.1.7";
             hash = "sha256-3/rsYq+HZgRW2Vd91ZW9rkXWUTUFzG/mCWD0pm++WA4=";
           }
-          # {
-          #   name = "path-autocomplete";
-          #   publisher = "ionutvmi";
-          #   version = "1.25.0";
-          #   hash = "sha256-iz32o1znwKpbJSdrDYf+GDPC++uGvsCdUuGaQu6AWEo=";
-          # }
+          {
+            name = "path-autocomplete";
+            publisher = "ionutvmi";
+            version = "1.25.0";
+            hash = "sha256-iz32o1znwKpbJSdrDYf+GDPC++uGvsCdUuGaQu6AWEo=";
+          }
           {
             name = "nix-ide";
             publisher = "jnoortheen";
@@ -641,21 +642,24 @@ in
         ];
     };
   };
-  home.activation.copy-vscode-settings = ''
-    echo "Copying VSCode settings..."
-    mkdir -p "$HOME/.config/VSCodium/User"
-    cp -f ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
-    cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
-    sed -ri 's/\$\{userConfig.uname\}/${userConfig.uname}/g' "$HOME/.config/VSCodium/User/settings.json"
-  '';
+  home.file."VSCodium/User/settings.json".source = ln ./settings.json;
+  home.file."VSCodium/User/keybindings.json".source = ln ./keybindings.json;
+  # home.activation.copy-vscode-settings = ''
+  #   echo "Copying VSCode settings..."
+  #   mkdir -p "$HOME/.config/VSCodium/User"
+  #   cp -f ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
+  #   cp -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
+  #   sed -ri 's/\$\{userConfig.uname\}/${userConfig.uname}/g' "$HOME/.config/VSCodium/User/settings.json"
+  # '';
   # language jsonc
   home.file.".vscode-oss/argv.json".text = ''
     {
       "enable-crash-reporter": false,
       "crash-reporter-id": "RANDOM UUID HERE",
-      "locale": "furry-owo",
+      "locale": "en",
       "password-store": "basic"
     }
   '';
+  # "locale": "furry-owo",
 }
 # Cannot activate da 'C/C++ Runner' extension because it depends on an unknown 'ms-vscode.cpptools' extension .

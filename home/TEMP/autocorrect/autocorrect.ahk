@@ -5544,7 +5544,7 @@ MoveCaret() { ; V1toV2: Added bracket
 ::coulnd't::couldn't
 ::coulndt::couldn't
 ::didnt::didn't
-::does’t::doesn’t
+::does't::doesn't
 ::does't::doesn't
 ::doesnt::doesn't
 ::doesnt'::doesn't

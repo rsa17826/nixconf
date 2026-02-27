@@ -18,7 +18,7 @@
   },
   "editor.pasteAs.enabled": false,
   "debug.focusWindowOnBreak": false,
-  "typos.path": "/etc/profiles/per-user/nyx/bin/typos-lsp",
+  "typos.path": "/etc/profiles/per-user/$USER/bin/typos-lsp",
   "files.exclude": {
     // "addons": true,
     "**/maps": true,
@@ -39,6 +39,7 @@
     "VERSION": true,
     "**/__pycache__": true,
     "**/.venv": true,
+    "hardware-configurations": true,
     // remove all folders but no files from res://scenes/blocks
     "**/scenes/blocks/[!.]": true,
     "**/scenes/blocks/[!.][!.]": true,

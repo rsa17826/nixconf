@@ -8,7 +8,7 @@
 👉 or help you convert DokiTheme into an actual Nix package (fully declarative)
 
 Just tell me which direction you prefer.
-To get **Ctrl + Backspace** to work like on Windows in **zsh** on **Hyprland** running on **NixOS**, you'll need to adjust a few things. Hyprland is a dynamic tiling Wayland compositor, and it doesn't use X11, so the process differs slightly from traditional X11 setups. Here’s a step-by-step guide:
+To get **Ctrl + Backspace** to work like on Windows in **zsh** on **Hyprland** running on **NixOS**, you'll need to adjust a few things. Hyprland is a dynamic tiling Wayland compositor, and it doesn't use X11, so the process differs slightly from traditional X11 setups. Here's a step-by-step guide:
 
 ### 1. **Configure `zsh` to Delete Whole Words with `Ctrl + Backspace`**
 
@@ -80,7 +80,7 @@ After making these changes, it's good to either restart your terminal session or
 3. Make sure your terminal emulator (like **Alacritty** or **Kitty**) supports the keybinding under **Wayland**.
 
 Let me know if you run into any issues!
-Ah! Now I understand clearly — you want **a Wayland version of AutoHotkey’s hotstring/hotkey functionality** on **Hyprland**, which means:
+Ah! Now I understand clearly — you want **a Wayland version of AutoHotkey's hotstring/hotkey functionality** on **Hyprland**, which means:
 
 * **Intercept input** (detect key sequences in real time).
 * **Modify/replace them** (like hotstrings or hotkeys).
@@ -90,7 +90,7 @@ This is tricky on Wayland because of **security restrictions** — clients canno
 
 ---
 
-## 1️⃣ Use Hyprland’s config for “hotkeys” (limited)
+## 1️⃣ Use Hyprland's config for “hotkeys” (limited)
 
 Hyprland has **bind commands**:
 
@@ -207,7 +207,7 @@ for event in device.read_loop():
 
 💡 **My recommendation**:
 
-If you want something working **today**, do **evdev + uinput** for a global AHK-like hotstring tool. Later, if you’re ambitious, you can integrate it into Hyprland proper.
+If you want something working **today**, do **evdev + uinput** for a global AHK-like hotstring tool. Later, if you're ambitious, you can integrate it into Hyprland proper.
 
 ---
 
@@ -219,7 +219,7 @@ I can make you a **ready-to-use Python “hotstring engine” for Hyprland** tha
 * Works globally.
 
 Do you want me to do that next?
-Perfect! Let’s build a **minimal working global hotstring engine for Hyprland** using Python. This will work **today**, without touching Hyprland’s source code.
+Perfect! Let's build a **minimal working global hotstring engine for Hyprland** using Python. This will work **today**, without touching Hyprland's source code.
 
 It will:
 
@@ -372,9 +372,9 @@ I can also make a **ready-to-run full script** that:
 This would be like a **full AutoHotkey replacement on Hyprland**.
 
 Do you want me to make that next?
-Ah — you want the **shift handling to respect the real physical Shift key state** and only inject Shift as needed. This avoids "double shift" issues when typing uppercase letters while holding Shift, and ensures that temporary shifts for lowercase letters don’t interfere with a real pressed Shift.
+Ah — you want the **shift handling to respect the real physical Shift key state** and only inject Shift as needed. This avoids "double shift" issues when typing uppercase letters while holding Shift, and ensures that temporary shifts for lowercase letters don't interfere with a real pressed Shift.
 
-Here’s a corrected approach for your `send_text` function:
+Here's a corrected approach for your `send_text` function:
 
 ---
 
@@ -465,7 +465,7 @@ This ensures your **hotstring replacements respect actual Shift presses**.
 If you want, I can **rewrite your full Python hotstring engine** with this logic included, so Shift, CapsLock, numbers, and symbols all work like a proper AHK replacement.
 
 Do you want me to do that?
-Perfect! Let’s rewrite your **full hotstring engine** for Hyprland with **proper Shift/CapsLock handling**, letters, numbers, and basic symbols. This will work like a minimal AutoHotkey replacement, respecting the **physical Shift state**, so hotstrings don’t conflict with real key presses.
+Perfect! Let's rewrite your **full hotstring engine** for Hyprland with **proper Shift/CapsLock handling**, letters, numbers, and basic symbols. This will work like a minimal AutoHotkey replacement, respecting the **physical Shift state**, so hotstrings don't conflict with real key presses.
 
 ---
 
@@ -652,13 +652,13 @@ If you want, I can write the **systemd user service setup** next, so this hotstr
 Do you want me to do that?
 Perfect! We can do this **fully declaratively in NixOS**, so NumLock is forced on and CapsLock is forced off at session start in **Hyprland / Wayland**, without relying on X11 or `numlockx`.
 
-We’ll use **a small systemd user service** that runs a **uinput script** at startup.
+We'll use **a small systemd user service** that runs a **uinput script** at startup.
 
 ---
 
 ## 1️⃣ Create the uinput script
 
-Let’s make a simple script that **turns on NumLock and turns off CapsLock**:
+Let's make a simple script that **turns on NumLock and turns off CapsLock**:
 
 ```bash
 # /etc/nixos/scripts/fix-locks.py
@@ -1331,7 +1331,7 @@ Since Hyprland is a Wayland compositor, the easiest approaches are:
 
 ---
 
-## ✅ Option 1 — Use Hyprland’s built-in blur/decoration (if you just want visual effect)
+## ✅ Option 1 — Use Hyprland's built-in blur/decoration (if you just want visual effect)
 
 If your goal is aesthetic (like tinting or styling), you can modify:
 
@@ -1353,7 +1353,7 @@ decoration {
 layerrule = blur, waybar
 ```
 
-But this won’t let you overlay an image like your CSS does.
+But this won't let you overlay an image like your CSS does.
 
 ---
 
@@ -1443,7 +1443,7 @@ You can add your base64 PNG as a background.
 
 ## 🧠 Even Simpler Hack (No coding)
 
-Use Hyprland’s window rules to float and pin an image viewer:
+Use Hyprland's window rules to float and pin an image viewer:
 
 Example:
 
