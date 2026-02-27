@@ -14,6 +14,10 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # impermanence = {
     #   url = "github:nix-community/impermanence";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +39,7 @@
       home-manager,
       disko,
       sops-nix,
+      copyparty,
       ...
     }@inputs:
     let

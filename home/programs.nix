@@ -133,6 +133,7 @@
     ly # tui login manager
     sops # secrets manager
     direnv
+    copyparty
     home-manager
   ];
 }
