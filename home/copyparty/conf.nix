@@ -20,8 +20,7 @@
 
     # create users
     accounts = {
-      admin.passwordFile = "/run/keys/copyparty/k_password";
-      # admin.password = (_sops.decryptFile ./passwords.yaml).admin;
+      admin.passwordFile = "/home/${userConfig.uname}/.config/sops-nix/secrets";
     };
 
     # create a volume
