@@ -20,7 +20,7 @@
 
     # create users
     accounts = {
-      admin.passwordFile = "/home/${userConfig.uname}/.config/sops-nix/secrets";
+      admin.passwordFile = "/home/${userConfig.uname}/.config/sops-nix/secrets/copypartyAdmin";
     };
 
     # create a volume
