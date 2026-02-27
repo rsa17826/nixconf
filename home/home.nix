@@ -144,6 +144,7 @@
     EDITOR = "codium";
     VISUAL = "codium";
     HYPRCURSOR_THEME = "mew";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
   };
 
   # Bootloader.
