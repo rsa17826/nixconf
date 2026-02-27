@@ -20,7 +20,7 @@
 
     # create users
     accounts = {
-      admin.passwordFile = "/run/secrets/copypartyAdmin";
+      admin.passwordFile = "/home/${userConfig.uname}/a";
     };
 
     # create a volume
