@@ -42,6 +42,7 @@
       "wheel"
       "opensnitch"
       "input"
+      "audio"
     ];
     packages = with pkgs; [
       quickshell # widget thing
