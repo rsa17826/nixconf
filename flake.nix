@@ -49,30 +49,35 @@
       # Helper function to generate a host configuration
       mkHost =
         hostName: userConfig:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs hostName userConfig;
-          };
-          modules = userConfig.modules ++ [
-            ./hardware-configurations/${hostName}.nix
+        nixpkgs.lib.nixosSystem (
+          let
+            args = {
+              inherit inputs hostName userConfig;
+              _sops = inputs.sops-nix.nixosModules.sops;
+            };
+          in
+          {
+            inherit system;
 
-            inputs.sops-nix.nixosModules.sops
+            specialArgs = args;
+            modules = userConfig.modules ++ [
+              ./hardware-configurations/${hostName}.nix
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                # useGlobalPkgs = true;
-                # useUserPackages = true;
-                backupFileExtension = "backup";
-                extraSpecialArgs = {
-                  inherit inputs hostName userConfig;
+              inputs.sops-nix.nixosModules.sops
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  # useGlobalPkgs = true;
+                  # useUserPackages = true;
+                  backupFileExtension = "backup";
+                  extraSpecialArgs = args;
+                  users.${userConfig.uname} = import userConfig.homeFile;
                 };
-                users.${userConfig.uname} = import userConfig.homeFile;
-              };
-            }
-          ];
-        };
+              }
+            ];
+          }
+        );
 
       # Define your hosts here
       hosts = {
