@@ -140,5 +140,9 @@
     copyparty
     home-manager
     pulseaudio
+    pipewire
+    wireplumber
   ];
+  services.pipewire.enable = true;
+  services.pipewire.wireplumber.enable = true;
 }
