@@ -27,7 +27,7 @@
     # create a volume
     volumes = {
       "/" = {
-        path = "${userConfig.uname}/copyparty";
+        path = "/home/${userConfig.uname}/copyparty";
         access = {
           r = "*";
           A = [
