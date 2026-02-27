@@ -2268,3 +2268,346 @@ xcursorgen
   });
 
 })();
+
+
+
+Alright — if you want to **parse KeePassXC’s auto-type sequence yourself** and implement `{DELAY}`, `{TAB}`, `{ENTER}`, `{TOTP}`, etc. in a Wayland script using `wtype`, here’s how to do it cleanly.
+
+We’ll let:
+
+* **KeePassXC** store the sequence
+* Your script fetch it via CLI
+* Your script parse and execute it token by token
+
+---
+
+# 🔧 Step 1 — Get the sequence from KeePassXC
+
+You can extract the auto-type sequence like this:
+
+```bash
+keepassxc-cli show -a autotype /path/to/db.kdbx "Entry Name"
+```
+
+If you need window matching:
+
+```bash
+win=$(hyprctl activewindow -j | jq -r '.title')
+entry=$(keepassxc-cli locate /path/to/db.kdbx "$win" | head -n1)
+sequence=$(keepassxc-cli show -a autotype /path/to/db.kdbx "$entry")
+```
+
+Now `$sequence` contains something like:
+
+```
+{USERNAME}{TAB}{PASSWORD}{ENTER}{DELAY 2000}{TOTP}{ENTER}
+```
+
+---
+
+# 🔧 Step 2 — Replace field placeholders first
+
+Fetch the fields:
+
+```bash
+username=$(keepassxc-cli show -a username /path/to/db.kdbx "$entry")
+password=$(keepassxc-cli show -a password /path/to/db.kdbx "$entry")
+totp=$(keepassxc-cli show -a totp /path/to/db.kdbx "$entry" 2>/dev/null)
+```
+
+Then substitute:
+
+```bash
+sequence=${sequence//\{USERNAME\}/$username}
+sequence=${sequence//\{PASSWORD\}/$password}
+sequence=${sequence//\{TOTP\}/$totp}
+```
+
+Now you're left with:
+
+```
+actualuser{TAB}actualpass{ENTER}{DELAY 2000}123456{ENTER}
+```
+
+---
+
+# 🔧 Step 3 — Token Parser
+
+Here’s a minimal but working Bash parser:
+
+```bash
+#!/usr/bin/env bash
+
+parse_and_type() {
+    local input="$1"
+
+    while [[ -n "$input" ]]; do
+        if [[ "$input" =~ ^\{DELAY[[:space:]]+([0-9]+)\} ]]; then
+            ms="${BASH_REMATCH[1]}"
+            sleep "$(bc <<< "scale=3; $ms/1000")"
+            input="${input#\{DELAY $ms\}}"
+
+        elif [[ "$input" =~ ^\{TAB\} ]]; then
+            wtype -k Tab
+            input="${input#\{TAB\}}"
+
+        elif [[ "$input" =~ ^\{ENTER\} ]]; then
+            wtype -k Return
+            input="${input#\{ENTER\}}"
+
+        elif [[ "$input" =~ ^\{SPACE\} ]]; then
+            wtype " "
+            input="${input#\{SPACE\}}"
+
+        elif [[ "$input" =~ ^\{ ]]; then
+            # Unknown token — strip safely
+            input="${input#\{}"
+            input="${input#*\}}"
+
+        else
+            # Normal character
+            char="${input:0:1}"
+            wtype "$char"
+            input="${input:1}"
+        fi
+    done
+}
+
+parse_and_type "$sequence"
+```
+
+---
+
+# 🧠 What This Supports
+
+✔ `{USERNAME}`
+✔ `{PASSWORD}`
+✔ `{TOTP}`
+✔ `{TAB}`
+✔ `{ENTER}`
+✔ `{DELAY 2000}`
+✔ Raw text
+
+---
+
+# ⚠️ Important Notes
+
+### 1️⃣ Use `wtype -k` for special keys
+
+Examples:
+
+```
+wtype -k Tab
+wtype -k Return
+wtype -k Escape
+```
+
+### 2️⃣ Don’t use `wtype "$fullstring"`
+
+You must send character-by-character if you want delay handling.
+
+### 3️⃣ `{DELAY=0}`
+
+KeePass has both:
+
+```
+{DELAY 2000}
+{DELAY=0}
+```
+
+Add support like:
+
+```bash
+elif [[ "$input" =~ ^\{DELAY=([0-9]+)\} ]]; then
+    ms="${BASH_REMATCH[1]}"
+    sleep "$(bc <<< "scale=3; $ms/1000")"
+    input="${input#\{DELAY=$ms\}}"
+```
+
+---
+
+# 🚀 Result
+
+Now your script:
+
+1. Gets matching entry
+2. Reads KeePassXC’s defined auto-type sequence
+3. Expands credentials
+4. Interprets tokens
+5. Sends proper delayed keystrokes via `wtype`
+
+Fully Wayland-native.
+No X11.
+Delays work.
+OTP-after-reload works.
+
+---
+
+If you want, I can next give you:
+
+* A fully polished Nix/Home-Manager module version
+* Or a faster parser written in awk instead of bash loops (cleaner + less fragile)
+* Or window-class matching instead of title matching (more reliable in Hyprland)
+
+
+Short answer: **not directly like that** in Hyprland.
+
+Hyprland keybinds (`bind = ...`) do not support inline scripting with variables like:
+
+```
+bind ^!a={
+  uname,passwd,kpotp,seq=...
+}
+```
+
+Hyprland can only:
+
+* run commands (`exec`)
+* dispatch built-in actions
+* pass static arguments
+
+So you’ll need to move that logic into a **separate script**, then call it from a bind.
+
+---
+
+# ✅ Proper Way: Use a Script + `wtype` + KeePassXC CLI
+
+Since you're on **Hyprland (Wayland)**, using `wtype` is correct.
+
+The right way is:
+
+### 1️⃣ Create a script
+
+Example: `~/.local/bin/kpxc-autotype`
+
+```bash
+#!/usr/bin/env bash
+
+# Get active window title (Hyprland JSON)
+winTitle=$(hyprctl activewindow -j | jq -r '.title')
+
+# Query KeePassXC CLI for matching entry
+# (adjust search logic to your DB setup)
+entry=$(keepassxc-cli locate /path/to/db.kdbx "$winTitle" | head -n1)
+
+# Extract fields
+username=$(keepassxc-cli show -a username /path/to/db.kdbx "$entry")
+password=$(keepassxc-cli show -a password /path/to/db.kdbx "$entry")
+otp=$(keepassxc-cli show -a totp /path/to/db.kdbx "$entry" 2>/dev/null)
+
+# Type it
+wtype "$username"
+wtype $'\t'
+wtype "$password"
+
+# Optional OTP
+if [ -n "$otp" ]; then
+  wtype $'\t'
+  wtype "$otp"
+fi
+
+wtype $'\n'
+```
+
+Make executable:
+
+```bash
+chmod +x ~/.local/bin/kpxc-autotype
+```
+
+---
+
+### 2️⃣ Hyprland bind
+
+In `hyprland.conf`:
+
+```
+bind = CTRL+ALT, A, exec, ~/.local/bin/kpxc-autotype
+```
+
+---
+
+# ⚠️ Important Things
+
+### 🔐 1. KeePassXC CLI needs DB access
+
+You’ll either:
+
+* Enter password each time
+* Use `--key-file`
+* Or use `--pw-stdin` with a gpg-agent setup
+* Or unlock DB in GUI and use `--no-password` (less secure)
+
+### 🧠 2. `jq` required
+
+Install it in Nix:
+
+```nix
+environment.systemPackages = with pkgs; [
+  jq
+  wtype
+  keepassxc
+];
+```
+
+---
+
+# 🚀 Better Option (Much Simpler)
+
+Instead of manually scripting:
+
+In **KeePassXC GUI → Settings → Auto-Type**
+
+* Set custom auto-type command to:
+
+```
+wtype {USERNAME}{TAB}{PASSWORD}{ENTER}
+```
+
+That works in Hyprland without needing CLI at all.
+
+KeePassXC will replace `{USERNAME}` etc before calling `wtype`.
+
+This is cleaner and avoids handling your DB password manually.
+
+---
+
+# ❗ Why Your Inline Idea Won’t Work
+
+Hyprland:
+
+* ❌ does not support variable assignments
+* ❌ does not support inline Lua/bash blocks
+* ❌ cannot substitute custom variables like `{username}`
+* ❌ cannot evaluate expressions
+
+It only launches external commands.
+
+---
+
+# 🏆 Cleanest Way Overall (Recommended)
+
+For Hyprland:
+
+**KeePassXC → set auto-type command to:**
+
+```
+wtype {USERNAME}{TAB}{PASSWORD}{ENTER}
+```
+
+No scripts.
+No CLI.
+No DB password handling.
+No jq.
+Fully Wayland-native.
+
+---
+
+If you'd like, tell me:
+
+* Are you using GUI KeePassXC unlocked?
+* Do you want window-title matching?
+* Do you want OTP included?
+* Are you using Home-Manager?
+
+I can give you a minimal Nix-native setup tailored to your config.
