@@ -63,7 +63,7 @@
               ./hardware-configurations/${hostName}.nix
 
               inputs.sops-nix.nixosModules.sops
-
+              inputs.copyparty.nixosModules.default
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
