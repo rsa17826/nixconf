@@ -139,5 +139,6 @@
     direnv
     copyparty
     home-manager
+    pulseaudio
   ];
 }
