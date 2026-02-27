@@ -53,7 +53,6 @@
           let
             args = {
               inherit inputs hostName userConfig;
-              _sops = inputs.sops-nix.nixosModules.sops;
             };
           in
           {
