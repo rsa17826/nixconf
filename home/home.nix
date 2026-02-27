@@ -134,6 +134,12 @@
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style = "adwaita-dark";
+  };
+
   home.sessionVariables = {
     EDITOR = "codium";
     VISUAL = "codium";
