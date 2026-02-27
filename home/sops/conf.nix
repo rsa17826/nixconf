@@ -5,6 +5,12 @@
     defaultSopsFile = ./secrets.yaml;
     secrets = {
       GITHUB_TOKEN = {
+        owner = userConfig.uname;
+      };
+      copypartyAdmin = {
+        owner = "copyparty";
+        restartUnits = [ "home-assistant.service" ];
+        path = "/home/${userConfig.uname}/.config/sops-nix/secrets";
       };
     };
   };
