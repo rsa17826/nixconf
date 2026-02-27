@@ -20,7 +20,6 @@
     ./cursors/conf.nix
     ./sops/conf.nix
     ./zsh/plugins.nix
-    ./copyparty/conf.nix
     # ./git/conf.nix
     #    ./keepass/conf.nix
   ];

@@ -4,7 +4,10 @@
   ...
 }:
 {
-  imports = [ ./alias.nix ];
+  imports = [
+    ./alias.nix
+    ./copyparty/conf.nix
+  ];
   programs.appimage = {
     enable = true;
     binfmt = true;
