@@ -139,6 +139,10 @@
     platformTheme = "gtk";
     style = "adwaita-dark";
   };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   home.sessionVariables = {
     EDITOR = "codium";
