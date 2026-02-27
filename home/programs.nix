@@ -6,6 +6,7 @@
 {
   imports = [
     ./alias.nix
+    ./sops/conf.nix
     ./copyparty/conf.nix
   ];
   programs.appimage = {
