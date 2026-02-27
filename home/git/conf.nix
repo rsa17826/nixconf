@@ -1,4 +1,4 @@
-{ userConfig,... }:
+{ userConfig, ... }:
 {
   programs.git.config = {
     init = {

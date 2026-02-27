@@ -18,10 +18,10 @@
     ./hyprland/conf.nix
     ./waybar/conf.nix
     ./cursors/conf.nix
-    ./sops/conf.nix
+    #    ./sops/conf.nix
     ./zsh/plugins.nix
     # ./git/conf.nix
-    ./keepass/conf.nix
+    #    ./keepass/conf.nix
   ];
   #wayland.windowManager.hyprland = {
   #  # Whether to enable Hyprland wayland compositor
@@ -68,8 +68,8 @@
         maxEntries = null;
 
         plugins = [
-          "${pkgs.anyrun}/lib/libapplications.so"
-          "${pkgs.anyrun}/lib/libsymbols.so"
+          #        "${pkgs.anyrun}/lib/libapplications.so"
+          #         "${pkgs.anyrun}/lib/libsymbols.so"
           #"${pkgs.anyrun}/lib/libshell.so"
           #"${pkgs.anyrun}/lib/libdictionary.so"
         ];
