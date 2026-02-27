@@ -18,7 +18,7 @@
     ./hyprland/conf.nix
     ./waybar/conf.nix
     ./cursors/conf.nix
-    #    ./sops/conf.nix
+    ./sops/conf.nix
     ./zsh/plugins.nix
     # ./git/conf.nix
     #    ./keepass/conf.nix
