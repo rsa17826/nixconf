@@ -3,12 +3,6 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
-        name = "hyprlang-vscode";
-        publisher = "fireblast";
-        version = "0.0.3";
-        hash = "sha256-iMCyomgMGGUXaVqq1l7bgyvFgZa/W/eWHaqkA5RmExE=";
-      }
-      {
         name = "shell-tidy-vscode";
         publisher = "xqvvu";
         version = "1.1.2";
