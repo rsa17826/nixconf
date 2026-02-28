@@ -99,14 +99,14 @@
       # openshot-qt # vid editor
       # pay-respects
       imagemagick
-      shfmt # sh formatter
+      shfmt # shell formatter
       cfm # tui file manager
-      keepassxc
+      keepassxc # password manager
       grim
       slurp
-      tesseract5
-      thunar
-      yazi
+      tesseract5 # ocr
+      thunar # gui file manager
+      yazi # tui file manager
     ];
   };
   environment.systemPackages = with pkgs; [

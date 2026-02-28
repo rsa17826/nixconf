@@ -27,22 +27,23 @@
     dataHome = "/home/${userConfig.uname}/.local/share";
     configHome = "/home/${userConfig.uname}/.config";
     cacheHome = "/home/${userConfig.uname}/.cache";
-    desktopEntries.yazi = {
-      name = "Yazi";
-      exec = "kitty -e yazi %u"; # Replace 'kitty' with your terminal (alacritty, foot, etc.)
-      terminal = false;
-      mimeType = [ "inode/directory" ];
-      categories = [
-        "System"
-        "FileTools"
-        "FileManager"
-      ];
-    };
+    # desktopEntries.yazi = {
+    #   name = "Yazi";
+    #   exec = "kitty -e yazi %u"; # Replace 'kitty' with your terminal (alacritty, foot, etc.)
+    #   terminal = false;
+    #   mimeType = [ "inode/directory" ];
+    #   categories = [
+    #     "System"
+    #     "FileTools"
+    #     "FileManager"
+    #   ];
+    # };
 
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "inode/directory" = [ "yazi.desktop" ]; # Replace with nautilus.desktop, nemo.desktop, etc.
+        "inode/directory" = [ "thunar.desktop" ];
+        # "inode/directory" = [ "yazi.desktop" ];
       };
     };
 

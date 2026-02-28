@@ -1146,7 +1146,7 @@ def ahk_to_kanata():
         content = f.read()
 
     content = re.sub(r'(# KANATA_ALIASES_START).*?(# KANATA_ALIASES_END)', 
-                     f'\\1\n{"\n".join(aliases)}\n      \\2', content, flags=re.DOTALL)
+                     f'\\1\n{"\n".join(aliases)}\n      \\2', content, flags=re.DOTALL)yazi
     content = re.sub(r'(# KANATA_SEQUENCES_START).*?(# KANATA_SEQUENCES_END)', 
                      f'\\1\n{"\n".join(sequences)}\n      \\2', content, flags=re.DOTALL)
 
