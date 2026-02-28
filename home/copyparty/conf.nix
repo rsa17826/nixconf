@@ -46,7 +46,7 @@
           nodupe = true;
         };
       };
-      "s" = {
+      "/s" = {
         path = "/home/${userConfig.uname}/copypartyS";
         access = {
           rwmd = "s";
