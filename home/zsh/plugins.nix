@@ -13,6 +13,7 @@
     enable = true;
     enableZshIntegration = true;
   };
+  programs.nix-index.enable = true;
   programs.zsh = {
     dotDir = "${config.xdg.configHome}/zsh";
     enable = true;

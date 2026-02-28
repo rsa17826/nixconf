@@ -90,7 +90,7 @@
             };
           in
           {
-                
+
             inherit pkgs;
             # Home-manager requires 'pkgs' instance
             extraSpecialArgs = args;
@@ -139,6 +139,14 @@
       # Map the hosts defined above into nixosConfigurations
       nixosConfigurations = nixHosts;
       homeConfigurations = homehosts;
+      nix = {
+        # 1. This pins the 'nixpkgs' flake to your system's input
+        registry.nixpkgs.flake = nixpkgs;
+
+        # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
+        # (Fixes older tools that don't know about flakes yet)
+        nixPath = [ "nixpkgs=${nixpkgs.outPath}" ];
+      };
     };
 }
 # error: flake 'git+file:///home/user/nixconf' does not provide attribute 'packages.x86_64-linux.homeConfigurations."nyix".activationPackage', 'legacyPackages.x86_64-linux.homeConfigurations."nyix".activationPackage' or 'homeConfigurations."nyix".activationPackage'
