@@ -3,7 +3,7 @@
   services.copyparty = {
     enable = true;
     # the user to run the service as
-    user = "copyparty";
+    user = "${userConfig.uname}";
     # the group to run the service as
     group = "copyparty";
     # directly maps to values in the [global] section of the copyparty config.
