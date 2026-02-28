@@ -61,8 +61,7 @@
             };
           in
           {
-            nixpkgs.hostPlatform = system;
-
+            inherit system;
             specialArgs = args;
             modules = userConfig.modules ++ [
               ./hardware-configurations/${hostName}.nix
