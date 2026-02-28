@@ -78,7 +78,7 @@ trap clean_up SIGINT
 # Begin the printing of the nix expression that will house the list of extensions.
 printf '{ extensions = [\n'
 text="
-xqvvu.shell-tidy-vscode"
+fireblast.hyprlang-vscode"
 
 # Note that we are only looking to update extensions that are already installed.
 # IFS=$'\n' read -d '' -r -a lines <<< "$text"
