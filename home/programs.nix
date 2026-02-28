@@ -144,12 +144,17 @@
     pipewire
     wireplumber
   ];
-  # Enable PipeWire
-  services.pipewire.enable = true;
-  services.pipewire.wireplumber.enable = true;
+  services.pipewire = {
+    # Enable PipeWire
+    enable = true;
+    wireplumber.enable = true;
 
-  # PulseAudio compatibility (so applications using PulseAudio work)
-  services.pipewire.pulse.enable = true;
+    # PulseAudio compatibility (so applications using PulseAudio work)
+    pulse.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    jack.enable = true;
+  };
 
   # Disable PulseAudio itself (optional, safer on NixOS)
   services.pulseaudio.enable = false;
