@@ -58,6 +58,20 @@ in
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
+  hardware.nvidia = {
+    # Modesetting is required for most modern Wayland/X11 setups
+    modesetting.enable = true;
+
+    # This is the line Nix is complaining about:
+    # Set to false because you have a Maxwell (GM200) GPU.
+    open = false;
+
+    # Enable the Nvidia settings menu
+    nvidiaSettings = true;
+
+    # Optionally, specify the package to ensure you stay on a compatible version
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     persistent = true;
