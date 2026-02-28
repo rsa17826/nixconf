@@ -21,6 +21,7 @@
     # create users
     accounts = {
       admin.passwordFile = "/home/${userConfig.uname}/a";
+      s.passwordFile = "/home/${userConfig.uname}/s";
     };
 
     # create a volume
@@ -42,6 +43,22 @@
           d2t = true;
           # skips hashing file contents if path matches *.iso
           nohash = "\.iso$";
+          nodupe = true;
+        };
+      };
+      "s" = {
+        path = "/home/${userConfig.uname}/copypartyS";
+        access = {
+          rwmd = "s";
+          # A = [
+          #   "admin"
+          # ];
+        };
+        flags = {
+          fk = 4;
+          scan = 60;
+          # volflag "e2d" enables the uploads database
+          e2d = true;
           nodupe = true;
         };
       };
