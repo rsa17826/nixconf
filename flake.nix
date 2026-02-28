@@ -77,6 +77,29 @@
             ];
           }
         );
+      mkHostHM =
+        hostName: userConfig:
+        home-manager.lib.homeManagerConfiguration (
+          let
+            args = {
+              inherit
+                inputs
+                hostName
+                userConfig
+                ;
+            };
+          in
+          {
+                
+            inherit pkgs;
+            # Home-manager requires 'pkgs' instance
+            extraSpecialArgs = args;
+            modules = [
+              # > Our main home-manager configuration file <
+              userConfig.homeFile
+            ];
+          }
+        );
 
       # Define your hosts here
       hosts = {
@@ -109,10 +132,13 @@
           ];
         };
       };
+      nixHosts = nixpkgs.lib.mapAttrs mkHost hosts;
+      homehosts = nixpkgs.lib.mapAttrs mkHostHM hosts;
     in
     {
       # Map the hosts defined above into nixosConfigurations
-      nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
+      nixosConfigurations = nixHosts;
+      homeConfigurations = homehosts;
     };
 }
 # error: flake 'git+file:///home/user/nixconf' does not provide attribute 'packages.x86_64-linux.homeConfigurations."nyix".activationPackage', 'legacyPackages.x86_64-linux.homeConfigurations."nyix".activationPackage' or 'homeConfigurations."nyix".activationPackage'
