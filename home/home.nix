@@ -22,22 +22,36 @@
     # ./git/conf.nix
     #    ./keepass/conf.nix
   ];
-  #wayland.windowManager.hyprland = {
-  #  # Whether to enable Hyprland wayland compositor
-  #  enable = true;
-  #  # The hyprland package to use
-  #  package = pkgs.hyprland;
-  #  # Whether to enable XWayland
-  #  xwayland.enable = true;
-  #
-  #    # Optional
-  #    # Whether to enable hyprland-session.target on hyprland startup
-  #    systemd.enable = true;
-  #  };
-  xdg.enable = true;
-  xdg.dataHome = "/home/${userConfig.uname}/.local/share";
-  xdg.configHome = "/home/${userConfig.uname}/.config";
-  xdg.cacheHome = "/home/${userConfig.uname}/.cache";
+  xdg = {
+    enable = true;
+    dataHome = "/home/${userConfig.uname}/.local/share";
+    configHome = "/home/${userConfig.uname}/.config";
+    cacheHome = "/home/${userConfig.uname}/.cache";
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = [ "thunar.desktop" ]; # Replace with nautilus.desktop, nemo.desktop, etc.
+      };
+    };
+
+    portal = {
+      enable = true;
+
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-hyprland
+      ];
+
+      config = {
+        common = {
+          default = [
+            "hyprland"
+            "gtk"
+          ];
+        };
+      };
+    };
+  };
   home.stateVersion = "25.11"; # Please read the comment before changing.
   programs = {
     kitty = {
@@ -143,24 +157,6 @@
     style = {
       name = "adwaita-dark";
       package = pkgs.adwaita-qt;
-    };
-  };
-
-  xdg.portal = {
-    enable = true;
-
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-
-    config = {
-      common = {
-        default = [
-          "hyprland"
-          "gtk"
-        ];
-      };
     };
   };
   dconf.settings = {
