@@ -43,7 +43,7 @@
       quickshell # widget thing
       typos # spellchecker
       typos-lsp
-      keepass # password manager
+      # keepass # password manager
       python313
       python313Packages.py7zr
       godot # programing
