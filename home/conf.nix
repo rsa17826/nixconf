@@ -17,6 +17,12 @@ let
   ];
 in
 {
+  imports = [
+    ./alias.nix
+    ./sops/conf.nix
+    ./copyparty/conf.nix
+    ./firewall/conf.nix
+  ];
   security.sudo.extraConfig = ''
     Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
   '';
