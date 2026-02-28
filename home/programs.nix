@@ -1,6 +1,7 @@
 {
   pkgs,
   userConfig,
+  inputs,
   ...
 }:
 {
@@ -40,7 +41,7 @@
       "audio"
     ];
     packages = with pkgs; [
-      quickshell # widget thing
+      inputs.quickshell.packages.${pkgs.system}.default # widget thing
       typos # spellchecker
       typos-lsp
       # keepass # password manager
