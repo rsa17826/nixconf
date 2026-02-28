@@ -8,25 +8,41 @@ PanelWindow {
 
   property var activePlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
 
+  WlrLayershell.keyboardFocus: None
+  WlrLayershell.layer: WlrLayer.Overlay
   color: "transparent"
 
-  // 1. Start with a standard window to let Wayland initialize
+  // 1. Initial window setup
   implicitHeight: 4
   width: Screen.width
 
-  // 2. Use a Timer to attach LayerShell properties after 100ms
-  // This bypasses the "Non-existent attached object" crash
-  Timer {
-    id: initTimer
+  // Logic to enable animation ONLY after the first value is set
+  // onActivePlayerChanged: {
+  //   if (activePlayer) {
+  //     // Small delay to ensure the bar has moved to its starting position
+  //     // before we enable smooth sliding animations.
+  //     timerEnableAnim.start()
+  //   } else {
+  //     widthBehavior.enabled = false
+  //   }
+  // }
 
+  anchors {
+    left: true
+    right: true
+    top: true
+  }
+
+  // 2. Delayed attachment to fix "Non-existent attached object"
+  // This ensures the bar is on top of EVERYTHING, including fullscreen apps.
+  Timer {
     interval: 100
     repeat: false
     running: true
 
     onTriggered: {
-      WlrLayerShell.layer = WlrLayerShell.Overlay
-      WlrLayerShell.anchor = WlrLayerShell.Top | WlrLayerShell.Left | WlrLayerShell.Right
-      WlrLayerShell.exclusive = false
+
+      // Doesn't push windows down
     }
   }
   Rectangle {
@@ -38,24 +54,37 @@ PanelWindow {
 
       color: "#7aa2f7"
       height: parent.height
+
+      // Width logic
       width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
 
-      Behavior on width {
-        NumberAnimation {
-          duration: 500
-          easing.type: Easing.Linear
-        }
-      }
+      // 3. Animation with onFirst: false behavior
+      // Behavior on width {
+      //   id: widthBehavior
+
+      //   enabled: root.targetWidth > progressFill.width
+
+      //   NumberAnimation {
+      //     duration: 500
+      //     easing.type: Easing.Linear
+      //   }
+      // }
     }
   }
+  Timer {
+    id: timerEnableAnim
+
+    interval: 1000
+
+    onTriggered: widthBehavior.enabled = true
+  }
+
+  // Update the position from DBus
   Timer {
     interval: 500
     repeat: true
     running: !!root.activePlayer && root.activePlayer.playbackState === MprisPlaybackState.Playing
 
-    onTriggered: {
-      if (root.activePlayer)
-        root.activePlayer.positionChanged()
-    }
+    onTriggered: root.activePlayer.positionChanged()
   }
 }
