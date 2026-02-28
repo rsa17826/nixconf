@@ -49,9 +49,9 @@
         path = "/home/${userConfig.uname}/copypartyS";
         access = {
           rwmd = "s";
-          # A = [
-          #   "admin"
-          # ];
+          A = [
+            "admin"
+          ];
         };
         flags = {
           fk = 4;
