@@ -17,6 +17,14 @@ let
     sd = "shutdown";
     reb = "reboot";
   };
+  commonInit = ''
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+  '';
+
+  # Fish uses different syntax for exports
+  fishInit = ''
+    set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/(id -u)/bus"
+  '';
 in
 {
   environment.shellAliases = shellAliases;
@@ -24,14 +32,17 @@ in
     bash = {
       enable = true;
       shellAliases = shellAliases;
+      interactiveShellInit = commonInit;
     };
     zsh = {
       enable = true;
       shellAliases = shellAliases;
+      interactiveShellInit = commonInit;
     };
     fish = {
       enable = true;
       shellAliases = lib.mapAttrs (_k: v: lib.strings.replaceStrings [ "|&" ] [ "&|" ] v) shellAliases;
+      interactiveShellInit = fishInit;
     };
   };
 }
