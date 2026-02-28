@@ -41,7 +41,7 @@
       "audio"
     ];
     packages = with pkgs; [
-      inputs.quickshell.packages.${pkgs.system}.default # widget thing
+      inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default # widget thing
       typos # spellchecker
       typos-lsp
       # keepass # password manager
