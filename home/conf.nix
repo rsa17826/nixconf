@@ -59,9 +59,7 @@ in
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-┃              "nvidia-x11"
-┃            ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["nvidia-x11"];
   hardware.nvidia = {
     # Modesetting is required for most modern Wayland/X11 setups
     modesetting.enable = true;
