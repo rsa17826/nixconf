@@ -179,7 +179,7 @@ in
         libxcb
 
         # Input & fonts
-        # libxkbcommon
+        libxkbcommon
         fontconfig
 
         # Wayland (fallback)
