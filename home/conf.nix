@@ -23,9 +23,6 @@ in
     ./copyparty/conf.nix
     ./firewall/conf.nix
   ];
-  security.sudo.extraConfig = ''
-    Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
-  '';
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -48,53 +45,18 @@ in
     # (Fixes older tools that don't know about flakes yet)
     nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
   };
-  programs.nix-ld.enable = true;
-
-  programs.nix-ld.libraries = with pkgs; [
-    # Core X11
-    libX11
-    libXcursor
-    libXext
-    libXi
-    libXinerama
-    libXrandr
-    libxcb
-
-    # Input & fonts
-    libxkbcommon
-    fontconfig
-
-    # Wayland (fallback)
-    wayland
-
-    # Graphics
-    libGL
-    vulkan-loader
-  ];
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.graphics.enable = true;
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-      "nvidia-persistenced"
-    ];
-  hardware.nvidia = {
-    # Modesetting is required for most modern Wayland/X11 setups
-    modesetting.enable = true;
-
-    # This is the line Nix is complaining about:
-    # Set to false because you have a Maxwell (GM200) GPU.
-    open = false;
-
-    # Enable the Nvidia settings menu
-    nvidiaSettings = true;
-
-    # Optionally, specify the package to ensure you stay on a compatible version
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  nixpkgs.config = {
+    allowUnfreePredicate =
+      pkg:
+      builtins.elem (pkgs.lib.getName pkg) [
+        "nvidia-x11"
+        "nvidia-settings"
+        "nvidia-persistenced"
+      ];
   };
-  nix.settings.auto-optimise-store = true;
+  nix.settings = {
+    auto-optimise-store = true;
+  };
   nix.gc = {
     persistent = true;
     automatic = true;
@@ -104,34 +66,170 @@ in
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages;
-  security.sudo.extraRules = [
-    {
-      groups = [ "users" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/etc/profiles/per-user/nyx/bin/githubNotifications";
-          options = [
-            "NOPASSWD"
-            # "NOEXEC"
-          ];
-        }
-      ];
-    }
-  ];
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
     HYPRCURSOR_THEME = "mew";
     QT_STYLE_OVERRIDE = "adwaita-dark";
+  };
+  # systemd.services.numlock = {
+  #   description = "Enable NumLock at startup";
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = "yes";
+  #     ExecStart = "setleds +num";
+  #   };
+  # };
+  console.useXkbConfig = true;
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
+        serif = [ "JetBrainsMono Nerd Font Propo" ];
+        monospace = [ "JetBrainsMono Nerd Font Mono" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
+  security = {
+    sudo = {
+      extraConfig = ''
+        Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
+      '';
+      extraRules = [
+        {
+          groups = [ "users" ];
+          commands = [
+            {
+              command = "/run/current-system/sw/bin/reboot";
+              options = [ "NOPASSWD" ];
+            }
+            {
+              command = "/run/current-system/sw/bin/nixos-rebuild";
+              options = [ "NOPASSWD" ];
+            }
+            {
+              command = "/etc/profiles/per-user/nyx/bin/githubNotifications";
+              options = [
+                "NOPASSWD"
+                # "NOEXEC"
+              ];
+            }
+          ];
+        }
+      ];
+      enable = true;
+    };
+
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    # xdg.portal = {
+    #   enable = true;
+    #   extraPortals = [
+    #     pkgs.xdg-desktop-portal-hyprland
+    #     pkgs.xdg-desktop-portal-gtk # Necessary for fallback
+    #   ];
+    #   config.common.default = "*"; # Or "hyprland;gtk"
+    # };
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+    # Enable CUPS to print documents.
+    # services.printing.enable = true;
+
+    # Enable sound with pipewire.
+    rtkit.enable = true;
+  };
+  hardware = {
+    graphics = {
+      enable = true;
+    };
+    nvidia = {
+      # Modesetting is required for most modern Wayland/X11 setups
+      modesetting.enable = true;
+
+      # This is the line Nix is complaining about:
+      # Set to false because you have a Maxwell (GM200) GPU.
+      open = false;
+
+      # Enable the Nvidia settings menu
+      nvidiaSettings = true;
+
+      # Optionally, specify the package to ensure you stay on a compatible version
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+    # TODO
+    # uinput things
+    uinput.enable = true;
+  };
+  programs = {
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        # Core X11
+        libX11
+        libXcursor
+        libXext
+        libXi
+        libXinerama
+        libXrandr
+        libxcb
+
+        # Input & fonts
+        libxkbcommon
+        fontconfig
+
+        # Wayland (fallback)
+        wayland
+
+        # Graphics
+        libGL
+        vulkan-loader
+      ];
+    };
+    mouse-actions.enable = true;
+  };
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It's perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  # sudo codium --no-sandbox --user-data-dir "/home/${userConfig.uname}/.config/VSCodium/"
+  networking.hostName = "${hostName}";
+  system = {
+    stateVersion = "25.05";
+  };
+  services = {
+    udisks2 = {
+      enable = true;
+    };
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+    };
+    keyd = {
+      enable = true;
+      keyboards = {
+        default = {
+          ids = [ "*" ];
+          settings = {
+            main = {
+              capslock = "overload(control, esc)";
+              # numlock = "repeat";
+            };
+          };
+        };
+      };
+    };
+    opensnitch = {
+      enable = true;
+    };
   };
 
   #  fileSystems."/data" =
@@ -171,74 +269,5 @@ in
   #     '';
   #   };
   # };
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = [ "*" ];
-        settings = {
-          main = {
-            capslock = "overload(control, esc)";
-            # numlock = "repeat";
-          };
-        };
-      };
-    };
-  };
-  # systemd.services.numlock = {
-  #   description = "Enable NumLock at startup";
-  #   wantedBy = [ "multi-user.target" ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = "yes";
-  #     ExecStart = "setleds +num";
-  #   };
-  # };
-  console.useXkbConfig = true;
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
-      serif = [ "JetBrainsMono Nerd Font Propo" ];
-      monospace = [ "JetBrainsMono Nerd Font Mono" ];
-      emoji = [ "Noto Color Emoji" ];
-    };
-  };
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # xdg.portal = {
-  #   enable = true;
-  #   extraPortals = [
-  #     pkgs.xdg-desktop-portal-hyprland
-  #     pkgs.xdg-desktop-portal-gtk # Necessary for fallback
-  #   ];
-  #   config.common.default = "*"; # Or "hyprland;gtk"
-  # };
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  security.rtkit.enable = true;
-  # TODO
-  # uinput things
-  hardware.uinput.enable = true;
-  programs.mouse-actions.enable = true;
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  # sudo codium --no-sandbox --user-data-dir "/home/${userConfig.uname}/.config/VSCodium/"
-  networking.hostName = "${hostName}";
-  system.stateVersion = "25.05"; # Did you read the comment?
-  services.opensnitch.enable = true;
-  security.sudo.enable = true;
 }
