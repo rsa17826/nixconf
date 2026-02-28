@@ -31,6 +31,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,6 +43,7 @@
       home-manager,
       disko,
       sops-nix,
+      nix-index-database,
       copyparty,
       ...
     }@inputs:
@@ -64,6 +69,7 @@
 
               inputs.sops-nix.nixosModules.sops
               inputs.copyparty.nixosModules.default
+              nix-index-database.nixosModules.nix-index
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
@@ -139,14 +145,6 @@
       # Map the hosts defined above into nixosConfigurations
       nixosConfigurations = nixHosts;
       homeConfigurations = homehosts;
-      nix = {
-        # 1. This pins the 'nixpkgs' flake to your system's input
-        registry.nixpkgs.flake = nixpkgs;
-
-        # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
-        # (Fixes older tools that don't know about flakes yet)
-        nixPath = [ "nixpkgs=${nixpkgs.outPath}" ];
-      };
     };
 }
 # error: flake 'git+file:///home/user/nixconf' does not provide attribute 'packages.x86_64-linux.homeConfigurations."nyix".activationPackage', 'legacyPackages.x86_64-linux.homeConfigurations."nyix".activationPackage' or 'homeConfigurations."nyix".activationPackage'

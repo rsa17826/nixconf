@@ -1,5 +1,6 @@
 {
   userConfig,
+  inputs,
   config,
   hostName,
   lib,
@@ -33,7 +34,14 @@ in
       # configurationLimit = 35;
     };
   };
+  nix = {
+    # 1. This pins the 'nixpkgs' flake to your system's input
+    registry.nixpkgs.flake = inputs.nixpkgs;
 
+    # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
+    # (Fixes older tools that don't know about flakes yet)
+    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
+  };
   programs.nix-ld.enable = true;
 
   programs.nix-ld.libraries = with pkgs; [
