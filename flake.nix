@@ -61,7 +61,7 @@
             };
           in
           {
-            stdenv.hostPlatform.system = system;
+            nixpkgs.hostPlatform = system;
 
             specialArgs = args;
             modules = userConfig.modules ++ [
