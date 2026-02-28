@@ -105,6 +105,8 @@
       grim
       slurp
       tesseract5
+      thunar
+      yazi
     ];
   };
   environment.systemPackages = with pkgs; [
