@@ -1,56 +1,49 @@
 import QtQuick
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.Mpris
-import QtQuick.Controls
 
 PanelWindow {
   id: root
 
-  property var activePlayer: players.length > 0 ? players[0] : null
-  property var players: Mpris.players.values
+  property var activePlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
 
-  implicitHeight: 120
-  implicitWidth: 400
+  color: "transparent"
 
+  // 1. Start with a standard window to let Wayland initialize
+  implicitHeight: 4
+  width: Screen.width
+
+  // 2. Use a Timer to attach LayerShell properties after 100ms
+  // This bypasses the "Non-existent attached object" crash
+  Timer {
+    id: initTimer
+
+    interval: 100
+    repeat: false
+    running: true
+
+    onTriggered: {
+      WlrLayerShell.layer = WlrLayerShell.Overlay
+      WlrLayerShell.anchor = WlrLayerShell.Top | WlrLayerShell.Left | WlrLayerShell.Right
+      WlrLayerShell.exclusive = false
+    }
+  }
   Rectangle {
     anchors.fill: parent
-    border.color: activePlayer ? "#7aa2f7" : "#3b4261"
-    border.width: 2
-    color: "#1a1b26"
-    radius: 8
-  }
-  Column {
-    anchors.centerIn: parent
-    spacing: 10
-    width: parent.width - 40
+    color: root.activePlayer ? "rgba(0, 0, 0, 0.4)" : "transparent"
 
-    Text {
-      color: "white"
-      elide: Text.ElideRight
-      font.bold: true
-      horizontalAlignment: Text.AlignHCenter
-      // Use the 'metadata' property if 'title' is blank,
-      // and provide a fallback so it doesn't stay stuck on "Waiting..."
-      text: (root.activePlayer && root.activePlayer.title) ? root.activePlayer.title : (root.activePlayer ? "Unknown Track" : "No Player Detected")
-      width: parent.width
-    }
-    Slider {
-      id: progressSlider
+    Rectangle {
+      id: progressFill
 
-      enabled: !!root.activePlayer
+      color: "#7aa2f7"
+      height: parent.height
+      width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
 
-      // MPRIS length is in microseconds. Slider works better in seconds.
-      from: 0
-      to: root.activePlayer ? (root.activePlayer.length / 1000000) : 100
-      value: root.activePlayer ? (root.activePlayer.position / 1000000) : 0
-      width: parent.width
-
-      onMoved: {
-        if (root.activePlayer) {
-          // IMPORTANT: Brave expects microseconds for seeking.
-          // If you send 'seconds' here, it seeks to the very beginning (0.00x),
-          // which makes the song restart.
-          root.activePlayer.position = value * 1000000
+      Behavior on width {
+        NumberAnimation {
+          duration: 500
+          easing.type: Easing.Linear
         }
       }
     }
@@ -58,12 +51,11 @@ PanelWindow {
   Timer {
     interval: 500
     repeat: true
-    running: true
+    running: !!root.activePlayer && root.activePlayer.playbackState === MprisPlaybackState.Playing
 
     onTriggered: {
-      if (root.activePlayer) {
+      if (root.activePlayer)
         root.activePlayer.positionChanged()
-      }
     }
   }
 }
