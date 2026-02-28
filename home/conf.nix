@@ -176,7 +176,7 @@ in
         libXi
         libXinerama
         libXrandr
-        libxcb
+        # libxcb
 
         # Input & fonts
         libxkbcommon

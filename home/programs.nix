@@ -30,7 +30,6 @@
 
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
-    # shell = pkgs.zsh;
     isNormalUser = true;
     description = "${userConfig.uname}";
     extraGroups = [
