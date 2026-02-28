@@ -1,72 +1,68 @@
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
 import Quickshell.Services.Mpris
+import QtQuick.Controls
 
-ShellRoot {
-  Variants {
-    model: Quickshell.screens
+PanelWindow {
+  id: root
 
-    delegate: WlrLayerShell {
-      anchors.left: true
-      anchors.right: true
+  property var activePlayer: players.length > 0 ? players[0] : null
+  property var players: Mpris.players.values
 
-      // Anchor to top, left, and right to span the screen
-      anchors.top: true
+  implicitHeight: 120
+  implicitWidth: 400
 
-      // Ensure it doesn't take focus or block mouse clicks
-      exclusionMode: WlrLayer.ExclusionMode.None
+  Rectangle {
+    anchors.fill: parent
+    border.color: activePlayer ? "#7aa2f7" : "#3b4261"
+    border.width: 2
+    color: "#1a1b26"
+    radius: 8
+  }
+  Column {
+    anchors.centerIn: parent
+    spacing: 10
+    width: parent.width - 40
 
-      // Total height of 4px
-      height: 4
-      keyboardFocus: WlrLayer.KeyboardFocus.None
+    Text {
+      color: "white"
+      elide: Text.ElideRight
+      font.bold: true
+      horizontalAlignment: Text.AlignHCenter
+      // Use the 'metadata' property if 'title' is blank,
+      // and provide a fallback so it doesn't stay stuck on "Waiting..."
+      text: (root.activePlayer && root.activePlayer.title) ? root.activePlayer.title : (root.activePlayer ? "Unknown Track" : "No Player Detected")
+      width: parent.width
+    }
+    Slider {
+      id: progressSlider
 
-      // Layer 'Overlay' keeps it above fullscreen apps
-      layer: WlrLayer.Overlay
-      // Target every screen
-      screen: modelData
+      enabled: !!root.activePlayer
 
-      // The Progress Bar Container
-      Rectangle {
+      // MPRIS length is in microseconds. Slider works better in seconds.
+      from: 0
+      to: root.activePlayer ? (root.activePlayer.length / 1000000) : 100
+      value: root.activePlayer ? (root.activePlayer.position / 1000000) : 0
+      width: parent.width
 
-        // We use the first available active player
-        property var player: Mpris.player
-
-        anchors.fill: parent
-        color: "transparent"
-        visible: Mpris.player?.playbackStatus === Mpris.Playing
-
-        // Calculate width based on position/length
-        Rectangle {
-          id: progressBar
-
-          color: "transparent"
-          height: parent.height
-          width: parent.width * (parent.player?.position / parent.player?.length || 0)
-
-          // Smooth animation for position updates
-          Behavior on width {
-            NumberAnimation {
-              duration: 500
-            }
-          }
-
-          // Top 2px: Red
-          Rectangle {
-            anchors.top: parent.top
-            color: "#FF0000"
-            height: 2
-            width: parent.width
-          }
-
-          // Bottom 2px: Black
-          Rectangle {
-            anchors.bottom: parent.bottom
-            color: "#000000"
-            height: 2
-            width: parent.width
-          }
+      onMoved: {
+        if (root.activePlayer) {
+          // IMPORTANT: Brave expects microseconds for seeking.
+          // If you send 'seconds' here, it seeks to the very beginning (0.00x),
+          // which makes the song restart.
+          root.activePlayer.position = value * 1000000
         }
+      }
+    }
+  }
+  Timer {
+    interval: 500
+    repeat: true
+    running: true
+
+    onTriggered: {
+      if (root.activePlayer) {
+        root.activePlayer.positionChanged()
       }
     }
   }
