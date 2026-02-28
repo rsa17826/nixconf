@@ -107,6 +107,9 @@
       shfmt # sh formatter
       cfm # tui file manager
       keepassxc
+      grim
+      slurp
+      tesseract5
     ];
   };
   environment.systemPackages = with pkgs; [
