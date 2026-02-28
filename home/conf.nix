@@ -176,10 +176,10 @@ in
         libXi
         libXinerama
         libXrandr
-        # libxcb
+        libxcb
 
         # Input & fonts
-        libxkbcommon
+        # libxkbcommon
         fontconfig
 
         # Wayland (fallback)
