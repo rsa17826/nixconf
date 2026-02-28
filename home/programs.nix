@@ -107,6 +107,7 @@
       tesseract5 # ocr
       thunar # gui file manager
       yazi # tui file manager
+      hyprshot
     ];
   };
   environment.systemPackages = with pkgs; [
