@@ -24,7 +24,6 @@
       s.passwordFile = "/home/${userConfig.uname}/s";
     };
 
-    # create a volume
     volumes = {
       "/" = {
         path = "/home/${userConfig.uname}/copyparty";
