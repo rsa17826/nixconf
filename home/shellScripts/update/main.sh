@@ -11,6 +11,11 @@ if [[ "$*" == *"--dry-run"* ]]; then
   DRY_RUN=true
   set -- "${@/--dry-run/}"
 fi
+hm=false
+if [[ "$*" == *"hm"* ]]; then
+  hm=true
+  set -- "${@/hm/}"
+fi
 
 # Determine the target
 if [ -n "$1" ]; then
@@ -118,7 +123,11 @@ else
 
   export NIXOS_LABEL_VERSION
   echo "🚀 Switching to #$TARGET..."
-  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
+  if [ "$hm"=true]; then
+    home-manager switch --flake ./#nyix
+  else
+    sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
+  fi
   # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
   # Return to original directory

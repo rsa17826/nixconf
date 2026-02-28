@@ -648,8 +648,8 @@ in
   home.activation.copy-vscode-settings = ''
     echo "Copying VSCode settings..."
     mkdir -p "$HOME/.config/VSCodium/User"
-    ln ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
-    ln ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
+    ln -f ${./settings.json} "$HOME/.config/VSCodium/User/settings.json"
+    ln -f ${./keybindings.json} "$HOME/.config/VSCodium/User/keybindings.json"
   '';
   # language jsonc
   home.file.".vscode-oss/argv.json".text = ''
