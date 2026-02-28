@@ -30,7 +30,7 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "inode/directory" = [ "thunar.desktop" ]; # Replace with nautilus.desktop, nemo.desktop, etc.
+        "inode/directory" = [ "yazi.desktop" ]; # Replace with nautilus.desktop, nemo.desktop, etc.
       };
     };
 
