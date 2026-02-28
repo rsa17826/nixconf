@@ -61,7 +61,7 @@
             };
           in
           {
-            inherit system;
+            stdenv.hostPlatform.system = system;
 
             specialArgs = args;
             modules = userConfig.modules ++ [
