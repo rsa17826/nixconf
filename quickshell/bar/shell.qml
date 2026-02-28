@@ -2,6 +2,8 @@
 import Quickshell
 
 Scope {
+  Mp {
+  }
   Bar {
   }
 }
