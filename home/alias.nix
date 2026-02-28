@@ -23,7 +23,7 @@ let
 
   # Fish uses different syntax for exports
   fishInit = ''
-    set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/(id -u)/bus"
+    set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/"(id -u)"/bus"
   '';
 in
 {

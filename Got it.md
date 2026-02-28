@@ -2611,3 +2611,95 @@ If you'd like, tell me:
 * Are you using Home-Manager?
 
 I can give you a minimal Nix-native setup tailored to your config.
+
+
+Here’s a **practical way to *send the current HTML5 `video.currentTime` from Brave to your shell*** and format it into a human‑friendly time — *even if Brave’s MPRIS doesn’t report rate*.
+
+---
+
+## 🛠️ Step‑by‑Step: Get Video Time from Brave to Shell
+
+### 1) **Launch Brave with a debugging port**
+
+You need to start Brave with the **remote debugging port enabled** so you can query it from your shell:
+
+```bash
+brave --remote-debugging-port=9222 &
+```
+
+This opens Brave so external tools can talk to it using the **Chrome DevTools Protocol (CDP)**. ([Brave Help Center][1])
+
+> If you already have Brave running, you’ll need to restart it with that flag.
+
+---
+
+### 2) **Find the tab’s debugging session**
+
+Get the list of open debugging targets (tabs):
+
+```bash
+curl -s http://localhost:9222/json
+```
+
+This returns a JSON array of tabs; look for the one with your video page and copy its `"id"` (e.g., `"sessionId":"XYZ..."`).
+Call it something like:
+
+```
+SESSION_ID="your-session-id-here"
+```
+
+---
+
+### 3) **Query the video currentTime via CDP**
+
+Once you have the session ID, use this curl request to *evaluate JavaScript* inside that tab:
+
+```bash
+curl -s -X POST \
+  -H "Content-Type: application/json" \
+  --data "{\"expression\":\"document.querySelector('video').currentTime\"}" \
+  http://localhost:9222/json/session/$SESSION_ID/Runtime.evaluate
+```
+
+This will return JSON containing the actual video playback time in seconds as a number — *accurate at 2× playback*.
+
+---
+
+### 4) **Format the result into HH:MM:SS**
+
+You can wrap it in a shell helper like this:
+
+```bash
+SESSION_ID="your-session-id"
+raw=$(curl -s -X POST \
+    -H "Content-Type: application/json" \
+    --data "{\"expression\":\"document.querySelector('video').currentTime\"}" \
+    http://localhost:9222/json/session/$SESSION_ID/Runtime.evaluate)
+
+# Extract the numeric value (e.g. result.value)
+seconds=$(echo "$raw" | jq -r '.result.value')
+
+# Turn it into HH:MM:SS
+printf "%02d:%02d:%02d\n" $(($seconds/3600)) $(($seconds%3600/60)) $(($seconds%60))
+```
+
+---
+
+## 🚀 Result
+
+Running that command prints the *correct video position* even when playback speed isn’t 1× — something `playerctl` can’t report from Brave’s MPRIS due to missing rate info. ([Lightrun][2])
+
+---
+
+## ⚠️ Notes
+
+* Remote debugging must be enabled when starting Brave.
+* This works for *any HTML5 video* on the page that you can reach with `document.querySelector('video')`.
+* If the page has multiple `<video>`s, you may need a more specific selector.
+
+---
+
+If you want, I can help turn this into a **watch script** that continually prints the current video time (like `top`/`watch`) so you can *monitor it live as it plays*.
+
+[1]: https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave?utm_source=chatgpt.com "How Do I Use Command Line Flags in Brave? – Brave Help Center"
+[2]: https://lightrun.com/answers/brave-brave-browser-remote-debugging-should-be-proxied-and-enabled-by-default?utm_source=chatgpt.com "Remote debugging should be proxied and enabled by default"

@@ -28,6 +28,7 @@ in
     # ./git/conf.nix
     #    ./keepass/conf.nix
   ];
+  services.playerctld.enable = true;
   xdg = {
     enable = true;
     dataHome = "/home/${userConfig.uname}/.local/share";

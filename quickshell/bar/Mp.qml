@@ -8,10 +8,12 @@ PanelWindow {
 
   property var activePlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
 
+  Text: {
+    text: root.activePlayer.position
+  }
   WlrLayershell.keyboardFocus: None
   WlrLayershell.layer: WlrLayer.Overlay
   color: "transparent"
-
   implicitHeight: 2
   width: Screen.width
 
@@ -29,7 +31,6 @@ PanelWindow {
 
       color: '#d12121'
       height: parent.height
-
       width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
     }
   }
