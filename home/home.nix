@@ -5,6 +5,12 @@
   inputs,
   ...
 }:
+let
+  gtkExtraConfig = {
+    gtk-application-prefer-dark-theme = 1;
+    gtk-enable-animations = 0;
+  };
+in
 {
   home.username = userConfig.uname;
   home.homeDirectory = "/home/${userConfig.uname}";
@@ -157,9 +163,8 @@
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk3.extraConfig = gtkExtraConfig;
+    gtk4.extraConfig = gtkExtraConfig;
   };
 
   qt = {
