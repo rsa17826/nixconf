@@ -642,8 +642,8 @@ in
         ];
     };
   };
-  home.file."VSCodium/User/settings.json".source = ./settings.json;
-  home.file."VSCodium/User/keybindings.json".source = ./keybindings.json;
+  home.file."VSCodium/User/settings.json".source = ln ./settings.json;
+  home.file."VSCodium/User/keybindings.json".source = ln ./keybindings.json;
   # home.activation.copy-vscode-settings = ''
   #   echo "Copying VSCode settings..."
   #   mkdir -p "$HOME/.config/VSCodium/User"
