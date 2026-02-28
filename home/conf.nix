@@ -56,7 +56,8 @@ in
     libGL
     vulkan-loader
   ];
-
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics.enable = true;
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     persistent = true;
