@@ -133,7 +133,7 @@
     cascadia-code # font
     swaynotificationcenter # notification daemon
 
-    waybar
+    # waybar
     nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
     font-awesome # For additional icons
     wlogout # For the power menu click

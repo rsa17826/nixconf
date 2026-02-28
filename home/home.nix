@@ -16,7 +16,7 @@
     inputs.sops-nix.homeManagerModules.sops
     ./vscode/conf.nix
     ./hyprland/conf.nix
-    ./waybar/conf.nix
+    # ./waybar/conf.nix
     ./cursors/conf.nix
     ./zsh/plugins.nix
     # ./git/conf.nix
