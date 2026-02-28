@@ -8,14 +8,11 @@ PanelWindow {
 
   property var activePlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
 
-  Text: {
-    text: root.activePlayer.position
-  }
   WlrLayershell.keyboardFocus: None
   WlrLayershell.layer: WlrLayer.Overlay
   color: "transparent"
   implicitHeight: 2
-  width: Screen.width
+  implicitWidth: Screen.width
 
   anchors {
     left: true

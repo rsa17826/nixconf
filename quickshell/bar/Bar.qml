@@ -7,6 +7,8 @@ import Quickshell.Io
 Scope {
   property int ghNotifCount
   property string ghNotifData
+  WlrLayershell.keyboardFocus: None
+  WlrLayershell.layer: WlrLayer.Overlay
 
   // Timer {
   //   interval: 60000   // 60 seconds

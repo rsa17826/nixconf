@@ -7,7 +7,7 @@ Rectangle {
   height: 10
   radius: 20
   // Width grows/shrinks based on number of digits
-  width: Math.max(height, ghNotifCountTextItem.width + 8)
+  implicitWidth: Math.max(height, ghNotifCountTextItem.implicitWidth + 8)
 
   anchors {
     right: parent.right
