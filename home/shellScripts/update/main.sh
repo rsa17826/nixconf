@@ -124,7 +124,7 @@ else
   export NIXOS_LABEL_VERSION
   echo "🚀 Switching to #$TARGET..."
   echo "hm is: $hm"
-  if [ "$hm" = "true" ]; then
+  if [ "$hm" = true ]; then
     home-manager switch --flake ./#nyix
   else
     sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
