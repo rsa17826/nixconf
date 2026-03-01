@@ -3,7 +3,7 @@ set -e
 
 # Join all the arguments into a single string, separated by spaces
 MESSAGE="$*"
-echo "$MESSAGE"
-# git add -A
-# git commit -m "$MESSAGE"
-# git push
+
+git add -A
+git commit -m "$MESSAGE"
+git push
