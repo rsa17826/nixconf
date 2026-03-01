@@ -11,6 +11,7 @@ let
     zsh-z = "share/zsh-z/zsh-z.plugin.zsh";
     zsh-forgit = "share/zsh-forgit/forgit.plugin.zsh";
     zsh-f-sy-h = "share/zsh/site-functions/f-sy-h.zsh";
+    zsh-command-time = "share/zsh/plugins/command-time/command-time.plugin.zsh";
   };
 in
 {
