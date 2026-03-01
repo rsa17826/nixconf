@@ -139,6 +139,8 @@ in
     # Enable sound with pipewire.
     rtkit.enable = true;
   };
+  systemd.user.services.xdg-desktop-portal-hyprland.Service.Restart = lib.mkForce "no";
+  systemd.user.services.xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
   hardware = {
     graphics = {
       enable = true;
