@@ -10,7 +10,6 @@ WINDOW_TITLE="https://portal.my.vccs.edu/idp/AuthnEngine#/authn"
 # This creates a pop-up that grabs focus and hides input
 # KP_PASS=$(echo -e "SETDESC Enter KeePass Master Password\nGETPIN" | pinentry | grep "^D " | sed 's/^D //')
 
-
 # 2. Securely export only Title and URL to a variable (Metadata only)
 # We use CSV format: "Group","Title","Username","URL","Notes"
 # We extract only the Title (Index 2) and URL (Index 4)
@@ -51,7 +50,7 @@ if [ -n "$MATCHED_PATH" ]; then
   SEQ=${SEQ:-"{USERNAME}{TAB}{PASSWORD}{ENTER}"}
 
   # Execute Sequence
-  echo "$SEQ" 
+  echo "$SEQ"
   # echo "$SEQ" | grep -oP '\{[A-Z0-9_-]+\}|[^{]+' | while read -r PART; do
   #   case "$PART" in
   #   "{USERNAME}") echo "$(get_attr username)" ;;
