@@ -10,7 +10,7 @@
   // "doki.wallpaper.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/gdColon 40a wide.png",
   // "doki.wallpaper.path": "C:/Users/User/Downloads/Media/Images/wallhaven-1peepw.png",
   "doki.background.anchor": "center",
-  "window.titleBarStyle": "custom",
+  "window.titleBarStyle": "custom ",
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
   "terminal.integrated.autoReplies": {
