@@ -21,7 +21,7 @@
     mutableExtensionsDir = false;
   };
   home.file."VSCodium/User/settings.json".source = ln "${userConfig.nixConf}/home/vscode/settings.json";
-  home.file."VSCodium/User/keybindings.json".source = ln "${userConfig.nixConf}/home/vscode/keybindings.json";
+  home.file."VSCodium/User/keybindings.json".source = ln "${ userConfig.nixConf}/home/vscode/keybindings.json";
 
   # home.activation.copy-vscode-settings = ''
   #   echo "Copying VSCode settings..."
