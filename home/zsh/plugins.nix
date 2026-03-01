@@ -3,10 +3,9 @@
   pkgs,
   lib,
   ...
-}: # Ensure lib is in your arguments here
+}:
 let
   zshPlugins = {
-    zsh-syntax-highlighting = null;
     zsh-autosuggestions = null;
     zsh-autopair = null;
     zsh-z = "share/zsh-z/zsh-z.plugin.zsh";
@@ -15,11 +14,18 @@ let
   };
 in
 {
+  programs.pay-respects = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.nix-index.enable = true;
   programs.zsh = {
     dotDir = "${config.xdg.configHome}/zsh";
     enable = true;
-
-    # Use lib.mapAttrsToList instead of builtins
+    history.size = 10000;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
     plugins = lib.mapAttrsToList (name: path: {
       name = name;
       src = pkgs.${name};
