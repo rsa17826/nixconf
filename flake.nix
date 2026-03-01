@@ -56,7 +56,9 @@
         hostName: userConfig:
         nixpkgs.lib.nixosSystem (
           let
-            userConfig.nixConf = "/home/${userConfig.uname}/nixconf";
+            userConfig = userConfig // {
+              nixConf = "/home/${userConfig.uname}/nixconf";
+            };
             args = {
               inherit inputs hostName userConfig;
             };
@@ -87,6 +89,9 @@
         hostName: userConfig:
         home-manager.lib.homeManagerConfiguration (
           let
+            userConfig = userConfig // {
+              nixConf = "/home/${userConfig.uname}/nixconf";
+            };
             args = {
               inherit
                 inputs
