@@ -10,7 +10,7 @@ download_logic() {
   local vid_format="bestvideo[height<=720]+bestaudio/worstvideo[height>720]+bestaudio/best"
 
   # 2. Define args normally
-  local args=("--cookies-from-browser" "brave" "-o" "$output_tmpl" "--newline" "--progress")
+  local args=("--cookies-from-browser" "brave" "-o" "~/videos/$output_tmpl" "--newline" "--progress")
 
   if [[ "$mode" == "Audio" ]]; then
     # Note: Using --embed-metadata as it's the modern version of --add-metadata
