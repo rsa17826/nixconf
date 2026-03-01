@@ -1,7 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }: # Ensure lib is in your arguments here
 let
-  # Define your plugins and their specific entry points here
-  # If the plugin is "standard", we just set it to null or true
   zshPlugins = {
     zsh-syntax-highlighting = null;
     zsh-autosuggestions = null;
@@ -15,10 +13,10 @@ in
   programs.zsh = {
     enable = true;
 
-    plugins = builtins.mapAttrsToList (name: path: {
+    # Use lib.mapAttrsToList instead of builtins
+    plugins = lib.mapAttrsToList (name: path: {
       name = name;
       src = pkgs.${name};
-      # If a path is provided, use it; otherwise, use your standard fallback
       file = if (path != null) then path else "share/${name}/${name}.zsh";
     }) zshPlugins;
   };
