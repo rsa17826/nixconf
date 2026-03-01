@@ -28,11 +28,10 @@
     '';
   };
 
-  # ???
-  # dconf.settings = {
-  #   "org/gnome/desktop/interface" = {
-  #     cursor-theme = "mew";
-  #     cursor-size = 48;
-  #   };
-  # };
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      cursor-theme = "mew";
+      cursor-size = 48;
+    };
+  };
 }
