@@ -13,9 +13,6 @@
     enable = true;
     enableZshIntegration = true;
   };
-  zsh-z = {
-    enable = true;
-  };
   programs.nix-index.enable = true;
   programs.zsh = {
     dotDir = "${config.xdg.configHome}/zsh";
@@ -30,7 +27,14 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    plugins =
+    plugins = [
+      {
+        name = "zsh-z";
+        src = pkgs.zsh-z;
+        file = "share/zsh-z/zsh-z.plugin.zsh"; # This is the specific path for this pkg
+      }
+    ]
+    ++
       map
         (pkg: {
           name = pkg.pname;
