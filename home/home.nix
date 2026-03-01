@@ -26,7 +26,7 @@ in
     ./cursors/conf.nix
     ./zsh/plugins.nix
     # ./git/conf.nix
-    #    ./keepass/conf.nix
+    ./keepass/conf.nix
   ];
   services.playerctld.enable = true;
   xdg = {
