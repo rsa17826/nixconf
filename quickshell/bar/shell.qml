@@ -21,7 +21,7 @@ Scope {
       property string ghNotifData
       required property var modelData
 
-      WlrLayershell.keyboardFocus: None
+      WlrLayershell.keyboardFocus: WlrLayershell.None
       WlrLayershell.layer: WlrLayer.Overlay
       color: "transparent"
       implicitHeight: 32
@@ -39,6 +39,7 @@ Scope {
 
         Rectangle {
           id: progressFill
+
           color: '#d12121'
           height: 2
           width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0

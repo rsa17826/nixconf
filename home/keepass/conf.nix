@@ -12,6 +12,9 @@
       };
       SSHAgent.Enabled = true;
     };
+    Browser = {
+      Enabled = true;
+    };
   };
   xdg.autostart.enable = true;
 }
