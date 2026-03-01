@@ -63,12 +63,12 @@ in
       ];
 
       config = {
-        common = {
-          default = [
-            "hyprland"
-            "gtk"
-          ];
-        };
+        common.default = [
+          "hyprland"
+        ];
+        gtk.default = [
+          "gtk"
+        ];
       };
     };
   };
