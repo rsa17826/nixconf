@@ -21,10 +21,9 @@ let
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
   '';
 
-  # Fish uses different syntax for exports
-  fishInit = ''
-    set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/"(id -u)"/bus"
-  '';
+  # fishInit = ''
+  #   set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/"(id -u)"/bus"
+  # '';
 in
 {
   environment.shellAliases = shellAliases;
