@@ -37,7 +37,9 @@ in
     zsh = {
       enable = true;
       shellAliases = shellAliases;
-      interactiveShellInit = commonInit;
+      interactiveShellInit = commonInit // {
+        "#" = "echo";
+      };
     };
     fish = {
       enable = true;
