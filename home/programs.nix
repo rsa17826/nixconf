@@ -112,6 +112,7 @@
       adwaita-icon-theme
     ];
   };
+  programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     neovim # tui text editor
     sxhkd
