@@ -9,8 +9,6 @@ killall -SIGUSR1 gpu-screen-recorder
 # 3. Loop until the newest file is different from the 'before' state
 while true; do
   CURRENT_VIDEO=$(ls -t ~/Videos/flashback/*.mp4 2>/dev/null | head -1)
-  echo "CURRENT_VIDEO $CURRENT_VIDEO"
-  echo "LAST_VIDEO $LAST_VIDEO"
   if [ "$CURRENT_VIDEO" != "$LAST_VIDEO" ] && [ -f "$CURRENT_VIDEO" ]; then
     break
   fi
