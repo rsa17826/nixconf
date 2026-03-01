@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }: # Ensure lib is in your arguments here
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: # Ensure lib is in your arguments here
 let
   zshPlugins = {
     zsh-syntax-highlighting = null;
@@ -11,6 +16,7 @@ let
 in
 {
   programs.zsh = {
+    dotDir = "${config.xdg.configHome}/zsh";
     enable = true;
 
     # Use lib.mapAttrsToList instead of builtins
