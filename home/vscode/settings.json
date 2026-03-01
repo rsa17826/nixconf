@@ -18,7 +18,7 @@
   },
   "editor.pasteAs.enabled": false,
   "debug.focusWindowOnBreak": false,
-  "typos.path": "/etc/profiles/per-user/$USER/bin/typos-lsp",
+  "typos.path": "/etc/profiles/per-user/nyix/bin/typos-lsp",
   "files.exclude": {
     // "addons": true,
     "**/maps": true,
