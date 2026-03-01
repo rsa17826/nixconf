@@ -34,8 +34,9 @@ Scope {
         top: true
       }
       Rectangle {
-        anchors.fill: parent
         color: root.activePlayer ? "rgba(0, 0, 0, 0.4)" : "transparent"
+        height: 2
+        width: parent.width
 
         Rectangle {
           id: progressFill
