@@ -17,8 +17,8 @@ PanelWindow {
     for (let line of lines) {
       // Debugging log so you can see the raw output in your console
       console.log("DEBUG qml: " + line)
-      if (parseFloat(line[1]))
-        progressValue = parseFloat(line[1])
+      if (parseFloat(line))
+        progressValue = parseFloat(line)
     }
   }
   function startDownload(mode) {
