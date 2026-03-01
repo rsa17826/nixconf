@@ -1,5 +1,6 @@
 {
   ln,
+  userConfig,
   ...
 }:
 {
@@ -13,7 +14,8 @@
   # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
   # home.file.".config/hypr/shaders".source = ./shaders;
   # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
-  home.file."hypr/hyprland.conf".source = ln ./hyprland.conf;
+  home.file.".config/hypr/hyprland.conf".source =
+    ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
   #  home.activation.copy-hyprland-settings = ''
   #    echo "Linking hyprland settings..."
 
