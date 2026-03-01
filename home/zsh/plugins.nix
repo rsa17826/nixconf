@@ -1,55 +1,25 @@
-{
-  userConfig,
-  config,
-  pkgs,
-  ...
-}:
-{
-  # users.users."${userConfig.uname}" = {
-  #   plugins = with pkgs; [
-  #   ];
-  # };
-  programs.pay-respects = {
-    enable = true;
-    enableZshIntegration = true;
+{ pkgs, ... }:
+let
+  # Define your plugins and their specific entry points here
+  # If the plugin is "standard", we just set it to null or true
+  zshPlugins = {
+    zsh-syntax-highlighting = null;
+    zsh-autosuggestions = null;
+    zsh-autopair = null;
+    zsh-z = "share/zsh-z/zsh-z.plugin.zsh";
+    zsh-forgit = "share/zsh-forgit/forgit.plugin.zsh";
+    zsh-f-sy-h = "share/zsh/site-functions/f-sy-h.zsh";
   };
-  programs.nix-index.enable = true;
+in
+{
   programs.zsh = {
-    dotDir = "${config.xdg.configHome}/zsh";
     enable = true;
 
-    # plugins = [
-    #   (mkZshPlugin "zsh-abbr" pkgs.zsh-abbr)
-    #   (mkZshPlugin "zsh-autosuggestions" pkgs.zsh-autosuggestions)
-    #   (mkZshPlugin "zsh-syntax-highlighting" pkgs.)
-    # ];
-    history.size = 10000;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    plugins = [
-      {
-        name = "zsh-z";
-        src = pkgs.zsh-z;
-        file = "share/zsh-z/zsh-z.plugin.zsh"; # This is the specific path for this pkg
-      }
-    ]
-    ++
-      map
-        (pkg: {
-          name = pkg.pname;
-          src = pkg;
-          file = "share/${pkg.pname}/${pkg.pname}.zsh";
-        })
-        (
-          with pkgs;
-          [
-            zsh-syntax-highlighting
-            zsh-autosuggestions
-            zsh-forgit
-            zsh-f-sy-h
-            zsh-autopair
-          ]
-        );
+    plugins = builtins.mapAttrsToList (name: path: {
+      name = name;
+      src = pkgs.${name};
+      # If a path is provided, use it; otherwise, use your standard fallback
+      file = if (path != null) then path else "share/${name}/${name}.zsh";
+    }) zshPlugins;
   };
 }
