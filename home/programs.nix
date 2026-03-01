@@ -147,7 +147,8 @@
     pulseaudio
     pipewire
     wireplumber
-    hyprlock
+    hyprlock # lockscreen
+    killall
   ];
   services.pipewire = {
     # Enable PipeWire
