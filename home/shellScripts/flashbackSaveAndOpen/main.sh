@@ -17,7 +17,7 @@ while true; do
 done
 
 # 4. Now that we have the new file, open it
-mpv "$CURRENT_VIDEO"
+vlc "$CURRENT_VIDEO"
 
 # 5. Ask to delete
 if ! zenity --question --text="Keep this clip?" --ok-label="Keep" --cancel-label="Delete"; then
