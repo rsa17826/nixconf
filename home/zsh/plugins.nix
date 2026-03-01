@@ -32,7 +32,7 @@ in
       src = pkgs.${name};
       file = if (path != null) then path else "share/${name}/${name}.zsh";
     }) zshPlugins;
-    initExtra = ''
+    initContent = ''
       ZSH_COMMAND_TIME_COLOR="yellow"
       ZSH_COMMAND_TIME_MIN_SECONDS=3
       ZSH_COMMAND_TIME_ECHO=1
