@@ -1,5 +1,6 @@
 {
   pkgs,
+  userConfig,
   ln,
   ...
 }:
@@ -18,22 +19,9 @@
     enable = true;
     package = pkgs.vscodium;
     mutableExtensionsDir = false;
-
-    # profiles.default = {
-    #   # extensions =
-    #   #   with pkgs.vscode-extensions;
-    #   #   [
-    #   #     # (dlExt {
-    #   #     #   name = "nix-embedded-languages";
-    #   #     #   version = "1.0.1";
-    #   #     #   publisher = "coopmoney";
-    #   #     #   domain = "openvsx.eclipsecontent.org";
-    #   #     # })
-    #   #   ]
-    # };
   };
-  home.file."VSCodium/User/settings.json".source = ln ./settings.json;
-  home.file."VSCodium/User/keybindings.json".source = ln ./keybindings.json;
+  home.file."VSCodium/User/settings.json".source = ln "${userConfig.nixConf}/home/vscode/settings.json";
+  home.file."VSCodium/User/keybindings.json".source = ln "${userConfig.nixConf}/home/vscode/keybindings.json";
 
   # home.activation.copy-vscode-settings = ''
   #   echo "Copying VSCode settings..."

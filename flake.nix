@@ -56,6 +56,7 @@
         hostName: userConfig:
         nixpkgs.lib.nixosSystem (
           let
+            userConfig.nixConf = "/home/${userConfig.uname}/nixconf";
             args = {
               inherit inputs hostName userConfig;
             };
