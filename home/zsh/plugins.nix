@@ -13,6 +13,9 @@
     enable = true;
     enableZshIntegration = true;
   };
+  zsh-z = {
+    enable = true;
+  };
   programs.nix-index.enable = true;
   programs.zsh = {
     dotDir = "${config.xdg.configHome}/zsh";
@@ -39,7 +42,6 @@
           [
             zsh-syntax-highlighting
             zsh-autosuggestions
-            zsh-z
             zsh-forgit
             zsh-f-sy-h
             zsh-autopair
