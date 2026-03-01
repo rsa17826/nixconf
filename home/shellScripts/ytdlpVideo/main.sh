@@ -1,76 +1,54 @@
 #!/usr/bin/env bash
 
-download_media() {
+# This function is called by the Quickshell process
+download_logic() {
   local mode=$1
   local url=$2
-
-  # Format: Title - By Creator.ext
+  # 1. REMOVE literal escaped quotes from the template.
+  # The array expansion "${args[@]}" handles spaces automatically.
   local output_tmpl="%(title)s - %(uploader)s.%(ext)s"
-
-  # Logic:
-  # 1. Best video <= 720p (Precedence: 720 > 480 > 360)
-  # 2. If none, get the absolute worst video available (the smallest above 720p)
   local vid_format="bestvideo[height<=720]+bestaudio/worstvideo[height>720]+bestaudio/best"
 
-  # Base arguments including Brave cookies
-  local cmd_args=(
-    "--cookies-from-browser" "brave"
-    "-o" "$output_tmpl"
-    "--newline"
-    "$url"
-  )
+  # 2. Define args normally
+  local args=("--cookies-from-browser" "brave" "-o" "$output_tmpl" "--newline" "--progress")
 
   if [[ "$mode" == "Audio" ]]; then
-    # Audio: Extract, keep thumbnail, add metadata, use uploader name
-    cmd_args+=("-x" "--audio-format" "mp3" "--embed-thumbnail" "--add-metadata")
+    # Note: Using --embed-metadata as it's the modern version of --add-metadata
+    args+=("-x" "--audio-format" "mp3" "--write-thumbnail" "--convert-thumbnails" "jpg" "--embed-thumbnail" "--embed-metadata")
   else
-    # Video: Apply the 720p-down / 1080p-up logic
-    cmd_args+=("-f" "$vid_format" "--merge-output-format" "mp4")
+    args+=("-f" "$vid_format" "--merge-output-format" "mp4")
   fi
 
-  yt-dlp "${cmd_args[@]}" |
-    stdbuf -oL sed -n 's/^\[download\][[:space:]]*\([0-9.]*\)% of.*/\1/p' |
-    zenity --progress \
-      --title="Downloading $mode" \
-      --text="Fetching: $url" \
-      --percentage=0 --auto-close --width=450
+  # 3. CRITICAL: Execute by passing the array and the URL as separate arguments.
+  # Do NOT wrap them in one string or add extra literal quotes.
+  yt-dlp "${args[@]}" "$url" | stdbuf -oL sed -u -n 's/.*download:\s*\([0-9.]*\)%/VALUE:\1/p' | awk '{printf "VALUE:%.0f\n", $1; fflush()}'
 }
 
-echo "Clipboard Monitor Active (Brave Cookies enabled)..."
+export -f download_logic
+
+# Get the absolute path of the script directory
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+echo "Clipboard Monitor Active..."
 
 LAST_CLIP=""
 
 while true; do
-  # Get clipboard, strip newlines/spaces
-  CURRENT_CLIP=$(wl-paste --type text --no-newline 2>/dev/null | xargs)
+  RAW_CLIP=$(wl-paste --type text --no-newline 2>/dev/null | tr -d '\n\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
-  # Check if it's a new valid link
-  if [[ "$CURRENT_CLIP" != "$LAST_CLIP" ]]; then
-    if [[ "$CURRENT_CLIP" =~ \.(mp3|mp4|webm|m3u8) || "$CURRENT_CLIP" == *"twitch.tv"* || "$CURRENT_CLIP" == *"youtube.com"* || "$CURRENT_CLIP" == *"youtu.be"* ]]; then
+  if [[ "$RAW_CLIP" != "$LAST_CLIP" && -n "$RAW_CLIP" ]]; then
+    URL=$(echo "$RAW_CLIP" | grep -Eo 'https?://[^[:space:]"]+' | sed -E "s/['\.\ ]*$//" | sed -E 's/(watch\?v=[^& ]*).*/\1/' | sort -u | head -n 1)
 
-      # Popup with 5s timeout
-      # Default behavior is 'Abort' if no action is taken
-      CHOICE=$(zenity --list --title="Media Link Detected" \
-        --text="Format for: ${CURRENT_CLIP:0:50}..." \
-        --column="Action" "Video" "Audio" "Abort" \
-        --timeout=5 --width=400 --height=250)
+    if [[ -n "$URL" ]]; then
+      # We use the absolute path to the QML file
+      # Trying the '--path' flag which is common in some Quickshell builds
+      TARGET_URL="$URL" quickshell --path "$SCRIPT_DIR/MediaPopup.qml" &
 
-      case "$CHOICE" in
-      "Video")
-        download_media "Video" "$CURRENT_CLIP"
-        ;;
-      "Audio")
-        download_media "Audio" "$CURRENT_CLIP"
-        ;;
-      *)
-        echo "Dismissed."
-        ;;
-      esac
+      # If '--path' fails, try this line instead:
+      # TARGET_URL="$URL" quickshell "$SCRIPT_DIR" &
 
-      # Mark as seen so we don't spam the popup
-      LAST_CLIP="$CURRENT_CLIP"
+      LAST_CLIP="$RAW_CLIP"
     fi
   fi
-
   sleep 1
 done
