@@ -108,6 +108,8 @@
       thunar # gui file manager
       yazi # tui file manager
       hyprshot
+      gnome-themes-extra
+      adwaita-icon-theme
     ];
   };
   environment.systemPackages = with pkgs; [

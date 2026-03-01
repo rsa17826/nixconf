@@ -27,6 +27,7 @@ in
     ./zsh/plugins.nix
     # ./git/conf.nix
   ];
+  services.swaync.enable = true;
   services.playerctld.enable = true;
   xdg = {
     enable = true;
