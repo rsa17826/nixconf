@@ -68,19 +68,19 @@ in
 
     portal = {
       enable = true;
-
+      config.common.default = "*";
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-hyprland
       ];
 
       config = {
-        common.default = [
-          "hyprland"
-        ];
-        gtk.default = [
-          "gtk"
-        ];
+        # common.default = [
+        #   "hyprland"
+        # ];
+        # gtk.default = [
+        #   "gtk"
+        # ];
       };
     };
   };
