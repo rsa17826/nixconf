@@ -13,7 +13,7 @@
       SSHAgent.Enabled = true;
     };
     Browser = {
-      Enabled = true;
+      enable = true;
     };
   };
   xdg.autostart.enable = true;
