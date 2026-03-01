@@ -21,7 +21,9 @@ download_logic() {
 
   # 3. CRITICAL: Execute by passing the array and the URL as separate arguments.
   # Do NOT wrap them in one string or add extra literal quotes.
-  yt-dlp "${args[@]}" "$url" | stdbuf -oL sed -u -n 's/.*download:\s*\([0-9.]*\)%/VALUE:\1/p' | awk '{printf "VALUE:%.0f\n", $1; fflush()}'
+  # yt-dlp "${args[@]}" "$url">a
+  yt-dlp "${args[@]}" "$url" | stdbuf -oL sed -u -n 's/.*\[download\]\s*\([0-9.]*\)%.*/\1/p'
+  #  | awk '{printf "VALUE:%.0f\n", $1; fflush()}'
 }
 
 export -f download_logic

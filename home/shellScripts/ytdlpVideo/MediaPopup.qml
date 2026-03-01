@@ -17,9 +17,8 @@ PanelWindow {
     for (let line of lines) {
       // Debugging log so you can see the raw output in your console
       console.log("DEBUG qml: " + line)
-      let match = line.match(/VALUE:(\d+)/)
-      if (match)
-        progressValue = parseFloat(match[1])
+      if (parseFloat(line[1]))
+        progressValue = parseFloat(line[1])
     }
   }
   function startDownload(mode) {
@@ -143,11 +142,11 @@ PanelWindow {
             radius: 5
             width: Math.min(parent.width * (progressValue / 100), parent.width)
 
-            Behavior on width {
-              NumberAnimation {
-                duration: 250
-              }
-            }
+            // Behavior on width {
+            //   NumberAnimation {
+            //     duration: 250
+            //   }
+            // }
           }
         }
         Text {
@@ -167,8 +166,11 @@ PanelWindow {
     stderr: StdioCollector {
       onStreamFinished: console.log(`linea read: ${this.text}`)
     }
-    stdout: StdioCollector {
-      onStreamFinished: console.log(`line read: ${this.text}`, ["bash", "-c", "download_logic \"" + root.activeMode + "\" \"" + root.targetUrl + "\""])
+    stdout: SplitParser {
+      onRead: function (data) {
+        console.log('asdasdasdasd', data)
+        handleOutput(data)
+      }
     }
 
     onExited: {
@@ -179,10 +181,8 @@ PanelWindow {
     }
   }
   Connections {
-    function onData(data) {
-      handleOutput(data)
-    }
     function onRead(data) {
+      console.log('asdasda5445sdasd', this.text, data)
       handleOutput(data)
     }
 
