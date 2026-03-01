@@ -20,9 +20,9 @@
     package = pkgs.vscodium;
     mutableExtensionsDir = false;
   };
-  home.file."VSCodium/User/settings.json".source = ln "${userConfig.nixConf}/home/vscode/settings.json";
-  home.file."VSCodium/User/keybindings.json".source = ln "${ userConfig.nixConf}/home/vscode/keybindings.json";
-
+# Use the full XDG path so VSCodium actually sees them
+home.file.".config/VSCodium/User/settings.json".source = ln "${userConfig.nixConf}/home/vscode/settings.json";
+home.file.".config/VSCodium/User/keybindings.json".source = ln "${userConfig.nixConf}/home/vscode/keybindings.json";
   # home.activation.copy-vscode-settings = ''
   #   echo "Copying VSCode settings..."
   #   mkdir -p "$HOME/.config/VSCodium/User"
