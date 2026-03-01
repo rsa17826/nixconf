@@ -53,11 +53,11 @@
 
       # Helper function to generate a host configuration
       mkHost =
-        hostName: tempuserConfig:
+        hostName: tempUserConfig:
         nixpkgs.lib.nixosSystem (
           let
-            userConfig = tempuserConfig // {
-              nixConf = "/home/${tempuserConfig.uname}/nixconf";
+            userConfig = tempUserConfig // {
+              nixConf = "/home/${tempUserConfig.uname}/nixconf";
             };
             args = {
               inherit inputs hostName userConfig;
@@ -86,11 +86,11 @@
           }
         );
       mkHostHM =
-        hostName: tempuserConfig:
+        hostName: tempUserConfig:
         home-manager.lib.homeManagerConfiguration (
           let
-            userConfig = tempuserConfig // {
-              nixConf = "/home/${tempuserConfig.uname}/nixconf";
+            userConfig = tempUserConfig // {
+              nixConf = "/home/${tempUserConfig.uname}/nixconf";
             };
             args = {
               inherit

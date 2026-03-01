@@ -139,12 +139,6 @@ in
     # Enable sound with pipewire.
     rtkit.enable = true;
   };
-  systemd.user.services.swaync.Service.Restart = lib.mkForce "no";
-  systemd.user.services.xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
-
-  # Also, prevent Home Manager from trying to start them during activation
-  systemd.user.services.swaync.Install.WantedBy = lib.mkForce [ ];
-  systemd.user.services.xdg-desktop-portal-gtk.Install.WantedBy = lib.mkForce [ ];
   hardware = {
     graphics = {
       enable = true;
