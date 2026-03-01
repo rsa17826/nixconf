@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-home-manager --flake ./#nyix %*
+home-manager --flake ./#nyix $*
