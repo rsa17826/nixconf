@@ -41,10 +41,10 @@ in
       };
       interactiveShellInit = commonInit;
     };
-    fish = {
-      enable = true;
-      shellAliases = lib.mapAttrs (_k: v: lib.strings.replaceStrings [ "|&" ] [ "&|" ] v) shellAliases;
-      interactiveShellInit = fishInit;
-    };
+    # fish = {
+    #   enable = true;
+    #   shellAliases = lib.mapAttrs (_k: v: lib.strings.replaceStrings [ "|&" ] [ "&|" ] v) shellAliases;
+    #   interactiveShellInit = fishInit;
+    # };
   };
 }

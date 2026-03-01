@@ -712,8 +712,8 @@
   },
   "qmlFormat.extraArguments": ["-n", "--semicolon-rule", "essential"],
   "terminal.integrated.profiles.linux": {
-    "fish": {
-      "path": "/run/current-system/sw/bin/fish",
+    "zsh": {
+      "path": "/run/current-system/sw/bin/zsh",
       "args": ["-l"]
     }
   },

@@ -14,4 +14,4 @@ done
 
 # Run the modern nix shell with the prefixed list
 echo "🔨 Loading: ${args[*]}"
-nix shell "${args[@]}" -c fish
+nix shell "${args[@]}" -c zsh
