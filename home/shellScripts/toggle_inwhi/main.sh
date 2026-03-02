@@ -5,7 +5,7 @@ SHADER_PATH="~/.config/hypr/shaders/inwhi.glsl"
 
 # Check if the shader is currently applied
 CURRENT_SHADER=$(hyprctl keyword decoration:screen_shader)
-
+echo "$CURRENT_SHADER"
 if [ "$CURRENT_SHADER" == "$SHADER_PATH" ]; then
   # If the shader is already applied, disable it
   hyprctl keyword decoration:screen_shader ""
