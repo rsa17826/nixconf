@@ -13,7 +13,7 @@ float mapToDarkeningFactor(float x) {
 }
 
 void main() {
-    vec4 pixColor = texture2D(tex, v_texcoord);
+    vec4 pixColor = texture2D(u_tex, v_texcoord);
     
     // Perceptual brightness
     float luminance = dot(pixColor.rgb, vec3(0.299, 0.587, 0.114));
