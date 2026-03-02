@@ -13,14 +13,19 @@ float mapToDarkeningFactor(float x) {
 }
 
 void main() {
-    // 1. Fixed variable names: u_tex instead of Source, v_texcoord instead of vTexCoord
-    vec3 color = texture2D(u_tex, v_texcoord).rgb;
-
-    // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
-    float averageIntensity = (color.r + color.g + color.b) / 3.0;
+    vec4 texColor = texture2D(u_tex, v_texcoord);
     
-    float darkeningFactor = mapToDarkeningFactor(averageIntensity);
+    // Calculate brightness (luminance)
+    // We use weighted values because the eye sees Green as brightest
+    float brightness = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
 
-    // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor
-    gl_FragColor = vec4(color * darkeningFactor, 1.0);
+    // INVERT logic: 
+    // If brightness is 1.0 (white), alpha becomes 0.0 (transparent)
+    // If brightness is 0.0 (black), alpha becomes 1.0 (opaque)
+    float alpha = 1.0 - brightness;
+
+    // Optional: Add a "threshold" to make sure near-whites are fully gone
+    alpha = smoothstep(0.0, 0.1, alpha); 
+
+    gl_FragColor = vec4(texColor.rgb, alpha);
 }
