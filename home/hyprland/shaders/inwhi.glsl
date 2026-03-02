@@ -13,19 +13,17 @@ float mapToDarkeningFactor(float x) {
 }
 
 void main() {
-    vec4 texColor = texture2D(u_tex, v_texcoord);
+    vec4 pixColor = texture2D(tex, v_texcoord);
     
-    // Calculate brightness (luminance)
-    // We use weighted values because the eye sees Green as brightest
-    float brightness = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+    // Perceptual brightness
+    float luminance = dot(pixColor.rgb, vec3(0.299, 0.587, 0.114));
 
-    // INVERT logic: 
-    // If brightness is 1.0 (white), alpha becomes 0.0 (transparent)
-    // If brightness is 0.0 (black), alpha becomes 1.0 (opaque)
-    float alpha = 1.0 - brightness;
+    // Map white (1.0) to transparent (0.0)
+    // Map black (0.0) to opaque (1.0)
+    float alpha = 1.0 - luminance;
 
-    // Optional: Add a "threshold" to make sure near-whites are fully gone
-    alpha = smoothstep(0.0, 0.1, alpha); 
+    // Use smoothstep to sharpen the edges of the text
+    alpha = smoothstep(0.05, 0.15, alpha);
 
-    gl_FragColor = vec4(texColor.rgb, alpha);
+    gl_FragColor = vec4(pixColor.rgb, alpha * pixColor.a);
 }
