@@ -18,7 +18,7 @@
     # Link the main Hyprland config file
     ".config/hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
     ".config/hypr/shaders" = {
-      source = ./shaders;
+      source = ln "${userConfig.nixConf}/home/hyprland/shaders";
       recursive = true;
     };
   };
