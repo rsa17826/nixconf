@@ -1,15 +1,19 @@
 #!/bin/bash
 
-# Path to your shader file
-SHADER_PATH="~/.config/hypr/shaders/inwhi.glsl"
+# Use $HOME instead of ~ for reliability in hyprctl
+SHADER_PATH="$HOME/.config/hypr/shaders/inwhi.glsl"
 
-# Check if the shader is currently applied
-CURRENT_SHADER=$(hyprctl getoption decoration:screen_shader -j | jq .set)
-echo "$CURRENT_SHADER"
-if [ "$CURRENT_SHADER" == "true" ]; then
-  # If the shader is already applied, disable it
+# Get the actual string value of the current shader
+# We use jq -r to get the raw string without quotes
+CURRENT_SHADER=$(hyprctl getoption decoration:screen_shader -j | jq -r '.str')
+
+# Check if the current shader string matches our path
+if [ "$CURRENT_SHADER" = "$SHADER_PATH" ]; then
+  # It's active, so clear it
   hyprctl keyword decoration:screen_shader ""
+  echo "Shader disabled."
 else
-  # If the shader is not applied, enable it
+  # It's not active (or a different one is), so enable it
   hyprctl keyword decoration:screen_shader "$SHADER_PATH"
+  echo "Shader enabled: $SHADER_PATH"
 fi
