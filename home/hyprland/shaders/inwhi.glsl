@@ -13,17 +13,14 @@ float mapToDarkeningFactor(float x) {
 }
 
 void main() {
-    vec4 pixColor = texture2D(u_tex, v_texcoord);
+    // 1. Fixed variable names: u_tex instead of Source, v_texcoord instead of vTexCoord
+    vec3 color = texture2D(u_tex, v_texcoord).rgb;
+
+    // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
+    float averageIntensity = (color.r + color.g + color.b) / 3.0;
     
-    // Perceptual brightness
-    float luminance = dot(pixColor.rgb, vec3(0.299, 0.587, 0.114));
+    float darkeningFactor = mapToDarkeningFactor(averageIntensity);
 
-    // Map white (1.0) to transparent (0.0)
-    // Map black (0.0) to opaque (1.0)
-    float alpha = 1.0 - luminance;
-
-    // Use smoothstep to sharpen the edges of the text
-    alpha = smoothstep(0.05, 0.15, alpha);
-
-    gl_FragColor = vec4(pixColor.rgb, alpha * pixColor.a);
+    // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor
+    gl_FragColor = vec4(color * darkeningFactor, 1.0);
 }
