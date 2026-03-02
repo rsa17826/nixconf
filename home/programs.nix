@@ -41,6 +41,7 @@
     ];
     packages = with pkgs; [
       inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default # widget thing
+      wtype
       typos # spellchecker
       typos-lsp
       # keepass # password manager
