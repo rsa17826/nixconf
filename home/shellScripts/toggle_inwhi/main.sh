@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to your shader file
-SHADER_PATH="inwhi"
+SHADER_PATH="~/.config/hypr/shaders/inwhi.glsl"
 
 # Check if the shader is currently applied
 CURRENT_SHADER=$(hyprctl getoption decoration:screen_shader -j | jq .set)
