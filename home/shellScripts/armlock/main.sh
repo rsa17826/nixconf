@@ -1,5 +1,8 @@
 #!/bin/bash
-# Wait until the user stops moving for 2 seconds to "prime" it
+# 1. We wait for 2 seconds of stillness to "arm" the trap.
+# 2. 'resume' only fires once the user moves AFTER that timeout.
+# 3. We kill swayidle immediately so it doesn't loop.
+
 swayidle -w \
-  timeout 2 'hyprlock; pkill -u $USER swayidle' \
+  timeout 2 'echo "Armed..." ' \
   resume 'hyprlock; pkill -u $USER swayidle'
