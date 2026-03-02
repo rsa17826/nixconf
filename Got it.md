@@ -2706,3 +2706,7 @@ If you want, I can help turn this into a **watch script** that continually print
 
 
 only allow connections frof first connected ip pashare
+decoration {
+    screen_shader = /path/to/your_shader.frag
+}
+https://github.com/loqusion/hyprshade
