@@ -2703,3 +2703,6 @@ If you want, I can help turn this into a **watch script** that continually print
 
 [1]: https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave?utm_source=chatgpt.com "How Do I Use Command Line Flags in Brave? – Brave Help Center"
 [2]: https://lightrun.com/answers/brave-brave-browser-remote-debugging-should-be-proxied-and-enabled-by-default?utm_source=chatgpt.com "Remote debugging should be proxied and enabled by default"
+
+
+only allow connections frof first connected ip pashare
