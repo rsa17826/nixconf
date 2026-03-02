@@ -1,7 +1,6 @@
 {
   ln,
   userConfig,
-  lib,
   ...
 }:
 {
@@ -18,10 +17,17 @@
   home.file = {
     # Link the main Hyprland config file
     ".config/hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
-  }
-  // lib.mapAttrs (_: k: v: {
-    ".config/hypr/shaders/${k}".source = ln "${userConfig.nixConf}/home/hyprland/shaders/${k}";
-  }) ./shaders;
+    ".config/hypr/shaders" = {
+      source = ./shaders;
+      recursive = true;
+    };
+  };
+  # // (
+  #   # Map over the files in the ./shaders directory
+  #   builtins.mapAttrs (name: value: {
+  #     source = ln "${userConfig.nixConf}/home/hyprland/shaders/${name}";
+  #   }) (builtins.readDir ./shaders)
+  # );
   #    echo "Linking hyprland settings..."
 
   #    mkdir -p "$HOME/.config/hypr"
