@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VIDEO_DIR="$HOME/videos/f;ashback"
+VIDEO_DIR="$HOME/videos/flashback"
 MAX_WAIT=5 # Seconds to wait for the new file
 START_TIME=$(date +%s)
 
