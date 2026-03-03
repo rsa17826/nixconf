@@ -7,7 +7,7 @@ rm -f $LOCK_FILE
 trap "rm -f $LOCK_FILE" EXIT
 
 swayidle -w \
-  timeout 1 "hyprctl dispatch exec 'qml-tool --file $SCRIPT_ASSETS/MediaPopup.qml' && echo 'Armed...'" \
+  timeout 1 "echo 'Armed...'" \
   resume "
     if [ ! -f \"$LOCK_FILE\" ]; then
       touch \"$LOCK_FILE\"
