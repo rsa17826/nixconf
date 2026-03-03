@@ -725,5 +725,6 @@
       "name": "Qt-6.10.2-linux-g++_from_PATH",
       "path": "/run/current-system/sw/bin/qtpaths"
     }
-  ]
+  ],
+  "direnv.restart.automatic": true,
 }

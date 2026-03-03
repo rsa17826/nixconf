@@ -42,8 +42,8 @@
     packages = with pkgs; [
       inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default # widget thing
       wtype
-      typos # spellchecker
-      typos-lsp
+      # typos
+      typos-lsp # spellchecker
       # keepass # password manager
       python313
       python313Packages.py7zr
@@ -51,14 +51,13 @@
       # appimage-run
       # firejail
       motrix # download manager
-      nix-tree
+      # nix-tree
       kid3 # audio tagger
       yt-dlp # media downloader
-      syncthingtray
+      # syncthingtray
       syncthing # file sync
       mp3gain # audio volume normilizer
       python314
-      # eww # status bar
       filen-desktop # cloud storage
       javaPackages.compiler.temurin-bin.jre-25 # for running java apps
       file # like die
@@ -69,7 +68,7 @@
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim
-      mission-center # task manager
+      # mission-center # task manager
       vlc # media player
       nicotine-plus # soulseek
       conky # like rainmeter
@@ -91,8 +90,6 @@
       # https://github.com/anyrun-org/anyrun
       # ulauncher
       qt6.qtdeclarative
-      # sway
-      #
       zenity
       libnotify
       simplex-chat-desktop # simple x chat
@@ -111,6 +108,7 @@
       hyprshot
       gnome-themes-extra
       adwaita-icon-theme
+      python313Packages.black
     ];
   };
   programs.gpu-screen-recorder.enable = true;

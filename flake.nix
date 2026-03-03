@@ -127,7 +127,7 @@
             ./home/programs.nix
             ./home/base.nix
             ./home/shellScripts/conf.nix
-            ./home/CRON/clean.nix
+            # ./home/CRON/clean.nix
           ];
         };
         # tunyic
