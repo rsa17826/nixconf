@@ -116,6 +116,10 @@ in
               options = [ "NOPASSWD" ];
             }
             {
+              command = "/etc/profiles/per-user/${userConfig.uname}/bin/pashare";
+              options = [ "NOPASSWD" ];
+            }
+            {
               command = "/etc/profiles/per-user/nyx/bin/githubNotifications";
               options = [
                 "NOPASSWD"

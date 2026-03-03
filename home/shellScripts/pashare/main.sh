@@ -1,29 +1,35 @@
 #!/bin/bash
+source admin && admin "$@"
 
 # Configuration
 PORT=1234
 SINK_NAME="VirtualSink"
 RATE=24000
+TITLE="Audio Streamer"
 
 # Function to clean up on exit or stop
 cleanup() {
   echo "Cleaning up..."
-  # Remove firewall rules (using -D to delete)
+  # Remove firewall rules
   sudo iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
-  # Loop to remove all specific ACCEPT rules for this port
   while sudo iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
 
   # Kill processes and unload Pulse modules
   fuser -k "$PORT/tcp" 2>/dev/null
   pactl unload-module module-simple-protocol-tcp 2>/dev/null
   pactl unload-module module-null-sink 2>/dev/null
-  echo "Done."
+
+  notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
+  exit 0
 }
+
+# Trap signals like Ctrl+C (SIGINT) or Terminal Close (SIGHUP)
+trap cleanup SIGINT SIGHUP SIGTERM
 
 case "$1" in
 start)
   # Ensure a clean slate
-  cleanup
+  cleanup 2>/dev/null
   sleep 1
 
   # 1. Create Virtual Sink
@@ -35,7 +41,6 @@ start)
     sink_properties=device.description="Virtual_Sink"
 
   # 2. Start TCP Broadcast
-  echo "Starting TCP Protocol on port $PORT..."
   pactl load-module module-simple-protocol-tcp \
     rate="$RATE" \
     format=s16le \
@@ -45,31 +50,33 @@ start)
     port="$PORT" \
     record_buffer_size=512
 
-  # 3. Move existing audio streams to the sink
+  # 3. Move existing audio
   sleep 1
   mapfile -t inputs < <(pactl list sink-inputs short | cut -f1)
   for id in "${inputs[@]}"; do
     pactl move-sink-input "$id" "$SINK_NAME" 2>/dev/null
   done
 
+  notify-send -u normal "$TITLE" "Server live. Waiting for connection on port $PORT..."
   echo "Waiting for the first connection to lock the IP..."
 
   # 4. Connection Monitoring Loop
   while true; do
-    # Look for an established connection on our port
-    # awk picks the 5th column (Remote Address)
+    # ss -ntp lists numeric addresses and ports
     FIRST_IP=$(ss -ntp | grep ":$PORT" | grep "ESTAB" | awk '{print $5}' | cut -d: -f1 | head -n1)
 
     if [[ -n "$FIRST_IP" ]]; then
-      echo "Locked to IP: $FIRST_IP"
-
-      # Allow this specific IP
+      # Apply Firewall Lock
       sudo iptables -I INPUT -p tcp -s "$FIRST_IP" --dport "$PORT" -j ACCEPT
-      # Drop all other traffic to this port
       sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
 
-      echo "Firewall rules applied. No other IPs can connect."
-      break
+      echo "Locked to IP: $FIRST_IP"
+      notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
+
+      # Keep the script running to maintain the trap/cleanup
+      # We use 'wait' or just a long sleep to keep the process alive
+      read -r -p "Press Enter to stop streaming or Ctrl+C..."
+      cleanup
     fi
     sleep 1
   done
