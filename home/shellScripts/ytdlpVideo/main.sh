@@ -1,30 +1,30 @@
 #!/usr/bin/env bash
 
 # This function is called by the Quickshell process
+#!/usr/bin/env bash
+
 download_logic() {
   local mode=$1
   local url=$2
-  # 1. REMOVE literal escaped quotes from the template.
-  # The array expansion "${args[@]}" handles spaces automatically.
+  local pid=$$ # Use the current subshell PID for the bar ID
   local output_tmpl="%(title)s - %(uploader)s.%(ext)s"
-  local vid_format="bestvideo[height<=720]+bestaudio/worstvideo[height>720]+bestaudio/best"
 
-  # 2. Define args normally
-  local args=("--cookies-from-browser" "brave" "-o" "$HOME/videos/$output_tmpl" "--newline" "--progress")
-  if [[ "$mode" == "Audio" ]]; then
-    # Note: Using --embed-metadata as it's the modern version of --add-metadata
-    args+=("-x" "--audio-format" "mp3" "--write-thumbnail" "--convert-thumbnails" "jpg" "--embed-thumbnail" "--embed-metadata")
-  else
-    args+=("-f" "$vid_format" "--merge-output-format" "mp4")
-  fi
+  # Initial message to create the bar
+  echo "{\"progress\": 0, \"name\": \"$mode: $url\", \"color\": \"#3498db\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
 
-  # 3. CRITICAL: Execute by passing the array and the URL as separate arguments.
-  # Do NOT wrap them in one string or add extra literal quotes.
-  # yt-dlp "${args[@]}" "$url">a
-  yt-dlp "${args[@]}" "$url" | stdbuf -oL sed -u -n 's/.*\[download\]\s*\([0-9.]*\)%.*/\1/p'
-  #  | awk '{printf "VALUE:%.0f\n", $1; fflush()}'
+  # Run yt-dlp and pipe progress to a loop that sends updates to the socket
+  yt-dlp --newline --progress --cookies-from-browser brave \
+    -o "$HOME/videos/$output_tmpl" "$url" | while read -r line; do
+    if [[ $line =~ \[download\]\ +([0-9.]+)% ]]; then
+      local percent="${BASH_REMATCH[1]}"
+      # Send update to socket
+      echo "{\"progress\": $percent, \"name\": \"$mode: $url\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
+    fi
+  done
+
+  # Close the bar after 5 seconds (using the max_idle logic we built)
+  echo "{\"action\": \"close\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
 }
-
 export -f download_logic
 
 # Get the absolute path of the script directory

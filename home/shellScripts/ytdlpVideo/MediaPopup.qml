@@ -7,74 +7,44 @@ PanelWindow {
   id: root
 
   property string activeMode: ""
-  property bool downloading: false
-  property real progressValue: 0
-  property string statusText: downloading ? "Downloading..." : "Media Link Detected"
   readonly property string targetUrl: Quickshell.env("TARGET_URL") ?? ""
 
-  function handleOutput(data) {
-    const lines = data.toString().split("\n")
-    for (let line of lines) {
-      // Debugging log so you can see the raw output in your console
-      console.log("DEBUG qml: " + line)
-      if (parseFloat(line))
-        progressValue = parseFloat(line)
-    }
-  }
-  function startDownload(mode) {
-    if (!targetUrl) {
-      statusText = "No URL found!"
-      return
-    }
-    activeMode = mode
-    downloading = true
-    dlProcess.running = true
-  }
-
+  // Window styling: Bottom Right
+  WlrLayershell.layer: WlrLayershell.Overlay
   color: "transparent"
-  implicitHeight: downloading ? 100 : 150
-  implicitWidth: 400
+  implicitHeight: 120
+  implicitWidth: 320
 
   anchors {
-    left: true
-    top: true
+    bottom: true
+    right: true
   }
   margins {
-    left: 20
-    top: 20
+    bottom: 20
+    right: 20
   }
   Rectangle {
     anchors.fill: parent
-    border.color: "#333"
-    border.width: 1
-    color: "#1e1e1e"
+    border.color: "#313244"
+    color: "#1e1e2e"
     radius: 12
 
     Column {
       anchors.fill: parent
       anchors.margins: 15
-      spacing: 12
+      spacing: 10
 
       Text {
-        color: "#3498db"
+        color: "#cdd6f4"
         font.bold: true
-        font.pixelSize: 16
-        text: statusText
-      }
-      Text {
-        color: "#888"
-        elide: Text.ElideMiddle
-        font.pixelSize: 12
-        text: targetUrl
-        visible: !downloading
-        width: parent.width - 30
+        text: "Media Found"
       }
       Row {
-        spacing: 12
-        visible: !downloading
+        spacing: 10
 
+        // Video Button
         Rectangle {
-          color: "#333"
+          color: "#313244"
           height: 35
           radius: 6
           width: 90
@@ -87,11 +57,17 @@ PanelWindow {
           MouseArea {
             anchors.fill: parent
 
-            onClicked: startDownload("Video")
+            onClicked: {
+              activeMode = "Video"
+              dlProcess.start()
+              root.visible = false
+            }
           }
         }
+
+        // Audio Button
         Rectangle {
-          color: "#333"
+          color: "#313244"
           height: 35
           radius: 6
           width: 90
@@ -104,19 +80,25 @@ PanelWindow {
           MouseArea {
             anchors.fill: parent
 
-            onClicked: startDownload("Audio")
+            onClicked: {
+              activeMode = "Audio"
+              dlProcess.start()
+              root.visible = false
+            }
           }
         }
+
+        // Close Button
         Rectangle {
-          color: "#422"
+          color: "#f38ba8"
           height: 35
           radius: 6
-          width: 90
+          width: 60
 
           Text {
             anchors.centerIn: parent
             color: "white"
-            text: "Abort"
+            text: "X"
           }
           MouseArea {
             anchors.fill: parent
@@ -125,75 +107,14 @@ PanelWindow {
           }
         }
       }
-      Column {
-        spacing: 8
-        visible: downloading
-        width: parent.width
-
-        Rectangle {
-          color: "#2a2a2a"
-          height: 10
-          radius: 5
-          width: parent.width
-
-          Rectangle {
-            color: "#3498db"
-            height: parent.height
-            radius: 5
-            width: Math.min(parent.width * (progressValue / 100), parent.width)
-
-            // Behavior on width {
-            //   NumberAnimation {
-            //     duration: 250
-            //   }
-            // }
-          }
-        }
-        Text {
-          anchors.right: parent.right
-          color: "white"
-          font.pixelSize: 12
-          text: Math.floor(progressValue) + "%"
-        }
-      }
     }
   }
   Process {
     id: dlProcess
 
+    // detached: true makes the process live on after the popup closes
     command: ["bash", "-c", "download_logic \"" + root.activeMode + "\" \"" + root.targetUrl + "\""]
 
-    stderr: StdioCollector {
-      onStreamFinished: console.log(`linea read: ${this.text}`)
-    }
-    stdout: SplitParser {
-      onRead: function (data) {
-        console.log('asdasdasdasd', data)
-        handleOutput(data)
-      }
-    }
-
-    onExited: {
-      // console.log(dlProcess.exitCode)
-      statusText = "Finished!"
-      progressValue = 100
-      exitTimer.start()
-    }
-  }
-  Connections {
-    function onRead(data) {
-      console.log('asdasda5445sdasd', this.text, data)
-      handleOutput(data)
-    }
-
-    ignoreUnknownSignals: true
-    target: dlProcess.stdout
-  }
-  Timer {
-    id: exitTimer
-
-    interval: 2000
-
-    onTriggered: Qt.quit()
+    onExited: Qt.quit()
   }
 }
