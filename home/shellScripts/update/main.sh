@@ -45,7 +45,7 @@ if [ "$NO_GIT" = true ]; then
   sudo nixos-rebuild build --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
   # Return to original directory
-  popd >/dev/null
+  popd >/dev/null || exit
   echo "✅ Dry run complete. If no errors appeared, it's safe to update."
 else
   # Real update logic
@@ -135,5 +135,5 @@ else
   # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
   # Return to original directory
-  popd >/dev/null
+  popd >/dev/null || exit
 fi
