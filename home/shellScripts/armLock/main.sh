@@ -1,5 +1,5 @@
-#!/usr/bin/env nix
-#!nix shell nixpkgs#swayidle --command bash
+#! /usr/bin/env nix-shell
+#! nix-shell -i python3 -p swayidle
 
 # Define a temporary lock file to prevent double-firing
 LOCK_FILE="/tmp/trap_active.lock"
