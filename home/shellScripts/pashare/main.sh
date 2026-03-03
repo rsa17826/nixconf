@@ -1,57 +1,93 @@
 #!/bin/bash
 
+sudo -v || exit 1
+
 PORT=1234
 SINK_NAME="VirtualSink"
+RATE=24000
 TITLE="Audio Streamer"
 
-# This function handles the firewall and must run as root
-apply_firewall() {
-  local target_ip=$1
-  iptables -I INPUT -p tcp -s "$target_ip" --dport "$PORT" -j ACCEPT
-  iptables -A INPUT -p tcp --dport "$PORT" -j DROP
+# Function to clean up on exit or stop
+cleanup() {
+  echo "Cleaning up..."
+  # Remove firewall rules
+  sudo iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
+  while sudo iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
+
+  # Kill processes and unload Pulse modules
+  fuser -k "$PORT/tcp" 2>/dev/null
+  pactl unload-module module-simple-protocol-tcp 2>/dev/null
+  pactl unload-module module-null-sink 2>/dev/null
+
+  notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
+  exit 0
 }
 
-cleanup_firewall() {
-  iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
-  while iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
-}
+# Trap signals like Ctrl+C (SIGINT) or Terminal Close (SIGHUP)
+trap cleanup SIGINT SIGHUP SIGTERM
 
-# --- MAIN LOGIC ---
 case "$1" in
 start)
-  # 1. PulseAudio (Runs as USER)
-  pactl load-module module-null-sink sink_name="$SINK_NAME" ... # (other params)
-  pactl load-module module-simple-protocol-tcp port="$PORT" ... # (other params)
+  # Ensure a clean slate
+  cleanup 2>/dev/null
+  sleep 1
 
-  notify-send "$TITLE" "Waiting for connection..."
+  # 1. Create Virtual Sink
+  echo "Creating Virtual Sink..."
+  pactl load-module module-null-sink \
+    sink_name="$SINK_NAME" \
+    rate="$RATE" \
+    channels=1 \
+    sink_properties=device.description="Virtual_Sink"
 
-  # 2. Wait for IP (Runs as USER)
+  # 2. Start TCP Broadcast
+  pactl load-module module-simple-protocol-tcp \
+    rate="$RATE" \
+    format=s16le \
+    channels=1 \
+    source="${SINK_NAME}.monitor" \
+    record=true \
+    port="$PORT" \
+    record_buffer_size=512
+
+  # 3. Move existing audio
+  sleep 1
+  mapfile -t inputs < <(pactl list sink-inputs short | cut -f1)
+  for id in "${inputs[@]}"; do
+    pactl move-sink-input "$id" "$SINK_NAME" 2>/dev/null
+  done
+
+  notify-send -u normal "$TITLE" "Server live. Waiting for connection on port $PORT..."
+  echo "Waiting for the first connection to lock the IP..."
+
+  # 4. Connection Monitoring Loop
   while true; do
+    # ss -ntp lists numeric addresses and ports
     FIRST_IP=$(ss -ntp | grep ":$PORT" | grep "ESTAB" | awk '{print $5}' | cut -d: -f1 | head -n1)
-    if [[ -n "$FIRST_IP" ]]; then
-      # 3. ELEVATE ONLY THE FIREWALL COMMANDS
-      # We call the script itself with a hidden flag
-      sudo "$0" --internal-firewall "$FIRST_IP"
 
-      notify-send -u critical "$TITLE" "Locked to $FIRST_IP"
-      break
+    if [[ -n "$FIRST_IP" ]]; then
+      # Apply Firewall Lock
+      sudo iptables -I INPUT -p tcp -s "$FIRST_IP" --dport "$PORT" -j ACCEPT
+      sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
+
+      echo "Locked to IP: $FIRST_IP"
+      notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
+
+      # Keep the script running to maintain the trap/cleanup
+      # We use 'wait' or just a long sleep to keep the process alive
+      read -r -p "Press Enter to stop streaming or Ctrl+C..."
+      cleanup
     fi
     sleep 1
   done
   ;;
 
---internal-firewall)
-  # This block runs as ROOT via the sudo rule
-  apply_firewall "$2"
-  ;;
-
 stop)
-  # Clean up firewall via sudo
-  sudo "$0" --internal-cleanup
-  pactl unload-module ...
+  cleanup
   ;;
 
---internal-cleanup)
-  cleanup_firewall
+*)
+  echo "Usage: $0 {start|stop}"
+  exit 1
   ;;
 esac
