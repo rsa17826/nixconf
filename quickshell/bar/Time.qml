@@ -11,7 +11,7 @@ Singleton {
   readonly property string time: {
     // The passed format string matches the default output of
     // the `date` command.
-    Qt.formatDateTime(clock.date, "ddd MMM d hh:mm:ss AP t yyyy")
+    Qt.formatDateTime(clock.date, "dddd MMM d HH:mm:ss t yyyy")
   }
 
   SystemClock {

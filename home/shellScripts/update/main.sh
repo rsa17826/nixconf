@@ -5,11 +5,11 @@ DEFAULT_TARGET="nyx"
 
 mkdir -p "$(dirname "$STATE_FILE")"
 
-# Flag for dry-run
-DRY_RUN=false
-if [[ "$*" == *"--dry-run"* ]]; then
-  DRY_RUN=true
-  set -- "${@/--dry-run/}"
+# Flag for nogit
+NO_GIT=false
+if [[ "$*" == *"--nogit"* ]]; then
+  NO_GIT=true
+  set -- "${@/--nogit/}"
 fi
 hm=false
 if [[ "$*" == *"hm"* ]]; then
@@ -18,9 +18,9 @@ if [[ "$*" == *"hm"* ]]; then
 fi
 
 # Determine the target
-if [ -n "$1" ]; then
+if [ -n "${1:-}" ]; then
   TARGET="$1"
-  [[ "$DRY_RUN" == false ]] && echo "$TARGET" >"$STATE_FILE"
+  [[ "$NO_GIT" == false ]] && echo "$TARGET" >"$STATE_FILE"
   echo "🎯 Target set to: $TARGET"
 else
   if [ -f "$STATE_FILE" ]; then
@@ -39,7 +39,7 @@ pushd "$HOME/nixconf" >/dev/null || {
   exit 1
 }
 export NIXPKGS_ALLOW_INSECURE=0
-if [ "$DRY_RUN" = true ]; then
+if [ "$NO_GIT" = true ]; then
   echo "🧪 DRY RUN: Building #$TARGET (No commit, no push, no switch)"
 
   sudo nixos-rebuild build --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
@@ -93,6 +93,7 @@ else
   prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+')
   [[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
   # Fallback to 0 if no generation is found in history
+
   if git diff-index --quiet HEAD --; then
     echo "0️⃣ No changes detected. Staying on current generation."
     next_generation=$prev_generation
@@ -111,7 +112,9 @@ else
 
   # Output the label to verify
   echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
-
+  if [[ "$NO_GIT" == 'true' ]]; then
+    SKIP_GIT=true
+  fi
   # Commit and push changes
   if [ "$SKIP_GIT" = false ]; then
     git add -A
