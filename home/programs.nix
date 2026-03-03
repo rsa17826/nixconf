@@ -150,7 +150,6 @@
     wireplumber
     hyprlock # lockscreen
     killall
-    swayidle
   ];
   services.pipewire = {
     # Enable PipeWire
