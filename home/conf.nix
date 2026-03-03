@@ -117,6 +117,10 @@ in
           users = [ "${userConfig.uname}" ];
           commands = [
             {
+              command = "/run/current-system/sw/bin/nixos-rebuild";
+              options = [ "NOPASSWD" ];
+            }
+            {
               command = "/etc/profiles/per-user/${userConfig.uname}/bin/pashare";
               options = [ "NOPASSWD" ];
             }
