@@ -14,6 +14,7 @@ let
       runtimeInputs = if builtins.pathExists depsPath then (import depsPath pkgs) else [ ];
     in
     pkgs.writeShellApplication {
+      bashOptions = [ ];
       inherit name runtimeInputs;
       text = builtins.readFile scriptPath;
     };
