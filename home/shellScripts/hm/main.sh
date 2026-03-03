@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-# shellcheck disable=SC2048,SC2086
+# shellcheck disable=all
 home-manager --flake ./#nyix $@
