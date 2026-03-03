@@ -5,13 +5,13 @@ MAX_WAIT=5 # Seconds to wait for the new file
 START_TIME=$(date +%s)
 
 # 1. Get the current newest file
-LAST_VIDEO=$(ls -t "$VIDEO_DIR"/*.mp4 2>/dev/null | head -1)
+LAST_VIDEO=$(find "$VIDEO_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
 
 # 2. Trigger the save
 killall -SIGUSR1 gpu-screen-recorder
 
 while true; do
-  CURRENT_VIDEO=$(ls -t "$VIDEO_DIR"/*.mp4 2>/dev/null | head -1)
+  CURRENT_VIDEO=$(find "$VIDEO_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
   NOW=$(date +%s)
 
   # Check if a new file appeared

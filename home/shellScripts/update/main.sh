@@ -74,7 +74,7 @@ else
   echo "📡 Checking remote for updates..."
   git fetch --quiet
 
-  UPSTREAM=${1:-'@{u}'}
+  # UPSTREAM=${1:-'@{u}'}
   LOCAL=$(git rev-parse @)
   REMOTE=$(git rev-parse "@{u}" 2>/dev/null || echo "$LOCAL")
   BASE=$(git merge-base @ "@{u}" 2>/dev/null || echo "$LOCAL")

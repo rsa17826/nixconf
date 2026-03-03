@@ -3,16 +3,15 @@ LOCK_FILE="/tmp/trap_active.lock"
 
 # Cleanup function if script is interrupted
 rm -f $LOCK_FILE
-trap 'rm -f "$LOCK_FILE"' EXIT
+# shellcheck disable=SC2064
+trap "rm -f $LOCK_FILE" EXIT
 
-# 2. Run swayidle for a single event
-# We use 'timeout 1' as a dummy trigger, but 'resume' is the real actor
 swayidle -w \
-  timeout 1 'echo "System armed..." ' \
-  resume '
-    if [ ! -f "'$LOCK_FILE'" ]; then
-      touch "'$LOCK_FILE'"
+  timeout 1 "hyprctl dispatch exec 'qml-tool --file $SCRIPT_ASSETS/MediaPopup.qml' && echo 'Armed...'" \
+  resume "
+    if [ ! -f \"$LOCK_FILE\" ]; then
+      touch \"$LOCK_FILE\"
       hyprlock --no-fade-in
-      rm -f "'$LOCK_FILE'"
-      pkill -u $USER swayidle
-    fi'
+      rm -f \"$LOCK_FILE\"
+      pkill -u \$USER swayidle
+    fi"
