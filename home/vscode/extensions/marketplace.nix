@@ -3,6 +3,12 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "direnv";
+        publisher = "mkhl";
+        version = "0.17.0";
+        hash = "sha256-9sFcfTMeLBGw2ET1snqQ6Uk//D/vcD9AVsZfnUNrWNg=";
+      }
+      {
         name = "shell-tidy-vscode";
         publisher = "xqvvu";
         version = "1.1.2";
