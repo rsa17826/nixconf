@@ -34,22 +34,33 @@ echo "Clipboard Monitor Active..."
 
 LAST_CLIP=""
 
+#!/bin/bash
+
+# Get the directory where the script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LAST_CLIP=""
+
 while true; do
+  # 1. Grab clipboard content, strip newlines and surrounding whitespace
   RAW_CLIP=$(wl-paste --type text --no-newline 2>/dev/null | tr -d '\n\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
+  # 2. Check if clipboard changed and isn't empty
   if [[ "$RAW_CLIP" != "$LAST_CLIP" && -n "$RAW_CLIP" ]]; then
-    URL=$(echo "$RAW_CLIP" | grep -Eo 'https?://[^[:space:]"]+' | sed -E "s/['\.\ ]*$//" | sed -E 's/(watch\?v=[^& ]*).*/\1/' | sort -u | head -n 1)
 
-    if [[ -n "$URL" ]]; then
-      # We use the absolute path to the QML file
-      # Trying the '--path' flag which is common in some Quickshell builds
-      TARGET_URL="$URL" quickshell --path "$SCRIPT_DIR/MediaPopup.qml" &
+    # 3. Extract URLs and clean them using sed (removing time stamps and quotes)
+    # We use a process substitution to loop through each found URL
+    while read -r URL; do
+      if [[ -n "$URL" ]]; then
+        # 4. Launch Quickshell with the environment variable
+        # Standard Quickshell usually takes the path to the main.qml or the directory
+        TARGET_URL="$URL" qs -p "$SCRIPT_DIR/MediaPopup.qml" &
+      fi
+    done < <(echo "$RAW_CLIP" | grep -Eo 'https?://[^[:space:]"]+' |
+      sed -E "s/(&t|&startTime)=[0-9]+//g" |
+      tr -d "'\"" | sort -u)
 
-      # If '--path' fails, try this line instead:
-      # TARGET_URL="$URL" quickshell "$SCRIPT_DIR" &
-
-      LAST_CLIP="$RAW_CLIP"
-    fi
+    LAST_CLIP="$RAW_CLIP"
   fi
+
   sleep 1
 done
