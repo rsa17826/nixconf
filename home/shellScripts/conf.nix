@@ -1,23 +1,30 @@
 { pkgs, userConfig, ... }:
 
 let
-  # The directory to scan (current directory)
   baseDir = ./.;
 
-  # Your existing script builder
-  newsh = { name }: pkgs.writeShellScriptBin name (builtins.readFile (baseDir + "/${name}/main.sh"));
+  # Optimized script builder
+  newsh =
+    name:
+    let
+      scriptPath = baseDir + "/${name}/main.sh";
+      depsPath = baseDir + "/${name}/deps.nix";
 
-  # 1. Get all files/directories in the current folder
-  # Returns a set: { "testpkg" = "directory"; "default.nix" = "regular"; ... }
+      # Check if deps.nix exists, otherwise provide an empty list
+      runtimeInputs = if builtins.pathExists depsPath then (import depsPath pkgs) else [ ];
+    in
+    pkgs.writeShellApplication {
+      inherit name runtimeInputs;
+      text = builtins.readFile scriptPath;
+    };
+
   contents = builtins.readDir baseDir;
 
-  # 2. Filter to find only directories that actually contain main.sh
   scriptNames = builtins.filter (
     name: contents.${name} == "directory" && builtins.pathExists (baseDir + "/${name}/main.sh")
   ) (builtins.attrNames contents);
 
 in
 {
-  # 3. Map the list of names to your newsh function
-  users.users."${userConfig.uname}".packages = map (name: newsh { inherit name; }) scriptNames;
+  users.users."${userConfig.uname}".packages = map newsh scriptNames;
 }

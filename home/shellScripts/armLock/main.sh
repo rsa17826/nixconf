@@ -1,9 +1,8 @@
-#!/usr/bin/env -S nix shell nixpkgs#swayidle --command bash
-
 # Define a temporary lock file to prevent double-firing
 LOCK_FILE="/tmp/trap_active.lock"
 
 # Cleanup function if script is interrupted
+rm -f $LOCK_FILE
 trap "rm -f $LOCK_FILE" EXIT
 
 # 2. Run swayidle for a single event
