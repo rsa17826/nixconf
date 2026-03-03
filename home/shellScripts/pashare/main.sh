@@ -21,7 +21,6 @@ cleanup() {
   pactl unload-module module-null-sink 2>/dev/null
 
   notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
-  exit 0
 }
 
 # Trap signals like Ctrl+C (SIGINT) or Terminal Close (SIGHUP)
@@ -85,6 +84,7 @@ start)
 
 stop)
   cleanup
+  exit 0
   ;;
 
 *)
