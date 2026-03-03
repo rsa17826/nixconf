@@ -23,9 +23,6 @@ cleanup() {
   notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
 }
 
-# Trap signals like Ctrl+C (SIGINT) or Terminal Close (SIGHUP)
-trap cleanup SIGINT SIGHUP SIGTERM
-
 case "$1" in
 start)
   # Ensure a clean slate
