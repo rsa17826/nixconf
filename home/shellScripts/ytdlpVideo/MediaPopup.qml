@@ -59,7 +59,7 @@ PanelWindow {
 
             onClicked: {
               activeMode = "Video"
-              dlProcess.start()
+              dlProcess.running = true
               root.visible = false
             }
           }
@@ -82,7 +82,7 @@ PanelWindow {
 
             onClicked: {
               activeMode = "Audio"
-              dlProcess.start()
+              dlProcess.running = true
               root.visible = false
             }
           }
