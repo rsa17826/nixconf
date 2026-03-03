@@ -109,6 +109,7 @@
       gnome-themes-extra
       adwaita-icon-theme
       python313Packages.black
+      (callPackage ./progress-daemon/progress-daemon.nix { })
     ];
   };
   programs.gpu-screen-recorder.enable = true;
