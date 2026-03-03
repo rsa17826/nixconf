@@ -3,7 +3,7 @@ LOCK_FILE="/tmp/trap_active.lock"
 
 # Cleanup function if script is interrupted
 rm -f $LOCK_FILE
-trap "rm -f $LOCK_FILE" EXIT
+trap 'rm -f "$LOCK_FILE"' EXIT
 
 # 2. Run swayidle for a single event
 # We use 'timeout 1' as a dummy trigger, but 'resume' is the real actor
