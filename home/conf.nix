@@ -111,10 +111,11 @@ in
               command = "/run/current-system/sw/bin/reboot";
               options = [ "NOPASSWD" ];
             }
-            {
-              command = "/run/current-system/sw/bin/nixos-rebuild";
-              options = [ "NOPASSWD" ];
-            }
+          ];
+        }
+        {
+          users = [ "${userConfig.uname}" ];
+          commands = [
             {
               command = "/etc/profiles/per-user/${userConfig.uname}/bin/pashare";
               options = [ "NOPASSWD" ];
