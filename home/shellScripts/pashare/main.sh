@@ -72,11 +72,7 @@ start)
 
       echo "Locked to IP: $FIRST_IP"
       notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
-
-      # Keep the script running to maintain the trap/cleanup
-      # We use 'wait' or just a long sleep to keep the process alive
-      read -r -p "Press Enter to stop streaming or Ctrl+C..."
-      cleanup
+      exit 0
     fi
     sleep 1
   done
