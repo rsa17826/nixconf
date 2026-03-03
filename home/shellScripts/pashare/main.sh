@@ -1,7 +1,8 @@
 #!/bin/bash
 
-sudo -v || exit 1
 # shellcheck disable=SC2317
+sudo -v || exit 1
+
 PORT=1234
 SINK_NAME="VirtualSink"
 RATE=24000
