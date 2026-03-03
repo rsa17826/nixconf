@@ -103,7 +103,7 @@ else
     next_generation=$((prev_generation + 1))
     SKIP_GIT=false
   fi
-  echo $next_generation
+  echo "$next_generation"
 
   # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
   # revision=$(git rev-parse HEAD)
