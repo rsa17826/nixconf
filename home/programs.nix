@@ -111,6 +111,7 @@
       python313Packages.black
       audacity
       (callPackage ./progress-daemon/progress-daemon.nix { })
+      goldberg-emu
     ];
   };
   programs.gpu-screen-recorder.enable = true;
