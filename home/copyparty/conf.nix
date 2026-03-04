@@ -28,7 +28,7 @@
       "/" = {
         path = "/home/${userConfig.uname}/copyparty";
         access = {
-          r = "*";
+          rwm = "*";
           A = [
             "admin"
           ];
