@@ -109,6 +109,7 @@
       gnome-themes-extra
       adwaita-icon-theme
       python313Packages.black
+      audacity
       (callPackage ./progress-daemon/progress-daemon.nix { })
     ];
   };
