@@ -20,7 +20,7 @@ cleanup() {
   pactl unload-module module-simple-protocol-tcp 2>/dev/null
   pactl unload-module module-null-sink 2>/dev/null
 
-  notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
+  # notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
 }
 
 case "$1" in
@@ -54,7 +54,7 @@ start)
     pactl move-sink-input "$id" "$SINK_NAME" 2>/dev/null
   done
 
-  notify-send -u normal "$TITLE" "Server live. Waiting for connection on port $PORT..."
+  # notify-send -u normal "$TITLE" "Server live. Waiting for connection on port $PORT..."
   echo "Waiting for the first connection to lock the IP..."
 
   # 4. Connection Monitoring Loop
@@ -68,7 +68,7 @@ start)
       sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
 
       echo "Locked to IP: $FIRST_IP"
-      notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
+      # notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
       exit 0
     fi
     sleep 1
