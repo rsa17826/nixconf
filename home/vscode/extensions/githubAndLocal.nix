@@ -75,6 +75,7 @@ in
         extName = "owoify-editor";
         extCreator = "rssaromeo";
         version = "3.0.0";
+        sourceRoot = "source";
 
         ghRev = "85238178aecb071fbfa36826a18d17225be20757";
         ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
@@ -86,6 +87,7 @@ in
         extName = "simple-auto-formatter";
         extCreator = "rssaromeo";
         version = "22.0.0";
+        sourceRoot = "source";
 
         ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
         ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
@@ -109,6 +111,7 @@ in
         extName = "auto-regex";
         extCreator = "rssaromeo";
         version = "51.0.0";
+        sourceRoot = "source";
 
         ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
         ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
@@ -142,6 +145,7 @@ in
         extName = "simpledatastorage";
         extCreator = "rssaromeo";
         version = "9.0.0";
+        sourceRoot = "source";
 
         ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
         ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
