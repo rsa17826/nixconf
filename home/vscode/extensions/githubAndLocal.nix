@@ -94,80 +94,80 @@ in
         version = "3.0.0";
         sourceRoot = "source";
 
-        ghRev = "85238178aecb071fbfa36826a18d17225be20757";
-        ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
+        ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
+        # ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
       })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "simple-auto-formatter";
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "simple-auto-formatter";
 
-        extName = "simple-auto-formatter";
-        extCreator = "rssaromeo";
-        version = "22.0.0";
-        sourceRoot = "source";
+      #   extName = "simple-auto-formatter";
+      #   extCreator = "rssaromeo";
+      #   version = "22.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
-        ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
-      })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "4-to-2-formatter";
+      #   ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
+      #   ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
+      # })
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "4-to-2-formatter";
 
-        extName = "4-to-2-formatter";
-        extCreator = "rssaromeo";
-        version = "7.0.0";
-        sourceRoot = "source";
+      #   extName = "4-to-2-formatter";
+      #   extCreator = "rssaromeo";
+      #   version = "7.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
-        ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
-      })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "auto-regex-vscode-extension";
+      #   ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
+      #   ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
+      # })
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "auto-regex-vscode-extension";
 
-        extName = "auto-regex";
-        extCreator = "rssaromeo";
-        version = "51.0.0";
-        sourceRoot = "source";
+      #   extName = "auto-regex";
+      #   extCreator = "rssaromeo";
+      #   version = "51.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
-        ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
-      })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "MultiFormatterVSCode";
+      #   ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
+      #   ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
+      # })
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "MultiFormatterVSCode";
 
-        extName = "multi-formatter";
-        extCreator = "Jota0222";
-        version = "6.0.0";
+      #   extName = "multi-formatter";
+      #   extCreator = "Jota0222";
+      #   version = "6.0.0";
 
-        ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
-        ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
-      })
-      (buildFromGh {
-        ghName = "coopmoney";
-        ghRepo = "vscode-nix-embedded-languages";
+      #   ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
+      #   ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+      # })
+      # (buildFromGh {
+      #   ghName = "coopmoney";
+      #   ghRepo = "vscode-nix-embedded-languages";
 
-        extName = "nix-embedded-languages";
-        extCreator = "coopermaruyama";
-        version = "1.1.1";
-        sourceRoot = "source";
+      #   extName = "nix-embedded-languages";
+      #   extCreator = "coopermaruyama";
+      #   version = "1.1.1";
+      #   sourceRoot = "source";
 
-        ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
-        ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-      })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "sds-vscode-language";
+      #   ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
+      #   ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
+      # })
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "sds-vscode-language";
 
-        extName = "simpledatastorage";
-        extCreator = "rssaromeo";
-        version = "9.0.0";
-        sourceRoot = "source";
+      #   extName = "simpledatastorage";
+      #   extCreator = "rssaromeo";
+      #   version = "9.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
-        ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
-      })
+      #   ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
+      #   ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
+      # })
     ];
   };
 }
