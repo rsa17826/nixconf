@@ -71,6 +71,16 @@ in
     extensions = [
       (buildFromGh {
         ghName = "rsa17826";
+        ghRepo = "vscodeowotest";
+        extName = "owoify-editor";
+        extCreator = "rssaromeo";
+        version = "3.0.0";
+
+        ghRev = "85238178aecb071fbfa36826a18d17225be20757";
+        # ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
+      })
+      (buildFromGh {
+        ghName = "rsa17826";
         ghRepo = "simple-auto-formatter";
 
         extName = "simple-auto-formatter";
