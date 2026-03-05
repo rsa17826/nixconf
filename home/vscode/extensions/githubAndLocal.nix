@@ -69,7 +69,7 @@ let
       inherit version;
       pname = extName;
       src = npmBuild; # Just the derivation output
-      sourceRoot = "."; # Tell Nix the extension files are in the root of src
+      inherit sourceRoot;
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
