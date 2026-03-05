@@ -24,11 +24,12 @@ let
       version,
       ghName,
       ghRev,
-      ghSha ? "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB=",
+      ghSha ? "sha256-GIT+HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
       ghRepo,
       sourceRoot ? ".",
       extName,
       extCreator,
+      npmDepsHash ? "sha256-NPM_DEPS_HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
@@ -42,7 +43,7 @@ let
         };
 
         # Use the hash provided by the failed build error
-        npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        inherit npmDepsHash;
 
         # Fix for the "Panic" - tells NPM not to be as strict with URLs
         makeCacheWritable = true;
