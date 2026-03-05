@@ -42,15 +42,15 @@ let
           sha256 = ghSha;
         };
 
-        # Use the hash provided by the failed build error
         inherit npmDepsHash;
 
-        # Fix for the "Panic" - tells NPM not to be as strict with URLs
+        # --- ADD THESE TWO LINES ---
+        dontNpmBuild = true;
+        # ---------------------------
+
         makeCacheWritable = true;
         npmInstallFlags = [ "--package-lock-only" ];
 
-        # If the lockfile is missing, this allows the build to continue
-        # (though you should really ensure the lockfile is in the repo root)
         postPatch = ''
           if [ ! -f package-lock.json ]; then
             echo "Warning: package-lock.json missing, attempting to generate..."
