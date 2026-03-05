@@ -40,6 +40,18 @@ let
         rev = ghRev; # pin this
         sha256 = ghSha;
       };
+      nativeBuildInputs = [
+        pkgs.nodejs
+        pkgs.npmHooks.npmConfigHook
+      ];
+
+      # You will need to calculate this hash for each extension
+      # Start with lib.fakeHash, let it fail, and copy the real hash
+      npmDepsHash = pkgs.lib.fakeHash;
+
+      buildPhase = ''
+        npm run compile
+      '';
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
