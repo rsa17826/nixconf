@@ -101,7 +101,6 @@ in
         extName = "owoify-editor";
         extCreator = "rssaromeo";
         version = "3.0.0";
-        sourceRoot = "source";
 
         ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
         ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
