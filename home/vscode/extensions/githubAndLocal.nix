@@ -31,7 +31,6 @@ let
       npmDepsHash,
     }:
     let
-      # 1. Build the dependencies and source together
       npmBuild = pkgs.buildNpmPackage {
         pname = "${extName}-deps";
         inherit version;
@@ -43,32 +42,39 @@ let
         };
 
         inherit npmDepsHash;
-        dontNpmBuild = true;
 
-        # Just pass the raw folder through
+        # 1. Tell Nix to actually run the build script in package.json
+        # Most VS Code extensions use "compile" or "build"
+        npmBuildScript = "compile";
+
+        # 2. Add dependencies needed for the build process (like TypeScript)
+        nativeBuildInputs = [ pkgs.typescript ];
+
         installPhase = ''
           cp -r . $out
         '';
 
         makeCacheWritable = true;
-        npmInstallFlags = [ "--package-lock-only" ];
+
+        # This ensures we have the lockfile we generated earlier
+        postPatch = ''
+          if [ ! -f package-lock.json ]; then
+            ${pkgs.nodejs}/bin/npm install --package-lock-only
+          fi
+        '';
       };
     in
-    # 2. Package it specifically for VS Code
     pkgs.stdenv.mkDerivation {
       pname = "vscode-extension-${extName}";
       inherit version;
-
       src = npmBuild;
 
-      # VS Code expects extensions in this specific nested path:
-      # share/vscode/extensions/${publisher}.${name}
       installPhase = ''
         mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
+        # We copy everything, including the newly created 'out' folder
         cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
       '';
 
-      # These meta attributes help Nix identify it as a VS Code extension
       passthru = {
         vscodeExtName = extName;
         vscodeExtPublisher = extCreator;
