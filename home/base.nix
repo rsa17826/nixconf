@@ -15,7 +15,7 @@
   services.displayManager.sddm.enable = false;
   services.displayManager.sddm.wayland.enable = false;
   services.displayManager.ly.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.desktopManager.plasma6.enable = false;
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
