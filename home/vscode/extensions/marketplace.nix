@@ -5,7 +5,7 @@
       {
         name = "zubanls";
         publisher = "zuban";
-        version = "";
+        version = "0.0.7";
         hash = "sha256-C5rJdvSFghY/nZjCM8/1EMcjzSiE+L2wNfkezTjBsxk=";
       }
       {

@@ -1,6 +1,3 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i bash -p cacert curl jq unzip
-# shellcheck shell=bash
 set -eu -o pipefail
 
 # can be added to your configuration with the following command and snippet:

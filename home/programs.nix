@@ -114,6 +114,7 @@
       (callPackage ./winspy/winspy.nix { })
       goldberg-emu
       deno
+      zuban
     ];
   };
   programs.gpu-screen-recorder.enable = true;
