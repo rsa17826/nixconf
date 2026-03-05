@@ -24,7 +24,7 @@ let
       version,
       ghName,
       ghRev,
-      ghSha,
+      ghSha ? "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB=",
       ghRepo,
       sourceRoot ? ".",
       extName,
