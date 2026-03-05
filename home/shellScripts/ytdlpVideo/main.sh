@@ -19,7 +19,13 @@ download_logic() {
     --output ".\%(title)s.%(ext)s" \
     --remote-components ejs:github --paths "$HOME/videos/" \
     --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
-    --write-thumbnail 2>~/ass
+    --write-thumbnail --list-formats 2>~/ass
+  # yt-dlp --newline --progress --cookies-from-browser brave \
+  #   --no-check-certificate --extract-audio "$url" \
+  #   --output ".\%(title)s.%(ext)s" \
+  #   --remote-components ejs:github --paths "$HOME/videos/" \
+  #   --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+  #   --write-thumbnail 2>~/ass
   #    while read -r line; do
   #   if [[ $line =~ \[download\]\ +([0-9.]+)% ]]; then
   #     local percent="${BASH_REMATCH[1]}"
