@@ -61,6 +61,22 @@
           nodupe = true;
         };
       };
+      "/videos" = {
+        path = "/home/${userConfig.uname}/videos";
+        access = {
+          rwmd = "s";
+          A = [
+            "admin"
+          ];
+        };
+        flags = {
+          fk = 4;
+          scan = 60;
+          # volflag "e2d" enables the uploads database
+          e2d = true;
+          nodupe = true;
+        };
+      };
     };
     # you may increase the open file limit for the process
     openFilesLimit = 8192;
