@@ -24,15 +24,15 @@ let
       version,
       ghName,
       ghRev,
-      ghSha ? "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
+      ghSha,
       ghRepo,
       sourceRoot ? ".",
       extName,
       extCreator,
     }:
     let
-      # This part handles the actual 'npm install' and 'npm run compile'
-      pkg = pkgs.buildNpmPackage {
+      # This handles the NPM build
+      npmBuild = pkgs.buildNpmPackage {
         pname = extName;
         inherit version sourceRoot;
         src = pkgs.fetchFromGitHub {
@@ -42,27 +42,27 @@ let
           sha256 = ghSha;
         };
 
-        # 1. Keep this as fakeHash first.
-        # 2. Nix will fail and give you the 'got: sha256-...' hash.
-        # 3. Paste that real hash here.
+        # IMPORTANT: This is the hash of the node_modules, NOT the source.
+        # Set to lib.fakeHash, run rebuild, copy the 'got:' hash from the error.
         npmDepsHash = pkgs.lib.fakeHash;
 
-        # This is the command in package.json that runs 'tsc'
+        # VS Code extensions usually need a compile step
         npmBuildScript = "compile";
 
-        # We don't want to run tests in the restricted Nix sandbox
-        doCheck = false;
+        # Avoid issues with hardware-specific binaries
+        makeCacheWritable = true;
 
-        # Tell Nix to keep the built files
         installPhase = ''
+          mkdir -p $out
           cp -r . $out
         '';
+        doCheck = false;
       };
     in
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version;
       pname = extName;
-      src = pkg; # Use the result of the build above
+      src = npmBuild;
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
