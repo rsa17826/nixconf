@@ -28,7 +28,7 @@ let
       ghRepo,
       extName,
       extCreator,
-      npmDepsHash ? "sha256-NPM+DEPS+HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      npmDepsHash ? pkgs.lib.fakeHash,
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
