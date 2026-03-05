@@ -112,6 +112,7 @@
       audacity
       (callPackage ./progress-daemon/progress-daemon.nix { })
       goldberg-emu
+      deno
     ];
   };
   programs.gpu-screen-recorder.enable = true;
