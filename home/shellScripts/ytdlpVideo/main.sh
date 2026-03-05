@@ -7,7 +7,7 @@ download_logic() {
   local mode=$1
   local url=$2
   local pid=$$ # Use the current subshell PID for the bar ID
-  local output_tmpl="%(fulltitle)s - %(uploader)s.%(ext)s"
+  # local output_tmpl="%(fulltitle)s - %(uploader)s.%(ext)s"
 
   # Initial message to create the bar
   echo "{\"progress\": 0, \"name\": \"$mode: $url\", \"color\": \"#3498db\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
