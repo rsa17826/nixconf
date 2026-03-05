@@ -49,8 +49,7 @@ let
         # --- REPLACE THE OLD HOOK LOGIC WITH THIS ---
         installPhase = ''
           runHook preInstall
-          mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
-          cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
+          cp -r . $out
           runHook postInstall
         '';
         # --------------------------------------------
@@ -69,7 +68,8 @@ let
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version;
       pname = extName;
-      src = npmBuild + "/share/vscode/extensions/${extCreator}.${extName}";
+      src = npmBuild; # Just the derivation output
+      sourceRoot = "."; # Tell Nix the extension files are in the root of src
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
