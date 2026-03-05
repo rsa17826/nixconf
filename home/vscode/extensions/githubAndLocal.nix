@@ -45,12 +45,15 @@ let
         pkgs.npmHooks.npmConfigHook
       ];
 
-      # You will need to calculate this hash for each extension
-      # Start with lib.fakeHash, let it fail, and copy the real hash
       npmDepsHash = pkgs.lib.fakeHash;
 
-      buildPhase = ''
-        npm run compile
+      # Build instructions
+      npmBuildScript = "compile";
+
+      # Nix needs to know where the build results are
+      installPhase = ''
+        mkdir -p $out
+        cp -r . $out
       '';
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
       vscodeExtUniqueId = "${extCreator}.${extName}";
