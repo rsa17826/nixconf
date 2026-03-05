@@ -11,6 +11,7 @@ download_logic() {
 
   # Initial message to create the bar
   echo "{\"progress\": 0, \"name\": \"$mode: $url\", \"color\": \"#3498db\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
+  # --extractor-args "youtube:player_js_variant=tv;player_js_version=20514@9f4cc5e4"
 
   # Run yt-dlp and pipe progress to a loop that sends updates to the socket
   # https://www.youtube.com/watch?v=7LkGQTsTXAk&t=115&startTime=0
