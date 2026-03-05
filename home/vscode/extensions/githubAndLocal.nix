@@ -43,14 +43,12 @@ let
 
         inherit npmDepsHash;
 
-        # Add this to handle the missing lockfile during the planning phase
+        # This prevents the Rust parser from panicking when it can't find a lockfile
+        # It forces Nix to rely on the hash you provide rather than pre-calculating it
         forceGitDeps = true;
 
-        # We must make sure npm can actually run its logic
-        makeCacheWritable = true;
-
-        # Manually trigger the lockfile generation before the npmConfigHook runs
-        prePatch = ''
+        # We generate the lockfile in the patch phase so it's ready for the fetcher
+        postPatch = ''
           if [ ! -f package-lock.json ]; then
             ${pkgs.nodejs}/bin/npm install --package-lock-only
           fi
@@ -58,6 +56,7 @@ let
 
         npmBuildScript = "compile";
         nativeBuildInputs = [ pkgs.typescript ];
+        makeCacheWritable = true;
 
         installPhase = ''
           cp -r . $out
@@ -71,7 +70,6 @@ let
 
       installPhase = ''
         mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
-        # We copy everything, including the newly created 'out' folder
         cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
       '';
 
@@ -81,6 +79,8 @@ let
         vscodeExtUniqueId = "${extCreator}.${extName}";
       };
     };
+
+    
   # dlExt =
   #   {
   #     name,
