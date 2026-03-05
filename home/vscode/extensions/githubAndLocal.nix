@@ -24,14 +24,14 @@ let
       version,
       ghName,
       ghRev,
-      ghSha ? "sha256-GIT+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      ghSha,
       ghRepo,
-      sourceRoot ? ".",
       extName,
       extCreator,
-      npmDepsHash ? "sha256-NPM+DEPS+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      npmDepsHash,
     }:
     let
+      # 1. Build the dependencies and source together
       npmBuild = pkgs.buildNpmPackage {
         pname = "${extName}-deps";
         inherit version;
@@ -43,36 +43,37 @@ let
         };
 
         inherit npmDepsHash;
-
         dontNpmBuild = true;
 
-        # --- REPLACE THE OLD HOOK LOGIC WITH THIS ---
+        # Just pass the raw folder through
         installPhase = ''
-          runHook preInstall
           cp -r . $out
-          runHook postInstall
         '';
-        # --------------------------------------------
 
         makeCacheWritable = true;
         npmInstallFlags = [ "--package-lock-only" ];
-
-        postPatch = ''
-          if [ ! -f package-lock.json ]; then
-            echo "Warning: package-lock.json missing, attempting to generate..."
-            ${pkgs.nodejs}/bin/npm install --package-lock-only
-          fi
-        '';
       };
     in
-    pkgs.vscode-utils.buildVscodeExtension {
+    # 2. Package it specifically for VS Code
+    pkgs.stdenv.mkDerivation {
+      pname = "vscode-extension-${extName}";
       inherit version;
-      pname = extName;
-      src = npmBuild; # Just the derivation output
-      inherit sourceRoot;
-      vscodeExtUniqueId = "${extCreator}.${extName}";
-      vscodeExtName = extName;
-      vscodeExtPublisher = extCreator;
+
+      src = npmBuild;
+
+      # VS Code expects extensions in this specific nested path:
+      # share/vscode/extensions/${publisher}.${name}
+      installPhase = ''
+        mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
+        cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
+      '';
+
+      # These meta attributes help Nix identify it as a VS Code extension
+      passthru = {
+        vscodeExtName = extName;
+        vscodeExtPublisher = extCreator;
+        vscodeExtUniqueId = "${extCreator}.${extName}";
+      };
     };
   # dlExt =
   #   {
