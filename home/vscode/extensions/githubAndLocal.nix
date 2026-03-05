@@ -97,6 +97,7 @@ in
         extName = "4-to-2-formatter";
         extCreator = "rssaromeo";
         version = "7.0.0";
+        sourceRoot = "source";
 
         ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
         ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
