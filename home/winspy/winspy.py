@@ -72,8 +72,10 @@ class HyprSpy:
         try:
             # Detect modifiers (Shift=1, Ctrl=4, Alt=8)
             state = self.root.winfo_pointerstate()
+            print(state)
             is_frozen = state & (1 | 4 | 8)
-        except:
+        except Exception as e:
+            print(e)
             is_frozen = False
 
         if not is_frozen:
