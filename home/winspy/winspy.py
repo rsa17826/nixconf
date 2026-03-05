@@ -75,18 +75,19 @@ class HyprSpy:
         self.root.after(100, lambda: self.label.config(bg=original_bg))
 
     def update_info(self):
-        # We use a slightly different way to check modifiers in Wayland/Tkinter:
-        # Check if Shift (1), Ctrl (4), or Alt (8) are in the current state bitmask
-        state = self.root.winfo_pointerx()  # Not used, but forces a state update
-
-        # To make this robust on Hyprland, we check the global modifier state
-        # Note: 0x1=Shift, 0x4=Ctrl, 0x8=Alt, 0x10=Mod2, 0x40=Mod4(Super)
-        modifiers = self.root.tk.call("tk", "get_state", self.root)
-        frozen = int(modifiers) & (0x1 | 0x4 | 0x8)
+        try:
+            # winfo_pointerstate returns a bitmask of modifiers
+            # 1 = Shift, 4 = Control, 8 = Alt, 64 = Mod4 (Super)
+            state = self.root.winfo_pointerstate()
+            # Check if Shift (1), Ctrl (4), or Alt (8) are active
+            frozen = state & (1 | 4 | 8)
+        except Exception:
+            frozen = False
 
         if not frozen:
             self.root.title("HyprSpy")
             win, cur = self.get_hypr_data()
+            
             if win and win.get("address") != "0x":
                 text = (
                     f"WINDOW INFORMATION (Click to Copy)\n"
@@ -107,8 +108,10 @@ class HyprSpy:
                 )
             else:
                 text = "No active window detected\n(Desktop Focused)"
+            
             self.label.config(text=text)
         else:
+            # Just update the title so user knows why it's not moving
             self.root.title("HyprSpy (FROZEN)")
 
         self.root.after(100, self.update_info)
