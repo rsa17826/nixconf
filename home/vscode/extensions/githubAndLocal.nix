@@ -24,11 +24,11 @@ let
       version,
       ghName,
       ghRev,
-      ghSha,
+      ghSha ? "sha256-GIT+SHA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
       ghRepo,
       extName,
       extCreator,
-      npmDepsHash,
+      npmDepsHash ? "sha256-NPM+DEPS+HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
