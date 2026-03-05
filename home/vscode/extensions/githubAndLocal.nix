@@ -134,6 +134,7 @@ in
         extName = "nix-embedded-languages";
         extCreator = "coopermaruyama";
         version = "1.1.1";
+        sourceRoot = "source";
 
         ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
         ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
