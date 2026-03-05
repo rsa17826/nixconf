@@ -29,7 +29,7 @@ let
       sourceRoot ? ".",
       extName,
       extCreator,
-      npmDepsHash ? "sha256-NPM_DEPS_HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      npmDepsHash ? "sha256-npmDEPShashAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
