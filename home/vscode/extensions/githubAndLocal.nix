@@ -30,40 +30,42 @@ let
       extName,
       extCreator,
     }:
-    pkgs.vscode-utils.buildVscodeExtension {
-      inherit version sourceRoot;
-      pname = extName;
-      src = pkgs.fetchFromGitHub {
-        owner = ghName;
-        repo = ghRepo;
-        # git ls-remote https://github.com/rsa17826/MultiFormatterVSCode HEAD
-        rev = ghRev; # pin this
-        sha256 = ghSha;
+    let
+      # This part handles the actual 'npm install' and 'npm run compile'
+      pkg = pkgs.buildNpmPackage {
+        pname = extName;
+        inherit version sourceRoot;
+        src = pkgs.fetchFromGitHub {
+          owner = ghName;
+          repo = ghRepo;
+          rev = ghRev;
+          sha256 = ghSha;
+        };
+
+        # 1. Keep this as fakeHash first.
+        # 2. Nix will fail and give you the 'got: sha256-...' hash.
+        # 3. Paste that real hash here.
+        npmDepsHash = pkgs.lib.fakeHash;
+
+        # This is the command in package.json that runs 'tsc'
+        npmBuildScript = "compile";
+
+        # We don't want to run tests in the restricted Nix sandbox
+        doCheck = false;
+
+        # Tell Nix to keep the built files
+        installPhase = ''
+          cp -r . $out
+        '';
       };
-      nativeBuildInputs = [
-        pkgs.nodejs
-        pkgs.npmHooks.npmConfigHook
-      ];
-
-      npmDepsHash = pkgs.lib.fakeHash;
-
-      # Build instructions
-      npmBuildScript = "compile";
-
-      # Nix needs to know where the build results are
-      installPhase = ''
-        mkdir -p $out
-        cp -r . $out
-      '';
-      doCheck = false;
-      # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    in
+    pkgs.vscode-utils.buildVscodeExtension {
+      inherit version;
+      pname = extName;
+      src = pkg; # Use the result of the build above
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
-      meta = {
-        # description = "Run multiple formatters sequentially in VS Code";
-        platforms = pkgs.lib.platforms.all;
-      };
     };
   # dlExt =
   #   {
