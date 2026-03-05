@@ -97,6 +97,7 @@ in
 
         ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
         ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
+        npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
       })
       # (buildFromGh {
       #   ghName = "rsa17826";
