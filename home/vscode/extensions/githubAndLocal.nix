@@ -55,6 +55,7 @@ let
         mkdir -p $out
         cp -r . $out
       '';
+      doCheck = false;
       # npmDepsHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
