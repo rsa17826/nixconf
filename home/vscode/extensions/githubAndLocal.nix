@@ -44,9 +44,16 @@ let
 
         inherit npmDepsHash;
 
-        # --- ADD THESE TWO LINES ---
         dontNpmBuild = true;
-        # ---------------------------
+
+        # --- REPLACE THE OLD HOOK LOGIC WITH THIS ---
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
+          cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
+          runHook postInstall
+        '';
+        # --------------------------------------------
 
         makeCacheWritable = true;
         npmInstallFlags = [ "--package-lock-only" ];
@@ -62,7 +69,7 @@ let
     pkgs.vscode-utils.buildVscodeExtension {
       inherit version;
       pname = extName;
-      src = npmBuild;
+      src = npmBuild + "/share/vscode/extensions/${extCreator}.${extName}";
       vscodeExtUniqueId = "${extCreator}.${extName}";
       vscodeExtName = extName;
       vscodeExtPublisher = extCreator;
