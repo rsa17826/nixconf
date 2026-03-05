@@ -3,6 +3,12 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "zubanls";
+        publisher = "zuban";
+        version = "";
+        hash = "sha256-C5rJdvSFghY/nZjCM8/1EMcjzSiE+L2wNfkezTjBsxk=";
+      }
+      {
         name = "direnv";
         publisher = "mkhl";
         version = "0.17.0";
