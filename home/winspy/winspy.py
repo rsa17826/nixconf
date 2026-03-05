@@ -35,17 +35,20 @@ class HyprSpy:
             win_proc = subprocess.run(
                 ["hyprctl", "activewindow", "-j"], capture_output=True, text=True
             )
+            print(win_proc)
             win_data = json.loads(win_proc.stdout)
 
             # Get cursor position
             cur_proc = subprocess.run(
                 ["hyprctl", "cursorpos", "-j"], capture_output=True, text=True
             )
+            print(cur_proc)
             cur_data = json.loads(cur_proc.stdout)
 
             return win_data, cur_data
         except Exception as e:
-            return None, None
+          print(e)
+          return None, None
 
     def update_info(self):
         win, cur = self.get_hypr_data()
@@ -68,7 +71,7 @@ class HyprSpy:
                 f"Relative: {cur.get('x')}, {cur.get('y')}"
             )
         else:
-            text = "No active window detected\n(Desktop Focused)"
+            text = "No active window detected\n(Desktop Focused)"+str(win)
 
         self.label.config(text=text)
         self.root.after(100, self.update_info)  # Refresh every 100ms
