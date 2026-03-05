@@ -10,9 +10,9 @@ class HyprSpy:
         self.root.geometry("450x380")
         self.root.attributes("-topmost", True)
 
-        # State tracking for modifiers
+        # Get our own address so we know when to freeze
+        self.own_address = self.get_own_address()
         self.is_frozen = False
-        self.modifiers_held = set()
 
         # UI Styling
         self.bg_color = "#1e1e2e"
@@ -35,26 +35,20 @@ class HyprSpy:
         )
         self.display.pack(expand=True, fill="both")
         
-        # Bindings
         self.display.bind("<Button-1>", self.copy_line)
-        self.display.bind("<Key>", lambda e: "break") # Disable typing
-        
-        # Track key presses globally for this window
-        self.root.bind("<KeyPress>", self.on_key_down)
-        self.root.bind("<KeyRelease>", self.on_key_up)
+        self.display.bind("<Key>", lambda e: "break") 
 
         self.update_info()
 
-    def on_key_down(self, event):
-        if event.keysym in ("Control_L", "Control_R", "Shift_L", "Shift_R", "Alt_L", "Alt_R"):
-            self.modifiers_held.add(event.keysym)
-            self.is_frozen = True
-
-    def on_key_up(self, event):
-        if event.keysym in ("Control_L", "Control_R", "Shift_L", "Shift_R", "Alt_L", "Alt_R"):
-            self.modifiers_held.discard(event.keysym)
-            if not self.modifiers_held:
-                self.is_frozen = False
+    def get_own_address(self):
+        """Focus the window briefly to capture its Hyprland address."""
+        try:
+            # We wait a tiny bit for the window to map
+            self.root.update()
+            proc = subprocess.run(["hyprctl", "activewindow", "-j"], capture_output=True, text=True)
+            return json.loads(proc.stdout).get("address")
+        except:
+            return None
 
     def get_hypr_data(self):
         try:
@@ -72,22 +66,28 @@ class HyprSpy:
         line_content = self.display.get(f"{line_num}.0", f"{line_num}.end").strip()
         
         if line_content and "=" not in line_content:
+            # Extract only the value after the colon
             to_copy = line_content.split(":", 1)[1].strip() if ":" in line_content else line_content
             self.root.clipboard_clear()
             self.root.clipboard_append(to_copy)
             
-            # Brief Flash
+            # Flash effect
             self.display.tag_add("flash", f"{line_num}.0", f"{line_num}.end")
             self.display.tag_config("flash", background="#45475a")
             self.root.after(150, lambda: self.display.tag_remove("flash", "1.0", "end"))
 
     def update_info(self):
-        if not self.is_frozen:
-            win, cur = self.get_hypr_data()
-            self.display.config(highlightbackground=self.bg_color)
-            self.root.title("HyprSpy")
+        win, cur = self.get_hypr_data()
+        
+        # Check if the currently active window is this script
+        current_active = win.get("address") if win else None
+        self.is_frozen = (current_active == self.own_address and self.own_address is not None)
 
-            if win and win.get("address") != "0x":
+        if not self.is_frozen:
+            self.display.config(highlightbackground=self.bg_color)
+            self.root.title("HyprSpy (Scanning...)")
+
+            if win and current_active != "0x":
                 text = (
                     f"WINDOW INFORMATION\n"
                     f"{'='*35}\n"
@@ -103,7 +103,7 @@ class HyprSpy:
                     f"CURSOR\n"
                     f"{'='*35}\n"
                     f"Absolute: {cur.get('x')}, {cur.get('y')}\n\n"
-                    f"HOLD SHIFT/CTRL/ALT TO FREEZE"
+                    f"CLICK THIS WINDOW TO FREEZE & COPY"
                 )
             else:
                 text = "No active window detected\n(Desktop Focused)"
@@ -113,8 +113,9 @@ class HyprSpy:
             self.display.insert("1.0", text)
             self.display.config(state="disabled")
         else:
+            # Frozen state logic
             self.display.config(highlightbackground=self.freeze_color)
-            self.root.title("HyprSpy (FROZEN)")
+            self.root.title("HyprSpy (FROZEN - Click elsewhere to resume)")
 
         self.root.after(100, self.update_info)
 
