@@ -35,7 +35,7 @@ function get_vsixpkg() {
   EXTTMP=$(mktemp -d -t vscode_exts_XXXXXXXX)
 
   URL="https://$1.gallery.vsassets.io/_apis/public/gallery/publisher/$1/extension/$2/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-  echo $URL
+  # echo $URL
   # Quietly but delicately curl down the file, blowing up at the first sign of trouble.
   curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"
   # Unpack the file we need to stdout then pull out the version
