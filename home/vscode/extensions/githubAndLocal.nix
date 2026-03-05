@@ -24,12 +24,12 @@ let
       version,
       ghName,
       ghRev,
-      ghSha ? "sha256-GIT+HASHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      ghSha ? "sha256-GIT+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
       ghRepo,
       sourceRoot ? ".",
       extName,
       extCreator,
-      npmDepsHash ? "sha256-npmDEPShashAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      npmDepsHash ? "sha256-NPM+DEPS+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
@@ -96,7 +96,7 @@ in
         sourceRoot = "source";
 
         ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
-        # ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
+        ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
       })
       # (buildFromGh {
       #   ghName = "rsa17826";
