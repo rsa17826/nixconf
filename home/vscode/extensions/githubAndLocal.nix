@@ -43,24 +43,24 @@ let
 
         inherit npmDepsHash;
 
-        # 1. Tell Nix to actually run the build script in package.json
-        # Most VS Code extensions use "compile" or "build"
-        npmBuildScript = "compile";
+        # Add this to handle the missing lockfile during the planning phase
+        forceGitDeps = true;
 
-        # 2. Add dependencies needed for the build process (like TypeScript)
+        # We must make sure npm can actually run its logic
+        makeCacheWritable = true;
+
+        # Manually trigger the lockfile generation before the npmConfigHook runs
+        prePatch = ''
+          if [ ! -f package-lock.json ]; then
+            ${pkgs.nodejs}/bin/npm install --package-lock-only
+          fi
+        '';
+
+        npmBuildScript = "compile";
         nativeBuildInputs = [ pkgs.typescript ];
 
         installPhase = ''
           cp -r . $out
-        '';
-
-        makeCacheWritable = true;
-
-        # This ensures we have the lockfile we generated earlier
-        postPatch = ''
-          if [ ! -f package-lock.json ]; then
-            ${pkgs.nodejs}/bin/npm install --package-lock-only
-          fi
         '';
       };
     in
