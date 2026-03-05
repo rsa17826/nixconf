@@ -17,7 +17,7 @@ let
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
       hash = pkgs.lib.fakeHash;
       pname = name; # Add this line specifically
-      # sourceRoot = ".";
+      sourceRoot = ".";
     };
   buildFromGh =
     {
@@ -25,6 +25,7 @@ let
       ghName,
       ghRev,
       ghSha ? "sha256-GIT+SHA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      sourceRoot ? ".",
       ghRepo,
       extName,
       extCreator,
@@ -43,20 +44,13 @@ let
 
         inherit npmDepsHash;
 
-        # This prevents the Rust parser from panicking when it can't find a lockfile
-        # It forces Nix to rely on the hash you provide rather than pre-calculating it
-        forceGitDeps = true;
-
-        # We generate the lockfile in the patch phase so it's ready for the fetcher
-        postPatch = ''
-          if [ ! -f package-lock.json ]; then
-            ${pkgs.nodejs}/bin/npm install --package-lock-only
-          fi
-        '';
+        # --- ADD THESE FLAGS ---
+        makeCacheWritable = true;
+        npmIgnoreScripts = true;
+        # -----------------------
 
         npmBuildScript = "compile";
         nativeBuildInputs = [ pkgs.typescript ];
-        makeCacheWritable = true;
 
         installPhase = ''
           cp -r . $out
@@ -70,6 +64,7 @@ let
 
       installPhase = ''
         mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
+        # We copy everything, including the newly created 'out' folder
         cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
       '';
 
@@ -79,8 +74,6 @@ let
         vscodeExtUniqueId = "${extCreator}.${extName}";
       };
     };
-
-    
   # dlExt =
   #   {
   #     name,
@@ -107,10 +100,10 @@ in
         extName = "owoify-editor";
         extCreator = "rssaromeo";
         version = "3.0.0";
+        sourceRoot = "source";
 
-        ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
-        ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
-        npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
+        ghRev = "85238178aecb071fbfa36826a18d17225be20757";
+        ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
       })
       (buildFromGh {
         ghName = "rsa17826";
@@ -119,7 +112,7 @@ in
         extName = "simple-auto-formatter";
         extCreator = "rssaromeo";
         version = "22.0.0";
-        # sourceRoot = "source";
+        sourceRoot = "source";
 
         ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
         ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
@@ -131,7 +124,7 @@ in
         extName = "4-to-2-formatter";
         extCreator = "rssaromeo";
         version = "7.0.0";
-        # sourceRoot = "source";
+        sourceRoot = "source";
 
         ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
         ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
@@ -143,7 +136,7 @@ in
         extName = "auto-regex";
         extCreator = "rssaromeo";
         version = "51.0.0";
-        # sourceRoot = "source";
+        sourceRoot = "source";
 
         ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
         ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
@@ -166,7 +159,7 @@ in
         extName = "nix-embedded-languages";
         extCreator = "coopermaruyama";
         version = "1.1.1";
-        # sourceRoot = "source";
+        sourceRoot = "source";
 
         ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
         ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
@@ -178,7 +171,7 @@ in
         extName = "simpledatastorage";
         extCreator = "rssaromeo";
         version = "9.0.0";
-        # sourceRoot = "source";
+        sourceRoot = "source";
 
         ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
         ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
