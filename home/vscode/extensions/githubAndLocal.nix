@@ -29,6 +29,8 @@ let
       extName,
       extCreator,
       npmDepsHash ? "sha256-NPM+DEPS+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      nativeBuildInputs ? [ ],
+      buildInputs ? [ ],
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
@@ -47,8 +49,8 @@ let
         # Most VS Code extensions use "compile" or "build"
         npmBuildScript = "compile";
         # 2. Add dependencies needed for the build process (like TypeScript)
-        nativeBuildInputs = [ pkgs.typescript ];
-
+        nativeBuildInputs = [ pkgs.typescript ] ++ nativeBuildInputs;
+        inherit buildInputs;
         installPhase = ''
           cp -r . $out
         '';
@@ -112,17 +114,17 @@ in
         npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
       })
       # onStartupFinished
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "simple-auto-formatter";
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "simple-auto-formatter";
 
-        extName = "simple-auto-formatter";
-        extCreator = "rssaromeo";
-        version = "22.0.0";
+      #   extName = "simple-auto-formatter";
+      #   extCreator = "rssaromeo";
+      #   version = "22.0.0";
 
-        ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
-        ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
-      })
+      #   ghRev = "ea398d43bfc9fb05e2c52d78135a0258c4a081f9";
+      #   ghSha = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
+      # })
       (buildFromGh {
         ghName = "rsa17826";
         ghRepo = "4-to-2-formatter";
@@ -130,35 +132,43 @@ in
         extName = "4-to-2-formatter";
         extCreator = "rssaromeo";
         version = "7.0.0";
-        # sourceRoot = "source";
 
         ghRev = "8d205d877c1c7b2747846472f161729e67c634e6";
         ghSha = "sha256-PHaOXLEX2D/nrhabylTB+U0R7/6eVSsrRulFYaNebtk=";
         npmDepsHash = "sha256-o7IA+4Kq4j2XD7dpJNje8g4G2KFi6ocsnXyaGSaXB8M=";
       })
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "auto-regex-vscode-extension";
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "auto-regex-vscode-extension";
 
-      #   extName = "auto-regex";
-      #   extCreator = "rssaromeo";
-      #   version = "51.0.0";
-      #   sourceRoot = "source";
+        extName = "auto-regex";
+        extCreator = "rssaromeo";
+        version = "51.0.0";
 
-      #   ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
-      #   ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
-      # })
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "MultiFormatterVSCode";
+        ghRev = "d90020c8705f914dcdc3725c0db4b3fe2168b781";
+        ghSha = "sha256-DN3KOub5fzXx8pTfwDGsAxWPLE44FaFjS2kCe7uNX6g=";
+        npmDepsHash = "sha256-G16A4BN9R6u1hklQ4ibrz4fUs0M8rvJLnJZk/fp7ChE=";
+        nativeBuildInputs = with pkgs; [
+          pkg-config
+          python3 # node-gyp usually needs this too
+        ];
 
-      #   extName = "multi-formatter";
-      #   extCreator = "Jota0222";
-      #   version = "6.0.0";
+        # Libraries needed at build and run time
+        buildInputs = with pkgs; [
+          libsecret
+        ];
+      })
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "MultiFormatterVSCode";
 
-      #   ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
-      #   ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
-      # })
+        extName = "multi-formatter";
+        extCreator = "Jota0222";
+        version = "6.0.0";
+
+        ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
+        ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+      })
       # (buildFromGh {
       #   ghName = "coopmoney";
       #   ghRepo = "vscode-nix-embedded-languages";
@@ -166,7 +176,6 @@ in
       #   extName = "nix-embedded-languages";
       #   extCreator = "coopermaruyama";
       #   version = "1.1.1";
-      #   sourceRoot = "source";
 
       #   ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
       #   ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
@@ -178,7 +187,6 @@ in
       #   extName = "simpledatastorage";
       #   extCreator = "rssaromeo";
       #   version = "9.0.0";
-      #   sourceRoot = "source";
 
       #   ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
       #   ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
