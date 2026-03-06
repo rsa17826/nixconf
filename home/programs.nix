@@ -212,6 +212,10 @@
                     libXtst
                     libxkbcommon
                     mesa
+                    # The fix for the libssl error:
+                    openssl
+                    zlib
+                    libkrb5
                   ]
                 )
               }
