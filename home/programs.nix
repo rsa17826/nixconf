@@ -126,7 +126,7 @@
 
           src = pkgs.fetchurl {
             url = "https://github.com/subhra74/xdm/releases/download/${version}/xdm-setup-${version}.tar.xz";
-            sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
+            sha256 = "sha256-FAQTZReX2XsTxfGi8MUo2m5G02Ur02q9dDsaadxhBDg=";
             # url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
             # sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
           };
