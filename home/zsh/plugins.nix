@@ -8,6 +8,7 @@ let
   zshPlugins = {
     zsh-autosuggestions = null;
     zsh-autopair = null;
+    zsh-history-substring-search = "share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh";
     zsh-z = "share/zsh-z/zsh-z.plugin.zsh";
     zsh-forgit = "share/zsh-forgit/forgit.plugin.zsh";
     zsh-f-sy-h = "share/zsh/site-functions/f-sy-h.zsh";
