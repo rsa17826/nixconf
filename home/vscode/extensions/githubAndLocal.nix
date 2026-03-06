@@ -166,7 +166,7 @@ in
         extCreator = "Jota0222";
         version = "6.0.0";
 
-        ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
+        ghRev = "021eaba326486ac6d82aaa5392a402efde0d053d";
         ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
         npmDepsHash = "sha256-wWpLlndJnrub7QVskc+jKACETjwv0niVwr6AZjFl1jU=";
         nativeBuildInputs = with pkgs; [
