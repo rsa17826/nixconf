@@ -27,7 +27,7 @@
   };
   xdg.configFile."hypr/hm.conf".text = ''
     plugin = ${
-      inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
+      inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
     }/lib/libhypr-dynamic-cursors.so
     
   ''; # // (
