@@ -198,6 +198,7 @@ in
 
         ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
         ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
+        npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
       })
     ];
   };
