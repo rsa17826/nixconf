@@ -30,9 +30,9 @@
   #     inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
   #   }/lib/libhypr-dynamic-cursors.so
   # '';
-  xdg.configFile."hypr/hm.conf".text = ''
-    plugin = hypr-darkwindow.packages.${pkgs.stdenv.hostPlatform.system}.Hypr-DarkWindow
-  '';
+  # xdg.configFile."hypr/hm.conf".text = ''
+  #   plugin = hypr-darkwindow.packages.${pkgs.stdenv.hostPlatform.system}.Hypr-DarkWindow
+  # '';
 
   # // (
   #   # Map over the files in the ./shaders directory
