@@ -25,7 +25,7 @@
     };
   };
   wayland.windowManager.hyprland = {
-    generateConfig = false;
+    extraConfig = "";
     enable = true;
     plugins = [ inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors ];
   };
