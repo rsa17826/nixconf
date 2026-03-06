@@ -125,8 +125,10 @@
           inherit version;
 
           src = pkgs.fetchurl {
-            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
+            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdm-setup-${version}.tar.xz";
             sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
+            # url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
+            # sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
           };
 
           # We need these to extract .zst and fix the binaries
