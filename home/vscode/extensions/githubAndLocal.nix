@@ -119,7 +119,6 @@ in
         extName = "simple-auto-formatter";
         extCreator = "rssaromeo";
         version = "22.0.0";
-        sourceRoot = "source";
 
         ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
         # ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
