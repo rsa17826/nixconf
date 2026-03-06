@@ -118,7 +118,7 @@
       libreoffice
       (
         let
-          version = "8.0.29";
+          version = "7.2.11";
         in
         pkgs.stdenv.mkDerivation {
           pname = "xdm";
