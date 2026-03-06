@@ -14,13 +14,13 @@
   #   cp -f ${./hyprland.conf} "$HOME/.config/hypr/hyprland.conf"
   #   # sudo cp -fr ${./shaders} "$HOME/.config/hypr/shaders"
   # '';
-  # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
-  # home.file.".config/hypr/shaders".source = ./shaders;
+  # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
+  # xdg.configFile."hypr/shaders".source = ./shaders;
   # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
-  home.file = {
+  xdg.configFile = {
     # Link the main Hyprland config file
-    ".config/hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
-    ".config/hypr/shaders" = {
+    "/hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
+    "/hypr/shaders" = {
       source = ln "${userConfig.nixConf}/home/hyprland/shaders";
       recursive = true;
     };
@@ -43,5 +43,5 @@
   #    #rm "$HOME/.config/hypr/hyprland.conf" >& /dev/null
   #    ln -f "$HOME/nixconf/home/hyprland/hyprland.conf" "$HOME/.config/hypr/hyprland.conf"
   #  '';
-  # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
+  # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
 }
