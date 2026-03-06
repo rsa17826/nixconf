@@ -24,12 +24,11 @@ let
       version,
       ghName,
       ghRev,
-      ghSha ? "sha256-GIT+SHA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-      sourceRoot ? ".",
+      ghSha,
       ghRepo,
       extName,
       extCreator,
-      npmDepsHash ? pkgs.lib.fakeHash,
+      npmDepsHash,
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
@@ -44,16 +43,24 @@ let
 
         inherit npmDepsHash;
 
-        # --- ADD THESE FLAGS ---
-        makeCacheWritable = true;
-        npmIgnoreScripts = true;
-        # -----------------------
-
+        # 1. Tell Nix to actually run the build script in package.json
+        # Most VS Code extensions use "compile" or "build"
         npmBuildScript = "compile";
+
+        # 2. Add dependencies needed for the build process (like TypeScript)
         nativeBuildInputs = [ pkgs.typescript ];
 
         installPhase = ''
           cp -r . $out
+        '';
+
+        makeCacheWritable = true;
+
+        # This ensures we have the lockfile we generated earlier
+        postPatch = ''
+          if [ ! -f package-lock.json ]; then
+            ${pkgs.nodejs}/bin/npm install --package-lock-only
+          fi
         '';
       };
     in
@@ -94,17 +101,17 @@ in
 {
   programs.vscode.profiles.default = {
     extensions = [
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "vscodeowotest";
-      #   extName = "owoify-editor";
-      #   extCreator = "rssaromeo";
-      #   version = "3.0.0";
-      #   sourceRoot = "source";
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "vscodeowotest";
+        extName = "owoify-editor";
+        extCreator = "rssaromeo";
+        version = "3.0.0";
 
-      #   ghRev = "85238178aecb071fbfa36826a18d17225be20757";
-      #   ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
-      # })
+        ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
+        ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
+        npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
+      })
       # (buildFromGh {
       #   ghName = "rsa17826";
       #   ghRepo = "simple-auto-formatter";
