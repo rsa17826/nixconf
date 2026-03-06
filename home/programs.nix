@@ -116,114 +116,127 @@
       deno
       zuban
       libreoffice
+      # (
+      #   let
+      #     version = "7.2.11";
+      #   in
+      #   pkgs.stdenv.mkDerivation {
+      #     pname = "xdm";
+      #     inherit version;
+
+      #     src = pkgs.fetchurl {
+      #       url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman.jar";
+      #       sha256 = "sha256-FAQTZReX2XsTxfGi8MUo2m5G02Ur02q9dDsaadxhBDg=";
+      #       # url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
+      #       # sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
+      #     };
+
+      #     # We need these to extract .zst and fix the binaries
+
+      #     sourceRoot = ".";
+      #     autoPatchelfIgnoreMissingDeps = [ "liblttng-ust.so.0" ];
+      #     nativeBuildInputs = [
+      #       pkgs.zstd
+      #       pkgs.autoPatchelfHook
+      #       pkgs.makeWrapper
+      #     ];
+
+      #     buildInputs = with pkgs; [
+      #       gtk3
+      #       nss
+      #       nspr
+      #       libX11
+      #       libXrender
+      #       libXtst
+      #       alsa-lib
+      #       at-spi2-atk
+      #       lttng-ust
+      #       libkrb5
+      #       icu
+      #       openssl
+      #       cairo
+      #       dbus
+      #       expat
+      #       fontconfig
+      #       gdk-pixbuf
+      #       glib
+      #       pango
+      #       libdrm
+      #       mesa
+      #     ];
+      #     installPhase = ''
+      #       runHook preInstall
+
+      #       mkdir -p $out/bin
+
+      #       # Copy the opt folder (where xdm-app lives)
+      #       if [ -d "opt" ]; then
+      #         cp -r opt $out/
+      #       fi
+
+      #       # Copy the usr folder (for icons/desktop files)
+      #       if [ -d "usr" ]; then
+      #         cp -r usr/* $out/
+      #       fi
+
+      #       # The actual binary is xdm-app, not xdman
+      #       chmod +x $out/opt/xdman/xdm-app
+
+      #       # Link it so you can run 'xdman' or 'xdm-app' from the terminal
+      #       ln -sf $out/opt/xdman/xdm-app $out/bin/xdman
+      #       ln -sf $out/opt/xdman/xdm-app $out/bin/xdm-app
+
+      #       runHook postInstall
+      #     '';
+      #     postFixup = ''
+      #       wrapProgram $out/opt/xdman/xdm-app \
+      #         --set GDK_PIXBUF_MODULE_FILE "${pkgs.librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \
+      #         --prefix LD_LIBRARY_PATH : ${
+      #           pkgs.lib.makeLibraryPath (
+      #             with pkgs;
+      #             [
+      #               gtk3
+      #               glib
+      #               cairo
+      #               pango
+      #               gdk-pixbuf
+      #               atk
+      #               at-spi2-atk
+      #               librsvg
+      #               libX11
+      #               libXcomposite
+      #               libXcursor
+      #               libXdamage
+      #               libXext
+      #               libXfixes
+      #               libXi
+      #               libXrender
+      #               libXtst
+      #               libxkbcommon
+      #               mesa
+      #               # The fix for the libssl error:
+      #               openssl
+      #               zlib
+      #               libkrb5
+      #             ]
+      #           )
+      #         }
+      #     '';
+      #   }
+      # )
       (
         let
-          version = "7.2.11";
-        in
-        pkgs.stdenv.mkDerivation {
-          pname = "xdm";
-          inherit version;
-
-          src = pkgs.fetchurl {
-            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdm-setup-${version}.tar.xz";
-            sha256 = "sha256-FAQTZReX2XsTxfGi8MUo2m5G02Ur02q9dDsaadxhBDg=";
-            # url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
-            # sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
+          # Define the version and fetch the jar
+          xdm-jar = fetchurl {
+            url = "https://github.com/subhra74/xdm/releases/download/7.2.11/xdman.jar";
+            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # See note below
           };
-
-          # We need these to extract .zst and fix the binaries
-
-          sourceRoot = ".";
-          autoPatchelfIgnoreMissingDeps = [ "liblttng-ust.so.0" ];
-          nativeBuildInputs = [
-            pkgs.zstd
-            pkgs.autoPatchelfHook
-            pkgs.makeWrapper
-          ];
-
-          buildInputs = with pkgs; [
-            gtk3
-            nss
-            nspr
-            libX11
-            libXrender
-            libXtst
-            alsa-lib
-            at-spi2-atk
-            lttng-ust
-            libkrb5
-            icu
-            openssl
-            cairo
-            dbus
-            expat
-            fontconfig
-            gdk-pixbuf
-            glib
-            pango
-            libdrm
-            mesa
-          ];
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out/bin
-
-            # Copy the opt folder (where xdm-app lives)
-            if [ -d "opt" ]; then
-              cp -r opt $out/
-            fi
-
-            # Copy the usr folder (for icons/desktop files)
-            if [ -d "usr" ]; then
-              cp -r usr/* $out/
-            fi
-
-            # The actual binary is xdm-app, not xdman
-            chmod +x $out/opt/xdman/xdm-app
-
-            # Link it so you can run 'xdman' or 'xdm-app' from the terminal
-            ln -sf $out/opt/xdman/xdm-app $out/bin/xdman
-            ln -sf $out/opt/xdman/xdm-app $out/bin/xdm-app
-
-            runHook postInstall
-          '';
-          postFixup = ''
-            wrapProgram $out/opt/xdman/xdm-app \
-              --set GDK_PIXBUF_MODULE_FILE "${pkgs.librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \
-              --prefix LD_LIBRARY_PATH : ${
-                pkgs.lib.makeLibraryPath (
-                  with pkgs;
-                  [
-                    gtk3
-                    glib
-                    cairo
-                    pango
-                    gdk-pixbuf
-                    atk
-                    at-spi2-atk
-                    librsvg
-                    libX11
-                    libXcomposite
-                    libXcursor
-                    libXdamage
-                    libXext
-                    libXfixes
-                    libXi
-                    libXrender
-                    libXtst
-                    libxkbcommon
-                    mesa
-                    # The fix for the libssl error:
-                    openssl
-                    zlib
-                    libkrb5
-                  ]
-                )
-              }
-          '';
-        }
+        in
+        writeShellScriptBin "xdman" ''
+          ${pkgs.jdk}/bin/java -jar ${xdm-jar} "$@"
+        ''
       )
+      jdk # Ensure a JDK/JRE is also in your system path
     ];
   };
   programs.gpu-screen-recorder.enable = true;
