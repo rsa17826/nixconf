@@ -188,17 +188,17 @@ in
       #   ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
       #   ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
       # })
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "sds-vscode-language";
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "sds-vscode-language";
 
-      #   extName = "simpledatastorage";
-      #   extCreator = "rssaromeo";
-      #   version = "9.0.0";
+        extName = "simpledatastorage";
+        extCreator = "rssaromeo";
+        version = "9.0.0";
 
-      #   ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
-      #   ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
-      # })
+        ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
+        ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
+      })
     ];
   };
 }
