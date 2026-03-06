@@ -24,11 +24,11 @@ let
       version,
       ghName,
       ghRev,
-      ghSha,
+      ghSha ? "sha256-GIT+SHA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
       ghRepo,
       extName,
       extCreator,
-      npmDepsHash,
+      npmDepsHash ? "sha256-NPM+DEPS+HASH+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
     }:
     let
       npmBuild = pkgs.buildNpmPackage {
@@ -46,7 +46,6 @@ let
         # 1. Tell Nix to actually run the build script in package.json
         # Most VS Code extensions use "compile" or "build"
         npmBuildScript = "compile";
-
         # 2. Add dependencies needed for the build process (like TypeScript)
         nativeBuildInputs = [ pkgs.typescript ];
 
@@ -54,14 +53,14 @@ let
           cp -r . $out
         '';
 
-        makeCacheWritable = true;
+        # makeCacheWritable = true;
 
         # This ensures we have the lockfile we generated earlier
-        postPatch = ''
-          if [ ! -f package-lock.json ]; then
-            ${pkgs.nodejs}/bin/npm install --package-lock-only
-          fi
-        '';
+        # postPatch = ''
+        #   if [ ! -f package-lock.json ]; then
+        #     ${pkgs.nodejs}/bin/npm install --package-lock-only
+        #   fi
+        # '';
       };
     in
     pkgs.stdenv.mkDerivation {
@@ -112,30 +111,32 @@ in
         ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
         npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
       })
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "simple-auto-formatter";
+      # onStartupFinished
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "simple-auto-formatter";
 
-      #   extName = "simple-auto-formatter";
-      #   extCreator = "rssaromeo";
-      #   version = "22.0.0";
-      #   sourceRoot = "source";
+        extName = "simple-auto-formatter";
+        extCreator = "rssaromeo";
+        version = "22.0.0";
+        sourceRoot = "source";
 
-      #   ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
-      #   ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
-      # })
-      # (buildFromGh {
-      #   ghName = "rsa17826";
-      #   ghRepo = "4-to-2-formatter";
+        ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
+        # ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
+      })
+      (buildFromGh {
+        ghName = "rsa17826";
+        ghRepo = "4-to-2-formatter";
 
-      #   extName = "4-to-2-formatter";
-      #   extCreator = "rssaromeo";
-      #   version = "7.0.0";
-      #   sourceRoot = "source";
+        extName = "4-to-2-formatter";
+        extCreator = "rssaromeo";
+        version = "7.0.0";
+        # sourceRoot = "source";
 
-      #   ghRev = "23df4506dbcff95247c8b454c03377f8a518226b";
-      #   ghSha = "sha256-UWioS6zquOphFsxyylWr83/btGfWFN9RwgtAe5s97yQ=";
-      # })
+        ghRev = "8d205d877c1c7b2747846472f161729e67c634e6";
+        ghSha = "sha256-PHaOXLEX2D/nrhabylTB+U0R7/6eVSsrRulFYaNebtk=";
+        npmDepsHash = "sha256-o7IA+4Kq4j2XD7dpJNje8g4G2KFi6ocsnXyaGSaXB8M=";
+      })
       # (buildFromGh {
       #   ghName = "rsa17826";
       #   ghRepo = "auto-regex-vscode-extension";
