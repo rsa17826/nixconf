@@ -229,7 +229,7 @@
           # Define the version and fetch the jar
           xdm-jar = fetchurl {
             url = "https://github.com/joselmm/xdm-2023/raw/main/xdman.jar";
-            sha256 = "sha256-gRfyhvneHlf0VRZ22PCrPi6ZBER0S1lffMTLngH1HHw="; # See note below
+            sha256 = "sha256-00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym="; # See note below
           };
         in
         writeShellScriptBin "xadman" ''
