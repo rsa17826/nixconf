@@ -5,9 +5,9 @@ Rectangle {
 
   color: ghNotifCount > 0 ? '#d31f31' : "#888888"
   height: 10
-  radius: 20
   // Width grows/shrinks based on number of digits
   implicitWidth: Math.max(height, ghNotifCountTextItem.implicitWidth + 8)
+  radius: 20
 
   anchors {
     right: parent.right

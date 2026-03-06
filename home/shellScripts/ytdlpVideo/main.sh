@@ -7,7 +7,7 @@
 #     --output ".\%(title)s.%(ext)s" \
 #     --remote-components ejs:github --paths "$HOME/videos/" \
 #     --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
-#     --write-thumbnail --list-formats                                              
+#     --write-thumbnail --list-formats
 # Extracting cookies from brave
 # Extracted 241 cookies from brave
 # [youtube] Extracting URL: https://www.youtube.com/watch?v=7LkGQTsTXAk
@@ -29,7 +29,7 @@
 # sb2 mhtml 80x45        1 │ mhtml │ images storyboard
 # sb1 mhtml 160x90       1 │ mhtml │ images storyboard
 # sb0 mhtml 320x180      1 │ mhtml │ images storyboard
-# Time: 0h:00m:04s                                                                            
+# Time: 0h:00m:04s
 # nyix@nyix:~/nixconf/ > yt-dlp --newline --progress --cookies-from-browser brave \
 #     --no-check-certificate --extract-audio "https://www.youtube.com/watch?v=7LkGQTsTXAk" \
 #     --output ".\%(title)s.%(ext)s" \
@@ -94,7 +94,7 @@
 # sb2 mhtml 80x45        1 │ mhtml │ images storyboard
 # sb1 mhtml 160x90       1 │ mhtml │ images storyboard
 # sb0 mhtml 320x180      1 │ mhtml │ images storyboard
-# Time: 0h:00m:05s                                                                            
+# Time: 0h:00m:05s
 # nyix@nyix:~/nixconf/ > yt-dlp --update-to nightly
 
 # Current version: stable@2026.02.21 from yt-dlp/yt-dlp
@@ -188,8 +188,8 @@
 # 96      mp4   1920x1080   30    │ ~ 57.54MiB 4197k m3u8  │ avc1.640028       mp4a.40.2           [en] WEB-S
 # 137     mp4   1920x1080   30    │   18.16MiB 1325k https │ avc1.640028 1325k video only          1080p, TV-D, mp4_dash
 # 248     webm  1920x1080   30    │   11.22MiB  819k https │ vp9          819k video only          1080p, TV-D, webm_dash
-# Time: 0h:00m:14s                                                                            
-# nyix@nyix:~/nixconf/ > 
+# Time: 0h:00m:14s
+# nyix@nyix:~/nixconf/ >
 download_logic() {
   local mode=$1
   local url=$2

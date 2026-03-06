@@ -45,9 +45,12 @@
   # swapDevices =
   #   [ { device = "/dev/mapper/luks-b7bc4b47-2765-48c4-9068-ee0083727616"; }
   #   ];
-swapDevices = [
-  { device = "/swapfile"; size = 20480; }  # Set the swap file size in MB (2048MB in this case)
-];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 20480;
+    } # Set the swap file size in MB (2048MB in this case)
+  ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -727,4 +727,13 @@
     }
   ],
   "direnv.restart.automatic": true,
+  "[properties]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "[ini]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "[plaintext]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  }
 }
