@@ -130,20 +130,23 @@
           };
 
           # We need these to extract .zst and fix the binaries
+
+          # This line prevents the "multiple directories" error
+          sourceRoot = ".";
+
           nativeBuildInputs = [
             pkgs.zstd
             pkgs.autoPatchelfHook
             pkgs.makeWrapper
           ];
 
-          # Libraries XDM needs to run
           buildInputs = with pkgs; [
             gtk3
             nss
             nspr
-            libX11
-            libXrender
-            libXtst
+            xorg.libX11
+            xorg.libXrender
+            xorg.libXtst
             alsa-lib
             at-spi2-atk
             cairo
@@ -157,20 +160,23 @@
             mesa
           ];
 
-          # The .zst extracts into a standard Linux structure (usr/bin, usr/lib, etc.)
           installPhase = ''
-            mkdir -p $out
-            cp -r usr/* $out/
+            runHook preInstall
 
-            # Ensure the binary is executable and linked correctly
+            mkdir -p $out/bin $out/lib/xdman
+
+            # Copy the extracted 'usr' contents to our output
+            if [ -d "usr" ]; then
+              cp -r usr/* $out/
+            fi
+
+            # Sometimes Arch packages put the binary in /usr/bin or /usr/lib
+            # We make sure our symlink points to the actual executable
             chmod +x $out/lib/xdman/xdman
-            ln -s $out/lib/xdman/xdman $out/bin/xdman
-          '';
+            ln -sf $out/lib/xdman/xdman $out/bin/xdman
 
-          meta = {
-            description = "Xtreme Download Manager";
-            homepage = "https://github.com/subhra74/xdm";
-          };
+            runHook postInstall
+          '';
         }
       )
     ];
