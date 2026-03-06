@@ -116,6 +116,56 @@
       deno
       zuban
       libreoffice
+      (
+        let
+          version = "8.0.29"; # Update this based on the release you want
+        in
+        pkgs.stdenv.mkDerivation {
+          pname = "xdm";
+          inherit version;
+
+          src = fetchurl {
+            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdm-setup-${version}-x64.tar.xz";
+            # You may need to update this hash if the download fails
+            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          };
+
+          # XDM usually needs an FHS environment because it's a pre-compiled binary
+          nativeBuildInputs = [ autoPatchelfHook ];
+          buildInputs = [
+            alsa-lib
+            at-spi2-atk
+            cairo
+            cups
+            dbus
+            expat
+            fontconfig
+            gdk-pixbuf
+            glib
+            gtk3
+            nss
+            nspr
+            pango
+            xorg.libX11
+            xorg.libXcomposite
+            xorg.libXcursor
+            xorg.libXdamage
+            xorg.libXext
+            xorg.libXfixes
+            xorg.libXi
+            xorg.libXrandr
+            xorg.libXrender
+            xorg.libXtst
+            xorg.libxcb
+          ];
+
+          installPhase = ''
+            mkdir -p $out/bin
+            cp -r . $out/opt/
+            ln -s $out/opt/xdman $out/bin/xdm
+          '';
+        }
+      )
     ];
   };
   programs.gpu-screen-recorder.enable = true;
