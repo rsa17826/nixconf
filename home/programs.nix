@@ -126,7 +126,7 @@
 
           src = pkgs.fetchurl {
             url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
-            sha256 = "sha256-n6+T8vI0R6pL2f7jBvW7/X7uVz8kG3mJ3rN+E1rW5g0=";
+            sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
           };
 
           # We need these to extract .zst and fix the binaries
