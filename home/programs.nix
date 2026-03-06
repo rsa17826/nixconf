@@ -158,29 +158,27 @@
             libdrm
             mesa
           ];
-
           installPhase = ''
             runHook preInstall
 
-            # Create the base output directory
             mkdir -p $out/bin
 
-            # 1. Copy the 'opt' folder (the app guts)
+            # Copy the opt folder (where xdm-app lives)
             if [ -d "opt" ]; then
               cp -r opt $out/
             fi
 
-            # 2. Copy the 'usr' folder (icons, desktop files)
+            # Copy the usr folder (for icons/desktop files)
             if [ -d "usr" ]; then
               cp -r usr/* $out/
             fi
 
-            # 3. Make the actual binary executable
-            # Based on your 'ls', it is in opt/xdman/xdman
-            chmod +x $out/opt/xdman/xdman
+            # The actual binary is xdm-app, not xdman
+            chmod +x $out/opt/xdman/xdm-app
 
-            # 4. Create the symlink in $out/bin so you can just type 'xdman'
-            ln -sf $out/opt/xdman/xdman $out/bin/xdman
+            # Link it so you can run 'xdman' or 'xdm-app' from the terminal
+            ln -sf $out/opt/xdman/xdm-app $out/bin/xdman
+            ln -sf $out/opt/xdman/xdm-app $out/bin/xdm-app
 
             runHook postInstall
           '';
