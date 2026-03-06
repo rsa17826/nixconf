@@ -131,7 +131,6 @@
 
           # We need these to extract .zst and fix the binaries
 
-          # This line prevents the "multiple directories" error
           sourceRoot = ".";
 
           nativeBuildInputs = [
@@ -144,9 +143,9 @@
             gtk3
             nss
             nspr
-            xorg.libX11
-            xorg.libXrender
-            xorg.libXtst
+            libX11
+            libXrender
+            libXtst
             alsa-lib
             at-spi2-atk
             cairo
@@ -163,17 +162,28 @@
           installPhase = ''
             runHook preInstall
 
-            mkdir -p $out/bin $out/lib/xdman
+            # Create the output directory
+            mkdir -p $out
 
-            # Copy the extracted 'usr' contents to our output
+            # Copy everything from the extracted usr folder to $out
             if [ -d "usr" ]; then
               cp -r usr/* $out/
             fi
 
-            # Sometimes Arch packages put the binary in /usr/bin or /usr/lib
-            # We make sure our symlink points to the actual executable
-            chmod +x $out/lib/xdman/xdman
-            ln -sf $out/lib/xdman/xdman $out/bin/xdman
+            # Find the real xdman binary (it's usually in lib/xdman/ or bin/)
+            # and make sure it is executable
+            REAL_BIN=$(find $out -name xdman -type f | head -n 1)
+
+            if [ -z "$REAL_BIN" ]; then
+              echo "Error: Could not find xdman binary in unpacked source!"
+              exit 1
+            fi
+
+            chmod +x "$REAL_BIN"
+
+            # Ensure there is a symlink in $out/bin so you can run 'xdman' from terminal
+            mkdir -p $out/bin
+            ln -sf "$REAL_BIN" $out/bin/xdman
 
             runHook postInstall
           '';
