@@ -229,7 +229,7 @@
           # Define the version and fetch the jar
           xdm-jar = fetchurl {
             url = "https://github.com/subhra74/xdm/releases/download/7.2.11/xdman.jar";
-            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # See note below
+            sha256 = "sha256-gRfyhvneHlf0VRZ22PCrPi6ZBER0S1lffMTLngH1HHw="; # See note below
           };
         in
         writeShellScriptBin "xdman" ''
