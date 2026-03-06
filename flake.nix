@@ -18,6 +18,11 @@
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hypr-dynamic-cursors = {
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     # impermanence = {
     #   url = "github:nix-community/impermanence";
     #   inputs.nixpkgs.follows = "nixpkgs";

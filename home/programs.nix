@@ -115,6 +115,7 @@
       goldberg-emu
       deno
       zuban
+      libreoffice
     ];
   };
   programs.gpu-screen-recorder.enable = true;
