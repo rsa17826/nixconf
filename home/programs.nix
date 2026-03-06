@@ -186,6 +186,34 @@
 
             runHook postInstall
           '';
+          postFixup = ''
+            wrapProgram $out/opt/xdman/xdm-app \
+              --prefix LD_LIBRARY_PATH : ${
+                pkgs.lib.makeLibraryPath (
+                  with pkgs;
+                  [
+                    gtk3
+                    glib
+                    cairo
+                    pango
+                    gdk-pixbuf
+                    atk
+                    at-spi2-atk
+                    xorg.libX11
+                    xorg.libXcomposite
+                    xorg.libXcursor
+                    xorg.libXdamage
+                    xorg.libXext
+                    xorg.libXfixes
+                    xorg.libXi
+                    xorg.libXrender
+                    xorg.libXtst
+                    libxkbcommon
+                    mesa
+                  ]
+                )
+              }
+          '';
         }
       )
     ];
