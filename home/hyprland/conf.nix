@@ -29,6 +29,7 @@
     plugin = ${
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
     }/lib/libhypr-dynamic-cursors.so
+    
   ''; # // (
   #   # Map over the files in the ./shaders directory
   #   builtins.mapAttrs (name: value: {
