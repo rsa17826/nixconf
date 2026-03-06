@@ -22,6 +22,10 @@
       url = "github:VirtCode/hypr-dynamic-cursors";
       inputs.hyprland.follows = "hyprland";
     };
+    hypr-darkwindow = {
+      url = "github:micha4w/Hypr-DarkWindow"; # Make sure to change the tag to match your hyprland version
+      inputs.hyprland.follows = "hyprland";
+    };
 
     # impermanence = {
     #   url = "github:nix-community/impermanence";
