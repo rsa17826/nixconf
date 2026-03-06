@@ -168,6 +168,7 @@ in
 
         ghRev = "0ded2c7cbad7769a42c3f3a4dffd16635111be4d";
         ghSha = "sha256-aDZ7HHMdFLwaG6Y2trInJGFAyz+xv/CrSyBBeoZ4Q28=";
+        npmDepsHash = "sha256-wWpLlndJnrub7QVskc+jKACETjwv0niVwr6AZjFl1jU=";
       })
       # (buildFromGh {
       #   ghName = "coopmoney";
