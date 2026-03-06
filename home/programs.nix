@@ -162,28 +162,18 @@
           installPhase = ''
             runHook preInstall
 
-            # Create the output directory
             mkdir -p $out
 
-            # Copy everything from the extracted usr folder to $out
+            # Move the extracted 'usr' contents directly into $out
+            # This places files in $out/bin, $out/lib, etc.
             if [ -d "usr" ]; then
               cp -r usr/* $out/
             fi
 
-            # Find the real xdman binary (it's usually in lib/xdman/ or bin/)
-            # and make sure it is executable
-            REAL_BIN=$(find $out -name xdman -type f | head -n 1)
-
-            if [ -z "$REAL_BIN" ]; then
-              echo "Error: Could not find xdman binary in unpacked source!"
-              exit 1
-            fi
-
-            chmod +x "$REAL_BIN"
-
-            # Ensure there is a symlink in $out/bin so you can run 'xdman' from terminal
-            mkdir -p $out/bin
-            ln -sf "$REAL_BIN" $out/bin/xdman
+            # Ensure the main binaries are executable
+            # The Arch package usually puts them in /usr/bin/ and /usr/lib/xdman/
+            find $out/bin -type f -exec chmod +x {} +
+            find $out/lib/xdman -type f -name "xdman" -exec chmod +x {} +
 
             runHook postInstall
           '';
