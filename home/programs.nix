@@ -120,7 +120,6 @@
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     neovim # tui text editor
-    sxhkd
     wget # cmd dl util
     brave # web browser
     nixfmt # nix language formatter
@@ -131,9 +130,8 @@
     kitty # terminal emulator
     # rofi
     # albert
-    keyd # disables capslock?
+    keyd # disables capslock and enables numlock
     anyrun # application launcher
-    # xmodmap
 
     nix-output-monitor # nix update formatter
     cascadia-code # font
