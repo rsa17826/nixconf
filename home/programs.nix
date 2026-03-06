@@ -132,7 +132,7 @@
           # We need these to extract .zst and fix the binaries
 
           sourceRoot = ".";
-
+          autoPatchelfIgnoreMissingDeps = [ "liblttng-ust.so.0" ];
           nativeBuildInputs = [
             pkgs.zstd
             pkgs.autoPatchelfHook
