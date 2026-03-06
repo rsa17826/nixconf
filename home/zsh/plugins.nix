@@ -44,6 +44,8 @@ in
       bindkey "\e[1;6C" forward-word  # Shift variant
       bindkey '^H' backward-kill-word  # Ctrl+Backspace
       bindkey "\e[3;5~" kill-word      # Ctrl+Delete
+      bindkey '^[[A' history-substring-search-up
+      bindkey '^[[B' history-substring-search-down
     '';
   };
 }
