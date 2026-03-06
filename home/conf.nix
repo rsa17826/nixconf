@@ -225,6 +225,7 @@ in
           ids = [ "*" ];
           settings = {
             main = {
+              numlock = "noop";
               capslock = "overload(control, esc)";
               # numlock = "repeat";
             };
