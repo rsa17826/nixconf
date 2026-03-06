@@ -118,52 +118,59 @@
       libreoffice
       (
         let
-          version = "8.0.29"; # Update this based on the release you want
+          version = "8.0.29";
         in
         pkgs.stdenv.mkDerivation {
           pname = "xdm";
           inherit version;
 
-          src = fetchurl {
-            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdm-setup-${version}-x64.tar.xz";
-            # You may need to update this hash if the download fails
-            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          src = pkgs.fetchurl {
+            url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
+            sha256 = "sha256-n6+T8vI0R6pL2f7jBvW7/X7uVz8kG3mJ3rN+E1rW5g0=";
           };
 
-          # XDM usually needs an FHS environment because it's a pre-compiled binary
-          nativeBuildInputs = [ autoPatchelfHook ];
-          buildInputs = [
+          # We need these to extract .zst and fix the binaries
+          nativeBuildInputs = [
+            pkgs.zstd
+            pkgs.autoPatchelfHook
+            pkgs.makeWrapper
+          ];
+
+          # Libraries XDM needs to run
+          buildInputs = with pkgs; [
+            gtk3
+            nss
+            nspr
+            libX11
+            libXrender
+            libXtst
             alsa-lib
             at-spi2-atk
             cairo
-            cups
             dbus
             expat
             fontconfig
             gdk-pixbuf
             glib
-            gtk3
-            nss
-            nspr
             pango
-            xorg.libX11
-            xorg.libXcomposite
-            xorg.libXcursor
-            xorg.libXdamage
-            xorg.libXext
-            xorg.libXfixes
-            xorg.libXi
-            xorg.libXrandr
-            xorg.libXrender
-            xorg.libXtst
-            xorg.libxcb
+            libdrm
+            mesa
           ];
 
+          # The .zst extracts into a standard Linux structure (usr/bin, usr/lib, etc.)
           installPhase = ''
-            mkdir -p $out/bin
-            cp -r . $out/opt/
-            ln -s $out/opt/xdman $out/bin/xdm
+            mkdir -p $out
+            cp -r usr/* $out/
+
+            # Ensure the binary is executable and linked correctly
+            chmod +x $out/lib/xdman/xdman
+            ln -s $out/lib/xdman/xdman $out/bin/xdman
           '';
+
+          meta = {
+            description = "Xtreme Download Manager";
+            homepage = "https://github.com/subhra74/xdm";
+          };
         }
       )
     ];
