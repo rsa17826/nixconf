@@ -232,7 +232,7 @@
             sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym"; # See note below
           };
         in
-        writeShellScriptBin "xadman" ''
+        writeShellScriptBin "xdm" ''
           ${pkgs.jdk}/bin/java -jar ${xdm-jar} "$@"
         ''
       )
