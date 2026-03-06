@@ -25,12 +25,13 @@
       recursive = true;
     };
   };
-  xdg.configFile."hypr/hm.conf".text = ''
-    plugin = ${
-      inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
-    }/lib/libhypr-dynamic-cursors.so
-    
-  ''; # // (
+  # xdg.configFile."hypr/hm.conf".text = ''
+  #   plugin = ${
+  #     inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
+  #   }/lib/libhypr-dynamic-cursors.so
+  # '';
+
+  # // (
   #   # Map over the files in the ./shaders directory
   #   builtins.mapAttrs (name: value: {
   #     source = ln "${userConfig.nixConf}/home/hyprland/shaders/${name}";
