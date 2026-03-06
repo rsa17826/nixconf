@@ -1,5 +1,7 @@
 {
   ln,
+  inputs,
+  pkgs,
   userConfig,
   ...
 }:
@@ -21,6 +23,10 @@
       source = ln "${userConfig.nixConf}/home/hyprland/shaders";
       recursive = true;
     };
+  };
+  wayland.windowManager.hyprland = {
+    enable = true;
+    plugins = [ inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors ];
   };
   # // (
   #   # Map over the files in the ./shaders directory
