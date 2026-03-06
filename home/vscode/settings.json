@@ -714,7 +714,7 @@
   "terminal.integrated.profiles.linux": {
     "zsh": {
       "path": "/run/current-system/sw/bin/zsh",
-      "args": ["-l"]
+      // "args": ["-l"]
     }
   },
   "[shellscript]": {
@@ -735,5 +735,8 @@
   },
   "[plaintext]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "[hyprlang]": {
+    "editor.defaultFormatter": "Jota0222.multi-formatter"
   }
 }
