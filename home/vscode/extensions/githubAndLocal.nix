@@ -94,29 +94,29 @@ in
 {
   programs.vscode.profiles.default = {
     extensions = [
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "vscodeowotest";
-        extName = "owoify-editor";
-        extCreator = "rssaromeo";
-        version = "3.0.0";
-        sourceRoot = "source";
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "vscodeowotest";
+      #   extName = "owoify-editor";
+      #   extCreator = "rssaromeo";
+      #   version = "3.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "85238178aecb071fbfa36826a18d17225be20757";
-        ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
-      })
-      (buildFromGh {
-        ghName = "rsa17826";
-        ghRepo = "simple-auto-formatter";
+      #   ghRev = "85238178aecb071fbfa36826a18d17225be20757";
+      #   ghSha = "sha256-3nTApOmVXrUyoQ5Zvo0vt8bTn1XQpk36webCSacwbF8=";
+      # })
+      # (buildFromGh {
+      #   ghName = "rsa17826";
+      #   ghRepo = "simple-auto-formatter";
 
-        extName = "simple-auto-formatter";
-        extCreator = "rssaromeo";
-        version = "22.0.0";
-        sourceRoot = "source";
+      #   extName = "simple-auto-formatter";
+      #   extCreator = "rssaromeo";
+      #   version = "22.0.0";
+      #   sourceRoot = "source";
 
-        ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
-        ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
-      })
+      #   ghRev = "704d3115007225940bbff112d686ea85508eeb9b";
+      #   ghSha = "sha256-Zk9tG2qxfQrZbn/HRAImipiGQ+GyD0Ga4I3UqUIVfjY=";
+      # })
       # (buildFromGh {
       #   ghName = "rsa17826";
       #   ghRepo = "4-to-2-formatter";
