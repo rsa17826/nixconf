@@ -40,6 +40,15 @@ in
         "#" = "echo";
       };
       interactiveShellInit = commonInit;
+      initExtra = ''
+        # Map the codes Kitty is sending to Zsh actions
+        bindkey "\e[1;5D" backward-word
+        bindkey "\e[1;5C" forward-word
+        bindkey "\e[1;6D" backward-word # Shift variant
+        bindkey "\e[1;6C" forward-word  # Shift variant
+        bindkey '^H' backward-kill-word  # Ctrl+Backspace
+        bindkey "\e[3;5~" kill-word      # Ctrl+Delete
+      '';
     };
     # fish = {
     #   enable = true;
