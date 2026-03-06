@@ -148,6 +148,10 @@
             libXtst
             alsa-lib
             at-spi2-atk
+            lttng-ust
+            libkrb5
+            icu
+            openssl
             cairo
             dbus
             expat
