@@ -162,18 +162,25 @@
           installPhase = ''
             runHook preInstall
 
-            mkdir -p $out
+            # Create the base output directory
+            mkdir -p $out/bin
 
-            # Move the extracted 'usr' contents directly into $out
-            # This places files in $out/bin, $out/lib, etc.
+            # 1. Copy the 'opt' folder (the app guts)
+            if [ -d "opt" ]; then
+              cp -r opt $out/
+            fi
+
+            # 2. Copy the 'usr' folder (icons, desktop files)
             if [ -d "usr" ]; then
               cp -r usr/* $out/
             fi
 
-            # Ensure the main binaries are executable
-            # The Arch package usually puts them in /usr/bin/ and /usr/lib/xdman/
-            find $out/bin -type f -exec chmod +x {} +
-            find $out/lib/xdman -type f -name "xdman" -exec chmod +x {} +
+            # 3. Make the actual binary executable
+            # Based on your 'ls', it is in opt/xdman/xdman
+            chmod +x $out/opt/xdman/xdman
+
+            # 4. Create the symlink in $out/bin so you can just type 'xdman'
+            ln -sf $out/opt/xdman/xdman $out/bin/xdman
 
             runHook postInstall
           '';
