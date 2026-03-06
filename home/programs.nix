@@ -188,6 +188,7 @@
           '';
           postFixup = ''
             wrapProgram $out/opt/xdman/xdm-app \
+              --set GDK_PIXBUF_MODULE_FILE "${pkgs.librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \
               --prefix LD_LIBRARY_PATH : ${
                 pkgs.lib.makeLibraryPath (
                   with pkgs;
@@ -199,15 +200,16 @@
                     gdk-pixbuf
                     atk
                     at-spi2-atk
-                    xorg.libX11
-                    xorg.libXcomposite
-                    xorg.libXcursor
-                    xorg.libXdamage
-                    xorg.libXext
-                    xorg.libXfixes
-                    xorg.libXi
-                    xorg.libXrender
-                    xorg.libXtst
+                    librsvg
+                    libX11
+                    libXcomposite
+                    libXcursor
+                    libXdamage
+                    libXext
+                    libXfixes
+                    libXi
+                    libXrender
+                    libXtst
                     libxkbcommon
                     mesa
                   ]
