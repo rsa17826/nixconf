@@ -277,6 +277,7 @@
     wireplumber
     hyprlock # lockscreen
     killall
+    losslesscut-bin
   ];
   services.pipewire = {
     # Enable PipeWire

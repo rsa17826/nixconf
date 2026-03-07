@@ -40,7 +40,6 @@ in
         "#" = "echo";
       };
       interactiveShellInit = commonInit;
-      
     };
     # fish = {
     #   enable = true;
