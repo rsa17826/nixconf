@@ -44,6 +44,7 @@
     packages = with pkgs; [
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
+      steam
       # typos
       typos-lsp # spellchecker
       # keepass # password manager

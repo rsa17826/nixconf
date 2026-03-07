@@ -52,6 +52,7 @@ in
         "nvidia-x11"
         "nvidia-settings"
         "nvidia-persistenced"
+        "steam"
       ];
   };
   nix.settings = {
