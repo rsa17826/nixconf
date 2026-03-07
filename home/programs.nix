@@ -42,6 +42,7 @@
       "audio"
     ];
     packages = with pkgs; [
+      gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
       steam
