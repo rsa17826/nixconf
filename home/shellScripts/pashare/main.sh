@@ -5,7 +5,7 @@ sudo -v || exit 1
 
 PORT=1234
 SINK_NAME="VirtualSink"
-RATE=24000
+RATE=12000
 # TITLE="Audio Streamer"
 
 # Function to clean up on exit or stop
