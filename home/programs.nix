@@ -2,6 +2,7 @@
   pkgs,
   userConfig,
   inputs,
+  pkgFromInp,
   ...
 }:
 {
@@ -18,6 +19,7 @@
   programs = {
     hyprland = {
       enable = true;
+      package = pkgFromInp "hyprland" "hyprland";
     };
     firefox = {
       enable = true;
@@ -40,7 +42,7 @@
       "audio"
     ];
     packages = with pkgs; [
-      inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default # widget thing
+      (pkgFromInp "quickshell" "default") # widget thing
       wtype
       # typos
       typos-lsp # spellchecker

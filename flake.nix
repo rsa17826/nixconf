@@ -57,6 +57,11 @@
       ...
     }@inputs:
     let
+      globalArgs = {
+        inherit inputs;
+        pkgFromInp =
+          inputName: pkgName: inputs.${inputName}.packages.${pkgs.stdenv.hostPlatform.system}.${pkgName};
+      };
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
 
@@ -68,8 +73,8 @@
             userConfig = tempUserConfig // {
               nixConf = "/home/${tempUserConfig.uname}/nixconf";
             };
-            args = {
-              inherit inputs hostName userConfig;
+            args = globalArgs // {
+              inherit hostName userConfig;
             };
           in
           {
@@ -101,9 +106,8 @@
             userConfig = tempUserConfig // {
               nixConf = "/home/${tempUserConfig.uname}/nixconf";
             };
-            args = {
+            args = globalArgs // {
               inherit
-                inputs
                 hostName
                 userConfig
                 ;
