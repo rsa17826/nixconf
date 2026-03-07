@@ -53,6 +53,8 @@ in
         "nvidia-settings"
         "nvidia-persistenced"
         "steam"
+        "steam-original"
+        "steam-unwrapped"
       ];
   };
   nix.settings = {
