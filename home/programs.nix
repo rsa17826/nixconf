@@ -237,6 +237,7 @@
         ''
       )
       jdk # Ensure a JDK/JRE is also in your system path
+      xemu
     ];
   };
   programs.gpu-screen-recorder.enable = true;
