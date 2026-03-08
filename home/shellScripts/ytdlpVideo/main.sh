@@ -202,25 +202,27 @@ download_logic() {
 
   # Run yt-dlp and pipe progress to a loop that sends updates to the socket
   # https://www.youtube.com/watch?v=7LkGQTsTXAk&t=115&startTime=0
-  yt-dlp --newline --progress --cookies-from-browser brave \
-    --no-check-certificate --extract-audio "$url" \
-    --output ".\%(title)s.%(ext)s" \
-    --remote-components ejs:github --paths "$HOME/videos/" \
-    --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
-    --write-thumbnail --list-formats 2>~/ass
   # yt-dlp --newline --progress --cookies-from-browser brave \
   #   --no-check-certificate --extract-audio "$url" \
   #   --output ".\%(title)s.%(ext)s" \
   #   --remote-components ejs:github --paths "$HOME/videos/" \
   #   --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
-  #   --write-thumbnail 2>~/ass
-  #    while read -r line; do
-  #   if [[ $line =~ \[download\]\ +([0-9.]+)% ]]; then
-  #     local percent="${BASH_REMATCH[1]}"
-  #     # Send update to socket
-  #     echo "{\"progress\": $percent, \"name\": \"$HOME/videos/$output_tmpl\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
-  #   fi
-  # done
+  #   --write-thumbnail --list-formats 2>~/ass
+  yt-dlp --cookies-from-browser brave https://www.twitch.tv/videos/2708570264\
+  -f "bestvideo[height<=720]+bestaudio/best[height<=720]" --merge-output-format mp4 "" url "" --no-mtime --add-metadata --output ".\%(title)s.%(ext)s" --paths "~/videos" --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic"
+  yt-dlp --newline --progress --cookies-from-browser brave \
+    --no-check-certificate --extract-audio "$url" \
+    --output ".\%(title)s.%(ext)s" \
+    --remote-components ejs:github --paths "$HOME/videos/" \
+    --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+    --write-thumbnail 2>~/ass
+     while read -r line; do
+    if [[ $line =~ \[download\]\ +([0-9.]+)% ]]; then
+      local percent="${BASH_REMATCH[1]}"
+      # Send update to socket
+      echo "{\"progress\": $percent, \"name\": \"$HOME/videos/$output_tmpl\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
+    fi
+  done
 
   # Close the bar after 5 seconds (using the max_idle logic we built)
   echo "{\"action\": \"close\", \"pid\": $pid}" | nc -U /tmp/progress_bars.sock
