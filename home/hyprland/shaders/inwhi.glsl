@@ -13,29 +13,14 @@ float mapToDarkeningFactor(float x) {
 }
 
 void main() {
-  // 1. Get the full vec4 (RGBA) so we have the alpha channel available
-  vec4 pix = texture2D(u_tex, v_texcoord);
-  vec3 color = pix.rgb;
+  // 1. Fixed variable names: u_tex instead of Source, v_texcoord instead of vTexCoord
+  vec3 color = texture2D(u_tex, v_texcoord).rgb;
 
-  float maxC = max(color.r, max(color.g, color.b));
-  float minC = min(color.r, min(color.g, color.b));
+  // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
+  float averageIntensity = (color.r + color.g + color.b) / 3.0;
+    
+  float darkeningFactor = mapToDarkeningFactor(averageIntensity);
 
-  // 2. Logic: if the difference between max and min channel is < 5%
-  if ((maxC - minC) < 0.02) {
-    // Invert RGB but keep the original Alpha
-vec3 inverted = 1.0 - color.rgb;
-float brightness = (inverted.r + inverted.g + inverted.b) / 3.0;
-        
-  if (brightness >= 0.8) {
-    // Apply your formula: 40% + (brightness - 80%)
-    // This dims the harsh whites while keeping some detail
-    float dimmedRatio = 0.4 + (brightness - 0.8);
-    inverted = inverted * (dimmedRatio / brightness);
-  }
-        
-  gl_FragColor = vec4(inverted, pix.a);
-      } else {
-  // Output original RGBA
-  gl_FragColor = pix;
-}
+  // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor
+  gl_FragColor = vec4(color * darkeningFactor, 1.0);
 }
