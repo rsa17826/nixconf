@@ -41,6 +41,18 @@ Scope {
       }
       Tray {
       }
+      ClipHist {
+      }
+      // inside shell.qml
+      ClipHist {
+        id: clipboardLogic
+
+      }
+
+      // Then in your bar
+      Text {
+        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
+      }
     }
   }
 }

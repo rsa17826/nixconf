@@ -45,6 +45,7 @@
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
+      cliphist
       steam
       # typos
       typos-lsp # spellchecker
