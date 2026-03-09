@@ -16,7 +16,7 @@ let
     repairStore = "sudo nix-store --verify --check-contents --repair";
     sd = "shutdown";
     reb = "reboot";
-    cd = "z";
+    # cd = "z";
   };
   commonInit = ''
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"

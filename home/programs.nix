@@ -120,6 +120,41 @@
       deno
       zuban
       libreoffice
+      # (pkgs.writeShellScriptBin "godot47" ''exec ${
+      #   (pkgs.stdenv.mkDerivation rec {
+      #     version = "4.7-dev2";
+      #     pname = "godot-${version}";
+      #     src = pkgs.fetchurl {
+      #       url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
+      #       sha256 = "00g3iidkcr068ayy6r77zpmpnl4c66q1gcqid0klc1hbxmdw5psp";
+      #     };
+      #     nativeBuildInputs = with pkgs; [ unzip ];
+      #     sourceRoot = ".";
+      #     installPhase = "mkdir -p $out/bin; chmod +x Godot_v${version}_linux.x86_64; cp Godot_v* $out/bin/godot";
+      #   })
+      # }/bin/godot "$@"'')
+      (
+        let
+          godot-4-7-dev2 = pkgs.stdenv.mkDerivation rec {
+
+            version = "4.7-dev2";
+            pname = "godot-${version}";
+            src = pkgs.fetchurl {
+              url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
+              sha256 = "00g3iidkcr068ayy6r77zpmpnl4c66q1gcqid0klc1hbxmdw5psp";
+            };
+            nativeBuildInputs = with pkgs; [ unzip ];
+            sourceRoot = ".";
+            installPhase = ''
+              mkdir -p $out/bin
+              chmod +x Godot_v${version}_linux.x86_64
+              cp Godot_v${version}_linux.x86_64 $out/bin/godot-${version}
+            '';
+          };
+        in
+        godot-4-7-dev2
+      )
+
       # (
       #   let
       #     version = "7.2.11";
