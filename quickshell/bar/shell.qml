@@ -28,30 +28,60 @@ Scope {
       implicitWidth: Screen.width
       screen: modelData
 
+      MediaProgress {
+      }
       anchors {
         left: true
         right: true
         top: true
       }
+
+      // Left side content (Clock)
       Clock {
+        anchors {
+          left: parent.left
+          verticalCenter: parent.verticalCenter
+        }
       }
-      MediaProgress {
+
+      // Center content (Media progress + Clipboard text)
+      Row {
+        spacing: 20
+
+        anchors {
+          left: parent.left
+          leftMargin: 100
+          verticalCenter: parent.verticalCenter
+        }
+        Text {
+          id: clipboardDisplay
+
+          anchors.verticalCenter: parent.verticalCenter
+          color: "#cccccc"
+          elide: Text.ElideRight
+          font.pixelSize: 11
+          text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
+          width: 300
+        }
       }
-      GithubNotif {
+
+      // Right side content (Tray + Github Notifications)
+      Row {
+        spacing: 15
+
+        anchors {
+          right: parent.right
+          rightMargin: 10
+          verticalCenter: parent.verticalCenter
+        }
+        Tray {
+        }
+        GithubNotif {
+        }
       }
-      Tray {
-      }
-      ClipHist {
-      }
-      // inside shell.qml
       ClipHist {
         id: clipboardLogic
 
-      }
-
-      // Then in your bar
-      Text {
-        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
       }
     }
   }
