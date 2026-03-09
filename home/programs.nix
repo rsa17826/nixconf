@@ -69,6 +69,7 @@
       opensnitch-ui # firewall
       vscodium # text editor
       wineWow64Packages.unstableFull # windows apps
+      winetricks
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim
