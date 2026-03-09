@@ -145,8 +145,8 @@ in
         extCreator = "rssaromeo";
         version = "51.0.0";
 
-        ghRev = "d90020c8705f914dcdc3725c0db4b3fe2168b781";
-        ghSha = "sha256-DN3KOub5fzXx8pTfwDGsAxWPLE44FaFjS2kCe7uNX6g=";
+        ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
+        ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
         npmDepsHash = "sha256-G16A4BN9R6u1hklQ4ibrz4fUs0M8rvJLnJZk/fp7ChE=";
         nativeBuildInputs = with pkgs; [
           pkg-config
