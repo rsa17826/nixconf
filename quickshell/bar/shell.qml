@@ -28,60 +28,56 @@ Scope {
       implicitWidth: Screen.width
       screen: modelData
 
-      MediaProgress {
-      }
       anchors {
         left: true
         right: true
         top: true
       }
 
-      // Left side content (Clock)
+      MediaProgress {
+      }
+
+      // Clipboard text aligned left
+      Text {
+        id: clipboardDisplay
+
+        anchors {
+          left: parent.left
+          leftMargin: 10
+          verticalCenter: parent.verticalCenter
+        }
+
+        color: "#cccccc"
+        elide: Text.ElideRight
+        font.pixelSize: 11
+        width: 400
+        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
+      }
+
+      // Clock centered
       Clock {
         anchors {
-          left: parent.left
+          horizontalCenter: parent.horizontalCenter
           verticalCenter: parent.verticalCenter
         }
       }
 
-      // Center content (Media progress + Clipboard text)
-      Row {
-        spacing: 20
-
+      // Tray positioned to the left of Github widget
+      Tray {
         anchors {
-          left: parent.left
-          leftMargin: 100
+          right: githubWidget.left
+          rightMargin: 15
           verticalCenter: parent.verticalCenter
-        }
-        Text {
-          id: clipboardDisplay
-
-          anchors.verticalCenter: parent.verticalCenter
-          color: "#cccccc"
-          elide: Text.ElideRight
-          font.pixelSize: 11
-          text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
-          width: 300
         }
       }
 
-      // Right side content (Tray + Github Notifications)
-      Row {
-        spacing: 15
-
-        anchors {
-          right: parent.right
-          rightMargin: 10
-          verticalCenter: parent.verticalCenter
-        }
-        Tray {
-        }
-        GithubNotif {
-        }
+      // Github widget on the far right
+      GithubNotif {
+        id: githubWidget
       }
+
       ClipHist {
         id: clipboardLogic
-
       }
     }
   }
