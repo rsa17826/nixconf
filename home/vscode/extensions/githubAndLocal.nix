@@ -143,7 +143,7 @@ in
 
         extName = "auto-regex";
         extCreator = "rssaromeo";
-        version = "51.0.0";
+        version = "52.0.0";
 
         ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
         ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
