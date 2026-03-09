@@ -54,7 +54,7 @@
       godot # programing
       # appimage-run
       # firejail
-      motrix # download manager
+      # motrix # download manager
       # nix-tree
       kid3 # audio tagger
       yt-dlp # media downloader
@@ -68,7 +68,6 @@
       opensnitch-ui # firewall
       vscodium # text editor
       # wineWowPackages.unstableFull # windows apps
-      # autokey # x11 only
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim

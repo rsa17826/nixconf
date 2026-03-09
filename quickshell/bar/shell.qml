@@ -33,73 +33,13 @@ Scope {
         right: true
         top: true
       }
-      Rectangle {
-        color: root.activePlayer ? "rgba(0, 0, 0, 0.4)" : "transparent"
-        height: 2
-        width: parent.width
-
-        Rectangle {
-          id: progressFill
-
-          color: '#d12121'
-          height: 2
-          width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
-        }
+      Clock {
       }
-
-      // Update the position from DBus
-      Timer {
-        interval: 500
-        repeat: true
-        running: !!root.activePlayer && root.activePlayer.playbackState === MprisPlaybackState.Playing
-
-        onTriggered: root.activePlayer.positionChanged()
+      MediaProgress {
       }
-      Rectangle {
-        anchors.centerIn: parent
-        anchors.fill: parent
-        color: "transparent"
-
-        Rectangle {
-          anchors.centerIn: parent
-          // anchors.fill: parent
-          color: '#77000000'
-          implicitHeight: clock.implicitHeight + 12
-          implicitWidth: clock.implicitWidth + 12
-          radius: 0
-
-          ClockWidget {
-            id: clock
-
-            anchors.centerIn: parent
-          }
-        }
-        // Right-aligned rectangle (notification badge)
-        GithubNotif {
-          Timer {
-            interval: 60000   // 60 seconds
-            repeat: true
-            running: true
-
-            onTriggered: {
-              updateGhNotifCount.running = true
-            }
-          }
-          Process {
-            id: updateGhNotifCount
-
-            command: ["sudo", "-n", "githubNotifications"]
-
-            stdout: StdioCollector {
-              onStreamFinished: _ => {
-                ghNotifData = text
-                ghNotifCount = JSON.parse(text).length
-              }
-            }
-
-            Component.onCompleted: running = true
-          }
-        }
+      GithubNotif {
+      }
+      Tray {
       }
     }
   }
