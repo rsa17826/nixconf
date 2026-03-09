@@ -68,7 +68,7 @@
       file # like die
       opensnitch-ui # firewall
       vscodium # text editor
-      # wineWowPackages.unstableFull # windows apps
+      wineWowPackages.unstable # windows apps
       unixtools.watch # watch cmd
       htop # process info
       # htop-vim
