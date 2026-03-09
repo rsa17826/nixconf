@@ -22,6 +22,7 @@ Row {
       width: 24
 
       onClicked: mouse => modelData.activate(mouse.x, mouse.y)
+
       // onSecondaryClicked: mouse => modelData.contextMenu(mouse.x, mouse.y)
 
       IconImage {

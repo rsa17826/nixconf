@@ -33,7 +33,6 @@ Scope {
         right: true
         top: true
       }
-
       MediaProgress {
       }
 
@@ -41,17 +40,17 @@ Scope {
       Text {
         id: clipboardDisplay
 
+        color: "#cccccc"
+        elide: Text.ElideRight
+        font.pixelSize: 11
+        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
+        width: 400
+
         anchors {
           left: parent.left
           leftMargin: 10
           verticalCenter: parent.verticalCenter
         }
-
-        color: "#cccccc"
-        elide: Text.ElideRight
-        font.pixelSize: 11
-        width: 400
-        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
       }
 
       // Clock centered
@@ -74,10 +73,11 @@ Scope {
       // Github widget on the far right
       GithubNotif {
         id: githubWidget
-      }
 
+      }
       ClipHist {
         id: clipboardLogic
+
       }
     }
   }

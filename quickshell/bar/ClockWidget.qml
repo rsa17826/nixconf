@@ -1,3 +1,0 @@
-// ClockWidget.qml
-import QtQuick
-

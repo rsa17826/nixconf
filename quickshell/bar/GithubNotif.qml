@@ -9,7 +9,6 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
-
 Rectangle {
   id: ghBadge
 

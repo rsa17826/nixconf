@@ -713,7 +713,7 @@
   "qmlFormat.extraArguments": ["-n", "--semicolon-rule", "essential"],
   "terminal.integrated.profiles.linux": {
     "zsh": {
-      "path": "/run/current-system/sw/bin/zsh",
+      "path": "/run/current-system/sw/bin/zsh"
       // "args": ["-l"]
     }
   },
