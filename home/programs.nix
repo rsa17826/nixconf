@@ -78,6 +78,7 @@
       nicotine-plus # soulseek
       conky # like rainmeter
       wl-clipboard # clipboard cli tool
+      dxvk
       # wl-clipboard-rs # what is the difference?
       wl-clicker # autoclicker
       # see if can change to scrolllock/z
