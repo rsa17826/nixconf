@@ -65,7 +65,7 @@
       filen-desktop # cloud storage
       javaPackages.compiler.temurin-bin.jre-25 # for running java apps
       file # like die
-      # opensnitch-ui # firewall
+      opensnitch-ui # firewall
       vscodium # text editor
       # wineWowPackages.unstableFull # windows apps
       # autokey # x11 only
