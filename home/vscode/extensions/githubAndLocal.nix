@@ -147,7 +147,7 @@ in
 
         ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
         ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
-        npmDepsHash = "sha256-G16A4BN9R6u1hklQ4ibrz4fUs0M8rvJLnJZk/fp7ChE=";
+        npmDepsHash = "sha256-XN++TQ7z+qF/iK3ktBnCISYh5+eAFi+5QeQgIw0ogoA=";
         nativeBuildInputs = with pkgs; [
           pkg-config
           python3 # node-gyp usually needs this too
