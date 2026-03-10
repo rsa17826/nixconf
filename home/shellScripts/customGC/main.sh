@@ -48,9 +48,10 @@ all_gens=$(echo "$gens" | awk '{print $1}')
 to_delete=()
 for g in $all_gens; do
   if [[ -z "$g" ]]; then continue; fi
-  # Remove quotes from the right side of =~ (Fixes SC2076)
-  # We check if the generation is surrounded by spaces in our 'keep' string
-  if [[ ! " $keep_final " =~ " $g " ]]; then
+  # SC2076 Fix: Remove quotes from the variable on the right side of =~
+  # We use a temporary variable to hold the regex pattern to be extra safe
+  pattern=" $g "
+  if [[ ! " $keep_final " =~ $pattern ]]; then
     to_delete+=("$g")
   fi
 done
