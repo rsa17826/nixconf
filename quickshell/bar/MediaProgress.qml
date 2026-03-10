@@ -19,7 +19,7 @@ Rectangle {
 
     color: '#d12121'
     height: 2
-    width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 50
+    width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
   }
   // Update the position from DBus
   Timer {
