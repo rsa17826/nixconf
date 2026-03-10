@@ -203,7 +203,21 @@ in
   };
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  # systemd.services.nix-custom-gc = {
+  #   description = "Custom GFS Garbage Collection";
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStart = "/path/to/your/script.sh";
+  #   };
+  # };
 
+  # systemd.timers.nix-custom-gc = {
+  #   wantedBy = [ "timers.target" ];
+  #   timerConfig = {
+  #     OnCalendar = "daily";
+  #     Persistent = true;
+  #   };
+  # };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
