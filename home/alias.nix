@@ -5,7 +5,7 @@ let
     vim = "nvim";
     vi = "nvim";
     nano = "nvim";
-    "nix-env" = "echo wrong command";
+    # "nix-env" = "echo wrong command";
     clearcache = "nix-collect-garbage";
     clearallcache = "sudo nix-collect-garbage --delete-older-than 15d";
     worm = "magic-wormhole send";
