@@ -2727,3 +2727,73 @@ https://github.com/loqusion/hyprshade
 // ==/UserScript==
 
 loadlib("textjack")((e)=>e.replace(/(?<!\w)nano(?!\w)/g, "nvim"))
+
+
+// ==UserScript==
+// @name         Universal Code Fixer (+ Hyprland)
+// @match        *://*/*
+// @require      https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nix.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-gdscript.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-toml.min.js
+// @resource     PRISM_CSS https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    GM_addStyle(GM_getResourceText("PRISM_CSS")+`
+    .token.variable { color: #c678dd !important; } /* Purple variables */
+.token.keyword { color: #e06c75 !important; }  /* Reddish keywords */`);
+
+    // 1. Define Hyprland Syntax manually since it's a niche language
+// 1. Refined Hyprland Syntax
+Prism.languages.hyprlang = {
+    'comment': /#.*/,
+    // Variables like $mainMod
+    'variable': /\$[a-zA-Z0-9_]+/,
+    // Keywords only at the start of the line or after a semicolon
+    'keyword': {
+        pattern: /(^|;|^\s*)\b(?:exec-once|exec|bind[a-z]*|monitor|workspace|windowrule[s]?|bezier|animation|input|gestures|general|decoration|animations|dwindle|master|misc|plugin|device)\b/m,
+        lookbehind: true
+    },
+    // The "next", "prev", "insert" arguments
+    'symbol': /\b(?:next|prev|insert|upstream|downstream)\b/,
+    'punctuation': /[=,]/,
+    'string': {
+        pattern: /"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'/,
+        greedy: true
+    }
+};
+
+    function highlightEverything() {
+        const blocks = document.querySelectorAll('code[data-test-id="code-content"], .code-container');
+
+        blocks.forEach(block => {
+            if (block.dataset.prismFixed === "true") return;
+
+            const rawCode = block.innerText;
+            let lang = 'bash';
+
+            // Logic to detect Hyprland
+            if (rawCode.includes('exec-once') || rawCode.includes('monitor=') || rawCode.includes('bind =')) {
+                lang = 'hyprlang';
+            } else if (rawCode.includes('pkgs.') || rawCode.includes('let')||/(?<!)with [\-\w]+;/.test(rawCode)) {
+                lang = 'nix';
+            } else if (rawCode.includes('func ') || rawCode.includes('extends ')) {
+                lang = 'gdscript';
+            }
+
+            if (Prism.languages[lang]) {
+                block.innerHTML = Prism.highlight(rawCode, Prism.languages[lang], lang);
+                block.className = `language-${lang} fixed-code`;
+                block.dataset.prismFixed = "true";
+            }
+        });
+    }
+
+    setInterval(highlightEverything, 1500);
+})();
