@@ -3,11 +3,11 @@
 
 stdenv.mkDerivation rec {
   pname = "portmaster";
-  version = "1.6.4"; # Update this to the latest stable version
+  version = "2.1.7"; # Update this to the latest stable version
 
   # Portmaster has multiple binaries; usually, you'd fetch the 'core' and 'ui'
   src = fetchurl {
-    url = "https://updates.safing.io/latest/linux_amd64/core/portmaster-core_v${version}";
+    url = "https://updates.safing.io/latest/linux_amd64/packages/Portmaster_${version}_amd64.deb";
     sha256 = "0000000000000000000000000000000000000000000000000000"; # Replace with actual hash
   };
 
