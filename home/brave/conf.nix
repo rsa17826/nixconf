@@ -36,9 +36,9 @@ in
           "update_url" = "${storeUrl}";
           "file_url_navigation_allowed" = true;
           "runtime_allowed_hosts" = [
-            "https://*/*"
-            "http://*/*"
-            "file:///*"
+            "https://*"
+            "http://*"
+            "file://*"
           ];
         };
         # XDM
