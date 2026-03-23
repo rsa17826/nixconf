@@ -290,7 +290,7 @@
           name = "portmaster-binary";
           src = pkgs.fetchurl {
             url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "PASTE_YOUR_HASH_HERE"; # Use the hash from nix-prefetch-url
+            sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym"; # Use the hash from nix-prefetch-url
           };
           phases = [ "installPhase" ];
           installPhase = ''
