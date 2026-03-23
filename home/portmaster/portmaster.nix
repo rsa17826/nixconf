@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   # For a full conversion, you'd also fetch the UI binary and the Icon
   icon = fetchurl {
     url = "https://raw.githubusercontent.com/safing/portmaster-packaging/master/linux/portmaster_logo.png";
-    sha256 = "16n8m0k09v7v7z8x9z7x9z7x9z7x9z7x9z7x9z7x9z7x9z7x9z7x"; 
+    sha256 = "sha256-7LAmJZUllK+G07U3YjY8HiJ8K5YE/JyUI2gvyHqSqVc="; 
   };
 
   nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
