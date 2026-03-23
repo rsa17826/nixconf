@@ -9,6 +9,7 @@
       copypartyAdmin = {
         reloadUnits = [ "copyparty.service" ];
         path = "/home/${userConfig.uname}/.config/sops-nix/secrets";
+        owner = userConfig.uname;
       };
     };
   };
