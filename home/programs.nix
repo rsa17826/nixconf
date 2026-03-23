@@ -293,7 +293,7 @@
           src = pkgs.fetchurl {
             # This is the 'notifier' / core binary link
             url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "sha256-0000000000000000000000000000000000000000000="; # RUN: nix-prefetch-url [URL] to get this!
+            sha256 = "sha256-xneMV5+tao0l+QTqmGPRj7aQWFr8T5LEWhortDYmL1g="; # RUN: nix-prefetch-url [URL] to get this!
           };
 
           phases = [ "installPhase" ];
