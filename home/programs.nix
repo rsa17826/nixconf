@@ -316,7 +316,7 @@
             exec ${
               pkgs.fetchurl {
                 url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-                sha256 = "0000000000000000000000000000000000000000000="; # <--- Replace with your prefetched hash!
+                sha256 = "sha256-xneMV5+tao0l+QTqmGPRj7aQWFr8T5LEWhortDYmL1g="; # <--- Replace with your prefetched hash!
               }
             } "$@"
           '';
