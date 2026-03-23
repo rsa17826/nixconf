@@ -294,7 +294,6 @@
               curl
               glibc
               zlib
-              ext4utils # helps with filesystem tasks Portmaster does
               # Add any UI libs if the GUI fails later:
               nss
               nspr
