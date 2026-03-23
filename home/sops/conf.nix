@@ -8,12 +8,12 @@
         owner = userConfig.uname;
       };
       copypartyAdmin = {
-        reloadUnits = [ "copyparty.service" ];
+        restartUnits = [ "copyparty.service" ];
         group = "copyparty";
         mode = "0440";
       };
       copypartyS = {
-        reloadUnits = [ "copyparty.service" ];
+        restartUnits = [ "copyparty.service" ];
         group = "copyparty";
         mode = "0440";
       };
