@@ -5,7 +5,50 @@
   pkgFromInp,
   ...
 }:
+let
+  portmaster = pkgs.callPackage ./portmaster/portmaster.nix { };
+in
 {
+
+  systemd.services.portmaster = {
+    description = "Portmaster by Safing";
+    documentation = [ "https://docs.safing.io" ];
+    wantedBy = [ "multi-user.target" ];
+    before = [
+      "nss-lookup.target"
+      "network.target"
+    ];
+    after = [ "network-pre.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      WorkingDirectory = "/var/lib/portmaster";
+      StateDirectory = "portmaster";
+      ExecStart = "${portmaster}/bin/portmaster-core --log-dir=/var/lib/portmaster/log";
+      Restart = "on-failure";
+      RestartSec = 10;
+
+      # Security settings from your script
+      AmbientCapabilities = [
+        "CAP_CHOWN"
+        "CAP_NET_ADMIN"
+        "CAP_NET_BIND_SERVICE"
+        "CAP_NET_RAW"
+        "CAP_SYS_PTRACE"
+        "CAP_DAC_OVERRIDE"
+      ];
+      CapabilityBoundingSet = [
+        "CAP_CHOWN"
+        "CAP_NET_ADMIN"
+        "CAP_NET_BIND_SERVICE"
+        "CAP_NET_RAW"
+        "CAP_SYS_PTRACE"
+        "CAP_DAC_OVERRIDE"
+      ];
+      ProtectSystem = "full";
+      PrivateTmp = true;
+    };
+  };
   programs.appimage = {
     enable = true;
     binfmt = true;
@@ -42,54 +85,7 @@
       "audio"
     ];
     packages = with pkgs; [
-      (
-        let
-          portmaster = pkgs.callPackage ./portmaster/portmaster.nix { };
-        in
-        {
-          environment.systemPackages = [ portmaster ];
 
-          systemd.services.portmaster = {
-            description = "Portmaster by Safing";
-            documentation = [ "https://docs.safing.io" ];
-            wantedBy = [ "multi-user.target" ];
-            before = [
-              "nss-lookup.target"
-              "network.target"
-            ];
-            after = [ "network-pre.target" ];
-
-            serviceConfig = {
-              Type = "simple";
-              WorkingDirectory = "/var/lib/portmaster";
-              StateDirectory = "portmaster";
-              ExecStart = "${portmaster}/bin/portmaster-core --log-dir=/var/lib/portmaster/log";
-              Restart = "on-failure";
-              RestartSec = 10;
-
-              # Security settings from your script
-              AmbientCapabilities = [
-                "CAP_CHOWN"
-                "CAP_NET_ADMIN"
-                "CAP_NET_BIND_SERVICE"
-                "CAP_NET_RAW"
-                "CAP_SYS_PTRACE"
-                "CAP_DAC_OVERRIDE"
-              ];
-              CapabilityBoundingSet = [
-                "CAP_CHOWN"
-                "CAP_NET_ADMIN"
-                "CAP_NET_BIND_SERVICE"
-                "CAP_NET_RAW"
-                "CAP_SYS_PTRACE"
-                "CAP_DAC_OVERRIDE"
-              ];
-              ProtectSystem = "full";
-              PrivateTmp = true;
-            };
-          };
-        }
-      )
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
@@ -331,6 +327,7 @@
   };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
+    portmaster
     neovim # tui text editor
     wget # cmd dl util
     brave # web browser
