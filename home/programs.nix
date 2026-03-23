@@ -286,22 +286,40 @@
     (
       let
         # Define Portmaster manually since it's missing from nixpkgs
-        portmaster = pkgs.stdenv.mkDerivation rec {
-          pname = "portmaster";
-          version = "1.6.5"; # Update this version as needed
-
-          src = pkgs.fetchurl {
-            # This is the 'notifier' / core binary link
-            url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "sha256-xneMV5+tao0l+QTqmGPRj7aQWFr8T5LEWhortDYmL1g="; # RUN: nix-prefetch-url [URL] to get this!
-          };
-
-          phases = [ "installPhase" ];
-
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $src $out/bin/portmaster-start
-            chmod +x $out/bin/portmaster-start
+        portmaster = pkgs.buildFHSUserEnv {
+          name = "portmaster-start";
+          targetPkgs =
+            pkgs: with pkgs; [
+              wget
+              curl
+              glibc
+              zlib
+              ext4utils # helps with filesystem tasks Portmaster does
+              # Add any UI libs if the GUI fails later:
+              nss
+              nspr
+              atk
+              at-spi2-atk
+              libX11
+              libxcb
+              libXcomposite
+              libXdamage
+              libXext
+              libXfixes
+              libXrandr
+              mesa
+              expat
+            ];
+          runScript = pkgs.writeScript "portmaster-wrapper" ''
+            export PORTMASTER_DATA="$HOME/.local/share/portmaster"
+            mkdir -p "$PORTMASTER_DATA"
+            # This points to the real binary you downloaded
+            exec ${
+              pkgs.fetchurl {
+                url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
+                sha256 = "0000000000000000000000000000000000000000000="; # <--- Replace with your prefetched hash!
+              }
+            } "$@"
           '';
         };
       in
