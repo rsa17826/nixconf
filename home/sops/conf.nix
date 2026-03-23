@@ -5,15 +5,16 @@
     defaultSopsFile = ./secrets.yaml;
     secrets = {
       GITHUB_TOKEN = {
+        owner = userConfig.uname;
       };
       copypartyAdmin = {
         reloadUnits = [ "copyparty.service" ];
-        path = "/home/${userConfig.uname}/.config/sops-nix/secrets";
-        # owner = userConfig.uname;
-        # 3. Set the group to 'copyparty' so the service can read it
         group = "copyparty";
-
-        # 4. Set permissions: Read for owner (root) and group (copyparty)
+        mode = "0440";
+      };
+      copypartyS = {
+        reloadUnits = [ "copyparty.service" ];
+        group = "copyparty";
         mode = "0440";
       };
     };

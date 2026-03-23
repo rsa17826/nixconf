@@ -20,8 +20,8 @@
 
     # create users
     accounts = {
-      admin.passwordFile = "/home/${userConfig.uname}/a";
-      s.passwordFile = "/home/${userConfig.uname}/s";
+      admin.passwordFile = "/run/secrets/copypartyAdmin";
+      s.passwordFile = "/run/secrets/copypartyS";
     };
 
     volumes = {
