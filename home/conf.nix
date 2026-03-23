@@ -71,6 +71,7 @@ in
   boot.kernelPackages = pkgs.linuxPackages;
   environment.variables = {
     EDITOR = "nvim";
+    SOPS_EDITOR = "codium --wait";
     VISUAL = "nvim";
     SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
     HYPRCURSOR_THEME = "mew";
