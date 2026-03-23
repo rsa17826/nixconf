@@ -282,11 +282,26 @@
     ];
   };
   programs.gpu-screen-recorder.enable = true;
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages =
     (
       let
-        # Define Portmaster manually since it's missing from nixpkgs
-        portmaster = pkgs.buildFHSEnv {
+        # 1. Fetch the binary AND make it executable
+        portmaster-bin = pkgs.stdenv.mkDerivation {
+          name = "portmaster-binary";
+          src = pkgs.fetchurl {
+            url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
+            sha256 = "PASTE_YOUR_HASH_HERE"; # Use the hash from nix-prefetch-url
+          };
+          phases = [ "installPhase" ];
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src $out/bin/portmaster-start
+            chmod +x $out/bin/portmaster-start
+          '';
+        };
+
+        # 2. Put that executable binary inside the FHS environment
+        portmaster-pkg = pkgs.buildFHSEnv {
           name = "portmaster-start";
           targetPkgs =
             pkgs: with pkgs; [
@@ -294,7 +309,6 @@
               curl
               glibc
               zlib
-              # Add any UI libs if the GUI fails later:
               nss
               nspr
               atk
@@ -308,57 +322,60 @@
               libXrandr
               mesa
               expat
+              iptables
+              iproute2
             ];
           runScript = pkgs.writeScript "portmaster-wrapper" ''
             export PORTMASTER_DATA="$HOME/.local/share/portmaster"
             mkdir -p "$PORTMASTER_DATA"
-            # This points to the real binary you downloaded
-            exec ${
-              pkgs.fetchurl {
-                url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-                sha256 = "sha256-xneMV5+tao0l+QTqmGPRj7aQWFr8T5LEWhortDYmL1g="; # <--- Replace with your prefetched hash!
-              }
-            } "$@"
+            exec ${portmaster-bin}/bin/portmaster-start "$@"
           '';
         };
       in
-      portmaster
+      [
+        portmaster-bin
+        portmaster-pkg
+      ]
     )
-    neovim # tui text editor
-    wget # cmd dl util
-    brave # web browser
-    nixfmt # nix language formatter
-    git # git is required
-    # kdePackages.kget
-    p7zip # archival tool
-    nix-ld # run linux programs
-    kitty # terminal emulator
-    # rofi
-    # albert
-    keyd # disables capslock and enables numlock
-    anyrun # application launcher
+    ++ [
+      (with pkgs; [
 
-    nix-output-monitor # nix update formatter
-    cascadia-code # font
-    swaynotificationcenter # notification daemon
+        neovim # tui text editor
+        wget # cmd dl util
+        brave # web browser
+        nixfmt # nix language formatter
+        git # git is required
+        # kdePackages.kget
+        p7zip # archival tool
+        nix-ld # run linux programs
+        kitty # terminal emulator
+        # rofi
+        # albert
+        keyd # disables capslock and enables numlock
+        anyrun # application launcher
 
-    # waybar
-    nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
-    font-awesome # For additional icons
-    wlogout # For the power menu click
-    pavucontrol # For audio control
-    ly # tui login manager
-    sops # secrets manager
-    direnv
-    copyparty
-    home-manager
-    pulseaudio
-    pipewire
-    wireplumber
-    hyprlock # lockscreen
-    killall
-    losslesscut-bin
-  ];
+        nix-output-monitor # nix update formatter
+        cascadia-code # font
+        swaynotificationcenter # notification daemon
+
+        # waybar
+        nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
+        font-awesome # For additional icons
+        wlogout # For the power menu click
+        pavucontrol # For audio control
+        ly # tui login manager
+        sops # secrets manager
+        direnv
+        copyparty
+        home-manager
+        pulseaudio
+        pipewire
+        wireplumber
+        hyprlock # lockscreen
+        killall
+        losslesscut-bin
+      ])
+    ];
   services.pipewire = {
     # Enable PipeWire
     enable = true;
