@@ -66,7 +66,7 @@
       filen-desktop # cloud storage
       javaPackages.compiler.temurin-bin.jre-25 # for running java apps
       file # like die
-      opensnitch-ui # firewall
+      # opensnitch-ui # firewall
       vscodium # text editor
       wineWow64Packages.unstableFull # windows apps
       winetricks
@@ -333,8 +333,8 @@
         };
       in
       [
-        portmaster-bin
-        portmaster-pkg
+        # portmaster-bin
+        # portmaster-pkg
       ]
     )
     ++ (with pkgs; [

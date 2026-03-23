@@ -251,9 +251,9 @@ in
         };
       };
     };
-    opensnitch = {
-      enable = true;
-    };
+    # opensnitch = {
+    #   enable = true;
+    # };
   };
 
   #  fileSystems."/data" =
