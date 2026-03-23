@@ -290,7 +290,7 @@
           name = "portmaster-binary";
           src = pkgs.fetchurl {
             url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym"; # Use the hash from nix-prefetch-url
+            sha256 = "0n1g4qvb8aqsbb294kzwb9c91dlgs5irish4z4jqssmdkxbqqxy6"; # Use the hash from nix-prefetch-url
           };
           phases = [ "installPhase" ];
           installPhase = ''
@@ -337,45 +337,43 @@
         portmaster-pkg
       ]
     )
-    ++ [
-      (with pkgs; [
+    ++ (with pkgs; [
 
-        neovim # tui text editor
-        wget # cmd dl util
-        brave # web browser
-        nixfmt # nix language formatter
-        git # git is required
-        # kdePackages.kget
-        p7zip # archival tool
-        nix-ld # run linux programs
-        kitty # terminal emulator
-        # rofi
-        # albert
-        keyd # disables capslock and enables numlock
-        anyrun # application launcher
+      neovim # tui text editor
+      wget # cmd dl util
+      brave # web browser
+      nixfmt # nix language formatter
+      git # git is required
+      # kdePackages.kget
+      p7zip # archival tool
+      nix-ld # run linux programs
+      kitty # terminal emulator
+      # rofi
+      # albert
+      keyd # disables capslock and enables numlock
+      anyrun # application launcher
 
-        nix-output-monitor # nix update formatter
-        cascadia-code # font
-        swaynotificationcenter # notification daemon
+      nix-output-monitor # nix update formatter
+      cascadia-code # font
+      swaynotificationcenter # notification daemon
 
-        # waybar
-        nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
-        font-awesome # For additional icons
-        wlogout # For the power menu click
-        pavucontrol # For audio control
-        ly # tui login manager
-        sops # secrets manager
-        direnv
-        copyparty
-        home-manager
-        pulseaudio
-        pipewire
-        wireplumber
-        hyprlock # lockscreen
-        killall
-        losslesscut-bin
-      ])
-    ];
+      # waybar
+      nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
+      font-awesome # For additional icons
+      wlogout # For the power menu click
+      pavucontrol # For audio control
+      ly # tui login manager
+      sops # secrets manager
+      direnv
+      copyparty
+      home-manager
+      pulseaudio
+      pipewire
+      wireplumber
+      hyprlock # lockscreen
+      killall
+      losslesscut-bin
+    ]);
   services.pipewire = {
     # Enable PipeWire
     enable = true;
