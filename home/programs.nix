@@ -286,7 +286,7 @@
     (
       let
         # Define Portmaster manually since it's missing from nixpkgs
-        portmaster = pkgs.buildFHSUserEnv {
+        portmaster = pkgs.buildFHSEnv {
           name = "portmaster-start";
           targetPkgs =
             pkgs: with pkgs; [
