@@ -30,12 +30,7 @@ in
     enable = true;
 
     extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-      {
-        id = "dcpihecpambacapedldabdbpakmachpb";
-        updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
-      }
-      (mkext {
+      (mkCrx {
         path = "/home/${userConfig.uname}/chrome extensions/dearrow";
         id = "nebjniochfgmgoadjlnelfggcmomgopf";
         crxPath = "/home/share/extension.crx";
