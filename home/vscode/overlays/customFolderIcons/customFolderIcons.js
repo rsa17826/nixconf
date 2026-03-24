@@ -26,11 +26,12 @@ const updateIcons = () => {
     const path = el.getAttribute("aria-label")
     if (path) {
       // Convert path and format URL
-      const formattedPath =
+      const formattedPath = (
         path
           .replace(/\\/g, "/")
           .replace(/ • Contains emphasized items$/, "")
           .replace(/^~/, USERHOME) + "/image.png"
+      ).trimStart("/")
       const vscodePath = `vscode-file://vscode-app/${formattedPath}`
 
       // Set the variable directly on the element's style
