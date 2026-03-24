@@ -36,6 +36,7 @@
     "**/node_modules": true,
     // "**/images": true,
     ".gitattributes": true,
+    "**/.foldericon.png": true,
     "VERSION": true,
     "**/__pycache__": true,
     "**/.venv": true,
