@@ -181,7 +181,7 @@ in
     gtk3.extraConfig = gtkExtraConfig;
     gtk4.extraConfig = gtkExtraConfig;
     # gtk4.theme = config.gtk.theme;
-    gtk.gtk4.theme = null;
+    gtk4.theme = null;
   };
 
   qt = {
