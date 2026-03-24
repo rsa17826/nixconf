@@ -31,7 +31,7 @@ const updateIcons = () => {
           .replace(/\\/g, "/")
           .replace(/ • Contains emphasized items$/, "")
           .replace(/^~/, USERHOME) + "/image.png"
-      ).trimStart("/")
+      ).replace(/^\/+/, "")
       const vscodePath = `vscode-file://vscode-app/${formattedPath}`
 
       // Set the variable directly on the element's style
