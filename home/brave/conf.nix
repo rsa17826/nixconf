@@ -31,6 +31,7 @@ in
 
     extensions = [
       (mkCrx {
+        name = "dearrow";
         path = "/home/${userConfig.uname}/chrome extensions/dearrow";
         id = "nebjniochfgmgoadjlnelfggcmomgopf";
         crxPath = "/home/share/extension.crx";
