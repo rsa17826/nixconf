@@ -42,22 +42,40 @@ Rectangle {
 
   MouseArea {
     anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
 
     onClicked: {
       const data = JSON.parse(ghNotifData)
       if (data.length > 0) {
-        // 1. Find the newest notification object
-        const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b);
+        const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b)
 
-        // 2. Open the URL in your browser
-        Qt.openUrlExternally(newest.url.replace("api.github.com/repos", "github.com").replace("api.github.com", "github.com"));
+        let link = ""
+        if (newest.type === "Release") {
+          // For releases, go to the repo's release page to avoid 404s
+          link = newest.repo_url + "/releases"
+        } else {
+          // For Issues/PRs, the string replacement works perfectly
+          link = newest.thread_url.replace("api.github.com/notifications/threads", "github.com");
+          // Note: Using thread_url -> github.com usually redirects correctly
+        }
 
-        // 3. "Fake" mark as read by clearing UI locally
+        Qt.openUrlExternally(link);
+
+        // Mark as read logic
+        updateGhNotifCount.command = ["githubNotifications", "read", newest.thread_url]
+        updateGhNotifCount.running = true
         ghNotifCount = 0
-        ghNotifData = "[]"
+        resetTimer.start()
       }
     }
+  }
+
+  // Add a small timer to reset the command after the "read" process starts
+  Timer {
+    id: resetTimer
+
+    interval: 1000
+
+    onTriggered: updateGhNotifCount.command = ["githubNotifications"]
   }
   anchors {
     right: parent.right

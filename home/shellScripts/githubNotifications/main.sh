@@ -24,13 +24,15 @@ case "$1" in
 
 *)
   # Default behavior: Fetch notifications
+  # Fetch: We now also grab the repository HTML URL
   curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
     "https://api.github.com/notifications?all=false" |
     jq 'map({ 
         updated_at: .updated_at, 
         title: .subject.title, 
-        url: .url, 
-        subject_url: .subject.url 
+        thread_url: .url, 
+        repo_url: .repository.html_url,
+        type: .subject.type
       })'
   ;;
 esac
