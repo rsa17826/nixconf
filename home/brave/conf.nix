@@ -32,7 +32,7 @@ in
     extensions = [
       (mkCrx {
         name = "dearrow";
-        path = "/home/${userConfig.uname}/chrome extensions/dearrow";
+        src = "/home/${userConfig.uname}/chrome extensions/dearrow";
         id = "nebjniochfgmgoadjlnelfggcmomgopf";
         crxPath = "/home/share/extension.crx";
         version = "2.1.11";
