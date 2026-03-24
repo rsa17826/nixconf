@@ -158,12 +158,12 @@
         version = "1.6.2";
         hash = "sha256-YDX5MOgNMQu1R6evYqKm/R4y70lLsa+SKfwchTd2oHM=";
       }
-      {
-        name = "synthwave-fluoromachine-cursor";
-        publisher = "lujstn";
-        version = "0.2.1";
-        hash = "sha256-OOQu0OJMx54dGpH4dqx/jszwhZEDtE2nMvjUol0uc+U=";
-      }
+      # {
+      #   name = "synthwave-fluoromachine-cursor";
+      #   publisher = "lujstn";
+      #   version = "0.2.1";
+      #   hash = "sha256-OOQu0OJMx54dGpH4dqx/jszwhZEDtE2nMvjUol0uc+U=";
+      # }
       {
         name = "ts-error-translator";
         publisher = "mattpocock";
