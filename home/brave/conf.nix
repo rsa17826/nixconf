@@ -16,7 +16,7 @@ let
       nativeBuildInputs = [ pkgs.go-crx3 ];
 
       buildPhase = ''
-        crx3 pack $src -p ${keyPath} -o ${name}.crx
+        crx3 pack $src -o ${name}.crx
       '';
       installPhase = ''
         mkdir -p $out
