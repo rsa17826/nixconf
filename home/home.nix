@@ -202,7 +202,6 @@ in
     EDITOR = "nvim";
     SOPS_EDITOR = "codium --wait";
     VISUAL = "nvim";
-    SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
     HYPRCURSOR_THEME = "mew";
     QT_STYLE_OVERRIDE = "adwaita-dark";
   };

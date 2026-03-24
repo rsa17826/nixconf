@@ -2,7 +2,7 @@
 # source admin && admin "$@"
 
 # The standard sops-nix path for Home Manager secrets
-TOKEN_PATH="$SECRETS/GITHUB_TOKEN"
+TOKEN_PATH="/run/secrets/GITHUB_TOKEN"
 
 # 1. Check if the decrypted secret exists
 if [ -f "$TOKEN_PATH" ]; then

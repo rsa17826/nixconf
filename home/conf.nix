@@ -11,7 +11,6 @@ let
   sudoKeepVars = [
     "EDITOR"
     "VISUAL"
-    "SECRETS"
     "NIXOS_LABEL_VERSION"
     "NIXOS_LABEL"
   ];
@@ -74,7 +73,6 @@ in
     EDITOR = "nvim";
     SOPS_EDITOR = "codium --wait";
     VISUAL = "nvim";
-    SECRETS = "/home/${userConfig.uname}/.config/sops-nix/secrets";
     HYPRCURSOR_THEME = "mew";
     QT_STYLE_OVERRIDE = "adwaita-dark";
   };
