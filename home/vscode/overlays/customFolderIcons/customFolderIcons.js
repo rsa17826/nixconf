@@ -42,24 +42,23 @@ const updateIcons = () => {
       "--tried-folder-icon-url"
     )
 
-    if (lastTried !== iconUrl) {
-      el.style.setProperty("--tried-folder-icon-url", iconUrl)
+    // if (lastTried !== iconUrl) {
+    el.style.setProperty("--tried-folder-icon-url", iconUrl)
 
-      // 3. Fix fetch syntax (method: 'HEAD' is more efficient than GET)
-      fetch(iconUrl, { method: "HEAD" })
-        .then((response) => {
-          if (response.ok) {
-            el.style.setProperty(
-              "--folder-icon-url",
-              `url('${iconUrl}')`
-            )
-            el.setAttribute("data-has-custom-icon", "true")
-          }
-        })
-        .catch(() => {
-          // Silent catch if image doesn't exist
-        })
-    }
+    fetch(iconUrl, { method: "HEAD" })
+      .then((response) => {
+        if (response.ok) {
+          el.style.setProperty(
+            "--folder-icon-url",
+            `url('${iconUrl}')`
+          )
+          el.setAttribute("data-has-custom-icon", "true")
+        }
+      })
+      .catch(() => {
+        el.removeAttribute("data-has-custom-icon", "false")
+      })
+    // }
   })
 }
 
