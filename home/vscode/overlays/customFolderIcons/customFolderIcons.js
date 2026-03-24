@@ -16,31 +16,49 @@ styleElement.textContent = `
 `
 document.head.appendChild(styleElement)
 
-// 2. The function to update elements (no textContent rewriting needed)
 const updateIcons = () => {
-  const folders = document.querySelectorAll(
-    ".folder-icon:not([data-has-custom-icon])"
-  )
+  // Use a data attribute to avoid re-processing if needed,
+  // though checking the style variable is also fine.
+  const folders = document.querySelectorAll(".folder-icon")
 
   folders.forEach((el) => {
     const path = el.getAttribute("aria-label")
-    if (path) {
-      // Convert path and format URL
-      const formattedPath = (
-        path
-          .replace(/\\/g, "/")
-          .replace(/ • Contains emphasized items$/, "")
-          .replace(/^~/, USERHOME) + "/image.png"
-      ).replace(/^\/+/, "")
-      const vscodePath = `vscode-file://vscode-app/${formattedPath}`
+    if (!path) return
 
-      // Set the variable directly on the element's style
-      el.style.setProperty(
-        "--folder-icon-url",
-        `url('${vscodePath}')`
-      )
-      // Mark as processed
-      el.setAttribute("data-has-custom-icon", "true")
+    // 1. Clean and Format the Path
+    // We keep the leading slash for absolute paths after the protocol
+    let cleanPath = path
+      .replace(/\\/g, "/")
+      .replace(/ • Contains emphasized items$/, "")
+      .replace(/^~/, USERHOME)
+
+    // Ensure it starts with a / so vscode-app/ + /home/... works correctly
+    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+
+    const iconUrl = `vscode-file://vscode-app${cleanPath}/image.png`
+
+    // 2. Correct way to get current style properties
+    const lastTried = el.style.getPropertyValue(
+      "--tried-folder-icon-url"
+    )
+
+    if (lastTried !== iconUrl) {
+      el.style.setProperty("--tried-folder-icon-url", iconUrl)
+
+      // 3. Fix fetch syntax (method: 'HEAD' is more efficient than GET)
+      fetch(iconUrl, { method: "HEAD" })
+        .then((response) => {
+          if (response.ok) {
+            el.style.setProperty(
+              "--folder-icon-url",
+              `url('${iconUrl}')`
+            )
+            el.setAttribute("data-has-custom-icon", "true")
+          }
+        })
+        .catch(() => {
+          // Silent catch if image doesn't exist
+        })
     }
   })
 }
