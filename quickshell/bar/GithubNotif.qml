@@ -42,29 +42,30 @@ Rectangle {
 
   MouseArea {
     anchors.fill: parent
+    cursorShape: Qt.PointingHandCursor
 
     onClicked: {
       const data = JSON.parse(ghNotifData)
       if (data.length > 0) {
+        // 1. Find the newest notification
         const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b)
+        newestAge = "Loading..."
+        // 2. Fetch the real browser URL directly in JS
+        fetch(newest.url).then(response => response.json()).then(json => {
+          if (json.html_url) {
+            // Open the correct browser link (e.g., the tag link for releases)
+            Qt.openUrlExternally(json.html_url);
 
-        let link = ""
-        if (newest.type === "Release") {
-          // For releases, go to the repo's release page to avoid 404s
-          link = newest.repo_url + "/releases"
-        } else {
-          // For Issues/PRs, the string replacement works perfectly
-          link = newest.thread_url.replace("api.github.com/notifications/threads", "github.com");
-          // Note: Using thread_url -> github.com usually redirects correctly
-        }
+            // 3. Mark as read via your bash script
+            updateGhNotifCount.command = ["githubNotifications", "read", newest.thread_url]
+            updateGhNotifCount.running = true;
 
-        Qt.openUrlExternally(link);
-
-        // Mark as read logic
-        updateGhNotifCount.command = ["githubNotifications", "read", newest.thread_url]
-        updateGhNotifCount.running = true
-        ghNotifCount = 0
-        resetTimer.start()
+            // 4. Clean up UI
+            ghNotifCount = 0
+            newestAge = ""
+            resetTimer.start()
+          }
+        }).catch(err => console.error("Failed to fetch GitHub metadata:", err))
       }
     }
   }

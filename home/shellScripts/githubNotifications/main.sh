@@ -30,9 +30,7 @@ case "$1" in
     jq 'map({ 
         updated_at: .updated_at, 
         title: .subject.title, 
-        thread_url: .url, 
-        repo_url: .repository.html_url,
-        type: .subject.type
+        url: .subject.latest_comment_url
       })'
   ;;
 esac
