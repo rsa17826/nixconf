@@ -5,7 +5,6 @@ let
     {
       name,
       src,
-      keyPath,
       version,
     }:
     pkgs.stdenv.mkDerivation {
