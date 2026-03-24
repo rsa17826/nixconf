@@ -1,77 +1,110 @@
-{ pkgs, ... }:
+{ userConfig, pkgs, ... }:
 
 let
-  # The standard Chrome Web Store update URL
-  storeUrl = "https://clients2.google.com/service/update2/crx";
+  mkCrx =
+    {
+      name,
+      src,
+      keyPath,
+      version,
+    }:
+    pkgs.stdenv.mkDerivation {
+      pname = name;
+      inherit version;
+      inherit src;
+
+      nativeBuildInputs = [ pkgs.go-crx3 ];
+
+      buildPhase = ''
+        crx3 pack $src -p ${keyPath} -o ${name}.crx
+      '';
+      installPhase = ''
+        mkdir -p $out
+        cp ${name}.crx $out/
+      '';
+    };
 in
 {
   # 2. Use the Chromium module only for the Policies/Extensions
   programs.chromium = {
     enable = true;
 
-    extraOpts = {
-      "CommandLineFlagSecurityWarningsEnabled" = false;
-      "ExtensionsOnChromeURLsEnabled" = true;
+    extensions = [
+      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+      {
+        id = "dcpihecpambacapedldabdbpakmachpb";
+        updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
+      }
+      (mkext {
+        path = "/home/${userConfig.uname}/chrome extensions/dearrow";
+        id = "nebjniochfgmgoadjlnelfggcmomgopf";
+        crxPath = "/home/share/extension.crx";
+        version = "2.1.11";
+      })
+    ];
+    # extraOpts = {
+    #   "CommandLineFlagSecurityWarningsEnabled" = false;
+    #   "ExtensionsOnChromeURLsEnabled" = true;
 
-      "ExtensionSettings" = {
-        # DeArrow
-        "nebjniochfgmgoadjlnelfggcmomgopf" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-        };
-        # LibRedirect
-        "oladmjdebphlnjjcnomfhhbfdldiimaf" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-        };
-        # Stylus
-        "clngdbkpkpeebahjckkjfobafhncgmne" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-          "file_url_navigation_allowed" = true;
-        };
-        # Violentmonkey
-        "gindolcalhpefcmpmladkchjkfonglfa" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-          "file_url_navigation_allowed" = true;
-        };
-        # XDM
-        "baejcnbldekpcbiogipmdeohckapojkf" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-          "file_url_navigation_allowed" = true;
-        };
-        # SponsorBlock
-        "mnjggcdmjocbbbhaepdhchncahnbgone" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-        };
-        # Redirector
-        "ocgpenflpmgnfapjedencafcfakcekcd" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "${storeUrl}";
-        };
+    #   "ExtensionSettings" = {
+    #     # DeArrow
+    #     "nebjniochfgmgoadjlnelfggcmomgopf" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #     };
+    #     # LibRedirect
+    #     "oladmjdebphlnjjcnomfhhbfdldiimaf" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #     };
+    #     # Stylus
+    #     "clngdbkpkpeebahjckkjfobafhncgmne" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #       "file_url_navigation_allowed" = true;
+    #     };
+    #     # Violentmonkey
+    #     "gindolcalhpefcmpmladkchjkfonglfa" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #       "file_url_navigation_allowed" = true;
+    #     };
+    #     # XDM
+    #     "baejcnbldekpcbiogipmdeohckapojkf" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #       "file_url_navigation_allowed" = true;
+    #     };
+    #     # SponsorBlock
+    #     "mnjggcdmjocbbbhaepdhchncahnbgone" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #     };
+    #     # Redirector
+    #     "ocgpenflpmgnfapjedencafcfakcekcd" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "${storeUrl}";
+    #     };
 
-        # Generic force-installs for the rest
-        "edibdbjcniadpccecjdfdjjppcpchdlm" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "https://clients2.google.com/service/update2/crx";
-        };
-        "eimadpbcbfnmbkopoojfekhnkhdbieeh" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "https://clients2.google.com/service/update2/crx";
-        };
-        "ejddcgojdblidajhngkogefpkknnebdh" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "https://clients2.google.com/service/update2/crx";
-        };
-        "jcokkipkhhgiakinbnnplhkdbjbgcgpe" = {
-          "installation_mode" = "force_installed";
-          "update_url" = "https://clients2.google.com/service/update2/crx";
-        };
-      };
-    };
+    #     # Generic force-installs for the rest
+    #     "edibdbjcniadpccecjdfdjjppcpchdlm" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "https://clients2.google.com/service/update2/crx";
+    #     };
+    #     "eimadpbcbfnmbkopoojfekhnkhdbieeh" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "https://clients2.google.com/service/update2/crx";
+    #     };
+    #     "ejddcgojdblidajhngkogefpkknnebdh" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "https://clients2.google.com/service/update2/crx";
+    #     };
+    #     "jcokkipkhhgiakinbnnplhkdbjbgcgpe" = {
+    #       "installation_mode" = "force_installed";
+    #       "update_url" = "https://clients2.google.com/service/update2/crx";
+    #     };
+    #   };
+    # };
   };
 }
 # ~/chrome extensions/dearrow
