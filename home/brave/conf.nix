@@ -3,17 +3,9 @@
 let
   # The standard Chrome Web Store update URL
   storeUrl = "https://clients2.google.com/service/update2/crx";
-  dearrowId = "nebjniochfgmgoadjlnelfggcmomgopf";
-  dearrowSrc = "/home/nyix/chrome extensions/dearrow";
 in
 {
   # 2. Use the Chromium module only for the Policies/Extensions
-  home.file.".config/BraveSoftware/Brave-Browser/External Extensions/${dearrowId}.json".text =
-    builtins.toJSON
-      {
-        "external_bundle" = "${dearrowSrc}";
-        "external_version" = "1.0.0"; # Must match the version in the extension's manifest.json
-      };
   programs.chromium = {
     enable = true;
 
