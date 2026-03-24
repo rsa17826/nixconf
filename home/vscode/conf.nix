@@ -2,13 +2,14 @@
   pkgs,
   userConfig,
   ln,
+  userConf,
   ...
 }:
 {
   nixpkgs.overlays = [
     (import ./overlays/dokiTheme/conf.nix)
     (import ./overlays/owoify/conf.nix)
-    (import ./overlays/customFolderIcons/conf.nix)
+    ((import ./overlays/customFolderIcons/conf.nix) userConf)
     (import ./overlays/toLocaleStringFix/conf.nix)
     (import ./overlays/updateHash/conf.nix)
   ];

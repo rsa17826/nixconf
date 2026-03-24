@@ -1,7 +1,9 @@
-self: super: {
+userConf: self: super: {
   vscodium = super.vscodium.overrideAttrs (old: {
     # 1. Pass the file content via an environment variable to avoid shell escaping issues
-    customFolderIcons = builtins.readFile ./customFolderIcons.js;
+    customFolderIcons = builtins.replaceStrings [ "\${USERHOME}" ] [ "/home/${userConf.uname}" ] (
+      builtins.readFile ./customFolderIcons.js
+    );
 
     postPatch = (old.postPatch or "") + ''
       target="resources/app/out/vs/workbench/workbench.desktop.main.js"
