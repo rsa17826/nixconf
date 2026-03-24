@@ -8,6 +8,7 @@
   nixpkgs.overlays = [
     (import ./overlays/dokiTheme/conf.nix)
     (import ./overlays/owoify/conf.nix)
+    (import ./overlays/customFolderIcons/conf.nix)
     (import ./overlays/toLocaleStringFix/conf.nix)
     (import ./overlays/updateHash/conf.nix)
   ];
