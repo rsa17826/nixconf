@@ -22,7 +22,6 @@ in
     ./sops/conf.nix
     ./copyparty/conf.nix
     ./firewall/conf.nix
-    ./brave/conf.nix
   ];
   boot.loader = {
     efi = {

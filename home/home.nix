@@ -31,6 +31,7 @@ in
     ./cursors/conf.nix
     ./zsh/plugins.nix
     ./kitty/conf.nix
+    ./brave/conf.nix
     # ./git/conf.nix
   ];
   systemd.user.services.swaync.Service.Restart = lib.mkForce "no";
