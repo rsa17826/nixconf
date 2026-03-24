@@ -10,6 +10,8 @@ styleElement.textContent = `
     content: "" !important;
     width: 16px;
     height: 16px;
+    position:relative;
+    left:-2px;
     display: inline-block;
   }
 `
@@ -24,7 +26,7 @@ async function findIconUpwards(currentPath) {
     return null
   }
 
-  const iconUrl = `vscode-file://vscode-app${currentPath}/image.png`
+  const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
 
   try {
     const response = await fetch(iconUrl, { method: "HEAD" })
