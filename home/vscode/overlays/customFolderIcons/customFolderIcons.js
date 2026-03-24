@@ -67,6 +67,7 @@ const updateIcons = () => {
       // Initial trigger
       updateIcons()
       console.log("🎨 Folder icon observer is live.")
+      return
     } else {
       console.error(
         "Could not find .monaco-list-rows. Is the Explorer visible?"
