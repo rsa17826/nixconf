@@ -86,10 +86,10 @@ in
       };
     };
   };
-  home.stateVersion = "25.11"; # Please read the comment before changing.
+  home.stateVersion = "26.05";
   programs = {
     kitty = {
-      enable = true; # required for the default Hyprland config
+      enable = true;
     };
     home-manager = {
       enable = true;
@@ -180,6 +180,8 @@ in
     };
     gtk3.extraConfig = gtkExtraConfig;
     gtk4.extraConfig = gtkExtraConfig;
+    # gtk4.theme = config.gtk.theme;
+    gtk.gtk4.theme = null;
   };
 
   qt = {
