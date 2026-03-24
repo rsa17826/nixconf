@@ -70,12 +70,12 @@ const updateIcons = () => {
 
     if (listContainer) {
       const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          if (mutation.addedNodes.length > 0) {
-            updateIcons()
-            break
-          }
-        }
+        updateIcons()
+        // for (const mutation of mutations) {
+        //   if (mutation.addedNodes.length > 0) {
+        //     break
+        //   }
+        // }
       })
 
       observer.observe(listContainer, {
