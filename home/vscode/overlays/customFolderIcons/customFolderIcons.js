@@ -46,32 +46,34 @@ const updateIcons = () => {
 
 // 3. Setup MutationObserver to watch the Explorer list
 ;(async () => {
-  const listContainer = document.querySelector(".monaco-list-rows")
+  while (1) {
+    const listContainer = document.querySelector(".monaco-list-rows")
 
-  if (listContainer) {
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.addedNodes.length > 0) {
-          updateIcons()
-          break
+    if (listContainer) {
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.addedNodes.length > 0) {
+            updateIcons()
+            break
+          }
         }
-      }
-    })
+      })
 
-    observer.observe(listContainer, {
-      childList: true,
-      subtree: true,
-    })
+      observer.observe(listContainer, {
+        childList: true,
+        subtree: true,
+      })
 
-    // Initial trigger
-    updateIcons()
-    console.log("🎨 Folder icon observer is live.")
-  } else {
-    console.error(
-      "Could not find .monaco-list-rows. Is the Explorer visible?"
-    )
-    await new Promise((resolve) => {
-      setTimeout(resolve, 100)
-    })
+      // Initial trigger
+      updateIcons()
+      console.log("🎨 Folder icon observer is live.")
+    } else {
+      console.error(
+        "Could not find .monaco-list-rows. Is the Explorer visible?"
+      )
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100)
+      })
+    }
   }
 })()
