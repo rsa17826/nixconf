@@ -61,14 +61,17 @@ const updateIcons = async () => {
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
     // Start the recursive search
-    const foundUrl = await findIconUpwards(cleanPath)
-
-    if (foundUrl) {
-      el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
-      el.setAttribute("data-has-custom-icon", "true")
-    } else {
-      el.removeAttribute("data-has-custom-icon")
-    }
+    findIconUpwards(cleanPath).then((foundUrl) => {
+      if (foundUrl) {
+        el.style.setProperty(
+          "--folder-icon-url",
+          `url('${foundUrl}')`
+        )
+        el.setAttribute("data-has-custom-icon", "true")
+      } else {
+        el.removeAttribute("data-has-custom-icon")
+      }
+    })
   }
 }
 

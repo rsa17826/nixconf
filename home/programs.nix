@@ -278,7 +278,8 @@
         ''
       )
       jdk # Ensure a JDK/JRE is also in your system path
-      xemu
+      xemu # xbox emu
+      wl-clip-persist # keep clip past app death
     ];
   };
   programs.gpu-screen-recorder.enable = true;
@@ -338,7 +339,6 @@
       ]
     )
     ++ (with pkgs; [
-
       neovim # tui text editor
       wget # cmd dl util
       brave # web browser
