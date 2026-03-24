@@ -1,7 +1,7 @@
-userConf: self: super: {
+userConfig: self: super: {
   vscodium = super.vscodium.overrideAttrs (old: {
     # 1. Pass the file content via an environment variable to avoid shell escaping issues
-    customFolderIcons = builtins.replaceStrings [ "\${USERHOME}" ] [ "/home/${userConf.uname}" ] (
+    customFolderIcons = builtins.replaceStrings [ "\${USERHOME}" ] [ "/home/${userConfig.uname}" ] (
       builtins.readFile ./customFolderIcons.js
     );
 
