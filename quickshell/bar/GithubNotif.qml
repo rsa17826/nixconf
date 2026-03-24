@@ -47,25 +47,34 @@ Rectangle {
     onClicked: {
       const data = JSON.parse(ghNotifData)
       if (data.length > 0) {
-        // 1. Find the newest notification
-        const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b)
-        newestAge = "Loading..."
-        // 2. Fetch the real browser URL directly in JS
-        fetch(newest.url).then(response => response.json()).then(json => {
-          if (json.html_url) {
-            // Open the correct browser link (e.g., the tag link for releases)
-            Qt.openUrlExternally(json.html_url);
+        const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b);
 
-            // 3. Mark as read via your bash script
-            updateGhNotifCount.command = ["githubNotifications", "read", newest.thread_url]
-            updateGhNotifCount.running = true;
+        // Create the request
+        const xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              const json = JSON.parse(xhr.responseText)
+              if (json.html_url) {
+                // 1. Open Browser
+                Qt.openUrlExternally(json.html_url);
 
-            // 4. Clean up UI
-            ghNotifCount = 0
-            newestAge = ""
-            resetTimer.start()
+                // 2. Mark as read via your bash script
+                ghReadNotif.command = ["githubNotifications", "read", newest.thread_url]
+                ghReadNotif.running = true;
+
+                // 3. UI Cleanup
+                ghNotifCount = 0
+                newestAge = ""
+              }
+            } else {
+              console.error("Failed to fetch GitHub metadata. Status:", xhr.status)
+            }
           }
-        }).catch(err => console.error("Failed to fetch GitHub metadata:", err))
+        }
+
+        xhr.open("GET", newest.url)
+        xhr.send()
       }
     }
   }
@@ -74,9 +83,9 @@ Rectangle {
   Timer {
     id: resetTimer
 
-    interval: 1000
+    interval: 5000
 
-    onTriggered: updateGhNotifCount.command = ["githubNotifications"]
+    onTriggered: updateGhNotifCount.running = true
   }
   anchors {
     right: parent.right
@@ -126,5 +135,12 @@ Rectangle {
     }
 
     Component.onCompleted: running = true
+  }
+  Process {
+    id: ghReadNotif
+
+    stdout: StdioCollector {
+      onStreamFinished: resetTimer.start()
+    }
   }
 }
