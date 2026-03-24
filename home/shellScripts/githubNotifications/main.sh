@@ -17,4 +17,5 @@ fi
 # Note: GitHub recommends the 'Bearer' prefix for modern tokens
 curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
   "https://api.github.com/notifications?all=false" |
-  jq 'map({ updated_at: .updated_at, title: .subject.title, url: .subject.url })'
+  jq 'map({ updated_at: .updated_at, title: .subject.title, url: .subject.latest_comment_url })'
+  # jq 'map({ updated_at: .updated_at, title: .subject.title, url: .subject.url })'
