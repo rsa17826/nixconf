@@ -51,7 +51,7 @@ Rectangle {
         const newest = data.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b);
 
         // 2. Open the URL in your browser
-        Qt.openUrlExternally(newest.url);
+        Qt.openUrlExternally(newest.url.replace("api.github.com/repos", "github.com").replace("api.github.com", "github.com"));
 
         // 3. "Fake" mark as read by clearing UI locally
         ghNotifCount = 0
