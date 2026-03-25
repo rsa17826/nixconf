@@ -358,7 +358,6 @@
       swaynotificationcenter # notification daemon
 
       # waybar
-      nerd-fonts.jetbrains-mono # Matches your JetBrainsMono NFP
       font-awesome # For additional icons
       wlogout # For the power menu click
       pavucontrol # For audio control
@@ -374,6 +373,13 @@
       killall
       losslesscut-bin
     ]);
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.hack
+  ];
+
+  # This is crucial for the system to "see" them
+  fonts.fontconfig.enable = true;
   services.pipewire = {
     # Enable PipeWire
     enable = true;
