@@ -1,0 +1,620 @@
+hyprland> -- Installing: /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/protocols/ToplevelExport.hpp
+hyprland> -- Installing: /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/defines.hpp
+hyprland> -- Installing: /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/pch
+hyprland> -- Installing: /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/pch/pch.hpp
+hyprland> Running phase: fixupPhase
+hyprland> Moving /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/share/pkgconfig to /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/share/pkgconfig
+hyprland> Patching '/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/share/pkgconfig/hyprland.pc' includedir to output /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev
+hyprland> shrinking RPATHs of ELF executables and libraries in /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718
+hyprland> shrinking /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin/start-hyprland
+hyprland> shrinking /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin/hyprctl
+hyprland> shrinking /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin/.Hyprland-wrapped
+hyprland> shrinking /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin/hyprpm
+hyprland> checking for references to /build/ in /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718...
+hyprland> patching script interpreter paths in /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718
+hyprland> stripping (with command strip and flags -S -p) in  /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin
+hyprland> shrinking RPATHs of ELF executables and libraries in /nix/store/28bhyqg38qh12jwzkm83amdhp9gvpfg5-hyprland-0.54.0+date=2026-03-24_bbf6718-man
+hyprland> checking for references to /build/ in /nix/store/28bhyqg38qh12jwzkm83amdhp9gvpfg5-hyprland-0.54.0+date=2026-03-24_bbf6718-man...
+hyprland> gzipping man pages under /nix/store/28bhyqg38qh12jwzkm83amdhp9gvpfg5-hyprland-0.54.0+date=2026-03-24_bbf6718-man/share/man/
+hyprland> patching script interpreter paths in /nix/store/28bhyqg38qh12jwzkm83amdhp9gvpfg5-hyprland-0.54.0+date=2026-03-24_bbf6718-man
+hyprland> shrinking RPATHs of ELF executables and libraries in /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev
+hyprland> checking for references to /build/ in /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev...
+hyprland> patching script interpreter paths in /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev
+hyprland> making symlink relative: /nix/store/ld5q3hwc2n67fm2vwmb30s4j93drvl43-hyprland-0.54.0+date=2026-03-24_bbf6718/bin/hyprland
+hypr-dynamic-cursors> building '/nix/store/2y1jfxbmdgri9n9wg5hjxzw4zddbaykw-hypr-dynamic-cursors.drv'
+hypr-dynamic-cursors> Running phase: unpackPhase
+hypr-dynamic-cursors> unpacking source archive /nix/store/cm34ip6g0rscgk7wcz4bg6h8kdpmdypc-naa3b44kv5x09zvyydh5ydfvl3plg5hk-source
+hypr-dynamic-cursors> source root is naa3b44kv5x09zvyydh5ydfvl3plg5hk-source
+hypr-dynamic-cursors> Running phase: patchPhase
+hypr-dynamic-cursors> Running phase: updateAutotoolsGnuConfigScriptsPhase
+hypr-dynamic-cursors> Running phase: configurePhase
+hypr-dynamic-cursors> no configure script, doing nothing
+hypr-dynamic-cursors> Running phase: buildPhase
+hypr-dynamic-cursors> build flags: -j12 SHELL=/nix/store/lw117lsr8d585xs63kx5k233impyrq7q-bash-5.3p3/bin/bash
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/cursor.cpp -o out/cursor.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/highres.cpp -o out/highres.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/main.cpp -o out/main.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/config/ShapeRule.cpp -o out/config/ShapeRule.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/config/config.cpp -o out/config/config.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/mode/ModeRotate.cpp -o out/mode/ModeRotate.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/mode/ModeStretch.cpp -o out/mode/ModeStretch.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/mode/ModeTilt.cpp -o out/mode/ModeTilt.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/mode/utils.cpp -o out/mode/utils.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/other/Shake.cpp -o out/other/Shake.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/render/CursorPassElement.cpp -o out/render/CursorPassElement.o
+hypr-dynamic-cursors> g++ -Wall -fPIC -std=c++26 -g -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/protocols -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src -I/nix/store/891cs8mhvh5wa08z0afgvs2ky7bakjiq-aquamarine-0.10.0+date=2026-03-22_f62a4db-dev/include -I/nix/store/xzag246knkmldq4x4g1gkd2nz0baa6mi-cairo-1.18.4-dev/include/cairo -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include/freetype2 -I/nix/store/272w1q8sg6qmglcw6xfnb4qixzzryyqb-freetype-2.13.3-dev/include -I/nix/store/869g80af12y5n3dhbckh19w8p3w64s5z-pixman-0.46.4/include/pixman-1 -I/nix/store/8kay87gsbppxqxakv9h5p94r7zsis1sp-libxcb-1.17.0-dev/include -I/nix/store/ksx8m47bfqv4sjwg7rk4yc5gwfclmv65-hyprcursor-0.1.13+date=2026-03-02_b623964-dev/include -I/nix/store/p813bpki8ji0dmsfq1h3jal9rv7n1fcy-hyprgraphics-0.5.0+date=2026-03-02_7d63c04-dev/include -I/nix/store/q091r70b1ivv6ldz50ilpgkpbvw2w0p0-hyprlang-0.6.8+date=2026-03-02_7615ee3-dev/include -I/nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include -I/nix/store/nm8vpqbxi7qx1dgq5nb4arj0hqhbxvby-libdrm-2.4.131-dev/include/libdrm -I/nix/store/wznk7qyvi5v6qwd4a673v3f6zx6ngn9i-libglvnd-1.7.0-dev/include -I/nix/store/zj092hkwgq72k5vhqnq1wfgw3jhgi3vi-libinput-1.29.2-dev/include -I/nix/store/zx63hp3fkaznmi35hcpc2kkbhp2pq5hz-libxkbcommon-1.13.1-dev/include -I/nix/store/qzg6fshx9s4ivmm38jmnijkmhzz87h2j-wayland-1.24.0-dev/include -I/nix/store/n29rdpw26zp5pggkl9vjns12qmki6gik-libxcb-errors-1.0.1-dev/include -I/nix/store/qhr2rq3z42ikdwhvca50abffm1sm0a20-libxcb-wm-0.4.2-dev/include  --no-gnu-unique -c src/render/renderer.cpp -o out/render/renderer.o
+hypr-dynamic-cursors> In file included from src/highres.cpp:14:
+hypr-dynamic-cursors> src/highres.hpp:20:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:20:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/highres.hpp:37:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:37:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> In file included from src/config/../cursor.hpp:15,
+hypr-dynamic-cursors>                  from src/config/config.cpp:4:
+hypr-dynamic-cursors> src/config/../highres.hpp:20:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/config/../highres.hpp:20:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/highres.cpp: In member function 'void CHighresHandler::update()':
+hypr-dynamic-cursors> src/highres.cpp:46:23: error: cannot convert 'std::nullptr_t' to 'int' in assignment
+hypr-dynamic-cursors>    46 |             texture = nullptr;
+hypr-dynamic-cursors>       |                       ^~~~~~~
+hypr-dynamic-cursors> src/config/../highres.hpp:37:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/config/../highres.hpp:37:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/config/../cursor.hpp:32:123: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                           ^~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                           ITexture
+hypr-dynamic-cursors> src/config/../cursor.hpp:32:131: error: template argument 1 is invalid
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                                   ^
+hypr-dynamic-cursors> src/highres.cpp: In member function 'void CHighresHandler::loadShape(const std::string&)':
+hypr-dynamic-cursors> src/highres.cpp:108:19: error: cannot convert 'std::nullptr_t' to 'int' in assignment
+hypr-dynamic-cursors>   108 |         texture = nullptr;
+hypr-dynamic-cursors>       |                   ^~~~~~~
+hypr-dynamic-cursors> src/highres.cpp:134:23: error: cannot convert 'std::nullptr_t' to 'int' in assignment
+hypr-dynamic-cursors>   134 |             texture = nullptr;
+hypr-dynamic-cursors>       |                       ^~~~~~~
+hypr-dynamic-cursors> src/render/CursorPassElement.cpp: In member function 'virtual std::optional<Hyprutils::Math::CBox> CCursorPassElement::boundingBox()':
+hypr-dynamic-cursors> src/render/CursorPassElement.cpp:36:55: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    36 |     return data.box.copy().scale(1.F / g_pHyprOpenGL->m_renderData.pMonitor->m_scale).round();
+hypr-dynamic-cursors>       |                                                       ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                       SRectRenderData
+hypr-dynamic-cursors> src/highres.cpp:146:26: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>   146 |     texture = makeShared<CTexture>(buffer);
+hypr-dynamic-cursors>       |                          ^~~~~~~~
+hypr-dynamic-cursors>       |                          ITexture
+hypr-dynamic-cursors> src/highres.cpp:146:35: error: no matching function for call to 'makeShared<<expression error> >(SP<CCursorBuffer>&)'
+hypr-dynamic-cursors>   146 |     texture = makeShared<CTexture>(buffer);
+hypr-dynamic-cursors>       |               ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+hypr-dynamic-cursors> In file included from /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/WeakPtr.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/helpers/memory/Memory.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/macros.hpp:8,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/helpers/Color.hpp:5,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/plugins/PluginAPI.hpp:23,
+hypr-dynamic-cursors>                  from src/globals.hpp:3,
+hypr-dynamic-cursors>                  from src/highres.cpp:1:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:196:48: note: candidate: 'template<class U, class ... Args> Hyprutils::Memory::CSharedPointer<U> Hyprutils::Memory::makeShared(Args&& ...)'
+hypr-dynamic-cursors>   196 |         [[nodiscard]] inline CSharedPointer<U> makeShared(Args&&... args) {
+hypr-dynamic-cursors>       |                                                ^~~~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:196:48: note:   template argument deduction/substitution failed:
+hypr-dynamic-cursors> src/highres.cpp:146:35: error: template argument 1 is invalid
+hypr-dynamic-cursors>   146 |     texture = makeShared<CTexture>(buffer);
+hypr-dynamic-cursors>       |               ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+hypr-dynamic-cursors> src/highres.cpp: At global scope:
+hypr-dynamic-cursors> src/highres.cpp:149:4: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>   149 | SP<CTexture> CHighresHandler::getTexture() {
+hypr-dynamic-cursors>       |    ^~~~~~~~
+hypr-dynamic-cursors>       |    ITexture
+hypr-dynamic-cursors> src/highres.cpp:149:12: error: template argument 1 is invalid
+hypr-dynamic-cursors>   149 | SP<CTexture> CHighresHandler::getTexture() {
+hypr-dynamic-cursors>       |            ^
+hypr-dynamic-cursors> make: *** [Makefile:25: out/render/CursorPassElement.o] Error 1
+hypr-dynamic-cursors> make: *** Waiting for unfinished jobs....
+hypr-dynamic-cursors> In file included from src/cursor.hpp:15,
+hypr-dynamic-cursors>                  from src/main.cpp:20:
+hypr-dynamic-cursors> src/highres.hpp:20:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:20:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/highres.hpp:37:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:37:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> In file included from src/cursor.hpp:15,
+hypr-dynamic-cursors>                  from src/cursor.cpp:27:
+hypr-dynamic-cursors> src/highres.hpp:20:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:20:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    20 |     SP<CTexture> getTexture();
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/cursor.hpp:32:123: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                           ^~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                           ITexture
+hypr-dynamic-cursors> src/cursor.hpp:32:131: error: template argument 1 is invalid
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                                   ^
+hypr-dynamic-cursors> In file included from src/render/renderer.cpp:17:
+hypr-dynamic-cursors> src/render/renderer.hpp:4:47: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>     4 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch);
+hypr-dynamic-cursors>       |                                               ^~~~~~~~
+hypr-dynamic-cursors>       |                                               ITexture
+hypr-dynamic-cursors> src/render/renderer.hpp:4:55: error: template argument 1 is invalid
+hypr-dynamic-cursors>     4 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch);
+hypr-dynamic-cursors>       |                                                       ^
+hypr-dynamic-cursors> src/highres.hpp:37:8: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |        ^~~~~~~~
+hypr-dynamic-cursors>       |        ITexture
+hypr-dynamic-cursors> src/highres.hpp:37:16: error: template argument 1 is invalid
+hypr-dynamic-cursors>    37 |     SP<CTexture> texture;
+hypr-dynamic-cursors>       |                ^
+hypr-dynamic-cursors> src/render/renderer.cpp:59:47: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    59 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch) {
+hypr-dynamic-cursors>       |                                               ^~~~~~~~
+hypr-dynamic-cursors>       |                                               ITexture
+hypr-dynamic-cursors> src/render/renderer.cpp:59:55: error: template argument 1 is invalid
+hypr-dynamic-cursors>    59 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch) {
+hypr-dynamic-cursors>       |                                                       ^
+hypr-dynamic-cursors> src/render/renderer.cpp: In function 'void renderCursorTextureInternalWithDamage(int, Hyprutils::Math::CBox*, const Hyprutils::Math::CRegion&, float, Hyprutils::Math::Vector2D, bool, float, Hyprutils::Math::Vector2D)':
+hypr-dynamic-cursors> src/render/renderer.cpp:68:20: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    68 |     g_pHyprOpenGL->m_renderData.renderModif.applyToBox(newBox);
+hypr-dynamic-cursors>       |                    ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                    SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:71:95: error: 'class CHyprOpenGLImpl' has no member named 'm_monitorTransformEnabled'
+hypr-dynamic-cursors>    71 |     const auto TRANSFORM = Math::wlTransformToHyprutils(Math::invertTransform(!g_pHyprOpenGL->m_monitorTransformEnabled ? WL_OUTPUT_TRANSFORM_NORMAL : g_pHyprOpenGL->m_renderData.pMonitor->m_transform));
+hypr-dynamic-cursors>       |                                                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:71:167: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    71 |     const auto TRANSFORM = Math::wlTransformToHyprutils(Math::invertTransform(!g_pHyprOpenGL->m_monitorTransformEnabled ? WL_OUTPUT_TRANSFORM_NORMAL : g_pHyprOpenGL->m_renderData.pMonitor->m_transform));
+hypr-dynamic-cursors>       |                                                                                                                                                                       ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                                                                       SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:72:84: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    72 |     Mat3x3 matrix = projectCursorBox(newBox, TRANSFORM, newBox.rot, g_pHyprOpenGL->m_renderData.monitorProjection, hotspot, stretchAngle, stretch);
+hypr-dynamic-cursors>       |                                                                                    ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                    SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:74:38: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    74 |     Mat3x3 glMatrix = g_pHyprOpenGL->m_renderData.projection.copy().multiply(matrix);
+hypr-dynamic-cursors>       |                                      ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                      SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:78:16: error: base operand of '->' is not a pointer
+hypr-dynamic-cursors>    78 |     switch (tex->m_type) {
+hypr-dynamic-cursors>       |                ^~
+hypr-dynamic-cursors> src/render/renderer.cpp:79:52: error: 'class CHyprOpenGLImpl' has no member named 'getSurfaceShader'
+hypr-dynamic-cursors>    79 |         case TEXTURE_RGBA: shader = g_pHyprOpenGL->getSurfaceShader(SH_FEAT_RGBA); break;
+hypr-dynamic-cursors>       |                                                    ^~~~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:79:69: error: 'SH_FEAT_RGBA' was not declared in this scope; did you mean 'Render::SH_FEAT_RGBA'?
+hypr-dynamic-cursors>    79 |         case TEXTURE_RGBA: shader = g_pHyprOpenGL->getSurfaceShader(SH_FEAT_RGBA); break;
+hypr-dynamic-cursors>       |                                                                     ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                     Render::SH_FEAT_RGBA
+hypr-dynamic-cursors> In file included from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/OpenGL.hpp:35,
+hypr-dynamic-cursors>                  from src/render/renderer.cpp:9:
+hypr-dynamic-cursors> /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/ShaderLoader.hpp:14:9: note: 'Render::SH_FEAT_RGBA' declared here
+hypr-dynamic-cursors>    14 |         SH_FEAT_RGBA     = (1 << 0), // RGBA/RGBX texture sampling
+hypr-dynamic-cursors>       |         ^~~~~~~~~~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:80:52: error: 'class CHyprOpenGLImpl' has no member named 'getSurfaceShader'
+hypr-dynamic-cursors>    80 |         case TEXTURE_RGBX: shader = g_pHyprOpenGL->getSurfaceShader(SH_FEAT_UNKNOWN); break;
+hypr-dynamic-cursors>       |                                                    ^~~~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/cursor.hpp:32:123: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                           ^~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                           ITexture
+hypr-dynamic-cursors> src/cursor.hpp:32:131: error: template argument 1 is invalid
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                                                                                                                                   ^
+hypr-dynamic-cursors> src/render/renderer.cpp:80:69: error: 'SH_FEAT_UNKNOWN' was not declared in this scope; did you mean 'Render::SH_FEAT_UNKNOWN'?
+hypr-dynamic-cursors>    80 |         case TEXTURE_RGBX: shader = g_pHyprOpenGL->getSurfaceShader(SH_FEAT_UNKNOWN); break;
+hypr-dynamic-cursors>       |                                                                     ^~~~~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                     Render::SH_FEAT_UNKNOWN
+hypr-dynamic-cursors> /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/ShaderLoader.hpp:12:9: note: 'Render::SH_FEAT_UNKNOWN' declared here
+hypr-dynamic-cursors>    12 |         SH_FEAT_UNKNOWN = 0, // all features just in case
+hypr-dynamic-cursors>       |         ^~~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:81:67: error: 'struct SPreparedShaders' has no member named 'frag'
+hypr-dynamic-cursors>    81 |         case TEXTURE_EXTERNAL: shader = g_pHyprOpenGL->m_shaders->frag[SH_FRAG_EXT]; break; // apparently unused
+hypr-dynamic-cursors>       |                                                                   ^~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:81:72: error: 'SH_FRAG_EXT' was not declared in this scope; did you mean 'Render::SH_FRAG_EXT'?
+hypr-dynamic-cursors>    81 |         case TEXTURE_EXTERNAL: shader = g_pHyprOpenGL->m_shaders->frag[SH_FRAG_EXT]; break; // apparently unused
+hypr-dynamic-cursors>       |                                                                        ^~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                        Render::SH_FRAG_EXT
+hypr-dynamic-cursors> /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/ShaderLoader.hpp:33:9: note: 'Render::SH_FRAG_EXT' declared here
+hypr-dynamic-cursors>    33 |         SH_FRAG_EXT,
+hypr-dynamic-cursors>       |         ^~~~~~~~~~~
+hypr-dynamic-cursors> src/render/renderer.cpp:86:8: error: base operand of '->' is not a pointer
+hypr-dynamic-cursors>    86 |     tex->bind();
+hypr-dynamic-cursors>       |        ^~
+hypr-dynamic-cursors> src/render/renderer.cpp:88:35: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>    88 |     auto scaling = g_pHyprOpenGL->m_renderData.useNearestNeighbor || nearest ? GL_NEAREST : GL_LINEAR;
+hypr-dynamic-cursors>       |                                   ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                   SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:89:24: error: base operand of '->' is not a pointer
+hypr-dynamic-cursors>    89 |     glTexParameteri(tex->m_target, GL_TEXTURE_MAG_FILTER, scaling);
+hypr-dynamic-cursors>       |                        ^~
+hypr-dynamic-cursors> src/render/renderer.cpp:90:24: error: base operand of '->' is not a pointer
+hypr-dynamic-cursors>    90 |     glTexParameteri(tex->m_target, GL_TEXTURE_MIN_FILTER, scaling);
+hypr-dynamic-cursors>       |                        ^~
+hypr-dynamic-cursors> src/render/renderer.cpp:101:96: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   101 |     transformedBox.transform(Math::wlTransformToHyprutils(Math::invertTransform(g_pHyprOpenGL->m_renderData.pMonitor->m_transform)), g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.x, g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.y);
+hypr-dynamic-cursors>       |                                                                                                ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:101:149: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   101 |     transformedBox.transform(Math::wlTransformToHyprutils(Math::invertTransform(g_pHyprOpenGL->m_renderData.pMonitor->m_transform)), g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.x, g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.y);
+hypr-dynamic-cursors>       |                                                                                                                                                     ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                                                     SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:101:208: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   101 |     transformedBox.transform(Math::wlTransformToHyprutils(Math::invertTransform(g_pHyprOpenGL->m_renderData.pMonitor->m_transform)), g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.x, g_pHyprOpenGL->m_renderData.pMonitor->m_transformedSize.y);
+hypr-dynamic-cursors>       |                                                                                                                                                                                                                ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                                                                                                                SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:116:24: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   116 |     if (g_pHyprOpenGL->m_renderData.clipBox.width != 0 && g_pHyprOpenGL->m_renderData.clipBox.height != 0) {
+hypr-dynamic-cursors>       |                        ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                        SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:116:74: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   116 |     if (g_pHyprOpenGL->m_renderData.clipBox.width != 0 && g_pHyprOpenGL->m_renderData.clipBox.height != 0) {
+hypr-dynamic-cursors>       |                                                                          ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                          SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:117:43: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   117 |         CRegion damageClip{g_pHyprOpenGL->m_renderData.clipBox.x, g_pHyprOpenGL->m_renderData.clipBox.y, g_pHyprOpenGL->m_renderData.clipBox.width, g_pHyprOpenGL->m_renderData.clipBox.height};
+hypr-dynamic-cursors>       |                                           ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                           SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:117:82: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   117 |         CRegion damageClip{g_pHyprOpenGL->m_renderData.clipBox.x, g_pHyprOpenGL->m_renderData.clipBox.y, g_pHyprOpenGL->m_renderData.clipBox.width, g_pHyprOpenGL->m_renderData.clipBox.height};
+hypr-dynamic-cursors>       |                                                                                  ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                  SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:117:121: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   117 |         CRegion damageClip{g_pHyprOpenGL->m_renderData.clipBox.x, g_pHyprOpenGL->m_renderData.clipBox.y, g_pHyprOpenGL->m_renderData.clipBox.width, g_pHyprOpenGL->m_renderData.clipBox.height};
+hypr-dynamic-cursors>       |                                                                                                                         ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                         SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:117:164: error: 'class CHyprOpenGLImpl' has no member named 'm_renderData'; did you mean 'SRectRenderData'?
+hypr-dynamic-cursors>   117 |         CRegion damageClip{g_pHyprOpenGL->m_renderData.clipBox.x, g_pHyprOpenGL->m_renderData.clipBox.y, g_pHyprOpenGL->m_renderData.clipBox.width, g_pHyprOpenGL->m_renderData.clipBox.height};
+hypr-dynamic-cursors>       |                                                                                                                                                                    ^~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                                                                    SRectRenderData
+hypr-dynamic-cursors> src/render/renderer.cpp:117:191: error: no matching function for call to 'Hyprutils::Math::CRegion::CRegion(<brace-enclosed initializer list>)'
+hypr-dynamic-cursors>   117 |         CRegion damageClip{g_pHyprOpenGL->m_renderData.clipBox.x, g_pHyprOpenGL->m_renderData.clipBox.y, g_pHyprOpenGL->m_renderData.clipBox.width, g_pHyprOpenGL->m_renderData.clipBox.height};
+hypr-dynamic-cursors>       |                                                                                                                                                                                               ^
+hypr-dynamic-cursors> In file included from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/../helpers/math/Math.hpp:6,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/../SharedDefs.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/../includes.hpp:30,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/../defines.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/Shader.hpp:3,
+hypr-dynamic-cursors>                  from src/render/renderer.cpp:1:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:24:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(Hyprutils::Math::CRegion&&)'
+hypr-dynamic-cursors>    24 |             CRegion(CRegion&&) noexcept;
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:24:13: note:   candidate expects 1 argument, 4 provided
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:23:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(const Hyprutils::Math::CRegion&)'
+hypr-dynamic-cursors>    23 |             CRegion(const CRegion&);
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:23:13: note:   candidate expects 1 argument, 4 provided
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:21:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(pixman_box32_t*)'
+hypr-dynamic-cursors>    21 |             CRegion(pixman_box32_t* box);
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:21:13: note:   candidate expects 1 argument, 4 provided
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:19:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(const Hyprutils::Math::CBox&)'
+hypr-dynamic-cursors>    19 |             CRegion(const CBox& box);
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:19:13: note:   candidate expects 1 argument, 4 provided
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:17:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(double, double, double, double)'
+hypr-dynamic-cursors>    17 |             CRegion(double x, double y, double w, double h);
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:17:13: note:   conversion of argument 1 would be ill-formed:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:15:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion(const pixman_region32_t*)'
+hypr-dynamic-cursors>    15 |             CRegion(const pixman_region32_t* const ref);
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:15:13: note:   candidate expects 1 argument, 4 provided
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:13:13: note: candidate: 'Hyprutils::Math::CRegion::CRegion()'
+hypr-dynamic-cursors>    13 |             CRegion();
+hypr-dynamic-cursors>       |             ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/math/Region.hpp:13:13: note:   candidate expects 0 arguments, 4 provided
+hypr-dynamic-cursors> In file included from src/cursor.cpp:28:
+hypr-dynamic-cursors> src/render/renderer.hpp:4:47: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>     4 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch);
+hypr-dynamic-cursors>       |                                               ^~~~~~~~
+hypr-dynamic-cursors>       |                                               ITexture
+hypr-dynamic-cursors> src/render/renderer.hpp:4:55: error: template argument 1 is invalid
+hypr-dynamic-cursors>     4 | void renderCursorTextureInternalWithDamage(SP<CTexture> tex, CBox* pBox, const CRegion& damage, float alpha, Vector2D hotspot, bool nearest, float stretchAngle, Vector2D stretch);
+hypr-dynamic-cursors>       |                                                       ^
+hypr-dynamic-cursors> src/render/renderer.cpp:135:8: error: base operand of '->' is not a pointer
+hypr-dynamic-cursors>   135 |     tex->unbind();
+hypr-dynamic-cursors>       |        ^~
+hypr-dynamic-cursors> src/cursor.cpp: In member function 'void CDynamicCursors::renderSoftware(CPointerManager*, SP<CMonitor>, const Time::steady_tp&, Hyprutils::Math::CRegion&, std::optional<Hyprutils::Math::Vector2D>, bool)':
+hypr-dynamic-cursors> src/cursor.cpp:105:23: error: no match for 'operator=' (operand types are 'Hyprutils::Memory::CSharedPointer<ITexture>' and 'int')
+hypr-dynamic-cursors>   105 |             texture = high;
+hypr-dynamic-cursors>       |                       ^~~~
+hypr-dynamic-cursors> In file included from /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/WeakPtr.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/helpers/memory/Memory.hpp:3,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/managers/eventLoop/EventLoopTimer.hpp:7,
+hypr-dynamic-cursors>                  from src/cursor.cpp:8:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:74:54: note: candidate: 'template<class U> Hyprutils::Memory::CSharedPointer<T>::validHierarchy<const Hyprutils::Memory::CSharedPointer<U>&> Hyprutils::Memory::CSharedPointer<T>::operator=(const Hyprutils::Memory::CSharedPointer<U>&) [with T = ITexture]'
+hypr-dynamic-cursors>    74 |             validHierarchy<const CSharedPointer<U>&> operator=(const CSharedPointer<U>& rhs) {
+hypr-dynamic-cursors>       |                                                      ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:74:54: note:   template argument deduction/substitution failed:
+hypr-dynamic-cursors> src/cursor.cpp:105:23: note:   mismatched types 'const Hyprutils::Memory::CSharedPointer<U>' and 'int'
+hypr-dynamic-cursors>   105 |             texture = high;
+hypr-dynamic-cursors>       |                       ^~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:97:54: note: candidate: 'template<class U> Hyprutils::Memory::CSharedPointer<T>::validHierarchy<const Hyprutils::Memory::CSharedPointer<U>&> Hyprutils::Memory::CSharedPointer<T>::operator=(Hyprutils::Memory::CSharedPointer<U>&&) [with T = ITexture]'
+hypr-dynamic-cursors>    97 |             validHierarchy<const CSharedPointer<U>&> operator=(CSharedPointer<U>&& rhs) {
+hypr-dynamic-cursors>       |                                                      ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:97:54: note:   template argument deduction/substitution failed:
+hypr-dynamic-cursors> src/cursor.cpp:105:23: note:   mismatched types 'Hyprutils::Memory::CSharedPointer<U>' and 'int'
+hypr-dynamic-cursors>   105 |             texture = high;
+hypr-dynamic-cursors>       |                       ^~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:85:29: note: candidate: 'Hyprutils::Memory::CSharedPointer<T>& Hyprutils::Memory::CSharedPointer<T>::operator=(const Hyprutils::Memory::CSharedPointer<T>&) [with T = ITexture]'
+hypr-dynamic-cursors>    85 |             CSharedPointer& operator=(const CSharedPointer& rhs) {
+hypr-dynamic-cursors>       |                             ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:85:61: note:   no known conversion for argument 1 from 'int' to 'const Hyprutils::Memory::CSharedPointer<ITexture>&'
+hypr-dynamic-cursors>    85 |             CSharedPointer& operator=(const CSharedPointer& rhs) {
+hypr-dynamic-cursors>       |                                       ~~~~~~~~~~~~~~~~~~~~~~^~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:103:29: note: candidate: 'Hyprutils::Memory::CSharedPointer<T>& Hyprutils::Memory::CSharedPointer<T>::operator=(Hyprutils::Memory::CSharedPointer<T>&&) [with T = ITexture]'
+hypr-dynamic-cursors>   103 |             CSharedPointer& operator=(CSharedPointer&& rhs) noexcept {
+hypr-dynamic-cursors>       |                             ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:103:56: note:   no known conversion for argument 1 from 'int' to 'Hyprutils::Memory::CSharedPointer<ITexture>&&'
+hypr-dynamic-cursors>   103 |             CSharedPointer& operator=(CSharedPointer&& rhs) noexcept {
+hypr-dynamic-cursors>       |                                       ~~~~~~~~~~~~~~~~~^~~
+hypr-dynamic-cursors> src/cursor.cpp:140:16: error: no match for 'operator=' (operand types are 'SP<CTexture>' {aka 'Hyprutils::Memory::CSharedPointer<CTexture>'} and 'Hyprutils::Memory::CSharedPointer<ITexture>')
+hypr-dynamic-cursors>   140 |     data.tex = texture;
+hypr-dynamic-cursors>       |                ^~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:74:54: note: candidate: 'template<class U> Hyprutils::Memory::CSharedPointer<T>::validHierarchy<const Hyprutils::Memory::CSharedPointer<U>&> Hyprutils::Memory::CSharedPointer<T>::operator=(const Hyprutils::Memory::CSharedPointer<U>&) [with T = CTexture]'
+hypr-dynamic-cursors>    74 |             validHierarchy<const CSharedPointer<U>&> operator=(const CSharedPointer<U>& rhs) {
+hypr-dynamic-cursors>       |                                                      ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:74:54: note:   template argument deduction/substitution failed:
+hypr-dynamic-cursors> In file included from /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/bits/stl_pair.h:60,
+hypr-dynamic-cursors>                  from /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/bits/stl_algobase.h:64,
+hypr-dynamic-cursors>                  from /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/bits/specfun.h:43,
+hypr-dynamic-cursors>                  from /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/cmath:3906,
+hypr-dynamic-cursors>                  from src/cursor.cpp:1:
+hypr-dynamic-cursors> /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/type_traits: In substitution of 'template<bool _Cond, class _Tp> using std::enable_if_t = typename std::enable_if::type [with bool _Cond = false; _Tp = Hyprutils::Memory::CSharedPointer<CTexture>&]':
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:25:19:   required by substitution of 'template<class T> template<class X> using Hyprutils::Memory::CSharedPointer<T>::validHierarchy = std::enable_if_t<((bool)is_assignable_v<Hyprutils::Memory::CSharedPointer<T>&, X>), Hyprutils::Memory::CSharedPointer<T>&> [with X = const Hyprutils::Memory::CSharedPointer<ITexture>&; T = CTexture]'
+hypr-dynamic-cursors>    25 |             using validHierarchy = std::enable_if_t<std::is_assignable_v<CSharedPointer<T>&, X>, CSharedPointer&>;
+hypr-dynamic-cursors>       |                   ^~~~~~~~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:74:54:   required by substitution of 'template<class U> Hyprutils::Memory::CSharedPointer<CTexture>::validHierarchy<const Hyprutils::Memory::CSharedPointer<U>&> Hyprutils::Memory::CSharedPointer<CTexture>::operator=(const Hyprutils::Memory::CSharedPointer<U>&) [with U = ITexture]'
+hypr-dynamic-cursors>    74 |             validHierarchy<const CSharedPointer<U>&> operator=(const CSharedPointer<U>& rhs) {
+hypr-dynamic-cursors>       |                                                      ^~~~~~~~
+hypr-dynamic-cursors> src/cursor.cpp:140:16:   required from here
+hypr-dynamic-cursors>   140 |     data.tex = texture;
+hypr-dynamic-cursors>       |                ^~~~~~~
+hypr-dynamic-cursors> /nix/store/icfdw41aww09xvl0y5g1wy9zd42wcf90-gcc-14.3.0/include/c++/14.3.0/type_traits:2711:11: error: no type named 'type' in 'struct std::enable_if<false, Hyprutils::Memory::CSharedPointer<CTexture>&>'
+hypr-dynamic-cursors>  2711 |     using enable_if_t = typename enable_if<_Cond, _Tp>::type;
+hypr-dynamic-cursors>       |           ^~~~~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:97:54: note: candidate: 'template<class U> Hyprutils::Memory::CSharedPointer<T>::validHierarchy<const Hyprutils::Memory::CSharedPointer<U>&> Hyprutils::Memory::CSharedPointer<T>::operator=(Hyprutils::Memory::CSharedPointer<U>&&) [with T = CTexture]'
+hypr-dynamic-cursors>    97 |             validHierarchy<const CSharedPointer<U>&> operator=(CSharedPointer<U>&& rhs) {
+hypr-dynamic-cursors>       |                                                      ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:97:54: note:   template argument deduction/substitution failed:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:85:29: note: candidate: 'Hyprutils::Memory::CSharedPointer<T>& Hyprutils::Memory::CSharedPointer<T>::operator=(const Hyprutils::Memory::CSharedPointer<T>&) [with T = CTexture]'
+hypr-dynamic-cursors>    85 |             CSharedPointer& operator=(const CSharedPointer& rhs) {
+hypr-dynamic-cursors>       |                             ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:85:61: note:   no known conversion for argument 1 from 'Hyprutils::Memory::CSharedPointer<ITexture>' to 'const Hyprutils::Memory::CSharedPointer<CTexture>&'
+hypr-dynamic-cursors>    85 |             CSharedPointer& operator=(const CSharedPointer& rhs) {
+hypr-dynamic-cursors>       |                                       ~~~~~~~~~~~~~~~~~~~~~~^~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:103:29: note: candidate: 'Hyprutils::Memory::CSharedPointer<T>& Hyprutils::Memory::CSharedPointer<T>::operator=(Hyprutils::Memory::CSharedPointer<T>&&) [with T = CTexture]'
+hypr-dynamic-cursors>   103 |             CSharedPointer& operator=(CSharedPointer&& rhs) noexcept {
+hypr-dynamic-cursors>       |                             ^~~~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/SharedPtr.hpp:103:56: note:   no known conversion for argument 1 from 'Hyprutils::Memory::CSharedPointer<ITexture>' to 'Hyprutils::Memory::CSharedPointer<CTexture>&&'
+hypr-dynamic-cursors>   103 |             CSharedPointer& operator=(CSharedPointer&& rhs) noexcept {
+hypr-dynamic-cursors>       |                                       ~~~~~~~~~~~~~~~~~^~~
+hypr-dynamic-cursors> src/cursor.cpp: At global scope:
+hypr-dynamic-cursors> src/cursor.cpp:185:25: error: no declaration matches 'SP<Aquamarine::IBuffer> CDynamicCursors::renderHardware(CPointerManager*, SP<CPointerManager::SMonitorPointerState>, SP<CTexture>)'
+hypr-dynamic-cursors>   185 | SP<Aquamarine::IBuffer> CDynamicCursors::renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture) {
+hypr-dynamic-cursors>       |                         ^~~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/cursor.hpp:32:29: note: candidate is: 'SP<Aquamarine::IBuffer> CDynamicCursors::renderHardware(CPointerManager*, SP<CPointerManager::SMonitorPointerState>, int)'
+hypr-dynamic-cursors>    32 |     SP<Aquamarine::IBuffer> renderHardware(CPointerManager* pointers, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture);
+hypr-dynamic-cursors>       |                             ^~~~~~~~~~~~~~
+hypr-dynamic-cursors> src/cursor.hpp:17:7: note: 'class CDynamicCursors' defined here
+hypr-dynamic-cursors>    17 | class CDynamicCursors {
+hypr-dynamic-cursors>       |       ^~~~~~~~~~~~~~~
+hypr-dynamic-cursors> make: *** [Makefile:25: out/highres.o] Error 1
+hypr-dynamic-cursors> In file included from /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/WeakPtr.hpp:4:
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/UniquePtr.hpp: In instantiation of 'Hyprutils::Memory::CUniquePointer<U> Hyprutils::Memory::makeUnique(Args&& ...) [with U = CCursorPassElement; Args = {CCursorPassElement::SRenderData&}]':
+hypr-dynamic-cursors> src/cursor.cpp:148:69:   required from here
+hypr-dynamic-cursors>   148 |     g_pHyprRenderer->m_renderPass.add(makeUnique<CCursorPassElement>(data));
+hypr-dynamic-cursors>       |                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+hypr-dynamic-cursors> /nix/store/7mpzlg3lwxycgps246p4kyhlbgy4x9zg-hyprutils-0.11.1+date=2026-03-22_cb4e152-dev/include/hyprutils/memory/UniquePtr.hpp:137:38: error: invalid new-expression of abstract class type 'CCursorPassElement'
+hypr-dynamic-cursors>   137 |             return CUniquePointer<U>(new U(std::forward<Args>(args)...));
+hypr-dynamic-cursors>       |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hypr-dynamic-cursors> In file included from src/cursor.cpp:31:
+hypr-dynamic-cursors> src/render/CursorPassElement.hpp:10:7: note:   because the following virtual functions are pure within 'CCursorPassElement':
+hypr-dynamic-cursors>    10 | class CCursorPassElement : public IPassElement {
+hypr-dynamic-cursors> In file included from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/pass/Pass.hpp:4,
+hypr-dynamic-cursors>                  from /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/OpenGL.hpp:24,
+hypr-dynamic-cursors>                  from src/cursor.cpp:16:
+hypr-dynamic-cursors> /nix/store/01cw559r5z4fpfxqb18drfi0sqbahs8j-hyprland-0.54.0+date=2026-03-24_bbf6718-dev/include/hyprland/src/render/pass/PassElement.hpp:26:33: note:     'virtual ePassElementType IPassElement::type()'
+hypr-dynamic-cursors>    26 |     virtual ePassElementType    type()                = 0;
+hypr-dynamic-cursors>       |                                 ^~~~
+hypr-dynamic-cursors> src/main.cpp:38:114: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    38 | typedef SP<Aquamarine::IBuffer> (*origRenderHWCursorBuffer)(void*, SP<CPointerManager::SMonitorPointerState>, SP<CTexture>);
+hypr-dynamic-cursors>       |                                                                                                                  ^~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                  ITexture
+hypr-dynamic-cursors> src/main.cpp:38:122: error: template argument 1 is invalid
+hypr-dynamic-cursors>    38 | typedef SP<Aquamarine::IBuffer> (*origRenderHWCursorBuffer)(void*, SP<CPointerManager::SMonitorPointerState>, SP<CTexture>);
+hypr-dynamic-cursors>       |                                                                                                                          ^
+hypr-dynamic-cursors> src/main.cpp:40:115: error: 'CTexture' was not declared in this scope; did you mean 'ITexture'?
+hypr-dynamic-cursors>    40 | SP<Aquamarine::IBuffer> hkRenderHWCursorBuffer(void* thisptr, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture) {
+hypr-dynamic-cursors>       |                                                                                                                   ^~~~~~~~
+hypr-dynamic-cursors>       |                                                                                                                   ITexture
+hypr-dynamic-cursors> src/main.cpp:40:123: error: template argument 1 is invalid
+hypr-dynamic-cursors>    40 | SP<Aquamarine::IBuffer> hkRenderHWCursorBuffer(void* thisptr, SP<CPointerManager::SMonitorPointerState> state, SP<CTexture> texture) {
+hypr-dynamic-cursors>       |                                                                                                                           ^
+hypr-dynamic-cursors> src/main.cpp: In function 'PLUGIN_DESCRIPTION_INFO pluginInit(void*)':
+hypr-dynamic-cursors> src/main.cpp:264:50: error: 'CVarList' has not been declared
+hypr-dynamic-cursors>   264 |     addDispatcher(CONFIG_DISPATCHER_MAGNIFY, [&](CVarList args) {
+hypr-dynamic-cursors>       |                                                  ^~~~~~~~
+hypr-dynamic-cursors> src/main.cpp: In lambda function:
+hypr-dynamic-cursors> src/main.cpp:271:28: error: request for member 'begin' in 'args', which is of non-class type 'int'
+hypr-dynamic-cursors>   271 |             auto it = args.begin();
+hypr-dynamic-cursors>       |                            ^~~~~
+hypr-dynamic-cursors> src/main.cpp:272:28: error: request for member 'end' in 'args', which is of non-class type 'int'
+hypr-dynamic-cursors>   272 |             if (it != args.end() && *it != "") {
+hypr-dynamic-cursors>       |                            ^~~
+hypr-dynamic-cursors> src/main.cpp:276:32: error: request for member 'end' in 'args', which is of non-class type 'int'
+hypr-dynamic-cursors>   276 |                 if (it != args.end())
+hypr-dynamic-cursors>       |                                ^~~
+hypr-dynamic-cursors> src/main.cpp: In function 'PLUGIN_DESCRIPTION_INFO pluginInit(void*)':
+hypr-dynamic-cursors> src/main.cpp:264:46: error: could not convert '<lambda closure object>pluginInit(void*)::<lambda(int)>()' from 'pluginInit(void*)::<lambda(int)>' to 'std::function<std::optional<std::__cxx11::basic_string<char> >(Hyprutils::String::CVarList)>'
+hypr-dynamic-cursors>   264 |     addDispatcher(CONFIG_DISPATCHER_MAGNIFY, [&](CVarList args) {
+hypr-dynamic-cursors>       |                                              ^~~~~~~~~~~~~~~~~~~~
+hypr-dynamic-cursors>       |                                              |
+hypr-dynamic-cursors>       |                                              pluginInit(void*)::<lambda(int)>
+hypr-dynamic-cursors>   265 |         std::optional<std::string> error;
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     
+hypr-dynamic-cursors>   266 | 
+hypr-dynamic-cursors>       |                                               
+hypr-dynamic-cursors>   267 |         std::optional<int> duration;
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~          
+hypr-dynamic-cursors>   268 |         std::optional<float> size;
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~            
+hypr-dynamic-cursors>   269 | 
+hypr-dynamic-cursors>       |                                               
+hypr-dynamic-cursors>   270 |         try {
+hypr-dynamic-cursors>       |         ~~~~~                                 
+hypr-dynamic-cursors>   271 |             auto it = args.begin();
+hypr-dynamic-cursors>       |             ~~~~~~~~~~~~~~~~~~~~~~~           
+hypr-dynamic-cursors>   272 |             if (it != args.end() && *it != "") {
+hypr-dynamic-cursors>       |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hypr-dynamic-cursors>   273 |                 duration = std::stoi(*it);
+hypr-dynamic-cursors>       |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~    
+hypr-dynamic-cursors>   274 | 
+hypr-dynamic-cursors>       |                                               
+hypr-dynamic-cursors>   275 |                 it++;
+hypr-dynamic-cursors>       |                 ~~~~~                         
+hypr-dynamic-cursors>   276 |                 if (it != args.end())
+hypr-dynamic-cursors>       |                 ~~~~~~~~~~~~~~~~~~~~~         
+hypr-dynamic-cursors>   277 |                     size = std::stof(*it);
+hypr-dynamic-cursors>       |                     ~~~~~~~~~~~~~~~~~~~~~~    
+hypr-dynamic-cursors>   278 |             }
+hypr-dynamic-cursors>       |             ~                                 
+hypr-dynamic-cursors>   279 |         } catch (...) {
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~~~                       
+hypr-dynamic-cursors>   280 |             error = "types did not match";
+hypr-dynamic-cursors>       |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+hypr-dynamic-cursors>   281 |         }
+hypr-dynamic-cursors>       |         ~                                     
+hypr-dynamic-cursors>   282 | 
+hypr-dynamic-cursors>       |                                               
+hypr-dynamic-cursors>   283 |         g_pDynamicCursors->dispatchMagnify(duration, size);
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hypr-dynamic-cursors>   284 | 
+hypr-dynamic-cursors>       |                                               
+hypr-dynamic-cursors>   285 |         return error;
+hypr-dynamic-cursors>       |         ~~~~~~~~~~~~~                         
+hypr-dynamic-cursors>   286 |     });
+hypr-dynamic-cursors>       |     ~                                         
+hypr-dynamic-cursors> make: *** [Makefile:25: out/config/config.o] Error 1
+hypr-dynamic-cursors> make: *** [Makefile:25: out/render/renderer.o] Error 1
+hypr-dynamic-cursors> make: *** [Makefile:25: out/cursor.o] Error 1
+hypr-dynamic-cursors> make: *** [Makefile:25: out/main.o] Error 1
+error: Cannot build '/nix/store/2y1jfxbmdgri9n9wg5hjxzw4zddbaykw-hypr-dynamic-cursors.drv'.
+       Reason: builder failed with exit code 2.
+       Output paths:
+         /nix/store/mgqcdxg7lzhkc563psy6ny0417qkaikw-hypr-dynamic-cursors
+error: Cannot build '/nix/store/gwvqk2sa69bzh7vcg89z3b1r6rl7dv7f-hm_hyprhm.conf.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/dfm9a7km6dy405hij479r93gv09vy39z-hm_hyprhm.conf
+error: Cannot build '/nix/store/fpwqn1ncxihfjvl14i8ijmh5n9b38a4a-home-manager-files.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/x7f5z2afgi65g6f1s6995c3ki27l343k-home-manager-files
+error: Cannot build '/nix/store/c1vkmxkn6vhp4lik8v6ki0l017vhfs5h-home-manager-generation.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/qsv666a03qz18n9s0sapd9flgr2fh9n8-home-manager-generation
+error: Cannot build '/nix/store/sqk2jkyyfb6c8plmyknja15xrj2sj48n-unit-home-manager-nyix.service.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/pjcxhmfbxch61ywqr125044abf987z32-unit-home-manager-nyix.service
+error: Cannot build '/nix/store/lwfhlxc714h4bz3liclj7ra7zw28ni8f-system-units.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/j24yy9g9ihidz47dpx74rsqjdb3zkiv5-system-units
+error: Cannot build '/nix/store/663csr93wj8kg4kkw8wjpcqk7mfabvfp-etc.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/gb94f63m7637jf9szbnrziy8gdk0i3hh-etc
+error: Cannot build '/nix/store/929iq194wwa9bp4b5bgrhqffxyry9gdi-nixos-system-nyix-Generation.452.-.nyix.-.2026_03_25_19_12_43.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/p1dn1bk8kqj2zcjy82ifps5k4xpmy9ij-nixos-system-nyix-Generation.452.-.nyix.-.2026_03_25_19_12_43
+Traceback (most recent call last):
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/__init__.py", line 397, in main
+    execute(sys.argv)
+    ~~~~~~~^^^^^^^^^^
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/__init__.py", line 360, in execute
+    services.build_and_activate_system(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        action=action,
+        ^^^^^^^^^^^^^^
+    ...<6 lines>...
+        grouped_nix_args=grouped_nix_args,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/services.py", line 312, in build_and_activate_system
+    path_to_config = _build_system(
+        attr=attr,
+    ...<5 lines>...
+        grouped_nix_args=grouped_nix_args,
+    )
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/services.py", line 176, in _build_system
+    path_to_config = nix.build_flake(
+        attr,
+    ...<3 lines>...
+        | grouped_nix_args.flake_eval_flags,
+    )
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/nix.py", line 90, in build_flake
+    r = run_wrapper(run_args, stdout=PIPE)
+  File "/nix/store/kz3b5yzzmcyxbda7rdhdrzggxa2nqhxc-nixos-rebuild-ng-26.05/lib/python3.13/site-packages/nixos_rebuild/process.py", line 211, in run_wrapper
+    r = subprocess.run(
+        final_args,
+    ...<5 lines>...
+        **kwargs,
+    )
+  File "/nix/store/pzdalg368npikvpq4ncz2saxnz19v53k-python3-3.13.12/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['nix', '--extra-experimental-features', 'nix-command flakes', 'build', '--print-out-paths', '.#nixosConfigurations."nyix".config.system.build.toplevel', '--no-link', '-v', '--log-format', 'internal-json', '--show-trace', '--impure']' returned non-zero exit status 1.
+┏━ 8 Errors: 
+ ⋮ 
+┃        Output paths:
+┃          /nix/store/dfm9a7km6dy405hij479r93gv09vy39z-hm_hyprhm.conf
+┃ error: Cannot build '/nix/store/2y1jfxbmdgri9n9wg5hjxzw4zddbaykw-hypr-dynamic-cursors.drv'.
+┃        Reason: builder failed with exit code 2.
+┃        Output paths:
+┃          /nix/store/mgqcdxg7lzhkc563psy6ny0417qkaikw-hypr-dynamic-cursors
+┣━ Dependency Graph:
+┃                   ┌─ ⏵ hypr-dynamic-cursors (buildPhase) ⏱ 10s (∅ 10s)
+┃                ┌─ ⏸ hm_hyprhm.conf
+┃             ┌─ ⏸ home-manager-files
+┃          ┌─ ⏸ home-manager-generation
+┃       ┌─ ⏸ unit-home-manager-nyix.service
+┃    ┌─ ⏸ system-units
+┃ ┌─ ⏸ etc
+┃ ⏸ nixos-system-nyix-Generation.452.-.nyix.-.2026_03_25_19_12_43
+┣━━━ Builds           │ Downloads         │ Host                                                          
+┃    ⏵ 1 │ ✔ 23 │     │     │       │     │ localhost                                                     
+┃        │      │     │     │ ↓ 111 │     │ https://cache.nixos.org                                       
+┗━ ∑ ⏵ 1 │ ✔ 23 │ ⏸ 8 │ ↓ 0 │ ↓ 111 │ ⏸ 0 │ ⚠ Exited with 8 errors reported by nix at 19:19:41 after 6m57s
+Time: 0h:06m:57s

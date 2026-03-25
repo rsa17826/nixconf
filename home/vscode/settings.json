@@ -740,5 +740,5 @@
   "[hyprlang]": {
     "editor.defaultFormatter": "Jota0222.multi-formatter"
   },
-  "terminal.integrated.fontFamily": "'Hack Nerd Font Mono', 'JetBrainsMono NF', 'monospace'"
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'"
 }

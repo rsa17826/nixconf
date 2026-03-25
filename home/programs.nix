@@ -372,6 +372,7 @@
       hyprlock # lockscreen
       killall
       losslesscut-bin
+      eza # ls
     ]);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
