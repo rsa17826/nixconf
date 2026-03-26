@@ -71,9 +71,9 @@ in
     portal = {
       enable = true;
       config.common.default = "*";
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-hyprland
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
       ];
 
       config = {
@@ -206,6 +206,8 @@ in
     VISUAL = "nvim";
     HYPRCURSOR_THEME = "mew";
     QT_STYLE_OVERRIDE = "adwaita-dark";
+    ADW_DISABLE_PORTAL = "0";
+    GTK_THEME = "Adwaita-dark";
   };
 
   # Bootloader.
