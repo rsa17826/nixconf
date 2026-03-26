@@ -8,15 +8,27 @@
       #    variant = "";
     };
   };
-  networking.nameservers = [
-    "9.9.9.9"
-    "149.112.112.112"
-  ];
+  networking = {
+    nameservers = [
+      "9.9.9.9"
+      "149.112.112.112"
+    ];
+    networkmanager = {
+      enable = true;
+    };
+    resolved = {
+      enable = true;
+      dnsOverHttps = [
+        {
+          url = "https://dns.quad9.net/dns-query"; # Quad9 DoH server URL
+          domains = [ "." ];
+        }
+      ];
+    };
+  };
   services.displayManager.sddm.enable = false;
   services.displayManager.sddm.wayland.enable = false;
   services.displayManager.ly.enable = true;
-  # services.desktopManager.plasma6.enable = false;
-  networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
