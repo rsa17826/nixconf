@@ -740,5 +740,9 @@
   "[hyprlang]": {
     "editor.defaultFormatter": "Jota0222.multi-formatter"
   },
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'"
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.env.linux": {
+    "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}"
+  }
 }
