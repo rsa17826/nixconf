@@ -2726,7 +2726,7 @@ https://github.com/loqusion/hyprshade
 // @description 3/20/2026, 9:52:06 AM
 // ==/UserScript==
 
-loadlib("textjack")((e)=>e.replace(/(?<!\w)nano(?!\w)/g, "nvim").replace(/(?<!\w)notepad(?!\w)/g, "codium"))
+loadlib("textjack")((e)=>e.replace(/(?<!\w)nano|vim?(?!\w)/g, "nvim").replace(/(?<!\w)notepad(?!\w)/g, "codium"))
 
 
 // ==UserScript==
