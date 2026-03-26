@@ -16,9 +16,7 @@
       "149.112.112.112#dns.quad9.net"
       "9.9.9.9#dns.quad9.net"
     ];
-    settings = ''
-      DNSOverHTTPS=yes
-    '';
+    settings.DNSOverHTTPS = true;
   };
   networking = {
     nameservers = [
