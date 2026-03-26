@@ -8,6 +8,18 @@
       #    variant = "";
     };
   };
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ];
+    fallbackDns = [
+      "149.112.112.112#dns.quad9.net"
+      "9.9.9.9#dns.quad9.net"
+    ];
+    extraConfig = ''
+      DNSOverHTTPS=yes
+    '';
+  };
   networking = {
     nameservers = [
       "9.9.9.9"
@@ -15,15 +27,6 @@
     ];
     networkmanager = {
       enable = true;
-    };
-    resolved = {
-      enable = true;
-      dnsOverHttps = [
-        {
-          url = "https://dns.quad9.net/dns-query"; # Quad9 DoH server URL
-          domains = [ "." ];
-        }
-      ];
     };
   };
   services.displayManager.sddm.enable = false;
