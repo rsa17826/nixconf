@@ -374,6 +374,7 @@
       losslesscut-bin
       eza # ls
       swappy # image editor
+      satty # image editor
     ]);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
