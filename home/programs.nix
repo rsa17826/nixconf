@@ -368,7 +368,7 @@
       home-manager
       pulseaudio
       pipewire
-      launcher.packages.${system}.default
+      (pkgFromInp "multi-game-launcher" "default")
       wireplumber
       hyprlock # lockscreen
       killall
