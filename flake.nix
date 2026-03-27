@@ -44,6 +44,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    multi-game-launcher = {
+      url = "github:rsa17826/multi-game-launcher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -54,6 +58,7 @@
       sops-nix,
       nix-index-database,
       copyparty,
+      multi-game-launcher,
       ...
     }@inputs:
     let

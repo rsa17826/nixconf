@@ -368,6 +368,7 @@
       home-manager
       pulseaudio
       pipewire
+      multi-game-launcher
       wireplumber
       hyprlock # lockscreen
       killall
