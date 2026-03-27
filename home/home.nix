@@ -31,6 +31,7 @@ in
     ./cursors/conf.nix
     ./zsh/plugins.nix
     ./kitty/conf.nix
+    ./multiGameLauncher/conf.nix
     # ./brave/conf.nix
     # ./git/conf.nix
   ];

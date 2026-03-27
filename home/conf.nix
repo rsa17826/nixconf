@@ -22,7 +22,6 @@ in
     ./copyparty/conf.nix
     ./firewall/conf.nix
     ./brave/conf.nix
-    ./multiGameLauncher/conf.nix
   ];
   boot.loader = {
     efi = {
