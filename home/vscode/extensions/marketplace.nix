@@ -158,6 +158,12 @@
         version = "1.6.2";
         hash = "sha256-YDX5MOgNMQu1R6evYqKm/R4y70lLsa+SKfwchTd2oHM=";
       }
+      {
+        name = "basedpyright";
+        publisher = "detachhead";
+        version = "1.38.4";
+        hash = "sha256-05Pu65luhtoYQscIXfO7lXdJCbadRerSY2xFjTji/W4=";
+      }
       # {
       #   name = "synthwave-fluoromachine-cursor";
       #   publisher = "lujstn";
