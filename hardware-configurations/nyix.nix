@@ -41,7 +41,21 @@
       "dmask=0077"
     ];
   };
-
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/4752ae65-da00-4f1d-8a1d-33f0098d4abc";
+    fsType = "ext4"; # or ntfs, btrfs, etc.
+    # options = [
+    #   "defaults"
+    #   "nofail"
+    #   "x-systemd.device-timeout=5s"
+    #   "x-systemd.mount-timeout=5s"
+    # ];
+    options = [
+      "nofail"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=600"
+    ];
+  };
   # swapDevices =
   #   [ { device = "/dev/mapper/luks-b7bc4b47-2765-48c4-9068-ee0083727616"; }
   #   ];
