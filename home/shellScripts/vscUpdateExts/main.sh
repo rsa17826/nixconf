@@ -3,20 +3,24 @@
 # shellcheck shell=bash
 set -eu -o pipefail
 
-# can be added to your configuration with the following command and snippet:
-# $ ./pkgs/applications/editors/vscode/extensions/update_installed_exts.sh > extensions.nix
+# Reads extensions from a marketplace.nix file and updates their versions/hashes.
+# Usage: ./update_marketplace_exts.sh [path/to/marketplace.nix]
 #
-# packages = with pkgs;
-#   (vscode-with-extensions.override {
-#     vscodeExtensions = map
-#       (extension: vscode-utils.buildVscodeMarketplaceExtension {
-#         mktplcRef = {
-#          inherit (extension) name publisher version sha256;
-#         };
-#       })
-#       (import ./extensions.nix).extensions;
-#   })
-# ]
+# Expected nix file format:
+# { pkgs, ... }:
+# {
+#   programs.vscode.profiles.default = {
+#     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+#       {
+#         name = "...";
+#         publisher = "...";
+#         version = "...";
+#         hash = "...";
+#       }
+#       ...
+#     ];
+#   };
+# }
 
 # Helper to just fail with a message and non-zero exit code.
 function fail() {
@@ -32,12 +36,14 @@ function clean_up() {
 }
 
 function get_vsixpkg() {
-  N="$1.$2"
+  local PUBLISHER="$1"
+  local NAME="$2"
+  local N="$PUBLISHER.$NAME"
 
   # Create a tempdir for the extension download.
   EXTTMP=$(mktemp -d -t vscode_exts_XXXXXXXX)
 
-  URL="https://$1.gallery.vsassets.io/_apis/public/gallery/publisher/$1/extension/$2/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+  URL="https://$PUBLISHER.gallery.vsassets.io/_apis/public/gallery/publisher/$PUBLISHER/extension/$NAME/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
 
   # Quietly but delicately curl down the file, blowing up at the first sign of trouble.
   curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"
@@ -48,42 +54,76 @@ function get_vsixpkg() {
 
   # Clean up.
   rm -Rf "$EXTTMP"
-  # I don't like 'rm -Rf' lurking in my scripts but this seems appropriate.
 
   cat <<-EOF
-  {
-    name = "$2";
-    publisher = "$1";
-    version = "$VER";
-    hash = "$HASH";
-  }
+      {
+        name = "$NAME";
+        publisher = "$PUBLISHER";
+        version = "$VER";
+        hash = "$HASH";
+      }
 EOF
 }
 
-# See if we can find our `code` binary somewhere.
+# Determine the nix file to operate on.
 if [ $# -ne 0 ]; then
-  CODE=$1
+  NIX_FILE="$1"
 else
-  CODE=$(command -v code || command -v codium)
+  NIX_FILE="$(dirname "$0")/marketplace.nix"
 fi
 
-if [ -z "$CODE" ]; then
-  # Not much point continuing.
-  fail "VSCode executable not found"
+if [ ! -f "$NIX_FILE" ]; then
+  fail "marketplace.nix not found: $NIX_FILE"
 fi
 
 # Try to be a good citizen and clean up after ourselves if we're killed.
 trap clean_up SIGINT
 
-# Begin the printing of the nix expression that will house the list of extensions.
-printf '{ extensions = [\n'
+# Parse publisher/name pairs out of the nix file.
+# Each extension block has lines like:  name = "foo";  and  publisher = "bar";
+# We extract them as tab-separated PUBLISHER<TAB>NAME pairs, in order.
+mapfile -t EXTENSIONS < <(
+  awk '
+    /publisher = / { gsub(/.*publisher = "|";.*/, ""); pub = $0 }
+    /name = /      { gsub(/.*name = "|";.*/, "");      nam = $0 }
+    pub && nam     { print pub "\t" nam; pub = ""; nam = "" }
+  ' "$NIX_FILE"
+)
 
-# Note that we are only looking to update extensions that are already installed.
-for i in $($CODE --list-extensions); do
-  OWNER=$(echo "$i" | cut -d. -f1)
-  EXT=$(echo "$i" | cut -d. -f2)
+if [ ${#EXTENSIONS[@]} -eq 0 ]; then
+  fail "No extensions found in $NIX_FILE"
+fi
 
-  get_vsixpkg "$OWNER" "$EXT"
+echo "Found ${#EXTENSIONS[@]} extension(s) in $NIX_FILE, fetching updates..." >&2
+
+# Build the updated extensions block.
+ENTRIES=""
+for entry in "${EXTENSIONS[@]}"; do
+  PUBLISHER="${entry%%	*}"
+  NAME="${entry##*	}"
+  echo "  Updating $PUBLISHER.$NAME ..." >&2
+  ENTRIES+="$(get_vsixpkg "$PUBLISHER" "$NAME")"$'\n'
 done
-# Close off the nix expression.
-printf '];\n}'
+
+# Write the updated file, preserving the surrounding nix boilerplate.
+# We replace everything between the opening '[' and closing '];' of the
+# extensionsFromVscodeMarketplace list.
+TMPOUT=$(mktemp)
+awk -v entries="$ENTRIES" '
+  /extensionsFromVscodeMarketplace \[/ {
+    print
+    print entries
+    skip = 1
+    next
+  }
+  skip && /^\s*\];/ {
+    print
+    skip = 0
+    next
+  }
+  skip { next }
+  { print }
+' "$NIX_FILE" >"$TMPOUT"
+
+mv "$TMPOUT" "$NIX_FILE"
+echo "Done. $NIX_FILE updated." >&2
