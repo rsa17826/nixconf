@@ -18,13 +18,13 @@
     defaultApplications = {
       "application/x-sds" = [ "codium.desktop" ];
       "application/json" = [ "codium.desktop" ];
-      "application/vnd.stardivision.chart" = [ "codium.desktop" ]; # <-- add this
+      "application/vnd.stardivision.chart" = [ "codium.desktop" ];
     };
   };
   # Rebuild MIME database after HM places the XML
-  home.activation.updateMimeDatabase = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.shared-mime-info}/bin/update-mime-database \
-      "$HOME/.local/share/mime"
-  '';
+  # home.activation.updateMimeDatabase = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   ${pkgs.shared-mime-info}/bin/update-mime-database \
+  #     "$HOME/.local/share/mime"
+  # '';
 
 }
