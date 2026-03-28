@@ -18,13 +18,7 @@
     enable = true;
     defaultApplications = {
       "application/x-sds" = [ "codium.desktop" ];
-    };
-    # Note the missing 'd' at the end of 'remove'
-    removeAssociations = {
-      "application/x-sds" = [
-        "writer.desktop"
-        "libreoffice-writer.desktop"
-      ];
+      "application/json" = [ "codium.desktop" ];
     };
   };
 }
