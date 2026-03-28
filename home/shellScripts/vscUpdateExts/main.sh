@@ -120,7 +120,7 @@ PYEOF
 if [ $# -ne 0 ]; then
   NIX_FILE="$1"
 else
-  NIX_FILE="$HOME/home/vscode/extensions/marketplace.nix"
+  NIX_FILE="$HOME/nixconf/home/vscode/extensions/marketplace.nix"
 fi
 
 if [ ! -f "$NIX_FILE" ]; then
