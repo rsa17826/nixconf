@@ -32,6 +32,7 @@ in
     ./zsh/plugins.nix
     ./kitty/conf.nix
     ./multiGameLauncher/conf.nix
+    ./fileAssocs/conf.nix
     # ./brave/conf.nix
     # ./git/conf.nix
   ];

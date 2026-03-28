@@ -137,13 +137,12 @@
       # }/bin/godot "$@"'')
       (
         let
-          godot-4-7-dev2 = pkgs.stdenv.mkDerivation rec {
-
-            version = "4.7-dev2";
+          newestGodot = pkgs.stdenv.mkDerivation rec {
+            version = "4.7-dev3";
             pname = "godot-${version}";
             src = pkgs.fetchurl {
               url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
-              sha256 = "00g3iidkcr068ayy6r77zpmpnl4c66q1gcqid0klc1hbxmdw5psp";
+              sha256 = "sha256-+UtyBhZjrXOOpNWbGMnsZQXkMYRO4mGyVSeFqLjVOkY=";
             };
             nativeBuildInputs = with pkgs; [ unzip ];
             sourceRoot = ".";
@@ -154,7 +153,7 @@
             '';
           };
         in
-        godot-4-7-dev2
+        newestGodot
       )
 
       # (
