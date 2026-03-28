@@ -5,128 +5,128 @@
       {
         name = "hyprlang-vscode";
         publisher = "fireblast";
-        version = "0.0.3";
-        hash = "sha256-iMCyomgMGGUXaVqq1l7bgyvFgZa/W/eWHaqkA5RmExE=";
+        version = "";
+        hash = "";
       }
       {
         name = "zubanls";
         publisher = "zuban";
-        version = "0.0.7";
-        hash = "sha256-C5rJdvSFghY/nZjCM8/1EMcjzSiE+L2wNfkezTjBsxk=";
+        version = "";
+        hash = "";
       }
       {
         name = "direnv";
         publisher = "mkhl";
-        version = "0.17.0";
-        hash = "sha256-9sFcfTMeLBGw2ET1snqQ6Uk//D/vcD9AVsZfnUNrWNg=";
+        version = "";
+        hash = "";
       }
       {
         name = "shell-tidy-vscode";
         publisher = "xqvvu";
-        version = "1.1.2";
-        hash = "sha256-wi2JDzeWbJpzYlp224XZ7wDXRy09V+VEaXVubAfbuZw=";
+        version = "";
+        hash = "";
       }
       {
         name = "qml-format";
         publisher = "Delgan";
-        version = "1.1.0";
-        hash = "sha256-QOovj9loSWAgaBCwW3HBPD/Wr7GwVppSRcCJ4R5X/as=";
+        version = "";
+        hash = "";
       }
       {
         name = "qt-python";
         publisher = "theqtcompany";
-        version = "1.11.1";
-        hash = "sha256-yeZ67XitNgUaqEL0NCk8tsKuADit/kXmZ2q75R03nlQ=";
+        version = "";
+        hash = "";
       }
       {
         name = "qt-core";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-jMXC9UqvVxlvNSAMoInv3wCKyDwL/1I0TbftYjJphdU=";
+        version = "";
+        hash = "";
       }
       {
         name = "qt-ui";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-a3/O1do1SSgfHpXTjc7VBV/Tg2KuB8QB2hKcatt2ZGw=";
+        version = "";
+        hash = "";
       }
       {
         name = "qt-qml";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
+        version = "";
+        hash = "";
       }
       {
         name = "indent-jump";
         publisher = "apinix";
-        version = "1.0.3";
-        hash = "sha256-rvYc5bF2pakEUjtniKjE5wDnoZM9JGDEN2Lxhh3AdMo=";
+        version = "";
+        hash = "";
       }
       {
         name = "furry-language";
         publisher = "avoonix";
-        version = "0.1.1";
-        hash = "sha256-d4y17dG2J7VZq1g7uo+3Y1gp8+0qyaQKHAUqsSvlmq8=";
+        version = "";
+        hash = "";
       }
       {
         name = "nix";
         publisher = "bbenoist";
-        version = "1.0.1";
-        hash = "sha256-qwxqOGublQeVP2qrLF94ndX/Be9oZOn+ZMCFX1yyoH0=";
+        version = "";
+        hash = "";
       }
       {
         name = "paste-replaced";
         publisher = "betterthantomorrow";
-        version = "1.1.13";
-        hash = "sha256-yW51Vo7nSyQCVQAfrDjuWTSMAptv/h5oNV8z5KHFvIE=";
+        version = "";
+        hash = "";
       }
       {
         name = "vscode-toggle-quotes";
         publisher = "britesnow";
-        version = "0.3.6";
-        hash = "sha256-Hn3Mk224ePAAnNtkhKMcCil/kTgbonweb1i884Q62rs=";
+        version = "";
+        hash = "";
       }
       {
         name = "npm-intellisense";
         publisher = "christian-kohler";
-        version = "1.4.5";
-        hash = "sha256-liuFGnyvvVHzSv60oLkemFyv85R+RiGKErRIUz2PYKs=";
+        version = "";
+        hash = "";
       }
       {
         name = "vscode-eslint";
         publisher = "dbaeumer";
-        version = "3.0.21";
-        hash = "sha256-Ip9q7BroIVNsxbO/OcZuJWagYsYtV2xJhe0z0NFiR2U=";
+        version = "";
+        hash = "";
       }
       {
         name = "godot-format";
         publisher = "dohe";
-        version = "0.2.12";
-        hash = "sha256-CdP3hiOZctv++3KsMIzL3yKa9XStaKGHg6NSDYHyCno=";
+        version = "";
+        hash = "";
       }
       {
         name = "githistory";
         publisher = "donjayamanne";
-        version = "0.6.20";
-        hash = "sha256-nEdYS9/cMS4dcbFje23a47QBZr9eDK3dvtkFWqA+OHU=";
+        version = "";
+        hash = "";
       }
       {
         name = "prettier-vscode";
         publisher = "esbenp";
-        version = "11.0.2";
-        hash = "sha256-PwP49p1gpxfx3AmGFhNvRBBc4SxWM2b9aaiUG/C+Uhg=";
+        version = "";
+        hash = "";
       }
       {
         name = "comment-anchors";
         publisher = "exodiusstudios";
-        version = "1.10.4";
-        hash = "sha256-FvfjPpQsgCsnY1BylhLCM/qDQChf9/iTr3cKkCGfMVI=";
+        version = "";
+        hash = "";
       }
       {
         name = "workspace-formatter";
         publisher = "franneck94";
-        version = "1.2.2";
-        hash = "sha256-YooThmx+FUMD9eSaiI1NHO2AZppSBHtYdFJ9La4k0pQ=";
+        version = "";
+        hash = "";
       }
       {
         name = "godot-tools";

@@ -20,11 +20,12 @@ trap clean_up SIGINT SIGTERM
 function get_vsixpkg() {
   local PUBLISHER="$1"
   local NAME="$2"
+  N="$1.$2"
 
   EXTTMP=$(mktemp -d -t vscode_exts_XXXXXXXX)
   URL="https://$PUBLISHER.gallery.vsassets.io/_apis/public/gallery/publisher/$PUBLISHER/extension/$NAME/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
 
-  if ! curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/pkg.zip" "$URL"; then
+  if ! curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"; then
     rm -Rf "$EXTTMP"
     return 1
   fi
