@@ -27,9 +27,9 @@ case "$1" in
   # Fetch: We now also grab the repository HTML URL
   curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
     "https://api.github.com/notifications?all=false" |
-    jq 'map({ 
-        updated_at: .updated_at, 
-        title: .subject.title, 
+    jq 'map({
+        updated_at: .updated_at,
+        title: .subject.title,
         url: .subject.latest_comment_url
       })'
   ;;

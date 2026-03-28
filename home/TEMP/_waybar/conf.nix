@@ -104,7 +104,7 @@
         color: @text;
       }
 
-      #workspaces, #clock, #disk, #pulseaudio, #custom-github, 
+      #workspaces, #clock, #disk, #pulseaudio, #custom-github,
       #custom-notifications, #custom-power, #custom-notes {
         padding: 0 4px;
         margin: 0 2px;

@@ -28,12 +28,12 @@ with open(input_file, "r", encoding="utf-8") as f:
       match_entry = {"trigger": trigger, "replace": replace}
 
       # Handle AHK modifiers
-      modifier = modifier or ""  # ensure it's a string
+      modifier = modifier or "" # ensure it's a string
 
       if "*:" in modifier:
-        match_entry["regex"] = True  # wildcard anywhere in word
+        match_entry["regex"] = True # wildcard anywhere in word
       if "?" in modifier:
-        match_entry["word_boundary"] = False  # non-backspacing
+        match_entry["word_boundary"] = False # non-backspacing
       if ":c:" in modifier.lower():
         match_entry["ignore_case"] = False
 

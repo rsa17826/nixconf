@@ -53,7 +53,7 @@ self: super: {
           .monaco-workbench .part.editor.has-watermark>.content.empty .editor-group-container>.editor-group-letterpress,
           .part.editor>.content .editor-group-container .editor-group-watermark>.letterpress,
           .monaco-workbench .part.editor>.content .editor-group-container>.editor-group-watermark>.shortcuts>.watermark-box,
-          .monaco-workbench .part.editor>.content.empty>.watermark>.watermark-box 
+          .monaco-workbench .part.editor>.content.empty>.watermark>.watermark-box
           {
             display: none !important;
           }
@@ -68,7 +68,7 @@ self: super: {
           .settings-editor>.settings-body .settings-toc-container,
           /* end settings UI */
           .tabs-container,
-          .monaco-pane-view, 
+          .monaco-pane-view,
           .composite.title,
           /* welcome window */
           .editor-container,
@@ -82,7 +82,7 @@ self: super: {
           .xterm .xterm-screen canvas,
           /* end terminal stuff */
           .monaco-select-box,
-          .pane-header, 
+          .pane-header,
           .minimap-decorations-layer,
           .xterm-cursor-layer,
           .monaco-breadcrumbs,
@@ -95,7 +95,7 @@ self: super: {
           .monaco-workbench .part.editor>.content .editor-group-container>.title .tabs-breadcrumbs .breadcrumbs-control,
           .ref-tree, /* find usages */
           .head, /* find usages */
-          .monaco-workbench .part.editor>.content .editor-group-container>.title .editor-actions,  
+          .monaco-workbench .part.editor>.content .editor-group-container>.title .editor-actions,
           .welcomePageFocusElement /* welcome screen */
           /*.terminal-outer-container  Terminal outer edge */
           {
@@ -105,12 +105,12 @@ self: super: {
             background-repeat: no-repeat !important;
             background-size: cover !important;
           }
-          
+
           /*settings UI */
           .monaco-list.list_id_1 .monaco-list-rows,
           .settings-tree-container > .monaco-list > .monaco-scrollable-element > .monaco-list-rows,
           .monaco-list.list_id_2:not(.drop-target) .monaco-list-row:hover:not(.selected):not(.focused),
-          /* source control diff editor */  
+          /* source control diff editor */
           .lines-content.monaco-editor-background,
           /* output panel */
           .overflow-guard > .margin,

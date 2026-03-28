@@ -119,7 +119,6 @@
             };
           in
           {
-
             inherit pkgs;
             # Home-manager requires 'pkgs' instance
             extraSpecialArgs = args;

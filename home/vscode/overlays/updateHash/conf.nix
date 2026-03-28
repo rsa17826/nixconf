@@ -29,7 +29,7 @@ self: super: {
               if os.path.exists(full_path):
                   new_checksum = compute_checksum(full_path)
                   data["checksums"][rel_path] = new_checksum
-          
+
           with open("$PRODUCT_JSON", "w") as f:
               json.dump(data, f, indent='\t')
       EOF

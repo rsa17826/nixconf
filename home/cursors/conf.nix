@@ -36,10 +36,10 @@
 
     package = pkgs.runCommand "mew-cursor" { } ''
             install -dm755 $out/share/icons/mew/cursors
-            
+
             # Copy the contents of your folder directly into the cursors dir
             cp -rn ${./cursorImages}/* $out/share/icons/mew/cursors/
-            
+
             # Crucial: Wayland/X11 needs a 'default' file in the cursors dir
             # Adjust 'left_ptr' to whatever your main pointer file is named in cursorImages
             if [ -f $out/share/icons/mew/cursors/left_ptr ]; then

@@ -160,6 +160,8 @@
   "explorer.confirmDelete": false,
   "workbench.editorAssociations": {
     "{hexdiff}:/**/*.*": "hexEditor.hexedit",
+    "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc": "default",
+    "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.ui": "default",
     "*.dat": "hexEditor.hexedit",
     "*.sol": "hexEditor.hexedit",
     "*.vscdb": "hexEditor.hexedit",
@@ -168,7 +170,8 @@
     "*.class": "hexEditor.hexedit",
     "*.cha": "hexEditor.hexedit",
     "*.dmp": "hexEditor.hexedit",
-    "*.jar": "hexEditor.hexedit"
+    "*.jar": "hexEditor.hexedit",
+    "*.qrc": "qt-core.qrcEditor"
   },
   "[powershell]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
@@ -744,5 +747,8 @@
   "python.terminal.activateEnvironment": true,
   "terminal.integrated.env.linux": {
     "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}"
+  },
+  "[regex]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
   }
 }

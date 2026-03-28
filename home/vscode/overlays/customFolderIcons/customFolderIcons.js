@@ -40,7 +40,7 @@ async function findIconUpwards(currentPath) {
   // Move one directory up: /home/user/project/src -> /home/user/project
   const parentPath = currentPath.substring(
     0,
-    currentPath.lastIndexOf("/")
+    currentPath.lastIndexOf("/"),
   )
   return findIconUpwards(parentPath)
 }
@@ -65,7 +65,7 @@ const updateIcons = async () => {
       if (foundUrl) {
         el.style.setProperty(
           "--folder-icon-url",
-          `url('${foundUrl}')`
+          `url('${foundUrl}')`,
         )
         el.setAttribute("data-has-custom-icon", "true")
       } else {

@@ -18,7 +18,7 @@ void main() {
 
   // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
   float averageIntensity = (color.r + color.g + color.b) / 3.0;
-    
+
   float darkeningFactor = mapToDarkeningFactor(averageIntensity);
 
   // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor

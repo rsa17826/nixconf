@@ -17,9 +17,9 @@ class HyprSpy:
       # UI Styling
       self.bg_color = "#1e1e2e"
       self.fg_color = "#cdd6f4"
-      self.freeze_color = "#f38ba8" 
+      self.freeze_color = "#f38ba8"
       self.custom_font = font.Font(family="Monospace", size=10)
-        
+
       self.display = tk.Text(
           root,
           font=self.custom_font,
@@ -34,9 +34,9 @@ class HyprSpy:
           highlightbackground=self.bg_color
       )
       self.display.pack(expand=True, fill="both")
-        
+
       self.display.bind("<Button-1>", self.copy_line)
-      self.display.bind("<Key>", lambda e: "break") 
+      self.display.bind("<Key>", lambda e: "break")
 
       self.update_info()
 
@@ -64,13 +64,13 @@ class HyprSpy:
       index = self.display.index(f"@{event.x},{event.y}")
       line_num = index.split('.')[0]
       line_content = self.display.get(f"{line_num}.0", f"{line_num}.end").strip()
-        
+
       if line_content and "=" not in line_content:
           # Extract only the value after the colon
           to_copy = line_content.split(":", 1)[1].strip() if ":" in line_content else line_content
           self.root.clipboard_clear()
           self.root.clipboard_append(to_copy)
-            
+
           # Flash effect
           self.display.tag_add("flash", f"{line_num}.0", f"{line_num}.end")
           self.display.tag_config("flash", background="#45475a")
@@ -78,7 +78,7 @@ class HyprSpy:
 
   def update_info(self):
       win, cur = self.get_hypr_data()
-        
+
       # Check if the currently active window is this script
       current_active = win.get("address") if win else None
       self.is_frozen = (current_active == self.own_address and self.own_address is not None)
@@ -107,7 +107,7 @@ class HyprSpy:
               )
           else:
               text = "No active window detected\n(Desktop Focused)"
-            
+
           self.display.config(state="normal")
           self.display.delete("1.0", "end")
           self.display.insert("1.0", text)
