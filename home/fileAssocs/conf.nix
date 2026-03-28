@@ -21,4 +21,10 @@
       "application/json" = [ "codium.desktop" ];
     };
   };
+  # Rebuild MIME database after HM places the XML
+  home.activation.updateMimeDatabase = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.shared-mime-info}/bin/update-mime-database \
+      "$HOME/.local/share/mime"
+  '';
+
 }
