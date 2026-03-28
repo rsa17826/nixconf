@@ -1,8 +1,12 @@
 { userConfig, ... }:
 {
   programs.git = {
-    userName = userConfig.uname;
-    userEmail = userConfig.email;
+    settings = {
+      user = {
+        name = userConfig.uname;
+        email = userConfig.email;
+      };
+    };
     enable = true;
   };
 }

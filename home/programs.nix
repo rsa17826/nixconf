@@ -42,6 +42,8 @@
       "audio"
     ];
     packages = with pkgs; [
+      gh
+      niri
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype

@@ -34,7 +34,7 @@ in
     ./multiGameLauncher/conf.nix
     ./fileAssocs/conf.nix
     # ./brave/conf.nix
-    # ./git/conf.nix
+    ./git/conf.nix
   ];
   systemd.user.services.swaync.Service.Restart = lib.mkForce "no";
   systemd.user.services.xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
