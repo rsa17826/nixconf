@@ -26,5 +26,4 @@
   #   ${pkgs.shared-mime-info}/bin/update-mime-database \
   #     "$HOME/.local/share/mime"
   # '';
-
 }

@@ -3,3 +3,21 @@
 @regex (?<=[^\s])  #
 @replace  #
 @endregex
+
+@name trin ending spaces
+@file 
+@regex  +$
+@replace 
+@endregex
+
+@name trin end lines
+@file \.nix$
+@regex ^\n+([}\]])
+@replace $1
+@endregex
+@name trin start lines
+@file \.nix$
+@regex ([{[])\n{2,}
+@replace $1
+
+@endregex
