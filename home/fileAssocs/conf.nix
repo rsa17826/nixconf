@@ -18,6 +18,7 @@
     defaultApplications = {
       "application/x-sds" = [ "codium.desktop" ];
       "application/json" = [ "codium.desktop" ];
+      "application/vnd.stardivision.chart" = [ "codium.desktop" ]; # <-- add this
     };
   };
   # Rebuild MIME database after HM places the XML
