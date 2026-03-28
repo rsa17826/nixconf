@@ -29,8 +29,9 @@ function get_vsixpkg() {
     return 1
   fi
 
-  VER=$(jq -r '.version' <(unzip -qc "$EXTTMP/pkg.zip" "extension/package.json"))
-  HASH=$(nix-hash --flat --sri --type sha256 "$EXTTMP/pkg.zip")
+  VER=$(jq -r '.version' <(unzip -qc "$EXTTMP/$N.zip" "extension/package.json"))
+  # Calculate the hash
+  HASH=$(nix-hash --flat --sri --type sha256 "$EXTTMP/$N.zip")
   rm -Rf "$EXTTMP"
 
   echo "$VER|$HASH"
