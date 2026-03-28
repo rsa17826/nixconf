@@ -533,11 +533,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774610434,
-        "narHash": "sha256-c0kO3ygHRwen6T1TXpRHYD+guxNA/KXaywWcWgbmaGs=",
+        "lastModified": 1774656903,
+        "narHash": "sha256-HlP2gQgw2OT0t6fag23yjwtJJgPhjwnBBGQkKyPXBSo=",
         "owner": "rsa17826",
         "repo": "multi-game-launcher",
-        "rev": "06fec78b3265dffb17988ed3863c371fb50e6266",
+        "rev": "067ad76a3c9655b8ca97e684a65101af1572f048",
         "type": "github"
       },
       "original": {
