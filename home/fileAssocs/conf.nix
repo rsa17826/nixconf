@@ -1,10 +1,8 @@
 { pkgs, ... }:
 
 {
-  xdg.mimeData.enable = true;
-
-  # Create the definition file in the user's profile
-  xdg.dataFile."mime/packages/sds.xml".text = ''
+  # Register the MIME type system-wide
+  environment.etc."share/mime/packages/sds.xml".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
       <mime-type type="application/x-sds">
@@ -13,4 +11,9 @@
       </mime-type>
     </mime-info>
   '';
+
+  # Set the association
+  xdg.mime.defaultApplications = {
+    "application/x-sds" = "codium.desktop";
+  };
 }
