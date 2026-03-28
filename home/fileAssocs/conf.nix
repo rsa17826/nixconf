@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{ pkgs, lib, ... }:
 {
   # 1. Define the MIME type correctly for Home Manager
   # This puts it in ~/.local/share/mime/packages/sds.xml
