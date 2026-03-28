@@ -41,7 +41,7 @@
           # "d2t" disables multimedia parsers (in case the uploads are malicious)
           d2t = true;
           # skips hashing file contents if path matches *.iso
-          nohash = "\.iso$";
+          # nohash = "\.iso$";
           nodupe = true;
         };
       };

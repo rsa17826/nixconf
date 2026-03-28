@@ -1,0 +1,5 @@
+@name a
+@file \.py$
+@regex (?<=[^\s])  #
+@replace  #
+@endregex

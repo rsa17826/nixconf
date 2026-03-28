@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+from typing import Any
+
+
+from tkinter import Canvas, Frame, Label, Tk
+
+
 import socket
 import json
 import os
@@ -8,18 +14,34 @@ from threading import Thread
 
 SOCKET_PATH = "/tmp/progress_bars.sock"
 
+from typing import TypedDict, cast
+
+
+class BarType(TypedDict):
+  canvas: Canvas
+  frame: Frame
+  bar: str
+  perc: str | float | int
+  last_seen: float
+  max_idle: float
+  update: float
+
 
 class ProgressApp:
-  def __init__(self):
-    self.root = tk.Tk()
+  def __init__(self) -> None:
+    self.root: Tk = tk.Tk()
     self.root.title("Global Progress")
     self.root.geometry("300x1")
     self.root.overrideredirect(True)
-    self.root.attributes("-topmost", True)
-    self.root.configure(bg="#1e1e2e")
+    _ = self.root.attributes( # pyright: ignore[reportUnknownMemberType]
+      "-topmost", True
+    )
+    _ = self.root.configure(bg="#1e1e2e")
 
-    self.bars = {}  # pid: {frame, canvas, bar, perc, last_seen, max_idle}
-    self.container = tk.Frame(self.root, bg="#1e1e2e")
+    self.bars: dict[str, BarType] = (
+      {}
+    ) # pid: {frame, canvas, bar, perc, last_seen, max_idle}
+    self.container: Frame = tk.Frame(self.root, bg="#1e1e2e")
     self.container.pack(fill="both", expand=True, padx=10, pady=10)
 
     # Start background threads
@@ -33,41 +55,58 @@ class ProgressApp:
       s.bind(SOCKET_PATH)
       s.listen()
       while True:
-        conn, _ = s.accept()
+        conn, _ = s.accept() # pyright: ignore[reportAny]
         data = conn.recv(1024).decode()
         if data:
           try:
-            msg = json.loads(data.replace("'", '"'))
-            self.root.after(0, self.update_bars, msg)
+            msg = json.loads( # pyright: ignore[reportAny]
+              data.replace("'", '"')
+            )
+            _ = self.root.after(0, self.update_bars, msg)
           except:
             pass
         conn.close()
 
-  def update_bars(self, msg):
-    pid = msg.get("pid")
-    max_idle = msg.get("max_idle", 10)  # Default to 10 seconds
+  def update_bars(self, msg: dict[str, str | int | float]) -> None:
+    pid: str = str(msg.get("pid"))
+    max_idle: float = float(msg.get("max_idle", 10)) # Default to 10 seconds
 
     if msg.get("action") == "close":
       self.remove_bar(pid)
     else:
-      name, prog, color = (
-        msg.get("name", "Process"),
-        msg.get("progress", 0),
-        msg.get("color", "#00a"),
+      name, prog, color = cast(
+        tuple[str, int, str],
+        (
+          msg.get("name", "Process"),
+          msg.get("progress", 0),
+          msg.get("color", "#00a"),
+        ),
       )
 
       if pid not in self.bars:
-        f = tk.Frame(self.container, bg="#1e1e2e")
-        lbl = tk.Label(f, text=name, fg="white", bg="#1e1e2e", font=("Sans", 9))
-        canvas = tk.Canvas(f, height=10, bg="#313244", highlightthickness=0)
-        bar = canvas.create_rectangle(0, 0, 0, 10, fill=color)
+        f: Frame = tk.Frame(self.container, bg="#1e1e2e")
+        lbl: Label = tk.Label(
+          f, text=name, fg="white", bg="#1e1e2e", font=("Sans", 9)
+        )
+        canvas: Canvas = tk.Canvas(
+          f, height=10, bg="#313244", highlightthickness=0
+        )
+        bar: int = canvas.create_rectangle(0, 0, 0, 10, fill=color)
         lbl.pack(side="top", anchor="w")
         canvas.pack(fill="x", pady=(0, 5))
-        self.bars[pid] = {"frame": f, "canvas": canvas, "bar": bar}
+        self.bars[pid] = { # pyright: ignore[reportArgumentType]
+          "frame": f,
+          "canvas": canvas,
+          "bar": bar,
+        }
 
       # Update data
       self.bars[pid].update(
-        {"perc": prog, "last_seen": time.time(), "max_idle": max_idle}
+        {
+          "perc": prog,
+          "last_seen": time.time(),
+          "max_idle": max_idle,
+        } # pyright: ignore[reportArgumentType]
       )
 
       width = 280 * (prog / 100)
@@ -75,10 +114,10 @@ class ProgressApp:
 
     self.sort_and_resize()
 
-  def check_timeouts(self):
+  def check_timeouts(self) -> None:
     """Periodically check for idle progress bars."""
-    now = time.time()
-    to_delete = [
+    now: float = time.time()
+    to_delete: list[str] = [
       pid
       for pid, data in self.bars.items()
       if now - data["last_seen"] > data["max_idle"]
@@ -90,15 +129,15 @@ class ProgressApp:
     if to_delete:
       self.sort_and_resize()
 
-    self.root.after(1000, self.check_timeouts)  # Check every second
+    _ = self.root.after(1000, self.check_timeouts) # Check every second
 
-  def remove_bar(self, pid):
+  def remove_bar(self, pid: str) -> None:
     if pid in self.bars:
       self.bars[pid]["frame"].destroy()
       del self.bars[pid]
 
-  def sort_and_resize(self):
-    sorted_pids = sorted(
+  def sort_and_resize(self) -> None:
+    sorted_pids: list[str] = sorted(
       self.bars.keys(), key=lambda x: self.bars[x]["perc"], reverse=True
     )
     for pid in sorted_pids:
@@ -106,10 +145,10 @@ class ProgressApp:
       self.bars[pid]["frame"].pack(fill="x", side="top")
 
     self.root.update_idletasks()
-    new_height = max(self.container.winfo_reqheight() + 20, 1)
+    new_height: int = max(self.container.winfo_reqheight() + 20, 1)
     self.root.geometry(f"300x{new_height}")
 
-  def run(self):
+  def run(self) -> None:
     self.root.mainloop()
 
 
