@@ -1,8 +1,9 @@
 { pkgs, ... }:
 
 {
-  # Register the MIME type system-wide
-  environment.etc."share/mime/packages/sds.xml".text = ''
+  # 1. Define the MIME type correctly for Home Manager
+  # This puts it in ~/.local/share/mime/packages/sds.xml
+  xdg.dataFile."mime/packages/sds.xml".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
       <mime-type type="application/x-sds">
@@ -12,8 +13,11 @@
     </mime-info>
   '';
 
-  # Set the association
-  xdg.mime.defaultApplications = {
-    "application/x-sds" = "codium.desktop";
+  # 2. Set the default application
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/x-sds" = [ "codium.desktop" ];
+    };
   };
 }
