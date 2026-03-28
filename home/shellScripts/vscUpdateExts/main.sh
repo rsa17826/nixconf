@@ -3,8 +3,6 @@
 # shellcheck shell=bash
 set -eu -o pipefail
 
-# Reads extensions from a marketplace.nix file and updates their versions/hashes
-# one block at a time, preserving any commented-out blocks in the list.
 # Usage: ./update_marketplace_exts.sh [path/to/marketplace.nix]
 
 function fail() {
@@ -14,7 +12,6 @@ function fail() {
 
 function clean_up() {
   TDIR="${TMPDIR:-/tmp}"
-  echo "Script killed, cleaning up tmpdirs: $TDIR/vscode_exts_*" >&2
   rm -Rf "$TDIR/vscode_exts_*"
 }
 
@@ -27,13 +24,18 @@ function get_vsixpkg() {
 
   URL="https://$PUBLISHER.gallery.vsassets.io/_apis/public/gallery/publisher/$PUBLISHER/extension/$NAME/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
 
-  curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"
+  if ! curl --silent --show-error --retry 3 --fail -X GET -o "$EXTTMP/$N.zip" "$URL"; then
+    echo "    FAILED to download $N" >&2
+    rm -Rf "$EXTTMP"
+    return 1
+  fi
+
   VER=$(jq -r '.version' <(unzip -qc "$EXTTMP/$N.zip" "extension/package.json"))
   HASH=$(nix-hash --flat --sri --type sha256 "$EXTTMP/$N.zip")
 
   rm -Rf "$EXTTMP"
 
-  # Indent matches the surrounding nix file style (6 spaces)
+  # Standardized indentation for the block
   cat <<-EOF
       {
         name = "$NAME";
@@ -44,8 +46,6 @@ function get_vsixpkg() {
 EOF
 }
 
-# Replace a single { ... } block in NIX_FILE that matches the given publisher+name.
-# Commented-out blocks (lines beginning with #) are left untouched.
 function replace_block() {
   local PUBLISHER="$1"
   local NAME="$2"
@@ -55,81 +55,71 @@ function replace_block() {
   python3 - "$PUBLISHER" "$NAME" "$NEW_BLOCK" "$FILE" <<'PYEOF'
 import sys, re
 
-publisher = sys.argv[1]
-name      = sys.argv[2]
-new_block = sys.argv[3]
-filepath  = sys.argv[4]
+publisher, name, new_block, filepath = sys.argv[1:5]
 
 with open(filepath, 'r') as f:
     lines = f.readlines()
 
-result   = []
-i        = 0
+result = []
+i = 0
 replaced = False
 
 while i < len(lines):
-    line     = lines[i]
+    line = lines[i]
     stripped = line.strip()
 
-    # Start of a non-commented bare block?
+    # Look for a block starting with '{' that contains our target publisher and name
+    # and isn't the start of the file or a function header.
     if stripped == '{' and not line.lstrip().startswith('#'):
-        block = [line]
+        block_lines = [line]
         j = i + 1
-        blk_publisher = None
-        blk_name      = None
-
-        # Collect lines until the matching closing brace.
+        inner_publisher = None
+        inner_name = None
+        
+        # Look ahead to see if this block matches
         while j < len(lines):
-            bl  = lines[j]
-            bls = bl.strip()
-            block.append(bl)
-
-            # Only read attributes from non-commented lines.
+            bl = lines[j]
+            block_lines.append(bl)
             if not bl.lstrip().startswith('#'):
                 pm = re.search(r'publisher\s*=\s*"([^"]+)"', bl)
                 nm = re.search(r'name\s*=\s*"([^"]+)"', bl)
-                if pm:
-                    blk_publisher = pm.group(1)
-                if nm:
-                    blk_name = nm.group(1)
-                if bls == '}':
-                    break
+                if pm: inner_publisher = pm.group(1)
+                if nm: inner_name = nm.group(1)
+                if bl.strip() == '}': break
             j += 1
 
-        if blk_publisher == publisher and blk_name == name and not replaced:
-            # Emit the replacement block, keeping the original trailing newline.
-            result.append(new_block + '\n')
+        if inner_publisher == publisher and inner_name == name and not replaced:
+            # Maintain indentation of the original block if possible
+            indent = "      " 
+            indented_block = "\n".join([indent + l.strip() if l.strip() else "" for l in new_block.splitlines()])
+            result.append(indented_block + '\n')
             replaced = True
+            i = j + 1
         else:
-            result.extend(block)
-
-        i = j + 1
+            result.append(line)
+            i += 1
     else:
         result.append(line)
         i += 1
-
-if not replaced:
-    print(f"WARNING: no uncommented block found for {publisher}.{name} — skipped", file=sys.stderr)
 
 with open(filepath, 'w') as f:
     f.writelines(result)
 PYEOF
 }
 
-# Determine the nix file to operate on.
+# --- Main Script ---
+
 if [ $# -ne 0 ]; then
   NIX_FILE="$1"
 else
   NIX_FILE="$HOME/nixconf/home/vscode/extensions/marketplace.nix"
 fi
 
-if [ ! -f "$NIX_FILE" ]; then
-  fail "marketplace.nix not found: $NIX_FILE"
-fi
+[ ! -f "$NIX_FILE" ] && fail "File not found: $NIX_FILE"
 
 trap clean_up SIGINT
 
-# Parse publisher+name pairs from uncommented lines only.
+# Extract only blocks that have both publisher and name
 mapfile -t EXTENSIONS < <(
   awk '
     /^\s*#/        { next }
@@ -139,18 +129,16 @@ mapfile -t EXTENSIONS < <(
   ' "$NIX_FILE"
 )
 
-if [ ${#EXTENSIONS[@]} -eq 0 ]; then
-  fail "No uncommented extensions found in $NIX_FILE"
-fi
-
-echo "Found ${#EXTENSIONS[@]} extension(s) in $NIX_FILE, fetching updates..." >&2
+echo "Updating ${#EXTENSIONS[@]} extensions in $NIX_FILE..."
 
 for entry in "${EXTENSIONS[@]}"; do
-  PUBLISHER="${entry%%	*}"
-  NAME="${entry##*	}"
-  echo "  Updating $PUBLISHER.$NAME ..." >&2
-  NEW_BLOCK=$(get_vsixpkg "$PUBLISHER" "$NAME")
+  # Extract tab-separated values
+  PUBLISHER=$(echo "$entry" | cut -f1)
+  NAME=$(echo "$entry" | cut -f2)
+
+  echo "  -> $PUBLISHER.$NAME"
+  NEW_BLOCK=$(get_vsixpkg "$PUBLISHER" "$NAME") || continue
   replace_block "$PUBLISHER" "$NAME" "$NEW_BLOCK" "$NIX_FILE"
 done
 
-echo "Done. $NIX_FILE updated." >&2
+echo "Update complete."
