@@ -87,7 +87,7 @@ mapfile -t EXTENSIONS < <(
 )
 
 echo "Found ${#EXTENSIONS[@]} extensions. Updating..."
-sleep 10
+# sleep 10
 for entry in "${EXTENSIONS[@]}"; do
   P=$(echo "$entry" | cut -f1)
   N=$(echo "$entry" | cut -f2)
