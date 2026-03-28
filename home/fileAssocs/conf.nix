@@ -16,12 +16,11 @@
   # 2. Set the default application
   xdg.mimeApps = {
     enable = true;
-    # This forces Codium to be the FIRST choice
     defaultApplications = {
       "application/x-sds" = [ "codium.desktop" ];
     };
-    # This explicitly tells Linux NOT to use LibreOffice for this type
-    removedAssociations = {
+    # Note the missing 'd' at the end of 'remove'
+    removeAssociations = {
       "application/x-sds" = [
         "writer.desktop"
         "libreoffice-writer.desktop"
