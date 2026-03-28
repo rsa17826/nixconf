@@ -35,26 +35,26 @@
       {
         name = "qt-python";
         publisher = "theqtcompany";
-        version = "1.11.1";
-        hash = "sha256-yeZ67XitNgUaqEL0NCk8tsKuADit/kXmZ2q75R03nlQ=";
+        version = "1.13.0";
+        hash = "sha256-Kl2b+NMfBYhB4ir6YMK9nQEfit991d7e3iyX+s9CO7E=";
       }
       {
         name = "qt-core";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-jMXC9UqvVxlvNSAMoInv3wCKyDwL/1I0TbftYjJphdU=";
+        version = "1.13.0";
+        hash = "sha256-/SAoJmKfOfLtbYn4jvtbAFIa6O7kDouv0xQVhnxFOKM=";
       }
       {
         name = "qt-ui";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-a3/O1do1SSgfHpXTjc7VBV/Tg2KuB8QB2hKcatt2ZGw=";
+        version = "1.13.0";
+        hash = "sha256-Ie6cY8Q5gqRRfKczlK5QhQ6k2W6Su0NoGcJ9eee+tlo=";
       }
       {
         name = "qt-qml";
         publisher = "theqtcompany";
-        version = "1.10.0";
-        hash = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng=";
+        version = "1.13.0";
+        hash = "sha256-WPzierXLQM+HdVb0XAx80f4Fdd34Vf7WbFzFapr5VHE=";
       }
       {
         name = "indent-jump";
@@ -95,14 +95,14 @@
       {
         name = "vscode-eslint";
         publisher = "dbaeumer";
-        version = "3.0.21";
-        hash = "sha256-Ip9q7BroIVNsxbO/OcZuJWagYsYtV2xJhe0z0NFiR2U=";
+        version = "3.0.24";
+        hash = "sha256-ZQVzpSSLf3tpO4QtLjbCOje3L5/EqzT9A9IOssl6e54=";
       }
       {
         name = "godot-format";
         publisher = "dohe";
-        version = "0.2.12";
-        hash = "sha256-CdP3hiOZctv++3KsMIzL3yKa9XStaKGHg6NSDYHyCno=";
+        version = "0.2.14";
+        hash = "sha256-9OJde9Ue4Ggdi3W/TYGUZPp6R2Z+gaFS9bheJllN/pU=";
       }
       {
         name = "githistory";
@@ -113,8 +113,8 @@
       {
         name = "prettier-vscode";
         publisher = "esbenp";
-        version = "11.0.2";
-        hash = "sha256-PwP49p1gpxfx3AmGFhNvRBBc4SxWM2b9aaiUG/C+Uhg=";
+        version = "12.4.0";
+        hash = "sha256-RtIqVns16+W9/9coBFd0LNZ+ZdfhslC7d1qyvoZHmkI=";
       }
       {
         name = "comment-anchors";
@@ -131,8 +131,8 @@
       {
         name = "godot-tools";
         publisher = "geequlim";
-        version = "2.5.1";
-        hash = "sha256-kAzRSNZw1zaECblJv7NzXnE2JXSy9hzdT2cGX+uwleY=";
+        version = "2.6.1";
+        hash = "sha256-x+u5t4HB+uM2CbhSw0h/zoYPgBPTZNFaMuzL+KB9mAM=";
       }
       {
         name = "vscode-ansi";
@@ -149,8 +149,8 @@
       {
         name = "nix-ide";
         publisher = "jnoortheen";
-        version = "0.5.0";
-        hash = "sha256-jVuGQzMspbMojYq+af5fmuiaS3l3moG8L8Kyf40vots=";
+        version = "0.5.5";
+        hash = "sha256-epdEMPAkSo0IXsd+ozicI8bjPPquDKIzB3ONRUYWwn8=";
       }
       {
         name = "multi-formatter";
@@ -179,8 +179,8 @@
       {
         name = "rainbow-csv";
         publisher = "mechatroner";
-        version = "3.23.0";
-        hash = "sha256-HEbx7vjuVFjAG0koFI/JRehivRiLBF0cgx24LhdwCBc=";
+        version = "3.24.1";
+        hash = "sha256-xZpK6pJNXnxudauzJihEi9VASRXi89+hn7vfF33qRgY=";
       }
       {
         name = "indent-nested-dictionary";
@@ -203,26 +203,27 @@
       {
         name = "black-formatter";
         publisher = "ms-python";
-        version = "2025.3.11831009";
-        hash = "sha256-FsJHxYHae1NuDXQfOJ4TPnXDy05tTuyCElHD4MiaMDU=";
+        version = "2026.3.10851006";
+        hash = "sha256-6udMXPJkfhO7dSZIBi/78LsUtZ83AAVTrhBVQn4xB2M=";
       }
+      # TODO had bad hash
       {
         name = "debugpy";
         publisher = "ms-python";
-        version = "2025.17.2025121103";
-        hash = "sha256-Mt129kktLvt4Xs2ElV5HfxsAsAkg67vjJQqutJyjZRc=";
+        version = "2026.3.2026032701";
+        hash = "sha256-GE4bu1KaBWzyucSgPMd7Z5Wn8EKkTvuOkaO3c4+C08M=";
       }
       {
         name = "python";
         publisher = "ms-python";
-        version = "2025.20.0";
-        hash = "sha256-+VaAABB3/AgSTg2JzoqUtTz8fRNFr0aQjwzBYYFLhYE=";
+        version = "2026.5.2026032701";
+        hash = "sha256-UxduP78GTTu0JjhC1tJ86gnjlCNvYyK6QavJwmDmavk=";
       }
       {
         name = "vscode-pylance";
         publisher = "ms-python";
-        version = "2025.10.100";
-        hash = "sha256-XOuI0WPYV3Nnvst7keizPHUnQfa3P+WULttoHb3ZRVI=";
+        version = "2026.1.102";
+        hash = "sha256-dStVCOXT+OC3WnCBmSCBQZdNOmAfnlm9boW9NKMBRUo=";
       }
       {
         name = "hexeditor";
@@ -287,8 +288,8 @@
       {
         name = "rainbow-struct-field-tags";
         publisher = "se-dev-pion";
-        version = "0.3.1";
-        hash = "sha256-GtuvLfEmdA2oRaDGksWPcw12fJugskCXT9gwSP3MYTk=";
+        version = "0.4.0";
+        hash = "sha256-uxxNa51ZA3wdWkydSX223L7DoikEjuIlLIuJYJunkUE=";
       }
       {
         name = "vscode-highlight-text";
@@ -308,11 +309,12 @@
         version = "0.1.1";
         hash = "sha256-T4RvRYbUw+BDvdGWSySeR7ta3k7adtSOJZfSG0t9nHA=";
       }
+      # TODO had bad hash
       {
         name = "typos-vscode";
         publisher = "tekumara";
-        version = "0.1.46";
-        hash = "sha256-J4dXECKOq+EF4JnzpyWg6GQI9EAL8YlMtbR0zaX3dUU=";
+        version = "0.1.50";
+        hash = "sha256-M1HxTzG1TTvsWBI2vSlRMlFHdWKHzFjbDQdtFn5ZKxc=";
       }
       {
         name = "autolink";
@@ -323,8 +325,8 @@
       {
         name = "errorlens";
         publisher = "usernamehw";
-        version = "3.26.0";
-        hash = "sha256-pAkk3QURnlLNMZ2cFBks2lAEl/Hk8Z2i/QgvjUv+u2Y=";
+        version = "3.28.0";
+        hash = "sha256-7eu7y9IR1uxSFZ0IplDieFt3iWbcmdwf1lAcXq+S4C8=";
       }
       {
         name = "vscode-import-cost";
