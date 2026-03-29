@@ -342,8 +342,8 @@
       ]
     )
     ++ (with pkgs; [
-      espeak-ng
-      speech-dispatcher
+      espeak-ng # tts
+      speechd # tts
       neovim # tui text editor
       wget # cmd dl util
       brave # web browser
