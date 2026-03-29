@@ -346,7 +346,13 @@
       speechd # tts
       neovim # tui text editor
       wget # cmd dl util
-      brave # web browser
+      (brave.override {
+        commandLineArgs = [
+          "--enable-speech-dispatcher"
+          # This helps Chromium find the speechd library in the Nix store
+          "--lib-path=${pkgs.speechd}/lib"
+        ];
+      }) # web browser
       nixfmt # nix language formatter
       git # git is required
       # kdePackages.kget
