@@ -37,6 +37,38 @@ in
       # configurationLimit = 35;
     };
   };
+  services = {
+speechd = {
+    # Enable the Speech Dispatcher daemon
+    enable = true;
+};
+
+    udisks2 = {
+      enable = true;
+    };
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+    };
+    keyd = {
+      enable = true;
+      keyboards = {
+        default = {
+          ids = [ "*" ];
+          settings = {
+            main = {
+              numlock = "noop";
+              capslock = "overload(control, esc)";
+              # numlock = "repeat";
+            };
+          };
+        };
+      };
+    };
+    # opensnitch = {
+    #   enable = true;
+    # };
+
+  };
   nix = {
     # 1. This pins the 'nixpkgs' flake to your system's input
     registry.nixpkgs.flake = inputs.nixpkgs;
@@ -228,32 +260,6 @@ in
   networking.hostName = "${hostName}";
   system = {
     stateVersion = "25.05";
-  };
-  services = {
-    udisks2 = {
-      enable = true;
-    };
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-    };
-    keyd = {
-      enable = true;
-      keyboards = {
-        default = {
-          ids = [ "*" ];
-          settings = {
-            main = {
-              numlock = "noop";
-              capslock = "overload(control, esc)";
-              # numlock = "repeat";
-            };
-          };
-        };
-      };
-    };
-    # opensnitch = {
-    #   enable = true;
-    # };
   };
 
   #  fileSystems."/data" =
