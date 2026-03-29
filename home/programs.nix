@@ -50,6 +50,8 @@
       cliphist
       steam
       # typos
+      losslesscut-bin # video editor
+      uwsm
       typos-lsp # spellchecker
       # keepass # password manager
       python313
