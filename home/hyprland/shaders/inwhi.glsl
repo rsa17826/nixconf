@@ -1,26 +1,26 @@
-precision mediump float;
-
-uniform sampler2D u_tex;
+precision highp float;
 varying vec2 v_texcoord;
-
-float rerange(float val, float l1, float h1, float l2, float h2){
-  return ((val - l1) / (h1 - l1)) * (h2 - l2) + l2;
-}
-
-float mapToDarkeningFactor(float x) {
-  // Note: Ensure input is clamped to avoid division by zero or out-of-bounds math
-  return rerange(clamp(x, 0.5, 1.0), 0.5, 1.0, 0.8, 0.15);
-}
+uniform sampler2D tex;
 
 void main() {
-  // 1. Fixed variable names: u_tex instead of Source, v_texcoord instead of vTexCoord
-  vec3 color = texture2D(u_tex, v_texcoord).rgb;
+    vec4 px = texture2D(tex, v_texcoord);
+    vec3 c = px.rgb;
 
-  // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
-  float averageIntensity = (color.r + color.g + color.b) / 3.0;
+    // 1. Determine the "whiteness" (the common minimum of all channels)
+    float whiteness = min(min(c.r, c.g), c.b);
 
-  float darkeningFactor = mapToDarkeningFactor(averageIntensity);
+    // 2. Subtract the whiteness to push it toward black
+    // Using a power (like 2.0) makes the transition sharper
+    c.r -= pow(whiteness*0.9, 2.0);
+    c.g -= pow(whiteness*0.9, 2.0);
+    c.b -= pow(whiteness*0.9, 2.0);
 
-  // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor
-  gl_FragColor = vec4(color * darkeningFactor, 1.0);
+    // 3. Ensure values don't go below zero
+    c = max(c, 0.0);
+
+    // Optional: Apply your CAP if you still want to limit brightness
+    const float CAP = 0.867;
+    c = clamp(c, 0.0, CAP);
+
+    gl_FragColor = vec4(c, px.a);
 }
