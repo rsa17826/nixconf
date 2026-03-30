@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  tts-server = {
+  systemd.user.services.tts-server = {
     description = "Local espeak TTS server";
     wantedBy = [ "default.target" ];
     serviceConfig = {
