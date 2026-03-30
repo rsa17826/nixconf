@@ -35,6 +35,7 @@ in
     ./fileAssocs/conf.nix
     # ./brave/conf.nix
     ./git/conf.nix
+    ./vex++/conf.nix
   ];
   systemd = {
     user = {

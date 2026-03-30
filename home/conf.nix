@@ -22,7 +22,7 @@ in
     ./copyparty/conf.nix
     ./firewall/conf.nix
     ./brave/conf.nix
-    ./tts/conf.nix
+    # ./tts/conf.nix
   ];
   boot.loader = {
     efi = {
