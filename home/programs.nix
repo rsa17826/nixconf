@@ -219,44 +219,43 @@ in
     ];
   };
   programs.gpu-screen-recorder.enable = true;
-  environment.systemPackages =
-    with pkgs; [
-      espeak-ng # tts
-      speechd # tts
-      neovim # tui text editor
-      wget # cmd dl util
-      brave # web browser
-      nixfmt # nix language formatter
-      git # git is required
-      # kdePackages.kget
-      p7zip # archival tool
-      nix-ld # run linux programs
-      kitty # terminal emulator
-      # rofi
-      # albert
-      keyd # disables capslock and enables numlock
-      anyrun # application launcher
-      nix-output-monitor # nix update formatter
-      cascadia-code # font
-      swaynotificationcenter # notification daemon
-      font-awesome # For additional icons
-      wlogout # For the power menu click
-      pavucontrol # For audio control
-      ly # tui login manager
-      sops # secrets manager
-      direnv
-      copyparty
-      home-manager
-      pulseaudio
-      pipewire
-      wireplumber
-      hyprlock # lockscreen
-      killall
-      losslesscut-bin
-      eza # ls
-      swappy # image editor
-      satty # image editor
-    ];
+  environment.systemPackages = with pkgs; [
+    espeak-ng # tts
+    speechd # tts
+    neovim # tui text editor
+    wget # cmd dl util
+    brave # web browser
+    nixfmt # nix language formatter
+    git # git is required
+    # kdePackages.kget
+    p7zip # archival tool
+    nix-ld # run linux programs
+    kitty # terminal emulator
+    # rofi
+    # albert
+    keyd # disables capslock and enables numlock
+    anyrun # application launcher
+    nix-output-monitor # nix update formatter
+    cascadia-code # font
+    swaynotificationcenter # notification daemon
+    font-awesome # For additional icons
+    wlogout # For the power menu click
+    pavucontrol # For audio control
+    ly # tui login manager
+    sops # secrets manager
+    direnv
+    copyparty
+    home-manager
+    pulseaudio
+    pipewire
+    wireplumber
+    hyprlock # lockscreen
+    killall
+    losslesscut-bin
+    eza # ls
+    swappy # image editor
+    satty # image editor
+  ];
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nerd-fonts.hack

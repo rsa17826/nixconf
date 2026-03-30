@@ -45,7 +45,7 @@ start)
     source="${SINK_NAME}.monitor" \
     record=true \
     port="$PORT" \
-    record_buffer_size=512
+    record_buffer_size=2048
 
   # 3. Move existing audio
   sleep 1
