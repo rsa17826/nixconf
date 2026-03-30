@@ -22,6 +22,7 @@ in
     ./copyparty/conf.nix
     ./firewall/conf.nix
     ./brave/conf.nix
+    ./tts/conf.nix
   ];
   boot.loader = {
     efi = {
@@ -38,10 +39,10 @@ in
     };
   };
   services = {
-speechd = {
-    # Enable the Speech Dispatcher daemon
-    enable = true;
-};
+    speechd = {
+      # Enable the Speech Dispatcher daemon
+      enable = true;
+    };
 
     udisks2 = {
       enable = true;
