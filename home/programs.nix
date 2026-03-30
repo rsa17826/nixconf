@@ -5,6 +5,88 @@
   pkgFromInp,
   ...
 }:
+let
+  newestGodot =
+    version:
+    pkgs.stdenv.mkDerivation {
+      inherit version;
+      pname = "godot-${version}";
+      src = pkgs.fetchurl {
+        url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
+        sha256 = "sha256-+UtyBhZjrXOOpNWbGMnsZQXkMYRO4mGyVSeFqLjVOkY=";
+      };
+      nativeBuildInputs = with pkgs; [ unzip ];
+      sourceRoot = ".";
+      installPhase = ''
+        mkdir -p $out/bin
+        chmod +x Godot_v${version}_linux.x86_64
+        cp Godot_v${version}_linux.x86_64 $out/bin/godot-${version}
+        ln $out/bin/godot-${version} $out/bin/newestGodot
+      '';
+    };
+  xdm = pkgs.writeShellScriptBin "xdm" ''
+    ${pkgs.jdk}/bin/java -jar ${
+      (pkgs.fetchurl {
+        url = "https://github.com/joselmm/xdm-2023/raw/main/xdman.jar";
+        sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym";
+      })
+    } "$@"
+  '';
+  (
+      let
+        # 1. Fetch the binary AND make it executable
+        portmaster-bin = pkgs.stdenv.mkDerivation {
+          name = "portmaster-binary";
+          src = pkgs.fetchurl {
+            url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
+            sha256 = "0n1g4qvb8aqsbb294kzwb9c91dlgs5irish4z4jqssmdkxbqqxy6"; # Use the hash from nix-prefetch-url
+          };
+          phases = [ "installPhase" ];
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src $out/bin/portmaster-start
+            chmod +x $out/bin/portmaster-start
+          '';
+        };
+
+        # 2. Put that executable binary inside the FHS environment
+        portmaster-pkg = pkgs.buildFHSEnv {
+          name = "portmaster-start";
+          targetPkgs =
+            pkgs: with pkgs; [
+              wget
+              curl
+              glibc
+              zlib
+              nss
+              nspr
+              atk
+              at-spi2-atk
+              libX11
+              libxcb
+              libXcomposite
+              libXdamage
+              libXext
+              libXfixes
+              libXrandr
+              mesa
+              expat
+              iptables
+              iproute2
+            ];
+          runScript = pkgs.writeScript "portmaster-wrapper" ''
+            export PORTMASTER_DATA="$HOME/.local/share/portmaster"
+            mkdir -p "$PORTMASTER_DATA"
+            exec ${portmaster-bin}/bin/portmaster-start "$@"
+          '';
+        };
+      in
+      [
+        # portmaster-bin
+        # portmaster-pkg
+      ]
+    )
+in
 {
   programs.appimage = {
     enable = true;
@@ -42,6 +124,11 @@
       "audio"
     ];
     packages = with pkgs; [
+      (newestGodot "4.7-dev3")
+      xdm
+      (pkgFromInp "multi-game-launcher" "default")
+      #
+      calibre
       gh
       niri
       gamescope
@@ -126,222 +213,14 @@
       deno
       zuban
       libreoffice
-      # (pkgs.writeShellScriptBin "godot47" ''exec ${
-      #   (pkgs.stdenv.mkDerivation rec {
-      #     version = "4.7-dev2";
-      #     pname = "godot-${version}";
-      #     src = pkgs.fetchurl {
-      #       url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
-      #       sha256 = "00g3iidkcr068ayy6r77zpmpnl4c66q1gcqid0klc1hbxmdw5psp";
-      #     };
-      #     nativeBuildInputs = with pkgs; [ unzip ];
-      #     sourceRoot = ".";
-      #     installPhase = "mkdir -p $out/bin; chmod +x Godot_v${version}_linux.x86_64; cp Godot_v* $out/bin/godot";
-      #   })
-      # }/bin/godot "$@"'')
-      (
-        let
-          newestGodot = pkgs.stdenv.mkDerivation rec {
-            version = "4.7-dev3";
-            pname = "godot-${version}";
-            src = pkgs.fetchurl {
-              url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
-              sha256 = "sha256-+UtyBhZjrXOOpNWbGMnsZQXkMYRO4mGyVSeFqLjVOkY=";
-            };
-            nativeBuildInputs = with pkgs; [ unzip ];
-            sourceRoot = ".";
-            installPhase = ''
-              mkdir -p $out/bin
-              chmod +x Godot_v${version}_linux.x86_64
-              cp Godot_v${version}_linux.x86_64 $out/bin/godot-${version}
-            '';
-          };
-        in
-        newestGodot
-      )
-
-      # (
-      #   let
-      #     version = "7.2.11";
-      #   in
-      #   pkgs.stdenv.mkDerivation {
-      #     pname = "xdm";
-      #     inherit version;
-
-      #     src = pkgs.fetchurl {
-      #       url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman.jar";
-      #       sha256 = "sha256-FAQTZReX2XsTxfGi8MUo2m5G02Ur02q9dDsaadxhBDg=";
-      #       # url = "https://github.com/subhra74/xdm/releases/download/${version}/xdman_gtk-8.0.29-1-x86_64.pkg.tar.zst";
-      #       # sha256 = "sha256-ffFONhkbc41FhI1Wes+aifAmv1KQME/lA3pSoeTEKuw=";
-      #     };
-
-      #     # We need these to extract .zst and fix the binaries
-
-      #     sourceRoot = ".";
-      #     autoPatchelfIgnoreMissingDeps = [ "liblttng-ust.so.0" ];
-      #     nativeBuildInputs = [
-      #       pkgs.zstd
-      #       pkgs.autoPatchelfHook
-      #       pkgs.makeWrapper
-      #     ];
-
-      #     buildInputs = with pkgs; [
-      #       gtk3
-      #       nss
-      #       nspr
-      #       libX11
-      #       libXrender
-      #       libXtst
-      #       alsa-lib
-      #       at-spi2-atk
-      #       lttng-ust
-      #       libkrb5
-      #       icu
-      #       openssl
-      #       cairo
-      #       dbus
-      #       expat
-      #       fontconfig
-      #       gdk-pixbuf
-      #       glib
-      #       pango
-      #       libdrm
-      #       mesa
-      #     ];
-      #     installPhase = ''
-      #       runHook preInstall
-
-      #       mkdir -p $out/bin
-
-      #       # Copy the opt folder (where xdm-app lives)
-      #       if [ -d "opt" ]; then
-      #         cp -r opt $out/
-      #       fi
-
-      #       # Copy the usr folder (for icons/desktop files)
-      #       if [ -d "usr" ]; then
-      #         cp -r usr/* $out/
-      #       fi
-
-      #       # The actual binary is xdm-app, not xdman
-      #       chmod +x $out/opt/xdman/xdm-app
-
-      #       # Link it so you can run 'xdman' or 'xdm-app' from the terminal
-      #       ln -sf $out/opt/xdman/xdm-app $out/bin/xdman
-      #       ln -sf $out/opt/xdman/xdm-app $out/bin/xdm-app
-
-      #       runHook postInstall
-      #     '';
-      #     postFixup = ''
-      #       wrapProgram $out/opt/xdman/xdm-app \
-      #         --set GDK_PIXBUF_MODULE_FILE "${pkgs.librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \
-      #         --prefix LD_LIBRARY_PATH : ${
-      #           pkgs.lib.makeLibraryPath (
-      #             with pkgs;
-      #             [
-      #               gtk3
-      #               glib
-      #               cairo
-      #               pango
-      #               gdk-pixbuf
-      #               atk
-      #               at-spi2-atk
-      #               librsvg
-      #               libX11
-      #               libXcomposite
-      #               libXcursor
-      #               libXdamage
-      #               libXext
-      #               libXfixes
-      #               libXi
-      #               libXrender
-      #               libXtst
-      #               libxkbcommon
-      #               mesa
-      #               # The fix for the libssl error:
-      #               openssl
-      #               zlib
-      #               libkrb5
-      #             ]
-      #           )
-      #         }
-      #     '';
-      #   }
-      # )
-      (
-        let
-          # Define the version and fetch the jar
-          xdm-jar = fetchurl {
-            url = "https://github.com/joselmm/xdm-2023/raw/main/xdman.jar";
-            sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym"; # See note below
-          };
-        in
-        writeShellScriptBin "xdm" ''
-          ${pkgs.jdk}/bin/java -jar ${xdm-jar} "$@"
-        ''
-      )
-      jdk # Ensure a JDK/JRE is also in your system path
+      jdk
       xemu # xbox emu
       wl-clip-persist # keep clip past app death
     ];
   };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages =
-    (
-      let
-        # 1. Fetch the binary AND make it executable
-        portmaster-bin = pkgs.stdenv.mkDerivation {
-          name = "portmaster-binary";
-          src = pkgs.fetchurl {
-            url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "0n1g4qvb8aqsbb294kzwb9c91dlgs5irish4z4jqssmdkxbqqxy6"; # Use the hash from nix-prefetch-url
-          };
-          phases = [ "installPhase" ];
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $src $out/bin/portmaster-start
-            chmod +x $out/bin/portmaster-start
-          '';
-        };
-
-        # 2. Put that executable binary inside the FHS environment
-        portmaster-pkg = pkgs.buildFHSEnv {
-          name = "portmaster-start";
-          targetPkgs =
-            pkgs: with pkgs; [
-              wget
-              curl
-              glibc
-              zlib
-              nss
-              nspr
-              atk
-              at-spi2-atk
-              libX11
-              libxcb
-              libXcomposite
-              libXdamage
-              libXext
-              libXfixes
-              libXrandr
-              mesa
-              expat
-              iptables
-              iproute2
-            ];
-          runScript = pkgs.writeScript "portmaster-wrapper" ''
-            export PORTMASTER_DATA="$HOME/.local/share/portmaster"
-            mkdir -p "$PORTMASTER_DATA"
-            exec ${portmaster-bin}/bin/portmaster-start "$@"
-          '';
-        };
-      in
-      [
-        # portmaster-bin
-        # portmaster-pkg
-      ]
-    )
-    ++ (with pkgs; [
+    with pkgs; [
       espeak-ng # tts
       speechd # tts
       neovim # tui text editor
@@ -357,12 +236,9 @@
       # albert
       keyd # disables capslock and enables numlock
       anyrun # application launcher
-
       nix-output-monitor # nix update formatter
       cascadia-code # font
       swaynotificationcenter # notification daemon
-
-      # waybar
       font-awesome # For additional icons
       wlogout # For the power menu click
       pavucontrol # For audio control
@@ -373,7 +249,6 @@
       home-manager
       pulseaudio
       pipewire
-      (pkgFromInp "multi-game-launcher" "default")
       wireplumber
       hyprlock # lockscreen
       killall
@@ -381,7 +256,7 @@
       eza # ls
       swappy # image editor
       satty # image editor
-    ]);
+    ];
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nerd-fonts.hack
