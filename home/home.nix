@@ -36,12 +36,18 @@ in
     # ./brave/conf.nix
     ./git/conf.nix
   ];
-  systemd.user.services.swaync.Service.Restart = lib.mkForce "no";
-  systemd.user.services.xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
+  systemd = {
+    user = {
+      services = {
+        swaync.Service.Restart = lib.mkForce "no";
+        xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
 
-  # Also, prevent Home Manager from trying to start them during activation
-  systemd.user.services.swaync.Install.WantedBy = lib.mkForce [ ];
-  systemd.user.services.xdg-desktop-portal-gtk.Install.WantedBy = lib.mkForce [ ];
+        # Also, prevent Home Manager from trying to start them during activation
+        swaync.Install.WantedBy = lib.mkForce [ ];
+        xdg-desktop-portal-gtk.Install.WantedBy = lib.mkForce [ ];
+      };
+    };
+  };
 
   services.swaync.enable = true;
   services.playerctld.enable = true;
