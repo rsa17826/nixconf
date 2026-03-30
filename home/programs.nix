@@ -32,60 +32,60 @@ let
       })
     } "$@"
   '';
-  (
-      let
-        # 1. Fetch the binary AND make it executable
-        portmaster-bin = pkgs.stdenv.mkDerivation {
-          name = "portmaster-binary";
-          src = pkgs.fetchurl {
-            url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
-            sha256 = "0n1g4qvb8aqsbb294kzwb9c91dlgs5irish4z4jqssmdkxbqqxy6"; # Use the hash from nix-prefetch-url
-          };
-          phases = [ "installPhase" ];
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $src $out/bin/portmaster-start
-            chmod +x $out/bin/portmaster-start
-          '';
-        };
+  # (
+  #     let
+  #       # 1. Fetch the binary AND make it executable
+  #       portmaster-bin = pkgs.stdenv.mkDerivation {
+  #         name = "portmaster-binary";
+  #         src = pkgs.fetchurl {
+  #           url = "https://updates.safing.io/latest/linux_amd64/start/portmaster-start";
+  #           sha256 = "0n1g4qvb8aqsbb294kzwb9c91dlgs5irish4z4jqssmdkxbqqxy6"; # Use the hash from nix-prefetch-url
+  #         };
+  #         phases = [ "installPhase" ];
+  #         installPhase = ''
+  #           mkdir -p $out/bin
+  #           cp $src $out/bin/portmaster-start
+  #           chmod +x $out/bin/portmaster-start
+  #         '';
+  #       };
 
-        # 2. Put that executable binary inside the FHS environment
-        portmaster-pkg = pkgs.buildFHSEnv {
-          name = "portmaster-start";
-          targetPkgs =
-            pkgs: with pkgs; [
-              wget
-              curl
-              glibc
-              zlib
-              nss
-              nspr
-              atk
-              at-spi2-atk
-              libX11
-              libxcb
-              libXcomposite
-              libXdamage
-              libXext
-              libXfixes
-              libXrandr
-              mesa
-              expat
-              iptables
-              iproute2
-            ];
-          runScript = pkgs.writeScript "portmaster-wrapper" ''
-            export PORTMASTER_DATA="$HOME/.local/share/portmaster"
-            mkdir -p "$PORTMASTER_DATA"
-            exec ${portmaster-bin}/bin/portmaster-start "$@"
-          '';
-        };
-      in
-      [
-        # portmaster-bin
-        # portmaster-pkg
-      ]
-    )
+  #       # 2. Put that executable binary inside the FHS environment
+  #       portmaster-pkg = pkgs.buildFHSEnv {
+  #         name = "portmaster-start";
+  #         targetPkgs =
+  #           pkgs: with pkgs; [
+  #             wget
+  #             curl
+  #             glibc
+  #             zlib
+  #             nss
+  #             nspr
+  #             atk
+  #             at-spi2-atk
+  #             libX11
+  #             libxcb
+  #             libXcomposite
+  #             libXdamage
+  #             libXext
+  #             libXfixes
+  #             libXrandr
+  #             mesa
+  #             expat
+  #             iptables
+  #             iproute2
+  #           ];
+  #         runScript = pkgs.writeScript "portmaster-wrapper" ''
+  #           export PORTMASTER_DATA="$HOME/.local/share/portmaster"
+  #           mkdir -p "$PORTMASTER_DATA"
+  #           exec ${portmaster-bin}/bin/portmaster-start "$@"
+  #         '';
+  #       };
+  #     in
+  #     [
+  #       # portmaster-bin
+  #       # portmaster-pkg
+  #     ]
+  #   )
 in
 {
   programs.appimage = {
