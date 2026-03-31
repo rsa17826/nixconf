@@ -16,39 +16,43 @@ let
   };
 in
 {
-  programs.pay-respects = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-  programs.nix-index.enable = true;
-  programs.zsh = {
-    dotDir = "${config.xdg.configHome}/zsh";
-    enable = true;
-    history.size = 10000;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    plugins = lib.mapAttrsToList (name: path: {
-      name = name;
-      src = pkgs.${name};
-      file = if (path != null) then path else "share/${name}/${name}.zsh";
-    }) zshPlugins;
-    initContent = ''
-      ZSH_COMMAND_TIME_COLOR="yellow"
-      ZSH_COMMAND_TIME_MIN_SECONDS=3
-      ZSH_COMMAND_TIME_ECHO=1
-      # Map the codes Kitty is sending to Zsh actions
-      bindkey "\e[1;5D" backward-word
-      bindkey "\e[1;5C" forward-word
-      bindkey "\e[1;6D" backward-word # Shift variant
-      bindkey "\e[1;6C" forward-word  # Shift variant
-      bindkey '^H' backward-kill-word  # Ctrl+Backspace
-      bindkey "\e[3;5~" kill-word      # Ctrl+Delete
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[[B' history-substring-search-down
-      bindkey "$terminfo[kcuu1]" history-substring-search-up
-      bindkey "$terminfo[kcud1]" history-substring-search-down
-      bindkey '^[[Z' reverse-menu-complete
-    '';
+  programs = {
+    pay-respects = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    nix-index = {
+      enable = true;
+    };
+    zsh = {
+      dotDir = "${config.xdg.configHome}/zsh";
+      enable = true;
+      history.size = 10000;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      plugins = lib.mapAttrsToList (name: path: {
+        name = name;
+        src = pkgs.${name};
+        file = if (path != null) then path else "share/${name}/${name}.zsh";
+      }) zshPlugins;
+      initContent = ''
+        ZSH_COMMAND_TIME_COLOR="yellow"
+        ZSH_COMMAND_TIME_MIN_SECONDS=3
+        ZSH_COMMAND_TIME_ECHO=1
+        # Map the codes Kitty is sending to Zsh actions
+        bindkey "\e[1;5D" backward-word
+        bindkey "\e[1;5C" forward-word
+        bindkey "\e[1;6D" backward-word # Shift variant
+        bindkey "\e[1;6C" forward-word  # Shift variant
+        bindkey '^H' backward-kill-word  # Ctrl+Backspace
+        bindkey "\e[3;5~" kill-word      # Ctrl+Delete
+        bindkey '^[[A' history-substring-search-up
+        bindkey '^[[B' history-substring-search-down
+        bindkey "$terminfo[kcuu1]" history-substring-search-up
+        bindkey "$terminfo[kcud1]" history-substring-search-down
+        bindkey '^[[Z' reverse-menu-complete
+      '';
+    };
   };
 }
