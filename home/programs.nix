@@ -216,6 +216,7 @@ in
       jdk
       xemu # xbox emu
       wl-clip-persist # keep clip past app death
+      blender
     ];
   };
   programs.gpu-screen-recorder.enable = true;
@@ -255,6 +256,7 @@ in
     eza # ls
     swappy # image editor
     satty # image editor
+    nginx
   ];
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

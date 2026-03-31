@@ -1,0 +1,21 @@
+host: "127.0.0.1"
+port: 8080
+root: "~/nixconf/vm"
+
+http_authenticator:
+  domain_controller: wsgidav.dc.simple_dc.SimpleDomainController
+  accept_basic: true
+  accept_digest: false
+  default_to_digest: false
+
+simple_dc:
+  user_mapping:
+    "/":
+      "anonymous":
+        password: "a"
+
+cors:
+  allow_origin: "*"
+# testpkg python313Packages.watchdog python313Packages.cheroot python313Packages.wsgidav
+# nix-shell -p "python3.withPackages (ps: [ps.watchdog])" --run "python3 vm_sync.py ~/nixconf/vm"
+# wsgidav --host=127.0.0.1 --port=8080 --root=~/nixconf/vm --server cheroot --config=~/nixconf/vm/wsgidav.yaml

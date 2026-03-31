@@ -13,7 +13,6 @@ import Quickshell.Services.Mpris
 import Quickshell.Widgets
 
 Row {
-  // This repeats for every icon (OpenSnitch, Network, etc.)
   Repeater {
     model: SystemTray.items
 
@@ -21,13 +20,11 @@ Row {
       height: 24
       width: 24
 
-      onClicked: mouse => modelData.activate(mouse.x, mouse.y)
-
-      // onSecondaryClicked: mouse => modelData.contextMenu(mouse.x, mouse.y)
+      onClicked: mouse => modelData.activate()
 
       IconImage {
         anchors.fill: parent
-        source: modelData.icon // This is where OpenSnitch's icon lives
+        source: modelData.icon
       }
     }
   }
