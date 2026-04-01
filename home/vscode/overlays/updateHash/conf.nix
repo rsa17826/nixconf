@@ -1,38 +1,20 @@
 self: super: {
-  vscode = super.vscode.overrideAttrs (oldAttrs: {
+  vscodium = super.vscodium.overrideAttrs (oldAttrs: {
+    # We use jq to modify the json directly
+    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ super.jq ];
+
     postFixup = (oldAttrs.postFixup or "") + ''
-      # 1. Identify the product.json location
-      PRODUCT_JSON="$out/lib/vscode/resources/app/product.json"
+      # Find the product.json (it's often in different places depending on version)
+      PJSON=$(find $out -name product.json)
 
-      # 2. Use a python script to recalculate checksums of the actual files
-      # This mimics the logic in your TypeScript function
-      ${super.python3}/bin/python3 <<EOF
-      import json
-      import hashlib
-      import base64
-      import os
-
-      def compute_checksum(filename):
-          with open(filename, "rb") as f:
-              content = f.read()
-              # VS Code uses MD5 hashed then Base64 encoded without padding
-              m = hashlib.md5(content).digest()
-              return base64.b64encode(m).decode('utf-8').replace("=", "")
-
-      with open("$PRODUCT_JSON", "r") as f:
-          data = json.load(f)
-
-      if "checksums" in data:
-          for rel_path, old_checksum in data["checksums"].items():
-              # Construct absolute path to the file
-              full_path = os.path.join("$out/lib/vscode/resources/app", rel_path)
-              if os.path.exists(full_path):
-                  new_checksum = compute_checksum(full_path)
-                  data["checksums"][rel_path] = new_checksum
-
-          with open("$PRODUCT_JSON", "w") as f:
-              json.dump(data, f, indent='\t')
-      EOF
+      if [ -f "$PJSON" ]; then
+        echo "Fixing checksums in $PJSON..."
+        chmod +w "$PJSON"
+        # Removing the checksums key tells VSCodium to skip the check entirely
+        ${super.jq}/bin/jq 'del(.checksums)' "$PJSON" > "$PJSON.tmp" && mv "$PJSON.tmp" "$PJSON"
+      else
+        echo "Could not find product.json to fix checksums!"
+      fi
     '';
   });
 }
