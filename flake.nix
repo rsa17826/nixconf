@@ -90,7 +90,7 @@
 
               inputs.sops-nix.nixosModules.sops
               inputs.copyparty.nixosModules.default
-              nix-index-database.nixosModules.default
+              nix-index-database.nixosModules.nix-index
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
