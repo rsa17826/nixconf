@@ -1,12 +1,12 @@
-{ ... }:
+{ userConfig, ... }:
 {
   services = {
     syncthing = {
       enable = true;
-      group = "mygroupname";
-      user = "myusername";
-      dataDir = "/home/myusername/Documents"; # Default folder for new synced folders
-      configDir = "/home/myusername/.config/syncthing"; # Folder for Syncthing's settings and keys
+      group = "users";
+      user = "${userConfig.uname}";
+      dataDir = "/home/${userConfig.uname}/Documents"; # Default folder for new synced folders
+      configDir = "/home/${userConfig.uname}/.config/syncthing"; # Folder for Syncthing's settings and keys
     };
   };
 }
