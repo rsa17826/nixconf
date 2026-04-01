@@ -26,9 +26,9 @@
       recursive = true;
     };
   };
-  xdg.configFile."hypr/hm.conf".text = ''
-    plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
-  '';
+  # xdg.configFile."hypr/hm.conf".text = ''
+  #   plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
+  # '';
   # xdg.configFile."hypr/hm.conf".text = ''
   #   plugin = hypr-darkwindow.packages.${pkgs.stdenv.hostPlatform.system}.Hypr-DarkWindow
   # '';

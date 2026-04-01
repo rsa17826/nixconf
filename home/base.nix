@@ -69,9 +69,9 @@
     defaultSession = "hyprland";
 
     # programs.twm.enable=true;
-    autoLogin = {
-      enable = true;
-      user = "${userConfig.uname}";
-    };
+    # autoLogin = {
+    #   enable = true;
+    #   user = "${userConfig.uname}";
+    # };
   };
 }
