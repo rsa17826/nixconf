@@ -2,7 +2,7 @@
 {
   services = {
     syncthing = {
-      enable = true;
+      enable = false;
       group = "users";
       user = "${userConfig.uname}";
       dataDir = "/home/${userConfig.uname}/Documents"; # Default folder for new synced folders

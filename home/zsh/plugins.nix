@@ -21,9 +21,9 @@ in
       enable = true;
       enableZshIntegration = true;
     };
-    nix-index = {
-      enable = true;
-    };
+    # nix-index = {
+    #   enable = true;
+    # };
     zsh = {
       dotDir = "${config.xdg.configHome}/zsh";
       enable = true;
