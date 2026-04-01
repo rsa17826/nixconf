@@ -104,7 +104,8 @@ in
   };
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages;
+  # boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_6_18_19;
   environment.variables = {
     EDITOR = "nvim";
     SOPS_EDITOR = "codium --wait";
