@@ -69,11 +69,11 @@ in
   services.journald.storage = "persistent";
 
   nix = {
-    settings = {
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-    };
+    # settings = {
+    #   substituters = [ "https://hyprland.cachix.org" ];
+    #   trusted-substituters = [ "https://hyprland.cachix.org" ];
+    #   trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    # };
     # 1. This pins the 'nixpkgs' flake to your system's input
     registry.nixpkgs.flake = inputs.nixpkgs;
 
@@ -205,7 +205,7 @@ in
       nvidiaSettings = true;
 
       # Optionally, specify the package to ensure you stay on a compatible version
-      package = config.boot.kernelPackages.nvidiaPackages.production;
+      package = pkgs.linuxPackages_6_18.nvidiaPackages.production;
     };
     # TODO
     # uinput things
