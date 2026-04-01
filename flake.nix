@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland?tag=v0.54.3";
+      url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copyparty = {
@@ -19,7 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hypr-dynamic-cursors = {
-      url = "github:VirtCode/hypr-dynamic-cursors";
+      url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
       inputs.hyprland.follows = "hyprland";
     };
     hypr-darkwindow = {
