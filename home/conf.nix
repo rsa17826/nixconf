@@ -105,7 +105,7 @@ in
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages;
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = config.boot.kernelPackages.nvidiaPackages.production;
   environment.variables = {
     EDITOR = "nvim";
     SOPS_EDITOR = "codium --wait";
