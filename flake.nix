@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland?tag=v0.54.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copyparty = {

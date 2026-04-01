@@ -33,11 +33,6 @@ in
       enable = true;
       configurationLimit = 35;
     };
-    grub = {
-      # enable = true;
-      # device = "/dev/sda"; # Install GRUB into the MBR
-      # configurationLimit = 35;
-    };
   };
   services = {
     speechd = {
@@ -72,6 +67,11 @@ in
 
   };
   nix = {
+    settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
     # 1. This pins the 'nixpkgs' flake to your system's input
     registry.nixpkgs.flake = inputs.nixpkgs;
 
