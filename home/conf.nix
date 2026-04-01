@@ -105,7 +105,6 @@ in
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
   boot.kernelPackages = pkgs.linuxPackages;
   environment.variables = {
     EDITOR = "nvim";
@@ -206,7 +205,7 @@ in
       nvidiaSettings = true;
 
       # Optionally, specify the package to ensure you stay on a compatible version
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
     };
     # TODO
     # uinput things
