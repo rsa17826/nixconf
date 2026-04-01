@@ -27,6 +27,7 @@
       # unless the application (like a text editor) is listening for selection.
       "ctrl+shift+left" = "send_text all \\x1b[1;6D";
       "ctrl+shift+right" = "send_text all \\x1b[1;6C";
+      "allow_remote_control" = "yes";
     };
   };
 }

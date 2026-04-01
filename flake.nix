@@ -10,12 +10,12 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     copyparty = {
       url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland = {
+      url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hypr-dynamic-cursors = {
