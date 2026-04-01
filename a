@@ -1,0 +1,698 @@
+diff --git a/.gitignore b/.gitignore
+index 623df73..306cd13 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,2 +1,4 @@
+ **/.qmlls.ini
+-.direnv
+\ No newline at end of file
++.direnv
++vm/userjs
++vm/Violentmonkey
+\ No newline at end of file
+diff --git a/.sops.yaml b/.sops.yaml
+index c92c6e2..18b7f96 100644
+--- a/.sops.yaml
++++ b/.sops.yaml
+@@ -4,4 +4,4 @@ creation_rules:
+   - path_regex: secrets\.yaml$
+     key_groups:
+       - age:
+-          - *nyx
+\ No newline at end of file
++          - *nyx
+diff --git a/flake.lock b/flake.lock
+index b7d2e8c..593865e 100644
+--- a/flake.lock
++++ b/flake.lock
+@@ -41,11 +41,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1774236832,
+-        "narHash": "sha256-xvMAU9wDGBwAtpMLrzN8jiNk5z0j0oHji6UX3JHqvA0=",
++        "lastModified": 1774983731,
++        "narHash": "sha256-ZJGManY8rA/7+AZIxiW0CEMW9x8megcoh1xZ/oXq/aY=",
+         "owner": "9001",
+         "repo": "copyparty",
+-        "rev": "6a9e6da864f95d0f7ca7893c6e9d8f6d6a5801da",
++        "rev": "198f631ac80adc33a8f072d598ff0cd1aa2b5abd",
+         "type": "github"
+       },
+       "original": {
+@@ -149,11 +149,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1774371786,
+-        "narHash": "sha256-ag1HUJv0SDBqKAYxwWlvAE2gBsEk3XYFvWtmdAHFz7E=",
++        "lastModified": 1775075223,
++        "narHash": "sha256-koolplqbU5RQjQwdcYGz/AVKk18vQiYjHdSi17COIJ0=",
+         "owner": "nix-community",
+         "repo": "home-manager",
+-        "rev": "b8cb89f2c4f7006b17b4aa5d8b39b95b93b559d8",
++        "rev": "f21d8ebbc959e5da6fbda105ff47e334f058ac06",
+         "type": "github"
+       },
+       "original": {
+@@ -170,11 +170,11 @@
+         "nix-filter": "nix-filter"
+       },
+       "locked": {
+-        "lastModified": 1774295916,
+-        "narHash": "sha256-Cs/fHQd64wQl4aKM/x0TYQ9afaiA+23sd6N+oFQBzNY=",
++        "lastModified": 1774790854,
++        "narHash": "sha256-Vbk5I0qN++N6R8FpV31/I4vpBISMbKj/PBfFkUP4/Nk=",
+         "owner": "micha4w",
+         "repo": "Hypr-DarkWindow",
+-        "rev": "f6a79121ff46e2d6e82280274bddab2f3ebaff5a",
++        "rev": "13ef2d8f0c6beac07150a0d559f92eaa7108b5f6",
+         "type": "github"
+       },
+       "original": {
+@@ -191,11 +191,11 @@
+         "nixpkgs": "nixpkgs_2"
+       },
+       "locked": {
+-        "lastModified": 1773098910,
+-        "narHash": "sha256-hHMMP4h9VvacDLb8lkI6gZcUnhDbEt+GP2RLLL2s2C4=",
++        "lastModified": 1774744496,
++        "narHash": "sha256-dY0jMqKphWhrcHsNI+vf2/zJGeHR42ZI2a10o58YnFs=",
+         "owner": "VirtCode",
+         "repo": "hypr-dynamic-cursors",
+-        "rev": "57e14edd0ae265b01828e466e287e96eb1e84dd3",
++        "rev": "b736d61794650a5f6162381dfd1ba8c5efe865d9",
+         "type": "github"
+       },
+       "original": {
+@@ -281,11 +281,11 @@
+         "xdph": "xdph"
+       },
+       "locked": {
+-        "lastModified": 1774354685,
+-        "narHash": "sha256-GGo4zr9oLGtuZ73He9dlTuODAk2Qv0XOblkdlxBvh9I=",
++        "lastModified": 1775050177,
++        "narHash": "sha256-HEDofQ+Zs4toY6yqvScK4nXWewrdhAqM9mGOibsMzZo=",
+         "owner": "hyprwm",
+         "repo": "Hyprland",
+-        "rev": "bbf6718c4fc55867be0db8946918ce03d3879f64",
++        "rev": "7fbf8f98477dfbb2e6b193ef85e0c2d119d3fe80",
+         "type": "github"
+       },
+       "original": {
+@@ -533,11 +533,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1774729888,
+-        "narHash": "sha256-UH5zIdG5I1kzi6tI2ElAAV/ov4FjRizIqVcZxRNNRsM=",
++        "lastModified": 1774994540,
++        "narHash": "sha256-iHxSrRO1PHcDLtB+/5wNhrYyzsO2VCYfa+HbGx0zAeU=",
+         "owner": "rsa17826",
+         "repo": "multi-game-launcher",
+-        "rev": "3c63db26ad91a4fd12cb49ac93b8a1b0b93ab9a8",
++        "rev": "571c6938ce00f4a27fac88d93015bcce7c3727e9",
+         "type": "github"
+       },
+       "original": {
+@@ -568,11 +568,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1774156144,
+-        "narHash": "sha256-gdYe9wTPl4ignDyXUl1LlICWj41+S0GB5lG1fKP17+A=",
++        "lastModified": 1774762074,
++        "narHash": "sha256-89Mh4Eb/5stVJX6kGagVMijcU2FmfeD8Qv7UXc5d92o=",
+         "owner": "nix-community",
+         "repo": "nix-index-database",
+-        "rev": "55b588747fa3d7fc351a11831c4b874dab992862",
++        "rev": "bc13aeaed568be76eab84df88ff39261bb52ff70",
+         "type": "github"
+       },
+       "original": {
+@@ -615,11 +615,11 @@
+     },
+     "nixpkgs_3": {
+       "locked": {
+-        "lastModified": 1774106199,
+-        "narHash": "sha256-US5Tda2sKmjrg2lNHQL3jRQ6p96cgfWh3J1QBliQ8Ws=",
++        "lastModified": 1774709303,
++        "narHash": "sha256-D3Q07BbIA2KnTcSXIqqu9P586uWxN74zNoCH3h2ESHg=",
+         "owner": "nixos",
+         "repo": "nixpkgs",
+-        "rev": "6c9a78c09ff4d6c21d0319114873508a6ec01655",
++        "rev": "8110df5ad7abf5d4c0f6fb0f8f978390e77f9685",
+         "type": "github"
+       },
+       "original": {
+@@ -659,11 +659,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1773988952,
+-        "narHash": "sha256-XV/WgkkZ6OLJ+W0vrD4bXB7/ErQysc5R5lrkT2/VBVs=",
++        "lastModified": 1774950564,
++        "narHash": "sha256-KWU38p8zEtgFOL5KZoWeqWVv27uBFLX3N+Ih+TFs9/0=",
+         "ref": "refs/heads/master",
+-        "rev": "6a244c3c560b45f3b860ed6c0fc54d0291ab6f57",
+-        "revCount": 774,
++        "rev": "d6122277409783377059be6399004eb090a6008e",
++        "revCount": 782,
+         "type": "git",
+         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+       },
+@@ -694,11 +694,11 @@
+         ]
+       },
+       "locked": {
+-        "lastModified": 1774303811,
+-        "narHash": "sha256-fhG4JAcLgjKwt+XHbjs8brpWnyKUfU4LikLm3s0Q/ic=",
++        "lastModified": 1774910634,
++        "narHash": "sha256-B+rZDPyktGEjOMt8PcHKYmgmKoF+GaNAFJhguktXAo0=",
+         "owner": "Mic92",
+         "repo": "sops-nix",
+-        "rev": "614e256310e0a4f8a9ccae3fa80c11844fba7042",
++        "rev": "19bf3d8678fbbfbc173beaa0b5b37d37938db301",
+         "type": "github"
+       },
+       "original": {
+diff --git a/flake.nix b/flake.nix
+index 7dbf4f2..d661cbb 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -11,7 +11,7 @@
+       inputs.nixpkgs.follows = "nixpkgs";
+     };
+     hyprland = {
+-      url = "github:hyprwm/Hyprland";
++      url = "github:hyprwm/Hyprland?tag=v0.54.3";
+       inputs.nixpkgs.follows = "nixpkgs";
+     };
+     copyparty = {
+@@ -90,7 +90,7 @@
+ 
+               inputs.sops-nix.nixosModules.sops
+               inputs.copyparty.nixosModules.default
+-              nix-index-database.nixosModules.nix-index
++              nix-index-database.nixosModules.default
+               home-manager.nixosModules.home-manager
+               {
+                 home-manager = {
+diff --git a/home/base.nix b/home/base.nix
+index cd736c6..09c05e0 100644
+--- a/home/base.nix
++++ b/home/base.nix
+@@ -69,9 +69,9 @@
+     defaultSession = "hyprland";
+ 
+     # programs.twm.enable=true;
+-    autoLogin = {
+-      enable = true;
+-      user = "${userConfig.uname}";
+-    };
++    # autoLogin = {
++    #   enable = true;
++    #   user = "${userConfig.uname}";
++    # };
+   };
+ }
+diff --git a/home/brave/conf.nix b/home/brave/conf.nix
+index e646293..dfdb885 100644
+--- a/home/brave/conf.nix
++++ b/home/brave/conf.nix
+@@ -65,6 +65,10 @@ in
+           "installation_mode" = "force_installed";
+           "update_url" = "https://clients2.google.com/service/update2/crx";
+         };
++        "donbcfbmhbcapadipfkeojnmajbakjdc" = {
++          "installation_mode" = "force_installed";
++          "update_url" = "https://clients2.google.com/service/update2/crx";
++        };
+       };
+     };
+   };
+diff --git a/home/conf.nix b/home/conf.nix
+index 00601f0..f7cd475 100644
+--- a/home/conf.nix
++++ b/home/conf.nix
+@@ -22,6 +22,7 @@ in
+     ./copyparty/conf.nix
+     ./firewall/conf.nix
+     ./brave/conf.nix
++    ./syncthing/conf.nix
+     # ./tts/conf.nix
+   ];
+   boot.loader = {
+@@ -32,11 +33,6 @@ in
+       enable = true;
+       configurationLimit = 35;
+     };
+-    grub = {
+-      # enable = true;
+-      # device = "/dev/sda"; # Install GRUB into the MBR
+-      # configurationLimit = 35;
+-    };
+   };
+   services = {
+     speechd = {
+@@ -71,6 +67,11 @@ in
+ 
+   };
+   nix = {
++    settings = {
++      substituters = [ "https://hyprland.cachix.org" ];
++      trusted-substituters = [ "https://hyprland.cachix.org" ];
++      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
++    };
+     # 1. This pins the 'nixpkgs' flake to your system's input
+     registry.nixpkgs.flake = inputs.nixpkgs;
+ 
+diff --git a/home/firewall/conf.nix b/home/firewall/conf.nix
+index 331ba8d..bae26fa 100644
+--- a/home/firewall/conf.nix
++++ b/home/firewall/conf.nix
+@@ -4,8 +4,11 @@
+     8086
+     1234
+     9564
++    # 22000
+   ];
+   networking.firewall.allowedUDPPorts = [
+     1234
++    # 22000
++    # 21027
+   ];
+ }
+diff --git a/home/hyprland/shaders/inwhi copy.glsl b/home/hyprland/shaders/inwhi copy.glsl
+new file mode 100644
+index 0000000..fb6896e
+--- /dev/null
++++ b/home/hyprland/shaders/inwhi copy.glsl	
+@@ -0,0 +1,26 @@
++precision highp float;
++varying vec2 v_texcoord;
++uniform sampler2D tex;
++
++void main() {
++    vec4 px = texture2D(tex, v_texcoord);
++    vec3 c = px.rgb;
++
++    // 1. Determine the "whiteness" (the common minimum of all channels)
++    float whiteness = min(min(c.r, c.g), c.b);
++
++    // 2. Subtract the whiteness to push it toward black
++    // Using a power (like 2.0) makes the transition sharper
++    c.r -= pow(whiteness*0.9, 2.0);
++    c.g -= pow(whiteness*0.9, 2.0);
++    c.b -= pow(whiteness*0.9, 2.0);
++
++    // 3. Ensure values don't go below zero
++    c = max(c, 0.0);
++
++    // Optional: Apply your CAP if you still want to limit brightness
++    const float CAP = 0.867;
++    c = clamp(c, 0.0, CAP);
++
++    gl_FragColor = vec4(c, px.a);
++}
+\ No newline at end of file
+diff --git a/home/hyprland/shaders/inwhi.glsl b/home/hyprland/shaders/inwhi.glsl
+index 508e108..fb6896e 100644
+--- a/home/hyprland/shaders/inwhi.glsl
++++ b/home/hyprland/shaders/inwhi.glsl
+@@ -1,26 +1,26 @@
+-precision mediump float;
+-
+-uniform sampler2D u_tex;
++precision highp float;
+ varying vec2 v_texcoord;
++uniform sampler2D tex;
+ 
+-float rerange(float val, float l1, float h1, float l2, float h2){
+-  return ((val - l1) / (h1 - l1)) * (h2 - l2) + l2;
+-}
++void main() {
++    vec4 px = texture2D(tex, v_texcoord);
++    vec3 c = px.rgb;
+ 
+-float mapToDarkeningFactor(float x) {
+-  // Note: Ensure input is clamped to avoid division by zero or out-of-bounds math
+-  return rerange(clamp(x, 0.5, 1.0), 0.5, 1.0, 0.8, 0.15);
+-}
++    // 1. Determine the "whiteness" (the common minimum of all channels)
++    float whiteness = min(min(c.r, c.g), c.b);
+ 
+-void main() {
+-  // 1. Fixed variable names: u_tex instead of Source, v_texcoord instead of vTexCoord
+-  vec3 color = texture2D(u_tex, v_texcoord).rgb;
++    // 2. Subtract the whiteness to push it toward black
++    // Using a power (like 2.0) makes the transition sharper
++    c.r -= pow(whiteness*0.9, 2.0);
++    c.g -= pow(whiteness*0.9, 2.0);
++    c.b -= pow(whiteness*0.9, 2.0);
+ 
+-  // 2. Fixed math: 3.0 is a float, but always use 1.0 instead of 1 for rerange constants
+-  float averageIntensity = (color.r + color.g + color.b) / 3.0;
++    // 3. Ensure values don't go below zero
++    c = max(c, 0.0);
+ 
+-  float darkeningFactor = mapToDarkeningFactor(averageIntensity);
++    // Optional: Apply your CAP if you still want to limit brightness
++    const float CAP = 0.867;
++    c = clamp(c, 0.0, CAP);
+ 
+-  // 3. Fixed variable name: color instead of col, darkeningFactor instead of factor
+-  gl_FragColor = vec4(color * darkeningFactor, 1.0);
++    gl_FragColor = vec4(c, px.a);
+ }
+\ No newline at end of file
+diff --git a/home/programs.nix b/home/programs.nix
+index b0544a9..dc5b14f 100644
+--- a/home/programs.nix
++++ b/home/programs.nix
+@@ -216,6 +216,7 @@ in
+       jdk
+       xemu # xbox emu
+       wl-clip-persist # keep clip past app death
++      # blender
+     ];
+   };
+   programs.gpu-screen-recorder.enable = true;
+@@ -255,6 +256,7 @@ in
+     eza # ls
+     swappy # image editor
+     satty # image editor
++    # nginx
+   ];
+   fonts.packages = with pkgs; [
+     nerd-fonts.jetbrains-mono
+diff --git a/home/shellScripts/pashare/.foldericon.png b/home/shellScripts/pashare/.foldericon.png
+new file mode 100644
+index 0000000..cae28cd
+Binary files /dev/null and b/home/shellScripts/pashare/.foldericon.png differ
+diff --git a/home/shellScripts/pashare/main.sh b/home/shellScripts/pashare/main.sh
+index 5468a19..5817c45 100644
+--- a/home/shellScripts/pashare/main.sh
++++ b/home/shellScripts/pashare/main.sh
+@@ -5,7 +5,8 @@ sudo -v || exit 1
+ 
+ PORT=1234
+ SINK_NAME="VirtualSink"
+-RATE=11025
++RATE=48000
++# RATE=11025
+ # TITLE="Audio Streamer"
+ 
+ # Function to clean up on exit or stop
+diff --git a/home/syncthing/conf.nix b/home/syncthing/conf.nix
+new file mode 100644
+index 0000000..e68546a
+--- /dev/null
++++ b/home/syncthing/conf.nix
+@@ -0,0 +1,12 @@
++{ userConfig, ... }:
++{
++  services = {
++    syncthing = {
++      enable = false;
++      group = "users";
++      user = "${userConfig.uname}";
++      dataDir = "/home/${userConfig.uname}/Documents"; # Default folder for new synced folders
++      configDir = "/home/${userConfig.uname}/.config/syncthing"; # Folder for Syncthing's settings and keys
++    };
++  };
++}
+diff --git a/home/zsh/plugins.nix b/home/zsh/plugins.nix
+index 5b67281..bdcbbe1 100644
+--- a/home/zsh/plugins.nix
++++ b/home/zsh/plugins.nix
+@@ -16,38 +16,43 @@ let
+   };
+ in
+ {
+-  programs.pay-respects = {
+-    enable = true;
+-    enableZshIntegration = true;
+-  };
+-  programs.nix-index.enable = true;
+-  programs.zsh = {
+-    dotDir = "${config.xdg.configHome}/zsh";
+-    enable = true;
+-    history.size = 10000;
+-    enableCompletion = true;
+-    autosuggestion.enable = true;
+-    syntaxHighlighting.enable = true;
+-    plugins = lib.mapAttrsToList (name: path: {
+-      name = name;
+-      src = pkgs.${name};
+-      file = if (path != null) then path else "share/${name}/${name}.zsh";
+-    }) zshPlugins;
+-    initContent = ''
+-      ZSH_COMMAND_TIME_COLOR="yellow"
+-      ZSH_COMMAND_TIME_MIN_SECONDS=3
+-      ZSH_COMMAND_TIME_ECHO=1
+-      # Map the codes Kitty is sending to Zsh actions
+-      bindkey "\e[1;5D" backward-word
+-      bindkey "\e[1;5C" forward-word
+-      bindkey "\e[1;6D" backward-word # Shift variant
+-      bindkey "\e[1;6C" forward-word  # Shift variant
+-      bindkey '^H' backward-kill-word  # Ctrl+Backspace
+-      bindkey "\e[3;5~" kill-word      # Ctrl+Delete
+-      bindkey '^[[A' history-substring-search-up
+-      bindkey '^[[B' history-substring-search-down
+-      bindkey "$terminfo[kcuu1]" history-substring-search-up
+-      bindkey "$terminfo[kcud1]" history-substring-search-down
+-    '';
++  programs = {
++    pay-respects = {
++      enable = true;
++      enableZshIntegration = true;
++    };
++    # nix-index = {
++    #   enable = true;
++    # };
++    zsh = {
++      dotDir = "${config.xdg.configHome}/zsh";
++      enable = true;
++      history.size = 10000;
++      enableCompletion = true;
++      autosuggestion.enable = true;
++      syntaxHighlighting.enable = true;
++      plugins = lib.mapAttrsToList (name: path: {
++        name = name;
++        src = pkgs.${name};
++        file = if (path != null) then path else "share/${name}/${name}.zsh";
++      }) zshPlugins;
++      initContent = ''
++        ZSH_COMMAND_TIME_COLOR="yellow"
++        ZSH_COMMAND_TIME_MIN_SECONDS=3
++        ZSH_COMMAND_TIME_ECHO=1
++        # Map the codes Kitty is sending to Zsh actions
++        bindkey "\e[1;5D" backward-word
++        bindkey "\e[1;5C" forward-word
++        bindkey "\e[1;6D" backward-word # Shift variant
++        bindkey "\e[1;6C" forward-word  # Shift variant
++        bindkey '^H' backward-kill-word  # Ctrl+Backspace
++        bindkey "\e[3;5~" kill-word      # Ctrl+Delete
++        bindkey '^[[A' history-substring-search-up
++        bindkey '^[[B' history-substring-search-down
++        bindkey "$terminfo[kcuu1]" history-substring-search-up
++        bindkey "$terminfo[kcud1]" history-substring-search-down
++        bindkey '^[[Z' reverse-menu-complete
++      '';
++    };
+   };
+ }
+diff --git a/quickshell/bar/Tray.qml b/quickshell/bar/Tray.qml
+index 3acb991..167c37d 100644
+--- a/quickshell/bar/Tray.qml
++++ b/quickshell/bar/Tray.qml
+@@ -13,7 +13,6 @@ import Quickshell.Services.Mpris
+ import Quickshell.Widgets
+ 
+ Row {
+-  // This repeats for every icon (OpenSnitch, Network, etc.)
+   Repeater {
+     model: SystemTray.items
+ 
+@@ -21,13 +20,11 @@ Row {
+       height: 24
+       width: 24
+ 
+-      onClicked: mouse => modelData.activate(mouse.x, mouse.y)
+-
+-      // onSecondaryClicked: mouse => modelData.contextMenu(mouse.x, mouse.y)
++      onClicked: mouse => modelData.activate()
+ 
+       IconImage {
+         anchors.fill: parent
+-        source: modelData.icon // This is where OpenSnitch's icon lives
++        source: modelData.icon
+       }
+     }
+   }
+diff --git a/vm/vm_sync.py b/vm/vm_sync.py
+new file mode 100644
+index 0000000..7b50c57
+--- /dev/null
++++ b/vm/vm_sync.py
+@@ -0,0 +1,130 @@
++#!/usr/bin/env python3
++"""
++Watches ./Violentmonkey (VM JSON files) and syncs to ./userjs as named .user.js files.
++- Violentmonkey/vm_xxx -> userjs/@name.user.js  (on start + when VM file changes)
++- userjs/@name.user.js -> Violentmonkey/vm_xxx  (when you save the .user.js)
++"""
++
++import hashlib
++import json
++import re
++import sys
++import time
++from pathlib import Path
++from watchdog.observers import Observer
++from watchdog.events import FileSystemEventHandler
++
++BASE_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
++VM_DIR   = BASE_DIR / "Violentmonkey"
++JS_DIR   = BASE_DIR / "userjs"
++
++JS_DIR.mkdir(exist_ok=True)
++
++_vm_to_js: dict[Path, Path] = {}
++_js_to_vm: dict[Path, Path] = {}
++
++# Last known hash of each file — skip write if content unchanged
++_hashes: dict[Path, str] = {}
++
++
++def md5(text: str) -> str:
++    return hashlib.md5(text.encode()).hexdigest()
++
++
++def extract_name(code: str) -> str:
++    m = re.search(r"//\s*@name\s+(.+)", code)
++    name = m.group(1).strip() if m else "unnamed"
++    return re.sub(r'[<>:"/\\|?*]', "-", name)
++
++
++def vm_to_js(vm_path: Path):
++    try:
++        data = json.loads(vm_path.read_text(encoding="utf-8"))
++        code = data.get("code", "")
++        if not code:
++            return
++
++        name = extract_name(code)
++        js_path = JS_DIR / f"{name}.user.js"
++
++        _vm_to_js[vm_path.resolve()] = js_path.resolve()
++        _js_to_vm[js_path.resolve()] = vm_path.resolve()
++
++        h = md5(code)
++        if _hashes.get(js_path.resolve()) == h:
++            return # content unchanged, skip
++        _hashes[js_path.resolve()] = h
++
++        js_path.write_text(code, encoding="utf-8")
++        print(f"[vm->js]  {vm_path.name} -> userjs/{js_path.name}")
++    except Exception as e:
++        print(f"[error]  {vm_path.name}: {e}")
++
++
++def js_to_vm(js_path: Path):
++    vm_path = _js_to_vm.get(js_path.resolve())
++    if not vm_path:
++        print(f"[warn]   No matching VM file for {js_path.name}, skipping")
++        return
++    try:
++        code = js_path.read_text(encoding="utf-8")
++
++        h = md5(code)
++        if _hashes.get(js_path.resolve()) == h:
++            return # content unchanged, skip
++        _hashes[js_path.resolve()] = h
++
++        data = json.loads(vm_path.read_text(encoding="utf-8"))
++        data["code"] = code
++
++        vm_json = json.dumps(data)
++        vh = md5(vm_json)
++        if _hashes.get(vm_path.resolve()) == vh:
++            return
++        _hashes[vm_path.resolve()] = vh
++
++        vm_path.write_text(vm_json, encoding="utf-8")
++        print(f"[js->vm]  {js_path.name} -> {vm_path.name}")
++    except Exception as e:
++        print(f"[error]  {js_path.name}: {e}")
++
++
++class SyncHandler(FileSystemEventHandler):
++    def on_modified(self, event):
++        if event.is_directory:
++            return
++        p = Path(event.src_path).resolve()
++
++        if p.parent == JS_DIR.resolve() and p.name.endswith(".user.js"):
++            js_to_vm(p)
++        elif p.parent == VM_DIR.resolve() and "." not in p.name:
++            vm_to_js(p)
++
++
++def initial_sync():
++    count = 0
++    for f in VM_DIR.iterdir():
++        if f.is_file() and "." not in f.name:
++            vm_to_js(f)
++            count += 1
++    print(f"[init]   Synced {count} scripts -> {JS_DIR}")
++
++
++if __name__ == "__main__":
++    print(f"[vm_sync] Base: {BASE_DIR.resolve()}")
++    print(f"          VM:   {VM_DIR}")
++    print(f"          JS:   {JS_DIR}")
++    initial_sync()
++
++    handler = SyncHandler()
++    observer = Observer()
++    observer.schedule(handler, str(VM_DIR), recursive=False)
++    observer.schedule(handler, str(JS_DIR), recursive=False)
++    observer.start()
++    print("[vm_sync] Watching for changes. Ctrl+C to stop.")
++    try:
++        while True:
++            time.sleep(1)
++    except KeyboardInterrupt:
++        observer.stop()
++    observer.join()
+\ No newline at end of file
+diff --git a/vm/wsgidav.yaml b/vm/wsgidav.yaml
+new file mode 100644
+index 0000000..77da5e3
+--- /dev/null
++++ b/vm/wsgidav.yaml
+@@ -0,0 +1,21 @@
++host: "127.0.0.1"
++port: 8080
++root: "~/nixconf/vm"
++
++http_authenticator:
++  domain_controller: wsgidav.dc.simple_dc.SimpleDomainController
++  accept_basic: true
++  accept_digest: false
++  default_to_digest: false
++
++simple_dc:
++  user_mapping:
++    "/":
++      "anonymous":
++        password: "a"
++
++cors:
++  allow_origin: "*"
++# testpkg python313Packages.watchdog python313Packages.cheroot python313Packages.wsgidav
++# nix-shell -p "python3.withPackages (ps: [ps.watchdog])" --run "python3 vm_sync.py ~/nixconf/vm"
++# wsgidav --host=127.0.0.1 --port=8080 --root=~/nixconf/vm --server cheroot --config=~/nixconf/vm/wsgidav.yaml
+\ No newline at end of file

@@ -66,6 +66,8 @@ in
     # };
 
   };
+  services.journald.storage = "persistent";
+
   nix = {
     settings = {
       substituters = [ "https://hyprland.cachix.org" ];
