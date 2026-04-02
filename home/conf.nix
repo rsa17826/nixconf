@@ -25,14 +25,20 @@ in
     ./syncthing/conf.nix
     # ./tts/conf.nix
   ];
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+      };
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 35;
+      };
     };
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 35;
-    };
+    # Use latest kernel.
+    # boot.kernelPackages = pkgs.linuxPackages_latest;
+    # boot.kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages;
   };
   services = {
     speechd = {
@@ -102,10 +108,6 @@ in
     dates = "daily";
     options = "--delete-older-than 7d";
   };
-  # Use latest kernel.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  # boot.kernelPackages = pkgs.linuxPackages;
-  boot.kernelPackages = pkgs.linuxPackages;
   environment.variables = {
     EDITOR = "nvim";
     SOPS_EDITOR = "codium --wait";

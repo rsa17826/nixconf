@@ -256,6 +256,9 @@ in
     eza # ls
     swappy # image editor
     satty # image editor
+    ncdu
+    shellcheck
+    lazygit
     # nginx
   ];
   fonts.packages = with pkgs; [

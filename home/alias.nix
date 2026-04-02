@@ -19,6 +19,7 @@ let
     la = "eza -la --icons --git --header --total-size";
     lt = "eza --tree --level=2 --icons --git --group-directories-first";
     ls = "eza -l --icons --git --header --color-scale --group-directories-first --time-style=relative";
+    wiz = "ncdu"; # wiztree
     # cd = "z";
   };
   commonInit = ''
