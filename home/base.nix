@@ -1,30 +1,6 @@
 { userConfig, ... }:
 {
   nixpkgs.config.allowUnfree = false;
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "us";
-      #    variant = "";
-    };
-  };
-  services.dnscrypt-proxy = {
-    enable = true;
-    settings = {
-      ipv6_servers = true;
-      require_dnssec = true;
-      doh_servers = true;
-      server_names = [ "quad9-dnscrypt-ip4-filter-pri" ];
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-    };
-  };
   networking = {
     nameservers = [
       "9.9.9.9"
@@ -34,9 +10,6 @@
       enable = true;
     };
   };
-  services.displayManager.sddm.enable = false;
-  services.displayManager.sddm.wayland.enable = false;
-  services.displayManager.ly.enable = true;
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -51,27 +24,64 @@
     LC_TIME = "en_US.UTF-8";
   };
   nix.settings.experimental-features = "nix-command flakes";
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-  services.system76-scheduler.enable = true;
-  services.displayManager = {
-    # defaultSession = "plasma";
-    defaultSession = "hyprland";
-
-    # programs.twm.enable=true;
-    autoLogin = {
+  services = {
+    xserver = {
       enable = true;
-      user = "${userConfig.uname}";
+      xkb = {
+        layout = "us";
+        #    variant = "";
+      };
     };
+    dnscrypt-proxy = {
+      enable = true;
+      settings = {
+        ipv6_servers = true;
+        require_dnssec = true;
+        doh_servers = true;
+        server_names = [ "quad9-dnscrypt-ip4-filter-pri" ];
+        sources.public-resolvers = {
+          urls = [
+            "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
+            "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
+          ];
+          cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
+          minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+        };
+      };
+    };
+    displayManager = {
+      sddm = {
+        enable = false;
+        wayland.enable = false;
+      };
+      ly.enable = true;
+
+      # defaultSession = "plasma";
+      defaultSession = "hyprland";
+
+      # programs.twm.enable=true;
+      autoLogin = {
+        enable = true;
+        user = "${userConfig.uname}";
+      };
+
+    };
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse = {
+        enable = true;
+      };
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+    system76-scheduler.enable = true;
   };
 }
