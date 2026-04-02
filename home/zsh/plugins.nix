@@ -37,6 +37,7 @@ in
         file = if (path != null) then path else "share/${name}/${name}.zsh";
       }) zshPlugins;
       initContent = ''
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
         ZSH_COMMAND_TIME_COLOR="yellow"
         ZSH_COMMAND_TIME_MIN_SECONDS=3
         ZSH_COMMAND_TIME_ECHO=1
