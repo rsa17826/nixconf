@@ -29,7 +29,7 @@
   # };
   home.pointerCursor = {
     name = "mew";
-    size = 48;
+    size = 24;
     gtk.enable = true;
     x11.enable = true;
     enable = true;
@@ -58,7 +58,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       cursor-theme = "mew";
-      cursor-size = 48;
+      cursor-size = 24;
     };
   };
 }
