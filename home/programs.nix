@@ -128,6 +128,8 @@ in
       xdm
       (pkgFromInp "multi-game-launcher" "default")
       #
+      jpexs # ffdec
+      deluged
       calibre
       gh
       niri
