@@ -208,14 +208,14 @@
 #   #   --remote-components ejs:github --paths "$HOME/videos/" \
 #   #   --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
 #   #   --write-thumbnail --list-formats 2>~/ass
-#   yt-dlp --cookies-from-browser brave https://www.twitch.tv/videos/2708570264\
-#   -f "bestvideo[height<=720]+bestaudio/best[height<=720]" --merge-output-format mp4 "" url "" --no-mtime --add-metadata --output ".\%(title)s.%(ext)s" --paths "~/videos" --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic"
-#   yt-dlp --newline --progress --cookies-from-browser brave \
-#     --no-check-certificate --extract-audio "$url" \
-#     --output ".\%(title)s.%(ext)s" \
-#     --remote-components ejs:github --paths "$HOME/videos/" \
-#     --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
-#     --write-thumbnail 2>~/ass
+# yt-dlp --cookies-from-browser brave https://www.twitch.tv/videos/2708570264\
+# -f "bestvideo[height<=720]+bestaudio/best[height<=720]" --merge-output-format mp4 "" url "" --no-mtime --add-metadata --output ".\%(title)s.%(ext)s" --paths "~/videos" --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic"
+# yt-dlp --newline --progress --cookies-from-browser brave \
+#   --no-check-certificate --extract-audio "$url" \
+#   --output ".\%(title)s.%(ext)s" \
+#   --remote-components ejs:github --paths "$HOME/audio/" \
+#   --audio-format mp3 --audio-quality 128k --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+#   --write-thumbnail 2>~/ass
 #      while read -r line; do
 #     if [[ $line =~ \[download\]\ +([0-9.]+)% ]]; then
 #       local percent="${BASH_REMATCH[1]}"
@@ -236,7 +236,7 @@
 
 # LAST_CLIP=""
 
-# #!/bin/bash
+# #!/usr/bin/env bash
 
 # # Get the directory where the script is located
 # SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
