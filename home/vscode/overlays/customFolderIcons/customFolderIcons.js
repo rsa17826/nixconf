@@ -1,5 +1,4 @@
 const USERHOME = "${USERHOME}"
-
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
@@ -10,11 +9,11 @@ styleElement.textContent = `
     content: "" !important;
     width: 16px;
     height: 16px;
-    position: relative;
-    left: -2px;
+    position:relative;
+    left:-2px;
     display: inline-block;
   }
-  .file-icon[data-has-custom-icon="true"]>.monaco-icon-label-container::before {
+  .file-icon[data-has-custom-icon="true"]::after {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
@@ -22,6 +21,7 @@ styleElement.textContent = `
     width: 16px;
     height: 16px;
     position: relative;
+    left: -2px;
     display: inline-block;
   }
 `
