@@ -98,7 +98,7 @@ const updateIcons = async () => {
     const foundUrl = iconCache.get(cleanPath)
     if (foundUrl) {
       el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
-      iconel.setAttribute("data-has-custom-icon", "true")
+      el.setAttribute("data-has-custom-icon", "true")
     } else {
       // iconel.removeAttribute("data-has-custom-icon")
     }
