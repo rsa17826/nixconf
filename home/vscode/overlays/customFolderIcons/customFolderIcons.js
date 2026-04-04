@@ -14,21 +14,18 @@ styleElement.textContent = `
     left:-2px;
     display: inline-block;
   }
-  .file-icon[data-has-custom-icon="true"] {
-    position: relative;
-  }
-  .file-icon[data-has-custom-icon="true"]::after {
+  .file-icon>[data-has-custom-icon="true"]::before {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
     content: "" !important;
     width: 16px;
     height: 16px;
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-  }`
+    position:relative;
+    left:-2px;
+    display: inline-block;
+  }
+`
 document.head.appendChild(styleElement)
 
 /**
@@ -99,17 +96,17 @@ const updateIcons = async () => {
     cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
 
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
-
+    var iconel = el.querySelector(".monaco-icon-label-container")
     // Apply icon to `el` directly, same as folders
     findIconUpwards(cleanPath).then((foundUrl) => {
       if (foundUrl) {
-        el.style.setProperty(
+        iconel.style.setProperty(
           "--folder-icon-url",
           `url('${foundUrl}')`,
         )
-        el.setAttribute("data-has-custom-icon", "true")
+        iconel.setAttribute("data-has-custom-icon", "true")
       } else {
-        el.removeAttribute("data-has-custom-icon")
+        iconel.removeAttribute("data-has-custom-icon")
       }
     })
   }
