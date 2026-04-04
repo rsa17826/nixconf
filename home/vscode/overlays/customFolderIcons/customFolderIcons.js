@@ -22,7 +22,6 @@ styleElement.textContent = `
     width: 16px;
     height: 16px;
     position: relative;
-    left: -2px;
     display: inline-block;
   }
 `
@@ -54,7 +53,6 @@ const updateIcons = async () => {
   const files = document.querySelectorAll(".file-icon")
   const iconCache = new Map()
 
-  // --- Folders first: populate the cache ---
   await Promise.all(
     Array.from(folders).map(async (el) => {
       const path = el.getAttribute("aria-label")
@@ -78,15 +76,14 @@ const updateIcons = async () => {
         el.setAttribute("data-has-custom-icon", "true")
       } else {
         iconCache.set(cleanPath, null)
-        el.removeAttribute("data-has-custom-icon")
+        // el.removeAttribute("data-has-custom-icon")
       }
     }),
   )
 
-  // --- Files second: cache is warm, most will resolve instantly ---
   for (var el of files) {
     const path = el.getAttribute("aria-label")
-    if (!path) return
+    if (!path) continue
 
     let cleanPath = path
       .replace(/\\/g, "/")
@@ -96,14 +93,14 @@ const updateIcons = async () => {
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
     const iconel = el.querySelector(".monaco-icon-label-container")
-    if (!iconel) return
+    if (!iconel) continue
 
     const foundUrl = iconCache.get(cleanPath)
     if (foundUrl) {
       el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
       iconel.setAttribute("data-has-custom-icon", "true")
     } else {
-      iconel.removeAttribute("data-has-custom-icon")
+      // iconel.removeAttribute("data-has-custom-icon")
     }
   }
 }
