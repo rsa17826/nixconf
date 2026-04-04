@@ -14,6 +14,9 @@ styleElement.textContent = `
     left:-2px;
     display: inline-block;
   }
+  .file-icon[data-has-custom-icon="true"] {
+    position: relative;
+  }
   .file-icon[data-has-custom-icon="true"]::after {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
@@ -21,11 +24,11 @@ styleElement.textContent = `
     content: "" !important;
     width: 16px;
     height: 16px;
-    position: relative;
-    left: -2px;
-    display: inline-block;
-  }
-`
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }`
 document.head.appendChild(styleElement)
 
 /**
