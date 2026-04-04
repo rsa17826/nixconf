@@ -2,7 +2,8 @@ const USERHOME = "${USERHOME}"
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
-  .folder-icon[data-has-custom-icon="true"]::before {
+  .folder-icon[data-has-custom-icon="true"]::before,
+  .folder-icon[data-has-custom-icon="true"]::after {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;

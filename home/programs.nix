@@ -133,15 +133,16 @@ in
       deluged
       calibre
       gh
+      portablemc
       niri
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
       cliphist
       steam
-      # typos
       losslesscut-bin # video editor
       uwsm
+      # typos
       typos-lsp # spellchecker
       # keepass # password manager
       python313
