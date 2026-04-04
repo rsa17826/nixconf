@@ -27,35 +27,62 @@ styleElement.textContent = `
 `
 document.head.appendChild(styleElement)
 
-function makeIconFinder(cache) {
+// Global cache: path -> resolved url|null (never promises, only settled values)
+const globalIconCache = new Map()
+
+async function fetchIconUpwards(currentPath) {
+  if (!currentPath || currentPath === "/" || currentPath === ".")
+    return null
+  const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
+  try {
+    const response = await fetch(iconUrl, { method: "HEAD" })
+    if (response.ok) return iconUrl
+  } catch (e) {}
+  const parentPath = currentPath.substring(
+    0,
+    currentPath.lastIndexOf("/"),
+  )
+  return fetchIconUpwards(parentPath)
+}
+
+function makeIconFinder(localCache) {
   async function findIconUpwards(currentPath) {
     if (!currentPath || currentPath === "/" || currentPath === ".")
       return null
-    if (cache.has(currentPath)) return cache.get(currentPath)
+    if (localCache.has(currentPath))
+      return localCache.get(currentPath)
 
-    const promise = (async () => {
-      const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
-      try {
-        const response = await fetch(iconUrl, { method: "HEAD" })
-        if (response.ok) return iconUrl
-      } catch (e) {}
-      const parentPath = currentPath.substring(
-        0,
-        currentPath.lastIndexOf("/"),
-      )
-      return findIconUpwards(parentPath)
-    })()
+    // Global cache hit: return immediately, refresh in background
+    if (globalIconCache.has(currentPath)) {
+      const cached = globalIconCache.get(currentPath)
+      // Schedule background revalidation
+      fetchIconUpwards(currentPath).then((fresh) => {
+        if (fresh !== globalIconCache.get(currentPath)) {
+          globalIconCache.set(currentPath, fresh)
+          updateIcons() // value changed, re-apply
+        }
+      })
+      localCache.set(currentPath, cached)
+      return cached
+    }
 
-    cache.set(currentPath, promise)
-    return promise
+    // Cache miss: fetch, populate both caches
+    const promise = fetchIconUpwards(currentPath).then((url) => {
+      globalIconCache.set(currentPath, url)
+      return url
+    })
+    // Store promise in local cache to deduplicate parallel calls within this update
+    localCache.set(currentPath, promise)
+    const result = await promise
+    localCache.set(currentPath, result) // replace promise with resolved value
+    return result
   }
   return findIconUpwards
 }
 
 const updateIcons = async () => {
-  // Fresh cache per update — no stale results, no cross-update pollution
-  const cache = new Map()
-  const findIconUpwards = makeIconFinder(cache)
+  const localCache = new Map()
+  const findIconUpwards = makeIconFinder(localCache)
 
   const all = [
     ...document.querySelectorAll(".folder-icon"),
