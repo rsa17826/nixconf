@@ -68,7 +68,9 @@ const updateIcons = async () => {
 
       let cleanPath = path
         .replace(/\\/g, "/")
-        .replace(/ • Contains emphasized items$/, "")
+        // .replace(/ • Contains emphasized items$/, "")
+        // .replace(/ • Symbolic Link$/, "")
+        .replace(/ • [ \w]+$/, "")
         .replace(/^~/, USERHOME)
       if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
