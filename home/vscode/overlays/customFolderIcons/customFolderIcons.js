@@ -3,7 +3,7 @@ const USERHOME = "${USERHOME}"
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
-  [data-has-custom-icon="true"]::before {
+  .folder-icon[data-has-custom-icon="true"]::before {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
@@ -12,6 +12,17 @@ styleElement.textContent = `
     height: 16px;
     position:relative;
     left:-2px;
+    display: inline-block;
+  }
+  .file-icon[data-has-custom-icon="true"]::after {
+    background-image: var(--folder-icon-url) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    content: "" !important;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    left: -2px;
     display: inline-block;
   }
 `
@@ -76,10 +87,7 @@ const updateIcons = async () => {
   for (const el of files) {
     const path = el.getAttribute("aria-label")
     if (!path) continue
-    var nodeToUpdate = el.querySelector(
-      ".monaco-icon-label-container",
-    )
-    if (!nodeToUpdate) continue
+
     // Clean and Format the Path
     let cleanPath = path
       .replace(/\\/g, "/")
@@ -89,16 +97,16 @@ const updateIcons = async () => {
 
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
-    // Start the recursive search
+    // Apply icon to `el` directly, same as folders
     findIconUpwards(cleanPath).then((foundUrl) => {
       if (foundUrl) {
-        nodeToUpdate.style.setProperty(
+        el.style.setProperty(
           "--folder-icon-url",
           `url('${foundUrl}')`,
         )
-        nodeToUpdate.setAttribute("data-has-custom-icon", "true")
+        el.setAttribute("data-has-custom-icon", "true")
       } else {
-        nodeToUpdate.removeAttribute("data-has-custom-icon")
+        el.removeAttribute("data-has-custom-icon")
       }
     })
   }
