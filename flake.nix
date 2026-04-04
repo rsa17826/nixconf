@@ -48,6 +48,10 @@
       url = "github:rsa17826/multi-game-launcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    audio-manager = {
+      url = "github:rsa17826/audio-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -59,6 +63,7 @@
       nix-index-database,
       copyparty,
       multi-game-launcher,
+      audio-manager,
       ...
     }@inputs:
     let

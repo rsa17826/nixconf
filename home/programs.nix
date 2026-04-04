@@ -127,6 +127,7 @@ in
       (newestGodot "4.7-dev3")
       xdm
       (pkgFromInp "multi-game-launcher" "default")
+      (pkgFromInp "audio-manager" "default")
       #
       jpexs # ffdec
       deluged
