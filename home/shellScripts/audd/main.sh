@@ -25,11 +25,11 @@ while read -r url; do
 
   yt-dlp --newline --progress --cookies-from-browser brave \
     --no-check-certificate --extract-audio \
-    --output "%(title)s.%(ext)s" \
     --remote-components ejs:github --paths "$HOME/audio/" \
     --audio-format mp3 --audio-quality 128k \
     --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
     --write-thumbnail \
+    -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
     "$url"
 
 done <<<"$urls"
