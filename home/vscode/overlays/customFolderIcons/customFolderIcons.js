@@ -1,5 +1,8 @@
-// 1. Create the master style tag ONCE
 const USERHOME = "${USERHOME}"
+
+// Shared cache: path -> Promise<string|null>
+const iconCache = new Map()
+
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
@@ -10,8 +13,8 @@ styleElement.textContent = `
     content: "" !important;
     width: 16px;
     height: 16px;
-    position:relative;
-    left:-2px;
+    position: relative;
+    left: -2px;
     display: inline-block;
   }
   .file-icon[data-has-custom-icon="true"]>.monaco-icon-label-container::before {
@@ -21,58 +24,55 @@ styleElement.textContent = `
     content: "" !important;
     width: 16px;
     height: 16px;
-    position:relative;
-    left:-2px;
+    position: relative;
+    left: -2px;
     display: inline-block;
   }
 `
 document.head.appendChild(styleElement)
 
-/**
- * Recursively checks for image.png in the current and parent directories.
- */
 async function findIconUpwards(currentPath) {
-  // Stop if we hit the root or go above home (safety check)
-  if (!currentPath || currentPath === "/" || currentPath === ".") {
+  if (!currentPath || currentPath === "/" || currentPath === ".")
     return null
-  }
 
-  const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
+  // Return cached promise immediately — no duplicate fetches
+  if (iconCache.has(currentPath)) return iconCache.get(currentPath)
 
-  try {
-    const response = await fetch(iconUrl, { method: "HEAD" })
-    if (response.ok) {
-      return iconUrl
-    }
-  } catch (e) {
-    // Ignore fetch errors and keep climbing
-  }
+  const promise = (async () => {
+    const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
+    try {
+      const response = await fetch(iconUrl, { method: "HEAD" })
+      if (response.ok) return iconUrl
+    } catch (e) {}
 
-  // Move one directory up: /home/user/project/src -> /home/user/project
-  const parentPath = currentPath.substring(
-    0,
-    currentPath.lastIndexOf("/"),
-  )
-  return findIconUpwards(parentPath)
+    const parentPath = currentPath.substring(
+      0,
+      currentPath.lastIndexOf("/"),
+    )
+    return findIconUpwards(parentPath)
+  })()
+
+  iconCache.set(currentPath, promise)
+  return promise
 }
 
 const updateIcons = async () => {
   const folders = document.querySelectorAll(".folder-icon")
-  var files = document.querySelectorAll(".file-icon")
-  for (const el of folders) {
-    const path = el.getAttribute("aria-label")
-    if (!path) continue
+  const files = document.querySelectorAll(".file-icon")
 
-    // Clean and Format the Path
-    let cleanPath = path
-      .replace(/\\/g, "/")
-      .replace(/ • Contains emphasized items$/, "")
-      .replace(/^~/, USERHOME)
+  // --- Folders first: populate the cache ---
+  await Promise.all(
+    Array.from(folders).map(async (el) => {
+      const path = el.getAttribute("aria-label")
+      if (!path) return
 
-    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+      let cleanPath = path
+        .replace(/\\/g, "/")
+        .replace(/ • Contains emphasized items$/, "")
+        .replace(/^~/, USERHOME)
+      if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
-    // Start the recursive search
-    findIconUpwards(cleanPath).then((foundUrl) => {
+      const foundUrl = await findIconUpwards(cleanPath)
       if (foundUrl) {
         el.style.setProperty(
           "--folder-icon-url",
@@ -82,23 +82,26 @@ const updateIcons = async () => {
       } else {
         el.removeAttribute("data-has-custom-icon")
       }
-    })
-  }
-  for (const el of files) {
-    const path = el.getAttribute("aria-label")
-    if (!path) continue
+    }),
+  )
 
-    // Clean and Format the Path
-    let cleanPath = path
-      .replace(/\\/g, "/")
-      .replace(/ • Contains emphasized items$/, "")
-      .replace(/^~/, USERHOME)
-    cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
+  // --- Files second: cache is warm, most will resolve instantly ---
+  await Promise.all(
+    Array.from(files).map(async (el) => {
+      const path = el.getAttribute("aria-label")
+      if (!path) return
 
-    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
-    var iconel = el.querySelector(".monaco-icon-label-container")
-    // Apply icon to `el` directly, same as folders
-    findIconUpwards(cleanPath).then((foundUrl) => {
+      let cleanPath = path
+        .replace(/\\/g, "/")
+        .replace(/ • Contains emphasized items$/, "")
+        .replace(/^~/, USERHOME)
+      cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
+      if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+
+      const iconel = el.querySelector(".monaco-icon-label-container")
+      if (!iconel) return
+
+      const foundUrl = await findIconUpwards(cleanPath)
       if (foundUrl) {
         el.style.setProperty(
           "--folder-icon-url",
@@ -108,22 +111,19 @@ const updateIcons = async () => {
       } else {
         iconel.removeAttribute("data-has-custom-icon")
       }
-    })
-  }
+    }),
+  )
 }
 
-// 3. Setup MutationObserver
 ;(async () => {
   while (true) {
     const listContainer = document.querySelector(".monaco-list-rows")
-
     if (listContainer) {
       const observer = new MutationObserver(() => updateIcons())
       observer.observe(listContainer, {
         childList: true,
         subtree: true,
       })
-
       updateIcons()
       console.log("🎨 Recursive Folder icon observer is live.")
       return
