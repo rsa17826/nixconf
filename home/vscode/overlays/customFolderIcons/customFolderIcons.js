@@ -47,7 +47,7 @@ async function findIconUpwards(currentPath) {
 
 const updateIcons = async () => {
   const folders = document.querySelectorAll(".folder-icon")
-
+  var files = document.querySelectorAll(".file-icon")
   for (const el of folders) {
     const path = el.getAttribute("aria-label")
     if (!path) continue
@@ -57,6 +57,35 @@ const updateIcons = async () => {
       .replace(/\\/g, "/")
       .replace(/ • Contains emphasized items$/, "")
       .replace(/^~/, USERHOME)
+
+    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+
+    // Start the recursive search
+    findIconUpwards(cleanPath).then((foundUrl) => {
+      if (foundUrl) {
+        el.style.setProperty(
+          "--folder-icon-url",
+          `url('${foundUrl}')`,
+        )
+        el.setAttribute("data-has-custom-icon", "true")
+      } else {
+        el.removeAttribute("data-has-custom-icon")
+      }
+    })
+  }
+  for (const el of files) {
+    const path = el.getAttribute("aria-label")
+    if (!path) continue
+    var nodeToUpdate = el.querySelector(
+      ".monaco-icon-label-container",
+    )
+    if (!nodeToUpdate) continue
+    // Clean and Format the Path
+    let cleanPath = path
+      .replace(/\\/g, "/")
+      .replace(/ • Contains emphasized items$/, "")
+      .replace(/^~/, USERHOME)
+    cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
 
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
