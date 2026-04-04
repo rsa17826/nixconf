@@ -14,7 +14,7 @@ styleElement.textContent = `
     left:-2px;
     display: inline-block;
   }
-  .file-icon>[data-has-custom-icon="true"]::before {
+  .file-icon[data-has-custom-icon="true"]>.monaco-icon-label-container::before {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
@@ -100,7 +100,7 @@ const updateIcons = async () => {
     // Apply icon to `el` directly, same as folders
     findIconUpwards(cleanPath).then((foundUrl) => {
       if (foundUrl) {
-        iconel.style.setProperty(
+        el.style.setProperty(
           "--folder-icon-url",
           `url('${foundUrl}')`,
         )
