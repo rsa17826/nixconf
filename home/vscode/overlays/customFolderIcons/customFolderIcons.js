@@ -76,7 +76,7 @@ const updateIcons = async () => {
         el.setAttribute("data-has-custom-icon", "true")
       } else {
         iconCache.set(cleanPath, null)
-        // el.removeAttribute("data-has-custom-icon")
+        el.removeAttribute("data-has-custom-icon")
       }
     }),
   )
@@ -100,7 +100,7 @@ const updateIcons = async () => {
       el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
       el.setAttribute("data-has-custom-icon", "true")
     } else {
-      // iconel.removeAttribute("data-has-custom-icon")
+      el.removeAttribute("data-has-custom-icon")
     }
   }
 }
