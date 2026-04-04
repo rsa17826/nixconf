@@ -3,7 +3,7 @@ const USERHOME = "${USERHOME}"
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
-  .folder-icon[data-has-custom-icon="true"]::before {
+  [data-has-custom-icon="true"]::before {
     background-image: var(--folder-icon-url) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
@@ -92,13 +92,13 @@ const updateIcons = async () => {
     // Start the recursive search
     findIconUpwards(cleanPath).then((foundUrl) => {
       if (foundUrl) {
-        el.style.setProperty(
+        nodeToUpdate.style.setProperty(
           "--folder-icon-url",
           `url('${foundUrl}')`,
         )
-        el.setAttribute("data-has-custom-icon", "true")
+        nodeToUpdate.setAttribute("data-has-custom-icon", "true")
       } else {
-        el.removeAttribute("data-has-custom-icon")
+        nodeToUpdate.removeAttribute("data-has-custom-icon")
       }
     })
   }
