@@ -60,20 +60,24 @@ function updateFiles(p, foundUrl) {
       .replace(/^~/, USERHOME)
     cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
-    if (p != cleanPath) continue
-    const iconel = el.querySelector(".monaco-icon-label-container")
-    if (!iconel) continue
+    if (p !== cleanPath) continue
 
     if (foundUrl) {
       el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
       el.setAttribute("data-has-custom-icon", "true")
     } else {
+      el.style.removeProperty("--folder-icon-url") // ← remove stale style too
       el.removeAttribute("data-has-custom-icon")
     }
   }
 }
 const updateIcons = async () => {
   const folders = document.querySelectorAll(".folder-icon")
+  const files = document.querySelectorAll(".file-icon")
+
+  // Clear stale icons immediately before any async work
+  for (const el of folders) el.removeAttribute("data-has-custom-icon")
+  for (const el of files) el.removeAttribute("data-has-custom-icon")
 
   await Promise.all(
     Array.from(folders).map(async (el) => {
@@ -82,8 +86,6 @@ const updateIcons = async () => {
 
       let cleanPath = path
         .replace(/\\/g, "/")
-        // .replace(/ • Contains emphasized items$/, "")
-        // .replace(/ • Symbolic Link$/, "")
         .replace(/ • [ \w]+$/, "")
         .replace(/^~/, USERHOME)
       if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
@@ -98,7 +100,6 @@ const updateIcons = async () => {
         el.setAttribute("data-has-custom-icon", "true")
       } else {
         iconCache.set(cleanPath, null)
-        el.removeAttribute("data-has-custom-icon")
       }
       updateFiles(cleanPath, foundUrl)
     }),
