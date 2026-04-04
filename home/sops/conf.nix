@@ -17,6 +17,8 @@
         group = "copyparty";
         mode = "0440";
       };
+      syncthingApiKey = { };
+      syncthingRpId = { };
     };
   };
 }
