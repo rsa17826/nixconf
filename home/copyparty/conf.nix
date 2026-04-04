@@ -17,7 +17,10 @@
       # use booleans to set binary flags
       no-reload = true;
     };
-
+    dedup = true;
+    e2dsa = true;
+    e2ds = true;
+    e2d = true;
     # create users
     accounts = {
       admin.passwordFile = "/run/secrets/copypartyAdmin";
@@ -37,7 +40,7 @@
           fk = 4;
           scan = 60;
           # volflag "e2d" enables the uploads database
-          e2 = true;
+          e2d = true;
           # "d2t" disables multimedia parsers (in case the uploads are malicious)
           d2t = true;
           # skips hashing file contents if path matches *.iso
@@ -57,7 +60,7 @@
           fk = 4;
           scan = 60;
           # volflag "e2d" enables the uploads database
-          e2 = true;
+          e2d = true;
           nodupe = true;
         };
       };
@@ -73,7 +76,7 @@
           fk = 4;
           scan = 60;
           # volflag "e2d" enables the uploads database
-          e2 = true;
+          e2d = true;
           nodupe = true;
         };
       };
@@ -89,7 +92,7 @@
           fk = 4;
           scan = 60;
           # volflag "e2d" enables the uploads database
-          e2 = true;
+          e2d = true;
           nodupe = true;
         };
       };
