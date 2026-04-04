@@ -114,6 +114,7 @@ const updateIcons = async () => {
         childList: true,
         subtree: true,
         characterData: true,
+        attributeFilter: ["aria-label"],
       })
       updateIcons()
       console.log("🎨 Recursive Folder icon observer is live.")
