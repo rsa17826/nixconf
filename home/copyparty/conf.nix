@@ -16,11 +16,11 @@
       ];
       # use booleans to set binary flags
       no-reload = true;
+      dedup = true;
+      e2dsa = true;
+      e2ds = true;
+      e2d = true;
     };
-    dedup = true;
-    e2dsa = true;
-    e2ds = true;
-    e2d = true;
     # create users
     accounts = {
       admin.passwordFile = "/run/secrets/copypartyAdmin";
