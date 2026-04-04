@@ -60,7 +60,7 @@ function updateFiles(p, foundUrl) {
       .replace(/^~/, USERHOME)
     cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
     if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
-
+    if (p != cleanPath) continue
     const iconel = el.querySelector(".monaco-icon-label-container")
     if (!iconel) continue
 
