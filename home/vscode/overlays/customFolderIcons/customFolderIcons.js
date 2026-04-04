@@ -1,8 +1,5 @@
 const USERHOME = "${USERHOME}"
 
-// Shared cache: path -> Promise<string|null>
-const iconCache = new Map()
-
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
@@ -35,9 +32,6 @@ async function findIconUpwards(currentPath) {
   if (!currentPath || currentPath === "/" || currentPath === ".")
     return null
 
-  // Return cached promise immediately — no duplicate fetches
-  if (iconCache.has(currentPath)) return iconCache.get(currentPath)
-
   const promise = (async () => {
     const iconUrl = `vscode-file://vscode-app${currentPath}/.foldericon.png`
     try {
@@ -52,13 +46,13 @@ async function findIconUpwards(currentPath) {
     return findIconUpwards(parentPath)
   })()
 
-  iconCache.set(currentPath, promise)
   return promise
 }
 
 const updateIcons = async () => {
   const folders = document.querySelectorAll(".folder-icon")
   const files = document.querySelectorAll(".file-icon")
+  const iconCache = new Map()
 
   // --- Folders first: populate the cache ---
   await Promise.all(
@@ -76,45 +70,42 @@ const updateIcons = async () => {
 
       const foundUrl = await findIconUpwards(cleanPath)
       if (foundUrl) {
+        iconCache.set(cleanPath, foundUrl)
         el.style.setProperty(
           "--folder-icon-url",
           `url('${foundUrl}')`,
         )
         el.setAttribute("data-has-custom-icon", "true")
       } else {
+        iconCache.set(cleanPath, null)
         el.removeAttribute("data-has-custom-icon")
       }
     }),
   )
 
   // --- Files second: cache is warm, most will resolve instantly ---
-  await Promise.all(
-    Array.from(files).map(async (el) => {
-      const path = el.getAttribute("aria-label")
-      if (!path) return
+  for (var el of files) {
+    const path = el.getAttribute("aria-label")
+    if (!path) return
 
-      let cleanPath = path
-        .replace(/\\/g, "/")
-        .replace(/ • Contains emphasized items$/, "")
-        .replace(/^~/, USERHOME)
-      cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
-      if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+    let cleanPath = path
+      .replace(/\\/g, "/")
+      .replace(/ • [ \w]+$/, "")
+      .replace(/^~/, USERHOME)
+    cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
+    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
 
-      const iconel = el.querySelector(".monaco-icon-label-container")
-      if (!iconel) return
+    const iconel = el.querySelector(".monaco-icon-label-container")
+    if (!iconel) return
 
-      const foundUrl = await findIconUpwards(cleanPath)
-      if (foundUrl) {
-        el.style.setProperty(
-          "--folder-icon-url",
-          `url('${foundUrl}')`,
-        )
-        iconel.setAttribute("data-has-custom-icon", "true")
-      } else {
-        iconel.removeAttribute("data-has-custom-icon")
-      }
-    }),
-  )
+    const foundUrl = iconCache.get(cleanPath)
+    if (foundUrl) {
+      el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
+      iconel.setAttribute("data-has-custom-icon", "true")
+    } else {
+      iconel.removeAttribute("data-has-custom-icon")
+    }
+  }
 }
 
 ;(async () => {
