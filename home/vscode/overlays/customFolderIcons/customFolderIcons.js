@@ -1,5 +1,6 @@
 const USERHOME = "${USERHOME}"
 const styleElement = document.createElement("style")
+const iconCache = new Map()
 styleElement.id = "dynamic-folder-icons-style"
 styleElement.textContent = `
   .folder-icon[data-has-custom-icon="true"]::before {
@@ -47,11 +48,32 @@ async function findIconUpwards(currentPath) {
 
   return promise
 }
+function updateFiles(p, foundUrl) {
+  const files = document.querySelectorAll(".file-icon")
+  for (var el of files) {
+    const path = el.getAttribute("aria-label")
+    if (!path) continue
 
+    let cleanPath = path
+      .replace(/\\/g, "/")
+      .replace(/ • [ \w]+$/, "")
+      .replace(/^~/, USERHOME)
+    cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
+    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
+
+    const iconel = el.querySelector(".monaco-icon-label-container")
+    if (!iconel) continue
+
+    if (foundUrl) {
+      el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
+      el.setAttribute("data-has-custom-icon", "true")
+    } else {
+      el.removeAttribute("data-has-custom-icon")
+    }
+  }
+}
 const updateIcons = async () => {
   const folders = document.querySelectorAll(".folder-icon")
-  const files = document.querySelectorAll(".file-icon")
-  const iconCache = new Map()
 
   await Promise.all(
     Array.from(folders).map(async (el) => {
@@ -78,31 +100,9 @@ const updateIcons = async () => {
         iconCache.set(cleanPath, null)
         el.removeAttribute("data-has-custom-icon")
       }
+      updateFiles(cleanPath, foundUrl)
     }),
   )
-
-  for (var el of files) {
-    const path = el.getAttribute("aria-label")
-    if (!path) continue
-
-    let cleanPath = path
-      .replace(/\\/g, "/")
-      .replace(/ • [ \w]+$/, "")
-      .replace(/^~/, USERHOME)
-    cleanPath = cleanPath.substring(0, cleanPath.lastIndexOf("/"))
-    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath
-
-    const iconel = el.querySelector(".monaco-icon-label-container")
-    if (!iconel) continue
-
-    const foundUrl = iconCache.get(cleanPath)
-    if (foundUrl) {
-      el.style.setProperty("--folder-icon-url", `url('${foundUrl}')`)
-      el.setAttribute("data-has-custom-icon", "true")
-    } else {
-      el.removeAttribute("data-has-custom-icon")
-    }
-  }
 }
 
 ;(async () => {
