@@ -113,6 +113,7 @@ const updateIcons = async () => {
       observer.observe(listContainer, {
         childList: true,
         subtree: true,
+        characterData: true,
       })
       updateIcons()
       console.log("🎨 Recursive Folder icon observer is live.")
