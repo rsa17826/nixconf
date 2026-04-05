@@ -188,14 +188,14 @@
         "type": "github"
       }
     },
-    "ext-text-replacer": {
+    "ext-textreplace": {
       "flake": false,
       "locked": {
-        "lastModified": 1775061662,
-        "narHash": "sha256-v99YVb2w6xcSzk1DajKxDZKe9AwYC30p9pfK4i7yNho=",
+        "lastModified": 1775392592,
+        "narHash": "sha256-g3ZVjQyl6Ym6yZgDVDpoHZItSGwVsCp9kphvRkMCHyc=",
         "owner": "rsa17826",
         "repo": "textreplace-vscode-extension",
-        "rev": "7d7da196dae99e996551e8b39f32de37f8f9bb51",
+        "rev": "9c9bbc18ce785ca436f264081898f0fe4413e28a",
         "type": "github"
       },
       "original": {
@@ -836,7 +836,7 @@
         "ext-owoify-editor": "ext-owoify-editor",
         "ext-sds": "ext-sds",
         "ext-simple-auto-formatter": "ext-simple-auto-formatter",
-        "ext-text-replacer": "ext-text-replacer",
+        "ext-textreplace": "ext-textreplace",
         "home-manager": "home-manager",
         "hypr-darkwindow": "hypr-darkwindow",
         "hypr-dynamic-cursors": "hypr-dynamic-cursors",

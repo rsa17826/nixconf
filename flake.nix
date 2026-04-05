@@ -77,7 +77,7 @@
       url = "github:rsa17826/sds-vscode-language";
       flake = false;
     };
-    ext-text-replacer = {
+    ext-textreplace = {
       url = "github:rsa17826/textreplace-vscode-extension";
       flake = false;
     };

@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   # Helper function to reduce boilerplate
   buildFromFlake =
@@ -9,6 +14,7 @@ let
       npmDepsHash, # You still need this, but only when package-lock.json changes
       nativeBuildInputs ? [ ],
       buildInputs ? [ ],
+      npmDepsFetcherVersion ? 1,
     }:
     let
       # Extract version from package.json in the source
@@ -17,8 +23,15 @@ let
 
       npmBuild = pkgs.buildNpmPackage {
         pname = "${extName}-deps";
-        inherit version src npmDepsHash;
-
+        inherit
+          version
+          src
+          npmDepsHash
+          npmDepsFetcherVersion
+          ;
+        preBuild = ''
+          rm -rf src/test || true
+        '';
         npmBuildScript = "compile";
         nativeBuildInputs = [ pkgs.typescript ] ++ nativeBuildInputs;
         inherit buildInputs;
@@ -182,6 +195,7 @@ in
         extName = "simple-auto-formatter";
         extCreator = "rssaromeo";
         npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
+        npmDepsFetcherVersion = 2;
       })
       (buildFromFlake {
         src = inputs.ext-sds;
@@ -190,111 +204,12 @@ in
         npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
       })
       (buildFromFlake {
-        src = inputs.ext-text-replacer;
+        src = inputs.ext-textreplace;
         extName = "textreplace";
         extCreator = "rssaromeo";
-        npmDepsHash = "sha256-H0DLwZKE33hUHR0m2b/69xgcKnWnTwD11Di/dKjTvo8=";
+        npmDepsHash = "sha256-SG/vE/ovAc48STJL8v+ACrDZVxQRufI81KO14w2hn98=";
+        npmDepsFetcherVersion = 2;
       })
     ];
-    # extensions = [
-    #   (buildFromGh {
-    #     ghName = "rsa17826";
-    #     ghRepo = "vscodeowotest";
-    #     extName = "owoify-editor";
-    #     extCreator = "rssaromeo";
-    #     version = "3.0.0";
-
-    #     ghRev = "4972c72433774e930feb6a3e9ebae610d6dfde38";
-    #     ghSha = "sha256-5m0ijBmmM9namnCHJb2uHZrLXg+U3n84di+TlhZ/310=";
-    #     npmDepsHash = "sha256-eUE/p44juc+GWdw8HugVk5Ot69ckjaK4zhOPYM6GFnM=";
-    #   })
-    #   # onStartupFinished
-    #   # (buildFromGh {
-    #   #   ghName = "rsa17826";
-    #   #   ghRepo = "simple-auto-formatter";
-
-    #   #   extName = "simple-auto-formatter";
-    #   #   extCreator = "rssaromeo";
-    #   #   version = "22.0.0";
-
-    #   #   ghRev = "ea398d43bfc9fb05e2c52d78135a0258c4a081f9";
-    #   #   ghSha = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
-    #   # })
-    #   (buildFromGh {
-    #     ghName = "rsa17826";
-    #     ghRepo = "4-to-2-formatter";
-
-    #     extName = "4-to-2-formatter";
-    #     extCreator = "rssaromeo";
-    #     version = "7.0.0";
-
-    #     ghRev = "8d205d877c1c7b2747846472f161729e67c634e6";
-    #     ghSha = "sha256-PHaOXLEX2D/nrhabylTB+U0R7/6eVSsrRulFYaNebtk=";
-    #     npmDepsHash = "sha256-o7IA+4Kq4j2XD7dpJNje8g4G2KFi6ocsnXyaGSaXB8M=";
-    #   })
-    #   (buildFromGh {
-    #     ghName = "rsa17826";
-    #     ghRepo = "auto-regex-vscode-extension";
-
-    #     extName = "auto-regex";
-    #     extCreator = "rssaromeo";
-    #     version = "52.0.0";
-
-    #     ghRev = "40433a8c64ae8301ae9d7307f89410e1d8d68644";
-    #     ghSha = "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=";
-    #     npmDepsHash = "sha256-XN++TQ7z+qF/iK3ktBnCISYh5+eAFi+5QeQgIw0ogoA=";
-    #     nativeBuildInputs = with pkgs; [
-    #       pkg-config
-    #       python3 # node-gyp usually needs this too
-    #     ];
-
-    #     # Libraries needed at build and run time
-    #     buildInputs = with pkgs; [
-    #       libsecret
-    #     ];
-    #   })
-    #   (buildFromGh {
-    #     ghName = "rsa17826";
-    #     ghRepo = "MultiFormatterVSCode";
-
-    #     extName = "multi-formatter";
-    #     extCreator = "Jota0222";
-    #     version = "6.0.0";
-
-    #     ghRev = "021eaba326486ac6d82aaa5392a402efde0d053d";
-    #     ghSha = "sha256-VMGeH4s8z1rtH7SU87jNAZoWNHcFcQ0GHRPs6dvDWm8=";
-    #     npmDepsHash = "sha256-wWpLlndJnrub7QVskc+jKACETjwv0niVwr6AZjFl1jU=";
-    #     nativeBuildInputs = with pkgs; [
-    #       pkg-config
-    #       python3
-    #     ];
-    #     buildInputs = with pkgs; [
-    #       libsecret
-    #     ];
-    #   })
-    #   # (buildFromGh {
-    #   #   ghName = "coopmoney";
-    #   #   ghRepo = "vscode-nix-embedded-languages";
-
-    #   #   extName = "nix-embedded-languages";
-    #   #   extCreator = "coopermaruyama";
-    #   #   version = "1.1.1";
-
-    #   #   ghRev = "b8b2a5aedc444a6ac2c4be79648e502d5e25b36c";
-    #   #   ghSha = "sha256-zyJvVVlguTpUMwLXnllJsnJfn3WfXqyenxvJl6nr4Kk=";
-    #   # })
-    #   (buildFromGh {
-    #     ghName = "rsa17826";
-    #     ghRepo = "sds-vscode-language";
-
-    #     extName = "simpledatastorage";
-    #     extCreator = "rssaromeo";
-    #     version = "9.0.0";
-
-    #     ghRev = "391123c1c13b309a2733ed9d1bae0a077391adcb";
-    #     ghSha = "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=";
-    #     npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
-    #   })
-    # ];
   };
 }
