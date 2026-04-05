@@ -11,7 +11,6 @@ styleElement.textContent = `
     width: 16px;
     height: 16px;
     position: relative;
-    left: -2px;
     display: inline-block;
   }
   .file-icon[data-has-custom-icon="true"]::after {
@@ -22,8 +21,11 @@ styleElement.textContent = `
     width: 16px;
     height: 16px;
     position: relative;
-    left: -2px;
     display: inline-block;
+  }
+  .folder-icon[data-has-custom-icon="true"]::before{
+    width: 14px !important;
+    height: 14px !important;
   }
 `
 document.head.appendChild(styleElement)
