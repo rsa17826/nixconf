@@ -92,9 +92,9 @@ in
     enable = true;
     binfmt = true;
     package = pkgs.appimage-run.override {
-      extraPkgs = pkgs: [
-        pkgs.python312
-        pkgs.python314
+      extraPkgs = pkgs: with pkgs; [
+        python312
+        python314
       ];
     };
   };
@@ -225,6 +225,7 @@ in
   };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
+    nix-direnv
     espeak-ng # tts
     speechd # tts
     neovim # tui text editor
