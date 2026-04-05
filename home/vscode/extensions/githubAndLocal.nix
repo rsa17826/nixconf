@@ -193,7 +193,7 @@ in
         src = inputs.ext-text-replacer;
         extName = "textreplace";
         extCreator = "rssaromeo";
-        npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
+        npmDepsHash = "sha256-H0DLwZKE33hUHR0m2b/69xgcKnWnTwD11Di/dKjTvo8=";
       })
     ];
     # extensions = [
