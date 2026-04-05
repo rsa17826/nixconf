@@ -92,6 +92,102 @@
         "type": "indirect"
       }
     },
+    "ext-4-to-2-formatter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772760069,
+        "narHash": "sha256-PHaOXLEX2D/nrhabylTB+U0R7/6eVSsrRulFYaNebtk=",
+        "owner": "rsa17826",
+        "repo": "4-to-2-formatter",
+        "rev": "8d205d877c1c7b2747846472f161729e67c634e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "4-to-2-formatter",
+        "type": "github"
+      }
+    },
+    "ext-auto-regex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771082892,
+        "narHash": "sha256-UXZeOcP/GDA81+vU0pHAxDSJYSYs0djBfqoJdHgLCZc=",
+        "owner": "rsa17826",
+        "repo": "auto-regex-vscode-extension",
+        "rev": "40433a8c64ae8301ae9d7307f89410e1d8d68644",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "auto-regex-vscode-extension",
+        "type": "github"
+      }
+    },
+    "ext-multi-formatter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775047982,
+        "narHash": "sha256-1tGfHUwskxy0PsptlEYOVpRvnm4gy4riAwW52sMW4q0=",
+        "owner": "rsa17826",
+        "repo": "MultiFormatterVSCode",
+        "rev": "bb027dfb8083a20cf6f061ae94f6c2eac30b7b11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "MultiFormatterVSCode",
+        "type": "github"
+      }
+    },
+    "ext-owoify-editor": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775151521,
+        "narHash": "sha256-VrPy41IJWXeD2ZRRh7znQUGzIBUk8u/BWifbEiQ7Z80=",
+        "owner": "rsa17826",
+        "repo": "vscodeowotest",
+        "rev": "a309ecbfd6ad96ddeddd87f51ccdc24067bed697",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "vscodeowotest",
+        "type": "github"
+      }
+    },
+    "ext-sds": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755380432,
+        "narHash": "sha256-FlrSoYriFFXo3cBqR9jGMtKp/2X6T2smBkBtjogePBA=",
+        "owner": "rsa17826",
+        "repo": "sds-vscode-language",
+        "rev": "391123c1c13b309a2733ed9d1bae0a077391adcb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "sds-vscode-language",
+        "type": "github"
+      }
+    },
+    "ext-simple-auto-formatter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772761012,
+        "narHash": "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=",
+        "owner": "rsa17826",
+        "repo": "simple-auto-formatter",
+        "rev": "ea398d43bfc9fb05e2c52d78135a0258c4a081f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "simple-auto-formatter",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -718,6 +814,12 @@
         "audio-manager": "audio-manager",
         "copyparty": "copyparty",
         "disko": "disko",
+        "ext-4-to-2-formatter": "ext-4-to-2-formatter",
+        "ext-auto-regex": "ext-auto-regex",
+        "ext-multi-formatter": "ext-multi-formatter",
+        "ext-owoify-editor": "ext-owoify-editor",
+        "ext-sds": "ext-sds",
+        "ext-simple-auto-formatter": "ext-simple-auto-formatter",
         "home-manager": "home-manager",
         "hypr-darkwindow": "hypr-darkwindow",
         "hypr-dynamic-cursors": "hypr-dynamic-cursors",
