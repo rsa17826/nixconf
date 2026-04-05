@@ -52,6 +52,31 @@
       url = "github:rsa17826/audio-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # ext
+    ext-owoify-editor = {
+      url = "github:rsa17826/vscodeowotest";
+      flake = false;
+    };
+    ext-simple-auto-formatter = {
+      url = "github:rsa17826/simple-auto-formatter";
+      flake = false;
+    };
+    ext-4-to-2-formatter = {
+      url = "github:rsa17826/4-to-2-formatter";
+      flake = false;
+    };
+    ext-auto-regex = {
+      url = "github:rsa17826/auto-regex-vscode-extension";
+      flake = false;
+    };
+    ext-multi-formatter = {
+      url = "github:rsa17826/MultiFormatterVSCode";
+      flake = false;
+    };
+    ext-sds = {
+      url = "github:rsa17826/sds-vscode-language";
+      flake = false;
+    };
   };
 
   outputs =
