@@ -196,6 +196,10 @@ in
         extCreator = "rssaromeo";
         npmDepsHash = "sha256-Ia7RJ9aHnNYSqHFjPIDCjAuontkDP6mqumo7ord4H/s=";
         npmDepsFetcherVersion = 2;
+        nativeBuildInputs = with pkgs; [
+          pkg-config
+          python3
+        ];
         buildInputs = with pkgs; [ libsecret ];
       })
       (buildFromFlake {
