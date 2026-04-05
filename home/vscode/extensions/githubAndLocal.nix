@@ -194,7 +194,7 @@ in
         src = inputs.ext-simple-auto-formatter;
         extName = "simple-auto-formatter";
         extCreator = "rssaromeo";
-        npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
+        npmDepsHash = "sha256-Ia7RJ9aHnNYSqHFjPIDCjAuontkDP6mqumo7ord4H/s=";
         npmDepsFetcherVersion = 2;
       })
       (buildFromFlake {
