@@ -97,6 +97,10 @@ in
   };
   home.stateVersion = "26.05";
   programs = {
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     kitty = {
       enable = true;
     };

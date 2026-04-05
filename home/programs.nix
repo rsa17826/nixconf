@@ -225,7 +225,7 @@ in
   };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
-    nix-direnv
+    # nix-direnv
     espeak-ng # tts
     speechd # tts
     neovim # tui text editor
