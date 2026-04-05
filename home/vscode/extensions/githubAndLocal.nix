@@ -177,17 +177,23 @@ in
         ];
         buildInputs = with pkgs; [ libsecret ];
       })
-      # (buildFromFlake {
-      #   src = inputs.ext-simple-auto-formatter;
-      #   extName = "simple-auto-formatter";
-      #   extCreator = "rssaromeo";
-      #   npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
-      # })
+      (buildFromFlake {
+        src = inputs.ext-simple-auto-formatter;
+        extName = "simple-auto-formatter";
+        extCreator = "rssaromeo";
+        npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
+      })
       (buildFromFlake {
         src = inputs.ext-sds;
         extName = "simpledatastorage";
         extCreator = "rssaromeo";
         npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
+      })
+      (buildFromFlake {
+        src = inputs.ext-text-replacer;
+        extName = "textreplace";
+        extCreator = "rssaromeo";
+        npmDepsHash = "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=";
       })
     ];
     # extensions = [

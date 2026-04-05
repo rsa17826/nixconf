@@ -175,11 +175,11 @@
     "ext-simple-auto-formatter": {
       "flake": false,
       "locked": {
-        "lastModified": 1772761012,
-        "narHash": "sha256-FOBs2Vtje7kNQ27tb0ghwl6/yMjttzuofeuv2LAE6y8=",
+        "lastModified": 1775391728,
+        "narHash": "sha256-oBLIA7rxltcuIzJCAoMbCdPFv7hHi9/ZbMe31kmwB0Y=",
         "owner": "rsa17826",
         "repo": "simple-auto-formatter",
-        "rev": "ea398d43bfc9fb05e2c52d78135a0258c4a081f9",
+        "rev": "ca7580f9a70416755d9dbbd505cc25c6d6fd2d34",
         "type": "github"
       },
       "original": {
