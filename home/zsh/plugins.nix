@@ -98,7 +98,7 @@ in
         bindkey '^[[Z' reverse-menu-complete
 
         # ── cc: copy last N commands + output/errors to clipboard ──────────────
-        typeset -gx _CC_LOG="${config.xdg.runtimeDir}/zsh-cc-$$.log"
+        typeset -gx _CC_LOG="$XDG_RUNTIME_DIR/zsh-cc-$$.log"
 
         # Tee all stdout+stderr into the session log
         exec 3>&1 4>&2
