@@ -33,12 +33,12 @@ void main() {
   float effectiveLum = max(lum, maxNeighborLum);
 
   if (effectiveLum > threshold) {
-      float overshoot = (effectiveLum - threshold) / (1.0 - threshold);
-      float newLum = threshold + (overshoot * (cap - threshold));
+    float overshoot = (effectiveLum - threshold) / (1.0 - threshold);
+    float newLum = threshold + (overshoot * (cap - threshold));
 
-      // We scale the ORIGINAL pixel color by the ratio
-      // derived from the brightest neighbor.
-      pixColor.rgb *= (newLum / effectiveLum);
+    // We scale the ORIGINAL pixel color by the ratio
+    // derived from the brightest neighbor.
+    pixColor.rgb *= (newLum / effectiveLum);
   }
 
   gl_FragColor = pixColor;

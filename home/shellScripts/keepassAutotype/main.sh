@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DB_PATH="$HOME/keepassdb/keepass.kdbx"
 
@@ -13,7 +13,7 @@ WINDOW_TITLE="https://portal.my.vccs.edu/idp/AuthnEngine#/authn"
 # 2. Securely export only Title and URL to a variable (Metadata only)
 # We use CSV format: "Group","Title","Username","URL","Notes"
 # We extract only the Title (Index 2) and URL (Index 4)
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 2. Export Metadata (Stripping passwords immediately with awk)
 # Note: Adjust $5 to $3 if your URL is in the 3rd column based on previous tests

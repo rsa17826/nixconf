@@ -28,6 +28,11 @@
 @replace #!/usr/bin/env $1
 @endregex
 
+@file \.sh$
+@regex #!((?:ba|z)?sh)
+@replace #!/usr/bin/env $1
+@endregex
+
 @name use with
 @file \.nix$
 @regex \[\n *(\w+)\..*\n(\s*\1\.\w+)+\n *\];

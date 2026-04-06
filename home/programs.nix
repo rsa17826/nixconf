@@ -92,10 +92,11 @@ in
     enable = true;
     binfmt = true;
     package = pkgs.appimage-run.override {
-      extraPkgs = pkgs: with pkgs; [
-        python312
-        python314
-      ];
+      extraPkgs =
+        pkgs: with pkgs; [
+          python312
+          python314
+        ];
     };
   };
   programs = {

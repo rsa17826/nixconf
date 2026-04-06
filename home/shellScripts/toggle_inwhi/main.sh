@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Use $HOME instead of ~ for reliability in hyprctl
 SHADER_PATH="$HOME/.config/hypr/shaders/inwhi.glsl"

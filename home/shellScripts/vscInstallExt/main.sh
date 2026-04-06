@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -eu -o pipefail
 
 # can be added to your configuration with the following command and snippet:

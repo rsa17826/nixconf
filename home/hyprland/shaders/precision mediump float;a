@@ -32,11 +32,11 @@ void main() {
   bool isTouchingFlashbang = maxN > 0.95 && lum > 0.3;
 
   if (isBright || isTouchingFlashbang) {
-      float effectiveLum = max(lum, maxN);
-      float overshoot = (effectiveLum - threshold) / (1.0 - threshold);
-      float newLum = threshold + (overshoot * (cap - threshold));
+    float effectiveLum = max(lum, maxN);
+    float overshoot = (effectiveLum - threshold) / (1.0 - threshold);
+    float newLum = threshold + (overshoot * (cap - threshold));
 
-      pixColor.rgb *= (newLum / effectiveLum);
+    pixColor.rgb *= (newLum / effectiveLum);
   }
 
   gl_FragColor = pixColor;

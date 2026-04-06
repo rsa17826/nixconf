@@ -1,7 +1,7 @@
 self: super: {
   vscodium = super.vscodium.overrideAttrs (oldAttrs: {
     # We use jq to modify the json directly
-    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ super.jq ];
+    nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ super.jq ];
 
     postFixup = (oldAttrs.postFixup or "") + ''
       # Find the product.json (it's often in different places depending on version)
