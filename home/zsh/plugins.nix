@@ -42,7 +42,7 @@ in
         bindkey "\e[1;5C" forward-word
         bindkey "\e[1;6D" backward-word
         bindkey "\e[1;6C" forward-word
-        bindkey '^[d' backward-kill-word
+        bindkey '^[d' kill-word
         bindkey "\e[3;5~" kill-word
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
