@@ -26,6 +26,8 @@
     ln "${userConfig.nixConf}/home/vscode/settings.json";
   xdg.configFile."VSCodium/User/keybindings.json".source =
     ln "${userConfig.nixConf}/home/vscode/keybindings.json";
+  xdg.configFile."VSCodium/User/replace.regex".source =
+    ln "${userConfig.nixConf}/home/vscode/replace.regex";
   # home.activation.copy-vscode-settings = ''
   #   echo "Copying VSCode settings..."
   #   mkdir -p "$HOME/.config/VSCodium/User"
