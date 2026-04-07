@@ -19,7 +19,6 @@
   # xdg.configFile."hypr/shaders".source = ./shaders;
   # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
   xdg.configFile = {
-    # Link the main Hyprland config file
     "hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
     "hypr/hyprlock.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprlock.conf";
     "hypr/shaders" = {
