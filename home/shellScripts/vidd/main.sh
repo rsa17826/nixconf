@@ -28,10 +28,11 @@ while read -r url; do
     -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
     --merge-output-format mp4 \
     --no-mtime --add-metadata \
-    --output "%(title)s.%(ext)s" \
+    # --output "%(title)s.%(ext)s" \
     --remote-components ejs:github --paths "$HOME/videos/" \
     --audio-format mp3 --audio-quality 128k \
     --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+    -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
     "$url"
   # --write-thumbnail \
 
