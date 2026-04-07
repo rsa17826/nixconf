@@ -222,6 +222,7 @@ in
       xemu # xbox emu
       wl-clip-persist # keep clip past app death
       # blender
+      ffmpeg
     ];
   };
   programs.gpu-screen-recorder.enable = true;
