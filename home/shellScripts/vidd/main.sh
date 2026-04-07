@@ -23,13 +23,14 @@ fi
 while read -r url; do
   echo "--- Downloading: $url ---"
 
-  yt-dlp --newline --progress --cookies-from-browser brave \
+  yt-dlp --progress \
+    --cookies-from-browser brave \
     --no-check-certificate \
     -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
     --merge-output-format mp4 \
     --no-mtime --add-metadata \
     --remote-components ejs:github --paths "$HOME/videos/" \
-    --audio-format mp3 --audio-quality 128k \
+    --audio-format wav --audio-quality 128k \
     --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
     -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
     "$url"

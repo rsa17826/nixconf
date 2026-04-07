@@ -21,8 +21,13 @@
   xdg.configFile = {
     # Link the main Hyprland config file
     "hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
+    "hypr/hyprlock.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprlock.conf";
     "hypr/shaders" = {
       source = ln "${userConfig.nixConf}/home/hyprland/shaders";
+      recursive = true;
+    };
+    "hypr/wallpapers" = {
+      source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
       recursive = true;
     };
   };
