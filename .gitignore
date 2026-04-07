@@ -1,4 +1,5 @@
 **/.qmlls.ini
 .direnv
 vm/userjs
+vm/userts
 vm/Violentmonkey
