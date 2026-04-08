@@ -229,14 +229,6 @@ in
   };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
-    (makeDesktopItem {
-      name = "kitty-audd";
-      desktopName = "Kitty AudD";
-      exec = "kitty sh -c \"audd && exit\"";
-      icon = "utilities-terminal";
-      type = "Application";
-      categories = [ "Utility" ];
-    })
     # nix-direnv
     espeak-ng # tts
     speechd # tts

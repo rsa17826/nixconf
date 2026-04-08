@@ -57,6 +57,16 @@ in
     dataHome = "/home/${userConfig.uname}/.local/share";
     configHome = "/home/${userConfig.uname}/.config";
     cacheHome = "/home/${userConfig.uname}/.cache";
+    desktopEntries = {
+      kitty-audd = {
+        name = "Kitty AudD";
+        genericName = "Audio Identifier";
+        exec = "kitty sh -c \"audd && exit\"";
+        icon = "utilities-terminal";
+        categories = [ "Utility" ];
+        terminal = false;
+      };
+    };
     # desktopEntries.yazi = {
     #   name = "Yazi";
     #   exec = "kitty -e yazi %u"; # Replace 'kitty' with your terminal (alacritty, foot, etc.)
