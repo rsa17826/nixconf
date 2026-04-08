@@ -2797,3 +2797,46 @@ Prism.languages.hyprlang = {
 
     setInterval(highlightEverything, 1500);
 })();
+
+
+
+#!/usr/bin/env python3
+import time
+import math
+from pynput import mouse
+
+# Configuration
+SCROLL_FACTOR = 0.02  # Base speed multiplier
+
+scrolling = False
+start_pos = (0, 0)
+
+def on_click(x, y, button, pressed):
+    global scrolling, start_pos
+    if button == mouse.Button.middle:
+        if pressed:
+            scrolling = True
+            start_pos = (x, y)
+        else:
+            scrolling = False
+
+def on_move(x, y):
+    if not scrolling:
+        return
+    dx = x - start_pos[0]
+    dy = y - start_pos[1]
+
+    # distance from start
+    distance = math.hypot(dx, dy)
+    # Scroll speed proportional to distance
+    scroll_x = int(dx * SCROLL_FACTOR)
+    scroll_y = int(dy * SCROLL_FACTOR)
+
+    # Generate scroll events
+    # Negative y is up, positive is down
+    mouse_controller.scroll(-scroll_y, -scroll_x)
+
+mouse_controller = mouse.Controller()
+
+with mouse.Listener(on_click=on_click, on_move=on_move) as listener:
+    listener.join()
