@@ -130,6 +130,7 @@ in
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
       #
+      typescript
       nodejs
       jpexs # ffdec
       deluged
