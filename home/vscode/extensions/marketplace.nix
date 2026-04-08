@@ -3,6 +3,18 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "compare-folders";
+        publisher = "moshfeu";
+        version = "0.29.0";
+        hash = "sha256-oX4182qaoHbvZC9MdzzARBlW4MbtE7H0Fg687K5h2XQ=";
+      }
+      {
+        name = "fix-all-json";
+        publisher = "zardoy";
+        version = "0.1.6";
+        hash = "sha256-5XQqdy5BlFhtNyrzgd/P+CTOc+fhciGGwpvipTRdpqM=";
+      }
+      {
         name = "shellcheck";
         publisher = "timonwong";
         version = "0.39.2";
