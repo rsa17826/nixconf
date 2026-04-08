@@ -170,3 +170,11 @@ GODOT
 @flags gm
 @endregex
 
+@name mo allowUnfree
+@file \.nix$
+@regex ^( *)(?<!\w)allowUnfree\s*=\s*true\s*;
+@replace $1#FIXME dont use allowUnfree
+$1allowUnfree = false;
+@flags gm
+@endregex
+
