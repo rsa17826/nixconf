@@ -59,9 +59,17 @@ in
     cacheHome = "/home/${userConfig.uname}/.cache";
     desktopEntries = {
       kitty-audd = {
-        name = "Kitty AudD";
-        genericName = "Audio Identifier";
+        name = "audd";
+        genericName = "audio download";
         exec = "kitty sh -c \"audd && exit\"";
+        icon = "utilities-terminal";
+        categories = [ "Utility" ];
+        terminal = false;
+      };
+      kitty-vidd = {
+        name = "vidd";
+        genericName = "video download";
+        exec = "kitty sh -c \"vidd && exit\"";
         icon = "utilities-terminal";
         categories = [ "Utility" ];
         terminal = false;
