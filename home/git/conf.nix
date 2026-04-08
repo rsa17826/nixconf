@@ -1,4 +1,4 @@
-{ userConfig, ... }:
+{ userConfig, pkgs, ... }:
 {
   programs.git = {
     settings = {
@@ -7,6 +7,7 @@
         email = userConfig.email;
       };
     };
+    credential.helper = "!${pkgs.gh}/bin/gh auth git-credential";
     enable = true;
   };
 }
