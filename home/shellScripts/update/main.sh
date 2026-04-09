@@ -115,13 +115,15 @@ fi
 
 NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')
 
-export NIXOS_LABEL_VERSION
 echo "🚀 Switching to #$TARGET..."
 echo "hm is: $hm"
 if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
-  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
+  cat >"$HOME/nixconf/label.nix" <<EOF
+"$NIXOS_LABEL_VERSION"
+EOF
+  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 

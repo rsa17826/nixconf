@@ -120,6 +120,9 @@
             inherit system;
             specialArgs = args;
             modules = userConfig.modules ++ [
+              {
+                system.nixos.label = if builtins.pathExists ./label.nix then import ./label.nix else "unlabeled";
+              }
               ./hardware-configurations/${hostName}.nix
 
               inputs.sops-nix.nixosModules.sops
