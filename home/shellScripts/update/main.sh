@@ -101,7 +101,7 @@ echo "$next_generation"
 # revision=$(git rev-parse HEAD)
 NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
 cat >"$HOME/nixconf/label.nix" <<EOF
-"$NIXOS_LABEL_VERSION"
+"$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')"
 EOF
 # Output the label to verify
 echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
@@ -114,8 +114,6 @@ if [ "$SKIP_GIT" = false ]; then
   git commit -m "$NIXOS_LABEL_VERSION"
   git push
 fi
-
-NIXOS_LABEL_VERSION=$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')
 
 echo "🚀 Switching to #$TARGET..."
 echo "hm is: $hm"
