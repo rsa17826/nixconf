@@ -121,9 +121,9 @@ echo "hm is: $hm"
 if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
-  doas nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
+  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --impure |& nom --json
 fi
-# doas nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
+# sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
 # Return to original directory
 popd >/dev/null || exit

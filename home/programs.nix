@@ -230,7 +230,6 @@ in
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     # nix-direnv
-    doas
     espeak-ng # tts
     speechd # tts
     neovim # tui text editor

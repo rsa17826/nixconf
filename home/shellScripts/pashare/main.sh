@@ -10,8 +10,8 @@ RATE=48000
 cleanup() {
   echo "Cleaning up..."
   # Remove firewall rules
-  doas iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
-  while doas iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
+  sudo iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
+  while sudo iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
 
   # Kill processes and unload Pulse modules
   fuser -k "$PORT/tcp" 2>/dev/null
@@ -62,8 +62,8 @@ start)
 
     if [[ -n "$FIRST_IP" ]]; then
       # Apply Firewall Lock
-      doas iptables -I INPUT -p tcp -s "$FIRST_IP" --dport "$PORT" -j ACCEPT
-      doas iptables -A INPUT -p tcp --dport "$PORT" -j DROP
+      sudo iptables -I INPUT -p tcp -s "$FIRST_IP" --dport "$PORT" -j ACCEPT
+      sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
 
       echo "Locked to IP: $FIRST_IP"
       # notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"

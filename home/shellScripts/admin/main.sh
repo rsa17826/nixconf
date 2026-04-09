@@ -7,6 +7,6 @@ admin() {
   # Check if the script is being run as root
   if [ "$(id -u)" -ne 0 ]; then
     # Re-run the calling script with sudo and pass all arguments
-    exec doas -- "$0" "$@"
+    exec sudo -- "$0" "$@"
   fi
 }
