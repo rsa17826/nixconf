@@ -100,7 +100,9 @@ echo "$next_generation"
 # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
 # revision=$(git rev-parse HEAD)
 NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
-
+cat >"$HOME/nixconf/label.nix" <<EOF
+"$NIXOS_LABEL_VERSION"
+EOF
 # Output the label to verify
 echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
 if [[ "$NO_GIT" == 'true' ]]; then
@@ -120,9 +122,6 @@ echo "hm is: $hm"
 if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
-  cat >"$HOME/nixconf/label.nix" <<EOF
-"$NIXOS_LABEL_VERSION"
-EOF
   sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
