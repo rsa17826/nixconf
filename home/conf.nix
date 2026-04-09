@@ -178,7 +178,49 @@ in
       ];
       enable = true;
     };
+    doas = {
+      enable = true;
+      extraRules = [
+        # Rule for the "users" group to shutdown/reboot without a password
+        {
+          groups = [ "users" ];
+          noPass = true;
+          keepEnv = true; # Replaces your env_keep logic for these commands
+          runAsRoot = true;
+          cmd = "/run/current-system/sw/bin/shutdown";
+        }
+        {
+          groups = [ "users" ];
+          noPass = true;
+          keepEnv = true;
+          runAsRoot = true;
+          cmd = "/run/current-system/sw/bin/reboot";
+        }
 
+        # Rules for your specific user
+        {
+          users = [ "${userConfig.uname}" ];
+          noPass = true;
+          keepEnv = true;
+          runAsRoot = true;
+          cmd = "/run/current-system/sw/bin/nixos-rebuild";
+        }
+        {
+          users = [ "${userConfig.uname}" ];
+          noPass = true;
+          keepEnv = true;
+          runAsRoot = true;
+          cmd = "/etc/profiles/per-user/${userConfig.uname}/bin/pashare";
+        }
+        {
+          users = [ "${userConfig.uname}" ];
+          noPass = true;
+          keepEnv = true;
+          runAsRoot = true;
+          cmd = "/etc/profiles/per-user/nyx/bin/githubNotifications";
+        }
+      ];
+    };
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
