@@ -238,7 +238,7 @@ in
     nixfmt # nix language formatter
     git # git is required
     # kdePackages.kget
-    p7zip # archival tool
+    _7zz # archival tool
     nix-ld # run linux programs
     kitty # terminal emulator
     # rofi
