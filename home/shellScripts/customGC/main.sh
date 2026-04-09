@@ -68,8 +68,8 @@ if [[ ${#to_delete[@]} -gt 0 ]]; then
   echo "------------------------------------------"
   # To enable, uncomment the lines below.
   # Note: Using "${to_delete[@]}" ensures correct word splitting (Fixes SC2086)
-  sudo nix-env -p "$PROFILE" --delete-generations "${to_delete[@]}"
-  sudo nix-store --gc
+  nix-env -p "$PROFILE" --delete-generations "${to_delete[@]}"
+  nix-store --gc
 else
   echo "Nothing to delete."
 fi

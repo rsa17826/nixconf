@@ -36,7 +36,7 @@ parse_to_minutes() {
 # 1. Handle "cancel" or other flags first
 case "$1" in
 -c | --show | --help)
-  sudo /run/current-system/sw/bin/shutdown "$1"
+  doas /run/current-system/sw/bin/shutdown "$1"
   exit 0
   ;;
 esac
@@ -44,9 +44,9 @@ esac
 # 2. Handle Reboot vs Shutdown and Time parsing
 if [ -z "$1" ]; then
   # Default: immediate
-  sudo /run/current-system/sw/bin/shutdown now
+  doas /run/current-system/sw/bin/shutdown now
 else
   MINS=$(parse_to_minutes "$1")
   # Use + notation for relative time
-  sudo /run/current-system/sw/bin/shutdown "+$MINS"
+  doas /run/current-system/sw/bin/shutdown "+$MINS"
 fi

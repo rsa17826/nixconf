@@ -7,13 +7,13 @@ let
     nano = "nvim";
     # "nix-env" = "echo wrong command";
     clearcache = "nix-collect-garbage";
-    clearallcache = "sudo nix-collect-garbage --delete-older-than 15d";
+    clearallcache = "doas nix-collect-garbage --delete-older-than 15d";
     worm = "magic-wormhole send";
     hole = "magic-wormhole receive";
     q = "exit";
     c = "clear";
     nix-shell-alias = "nix-shell";
-    repairStore = "sudo nix-store --verify --check-contents --repair";
+    repairStore = "doas nix-store --verify --check-contents --repair";
     sd = "shutdown";
     reb = "reboot";
     la = "eza -la --icons --git --header --total-size";
