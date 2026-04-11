@@ -20,6 +20,8 @@ let
     lt = "eza --tree --level=2 --icons --git --group-directories-first";
     ls = "eza -l --icons --git --header --color-scale --group-directories-first --time-style=relative";
     wiz = "ncdu"; # wiztree
+    e = "codium";
+    edir = "codium";
     # cd = "z";
   };
   commonInit = ''

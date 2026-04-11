@@ -178,3 +178,20 @@ $1allowUnfree = false;
 @flags gm
 @endregex
 
+@name fix enter key
+@file /hyprland\.conf$
+@regex ENTER
+@replace RETURN
+@endregex
+
+@name always use -
+@file .
+@regex –
+@replace -
+@endregex
+
+
+# FIXME
+last regex breaks without this
+
+@endregex
