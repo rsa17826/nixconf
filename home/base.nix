@@ -10,7 +10,7 @@
     ];
     networkmanager = {
       enable = true;
-      dns = "unbound";
+      dns = "none";
     };
   };
   time.timeZone = "America/New_York";
