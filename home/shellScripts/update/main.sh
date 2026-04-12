@@ -120,7 +120,7 @@ echo "hm is: $hm"
 if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
-  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
+  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json | tee ~/nixconf/updatelog.ans
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
