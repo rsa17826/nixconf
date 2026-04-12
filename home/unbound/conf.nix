@@ -7,7 +7,7 @@
         {
           name = ".";
           forward-addr = [ "127.0.0.1@5353" ];
-          forward-no-cache = false;
+          # forward-no-cache = false;
         }
       ];
       server = {
