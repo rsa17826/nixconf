@@ -5,11 +5,15 @@
   userConfig,
   pkgFromInp,
   config,
+  lib,
   ...
 }:
 {
-  home.activation.enableAllScripts = ''
-    chmod +x "${userConfig.nixConf}/home/hyprland/scripts/*.sh"
+  home.activation.enableAllScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    nixconf="${userConfig.nixConf}"
+    if ls "$nixconf/home/hyprland/scripts/"*.sh &>/dev/null; then
+      chmod +x "$nixconf/home/hyprland/scripts/"*.sh
+    fi
   '';
   # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
   # xdg.configFile."hypr/shaders".source = ./shaders;
