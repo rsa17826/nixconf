@@ -35,13 +35,13 @@
         #    variant = "";
       };
     };
-    #   dnscrypt-proxy2 = {
-    #   enable = true;
-    #   settings = {
-    #     listen_addresses = [ "127.0.0.1:5353" ];
-    #     server_names = [ "cloudflare" "quad9" ];
-    #   };
-    # };
+    dnscrypt-proxy2 = {
+      enable = true;
+      settings = {
+        listen_addresses = [ "127.0.0.1:5353" ];
+        server_names = [ "quad9" ];
+      };
+    };
     # dnscrypt-proxy = {
     #   enable = false;
     #   settings = {
