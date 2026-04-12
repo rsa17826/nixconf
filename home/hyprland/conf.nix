@@ -8,13 +8,9 @@
   ...
 }:
 {
-  # home.activation.copy-hyprland-settings = ''
-  #   echo "Copying hyprland settings..."
-  #   mkdir -p "$HOME/.config/hypr/"
-  #   mkdir -p "$HOME/.config/hypr/shaders"
-  #   cp -f ${./hyprland.conf} "$HOME/.config/hypr/hyprland.conf"
-  #   # sudo cp -fr ${./shaders} "$HOME/.config/hypr/shaders"
-  # '';
+  home.activation.enableAllScripts = ''
+    chmod +x "${userConfig.nixConf}/home/hyprland/scripts/*.sh"
+  '';
   # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
   # xdg.configFile."hypr/shaders".source = ./shaders;
   # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
@@ -27,6 +23,10 @@
     };
     "hypr/wallpapers" = {
       source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
+      recursive = true;
+    };
+    "hypr/scripts" = {
+      source = ln "${userConfig.nixConf}/home/hyprland/scripts";
       recursive = true;
     };
   };
