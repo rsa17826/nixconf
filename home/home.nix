@@ -49,9 +49,10 @@ in
       };
     };
   };
-
-  services.swaync.enable = true;
-  services.playerctld.enable = true;
+  services = {
+    swaync.enable = true;
+    playerctld.enable = true;
+  };
   xdg = {
     enable = true;
     dataHome = "/home/${userConfig.uname}/.local/share";

@@ -278,18 +278,18 @@ in
 
   # This is crucial for the system to "see" them
   fonts.fontconfig.enable = true;
-  services.pipewire = {
+  services = {
     # Enable PipeWire
-    enable = true;
-    wireplumber.enable = true;
+    pipewire.enable = true;
+    pipewire.wireplumber.enable = true;
 
     # PulseAudio compatibility (so applications using PulseAudio work)
-    pulse.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-  };
+    pipewire.pulse.enable = true;
+    pipewire.alsa.enable = true;
+    pipewire.alsa.support32Bit = true;
+    pipewire.jack.enable = true;
 
-  # Disable PulseAudio itself (optional, safer on NixOS)
-  services.pulseaudio.enable = false;
+    # Disable PulseAudio itself (optional, safer on NixOS)
+    pulseaudio.enable = false;
+  };
 }

@@ -268,6 +268,7 @@ in
   system = {
     stateVersion = "25.05";
   };
+  services.resolved.enable = false;
 
   #  fileSystems."/data" =
   #    { device = "/dev/disk/by-uuid/A801-0866";
