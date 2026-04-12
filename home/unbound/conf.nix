@@ -20,6 +20,7 @@
           "127.0.0.0/8 allow"
           "::1 allow"
         ];
+        do-not-query-localhost = false;
         harden-dnssec-stripped = true;
         harden-glue = true;
         harden-referral-path = false;
