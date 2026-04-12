@@ -20,7 +20,7 @@
         ];
         harden-dnssec-stripped = true;
         harden-glue = true;
-        harden-referral-path = true;
+        harden-referral-path = false;
         val-clean-additional = true;
       };
     };
