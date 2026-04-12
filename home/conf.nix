@@ -41,39 +41,6 @@ in
     # boot.kernelPackages = pkgs.linuxPackages;
     kernelPackages = pkgs.linuxPackages;
   };
-  services = {
-    speechd = {
-      # Enable the Speech Dispatcher daemon
-      enable = true;
-    };
-
-    udisks2 = {
-      enable = true;
-    };
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-    };
-    keyd = {
-      enable = true;
-      keyboards = {
-        default = {
-          ids = [ "*" ];
-          settings = {
-            main = {
-              numlock = "noop";
-              capslock = "overload(control, esc)";
-              # numlock = "repeat";
-            };
-          };
-        };
-      };
-    };
-    # opensnitch = {
-    #   enable = true;
-    # };
-
-  };
-  services.journald.storage = "persistent";
 
   nix = {
     settings = {
@@ -268,7 +235,40 @@ in
   system = {
     stateVersion = "25.05";
   };
-  services.resolved.enable = false;
+  services = {
+    speechd = {
+      # Enable the Speech Dispatcher daemon
+      enable = true;
+    };
+
+    udisks2 = {
+      enable = true;
+    };
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+    };
+    keyd = {
+      enable = true;
+      keyboards = {
+        default = {
+          ids = [ "*" ];
+          settings = {
+            main = {
+              numlock = "noop";
+              capslock = "overload(control, esc)";
+              # numlock = "repeat";
+            };
+          };
+        };
+      };
+    };
+    # opensnitch = {
+    #   enable = true;
+    # };
+
+    journald.storage = "persistent";
+    resolved.enable = false;
+  };
 
   #  fileSystems."/data" =
   #    { device = "/dev/disk/by-uuid/A801-0866";

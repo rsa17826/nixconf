@@ -3,11 +3,14 @@
   nixpkgs.config.allowUnfree = false;
   networking = {
     nameservers = [
-      "9.9.9.9"
-      "149.112.112.112"
+      "127.0.0.1"
+      "::1"
+      # "9.9.9.9"
+      # "149.112.112.112"
     ];
     networkmanager = {
       enable = true;
+      dns = "unbound";
     };
   };
   time.timeZone = "America/New_York";
@@ -33,7 +36,7 @@
       };
     };
     dnscrypt-proxy = {
-      enable = true;
+      enable = false;
       settings = {
         ipv6_servers = true;
         require_dnssec = true;
