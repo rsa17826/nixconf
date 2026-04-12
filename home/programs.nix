@@ -13,7 +13,7 @@ let
       pname = "godot-${version}";
       src = pkgs.fetchurl {
         url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
-        sha256 = "sha256-+UtyBhZjrXOOpNWbGMnsZQXkMYsO4mGyVSeFqLjVOkY=";
+        sha256 = "sha256-9oBqCTVpt9Zhv4rA8qyoEIQul6w3PRswhH33TPhNg9M=";
       };
       nativeBuildInputs = with pkgs; [ unzip ];
       sourceRoot = ".";
