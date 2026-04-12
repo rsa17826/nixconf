@@ -48,6 +48,10 @@
       url = "github:rsa17826/multi-game-launcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wayland-keepass-autotype = {
+      url = "github:rsa17826/wayland-keepass-autotype";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     audio-manager = {
       url = "github:rsa17826/audio-manager";
       inputs.nixpkgs.follows = "nixpkgs";

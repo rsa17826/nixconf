@@ -127,6 +127,7 @@ in
     packages = with pkgs; [
       (newestGodot "4.7-dev3")
       xdm
+      (pkgFromInp "wayland-keepass-autotype" "default")
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
       #
@@ -271,9 +272,9 @@ in
     # nginx
     unbound-with-systemd
   ];
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.hack
+  fonts.packages = with pkgs; with nerd-fonts; [
+    jetbrains-mono
+    hack
   ];
 
   # This is crucial for the system to "see" them
