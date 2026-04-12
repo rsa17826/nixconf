@@ -271,6 +271,24 @@
         "type": "github"
       }
     },
+    "flake-utils_4": {
+      "inputs": {
+        "systems": "systems_4"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -845,7 +863,8 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
         "quickshell": "quickshell",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "wayland-keepass-autotype": "wayland-keepass-autotype"
       }
     },
     "sops-nix": {
@@ -910,6 +929,42 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_4": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "wayland-keepass-autotype": {
+      "inputs": {
+        "flake-utils": "flake-utils_4",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775968393,
+        "narHash": "sha256-NOCc8w6AM9dXBC2U7S8r2ZieKkzaGQ/Y7O6ycT7cNpE=",
+        "owner": "rsa17826",
+        "repo": "wayland-keepass-autotype",
+        "rev": "3cd0c0c7a212ef9758a6edd03a9a053f3ea88057",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "wayland-keepass-autotype",
         "type": "github"
       }
     },

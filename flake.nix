@@ -2,21 +2,40 @@
   description = "NixOS configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     copyparty = {
       url = "github:9001/copyparty";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     hyprland = {
       url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     hypr-dynamic-cursors = {
       url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
@@ -29,32 +48,53 @@
 
     # impermanence = {
     #   url = "github:nix-community/impermanence";
-    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs={
+    # nixpkgs.follows = "nixpkgs";
+    # flake-utils.follows="flake-utils";
+    # };
     #   inputs.home-manager.follows = "home-manager";
     # };
     # disko = {
     #   url = "github:nix-community/disko";
-    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs={
+    # nixpkgs.follows = "nixpkgs";
+    # flake-utils.follows="flake-utils";
+    # };
     # };
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     multi-game-launcher = {
       url = "github:rsa17826/multi-game-launcher";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     wayland-keepass-autotype = {
       url = "github:rsa17826/wayland-keepass-autotype";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     audio-manager = {
       url = "github:rsa17826/audio-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
     # ext
     ext-owoify-editor = {
@@ -91,12 +131,9 @@
     {
       nixpkgs,
       home-manager,
-      disko,
       sops-nix,
       nix-index-database,
       copyparty,
-      multi-game-launcher,
-      audio-manager,
       ...
     }@inputs:
     let
