@@ -23,6 +23,7 @@ in
     ./firewall/conf.nix
     ./brave/conf.nix
     ./syncthing/conf.nix
+    ./unbound/conf.nix
     # ./tts/conf.nix
   ];
   boot = {
