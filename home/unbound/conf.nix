@@ -12,8 +12,10 @@
           "127.0.0.0/8 allow"
           "::1 allow"
         ];
-        hide-identity = true;
-        hide-version = true;
+        harden-dnssec-stripped = true;
+        harden-glue = true;
+        harden-referral-path = true;
+        val-clean-additional = true;
       };
     };
   };
