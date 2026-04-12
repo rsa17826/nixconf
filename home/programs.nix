@@ -236,7 +236,7 @@ in
     speechd # tts
     neovim # tui text editor
     wget # cmd dl util
-    brave # web browser
+    (brave.override { commandLineArgs = "--remote-debugging-port=9222 --password-store=basic"; }) # web browser
     nixfmt # nix language formatter
     git # git is required
     # kdePackages.kget
@@ -273,10 +273,13 @@ in
     # nginx
     unbound-with-systemd
   ];
-  fonts.packages = with pkgs; with nerd-fonts; [
-    jetbrains-mono
-    hack
-  ];
+  fonts.packages =
+    with pkgs;
+    with nerd-fonts;
+    [
+      jetbrains-mono
+      hack
+    ];
 
   # This is crucial for the system to "see" them
   fonts.fontconfig.enable = true;
