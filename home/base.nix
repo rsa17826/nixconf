@@ -35,7 +35,7 @@
         #    variant = "";
       };
     };
-    dnscrypt-proxy2 = {
+    dnscrypt-proxy = {
       enable = true;
       settings = {
         listen_addresses = [ "127.0.0.1:5353" ];
