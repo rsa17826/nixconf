@@ -269,6 +269,7 @@ in
     shellcheck
     lazygit
     # nginx
+    unbound-with-systemd
   ];
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

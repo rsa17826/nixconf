@@ -9,6 +9,7 @@
       credential = {
         helper = "!gh auth git-credential";
       };
+      init.defaultBranch = "main";
     };
     enable = true;
   };
