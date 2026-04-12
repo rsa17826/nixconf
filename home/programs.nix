@@ -131,6 +131,7 @@ in
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
       #
+      rofi
       typescript
       nodejs
       jpexs # ffdec
