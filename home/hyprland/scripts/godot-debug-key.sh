@@ -5,23 +5,23 @@
 KEY="$1"
 
 active=$(hyprctl activewindow -j)
-title=$(echo "$active"    | jq -r '.title')
-from=$(echo "$active"     | jq -r '.address')
+title=$(echo "$active" | jq -r '.title')
+# from=$(echo "$active" | jq -r '.address')
 
 # Match: anything followed by a space and "(DEBUG)" at end of title
 if [[ "$title" =~ ^.*[[:space:]]\(DEBUG\)$ ]]; then
-  godot=$(hyprctl clients -j \
-    | jq -r '[.[] | select(.class | ascii_downcase | test("godot"))][0].address')
+  godot=$(hyprctl clients -j |
+    jq -r '[.[] | select(.class | ascii_downcase | test("godot"))][0].address')
 
   if [[ -n "$godot" && "$godot" != "null" ]]; then
     hyprctl dispatch focuswindow "address:$godot"
     sleep 0.04
-    wtype -k "$KEY"
-    sleep 0.04
-    hyprctl dispatch focuswindow "address:$from"
+    hyprctl dispatch sendshortcut ",$KEY,class:^[Gg]odot"
+    # sleep 0.04
+    # hyprctl dispatch focuswindow "address:$from"
   else
-    wtype -k "$KEY"  # Godot not open, pass through
+    hyprctl dispatch sendshortcut ",$KEY,class:^[Gg]odot"
   fi
 else
-  wtype -k "$KEY"    # Not a DEBUG window, pass through
+  hyprctl dispatch sendshortcut ",$KEY,class:^[Gg]odot"
 fi
