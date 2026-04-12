@@ -39,7 +39,10 @@
       enable = true;
       settings = {
         listen_addresses = [ "127.0.0.1:5353" ];
-        server_names = [ "quad9" ];
+        server_names = [
+          "quad9-doh-ip4-port443-filter-pri"
+          "quad9-dnscrypt-ip4-filter-pri"
+        ];
       };
     };
     # dnscrypt-proxy = {

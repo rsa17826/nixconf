@@ -3,12 +3,12 @@
   services.unbound = {
     enable = true;
     settings = {
-      # forward-zone = [
-      #   {
-      #     name = ".";
-      #     forward-addr = [ "127.0.0.1@5353" ];
-      #   }
-      # ];
+      forward-zone = [
+        {
+          name = ".";
+          forward-addr = [ "127.0.0.1@5353" ];
+        }
+      ];
       server = {
         interface = [
           "127.0.0.1"
