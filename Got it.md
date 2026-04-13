@@ -791,9 +791,9 @@ Add this to your `services.kanata.keyboards.<name>.config` section:
 ```lisp
 (defalias
   ;; This is your 'BlockInput' and 'Fix' logic
-  ;; 'm-release-all' effectively blocks your physical fingers from 
+  ;; 'm-release-all' effectively blocks your physical fingers from
   ;; sending new keys until the macro finishes.
-  fix_tset (macro 
+  fix_tset (macro
     (m-release-all)   ;; Block/Release physical keys
     bspc bspc bspc bspc bspc ;; {bs 5}
     t e s t spc       ;; "test "
@@ -860,7 +860,7 @@ def ahk_line_to_kanata(line):
     # Build Macro string
     # We map common symbols to Kanata names
     key_map = {';': 'semi', ',': 'comma', "'": 'squote', '.': 'dot', ' ': 'spc'}
-    
+
     def get_key(char):
         return key_map.get(char, char)
 
@@ -870,7 +870,7 @@ def ahk_line_to_kanata(line):
 
     alias = f"      {alias_name} (macro {bs_str} {repl_str})"
     sequence = f"      ({trig_str}) @{alias_name}"
-    
+
     return alias, sequence
 
 def update_nix_config():
@@ -890,11 +890,11 @@ def update_nix_config():
     # Replace content between markers
     alias_block = "\n".join(aliases)
     seq_block = "\n".join(sequences)
-    
+
     # Use regex to find and replace content between our markers
-    content = re.sub(r'(# KANATA_ALIASES_START).*?(# KANATA_ALIASES_END)', 
+    content = re.sub(r'(# KANATA_ALIASES_START).*?(# KANATA_ALIASES_END)',
                      f'\\1\n{alias_block}\n      \\2', content, flags=re.DOTALL)
-    content = re.sub(r'(# KANATA_SEQUENCES_START).*?(# KANATA_SEQUENCES_END)', 
+    content = re.sub(r'(# KANATA_SEQUENCES_START).*?(# KANATA_SEQUENCES_END)',
                      f'\\1\n{seq_block}\n      \\2', content, flags=re.DOTALL)
 
     with open(NIX_FILE, 'w') as f:
@@ -910,7 +910,7 @@ if __name__ == "__main__":
     enable = true;
     keyboards.default = {
       # This wildcard works for almost all internal/USB keyboards
-      devices = [ "/dev/input/by-path/*-kbd" ]; 
+      devices = [ "/dev/input/by-path/*-kbd" ];
       config = ''
         (defsrc
           a b c d e f g h i j k l m n o p q r s t u v w x y z
@@ -1025,11 +1025,11 @@ entry=$(zenity --entry --title="New Hotstring" --text="Format: ::typo::correctio
 if [ -n "$entry" ]; then
     # 3. Append to AHK file
     echo "$entry" >> "$HOME/path/to/autocorrect.ahk"
-    
+
     # 4. Trigger the Python Script immediately
     # (The systemd watcher will also see it, but this makes it instant)
     python3 "$HOME/path/to/update_kanata.py"
-    
+
     # 5. Optional: Replace the highlighted typo with the correction immediately
     # Extract the correction part from ::typo::correction
     correction=$(echo "$entry" | awk -F'::' '{print $3}')
@@ -1117,7 +1117,7 @@ NIX_FILE = "/etc/nixos/configuration.nix"
 def ahk_to_kanata():
     aliases = []
     sequences = []
-    
+
     if not os.path.exists(AHK_FILE): return
 
     with open(AHK_FILE, 'r') as f:
@@ -1128,10 +1128,10 @@ def ahk_to_kanata():
             if match:
                 opts, trig, repl = match.groups()
                 repl = repl.split(';')[0].strip() or trig # Use trig if repl is empty (exclusion)
-                
+
                 # Sanitize for Lisp
                 name = f"fix_{re.sub(r'[^a-zA-Z]', '_', trig)}"
-                
+
                 # Build Lisp strings
                 key_map = {';': 'semi', ',': 'comma', "'": 'squote', '.': 'dot', ' ': 'spc'}
                 t_lisp = " ".join([key_map.get(c, c) for c in trig])
@@ -1145,9 +1145,9 @@ def ahk_to_kanata():
     with open(NIX_FILE, 'r') as f:
         content = f.read()
 
-    content = re.sub(r'(# KANATA_ALIASES_START).*?(# KANATA_ALIASES_END)', 
+    content = re.sub(r'(# KANATA_ALIASES_START).*?(# KANATA_ALIASES_END)',
                      f'\\1\n{"\n".join(aliases)}\n      \\2', content, flags=re.DOTALL)yazi
-    content = re.sub(r'(# KANATA_SEQUENCES_START).*?(# KANATA_SEQUENCES_END)', 
+    content = re.sub(r'(# KANATA_SEQUENCES_START).*?(# KANATA_SEQUENCES_END)',
                      f'\\1\n{"\n".join(sequences)}\n      \\2', content, flags=re.DOTALL)
 
     with open(NIX_FILE, 'w') as f:
@@ -1201,10 +1201,10 @@ entry=$(zenity --entry --title="New Hotstring" \
 if [ -n "$entry" ]; then
     # Append to file
     echo "$entry" >> "$HOME/autocorrect.ahk"
-    
+
     # Run the Python updater with sudo (via the NOPASSWD rule we added)
     sudo python3 "$HOME/update_kanata.py"
-    
+
     # Instant fix: Paste the correction over the highlighted typo
     correction=$(echo "$entry" | awk -F'::' '{print $3}')
     echo -n "$correction" | wl-copy
@@ -1260,14 +1260,14 @@ if [ -n "$entry" ]; then
 
     # 3. Append to your AHK file
     echo "$entry" >> "$HOME/autocorrect.ahk"
-    
+
     # 4. Run the Python updater (Requires the NOPASSWD sudo rule)
     if sudo python3 "$HOME/update_kanata.py"; then
         # 5. Instant fix: Replace the highlighted word on your screen
         correction=$(echo "$entry" | awk -F'::' '{print $3}')
         echo -n "$correction" | wl-copy
         xdotool key ctrl+v
-        
+
         # Success notification
         notify-send "Kanata" "Reloaded! '$typo' -> '$correction' is now active." -i empathy-consistent
     else
@@ -1307,7 +1307,7 @@ Ensure your Python script actually exits with a success code so the Bash script 
 try:
     # ... existing file writing logic ...
     subprocess.run(["nixos-rebuild", "switch"], check=True)
-    sys.exit(0) 
+    sys.exit(0)
 except Exception as e:
     print(f"Error: {e}")
     sys.exit(1)
@@ -1857,7 +1857,7 @@ if (document.body) {
     ];
 
     // 3. The Symbol Decoder
-    // Instead of a regex for every word, we use one regex that finds 
+    // Instead of a regex for every word, we use one regex that finds
     // words containing symbols and cleans them.
     const symbolRegex = /[a-z0-9]*[%#*♥][a-z0-9%#*♥]*/gi;
 
@@ -2623,8 +2623,7 @@ Here’s a **practical way to *send the current HTML5 `video.currentTime` from B
 
 You need to start Brave with the **remote debugging port enabled** so you can query it from your shell:
 
-```bash
-brave --remote-debugging-port=9222 &
+```bashbrave --remote-debugging-port=9222 &
 ```
 
 This opens Brave so external tools can talk to it using the **Chrome DevTools Protocol (CDP)**. ([Brave Help Center][1])
@@ -2701,7 +2700,7 @@ Running that command prints the *correct video position* even when playback spee
 
 If you want, I can help turn this into a **watch script** that continually prints the current video time (like `top`/`watch`) so you can *monitor it live as it plays*.
 
-[1]: https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave?utm_source=chatgpt.com "How Do I Use Command Line Flags in Brave? – Brave Help Center"
+[1]: https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave?utm_source=chatgpt.com "How Do I Use Command Line Flags in Brave? - Brave Help Center"
 [2]: https://lightrun.com/answers/brave-brave-browser-remote-debugging-should-be-proxied-and-enabled-by-default?utm_source=chatgpt.com "Remote debugging should be proxied and enabled by default"
 
 
