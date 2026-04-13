@@ -222,16 +222,16 @@ in
     enable = true;
 
     platformTheme.name = "gtk2";
-    # style = {
-    #   name = "adwaita-dark";
-    #   package = pkgs.symlinkJoin {
-    #     name = "adwaita-qt-all";
-    #     paths = with pkgs; [
-    #       adwaita-qt
-    #       adwaita-qt6
-    #     ];
-    #   };
-    # };
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.symlinkJoin {
+        name = "adwaita-qt-all";
+        paths = with pkgs; [
+          adwaita-qt
+          adwaita-qt6
+        ];
+      };
+    };
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = {
@@ -244,7 +244,7 @@ in
     SOPS_EDITOR = "codium --wait";
     VISUAL = "nvim";
     HYPRCURSOR_THEME = "mew";
-    # QT_STYLE_OVERRIDE = "adwaita-dark";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
     ADW_DISABLE_PORTAL = "0";
     GTK_THEME = "Adwaita-dark";
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
