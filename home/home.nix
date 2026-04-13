@@ -225,7 +225,13 @@ in
 
     style = {
       name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
+      package = pkgs.symlinkJoin {
+        name = "adwaita-qt-all";
+        paths = with pkgs; [
+          adwaita-qt
+          adwaita-qt6
+        ];
+      };
     };
   };
   dconf.settings = {
