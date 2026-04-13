@@ -76,13 +76,16 @@ in
     dates = "daily";
     options = "--delete-older-than 7d";
   };
-  environment.variables = {
-    EDITOR = "nvim";
-    SOPS_EDITOR = "codium --wait";
-    VISUAL = "nvim";
-    HYPRCURSOR_THEME = "mew";
-    QT_STYLE_OVERRIDE = "adwaita-dark";
+  environment = {
+    variables = {
+      EDITOR = "nvim";
+      SOPS_EDITOR = "codium --wait";
+      VISUAL = "nvim";
+      HYPRCURSOR_THEME = "mew";
+      # QT_STYLE_OVERRIDE = "adwaita-dark";
+    };
   };
+
   # systemd.services.numlock = {
   #   description = "Enable NumLock at startup";
   #   wantedBy = [ "multi-user.target" ];

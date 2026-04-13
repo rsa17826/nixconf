@@ -245,6 +245,7 @@ in
     VISUAL = "nvim";
     HYPRCURSOR_THEME = "mew";
     # QT_STYLE_OVERRIDE = "adwaita-dark";
+    QT_QPA_PLATFORMTHEME = "gtk2";
     ADW_DISABLE_PORTAL = "0";
     GTK_THEME = "Adwaita-dark";
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
