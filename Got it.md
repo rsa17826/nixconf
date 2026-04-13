@@ -2840,3 +2840,112 @@ mouse_controller = mouse.Controller()
 
 with mouse.Listener(on_click=on_click, on_move=on_move) as listener:
     listener.join()
+To find duplicate files in a folder and replace them with symlinks, you typically combine a **duplicate finder** with a **script that links duplicates to one “original” file**.
+
+Here’s a clean, practical way to do it on Linux/macOS:
+
+---
+
+## 🧰 Step 1: Install a duplicate finder
+
+The most common tool is **`fdupes`**.
+
+* On Ubuntu/Debian:
+
+  ```bash
+  sudo apt install fdupes
+  ```
+* On macOS (with Homebrew):
+
+  ```bash
+  brew install fdupes
+  ```
+
+---
+
+## 🔍 Step 2: Find duplicates
+
+Run:
+
+```bash
+fdupes -r /path/to/folder
+```
+
+This outputs groups of duplicate files.
+
+---
+
+## 🔗 Step 3: Replace duplicates with symlinks
+
+⚠️ Be careful: this modifies files. Test on a copy first.
+
+Here’s a simple script:
+
+```bash
+fdupes -r /path/to/folder | while read file; do
+  if [ -z "$file" ]; then
+    unset original
+    continue
+  fi
+
+  if [ -z "$original" ]; then
+    original="$file"
+  else
+    rm "$file"
+    ln -s "$original" "$file"
+  fi
+done
+```
+
+---
+
+## 🧠 How it works
+
+* `fdupes` prints duplicates in groups (separated by blank lines)
+* First file = **original**
+* Others = deleted and replaced with **symlinks to original**
+
+---
+
+## ✅ Safer alternative (interactive)
+
+You can review before linking:
+
+```bash
+fdupes -r /path/to/folder
+```
+
+Then manually:
+
+```bash
+ln -s original duplicate
+```
+
+---
+
+## ⚡ Better tool (more control)
+
+Try **`rdfind`**, which can automatically replace duplicates:
+
+```bash
+rdfind -makesymlinks true /path/to/folder
+```
+
+---
+
+## 🚨 Important notes
+
+* Symlinks break if the original file is moved/deleted
+* Hard links (`ln` without `-s`) are often safer if same filesystem:
+
+  ```bash
+  rdfind -makehardlinks true /path/to/folder
+  ```
+* Always back up before bulk operations
+
+---
+
+If you want, I can give you:
+
+* a **version that keeps newest/oldest file**
+* or a **dry-run preview script** so nothing is deleted first
