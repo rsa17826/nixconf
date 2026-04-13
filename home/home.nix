@@ -248,7 +248,6 @@ in
     QT_STYLE_OVERRIDE = "adwaita-dark";
     ADW_DISABLE_PORTAL = "0";
     GTK_THEME = "Adwaita-dark";
-    GNOME_DESKTOP_SESSION_ID = "this-is-deprecated"; # tricks Qt into skipping portal
   };
 
   # Bootloader.

@@ -229,9 +229,13 @@ in
       ffmpeg
     ];
   };
+  services.gvfs.enable = true;
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     # nix-direnv
+    glib # provides gio
+    tumbler # thumbnail/icon service
+
     espeak-ng # tts
     speechd # tts
     neovim # tui text editor
