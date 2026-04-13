@@ -227,10 +227,12 @@ in
       wl-clip-persist # keep clip past app death
       # blender
       ffmpeg
-      gsettings-desktop-schemas
     ];
   };
   services = {
+    dbus = {
+      enable = true;
+    };
     gvfs = {
       enable = true;
     };
@@ -253,6 +255,7 @@ in
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     # nix-direnv
+    gsettings-desktop-schemas
     glib # provides gio
     tumbler # thumbnail/icon service
     gvfs
