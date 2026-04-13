@@ -48,22 +48,22 @@
           nodupe = true;
         };
       };
-      "/lwts" = {
-        path = "/home/${userConfig.uname}/projects/decen/lwts/not_censored/";
-        access = {
-          rwmd = "s";
-          A = [
-            "admin"
-          ];
-        };
-        flags = {
-          fk = 4;
-          scan = 60;
-          # volflag "e2d" enables the uploads database
-          e2d = true;
-          nodupe = true;
-        };
-      };
+      # "/lwts" = {
+      #   path = "/home/${userConfig.uname}/projects/decen/lwts/not_censored/";
+      #   access = {
+      #     rwmd = "s";
+      #     A = [
+      #       "admin"
+      #     ];
+      #   };
+      #   flags = {
+      #     fk = 4;
+      #     scan = 60;
+      #     # volflag "e2d" enables the uploads database
+      #     e2d = true;
+      #     nodupe = true;
+      #   };
+      # };
       "/s" = {
         path = "/home/${userConfig.uname}/copypartyS";
         access = {
