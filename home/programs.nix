@@ -227,15 +227,35 @@ in
       wl-clip-persist # keep clip past app death
       # blender
       ffmpeg
+      gsettings-desktop-schemas
     ];
   };
-  services.gvfs.enable = true;
+  services = {
+    gvfs = {
+      enable = true;
+    };
+    pipewire = {
+      # Enable PipeWire
+      enable = true;
+      wireplumber.enable = true;
+
+      # PulseAudio compatibility (so applications using PulseAudio work)
+      pulse.enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      jack.enable = true;
+    };
+    pulseaudio = {
+      # Disable PulseAudio itself (optional, safer on NixOS)
+      enable = false;
+    };
+  };
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     # nix-direnv
     glib # provides gio
     tumbler # thumbnail/icon service
-
+    gvfs
     espeak-ng # tts
     speechd # tts
     neovim # tui text editor
@@ -287,18 +307,4 @@ in
 
   # This is crucial for the system to "see" them
   fonts.fontconfig.enable = true;
-  services = {
-    # Enable PipeWire
-    pipewire.enable = true;
-    pipewire.wireplumber.enable = true;
-
-    # PulseAudio compatibility (so applications using PulseAudio work)
-    pipewire.pulse.enable = true;
-    pipewire.alsa.enable = true;
-    pipewire.alsa.support32Bit = true;
-    pipewire.jack.enable = true;
-
-    # Disable PulseAudio itself (optional, safer on NixOS)
-    pulseaudio.enable = false;
-  };
 }
