@@ -124,41 +124,6 @@ function reg(...templateArgs) {
 }
 
 const lastValue = new WeakMap()
-function owoifyStyles() {
-  let newCSS = ""
-
-  for (const sheet of document.styleSheets) {
-    let rules
-    try {
-      rules = sheet.cssRules
-    } catch {
-      continue // cross-origin stylesheets will throw
-    }
-
-    if (!rules) continue
-
-    for (const rule of rules) {
-      if (rule.type === CSSRule.STYLE_RULE && rule.style?.content) {
-        const content = rule.style.content
-
-        // remove surrounding quotes
-        const rawText = content.replace(/^["\']|["\']$/g, "")
-
-        const owoText = owowify(rawText)
-
-        newCSS += `
-${rule.selectorText} {
-  content: "${owoText}" !important;
-}
-`
-      }
-    }
-  }
-
-  const style = document.createElement("style")
-  style.textContent = newCSS
-  document.head.appendChild(style)
-}
 
 const mify = (node) => {
   // 1. PROTECT THE EDITOR: Do not touch code lines or the terminal
@@ -236,24 +201,60 @@ observer.observe(document.body, {
 
 // Initial run
 document.querySelectorAll("*").forEach(mify)
-owoifyStyles()
-
-const originalInsertRule = CSSStyleSheet.prototype.insertRule
 const originalDeleteRule = CSSStyleSheet.prototype.deleteRule
+const originalInsertRule = CSSStyleSheet.prototype.insertRule
 
-CSSStyleSheet.prototype.insertRule = function(rule, index) {
-  const result = originalInsertRule.call(this, rule, index)
-
-  if (rule.includes("content")) {
-    owoifyStyles()
+CSSStyleSheet.prototype.insertRule = function (rule, index) {
+  try {
+    // Only touch rules that actually contain `content:`
+    if (rule.includes("content")) {
+      rule = rule.replace(
+        /content\s*:\s*(['"])(.*?)\1/g,
+        (match, quote, text) => {
+          const owo = owowify(text)
+          return `content: ${quote}${owo}${quote}`
+        },
+      )
+    }
+  } catch (e) {
+    // fail silently — don't break CSS injection
   }
 
-  return result
+  return originalInsertRule.call(this, rule, index)
+}
+if (CSSStyleSheet.prototype.replaceSync) {
+  const originalReplaceSync = CSSStyleSheet.prototype.replaceSync
+
+  CSSStyleSheet.prototype.replaceSync = function (text) {
+    try {
+      if (text.includes("content")) {
+        text = text.replace(
+          /content\s*:\s*(['"])(.*?)\1/g,
+          (match, quote, str) => {
+            return `content: ${quote}${owowify(str)}${quote}`
+          },
+        )
+      }
+    } catch {}
+
+    return originalReplaceSync.call(this, text)
+  }
 }
 
-CSSStyleSheet.prototype.deleteRule = function(index) {
-  const result = originalDeleteRule.call(this, index)
+// const desc = Object.getOwnPropertyDescriptor(HTMLStyleElement.prototype, "textContent")
 
-  owoifyStyles()
-  return result
-}
+// Object.defineProperty(HTMLStyleElement.prototype, "textContent", {
+//   set(value) {
+//     try {
+//       if (value.includes("content")) {
+//         value = value.replace(
+//           /content\s*:\s*(['"])(.*?)\1/g,
+//           (m, q, t) => `content: ${q}${owowify(t)}${q}`
+//         )
+//       }
+//     } catch {}
+
+//     return desc.set.call(this, value)
+//   },
+//   get: desc.get
+// })
