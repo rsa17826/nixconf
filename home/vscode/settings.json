@@ -754,4 +754,5 @@
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
   },
   "qt-qml.doNotAskForQmllsDownload": true,
+  "terminal.integrated.initialHint": false,
 }
