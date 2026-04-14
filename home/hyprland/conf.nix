@@ -11,9 +11,7 @@
 {
   home.activation.enableAllScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     nixconf="${userConfig.nixConf}"
-    if ls "$nixconf/home/hyprland/scripts/"*.sh &>/dev/null; then
-      chmod +x "$nixconf/home/hyprland/scripts/"*.sh
-    fi
+    chmod +x "$nixconf/home/hyprland/scripts/"*.sh
   '';
   # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
   # xdg.configFile."hypr/shaders".source = ./shaders;
