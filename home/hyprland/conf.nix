@@ -37,6 +37,28 @@
   xdg.configFile."hypr/hm.conf".text = ''
     plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
   '';
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [
+        "~/.config/hypr/wallpapers/bafkreibsnx3lvxw4lq26nmqv6q7stdor3xs5scfobdcyukayz6v23lnk4i.webp"
+        "~/.config/hypr/wallpapers/wallpaper.png"
+        "~/.config/hypr/wallpapers/videoframe_940409.png"
+      ];
+      wallpaper = [
+        # By display
+        # {
+        #   monitor = "DP-2";
+        #   path = "~/wallpapers/wallpaper2.jpg";
+        # }
+        # By default/fallback
+        {
+          monitor = "";
+          path = "~/.config/hypr/wallpapers/videoframe_940409.png";
+        }
+      ];
+    };
+  };
   # xdg.configFile."hypr/hm.conf".text = ''
   #   plugin = hypr-darkwindow.packages.${pkgs.stdenv.hostPlatform.system}.Hypr-DarkWindow
   # '';
