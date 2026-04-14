@@ -259,7 +259,7 @@ in
     gsettings-desktop-schemas
     glib # provides gio
     tumbler # thumbnail/icon service
-    swww # wallpaper manager
+    awww # wallpaper manager
     gvfs
     espeak-ng # tts
     speechd # tts
