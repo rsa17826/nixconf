@@ -124,6 +124,41 @@ function reg(...templateArgs) {
 }
 
 const lastValue = new WeakMap()
+function owoifyStyles() {
+  let newCSS = ""
+
+  for (const sheet of document.styleSheets) {
+    let rules
+    try {
+      rules = sheet.cssRules
+    } catch {
+      continue // cross-origin stylesheets will throw
+    }
+
+    if (!rules) continue
+
+    for (const rule of rules) {
+      if (rule.type === CSSRule.STYLE_RULE && rule.style?.content) {
+        const content = rule.style.content
+
+        // remove surrounding quotes
+        const rawText = content.replace(/^["\']|["\']$/g, "")
+
+        const owoText = owowify(rawText)
+
+        newCSS += `
+${rule.selectorText} {
+  content: "${owoText}" !important;
+}
+`
+      }
+    }
+  }
+
+  const style = document.createElement("style")
+  style.textContent = newCSS
+  document.head.appendChild(style)
+}
 
 const mify = (node) => {
   // 1. PROTECT THE EDITOR: Do not touch code lines or the terminal
@@ -201,3 +236,24 @@ observer.observe(document.body, {
 
 // Initial run
 document.querySelectorAll("*").forEach(mify)
+owoifyStyles()
+
+const originalInsertRule = CSSStyleSheet.prototype.insertRule
+const originalDeleteRule = CSSStyleSheet.prototype.deleteRule
+
+CSSStyleSheet.prototype.insertRule = function(rule, index) {
+  const result = originalInsertRule.call(this, rule, index)
+
+  if (rule.includes("content")) {
+    owoifyStyles()
+  }
+
+  return result
+}
+
+CSSStyleSheet.prototype.deleteRule = function(index) {
+  const result = originalDeleteRule.call(this, index)
+
+  owoifyStyles()
+  return result
+}
