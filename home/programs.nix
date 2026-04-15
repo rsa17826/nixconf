@@ -265,7 +265,9 @@ in
     speechd # tts
     neovim # tui text editor
     wget # cmd dl util
-    (brave.override { commandLineArgs = "--remote-debugging-port=9222 --password-store=basic"; }) # web browser
+    (brave.override {
+      commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+    }) # web browser
     nixfmt # nix language formatter
     git # git is required
     # kdePackages.kget
