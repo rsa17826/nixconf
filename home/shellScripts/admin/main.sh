@@ -26,7 +26,8 @@ _sudo_require_resolve_self() {
     printf '%s/%s' "$_srs_dir" "$(basename "$0")"
     ;;
   *)
-    command -v "$0"
+    # On PATH → use that; otherwise assume it's in $PWD
+    command -v "$0" || printf '%s/%s' "$PWD" "$0"
     ;;
   esac
 }
