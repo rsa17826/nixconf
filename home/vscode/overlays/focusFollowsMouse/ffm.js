@@ -1,47 +1,67 @@
 let lastTarget = null
+let lastPos = { x: 0, y: 0 }
+
+const HOVER_DELAY = 0
+const MOVE_THRESHOLD = 4 // px (ignore tiny jitters)
 
 onmousemove = (e) => {
+  const dx = Math.abs(e.clientX - lastPos.x)
+  const dy = Math.abs(e.clientY - lastPos.y)
+
+  // Ignore tiny mouse jitter
+  if (dx < MOVE_THRESHOLD && dy < MOVE_THRESHOLD) return
+
+  lastPos = { x: e.clientX, y: e.clientY }
+
   const el = document.elementFromPoint(e.clientX, e.clientY)
   if (!el) return
 
-  // If you're directly over a real input → just focus it
-  if (isDirectInput(el)) {
-    if (lastTarget === el) return
-    lastTarget = el
-    el.focus()
-    return
+  const target = resolveTarget(el)
+  if (!target || target === lastTarget) return
+
+  lastTarget = target
+  applyFocus(target)
+}
+
+function resolveTarget(el) {
+  // 1. Direct real inputs (search box etc)
+  if (
+    el.matches(
+      '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"]',
+    )
+  ) {
+    return el
   }
 
-  const container = el.closest(
-    ':is(.terminal, .monaco-editor, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"]',
-  )
-  log(container)
-  if (!container || container === lastTarget) return
-  lastTarget = container
+  // 2. Terminal
+  const terminal = el.closest(".terminal")
+  if (terminal) {
+    return terminal.querySelector(".xterm-helper-textarea")
+  }
 
-  focusContainer(container)
+  // 3. Editor (Monaco)
+  const editor = el.closest(".monaco-editor")
+  if (editor) {
+    return editor.querySelector(".native-edit-context")
+  }
+
+  // 4. Search / input panels
+  const inputBox = el.closest(".inputbox, .search-view")
+  if (inputBox) {
+    return inputBox.querySelector("textarea, input")
+  }
+
+  // 5. Generic fallback
+  return el.closest('[role="textbox"], [contenteditable="true"]')
 }
 
-function isDirectInput(el) {
-  return el.matches('textarea, input, [contenteditable="true"]')
-}
+function applyFocus(target) {
+  if (!target) return
 
-function focusContainer(container) {
-  // Terminal
-  let input = container.querySelector(".xterm-helper-textarea")
-  if (input) return input.focus()
+  // Avoid unnecessary focus calls
+  if (document.activeElement === target) return
 
-  // Monaco editor
-  input = container.querySelector(".native-edit-context")
-  if (input) return input.focus()
-
-  // Search / input boxes (like Find in Files)
-  input = container.querySelector("textarea.input, input.input")
-  if (input) return input.focus()
-
-  // Generic fallback
-  const fallback = container.querySelector(
-    'textarea, input, [tabindex]:not([tabindex="-1"])',
-  )
-  fallback?.focus()
+  requestAnimationFrame(() => {
+    target.focus()
+  })
 }

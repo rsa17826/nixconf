@@ -1,0 +1,23 @@
+precision mediump float;
+varying vec2 v_texcoord;
+uniform sampler2D tex;
+
+void main() {
+  vec4 pixColor = texture2D(tex, v_texcoord);
+
+  // 1.0 = No change
+  // 2.0 = Aggressive darkening of whites (keeps text contrast)
+  // 3.0 = Extreme darkening
+  float gamma = 3.5;
+
+  // Apply the power curve to the RGB channels
+  pixColor.r = pow(pixColor.r, gamma);
+  pixColor.g = pow(pixColor.g, gamma);
+  pixColor.b = pow(pixColor.b, gamma);
+
+  // Optional: Bring the overall brightness back up slightly
+  // so it's not pitch black, but still "dim"
+  pixColor.rgb *= 0.5;
+
+  gl_FragColor = pixColor;
+}
