@@ -190,6 +190,25 @@ $1allowUnfree = false;
 @replace -
 @endregex
 
+@name admin - ensure source= line exists
+@file \.sh$
+@regex ^(?!# shellcheck source=)([^\n]*)\n(\. admin[^\n]*)$
+@replace $1
+# shellcheck source=/etc/profiles/per-user/nyix/bin/admin
+$2
+@endregex
+
+@name admin - ensure requiresSudo appended
+@file \.sh$
+@regex ^(\. admin)(?! && requiresSudo "\$@"$)[^\n]*$
+@replace $1 && requiresSudo "$@"
+@endregex
+
+@name admin - fix wrong source= path
+@file \.sh$
+@regex ^# shellcheck source=(?!/etc/profiles/per-user/nyix/bin/admin$)[^\n]*$
+@replace # shellcheck source=/etc/profiles/per-user/nyix/bin/admin
+@endregex
 
 # FIXME
 last regex breaks without this
