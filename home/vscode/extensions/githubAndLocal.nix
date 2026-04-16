@@ -215,6 +215,13 @@ in
         npmDepsHash = "sha256-SG/vE/ovAc48STJL8v+ACrDZVxQRufI81KO14w2hn98=";
         npmDepsFetcherVersion = 2;
       })
+      (buildFromFlake {
+        src = inputs.ext-better-end-line-actions;
+        extName = "better-end-line-actions";
+        extCreator = "rssaromeo";
+        npmDepsHash = "sha256-UEIyz+JvBIa+1+Csw2/8xTnYVC8z5guwt0Kr2WjzsJo=";
+        npmDepsFetcherVersion = 2;
+      })
     ];
   };
 }

@@ -111,6 +111,22 @@
         "type": "github"
       }
     },
+    "ext-better-end-line-actions": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776354708,
+        "narHash": "sha256-f36RWfDz2M04lPcMPd+VcMzBX2A13zCCBBZq3OL8ZT8=",
+        "owner": "rsa17826",
+        "repo": "fixed-line-actions-vscode-extension",
+        "rev": "9cd5cd0d801216a3950b8210b6b4bf0c8f5d625b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "fixed-line-actions-vscode-extension",
+        "type": "github"
+      }
+    },
     "ext-multi-formatter": {
       "flake": false,
       "locked": {
@@ -771,6 +787,7 @@
         "copyparty": "copyparty",
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
+        "ext-better-end-line-actions": "ext-better-end-line-actions",
         "ext-multi-formatter": "ext-multi-formatter",
         "ext-owoify-editor": "ext-owoify-editor",
         "ext-sds": "ext-sds",
