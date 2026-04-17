@@ -139,6 +139,7 @@ in
       calibre
       gh
       portablemc
+      bc
       niri
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
