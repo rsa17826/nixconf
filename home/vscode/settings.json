@@ -5,6 +5,7 @@
   // "doki.sticker.path": "C:/Users/User/Downloads/Media/Images/FyG4v_BaUAUDti1,jpg_ori-Picsart-BackgroundRemover.jpg",
   // "doki.wallpaper.path": "D:/Downloads/Videos/animator ar/Cute Furry Foxgirl in slime tells you she streams on Twitch.gif",
   "doki.wallpaper.path": "C:/Users/User/Downloads/Media/Images/purple dragon - Copy.png",
+  "files.saveConflictResolution": "askUser",
   "doki.background.path": "C:/Users/User/Downloads/Media/Images/purple dragon - Copy.png",
   // "doki.sticker.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/purple fox 400px 80a.png",
   // "doki.background.path": "C:/Users/User/Downloads/programs/VSCodium/data/user-data/User/__custom images/panky bg 60a.png",
@@ -106,7 +107,9 @@
       "rssaromeo.4-to-2-formatter",
       "rssaromeo.4-to-2-formatter",
       "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
       "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
     ],
   },
   "python.formatting.provider": "black",
@@ -123,8 +126,7 @@
     "editor.lightbulb.enabled": "onCode",
     // "editor.linkedEditing": true
   },
-  "javascript.format.semicolons": "remove",
-  "typescript.format.semicolons": "remove",
+  "js/ts.format.semicolons": "remove",
   "prettier.semi": false,
   "files.autoSave": "onFocusChange",
   "[css]": {
@@ -175,6 +177,7 @@
     "*.dmp": "hexEditor.hexedit",
     "*.jar": "hexEditor.hexedit",
     "*.qrc": "qt-core.qrcEditor",
+    "*.pkl": "default",
   },
   "[powershell]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
@@ -364,6 +367,48 @@
         },
       },
       {
+        "scope": "regex.tag.info",
+        "settings": {
+          "foreground": "#2866c4b9",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "regex.infotext",
+        "settings": {
+          "foreground": "#264d88b9",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "regex.tag.warn",
+        "settings": {
+          "foreground": "#e2850cb9",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "regex.warntext",
+        "settings": {
+          "foreground": "#9c651cb9",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "regex.tag.error",
+        "settings": {
+          "foreground": "#db1515b9",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "regex.errortext",
+        "settings": {
+          "foreground": "#a81f1fb9",
+          "fontStyle": "bold",
+        },
+      },
+      {
         "scope": "regex.specialescape",
         "settings": {
           "foreground": "#acdb00b9",
@@ -379,6 +424,13 @@
       },
       {
         "scope": "regex.text",
+        "settings": {
+          "foreground": "#646c77",
+          "fontStyle": "bold",
+        },
+      },
+      {
+        "scope": "source.regex",
         "settings": {
           "foreground": "#646c77",
           "fontStyle": "bold",
@@ -506,7 +558,7 @@
   "cmake.buildTask": true,
   "cmake.configureArgs": ["-G", "MinGW Makefiles"],
   "cmake.configureSettings": {},
-  "typescript.suggest.completeFunctionCalls": true,
+  "js/ts.suggest.completeFunctionCalls": true,
   "workbench.colorCustomizations": {},
   "godotFiles.documentation.viewer": "godot-tools",
   // "python.defaultInterpreterPath": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
@@ -525,18 +577,12 @@
   "editor.linkedEditing": true,
   "editor.renderWhitespace": "all",
   "python.analysis.inlayHints.variableTypes": true,
-  "javascript.inlayHints.enumMemberValues.enabled": true,
-  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
-  "javascript.inlayHints.parameterTypes.enabled": true,
-  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "javascript.inlayHints.variableTypes.enabled": true,
-  "typescript.inlayHints.enumMemberValues.enabled": true,
-  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-  "typescript.inlayHints.parameterNames.enabled": "all",
-  "typescript.inlayHints.parameterTypes.enabled": true,
-  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "typescript.inlayHints.variableTypes.enabled": true,
-  "javascript.inlayHints.parameterNames.enabled": "all",
+  "js/ts.inlayHints.enumMemberValues.enabled": true,
+  "js/ts.inlayHints.functionLikeReturnTypes.enabled": true,
+  "js/ts.inlayHints.parameterTypes.enabled": true,
+  "js/ts.inlayHints.propertyDeclarationTypes.enabled": true,
+  "js/ts.inlayHints.variableTypes.enabled": true,
+  "js/ts.inlayHints.parameterNames.enabled": "all",
   "shadered.executablePath": "D:\\programs\\shadered\\SHADERed.exe",
   "[csharp]": {
     "editor.defaultFormatter": "muhammad-sammy.csharp",
@@ -611,9 +657,9 @@
   "diffEditor.wordWrap": "off",
   "editor.wordWrapMinified": false,
   "workbench.editor.wrapTabs": true,
-  "totalTypeScript.hideAllTips": false,
-  "totalTypeScript.hideBasicTips": true,
-  "totalTypeScript.hiddenTips": [
+  "totaljs/ts.hideAllTips": false,
+  "totaljs/ts.hideBasicTips": true,
+  "totaljs/ts.hiddenTips": [
     "variable-type-annotation",
     "array-type",
     "any-type",
@@ -690,6 +736,7 @@
     "**/license",
     "license",
     "*.tet",
+    "**/node_modules/**",
   ],
   "godotFormatter.gdscriptFormatterPath": "C:\\Users\\User\\Downloads\\Applications\\Windows\\gdscript-formatter-0.17.0-windows-x86_64.exe",
   "godotFormatter.useBuiltInBinary": false,
@@ -755,5 +802,12 @@
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
   },
   "qt-qml.doNotAskForQmllsDownload": true,
+  "[yaml]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+  },
+  "git.autofetch": true,
+  "diffEditor.maxComputationTime": 0,
+  "totalTypeScript.hideAllTips": true,
+  "totalTypeScript.hideBasicTips": true,
   "terminal.integrated.initialHint": false,
 }
