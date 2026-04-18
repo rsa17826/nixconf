@@ -40,7 +40,7 @@ self: super: {
           .notifications-toasts {
             z-index: 9002 !important;
           }
-          div.context-view.monaco-component.monaco-menu-container
+          div.context-view.monaco-component.monaco-menu-con;tainer
           /*div.context-view.monaco-component.monaco-menu-container.bottom.left*/
           {
             z-index: 9003 !important;

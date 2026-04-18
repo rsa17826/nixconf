@@ -3,6 +3,12 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "markdown-kotlin";
+        publisher = "NikolaiFedorov";
+        version = "0.0.3";
+        hash = "sha256-AGUWme3yOLSgUj3l2oE5+OhFi4fohzMrdaRzgGvpadk=";
+      }
+      {
         name = "compare-folders";
         publisher = "moshfeu";
         version = "0.30.0";
