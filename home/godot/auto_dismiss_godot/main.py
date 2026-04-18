@@ -7,17 +7,17 @@ TEMPLATE_PATH = sys.argv[1] if len(sys.argv) > 1 else ""
 
 def get_active_window_class() -> str:
   result = subprocess.run(
-    ["hyprctl", "activewindow", "-j"], capture_output=True, text=True
+      ["hyprctl", "activewindow", "-j"], capture_output=True, text=True
   )
   try:
-    return json.loads(result.stdout).get("class", "")
+      return json.loads(result.stdout).get("class", "")
   except Exception:
-    return ""
+      return ""
 
 
 def take_screenshot() -> np.ndarray:
   with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
-    path = f.name
+      path = f.name
   subprocess.run(["grim", path], check=True)
   img = cv2.imread(path)
   os.unlink(path)
@@ -28,8 +28,8 @@ def find_template(screen: np.ndarray, template: np.ndarray, threshold=0.85):
   result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
   _, max_val, _, max_loc = cv2.minMaxLoc(result)
   if max_val >= threshold:
-    h, w = template.shape[:2]
-    return max_loc[0] + w // 2, max_loc[1] + h // 2
+      h, w = template.shape[:2]
+      return max_loc[0] + w // 2, max_loc[1] + h // 2
   return None
 
 
@@ -41,17 +41,20 @@ def click(x: int, y: int):
 def main():
   template = cv2.imread(TEMPLATE_PATH)
   if template is None:
-    raise FileNotFoundError(f"Template not found: {TEMPLATE_PATH}")
+      raise FileNotFoundError(f"Template not found: {TEMPLATE_PATH}")
+  print(f"Template loaded: {template.shape}", flush=True)
 
   while True:
-    if get_active_window_class() == "Godot":
-      screen = take_screenshot()
-      match = find_template(screen, template)
-      if match:
-        time.sleep(0.1)
-        click(*match)
-        time.sleep(0.5)
-    time.sleep(0.3)
+      wclass = get_active_window_class()
+      if wclass == "Godot":
+          screen = take_screenshot()
+          match = find_template(screen, template)
+          print(f"Godot focused, match={match}", flush=True)
+          if match:
+              time.sleep(0.1)
+              click(*match)
+              time.sleep(0.5)
+      time.sleep(0.3)
 
 
 if __name__ == "__main__":
