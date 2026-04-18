@@ -232,11 +232,12 @@ $2
 
 @name fix wrong type cases
 @file \.ts$
-@regex : String
-@replace : string
+@regex : String( |$)
+@replace : string$1
 @endregex
-@regex : Number
-@replace : number
+@file \.ts$
+@regex : Number( |$)
+@replace : number$1
 @endregex
 
 # FIXME
