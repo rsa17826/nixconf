@@ -30,6 +30,7 @@
         hyprwire.url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
       };
     };
+    # TODO follow https://github.com/VirtCode/hypr-dynamic-cursors/raw/refs/heads/main/hyprpm.toml
     hypr-dynamic-cursors = {
       url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
       inputs.hyprland.follows = "hyprland";
