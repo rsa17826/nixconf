@@ -33,7 +33,7 @@ done
 # 4. Handle Result
 if [ "$FOUND" = true ]; then
   vlc "$CURRENT_VIDEO"
-  if ! zenity --question --text="Keep this clip?" --title="Replay Saved"; then
+  if zenity --question --text="Delete this clip?" --title="Replay Saved"; then
     rm "$CURRENT_VIDEO"
     notify-send "Deleted" "Recording removed."
   fi
