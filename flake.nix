@@ -27,6 +27,7 @@
       url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        hyprwire.url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
       };
     };
     hypr-dynamic-cursors = {

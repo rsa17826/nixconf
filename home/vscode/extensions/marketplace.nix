@@ -5,8 +5,8 @@
       {
         name = "compare-folders";
         publisher = "moshfeu";
-        version = "0.29.0";
-        hash = "sha256-oX4182qaoHbvZC9MdzzARBlW4MbtE7H0Fg687K5h2XQ=";
+        version = "0.30.0";
+        hash = "sha256-XBMHEk5iRW6n9fjDUbD8c/FFGNRttrnV0tH1qUphXYo=";
       }
       {
         name = "fix-all-json";
@@ -17,8 +17,8 @@
       {
         name = "shellcheck";
         publisher = "timonwong";
-        version = "0.39.2";
-        hash = "sha256-u0KvmW4iMjxYfLI/wKxHBqv47UYtbib9fxKsCjUiu7A=";
+        version = "0.39.3";
+        hash = "sha256-A87dG+bBNCMZ8ERDGpVJIP7lXL8rfRely2Uo/ZMsgVI=";
       }
       {
         name = "hyprlang-vscode";
@@ -119,8 +119,8 @@
       {
         name = "godot-format";
         publisher = "dohe";
-        version = "0.2.14";
-        hash = "sha256-9OJde9Ue4Ggdi3W/TYGUZPp6R2Z+gaFS9bheJllN/pU=";
+        version = "0.2.15";
+        hash = "sha256-jJaf29/wCcvYJgRRsUFMvb21SQ+55Ffn38Z9XLd6vQw=";
       }
       {
         name = "githistory";
@@ -179,8 +179,8 @@
       {
         name = "basedpyright";
         publisher = "detachhead";
-        version = "1.38.4";
-        hash = "sha256-05Pu65luhtoYQscIXfO7lXdJCbadRerSY2xFjTji/W4=";
+        version = "1.39.2";
+        hash = "sha256-iSjwEPSlPWmg3cYLSCp2YmHOR8EShGuPHzXMHGoa4iM=";
       }
       # {
       #   name = "synthwave-fluoromachine-cursor";
@@ -221,10 +221,9 @@
       {
         name = "black-formatter";
         publisher = "ms-python";
-        version = "2026.3.10851006";
-        hash = "sha256-6udMXPJkfhO7dSZIBi/78LsUtZ83AAVTrhBVQn4xB2M=";
+        version = "2026.3.11061015";
+        hash = "sha256-BWnMuPUca/IXgtj6587YTA9ZleRH5v6eqbJHteptv+w=";
       }
-      # TODO had bad hash
       {
         name = "debugpy";
         publisher = "ms-python";
@@ -240,8 +239,8 @@
       {
         name = "vscode-pylance";
         publisher = "ms-python";
-        version = "2026.1.102";
-        hash = "sha256-dStVCOXT+OC3WnCBmSCBQZdNOmAfnlm9boW9NKMBRUo=";
+        version = "2026.2.100";
+        hash = "sha256-c970X2POFoNZoGhTwQ7CDNw0NZB+LkIgiNV0Nk1TJQw=";
       }
       {
         name = "hexeditor";
@@ -327,12 +326,11 @@
         version = "0.1.1";
         hash = "sha256-T4RvRYbUw+BDvdGWSySeR7ta3k7adtSOJZfSG0t9nHA=";
       }
-      # TODO had bad hash
       {
         name = "typos-vscode";
         publisher = "tekumara";
-        version = "0.1.50";
-        hash = "sha256-M1HxTzG1TTvsWBI2vSlRMlFHdWKHzFjbDQdtFn5ZKxc=";
+        version = "0.1.52";
+        hash = "sha256-o+AQDdToXTV/pUSt2zw19hf7nwbOb4gb9dlSsB7t32E=";
       }
       {
         name = "autolink";
