@@ -15,7 +15,7 @@ in
   systemd.user.services.ydotoold = {
     Unit.Description = "ydotool daemon";
     Install.WantedBy = [ "default.target" ];
-    Service = {
+    serviceConfig = {
       ExecStart = "${pkgs.ydotool}/bin/ydotoold";
       Restart = "always";
     };
@@ -31,7 +31,7 @@ in
       ];
     };
     Install.WantedBy = [ "graphical-session.target" ];
-    Service = {
+    serviceConfig = {
       ExecStart = "${godot-dismiss}/bin/godot-dismiss";
       Restart = "on-failure";
       RestartSec = "3s";
