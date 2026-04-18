@@ -5,21 +5,43 @@ COLOR_RESET="\033[0m"
 
 msg() { echo -e "${COLOR_BLUE}➜ $1${COLOR_RESET}"; }
 
+# Returns "system:name.service" or "user:name.service"
 find_service() {
   local query="$1"
-  systemctl list-units --type=service --all --no-legend |
-    awk '{print $1}' | grep -i "$query" | head -n 1
+  local found
+
+  found=$(systemctl list-units --type=service --all --no-legend 2>/dev/null |
+    awk '{print $1}' | grep -i "$query" | head -n 1)
+  if [[ -n "$found" ]]; then
+    echo "system:$found"
+    return
+  fi
+
+  found=$(systemctl --user list-units --type=service --all --no-legend 2>/dev/null |
+    awk '{print $1}' | grep -i "$query" | head -n 1)
+  if [[ -n "$found" ]]; then
+    echo "user:$found"
+    return
+  fi
 }
 
-get_service() {
+# Sets globals: SERVICE (name) and SCOPE_FLAG (empty or "--user")
+resolve_service() {
   local input="$1"
-
-  [[ "$input" == *.service ]] && echo "$input" && return
+  local name="$input"
+  [[ "$name" != *.service ]] && name="${name}.service"
 
   local found
   found=$(find_service "$input")
 
-  [[ -n "$found" ]] && echo "$found" || echo "${input}.service"
+  if [[ -n "$found" ]]; then
+    local scope="${found%%:*}"
+    SERVICE="${found##*:}"
+    [[ "$scope" == "user" ]] && SCOPE_FLAG="--user" || SCOPE_FLAG=""
+  else
+    SERVICE="$name"
+    SCOPE_FLAG=""
+  fi
 }
 
 usage() {
@@ -41,17 +63,17 @@ shift || true
 
 case "$cmd" in
 status | restart | stop | start)
-  service="$1"
-  [[ -z "$service" ]] && usage
+  [[ -z "$1" ]] && usage
+  resolve_service "$1"
 
-  sys=$(get_service "$service")
-  msg "$cmd $sys"
+  local_flag="${SCOPE_FLAG:+ (user)}"
+  msg "$cmd $SERVICE${local_flag}"
 
   if [[ "$cmd" == "status" ]]; then
-    systemctl status "$sys" --no-pager --lines=0
+    systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
   else
-    systemctl status "$sys" --no-pager --lines=0
-    systemctl "$cmd" "$sys"
+    systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
+    systemctl "$SCOPE_FLAG" "$cmd" "$SERVICE"
   fi
   ;;
 
@@ -79,13 +101,11 @@ log)
   done
 
   [[ -z "$service" ]] && usage
+  resolve_service "$service"
 
-  sys=$(get_service "$service")
-
-  args=(-u "$sys")
+  args=("$SCOPE_FLAG" -u "$SERVICE")
   args+=("${follow[@]}")
 
-  # default lines if not set
   if [[ ${#lines[@]} -eq 0 ]]; then
     args+=(-n 100)
   else
@@ -97,7 +117,7 @@ log)
   else
     journalctl "${args[@]}" --no-pager
   fi
-  systemctl status "$sys" --no-pager --lines=0
-  ;;
 
+  systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
+  ;;
 esac
