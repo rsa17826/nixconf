@@ -73,37 +73,29 @@ HASH_FIX_FILES=(
 auto_fix_hashes() {
   local tmpfile="$1"
   local fixed=false
-  local old_hash new_hash
 
   # Strip literal JSON \u001b unicode escapes (not actual ESC bytes)
   # shellcheck disable=SC2001
   local output
-  output=$(sed 's/\\u001b\[[0-9;]*[mGKHF]//g' "$tmpfile")
+  # extract hashes into a Bash array
+  mapfile -t output < <(sed -n 's/^@nix //p' "$tmpfile" |
+    jq -r '.msg?' |
+    grep "hash mismatch in fixed-output derivation" -A 2 |
+    grep -oE "sha256-[^=]+=")
 
-  while IFS= read -r line; do
-    if [[ "$line" =~ specified:.*sha256- ]]; then
-      old_hash="${line#*sha256-}"
-      old_hash="sha256-${old_hash%%[[:space:]]*}"
-    fi
-    if [[ "$line" =~ got:.*sha256- ]]; then
-      new_hash="${line#*sha256-}"
-      new_hash="sha256-${new_hash%%[[:space:]]*}"
-      if [[ -n "$old_hash" && -n "$new_hash" && "$old_hash" != "$new_hash" ]]; then
-        echo "🔧 Hash mismatch detected:"
-        echo "   old: $old_hash"
-        echo "   new: $new_hash"
-        for f in "${HASH_FIX_FILES[@]}"; do
-          local filepath="$HOME/nixconf/$f"
-          if [[ -f "$filepath" ]] && grep -qF "$old_hash" "$filepath"; then
-            sed -i "s|$old_hash|$new_hash|g" "$filepath"
-            echo "   ✅ Fixed in $f"
-            fixed=true
-          fi
-        done
-        old_hash="" new_hash=""
+  if [[ ${#output[@]} -eq 2 ]]; then
+    echo "🔧 Hash mismatch detected:"
+    echo "   old: ${output[0]}"
+    echo "   new: ${output[1]}"
+
+    for f in "${HASH_FIX_FILES[@]}"; do
+      local filepath="$HOME/nixconf/$f"
+      if [[ -f "$filepath" ]] && grep -qF "${output[0]}" "$filepath"; then
+        sed -i "s|${output[0]}|${output[1]}|g" "$filepath"
+        echo "   ✅ Fixed in $f"
       fi
-    fi
-  done <<< "$output"
+    done
+  fi
 
   $fixed
 }
