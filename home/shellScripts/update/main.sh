@@ -179,7 +179,8 @@ else
     fi
   done
 
-  rm -f "$TMPOUT"
+  echo "$TMPOUT"
+  # rm -f "$TMPOUT"
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
