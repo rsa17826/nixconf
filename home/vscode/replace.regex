@@ -238,3 +238,11 @@ $2
 @regex : Number( |$)
 @replace : number$1
 @endregex
+
+@name hyprland no dupes
+@file /hyprland\.conf$
+@regex ^( *)([\w:]+) \{[\s\S]*?^\1(\2) \{
+@error duplicated "$2" section detected on line !ln.3
+@errgroup 2
+@endregex
+

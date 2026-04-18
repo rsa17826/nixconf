@@ -4522,7 +4522,7 @@
     "when": "inInlineEditsPreviewEditor"
   },
   {
-    "key": "f6",
+    "key": "f5",
     "command": "workbench.action.debug.pause",
     "when": "debugState == 'running'"
   },
@@ -5478,5 +5478,10 @@
     "key": "ctrl+\\",
     "command": "workbench.action.terminal.splitActiveTab",
     "when": "terminalProcessSupported && terminalTabsFocus"
+  },
+  {
+    "key": "f6",
+    "command": "-workbench.action.debug.pause",
+    "when": "debugState == 'running'"
   }
 ]

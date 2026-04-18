@@ -98,11 +98,11 @@
     "ext-auto-regex": {
       "flake": false,
       "locked": {
-        "lastModified": 1776530661,
-        "narHash": "sha256-R5nRJKoF/ZwcSaJJEt4+6WobAWvOYZNaX+Vd6AArJKA=",
+        "lastModified": 1776533118,
+        "narHash": "sha256-/sVLM4Zg7+PECm+KrDKVLWZVQjnKMtARlHLxVBp0wdo=",
         "owner": "rsa17826",
         "repo": "auto-regex-vscode-extension",
-        "rev": "3c8c9837eb8dc11f488a0fd4f534863e80c4235b",
+        "rev": "47a1477403b02631fd6c8e18b3a679bae925e4b9",
         "type": "github"
       },
       "original": {
