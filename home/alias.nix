@@ -22,7 +22,7 @@ let
     wiz = "ncdu"; # wiztree
     e = "codium";
     edir = "codium";
-    updatec = "cd ~/nixconf ; nix flake update && pkill -9 codium ; update && codium ;1";
+    updatec = "cd ~/nixconf ; nix flake update && pkill -9 codium ; update && codium && q";
     # cd = "z";
   };
   commonInit = ''
