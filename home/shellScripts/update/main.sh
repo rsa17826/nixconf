@@ -64,7 +64,40 @@ now=$(date +"%Y_%m_%d_%H_%M_%S")
 # next_generation=40
 echo "📡 Checking remote for updates..."
 git fetch --quiet
+HASH_FIX_FILES=(
+  # Add paths relative to ~/nixconf, or absolute paths
+  # e.g. "pkgs/better-end-line-actions/default.nix"
+)
+auto_fix_hashes() {
+  local output="$1"
+  local fixed=false
+  local old_hash new_hash
 
+  while IFS= read -r line; do
+    if [[ "$line" =~ specified:.*sha256- ]]; then
+      old_hash=$(echo "$line" | grep -oP 'sha256-[A-Za-z0-9+/=]+')
+    fi
+    if [[ "$line" =~ got:.*sha256- ]]; then
+      new_hash=$(echo "$line" | grep -oP 'sha256-[A-Za-z0-9+/=]+')
+      if [[ -n "$old_hash" && -n "$new_hash" && "$old_hash" != "$new_hash" ]]; then
+        echo "🔧 Hash mismatch detected:"
+        echo "   old: $old_hash"
+        echo "   new: $new_hash"
+        for f in "${HASH_FIX_FILES[@]}"; do
+          local filepath="$HOME/nixconf/$f"
+          if [[ -f "$filepath" ]] && grep -qF "$old_hash" "$filepath"; then
+            sed -i "s|$old_hash|$new_hash|g" "$filepath"
+            echo "   ✅ Fixed in $f"
+            fixed=true
+          fi
+        done
+        old_hash="" new_hash=""
+      fi
+    fi
+  done <<<"$output"
+
+  $fixed
+}
 # UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse "@{u}" 2>/dev/null || echo "$LOCAL")
@@ -120,7 +153,31 @@ echo "hm is: $hm"
 if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
-  sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
+  TMPOUT=$(mktemp)
+
+  while true; do
+    sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace 2>&1 |
+      tee "$TMPOUT" |
+      nom --json
+    BUILD_EXIT=${PIPESTATUS[0]}
+
+    [[ $BUILD_EXIT -eq 0 ]] && break
+
+    echo "❌ Build failed. Scanning for hash mismatches..."
+    if auto_fix_hashes "$(cat "$TMPOUT")"; then
+      echo "🔁 Hash patched — retrying..."
+      if [[ "$SKIP_GIT" == false ]]; then
+        git add -A
+        git commit --amend --no-edit
+        git push --force-with-lease
+      fi
+    else
+      echo "⚠️  No fixable hashes found. Manual intervention needed."
+      break
+    fi
+  done
+
+  rm -f "$TMPOUT"
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
