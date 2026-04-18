@@ -230,7 +230,17 @@ $2
 # shellcheck source=/etc/profiles/per-user/nyix/bin/admin
 @endregex
 
+@name fix wrong type cases
+@file \.ts$
+@regex : String
+@replace : string
+@endregex
+@regex : Number
+@replace : number
+@endregex
+
 # FIXME
 last regex breaks without this
 
 @endregex
+

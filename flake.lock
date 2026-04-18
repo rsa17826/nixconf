@@ -98,11 +98,11 @@
     "ext-auto-regex": {
       "flake": false,
       "locked": {
-        "lastModified": 1776442079,
-        "narHash": "sha256-1W69l3fwSqgEHgn+x2U4p5bCvPGy8MI+4duFPlUpc8E=",
+        "lastModified": 1776530533,
+        "narHash": "sha256-uZJ26YCcbNhNpA2I3oG5Q8M/ICkWJCpRj1aOEJxJc7Q=",
         "owner": "rsa17826",
         "repo": "auto-regex-vscode-extension",
-        "rev": "78540c6fa791f21f4d1b857b9f74fa7070cb03c4",
+        "rev": "04d1bde88dbab523b13119996b384588781f558c",
         "type": "github"
       },
       "original": {
@@ -114,11 +114,11 @@
     "ext-better-end-line-actions": {
       "flake": false,
       "locked": {
-        "lastModified": 1776522424,
+        "lastModified": 1776525946,
         "narHash": "sha256-DEzk4SR2HqCJCMA53VcB6iX18q+D6yKBq3dVWqTEzr8=",
         "owner": "rsa17826",
         "repo": "fixed-line-actions-vscode-extension",
-        "rev": "5a415b281c88c5e00660519a48ae212347b4a9f1",
+        "rev": "cffa6f75342c860897e530fef684b7fc8a2a524e",
         "type": "github"
       },
       "original": {
