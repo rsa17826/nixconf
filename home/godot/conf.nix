@@ -13,24 +13,21 @@ let
 in
 {
   systemd.user.services.ydotoold = {
-    Unit.Description = "ydotool daemon";
-    Install.WantedBy = [ "default.target" ];
+    description = "ydotool daemon";
+    wantedBy = [ "default.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.ydotool}/bin/ydotoold";
       Restart = "always";
     };
   };
 
-  # The auto-dismiss service
   systemd.user.services.godot-dismiss = {
-    Unit = {
-      Description = "Auto-dismiss Godot dialogs";
-      After = [
-        "graphical-session.target"
-        "ydotoold.service"
-      ];
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
+    description = "Auto-dismiss Godot dialogs";
+    after = [
+      "graphical-session.target"
+      "ydotoold.service"
+    ];
+    wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
       ExecStart = "${godot-dismiss}/bin/godot-dismiss";
       Restart = "on-failure";
