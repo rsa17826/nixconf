@@ -3,7 +3,7 @@
 import subprocess, time, tempfile, os
 import cv2, numpy as np
 
-TEMPLATE_PATH = "/home/user/.config/godot-dismiss/ok_btn.png" # screenshot of the OK button
+TEMPLATE_PATH = "/home/nyix/.config/godot-dismiss/ok_btn.png" # screenshot of the OK button
 
 def get_active_window_class() -> str:
   result = subprocess.run(

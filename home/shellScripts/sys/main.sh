@@ -25,7 +25,7 @@ find_service() {
   fi
 }
 
-# Sets globals: SERVICE (name) and SCOPE_FLAG (empty or "--user")
+# Sets globals: SERVICE (name) and SCOPE_ARGS (empty array or ("--user"))
 resolve_service() {
   local input="$1"
   local name="$input"
@@ -37,10 +37,10 @@ resolve_service() {
   if [[ -n "$found" ]]; then
     local scope="${found%%:*}"
     SERVICE="${found##*:}"
-    [[ "$scope" == "user" ]] && SCOPE_FLAG="--user" || SCOPE_FLAG=""
+    [[ "$scope" == "user" ]] && SCOPE_ARGS=("--user") || SCOPE_ARGS=()
   else
     SERVICE="$name"
-    SCOPE_FLAG=""
+    SCOPE_ARGS=()
   fi
 }
 
@@ -66,14 +66,15 @@ status | restart | stop | start)
   [[ -z "$1" ]] && usage
   resolve_service "$1"
 
-  local_flag="${SCOPE_FLAG:+ (user)}"
-  msg "$cmd $SERVICE${local_flag}"
+  scope_label=""
+  [[ ${#SCOPE_ARGS[@]} -gt 0 ]] && scope_label=" (user)"
+  msg "$cmd $SERVICE${scope_label}"
 
   if [[ "$cmd" == "status" ]]; then
-    systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
+    systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
   else
-    systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
-    systemctl "$SCOPE_FLAG" "$cmd" "$SERVICE"
+    systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
+    systemctl "${SCOPE_ARGS[@]}" "$cmd" "$SERVICE"
   fi
   ;;
 
@@ -103,7 +104,7 @@ log)
   [[ -z "$service" ]] && usage
   resolve_service "$service"
 
-  args=("$SCOPE_FLAG" -u "$SERVICE")
+  args=("${SCOPE_ARGS[@]}" -u "$SERVICE")
   args+=("${follow[@]}")
 
   if [[ ${#lines[@]} -eq 0 ]]; then
@@ -118,6 +119,6 @@ log)
     journalctl "${args[@]}" --no-pager
   fi
 
-  systemctl "$SCOPE_FLAG" status "$SERVICE" --no-pager --lines=0
+  systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
   ;;
 esac
