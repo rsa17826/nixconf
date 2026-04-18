@@ -219,7 +219,7 @@ in
         src = inputs.ext-better-end-line-actions;
         extName = "better-end-line-actions";
         extCreator = "rssaromeo";
-        npmDepsHash = "sha256-UEIyz+JvBIa+1+Csw2/8xTnYVC8z5guwt0Kr2WjzsJo=";
+        npmDepsHash = "sha256-lqpv0TAksBoq+hr+KZ6kKhzsxlHxTEh9jQtf92uKI+4=";
         npmDepsFetcherVersion = 2;
       })
     ];

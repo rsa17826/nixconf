@@ -74,9 +74,7 @@ auto_fix_hashes() {
   local tmpfile="$1"
   local fixed=false
 
-  # shellcheck disable=SC2001
   local output
-  # extract hashes into a Bash array
   mapfile -t output < <(sed -n 's/^@nix //p' "$tmpfile" |
     jq -r '.msg?' |
     grep "hash mismatch in fixed-output derivation" -A 2 |
@@ -92,6 +90,7 @@ auto_fix_hashes() {
       if [[ -f "$filepath" ]] && grep -qF "${output[0]}" "$filepath"; then
         sed -i "s|${output[0]}|${output[1]}|g" "$filepath"
         echo "   ✅ Fixed in $f"
+        fixed=true
       fi
     done
   fi
