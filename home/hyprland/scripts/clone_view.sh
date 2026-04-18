@@ -13,7 +13,7 @@ SCREEN_H=$(echo "$MONITOR_INFO" | jq -r '.height')
 # 2. Select region with slurp
 GEOM=$(slurp -f "%x %y %w %h")
 [ -z "$GEOM" ] && exit 1
-read -r X Y W H <<< "$GEOM"
+read -r X Y W H <<<"$GEOM"
 
 # 3. Calculate normalized values (0.0 to 1.0)
 # We use printf to ensure a leading zero (e.g., .5 becomes 0.5)
@@ -25,8 +25,8 @@ SIZE_H=$(printf "%.4f" "$(echo "scale=4; $H / $SCREEN_H" | bc)")
 # 4. Update the runtime shader
 # This looks for the placeholders and replaces the entire line
 sed -e "s|vec2 offset = .*|vec2 offset = vec2($OFF_X, $OFF_Y);|" \
-    -e "s|vec2 size = .*|vec2 size = vec2($SIZE_W, $SIZE_H);|" \
-    "$SHADER_TEMPLATE" > "$SHADER_RUNTIME"
+  -e "s|vec2 size = .*|vec2 size = vec2($SIZE_W, $SIZE_H);|" \
+  "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
 # 5. Apply
 hyprctl keyword decoration:screen_shader "$SHADER_RUNTIME"

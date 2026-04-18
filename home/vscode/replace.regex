@@ -60,8 +60,21 @@ GODOT
 @replace true
 @flags gm
 @endregex
+@file \.gd$
 @regex \bFalse\b
 @replace false
+@flags gm
+@endregex
+
+@name python casing
+@file \.py$
+@regex \btrue\b
+@replace True
+@flags gm
+@endregex
+@file \.py$
+@regex \bfalse\b
+@replace False
 @flags gm
 @endregex
 
@@ -186,7 +199,7 @@ $1allowUnfree = false;
 
 @name always use -
 @file .
-@regex –
+@regex -
 @replace -
 @endregex
 
@@ -208,6 +221,13 @@ $2
 @file \.sh$
 @regex ^# shellcheck source=(?!/etc/profiles/per-user/nyix/bin/admin$)[^\n]*$
 @replace # shellcheck source=/etc/profiles/per-user/nyix/bin/admin
+@endregex
+
+@name admin - fix wrong source= path
+@file \.sh$
+@regex ^(?<!# shellcheck disable=SC1091\n)# shellcheck source=/etc/profiles/per-user/nyix/bin/admin$
+@replace # shellcheck disable=SC1091
+# shellcheck source=/etc/profiles/per-user/nyix/bin/admin
 @endregex
 
 # FIXME

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Define a temporary lock file to prevent double-firing
 LOCK_FILE="/tmp/trap_active.lock"
 

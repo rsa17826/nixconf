@@ -1,4 +1,4 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # # This function is called by the Quickshell process
 # #!/usr/bin/env bash
