@@ -160,7 +160,10 @@ else
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}
 
-    [[ $BUILD_EXIT -eq 0 ]] && break
+    if [[ $BUILD_EXIT -eq 0 ]]; then
+      rm -f "$TMPOUT"
+      break
+    fi
 
     echo "❌ Build failed. Scanning for hash mismatches..."
     if auto_fix_hashes "$TMPOUT"; then
