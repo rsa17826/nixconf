@@ -170,14 +170,13 @@ else
         git commit --amend --no-edit
         git push --force-with-lease
       fi
+      rm -f "$TMPOUT"
     else
       echo "⚠️  No fixable hashes found. Manual intervention needed."
+      echo "$TMPOUT"
       break
     fi
   done
-
-  echo "$TMPOUT"
-  # rm -f "$TMPOUT"
 fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
