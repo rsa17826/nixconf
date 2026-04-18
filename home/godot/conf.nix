@@ -8,7 +8,7 @@ let
   );
 
   godot-dismiss = pkgs.writeShellScriptBin "godot-dismiss" ''
-    exec ${pythonEnv}/bin/python3 /home/${userConfig.uname}/nxiconf/godot/auto_dismiss_godot/main.py
+    exec ${pythonEnv}/bin/python3 /home/${userConfig.uname}/nxiconf/home/godot/auto_dismiss_godot/main.py
   '';
 in
 {
