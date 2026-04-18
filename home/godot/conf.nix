@@ -4,6 +4,7 @@ let
     ps: with ps; [
       opencv4
       numpy
+      hyprctl
     ]
   );
 

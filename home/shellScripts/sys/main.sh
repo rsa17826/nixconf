@@ -113,11 +113,11 @@ log)
     args+=("${lines[@]}")
   fi
 
-  if [[ ${#follow[@]} -eq 0 ]]; then
-    journalctl "${args[@]}" --no-pager -r
-  else
-    journalctl "${args[@]}" --no-pager
-  fi
+  # if [[ ${#follow[@]} -eq 0 ]]; then
+  #   journalctl "${args[@]}" --no-pager -r
+  # else
+  journalctl "${args[@]}" --no-pager
+  # fi
 
   systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
   ;;
