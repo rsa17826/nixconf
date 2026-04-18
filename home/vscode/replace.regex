@@ -238,9 +238,3 @@ $2
 @regex : Number( |$)
 @replace : number$1
 @endregex
-
-# FIXME
-last regex breaks without this
-
-@endregex
-
