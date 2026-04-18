@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+# shellcheck source=/etc/profiles/per-user/nyix/bin/admin
+. admin && requiresSudo "$@"
 # 1. Setup Profile
 PROFILE="${1:-/nix/var/nix/profiles/system}"
 echo "Scanning profile: $PROFILE"
