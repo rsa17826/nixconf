@@ -136,6 +136,7 @@ in
       calibre
       gh
       portablemc
+      dgop # process stat screen thing
       bc
       niri
       gamescope
