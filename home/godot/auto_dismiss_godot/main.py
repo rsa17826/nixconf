@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import subprocess, time, tempfile, os, sys, json
 import cv2, numpy as np
+import evdev
 
 TEMPLATE_PATH = sys.argv[1] if len(sys.argv) > 1 else ""
 
@@ -39,8 +40,6 @@ def click(x: int, y: int):
   )
   subprocess.run(["ydotool", "click", "0xC0"])
 
-
-import evdev
 
 MODIFIERS = {
   evdev.ecodes.KEY_LEFTCTRL,
