@@ -137,7 +137,7 @@ in
       gh
       portablemc
       dgop # process stat screen thing
-      bc
+      bc # fp math in bash
       niri
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
