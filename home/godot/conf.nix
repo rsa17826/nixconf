@@ -16,7 +16,7 @@ let
       pkgs.ydotool
     ];
     text = ''
-      exec python3 ${./auto_dismiss_godot/main.py}
+      exec python3 ${./auto_dismiss_godot/main.py} ${./auto_dismiss_godot/ok_btn.png}
     '';
   };
 in
@@ -24,8 +24,8 @@ in
   systemd.user.services.ydotoold = {
     description = "ydotool daemon";
     wantedBy = [ "default.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.ydotool}/bin/ydotoold";
+    serviceConfig = with pkgs; {
+      ExecStart = "${ydotool}/bin/ydotoold";
       Restart = "always";
     };
   };
