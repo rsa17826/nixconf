@@ -71,9 +71,15 @@ HASH_FIX_FILES=(
   "home/vscode/extensions/marketplace.nix"
 )
 auto_fix_hashes() {
-  local output="$1"
+  local raw="$1"
   local fixed=false
   local old_hash new_hash
+
+  # The output is --log-format internal-json, so hashes live inside @nix JSON msg fields
+  # with ANSI escape codes. Strip them first so the regexes can match.
+  local output
+  # shellcheck disable=SC2001
+  output=$(echo "$raw" | sed 's/\x1b\[[0-9;]*[mGKHF]//g')
 
   while IFS= read -r line; do
     if [[ "$line" =~ specified:.*sha256- ]]; then
@@ -96,7 +102,7 @@ auto_fix_hashes() {
         old_hash="" new_hash=""
       fi
     fi
-  done <<<"$output"
+  done <<< "$output"
 
   $fixed
 }
