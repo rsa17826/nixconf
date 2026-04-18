@@ -69,6 +69,10 @@ in
           "installation_mode" = "force_installed";
           "update_url" = "https://clients2.google.com/service/update2/crx";
         };
+        "fbeffbjdlemaoicjdapfpikkikjoneco" = {
+          "installation_mode" = "force_installed";
+          "update_url" = "https://clients2.google.com/service/update2/crx";
+        };
       };
     };
   };
