@@ -585,7 +585,7 @@
   },
   {
     "key": "ctrl+]",
-    "command": "editor.action.indentLines",
+    "command": "lineFix.indentLines",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
@@ -709,7 +709,7 @@
   },
   {
     "key": "ctrl+[",
-    "command": "editor.action.outdentLines",
+    "command": "lineFix.outdentLines",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
