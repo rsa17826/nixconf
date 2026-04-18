@@ -235,7 +235,6 @@ $2
 @regex : String( |$)
 @replace : string$1
 @endregex
-@file \.ts$
 @regex : Number( |$)
 @replace : number$1
 @endregex
