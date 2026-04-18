@@ -71,22 +71,23 @@ HASH_FIX_FILES=(
   "home/vscode/extensions/marketplace.nix"
 )
 auto_fix_hashes() {
-  local raw="$1"
+  local tmpfile="$1"
   local fixed=false
   local old_hash new_hash
 
-  # The output is --log-format internal-json, so hashes live inside @nix JSON msg fields
-  # with ANSI escape codes. Strip them first so the regexes can match.
-  local output
+  # Strip literal JSON \u001b unicode escapes (not actual ESC bytes)
   # shellcheck disable=SC2001
-  output=$(echo "$raw" | sed 's/\x1b\[[0-9;]*[mGKHF]//g')
+  local output
+  output=$(sed 's/\\u001b\[[0-9;]*[mGKHF]//g' "$tmpfile")
 
   while IFS= read -r line; do
     if [[ "$line" =~ specified:.*sha256- ]]; then
-      old_hash=$(echo "$line" | grep -oP 'sha256-[A-Za-z0-9+/=]+')
+      old_hash="${line#*sha256-}"
+      old_hash="sha256-${old_hash%%[[:space:]]*}"
     fi
     if [[ "$line" =~ got:.*sha256- ]]; then
-      new_hash=$(echo "$line" | grep -oP 'sha256-[A-Za-z0-9+/=]+')
+      new_hash="${line#*sha256-}"
+      new_hash="sha256-${new_hash%%[[:space:]]*}"
       if [[ -n "$old_hash" && -n "$new_hash" && "$old_hash" != "$new_hash" ]]; then
         echo "🔧 Hash mismatch detected:"
         echo "   old: $old_hash"
