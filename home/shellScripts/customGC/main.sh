@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 # shellcheck source=/etc/profiles/per-user/nyix/bin/admin
 . admin && requiresSudo "$@"
 # 1. Setup Profile
