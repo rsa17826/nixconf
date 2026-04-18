@@ -36,6 +36,7 @@ in
       "graphical-session.target"
       "ydotoold.service"
     ];
+    wants = [ "ydotool.service" ];
     wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
       ExecStart = "${godot-dismiss}/bin/godot-dismiss";
