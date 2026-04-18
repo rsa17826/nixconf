@@ -67,6 +67,8 @@ git fetch --quiet
 HASH_FIX_FILES=(
   # Add paths relative to ~/nixconf, or absolute paths
   # e.g. "pkgs/better-end-line-actions/default.nix"
+  "home/vscode/extensions/githubAndLocal.nix"
+  "home/vscode/extensions/marketplace.nix"
 )
 auto_fix_hashes() {
   local output="$1"
