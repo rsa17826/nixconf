@@ -4,13 +4,21 @@ let
     ps: with ps; [
       opencv4
       numpy
-      hyprctl
     ]
   );
 
-  godot-dismiss = pkgs.writeShellScriptBin "godot-dismiss" ''
-    exec ${pythonEnv}/bin/python3 ${./auto_dismiss_godot/main.py}
-  '';
+  godot-dismiss = pkgs.writeShellApplication {
+    name = "godot-dismiss";
+    runtimeInputs = [
+      pythonEnv
+      pkgs.hyprland # provides hyprctl
+      pkgs.grim
+      pkgs.ydotool
+    ];
+    text = ''
+      exec python3 ${./auto_dismiss_godot/main.py}
+    '';
+  };
 in
 {
   systemd.user.services.ydotoold = {
