@@ -24,6 +24,7 @@ in
     ./brave/conf.nix
     ./syncthing/conf.nix
     ./unbound/conf.nix
+    ./godot/conf.nix
     # ./tts/conf.nix
   ];
   boot = {

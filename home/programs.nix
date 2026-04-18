@@ -175,6 +175,7 @@ in
       htop # process info
       # htop-vim
       # mission-center # task manager
+      ydotool
       vlc # media player
       nicotine-plus # soulseek
       conky # like rainmeter
