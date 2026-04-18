@@ -74,7 +74,6 @@ auto_fix_hashes() {
   local tmpfile="$1"
   local fixed=false
 
-  # Strip literal JSON \u001b unicode escapes (not actual ESC bytes)
   # shellcheck disable=SC2001
   local output
   # extract hashes into a Bash array
@@ -165,7 +164,7 @@ else
     [[ $BUILD_EXIT -eq 0 ]] && break
 
     echo "❌ Build failed. Scanning for hash mismatches..."
-    if auto_fix_hashes "$(cat "$TMPOUT")"; then
+    if auto_fix_hashes "$TMPOUT"; then
       echo "🔁 Hash patched — retrying..."
       if [[ "$SKIP_GIT" == false ]]; then
         git add -A
