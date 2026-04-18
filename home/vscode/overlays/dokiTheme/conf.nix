@@ -4,11 +4,11 @@ self: super: {
     let
       # Define images here so they are easy to reference
       img = {
-        bg = ./asticker.png;
+        bg = ./. + "bg (copy 1).png";
         # TODO emptyEditor not working dont know way will try fix later
         # https://github.com/doki-theme/doki-theme-vscode/blob/main/src/StickerService.ts#L170
         emptyEditor = ./emptyEditor.png;
-        sticker = ./bg.png;
+        sticker = ./asticker2.png;
       };
       backgroundAnchoring = "center";
       stickerStyle = ''
