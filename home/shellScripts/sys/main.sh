@@ -10,14 +10,14 @@ find_service() {
   local query="$1"
   local found
 
-  found=$(systemctl list-units --type=service --all --no-legend 2>/dev/null |
+  found=$(systemctl list-unit-files --type=service --no-legend 2>/dev/null |
     awk '{print $1}' | grep -i "$query" | head -n 1)
   if [[ -n "$found" ]]; then
     echo "system:$found"
     return
   fi
 
-  found=$(systemctl --user list-units --type=service --all --no-legend 2>/dev/null |
+  found=$(systemctl --user list-unit-files --type=service --no-legend 2>/dev/null |
     awk '{print $1}' | grep -i "$query" | head -n 1)
   if [[ -n "$found" ]]; then
     echo "user:$found"
