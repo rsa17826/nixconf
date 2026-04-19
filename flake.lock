@@ -867,11 +867,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776625262,
-        "narHash": "sha256-Pi7IVfDaSpbMhh9nH/kxxlMu0wR9YYYvmn34dalhH4c=",
+        "lastModified": 1776628570,
+        "narHash": "sha256-G+UpekFaul7SATclGvoF8aomjUP8bMUFDFYD7KXKVaI=",
         "owner": "rsa17826",
         "repo": "wayland-keepass-autotype",
-        "rev": "24312ef76505cf722ff503a3d5cbf8bfc3914019",
+        "rev": "3058f50e525887785a82d7cb7332f45b67c88be0",
         "type": "github"
       },
       "original": {
