@@ -2,10 +2,13 @@
 let
   folderScript = pkgs.writeShellApplication {
     name = "folder-thumbnailer";
-    runtimeInputs = with pkgs; [ exiv2 imagemagick ];
+    runtimeInputs = with pkgs; [
+      exiv2
+      imagemagick
+    ];
     text = ''
-      magick -thumbnail "$1" "$2/folder.png"  "$3" 2>/dev/null && exit 0
-      magick -thumbnail "$1" "$2/.folder.png" "$3" 2>/dev/null && exit 0
+      magick "$2/folder.png"  -thumbnail "$1" "$3" 2>/dev/null && exit 0
+      magick "$2/.folder.png" -thumbnail "$1" "$3" 2>/dev/null && exit 0
       rm -f \
         "$HOME/.cache/thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
         "$HOME/.thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
