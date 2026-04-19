@@ -259,6 +259,7 @@ in
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
     # nix-direnv
+    xfce.tumbler
     gsettings-desktop-schemas
     glib # provides gio
     tumbler # thumbnail/icon service
