@@ -233,6 +233,7 @@ in
     ];
   };
   services = {
+    tumbler.enable = true;
     dbus = {
       enable = true;
     };
