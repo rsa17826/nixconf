@@ -229,7 +229,7 @@ in
       wl-clip-persist # keep clip past app death
       # blender
       ffmpeg
-      hyprpaper
+      fdupes
     ];
   };
   services = {
