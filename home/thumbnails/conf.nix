@@ -7,7 +7,6 @@ let
       imagemagick
     ];
     text = ''
-      magick "$2/folder.png"  -thumbnail "$1" "$3" 2>/dev/null && exit 0
       magick "$2/.foldericon.png" -thumbnail "$1" "$3" 2>/dev/null && exit 0
       rm -f \
         "$HOME/.cache/thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
