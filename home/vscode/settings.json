@@ -809,5 +809,8 @@
   "diffEditor.maxComputationTime": 0,
   "totalTypeScript.hideAllTips": true,
   "totalTypeScript.hideBasicTips": true,
-  "terminal.integrated.initialHint": false
+  "terminal.integrated.initialHint": false,
+  "[kotlin]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  }
 }
