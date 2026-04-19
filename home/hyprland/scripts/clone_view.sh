@@ -5,7 +5,6 @@ SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.frag"
 SHADER_RUNTIME="$HOME/.config/hypr/shaders/active_clone.frag"
 
 # 1. Get Screen Resolution
-# We use -j for JSON and jq for reliable parsing
 MONITOR_INFO=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true)')
 SCREEN_W=$(echo "$MONITOR_INFO" | jq -r '.width')
 SCREEN_H=$(echo "$MONITOR_INFO" | jq -r '.height')
@@ -15,18 +14,35 @@ GEOM=$(slurp -f "%x %y %w %h")
 [ -z "$GEOM" ] && exit 1
 read -r X Y W H <<<"$GEOM"
 
-# 3. Calculate normalized values (0.0 to 1.0)
-# We use printf to ensure a leading zero (e.g., .5 becomes 0.5)
-OFF_X=$(printf "%.4f" "$(echo "scale=4; $X / $SCREEN_W" | bc)")
-OFF_Y=$(printf "%.4f" "$(echo "scale=4; $Y / $SCREEN_H" | bc)")
-SIZE_W=$(printf "%.4f" "$(echo "scale=4; $W / $SCREEN_W" | bc)")
-SIZE_H=$(printf "%.4f" "$(echo "scale=4; $H / $SCREEN_H" | bc)")
+# 3. Calculate normalized source region (0.0 to 1.0)
+OFF_X=$(printf "%.6f" "$(echo "scale=6; $X / $SCREEN_W" | bc)")
+OFF_Y=$(printf "%.6f" "$(echo "scale=6; $Y / $SCREEN_H" | bc)")
+SIZE_W=$(printf "%.6f" "$(echo "scale=6; $W / $SCREEN_W" | bc)")
+SIZE_H=$(printf "%.6f" "$(echo "scale=6; $H / $SCREEN_H" | bc)")
 
-# 4. Update the runtime shader
-# This looks for the placeholders and replaces the entire line
-sed -e "s|vec2 offset = .*|vec2 offset = vec2($OFF_X, $OFF_Y);|" \
+# 4. Calculate display size with aspect-ratio-preserving black borders
+#    Compare region AR (W/H) vs screen AR (SCREEN_W/SCREEN_H) using integer cross-multiply
+#    to avoid floating-point issues.
+#    If W * SCREEN_H > H * SCREEN_W → region is wider than screen → letterbox (bars top/bottom)
+#    Otherwise                       → region is taller than screen → pillarbox (bars left/right)
+REGION_WIDER=$(echo "$W * $SCREEN_H > $H * $SCREEN_W" | bc)
+
+if [ "$REGION_WIDER" -eq 1 ]; then
+  # Fit to full width; height shrinks to preserve AR
+  DISP_W="1.000000"
+  DISP_H=$(printf "%.6f" "$(echo "scale=6; $H * $SCREEN_W / ($W * $SCREEN_H)" | bc)")
+else
+  # Fit to full height; width shrinks to preserve AR
+  DISP_H="1.000000"
+  DISP_W=$(printf "%.6f" "$(echo "scale=6; $W * $SCREEN_H / ($H * $SCREEN_W)" | bc)")
+fi
+
+# 5. Stamp values into the runtime shader
+sed \
+  -e "s|vec2 offset = .*|vec2 offset = vec2($OFF_X, $OFF_Y);|" \
   -e "s|vec2 size = .*|vec2 size = vec2($SIZE_W, $SIZE_H);|" \
+  -e "s|vec2 dispSize = .*|vec2 dispSize = vec2($DISP_W, $DISP_H);|" \
   "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
-# 5. Apply
+# 6. Apply
 hyprctl keyword decoration:screen_shader "$SHADER_RUNTIME"
