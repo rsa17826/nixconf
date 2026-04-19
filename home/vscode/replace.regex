@@ -23,8 +23,8 @@
 @endregex
 
 @name no bin
-@file \.sh$
-@regex #!/bin/(\w+)
+@file \.sh|/[^/.]+$
+@regex ^(# )?#!/bin/(\w+)
 @replace #!/usr/bin/env $1
 @endregex
 

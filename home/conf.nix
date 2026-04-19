@@ -25,6 +25,7 @@ in
     ./syncthing/conf.nix
     ./unbound/conf.nix
     ./godot/conf.nix
+    ./thumbnails/conf.nix
     # ./tts/conf.nix
   ];
   boot = {
