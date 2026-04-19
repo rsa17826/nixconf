@@ -8,11 +8,11 @@ let
     ];
     text = ''
       magick "$2/.foldericon.png" -thumbnail "$1" "$3" 2>/dev/null && exit 0
-      rm -f \
-        "$HOME/.cache/thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
-        "$HOME/.thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
-        "$HOME/.cache/thumbnails/large/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
-        "$HOME/.thumbnails/large/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png"
+      # rm -f \
+      #   "$HOME/.cache/thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
+      #   "$HOME/.thumbnails/normal/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
+      #   "$HOME/.cache/thumbnails/large/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png" \
+      #   "$HOME/.thumbnails/large/$(printf '%s' "$4" | md5sum | cut -d ' ' -f1).png"
       exit 1
     '';
   };
