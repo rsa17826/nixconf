@@ -470,7 +470,7 @@
   },
   {
     "key": "ctrl+/",
-    "command": "editor.action.commentLine",
+    "command": "lineFix.commentLine",
     "when": "editorTextFocus && !editorReadonly",
   },
   {
