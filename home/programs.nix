@@ -21,7 +21,7 @@ let
         mkdir -p $out/bin
         chmod +x Godot_v${version}_linux.x86_64
         cp Godot_v${version}_linux.x86_64 $out/bin/godot-${version}
-        ln $out/bin/godot-${version} $out/bin/newestGodot
+        ln $out/bin/godot-${version} $out/bin/godot-newest
       '';
     };
   xdm = pkgs.writeShellScriptBin "xdm" ''
