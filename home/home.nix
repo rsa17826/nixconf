@@ -52,6 +52,7 @@ in
   services = {
     swaync.enable = true;
     playerctld.enable = true;
+    tumbler.enable = true;
   };
   xdg = {
     enable = true;
