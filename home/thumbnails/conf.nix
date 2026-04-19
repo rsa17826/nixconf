@@ -26,7 +26,7 @@ let
         destination = "/share/thumbnailers/folder-thumbnailer.thumbnailer";
         text = ''
           [Thumbnailer Entry]
-          Version=1.0
+        Version=1.0
           Encoding=UTF-8
           Type=X-Thumbnailer
           Name=Folder Thumbnailer
