@@ -25,6 +25,14 @@ let
           magick "$dir/.foldericon.png" -thumbnail "$size" "$output" 2>/dev/null
           exit 0
         fi
+        if [[ -f "$dir/.favicon.ico" ]]; then
+          magick "$dir/.favicon.ico" -thumbnail "$size" "$output" 2>/dev/null
+          exit 0
+        fi
+        if [[ -f "$dir/.favicon.png" ]]; then
+          magick "$dir/.favicon.png" -thumbnail "$size" "$output" 2>/dev/null
+          exit 0
+        fi
 
         # Move one directory up
         dir="$(dirname "$dir")"
