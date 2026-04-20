@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
 
 SAVE_DIR="$HOME/videos/rec"
+PID_FILE="/tmp/gpu-screen-recorder-rec.pid"
 mkdir -p "$SAVE_DIR"
 
-# 1. Check if a recording is already running
-if pgrep -f "gpu-screen-recorder" >/dev/null; then
-  pkill -SIGINT -f "gpu-screen-recorder"
+# 1. Check if a manual recording is already running (via PID file)
+if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+  kill -SIGINT "$(cat "$PID_FILE")"
+  rm -f "$PID_FILE"
+
   LATEST_FILE=$(find "$SAVE_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
   if ! GTK_THEME=Adwaita:dark zenity --question --text="Recording saved. Keep it?" --ok-label="Keep" --cancel-label="Delete"; then
     rm "$LATEST_FILE"
     notify-send -e -t 1000 "Deleted" "File removed."
   fi
 else
+  # Stale PID file cleanup
+  rm -f "$PID_FILE"
+
   # 2. Select region
   RAW_GEOM=$(slurp)
   [ -z "$RAW_GEOM" ] && exit 1
@@ -35,6 +41,6 @@ else
 
   notify-send -e -t 1000 "Recorder" "Recording started: $USER_FILENAME"
 
-  # 5. Launch recorder
+  # 5. Launch recorder and store its PID
   gpu-screen-recorder -w region -region "$GEOM" -f 60 -a "default_output" -o "$FINAL_PATH"
 fi

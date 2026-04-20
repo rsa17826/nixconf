@@ -88,28 +88,6 @@ let
   #   )
 in
 {
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-    package = pkgs.appimage-run.override {
-      extraPkgs =
-        pkgs: with pkgs; [
-          python312
-          python314
-        ];
-    };
-  };
-  programs = {
-    hyprland = {
-      enable = true;
-      package = pkgFromInp "hyprland" "hyprland";
-    };
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-  };
-
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -257,7 +235,31 @@ in
       enable = false;
     };
   };
-  programs.gpu-screen-recorder.enable = true;
+  programs = {
+    appimage = {
+      enable = true;
+      binfmt = true;
+      package = pkgs.appimage-run.override {
+        extraPkgs =
+          pkgs: with pkgs; [
+            python312
+            python314
+          ];
+      };
+    };
+
+    hyprland = {
+      enable = true;
+      package = pkgFromInp "hyprland" "hyprland";
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    gpu-screen-recorder = {
+      enable = true;
+    };
+  };
   environment.systemPackages = with pkgs; [
     # nix-direnv
     tumbler

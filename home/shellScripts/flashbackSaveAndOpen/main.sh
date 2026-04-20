@@ -7,8 +7,8 @@ START_TIME=$(date +%s)
 # 1. Get the current newest file
 LAST_VIDEO=$(find "$VIDEO_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
 
-# 2. Trigger the save
-killall -SIGUSR1 gpu-screen-recorder
+# 2. Trigger the save — target only the flashback instance (identified by -r flag)
+pkill -SIGUSR1 -f "gpu-screen-recorder.*-r "
 
 while true; do
   CURRENT_VIDEO=$(find "$VIDEO_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
@@ -21,7 +21,6 @@ while true; do
   fi
 
   # Check if we have exceeded the 5-second limit
-  # (Now - Start_Time >= Max_Wait)
   if [ $((NOW - START_TIME)) -ge "$MAX_WAIT" ]; then
     FOUND=false
     break
@@ -30,7 +29,7 @@ while true; do
   sleep 0.2
 done
 
-# 4. Handle Result
+# 3. Handle Result
 if [ "$FOUND" = true ]; then
   vlc "$CURRENT_VIDEO"
   if zenity --question --text="Delete this clip?" --title="Replay Saved"; then
