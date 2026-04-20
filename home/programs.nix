@@ -230,6 +230,7 @@ in
       # blender
       ffmpeg
       fdupes
+      dunst # notifier
     ];
   };
   services = {

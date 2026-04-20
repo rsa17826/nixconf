@@ -24,7 +24,7 @@
 
 @name no bin
 @file \.sh|/[^/.]+$
-@regex ^(# )?#!/bin/(\w+)
+@regex ^(?:# )?#!/bin/(\w+)
 @replace #!/usr/bin/env $1
 @endregex
 
