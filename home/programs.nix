@@ -6,6 +6,22 @@
   ...
 }:
 let
+  browserSelectorPkg = pkgFromInp "browserSelector" "default";
+
+  browserSelectorDesktop = pkgs.makeDesktopItem {
+    name = "browser-selector";
+    desktopName = "Browser Selector";
+    genericName = "Web Browser";
+    exec = "${browserSelectorPkg}/bin/browser-selector %u";
+    mimeTypes = [
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/ftp"
+    ];
+    startupNotify = false;
+    noDisplay = false;
+  };
+
   newestGodot =
     version:
     pkgs.stdenv.mkDerivation {
@@ -88,6 +104,12 @@ let
   #   )
 in
 {
+  xdg.mime.defaultApplications = {
+    "x-scheme-handler/http" = "browser-selector.desktop";
+    "x-scheme-handler/https" = "browser-selector.desktop";
+    "x-scheme-handler/ftp" = "browser-selector.desktop";
+    "text/html" = "browser-selector.desktop";
+  };
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -105,7 +127,8 @@ in
       (pkgFromInp "wayland-keepass-autotype" "default")
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
-      (pkgFromInp "browserSelector" "default")
+      browserSelectorPkg
+      browserSelectorDesktop
       #
       rofi
       typescript

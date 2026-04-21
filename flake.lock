@@ -56,6 +56,26 @@
         "type": "github"
       }
     },
+    "browserSelector": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776802313,
+        "narHash": "sha256-uPCGHkFn18kPURhgOvvV6g1AeSVOhC9K+2SAIBbhmvs=",
+        "owner": "rsa17826",
+        "repo": "browserSelector",
+        "rev": "cda5e56b272f724da5e211ffc93a1ac8949692c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "browserSelector",
+        "type": "github"
+      }
+    },
     "copyparty": {
       "inputs": {
         "flake-utils": [
@@ -785,6 +805,7 @@
     "root": {
       "inputs": {
         "audio-manager": "audio-manager",
+        "browserSelector": "browserSelector",
         "copyparty": "copyparty",
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
