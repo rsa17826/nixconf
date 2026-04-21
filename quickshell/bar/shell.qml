@@ -29,15 +29,31 @@ Scope {
       implicitWidth: Screen.width
       screen: modelData
 
+      MediaProgress {
+      }
       anchors {
         left: true
         right: true
         top: true
       }
-      MediaProgress {
+      Rectangle {
+        id: _LEFT
+
+        anchors {
+          horizontalCenter: parent.left
+          verticalCenter: parent.verticalCenter
+        }
+        ClipHist {
+          id: clipboardLogic
+
+          anchors {
+            left: root.left
+            verticalCenter: parent.verticalCenter
+          }
+        }
       }
-      Row {
-        spacing: 8
+      Rectangle {
+        id: _CENTER
 
         anchors {
           horizontalCenter: parent.horizontalCenter
@@ -64,23 +80,23 @@ Scope {
           }
         }
       }
-      Tray {
+      Rectangle {
+        id: _RIGHT
+
         anchors {
-          right: githubWidget.left
-          rightMargin: 15
+          horizontalCenter: parent.right
           verticalCenter: parent.verticalCenter
         }
-      }
-      GithubNotif {
-        id: githubWidget
+        GithubNotif {
+          id: githubWidget
 
-      }
-      ClipHist {
-        id: clipboardLogic
-
-        anchors {
-          left: main.left
-          verticalCenter: parent.verticalCenter
+        }
+        Tray {
+          anchors {
+            right: githubWidget.left
+            rightMargin: 15
+            verticalCenter: parent.verticalCenter
+          }
         }
       }
     }
