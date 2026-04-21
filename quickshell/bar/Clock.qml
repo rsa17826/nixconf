@@ -10,32 +10,25 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Rectangle {
-  anchors.centerIn: parent
-  anchors.fill: parent
-  color: "transparent"
+  // anchors.fill: parent
+  color: '#77000000'
+  implicitHeight: clock.implicitHeight + 12
+  implicitWidth: clock.implicitWidth + 12
+  radius: 0
 
-  Rectangle {
+  Text {
+    id: clock
+
     anchors.centerIn: parent
-    // anchors.fill: parent
-    color: '#77000000'
-    implicitHeight: clock.implicitHeight + 12
-    implicitWidth: clock.implicitWidth + 12
-    radius: 0
+    color: '#d40105'
+    // we no longer need time as an input
 
-    Text {
-      id: clock
+    // directly access the time property from the Time singleton
+    text: Time.time
 
-      anchors.centerIn: parent
-      color: '#d40105'
-      // we no longer need time as an input
-
-      // directly access the time property from the Time singleton
-      text: Time.time
-
-      font {
-        // family:
-        pointSize: 10
-      }
+    font {
+      // family:
+      pointSize: 10
     }
   }
 }

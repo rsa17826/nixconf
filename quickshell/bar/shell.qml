@@ -36,33 +36,34 @@ Scope {
       }
       MediaProgress {
       }
+      Row {
+        spacing: 8
 
-      // Clipboard text aligned left
-      Text {
-        id: clipboardDisplay
-
-        color: "#cccccc"
-        elide: Text.ElideRight
-        font.pixelSize: 11
-        text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
-        width: 400
-
-        anchors {
-          left: parent.left
-          leftMargin: 10
-          verticalCenter: parent.verticalCenter
-        }
-      }
-
-      // Clock centered
-      Clock {
         anchors {
           horizontalCenter: parent.horizontalCenter
           verticalCenter: parent.verticalCenter
         }
-      }
+        Clock {
+          id: clock
 
-      // Tray positioned to the left of Github widget
+          anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        ShutdownCountdown {
+          anchors {
+            left: clock.right
+            leftMargin: 15
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        Row {
+          anchors {
+            verticalCenter: parent.verticalCenter
+          }
+        }
+      }
       Tray {
         anchors {
           right: githubWidget.left
@@ -70,8 +71,6 @@ Scope {
           verticalCenter: parent.verticalCenter
         }
       }
-
-      // Github widget on the far right
       GithubNotif {
         id: githubWidget
 
@@ -79,6 +78,10 @@ Scope {
       ClipHist {
         id: clipboardLogic
 
+        anchors {
+          left: main.left
+          verticalCenter: parent.verticalCenter
+        }
       }
     }
   }

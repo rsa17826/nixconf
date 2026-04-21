@@ -2,7 +2,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-ShellRoot {
+Rectangle {
   id: clipRoot
 
   property var clipboardItems: []
@@ -14,6 +14,22 @@ ShellRoot {
       command: ["sh", "-c", `cliphist decode ${id} | wl-copy`],
       running: true
     })
+  }
+
+  Text {
+    id: clipboardDisplay
+
+    color: "#cccccc"
+    elide: Text.ElideRight
+    font.pixelSize: 11
+    text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"
+    width: 400
+
+    anchors {
+      left: parent.left
+      leftMargin: 10
+      verticalCenter: parent.verticalCenter
+    }
   }
 
   // 1. The main process to list history
