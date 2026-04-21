@@ -26,7 +26,7 @@ in
     ./unbound/conf.nix
     ./godot/conf.nix
     ./thumbnails/conf.nix
-    ./browserSelector/conf.nix
+    # ./browserSelector/conf.nix
     # ./tts/conf.nix
   ];
   boot = {

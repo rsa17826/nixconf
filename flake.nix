@@ -88,6 +88,13 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    browserSelector = {
+      url = "github:rsa17826/browserSelector";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     # ext
     ext-owoify-editor = {
       url = "github:rsa17826/vscodeowotest";
