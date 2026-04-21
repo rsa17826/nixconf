@@ -436,6 +436,11 @@
     "when": "editorFocus",
   },
   {
+    "key": "shift+alt+.",
+    "command": "editor.action.autoFix",
+    "when": "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/",
+  },
+  {
     "key": "shift+alt+a",
     "command": "editor.action.blockComment",
     "when": "editorTextFocus && !editorReadonly",
@@ -475,17 +480,17 @@
   },
   {
     "key": "shift+alt+down",
-    "command": "editor.action.copyLinesDownAction",
+    "command": "lineFix.copyLinesDown",
     "when": "editorTextFocus && !editorReadonly",
   },
   {
     "key": "shift+alt+up",
-    "command": "editor.action.copyLinesUpAction",
+    "command": "lineFix.copyLinesUp",
     "when": "editorTextFocus && !editorReadonly",
   },
   {
     "key": "ctrl+shift+k",
-    "command": "editor.action.deleteLines",
+    "command": "lineFix.deleteLines",
     "when": "textInputFocus && !editorReadonly",
   },
   {
@@ -655,12 +660,12 @@
   },
   {
     "key": "alt+down",
-    "command": "editor.action.moveLinesDownAction",
+    "command": "lineFix.moveLinesDown",
     "when": "editorTextFocus && !editorReadonly",
   },
   {
     "key": "alt+up",
-    "command": "editor.action.moveLinesUpAction",
+    "command": "lineFix.moveLinesUp",
     "when": "editorTextFocus && !editorReadonly",
   },
   {
@@ -5298,7 +5303,7 @@
   },
   {
     "key": "ctrl+d",
-    "command": "editor.action.deleteLines",
+    "command": "lineFix.deleteLines",
     "when": "textInputFocus && !editorReadonly",
   },
   {
