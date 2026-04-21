@@ -28,6 +28,10 @@
       source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
       recursive = true;
     };
+    "hypr/hyprland" = {
+      source = ln "${userConfig.nixConf}/home/hyprland/hyprland";
+      recursive = true;
+    };
     "hypr/scripts" = {
       source = ln "${userConfig.nixConf}/home/hyprland/scripts";
       recursive = true;
