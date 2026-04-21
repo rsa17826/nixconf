@@ -39,7 +39,7 @@ function owowify(inputText) {
   // loaded -> woaded
   // url -> uwl instead of uww
   result = result.replace(
-    reg`/(?<!([wl]${vowel}*))l(?!([wl]))/gi`,
+    reg`/(?<!([wl]${vowel}*))(?:l(?=\\w)|(?<=\\w)l)(?!([wl]))/gi`,
     ($0) => subSameCase($0, "w"),
   )
   /* na -> nya, nu -> nyu, no -> nyo, ne -> nye */
