@@ -209,6 +209,7 @@ in
       ffmpeg
       fdupes
       dunst # notifier
+      perl
     ];
   };
   services = {
