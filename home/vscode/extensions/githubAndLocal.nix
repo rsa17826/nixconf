@@ -160,24 +160,34 @@ in
     extensions = [
       (
         let
-          kdlLspBin = pkgs.fetchurl {
-            url = "https://github.com/kdl-org/kdl-rs/releases/download/v6.3.2/kdl-lsp-x86_64-unknown-linux-gnu.tar.xz";
-            hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # run nix-prefetch-url to get this
-          };
-          base = buildFromFlake {
-            src = inputs.ext-kdl;
-            extName = "kdl";
-            extCreator = "kdl-org";
-            npmDepsHash = "sha256-hD/R0fk0+4zm2lOqC8idTyozAXMcHBlB+YZ6w4jpm1k=";
-            npmInstallFlags = [ "--ignore-scripts" ];
-          };
+          # Patch package-lock.json BEFORE passing src to buildFromFlake so that
+          # fetchNpmDeps (the fixed-output derivation) also sees the patched lockfile.
+          # Without this, fetchNpmDeps runs `npm ci` with scripts enabled, which
+          # causes kdl-lsp's install.js to try to download a binary from GitHub —
+          # and that fails inside the Nix sandbox even for FODs on this system.
+          kdlSrc =
+            pkgs.runCommand "ext-kdl-patched"
+              {
+                nativeBuildInputs = [ pkgs.jq ];
+              }
+              ''
+                cp -r ${inputs.ext-kdl} $out
+                chmod -R +w $out
+                # Remove kdl-lsp's postinstall script entry from the lockfile so npm
+                # never tries to execute install.js during `npm ci`.
+                jq 'del(.packages["node_modules/kdl-lsp"].scripts)' \
+                  $out/package-lock.json > $out/package-lock.json.tmp
+                mv $out/package-lock.json.tmp $out/package-lock.json
+              '';
         in
-        base.overrideAttrs (old: {
-          preBuild = ''
-            mkdir -p node_modules/kdl-lsp/bin
-            tar -xf ${kdlLspBin} -C node_modules/kdl-lsp/bin
-          '';
-        })
+        buildFromFlake {
+          src = kdlSrc;
+          extName = "kdl";
+          extCreator = "kdl-org";
+          # Hash will change because the patched lockfile changes what npm ci
+          # produces — run with lib.fakeHash first to get the real value.
+          npmDepsHash = "sha256-vtqe1Ox7G2/g1VF1+PuH9itC7WsajcdJXrljxF1Ugos=";
+        }
       )
       (buildFromFlake {
         src = inputs.ext-owoify-editor;
