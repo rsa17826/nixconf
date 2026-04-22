@@ -274,6 +274,9 @@ in
       };
     };
 
+    niri = {
+      enable = true;
+    };
     hyprland = {
       enable = true;
       package = pkgFromInp "hyprland" "hyprland";

@@ -70,9 +70,6 @@
       ly = {
         enable = true;
       };
-      niri = {
-        enable = true;
-      };
 
       # defaultSession = "plasma";
       # defaultSession = "hyprland";
