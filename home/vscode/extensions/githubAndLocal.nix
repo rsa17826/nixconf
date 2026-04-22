@@ -156,12 +156,27 @@ in
 {
   programs.vscode.profiles.default = {
     extensions = [
-      (buildFromFlake {
-        src = inputs.ext-kdl;
-        extName = "kdl";
-        extCreator = "kdl-org";
-        npmDepsHash = "sha256-hD/R0fk0+4zm2lOqC8idTyozAXMcHBlB+YZ6w4jpm1k=";
-      })
+      (
+        let
+          kdlLspBin = pkgs.fetchurl {
+            url = "https://github.com/kdl-org/kdl-rs/releases/download/v6.3.2/kdl-lsp-x86_64-unknown-linux-gnu.tar.xz";
+            hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # run nix-prefetch-url to get this
+          };
+          base = buildFromFlake {
+            src = inputs.ext-kdl;
+            extName = "kdl";
+            extCreator = "kdl-org";
+            npmDepsHash = "sha256-hD/R0fk0+4zm2lOqC8idTyozAXMcHBlB+YZ6w4jpm1k=";
+            npmInstallFlags = [ "--ignore-scripts" ];
+          };
+        in
+        base.overrideAttrs (old: {
+          preBuild = ''
+            mkdir -p node_modules/kdl-lsp/bin
+            tar -xf ${kdlLspBin} -C node_modules/kdl-lsp/bin
+          '';
+        })
+      )
       (buildFromFlake {
         src = inputs.ext-owoify-editor;
         extName = "owoify-editor";
