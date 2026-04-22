@@ -14,6 +14,7 @@ let
       npmDepsHash, # You still need this, but only when package-lock.json changes
       nativeBuildInputs ? [ ],
       buildInputs ? [ ],
+      npmInstallFlags ? [ ],
       npmDepsFetcherVersion ? 1,
     }:
     let
@@ -27,6 +28,7 @@ let
           version
           src
           npmDepsHash
+          npmInstallFlags
           npmDepsFetcherVersion
           ;
         preBuild = ''
