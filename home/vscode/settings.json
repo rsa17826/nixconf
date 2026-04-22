@@ -812,5 +812,8 @@
   "terminal.integrated.initialHint": false,
   "[kotlin]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+  },
+  "[kdl]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
   }
 }

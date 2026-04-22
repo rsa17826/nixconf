@@ -130,6 +130,7 @@ in
       browserSelectorPkg
       browserSelectorDesktop
       #
+      kdlfmt
       rofi
       typescript
       nodejs
