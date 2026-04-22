@@ -147,22 +147,6 @@
         "type": "github"
       }
     },
-    "ext-kdl": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737100337,
-        "narHash": "sha256-oHn7d7LMwIQMOWxscTrLYhtnbXoxeFmb9E7bEd4XyLs=",
-        "owner": "kdl-org",
-        "repo": "vscode-kdl",
-        "rev": "5276060c388d3a43e7221146316e5023339f4811",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kdl-org",
-        "repo": "vscode-kdl",
-        "type": "github"
-      }
-    },
     "ext-multi-formatter": {
       "flake": false,
       "locked": {
@@ -826,7 +810,6 @@
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
         "ext-better-end-line-actions": "ext-better-end-line-actions",
-        "ext-kdl": "ext-kdl",
         "ext-multi-formatter": "ext-multi-formatter",
         "ext-owoify-editor": "ext-owoify-editor",
         "ext-sds": "ext-sds",

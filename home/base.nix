@@ -70,7 +70,8 @@
       ly.enable = true;
 
       # defaultSession = "plasma";
-      defaultSession = "hyprland";
+      # defaultSession = "hyprland";
+      defaultSession = "niri";
 
       # programs.twm.enable=true;
       autoLogin = {
