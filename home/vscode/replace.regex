@@ -246,10 +246,9 @@ $2
 @errgroup 2
 @endregex
 
-@name hyprland no dupes
-@file /hyprland\.conf$
-@regex ^( *)([\w:]+) \{[\s\S]*?^\1(\2) \{
-@replace duplicated "$2" section detected on line !ln.3
-@errgroup 2
+@name nix fix fake hash
+@file \.nix$
+@regex \blib\.fakeHash\b
+@replace sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 @endregex
 

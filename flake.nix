@@ -95,10 +95,6 @@
       };
     };
     # ext
-    ext-kdl = {
-      url = "github:kdl-org/vscode-kdl";
-      flake = false;
-    };
     ext-owoify-editor = {
       url = "github:rsa17826/vscodeowotest";
       flake = false;

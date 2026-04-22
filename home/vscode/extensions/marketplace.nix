@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
