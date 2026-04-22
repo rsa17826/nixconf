@@ -12,6 +12,8 @@ RIGHT_EDGE=$((MON_X + MON_W - BORDER))
 LEFT_EDGE=$((MON_X + BORDER))
 BOTTOM_EDGE=$((MON_Y + MON_H - BORDER))
 TOP_EDGE=$((MON_Y + BORDER))
+GX=$((MON_W / 2))
+GY=$((MON_H / 2))
 
 # The absolute pixel value for the "far" edge (adjusting for offset)
 Y_MAX=$((MON_Y + MON_H - 5)) # 5px offset so it doesn't immediately re-trigger
@@ -38,14 +40,16 @@ while true; do
     # Move to next workspace
     hyprctl dispatch workspace m+1
     # Warp mouse to Top (Y_MIN) keeping same X
-    hyprctl dispatch movecursor "$CX $Y_MIN"
+    # hyprctl dispatch movecursor "$CX $Y_MIN"
+    hyprctl dispatch movecursor "$GX $GY"
     # LAST_TRIGGER=$NOW
 
   elif ((CY <= TOP_EDGE)); then
     # Move to previous workspace
     hyprctl dispatch workspace m-1
     # Warp mouse to Bottom (Y_MAX) keeping same X
-    hyprctl dispatch movecursor "$CX $Y_MAX"
+    # hyprctl dispatch movecursor "$CX $Y_MAX"
+    hyprctl dispatch movecursor "$GX $GY"
     # LAST_TRIGGER=$NOW
   fi
   # fi
