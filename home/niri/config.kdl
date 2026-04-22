@@ -1,0 +1,340 @@
+// ############################################################
+// NIRI CONFIG — translated from Hyprland config
+// See https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+// ############################################################
+
+// NOTE: Niri does not support submaps. The Alt+Space launcher submap
+// has been replaced with direct Alt+<key> binds. Use anyrun or another
+// launcher for a popup-style experience.
+
+// NOTE: Niri uses a dynamic column-based tiling layout rather than
+// Hyprland's dwindle/master. Some window-rule positional logic is
+// approximated as best as possible.
+
+// ───────────────────────────────────────────────
+// ENVIRONMENT
+// ───────────────────────────────────────────────
+
+environment {
+    GTK_THEME            "Adwaita:dark"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    XCURSOR_SIZE         "24"
+    XCURSOR_THEME        "24"
+    HYPRCURSOR_SIZE      "24"
+    HYPRCURSOR_THEME     "mew"
+}
+
+// ───────────────────────────────────────────────
+// OUTPUT / MONITOR
+// ───────────────────────────────────────────────
+
+// Auto-detect all outputs at preferred resolution
+// Add named output blocks here if you need per-monitor config:
+// output "DP-1" { mode "1920x1080@144.000"; position x=0 y=0; scale 1.0 }
+
+// ───────────────────────────────────────────────
+// INPUT
+// ───────────────────────────────────────────────
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        numlock-on
+        repeat-delay 600
+        repeat-rate 25
+    }
+
+    mouse {
+        // 0.0 = no acceleration (matches Hyprland sensitivity=0)
+        accel-speed 0.0
+        accel-profile "flat"
+    }
+
+    touchpad {
+        natural-scroll
+        tap
+    }
+}
+
+cursor {
+    hide-after-inactive-ms 3000
+}
+
+// ───────────────────────────────────────────────
+// LAYOUT & APPEARANCE
+// ───────────────────────────────────────────────
+
+layout {
+    // gaps_in=2, gaps_out=2 in Hyprland → combined 4px gap
+    gaps 4
+
+    border {
+        width 2
+        // active-color matches rgba(33ccffee)
+        active-color   "#33ccffee"
+        // gradient equivalent of 33ccff→00ff99 at 45deg:
+        // active-gradient from="#33ccffee" to="#00ff99ee" angle=45
+        inactive-color "#595959aa"
+    }
+
+    // Disable focus-ring to avoid double outline with border
+    focus-ring {
+        off
+    }
+
+    shadow {
+        on
+        softness  4
+        spread    2
+        offset-x  0
+        offset-y  0
+        color     "#1a1a1aee"
+    }
+}
+
+// ───────────────────────────────────────────────
+// ANIMATIONS — disabled (Hyprland had enabled=no)
+// ───────────────────────────────────────────────
+
+animations {
+    off
+}
+
+// ───────────────────────────────────────────────
+// NAMED WORKSPACES
+// Super+a/s/d/f = 1-4  |  Super+q/w/e/r = 5-8
+// ───────────────────────────────────────────────
+
+workspace "1-code"    { idx 1 }
+workspace "2-browser" { idx 2 }
+workspace "3"         { idx 3 }
+workspace "4"         { idx 4 }
+workspace "5"         { idx 5 }
+workspace "6"         { idx 6 }
+workspace "7"         { idx 7 }
+workspace "8-bg"      { idx 8 }
+
+// ───────────────────────────────────────────────
+// AUTOSTART
+// ───────────────────────────────────────────────
+
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "GTK_THEME" "QT_STYLE_OVERRIDE"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "Adwaita-dark"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "sh" "-c" "~/.config/hypr/scripts/random-wallpapers.sh 30"
+spawn-at-startup "progress-daemon"
+spawn-at-startup "sh" "-c" "gpu-screen-recorder -w screen -f 60 -a default_output -r 300 -c mp4 -o ~/videos/flashback"
+spawn-at-startup "qs" "-p" "~/nixconf/quickshell/bar/"
+spawn-at-startup "python" "-m" "http.server" "-d" "~/projects/jira-project-ui/" "15432"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+spawn-at-startup "wl-clip-persist" "--clipboard" "regular"
+spawn-at-startup "kitten" "panel" "--edge=background" "-o" "background_opacity=0.2" "--margin-top" "30" "-o" "background=black" "dgop"
+
+// ───────────────────────────────────────────────
+// MISC
+// ───────────────────────────────────────────────
+
+screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+prefer-no-csd
+
+// ───────────────────────────────────────────────
+// KEYBINDINGS  ($mainMod = Super/Mod)
+// ───────────────────────────────────────────────
+
+binds {
+    // ── Workspace switching (Super + a/s/d/f/q/w/e/r) ──
+    Mod+A { focus-workspace 1 }
+    Mod+S { focus-workspace 2 }
+    Mod+D { focus-workspace 3 }
+    Mod+F { focus-workspace 4 }
+    Mod+Q { focus-workspace 5 }
+    Mod+W { focus-workspace 6 }
+    Mod+E { focus-workspace 7 }
+    Mod+R { focus-workspace 8 }
+
+    // ── Move window to workspace ──
+    Mod+Shift+A { move-window-to-workspace 1 }
+    Mod+Shift+S { move-window-to-workspace 2 }
+    Mod+Shift+D { move-window-to-workspace 3 }
+    Mod+Shift+F { move-window-to-workspace 4 }
+    Mod+Shift+Q { move-window-to-workspace 5 }
+    Mod+Shift+W { move-window-to-workspace 6 }
+    Mod+Shift+E { move-window-to-workspace 7 }
+    Mod+Shift+R { move-window-to-workspace 8 }
+    // Super+Down → move to workspace 8 (silent: no focus switch)
+    Mod+Down    { move-window-to-workspace 8 }
+
+    // ── Focus movement ──
+    // 1/4=left  3/6=right  2=up  5=down  (matching Hyprland numpad layout)
+    Mod+1 { focus-column-left }
+    Mod+4 { focus-column-left }
+    Mod+3 { focus-column-right }
+    Mod+6 { focus-column-right }
+    Mod+2 { focus-window-up }
+    Mod+5 { focus-window-down }
+
+    // Scroll through workspaces with mousewheel
+    Mod+WheelScrollDown { focus-workspace-down }
+    Mod+WheelScrollUp   { focus-workspace-up }
+
+    // ── Window management ──
+    Ctrl+Shift+Q     { close-window }
+    Shift+Alt+Space  { toggle-window-floating }
+    Shift+Alt+Return { fullscreen-window }
+    Mod+P            { toggle-column-tabbed-display }  // closest to Hyprland pseudo
+    Mod+M            { quit }
+
+    // Move/resize with mouse (matches Hyprland bindm)
+    Mod+MouseLeft  { move-window }
+    Mod+MouseRight { resize-window }
+
+    // ── Launcher submap → direct Alt+key binds ──
+    // (Niri has no submap support; these replace Alt+Space → <key>)
+    Ctrl+Shift+Space { spawn "anyrun" }
+    Alt+V            { spawn "codium" }
+    Alt+B            { spawn "brave" }
+    Alt+P            { spawn "sh" "-c" "kitty pashare start" }
+    Alt+G            { spawn "godot-newest" }
+    Alt+S            { spawn "winspy" }
+    Alt+A            { spawn "sh" "-c" "audioMover ~/audio ~/audio/output ~/syncthing/media/audio" }
+    Alt+E            { spawn "thunar" }
+    Alt+T            { spawn "kitty" }
+    Alt+X            { spawn "xdm" }
+
+    // ── Scripts ──
+    Mod+G       { spawn "sh" "-c" "~/.config/hypr/scripts/clone_view.sh" }
+
+    // ── Lock screen ──
+    Mod+L       { spawn "hyprlock" "--no-fade-in" }
+    Ctrl+Mod+L  { spawn "armLock" }
+
+    // ── Screenshots ──
+    // Region capture → satty
+    Ctrl+Print       { spawn "sh" "-c" "hyprshot -m region --raw | satty --filename -" }
+    // Region → OCR → clipboard
+    Ctrl+Shift+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | tesseract - - stdout | wl-copy" }
+    // Full output
+    Shift+Print      { spawn "hyprshot" "-m" "output" }
+    // Active window
+    Print            { spawn "hyprshot" "-m" "window" }
+
+    // ── KeePass autotype ──
+    Ctrl+Alt+A { spawn "wayland-keepass-autotype" "-d" "~/keepassdb/keepass.kdbx" "-c" "30" }
+    Ctrl+Alt+S { spawn "wayland-keepass-autotype" "-d" "~/keepassdb/keepass.kdbx" "-c" "30" "--password-only" }
+    Ctrl+Alt+D { spawn "wayland-keepass-autotype" "-d" "~/keepassdb/keepass.kdbx" "-c" "30" "--otp-only" }
+
+    // ── Screen recorder / flashback ──
+    Ctrl+F9       { spawn "sh" "-c" "killall -SIGUSR1 gpu-screen-recorder" }
+    Ctrl+Shift+F9 { spawn "flashbackSaveAndOpen" }
+
+    // ── Misc ──
+    Ctrl+Escape           { spawn "sh" "-c" "killall wtype; niri msg action reconfigure" }
+    Ctrl+Alt+Shift+Slash  { spawn "toggle_inwhi" }
+
+    // ── Audio ──
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+" }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-" }
+    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" }
+    XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" }
+
+    // ── Brightness ──
+    XF86MonBrightnessUp   { spawn "brightnessctl" "-e4" "-n2" "set" "5%+" }
+    XF86MonBrightnessDown { spawn "brightnessctl" "-e4" "-n2" "set" "5%-" }
+
+    // ── Media ──
+    XF86AudioNext  allow-when-locked=true { spawn "playerctl" "next" }
+    XF86AudioPause allow-when-locked=true { spawn "playerctl" "play-pause" }
+    XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause" }
+    XF86AudioPrev  allow-when-locked=true { spawn "playerctl" "previous" }
+
+    // ── Niri built-ins ──
+    Mod+Shift+P { power-off-monitors }
+}
+
+// ───────────────────────────────────────────────
+// WINDOW RULES
+// ───────────────────────────────────────────────
+
+// Rounding (Hyprland rounding=10, rounding_power=2)
+window-rule {
+    match app-id=r#".*"#
+    clip-to-geometry true
+    geometry-corner-radius 10.0
+}
+
+// Inactive opacity (Hyprland inactive_opacity=0.6)
+window-rule {
+    match is-focused=false
+    opacity 0.6
+}
+
+// Active windows — full opacity
+window-rule {
+    match is-focused=true
+    opacity 1.0
+}
+
+// VSCodium → workspace 1, tiled
+window-rule {
+    match app-id="codium" is-floating=false
+    open-on-workspace "1-code"
+}
+
+// VSCodium file dialogs → floating
+window-rule {
+    match app-id="codium" title=r#"^(Save As|Open (File|Folder))$"#
+    open-floating true
+}
+
+// LosslessCut file dialogs → floating
+window-rule {
+    match app-id="Losslesscut" title=r#"^Open file$"#
+    open-floating true
+}
+
+// Brave → workspace 2
+window-rule {
+    match app-id=r#"brave.*"#
+    open-on-workspace "2-browser"
+}
+
+// Brave save dialogs → floating
+window-rule {
+    match app-id=r#"brave.*"# title=r#"^Save (As|File)$"#
+    open-floating true
+}
+
+// Beatblock → fullscreen
+window-rule {
+    match app-id="Beatblock" title="Beatblock"
+    open-fullscreen true
+}
+
+// Global Progress — floating, full opacity, no decorations
+window-rule {
+    match title="Global Progress"
+    open-floating true
+    opacity 1.0
+    focus-ring { off }
+    border { off }
+    shadow { off }
+}
+
+// HyprSpy — floating (pinned via always-on-top approximation)
+window-rule {
+    match title="HyprSpy"
+    open-floating true
+}
+
+// XWayland: suppress focus on untitled floating XWayland windows
+// (approximates Hyprland's no_focus = true for that windowrule)
+window-rule {
+    match app-id="" title="" is-floating=true is-fullscreen=false
+    focus-ring { off }
+    border { off }
+}

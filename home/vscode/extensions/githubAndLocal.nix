@@ -157,6 +157,12 @@ in
   programs.vscode.profiles.default = {
     extensions = [
       (buildFromFlake {
+        src = inputs.ext-kdl;
+        extName = "kdl";
+        extCreator = "kdl-org";
+        npmDepsHash = "sha256-opTWFuuNgvs97CBGdex8kRuAZMSWsxJj3NIlKwy+ws8=";
+      })
+      (buildFromFlake {
         src = inputs.ext-owoify-editor;
         extName = "owoify-editor";
         extCreator = "rssaromeo";
