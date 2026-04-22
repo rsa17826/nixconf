@@ -6,7 +6,7 @@
         name = "kdl";
         publisher = "kdl-org";
         version = "2.1.3";
-        sha256 = lib.fakeHash;
+        sha256 = "sha256-Jssmb5owrgNWlmLFSKCgqMJKp3sPpOrlEUBwzZSSpbM=";
       }
       {
         name = "Kotlin";
