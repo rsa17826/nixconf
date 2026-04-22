@@ -160,7 +160,7 @@ in
         src = inputs.ext-kdl;
         extName = "kdl";
         extCreator = "kdl-org";
-        npmDepsHash = "sha256-opTWFuuNgvs97CBGdex8kRuAZMSWsxJj3NIlKwy+ws8=";
+        npmDepsHash = "sha256-hD/R0fk0+4zm2lOqC8idTyozAXMcHBlB+YZ6w4jpm1k=";
       })
       (buildFromFlake {
         src = inputs.ext-owoify-editor;

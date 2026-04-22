@@ -150,13 +150,17 @@
     "ext-kdl": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-2F5StcHWFrZmLdSuDDWmRQyrV197A1WJG1q6DY9P0Pg=",
-        "type": "file",
-        "url": "https://github.com/kdl-org/vscode-kdl.git"
+        "lastModified": 1737100337,
+        "narHash": "sha256-oHn7d7LMwIQMOWxscTrLYhtnbXoxeFmb9E7bEd4XyLs=",
+        "owner": "kdl-org",
+        "repo": "vscode-kdl",
+        "rev": "5276060c388d3a43e7221146316e5023339f4811",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://github.com/kdl-org/vscode-kdl.git"
+        "owner": "kdl-org",
+        "repo": "vscode-kdl",
+        "type": "github"
       }
     },
     "ext-multi-formatter": {
