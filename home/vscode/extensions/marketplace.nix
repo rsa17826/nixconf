@@ -1,7 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "kdl";
+        publisher = "kdl-org";
+        version = "2.1.3";
+        sha256 = lib.fakeHash;
+      }
       {
         name = "Kotlin";
         publisher = "mathiasfrohlich";
