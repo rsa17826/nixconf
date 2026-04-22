@@ -147,6 +147,18 @@
         "type": "github"
       }
     },
+    "ext-kdl": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-2F5StcHWFrZmLdSuDDWmRQyrV197A1WJG1q6DY9P0Pg=",
+        "type": "file",
+        "url": "https://github.com/kdl-org/vscode-kdl.git"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/kdl-org/vscode-kdl.git"
+      }
+    },
     "ext-multi-formatter": {
       "flake": false,
       "locked": {
@@ -810,6 +822,7 @@
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
         "ext-better-end-line-actions": "ext-better-end-line-actions",
+        "ext-kdl": "ext-kdl",
         "ext-multi-formatter": "ext-multi-formatter",
         "ext-owoify-editor": "ext-owoify-editor",
         "ext-sds": "ext-sds",

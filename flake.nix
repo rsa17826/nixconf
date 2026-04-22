@@ -96,7 +96,7 @@
     };
     # ext
     ext-kdl = {
-      url = "https://github.com/kdl-org/vscode-kdl.git";
+      url = "github:kdl-org/vscode-kdl";
       flake = false;
     };
     ext-owoify-editor = {
