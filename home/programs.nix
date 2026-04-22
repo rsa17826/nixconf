@@ -141,7 +141,6 @@ in
       portablemc
       dgop # process stat screen thing
       bc # fp math in bash
-      niri
       gamescope
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
@@ -274,9 +273,6 @@ in
       };
     };
 
-    niri = {
-      enable = true;
-    };
     hyprland = {
       enable = true;
       package = pkgFromInp "hyprland" "hyprland";

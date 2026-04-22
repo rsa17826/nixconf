@@ -73,7 +73,7 @@
 
       # defaultSession = "plasma";
       # defaultSession = "hyprland";
-      defaultSession = "niri";
+      defaultSession = "hyprland-uwsm";
 
       # programs.twm.enable=true;
       autoLogin = {
