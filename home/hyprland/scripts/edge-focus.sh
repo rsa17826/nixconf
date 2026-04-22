@@ -1,75 +1,54 @@
 #!/usr/bin/env bash
-# edge-focus.sh — Daemon: mouse hits screen edge → focus next window + warp cursor to center
-# Add to hyprland.conf:  exec-once = ~/.config/hypr/scripts/edge-focus.sh
 
-BORDER=5          # px from screen edge that triggers focus change
-COOLDOWN_MS=700   # ms to ignore further triggers after one fires
+# CONFIG
+BORDER=2
+# COOLDOWN=0.4
+# LAST_TRIGGER=0
 
-focus_and_warp() {
-    local dir=$1
+# 1. Get Monitor Dimensions
+read -r MON_X MON_Y MON_W MON_H < <(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | "\(.x) \(.y) \(.width) \(.height)"')
 
-    # Only focus if a window actually exists in that direction (no wrapping)
-    local active wx workspace has_win
-    active=$(hyprctl activewindow -j 2>/dev/null)
-    [ -z "$active" ] && return
+RIGHT_EDGE=$((MON_X + MON_W - BORDER))
+LEFT_EDGE=$((MON_X + BORDER))
+BOTTOM_EDGE=$((MON_Y + MON_H - BORDER))
+TOP_EDGE=$((MON_Y + BORDER))
 
-    wx=$(echo "$active" | jq '.at[0]')
-    workspace=$(echo "$active" | jq '.workspace.id')
+# The absolute pixel value for the "far" edge (adjusting for offset)
+Y_MAX=$((MON_Y + MON_H - 5)) # 5px offset so it doesn't immediately re-trigger
+Y_MIN=$((MON_Y + 5))
 
-    if [ "$dir" = "l" ]; then
-        has_win=$(hyprctl clients -j | jq "[.[] | select(.workspace.id == $workspace and .floating == false and .at[0] < $wx)] | length > 0")
-    else
-        has_win=$(hyprctl clients -j | jq "[.[] | select(.workspace.id == $workspace and .floating == false and .at[0] > $wx)] | length > 0")
-    fi
+while true; do
+  POS=$(hyprctl cursorpos)
+  CX=${POS%%,*}
+  CY=${POS#*, }
 
-    [ "$has_win" != "true" ] && return
+  # NOW=$EPOCHREALTIME
 
-    # Move focus
-    hyprctl dispatch layoutmsg "focus $dir" >/dev/null
+  # if (($(echo "$NOW - $LAST_TRIGGER > $COOLDOWN" | bc -l))); then
+  # --- Horizontal: Switch Windows ---
+  if ((CX >= RIGHT_EDGE)); then
+    hyprctl dispatch movefocus r
+    # LAST_TRIGGER=$NOW
+  elif ((CX <= LEFT_EDGE)); then
+    hyprctl dispatch movefocus l
+    # LAST_TRIGGER=$NOW
 
-    # Wait for layout to settle before reading new window position
-    sleep 0.12
+  # --- Vertical: Switch Workspaces + Mouse Warp ---
+  elif ((CY >= BOTTOM_EDGE)); then
+    # Move to next workspace
+    hyprctl dispatch workspace m+1
+    # Warp mouse to Top (Y_MIN) keeping same X
+    hyprctl dispatch movecursor "$CX $Y_MIN"
+    # LAST_TRIGGER=$NOW
 
-    # Warp cursor to center of newly focused window
-    local win wax way waw wah
-    win=$(hyprctl activewindow -j 2>/dev/null)
-    wax=$(echo "$win" | jq '.at[0]')
-    way=$(echo "$win" | jq '.at[1]')
-    waw=$(echo "$win" | jq '.size[0]')
-    wah=$(echo "$win" | jq '.size[1]')
-    hyprctl dispatch movecursor "$((wax + waw / 2))" "$((way + wah / 2))" >/dev/null
-}
+  elif ((CY <= TOP_EDGE)); then
+    # Move to previous workspace
+    hyprctl dispatch workspace m-1
+    # Warp mouse to Bottom (Y_MAX) keeping same X
+    hyprctl dispatch movecursor "$CX $Y_MAX"
+    # LAST_TRIGGER=$NOW
+  fi
+  # fi
 
-LAST_TRIGGER=0
-
-# Listen to Hyprland socket events using process substitution so variables persist
-while IFS= read -r line; do
-    # Only care about mouse movement events
-    [[ "$line" != mousemove* ]] && continue
-
-    # Debounce
-    NOW=$(date +%s%3N)
-    (( NOW - LAST_TRIGGER < COOLDOWN_MS )) && continue
-
-    # Parse cursor X from "mousemove>>X,Y"
-    COORDS="${line#mousemove>>}"
-    CX="${COORDS%,*}"
-
-    # Get focused monitor: x offset and logical width
-    read -r MON_X MON_W < <(
-        hyprctl monitors -j | jq -r '
-            .[] | select(.focused == true) | "\(.x) \(.width)"
-        '
-    )
-
-    # Trigger on right edge
-    if (( CX >= MON_X + MON_W - BORDER )); then
-        focus_and_warp r
-        LAST_TRIGGER=$(date +%s%3N)
-    # Trigger on left edge
-    elif (( CX <= MON_X + BORDER )); then
-        focus_and_warp l
-        LAST_TRIGGER=$(date +%s%3N)
-    fi
-
-done < <(socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock")
+  sleep 0.05
+done
