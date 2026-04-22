@@ -67,7 +67,12 @@
         enable = false;
         wayland.enable = false;
       };
-      ly.enable = true;
+      ly = {
+        enable = true;
+      };
+      niri = {
+        enable = true;
+      };
 
       # defaultSession = "plasma";
       # defaultSession = "hyprland";
