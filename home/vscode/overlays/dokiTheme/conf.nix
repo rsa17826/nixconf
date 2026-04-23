@@ -4,9 +4,7 @@ self: super: {
     let
       # Define images here so they are easy to reference
       img = {
-        bg = ./Copilot_Kali_Flag.png;
-        # TODO emptyEditor not working dont know way will try fix later
-        # https://github.com/doki-theme/doki-theme-vscode/blob/main/src/StickerService.ts#L170
+        bg = ./aaa.png;
         emptyEditor = ./emptyEditor.png;
         sticker = ./asticker2.png;
       };
