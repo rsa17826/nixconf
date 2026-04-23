@@ -234,6 +234,7 @@ in
       fdupes
       dunst # notifier
       perl
+      kdePackages.qtdeclarative
     ];
   };
   services = {
