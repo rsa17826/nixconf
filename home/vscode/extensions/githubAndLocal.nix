@@ -149,11 +149,11 @@ let
   #   }:
   #   pkgs.vscode-utils.extensionFromVscodeMarketplace {
   #     inherit name publisher version;
-  #     sha256 = sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
+  #     sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 
   #     src = pkgs.fetchurl {
   #       url = "https://${domain}/${publisher}/${name}/${version}/${publisher}.${name}-${version}.vsix";
-  #       sha256 = sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
+  #       sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   #     };
   #   };
 in
