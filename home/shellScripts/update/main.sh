@@ -153,6 +153,7 @@ if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
   TMPOUT=$(mktemp)
+  err=1
 
   while true; do
     sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace 2>&1 |
@@ -174,9 +175,11 @@ else
         git push --force-with-lease
       fi
       rm -f "$TMPOUT"
+      err=0
     else
       echo "⚠️  No fixable hashes found. Manual intervention needed."
       echo "$TMPOUT"
+      err=1
       break
     fi
   done
@@ -184,4 +187,5 @@ fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
 # Return to original directory
-popd >/dev/null || exit
+popd >/dev/null || exit 1
+exit "$err"
