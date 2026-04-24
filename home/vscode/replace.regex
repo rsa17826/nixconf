@@ -248,7 +248,7 @@ $2
 
 @name nix fix fake hash
 @file \.nix$
-@regex \blib\.fakeHash\b
-@replace sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+@regex (?<=[\s])(?:pkgs\.)?lib\.fakeHash(?=[\s;])
+@replace "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
 @endregex
 

@@ -71,7 +71,7 @@ let
       vscodeExtPublisher = publisher;
       vscodeExtUniqueId = "${publisher}.${name}";
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
-      hash = pkgs.sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
+      hash = "sha256-HASH+FROM+LOCAL+VSIX+FILE+AAAAAAAAAAAAAAAAA=";
       pname = name; # Add this line specifically
       sourceRoot = ".";
     };
@@ -162,7 +162,7 @@ in
         src = inputs.ext-vscode-void-color-theme;
         extName = "void-theme";
         extCreator = "rssaromeo";
-        npmDepsHash = "sha256-opTWFsuNgvs97CBGdex8kRuAZMSWBxJj3NIlKwy+ws8=";
+        npmDepsHash = "sha256-Dsx9bVQlpDoPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
       })
       (buildFromFlake {
         src = inputs.ext-owoify-editor;
