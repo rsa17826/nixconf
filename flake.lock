@@ -118,11 +118,11 @@
     "ext-auto-regex": {
       "flake": false,
       "locked": {
-        "lastModified": 1776784198,
-        "narHash": "sha256-rkORG/U8Z84AuJfQ1Yo/y+87SNPr64Qkl1c+LpWsXK8=",
+        "lastModified": 1777059757,
+        "narHash": "sha256-/0W8if3YAE+R59T24Q91vu7LqyeSka0/nQp4J3q9NkU=",
         "owner": "rsa17826",
         "repo": "auto-regex-vscode-extension",
-        "rev": "06516c69af9e7e6f0edf67d63f7e04504fdd982c",
+        "rev": "854608959a16340a3d3e95aad813624b3afa8e19",
         "type": "github"
       },
       "original": {
@@ -224,6 +224,22 @@
       "original": {
         "owner": "rsa17826",
         "repo": "textreplace-vscode-extension",
+        "type": "github"
+      }
+    },
+    "ext-vscode-void-color-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777058134,
+        "narHash": "sha256-sjvIiqs82PYf5Y37ElyuPjK+mbpSnlvbS/9a6dEuHWM=",
+        "owner": "rsa17826",
+        "repo": "vscode-void-color-theme",
+        "rev": "0ffe5d32acf7ad3e9df44ce141aae8982d789614",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "vscode-void-color-theme",
         "type": "github"
       }
     },
@@ -815,6 +831,7 @@
         "ext-sds": "ext-sds",
         "ext-simple-auto-formatter": "ext-simple-auto-formatter",
         "ext-textreplace": "ext-textreplace",
+        "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "hypr-darkwindow": "hypr-darkwindow",

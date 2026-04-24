@@ -95,6 +95,10 @@
       };
     };
     # ext
+    ext-vscode-void-color-theme = {
+      url = "github:rsa17826/vscode-void-color-theme";
+      flake = false;
+    };
     ext-owoify-editor = {
       url = "github:rsa17826/vscodeowotest";
       flake = false;

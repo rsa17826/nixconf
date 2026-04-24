@@ -71,7 +71,7 @@ let
       vscodeExtPublisher = publisher;
       vscodeExtUniqueId = "${publisher}.${name}";
       # If Nix still complains about null, use a dummy hash or run 'nix-hash --flat --type sha256 path/to/file'
-      hash = pkgs.lib.fakeHash;
+      hash = pkgs.sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
       pname = name; # Add this line specifically
       sourceRoot = ".";
     };
@@ -147,17 +147,23 @@ let
   #   }:
   #   pkgs.vscode-utils.extensionFromVscodeMarketplace {
   #     inherit name publisher version;
-  #     sha256 = lib.fakeHash;
+  #     sha256 = sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
 
   #     src = pkgs.fetchurl {
   #       url = "https://${domain}/${publisher}/${name}/${version}/${publisher}.${name}-${version}.vsix";
-  #       sha256 = lib.fakeHash;
+  #       sha256 = sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;
   #     };
   #   };
 in
 {
   programs.vscode.profiles.default = {
     extensions = [
+      (buildFromFlake {
+        src = inputs.ext-vscode-void-color-theme;
+        extName = "void-theme";
+        extCreator = "rssaromeo";
+        npmDepsHash = "sha256-opTWFsuNgvs97CBGdex8kRuAZMSWBxJj3NIlKwy+ws8=";
+      })
       (buildFromFlake {
         src = inputs.ext-owoify-editor;
         extName = "owoify-editor";
