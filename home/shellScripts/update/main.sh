@@ -172,7 +172,7 @@ else
       if [[ "$SKIP_GIT" == false ]]; then
         git add -A
         git commit --amend --no-edit
-        git push --force-with-lease
+      git push --force-with-lease
       fi
       rm -f "$TMPOUT"
       err=0
