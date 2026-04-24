@@ -230,11 +230,11 @@
     "ext-vscode-void-color-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1777058134,
-        "narHash": "sha256-sjvIiqs82PYf5Y37ElyuPjK+mbpSnlvbS/9a6dEuHWM=",
+        "lastModified": 1777060405,
+        "narHash": "sha256-juEVYr6zKauF+yAmQQ92cjaEU7OJJF2Uppubv7+pOZM=",
         "owner": "rsa17826",
         "repo": "vscode-void-color-theme",
-        "rev": "0ffe5d32acf7ad3e9df44ce141aae8982d789614",
+        "rev": "67c96044e0800bfe08972325295c8ba03ec7f0e1",
         "type": "github"
       },
       "original": {
