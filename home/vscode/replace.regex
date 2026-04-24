@@ -252,3 +252,8 @@ $2
 @replace "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
 @endregex
 
+@name force real - char
+@regex \u2013
+@replace -
+@endregex
+
