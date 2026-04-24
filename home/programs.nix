@@ -131,6 +131,7 @@ in
       browserSelectorDesktop
       #
       kdlfmt
+      icu
       rofi
       typescript
       nodejs
