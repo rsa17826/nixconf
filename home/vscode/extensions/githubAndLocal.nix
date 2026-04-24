@@ -16,6 +16,7 @@ let
       buildInputs ? [ ],
       npmInstallFlags ? [ ],
       npmDepsFetcherVersion ? 1,
+      dontNpmBuild ? false,
     }:
     let
       # Extract version from package.json in the source
@@ -34,6 +35,7 @@ let
         preBuild = ''
           rm -rf src/test || true
         '';
+        inherit dontNpmBuild;
         npmBuildScript = "compile";
         nativeBuildInputs = [ pkgs.typescript ] ++ nativeBuildInputs;
         inherit buildInputs;
@@ -163,6 +165,7 @@ in
         extName = "void-theme";
         extCreator = "rssaromeo";
         npmDepsHash = "sha256-Dsx9bVQlpDoPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
+        dontNpmBuild = true;
       })
       (buildFromFlake {
         src = inputs.ext-owoify-editor;
