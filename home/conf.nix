@@ -86,12 +86,12 @@ in
   nix.settings = {
     auto-optimise-store = true;
   };
-  nix.gc = {
-    persistent = true;
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
-  };
+  # nix.gc = {
+  #   persistent = true;
+  #   automatic = true;
+  #   dates = "daily";
+  #   options = "--delete-older-than 7d";
+  # };
   environment = {
     variables = {
       EDITOR = "nvim";
