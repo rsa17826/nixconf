@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ userConfig, pkgs, ... }:
 
 let
   extraPackages =
@@ -25,8 +25,8 @@ let
         # }
       ];
 
-  myPython = pkgs.python314.withPackages (_: extraPackages);
+  python314Pkgs = pkgs.python314.withPackages (_: extraPackages);
 in
 {
-  environment.systemPackages = [ myPython ];
+  users.users."${userConfig.uname}".packages = [ python314Pkgs ];
 }
