@@ -823,4 +823,9 @@
     "workbench.action.terminal.killEditor",
     "workbench.action.closeGroup",
   ],
+  "[json][jsonc]": {
+    "editor.codeActionsOnSave": ["source.fixAll"],
+  },
+  "fixAllJson.insertMissingCommaOnEnter": true,
+  "fixAllJson.insertMissingDoubleQuotesOnColon": true,
 }
