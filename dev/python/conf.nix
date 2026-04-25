@@ -20,7 +20,7 @@ let
       [
         {
           pname = "types-curses";
-          version = "2.0.2";
+          version = "2.4.2";
           sha256 = "sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=";
         }
       ];
