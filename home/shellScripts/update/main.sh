@@ -69,6 +69,7 @@ HASH_FIX_FILES=(
   # e.g. "pkgs/better-end-line-actions/default.nix"
   "home/vscode/extensions/githubAndLocal.nix"
   "home/vscode/extensions/marketplace.nix"
+  "dev/python/conf.nix"
 )
 auto_fix_hashes() {
   local tmpfile="$1"
