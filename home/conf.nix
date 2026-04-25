@@ -58,17 +58,30 @@ in
     # (Fixes older tools that don't know about flakes yet)
     nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
   };
-  nixpkgs.config = {
-    allowUnfreePredicate =
-      pkg:
-      builtins.elem (pkgs.lib.getName pkg) [
-        "nvidia-x11"
-        "nvidia-settings"
-        "nvidia-persistenced"
-        "steam"
-        "steam-original"
-        "steam-unwrapped"
-      ];
+  nixpkgs = {
+    overlays = [
+      (final: prev: {
+        pkgsi686Linux = prev.pkgsi686Linux.extend (
+          _: p: {
+            openldap = p.openldap.overrideAttrs (_: {
+              doCheck = false;
+            });
+          }
+        );
+      })
+    ];
+    config = {
+      allowUnfreePredicate =
+        pkg:
+        builtins.elem (pkgs.lib.getName pkg) [
+          "nvidia-x11"
+          "nvidia-settings"
+          "nvidia-persistenced"
+          "steam"
+          "steam-original"
+          "steam-unwrapped"
+        ];
+    };
   };
   nix.settings = {
     auto-optimise-store = true;
