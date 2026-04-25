@@ -131,6 +131,8 @@ in
       browserSelectorDesktop
       #
       kdlfmt
+      libxkbcommon
+      fzf
       rofi
       typescript
       nodejs
