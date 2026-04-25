@@ -18,11 +18,11 @@ let
         }
       )
       [
-        {
-          pname = "types-curses";
-          version = "2.4.2";
-          sha256 = "sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=";
-        }
+        # {
+        #   pname = "types-curses";
+        #   version = "2.4.2";
+        #   sha256 = "sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=";
+        # }
       ];
 
   myPython = pkgs.python314.withPackages (_: extraPackages);
