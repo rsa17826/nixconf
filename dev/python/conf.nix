@@ -12,6 +12,8 @@ let
         pkgs.python314Packages.buildPythonPackage {
           inherit pname version;
           src = pkgs.fetchPypi { inherit pname version sha256; };
+          pyproject = true;
+          build-system = [ pkgs.python314Packages.setuptools ];
           doCheck = false;
         }
       )
@@ -21,7 +23,6 @@ let
           version = "2.0.2";
           sha256 = "sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=";
         }
-        # just add more attrsets here
       ];
 
   myPython = pkgs.python314.withPackages (_: extraPackages);
