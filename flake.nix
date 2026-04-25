@@ -238,6 +238,7 @@
           email = "rsa17826@email.vccs.edu";
           homeFile = ./home/home.nix;
           modules = [
+            ./dev/python/conf.nix
             ./home/conf.nix
             ./home/programs.nix
             ./home/base.nix
