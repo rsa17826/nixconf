@@ -1,44 +1,57 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -e
 
-# Get current branch
+FLAKE_DIR="$HOME/nixconf"
+
 BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 
-# Join all arguments into a single string as the commit message
-MESSAGE="$*"
-MESSAGE="${MESSAGE:-NO MESSAGE SET}"
+MESSAGE="${*:-NO MESSAGE SET}"
 
-# Stage all changes
 git add -A
-
-# Only commit if there are changes
 if ! git diff --cached --quiet; then
   git commit -m "$MESSAGE"
 else
   echo "No changes to commit."
 fi
 
-# Get all remotes
 REMOTES=$(git remote)
-
 if [ -z "$REMOTES" ]; then
   echo "No remotes configured."
   exit 0
 fi
-
-# Loop through each remote
 for remote in $REMOTES; do
-  # Get all push URLs for this remote
   PUSH_URLS=$(git remote get-url --push "$remote" 2>/dev/null || echo "")
+  [ -z "$PUSH_URLS" ] && continue
 
-  if [ -z "$PUSH_URLS" ]; then
-    echo "No push URL for remote $remote, skipping."
-    continue
-  fi
-
-  # Push to each URL for this remote
   echo "$PUSH_URLS" | while read -r url; do
-    echo "Pushing to $remote ($url) on branch $BRANCH..."
-    git push "$url" "$BRANCH" || echo "Failed to push to $url, continuing..."
+    echo "Pushing to $remote ($url)..."
+
+    if git push "$url" "$BRANCH"; then
+
+      # Extract "owner/repo" from the Git URL (handles SSH and HTTPS)
+      CLEAN_URL=$(echo "$url" | sed -E 's|.*github.com[:/]([^/]+/[^/.]+)(\.git)?$|\1|')
+
+      # Query the flake metadata for inputs matching that owner/repo
+      MATCHING_INPUTS=$(
+        nix flake metadata "$FLAKE_DIR" --json | jq -r --arg TARGET "$CLEAN_URL" '
+        .locks.nodes | to_entries[] |
+        select(
+          (.value.original.owner + "/" + .value.original.repo == $TARGET) or
+          (.value.original.url | strings | contains($TARGET))
+        ) | .key'
+      )
+
+      if [ -n "$MATCHING_INPUTS" ]; then
+        pushd "$FLAKE_DIR" >/dev/null
+        for input in $MATCHING_INPUTS; do
+          echo "✨ Match found! Updating flake input: $input"
+          nix flake update "$input"
+        done
+        popd >/dev/null
+      fi
+
+    else
+      echo "Failed to push to $url, continuing..."
+    fi
   done
 done
