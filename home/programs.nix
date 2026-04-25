@@ -6,7 +6,7 @@
   ...
 }:
 let
-  browserSelectorPkg = pkgFromInp "browserSelector" "default";
+  browserSelectorPkg = pkgFromInp "browser-selector" "default";
 
   browserSelectorDesktop = pkgs.makeDesktopItem {
     name = "browser-selector";
