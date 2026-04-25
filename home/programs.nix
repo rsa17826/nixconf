@@ -127,6 +127,7 @@ in
       (pkgFromInp "wayland-keepass-autotype" "default")
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
+      (pkgFromInp "browser-selector" "default")
       browserSelectorPkg
       browserSelectorDesktop
       #

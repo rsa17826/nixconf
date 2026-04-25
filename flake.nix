@@ -88,7 +88,7 @@
         flake-utils.follows = "flake-utils";
       };
     };
-    browserSelector = {
+    browser-selector = {
       url = "github:rsa17826/browserSelector";
       inputs = {
         nixpkgs.follows = "nixpkgs";
