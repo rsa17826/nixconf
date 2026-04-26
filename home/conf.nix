@@ -222,6 +222,11 @@ in
         # Graphics
         libGL
         vulkan-loader
+
+        icu
+        zlib
+        openssl
+        glibc
       ];
     };
     mouse-actions.enable = true;
