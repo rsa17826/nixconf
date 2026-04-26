@@ -130,6 +130,10 @@ in
       # (pkgFromInp "file-sorter" "default")
       browserSelectorPkg
       browserSelectorDesktop
+      # why everything want these?
+      icu
+      openssl
+      zlib
       #
       kdlfmt
       libxkbcommon
