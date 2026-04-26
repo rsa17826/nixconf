@@ -14,9 +14,33 @@ let
     genericName = "Web Browser";
     exec = "${browserSelectorPkg}/bin/browser-selector %u";
     mimeTypes = [
+      # URL schemes
       "x-scheme-handler/http"
       "x-scheme-handler/https"
       "x-scheme-handler/ftp"
+      "x-scheme-handler/chrome"
+      "x-scheme-handler/about"
+      "x-scheme-handler/unknown"
+
+      # Web documents
+      "text/html"
+      "text/xml"
+      "text/mhtml"
+      "application/xhtml+xml"
+      "application/xml"
+
+      # PDFs (browsers handle these)
+      "application/pdf"
+
+      # Web feeds
+      "application/rss+xml"
+      "application/atom+xml"
+
+      # Media (if you want browser to be the fallback)
+      "audio/webm"
+      "video/webm"
+      "video/mp4"
+      "audio/mp4"
     ];
     startupNotify = false;
     noDisplay = false;
