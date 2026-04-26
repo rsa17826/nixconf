@@ -224,9 +224,11 @@ in
         vulkan-loader
 
         icu
+        glibc
+        libstdcxx
+        icu
         zlib
         openssl
-        glibc
       ];
     };
     mouse-actions.enable = true;
