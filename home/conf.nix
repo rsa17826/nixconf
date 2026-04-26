@@ -225,7 +225,6 @@ in
 
         icu
         glibc
-        libstdcxx
         icu
         zlib
         openssl
