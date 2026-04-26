@@ -129,12 +129,6 @@ let
   #   )
 in
 {
-  xdg.mime.defaultApplications = {
-    "x-scheme-handler/http" = "browser-selector.desktop";
-    "x-scheme-handler/https" = "browser-selector.desktop";
-    "x-scheme-handler/ftp" = "browser-selector.desktop";
-    "text/html" = "browser-selector.desktop";
-  };
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
