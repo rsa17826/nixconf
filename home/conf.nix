@@ -226,6 +226,7 @@ in
         icu
         glibc
         icu
+        gcc
         zlib
         openssl
       ];
