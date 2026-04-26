@@ -26,6 +26,7 @@ let
       "text/html"
       "text/xml"
       "text/mhtml"
+      "text/plain"
       "application/xhtml+xml"
       "application/xml"
 
