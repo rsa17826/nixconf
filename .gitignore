@@ -4,3 +4,4 @@ vm/userjs
 vm/userts
 vm/Violentmonkey
 updatelog.ans
+__pycache__

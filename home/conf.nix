@@ -26,6 +26,7 @@ in
     ./unbound/conf.nix
     ./godot/conf.nix
     ./thumbnails/conf.nix
+    ./mitmproxy/conf.nix
     # ./browserSelector/conf.nix
     # ./tts/conf.nix
   ];
