@@ -244,7 +244,6 @@ REPLACEMENTS += [ # pyright: ignore[reportConstantRedefinition]
   (re.compile(r"b\*\*\*", re.IGNORECASE), "bitch"),
   (re.compile(r"(?<!\w)f'ing(?!\w)", re.IGNORECASE), "fucking"),
   (re.compile(r"(?<!\w)NSFW(?!\w)", re.IGNORECASE), "porn"),
-  # h e c k  with substitution chars
   (
     re.compile(
       r"(?<![a-z0-9@#$%^&\*x♥])[h%#*♥] ?[e%#*♥] ?[c%#*♥] ?[k%#*♥](?=[^a-z0-9@#$%^&\*x♥]|$)",
@@ -279,11 +278,32 @@ _TEXT_TYPES = (
   "text/css",
 )
 
+REPLACEMENT_MAP = {p.pattern: r for p, r in REPLACEMENTS}
+
+# 2. Combine all patterns into one giant 'OR' regex
+# This is the "Magic Bullet" for performance
+combined_pattern = re.compile(
+  "|".join(p.pattern for p, _ in REPLACEMENTS), re.IGNORECASE
+)
+
 
 def replace_text(text: str) -> str:
-  for pattern, repl in REPLACEMENTS:
-    text = pattern.sub(repl, text)
-  return text
+  def dispatch(match):
+    # match.re.pattern gives us the specific sub-pattern that triggered the match
+    return REPLACEMENT_MAP.get(match.re.pattern, match.group(0))
+
+  return combined_pattern.sub(dispatch, text)
+
+
+# def replace_text(text: str) -> str:
+#   for pattern, repl in REPLACEMENTS:
+#     text = pattern.sub(repl, text)
+#   return text
+
+
+# def request(self, flow: http.HTTPFlow) -> None:
+#   # Strip compression headers so the server sends raw HTML
+#   flow.request.headers.pop("Accept-Encoding", None)
 
 
 class TextReplaceAddon:
@@ -293,6 +313,7 @@ class TextReplaceAddon:
       return
 
     # Skip tiny or clearly binary responses
+    # return
     cl = int(flow.response.headers.get("content-length", 0))
     if cl > 5_000_000: # skip responses > 5 MB
       return
