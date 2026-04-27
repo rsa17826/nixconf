@@ -1,5 +1,5 @@
 {...}:{
   security.pki.certificateFiles=[
-    ./mitmproxy.crt
+    ./mitmproxy-pem.crt
   ];
 }
