@@ -154,6 +154,7 @@ in
       openssl
       zlib
       #
+      socat
       kdlfmt
       libxkbcommon
       fzf
