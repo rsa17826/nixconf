@@ -27,13 +27,11 @@ in
   imports = [
     inputs.sops-nix.homeManagerModules.sops
   ]
-  ++ (lib.map (p: ./${p}/home.nix) # 1. The function comes first
-    (
-      lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/home.nix)) (
-        builtins.attrNames dir # 2. The list comes second
-      )
+  ++ (lib.map (p: ./${p}/home.nix) (
+    lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/home.nix)) (
+      builtins.attrNames dir
     )
-  );
+  ));
   systemd = {
     user = {
       services = {

@@ -5,6 +5,7 @@
   hostName,
   lib,
   pkgs,
+  listDir,
   ...
 }:
 let
@@ -14,19 +15,13 @@ let
     "NIXOS_LABEL_VERSION"
     "NIXOS_LABEL"
   ];
-  dir = builtins.readDir ./.;
 in
 {
   imports = [
     ./alias.nix
+
   ]
-  ++ (lib.map (p: ./${p}/conf.nix) # 1. The function comes first
-    (
-      lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)) (
-        builtins.attrNames dir # 2. The list comes second
-      )
-    )
-  );
+  ++ (listDir (p: ./${p}/conf.nix));
   security.pam.services.hyprlock = {
     text = ''
       auth include login

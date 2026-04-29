@@ -147,6 +147,18 @@
         inherit inputs;
         pkgFromInp =
           inputName: pkgName: inputs.${inputName}.packages.${pkgs.stdenv.hostPlatform.system}.${pkgName};
+        listDir =
+          cb:
+          (
+            let
+              dir = builtins.readDir ./.;
+            in
+            (builtins.map cb (
+              builtins.filter (name: dir.${name} == "directory" && builtins.pathExists (cb name)) (
+                builtins.attrNames dir
+              )
+            ))
+          );
       };
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
