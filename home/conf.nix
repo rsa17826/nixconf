@@ -20,9 +20,13 @@ in
   imports = [
     ./alias.nix
   ]
-  ++ lib.map (lib.filter (
-    name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)
-  ) (builtins.attrNames dir)) (p: ./${p}/conf.nix);
+  ++ (lib.map (p: ./${p}/conf.nix) # 1. The function comes first
+    (
+      lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)) (
+        builtins.attrNames dir # 2. The list comes second
+      )
+    )
+  );
   security.pam.services.hyprlock = {
     text = ''
       auth include login
