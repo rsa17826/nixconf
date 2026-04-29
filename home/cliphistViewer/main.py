@@ -17,6 +17,7 @@ import sys
 
 # ── helpers ──────────────────────────────────────────────────────────────────
 
+
 def get_history() -> list[str]:
   try:
     result = subprocess.run(
@@ -24,8 +25,11 @@ def get_history() -> list[str]:
       capture_output=True,
       text=True,
       check=True,
+      errors="replace", # Handle non-utf8 characters gracefully
     )
-    lines = result.stdout.strip().split("\n")
+    # Remove null bytes from the entire output
+    sanitized_stdout = result.stdout.replace("\0", "")
+    lines = sanitized_stdout.strip().split("\n")
     return [l for l in lines if l.strip()]
   except subprocess.CalledProcessError:
     return []
@@ -57,22 +61,22 @@ def preview(raw_line: str, width: int) -> str:
 
 C_NORMAL = 0
 C_SELECTED = 1 # highlighted row
-C_FILTER = 2    # search bar text
-C_STATUS = 3    # bottom status bar
-C_COUNT = 4     # item count in status bar
-C_EMPTY = 5     # "no results" message
-C_MATCH = 6     # matched substring in a normal row
+C_FILTER = 2 # search bar text
+C_STATUS = 3 # bottom status bar
+C_COUNT = 4 # item count in status bar
+C_EMPTY = 5 # "no results" message
+C_MATCH = 6 # matched substring in a normal row
 C_MATCH_SEL = 7 # matched substring in the selected row
 
 
 def init_colors() -> None:
   curses.use_default_colors()
-  curses.init_pair(C_SELECTED,  curses.COLOR_BLACK,  curses.COLOR_CYAN)
-  curses.init_pair(C_FILTER,    curses.COLOR_CYAN,   -1)
-  curses.init_pair(C_STATUS,    curses.COLOR_BLACK,  curses.COLOR_WHITE)
-  curses.init_pair(C_COUNT,     curses.COLOR_YELLOW, curses.COLOR_WHITE)
-  curses.init_pair(C_EMPTY,     curses.COLOR_RED,    -1)
-  curses.init_pair(C_MATCH,     curses.COLOR_YELLOW, -1)
+  curses.init_pair(C_SELECTED, curses.COLOR_BLACK, curses.COLOR_CYAN)
+  curses.init_pair(C_FILTER, curses.COLOR_CYAN, -1)
+  curses.init_pair(C_STATUS, curses.COLOR_BLACK, curses.COLOR_WHITE)
+  curses.init_pair(C_COUNT, curses.COLOR_YELLOW, curses.COLOR_WHITE)
+  curses.init_pair(C_EMPTY, curses.COLOR_RED, -1)
+  curses.init_pair(C_MATCH, curses.COLOR_YELLOW, -1)
   curses.init_pair(C_MATCH_SEL, curses.COLOR_YELLOW, curses.COLOR_CYAN)
 
 
@@ -140,11 +144,14 @@ def run(stdscr: curses._CursesWindow) -> None:
       safe_addstr(2, 0, "  no matches", curses.color_pair(C_EMPTY))
     else:
       for rel, item in enumerate(filtered[scroll_top : scroll_top + list_h]):
-        row   = rel + 1
+        row = rel + 1
         abs_i = rel + scroll_top
         is_selected = abs_i == selected
-        base_attr   = curses.color_pair(C_SELECTED) if is_selected else 0
-        match_attr  = curses.color_pair(C_MATCH_SEL if is_selected else C_MATCH) | curses.A_BOLD
+        base_attr = curses.color_pair(C_SELECTED) if is_selected else 0
+        match_attr = (
+          curses.color_pair(C_MATCH_SEL if is_selected else C_MATCH)
+          | curses.A_BOLD
+        )
 
         line = ("  " + preview(item, safe_w - 2)).ljust(safe_w)[:safe_w]
 
@@ -156,9 +163,9 @@ def run(stdscr: curses._CursesWindow) -> None:
             safe_addstr(row, 0, line, base_attr)
           else:
             hi = lo + len(filter_text)
-            safe_addstr(row, 0,  line[:lo],   base_attr)
-            safe_addstr(row, lo, line[lo:hi],  match_attr)
-            safe_addstr(row, hi, line[hi:],    base_attr)
+            safe_addstr(row, 0, line[:lo], base_attr)
+            safe_addstr(row, lo, line[lo:hi], match_attr)
+            safe_addstr(row, hi, line[hi:], base_attr)
 
     # ── status bar (last row) ────────────────────────────────────────────
     count_str = f" {selected + 1}/{len(filtered)} " if filtered else " 0/0 "
