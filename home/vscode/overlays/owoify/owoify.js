@@ -1,78 +1,77 @@
 Object.assign(window, console)
 /**
- * @param {String} inputText
+ * @param {String} text
  * @returns {String}
  */
-function owowify(inputText) {
+function owowify(text) {
   const endSentencePattern = String.raw`([\w ,.!?]+)?` // endSentencePattern
   // const endSentencePattern1 = String.raw`([\w ,.?]+)?`; // endSentencePattern without "!" sign
   // const endSentencePattern2 = String.raw`([\w ,.]+)?`; // endSentencePattern without "!" and "?" sign
-  inputText = String(inputText)
+  text = String(text)
   const vowel = "[aiueo]"
   const vowelNoE = "[aiuo]" // vowel without e
   const vowelNoIE = "[auo]" // vowel without i and e
   const zackqyWord = "[jzckq]"
-  var result = inputText
   // OwO emote
-  result = result.replace(
+  text = text.replace(
     reg`/(i(?:'|)m(?:\s+|\s+so+\s+)bored)${endSentencePattern}/gi`,
     subOwoEmote("-w-"),
   )
-  result = result.replace(
+  text = text.replace(
     reg`/(love\s+(?:you|him|her|them))${endSentencePattern}/gi`,
     subOwoEmote("uwu"),
   )
-  result = result.replace(
+  text = text.replace(
     reg`/(i\s+don(?:'|)t\s+care|i\s*d\s*c)${endSentencePattern}/gi`,
     subOwoEmote("0w0"),
   )
   // world substitution
-  result = result.replace(reg`/l[ou]ve?/gi`, ($0) =>
+  text = text.replace(reg`/l[ou]ve?/gi`, ($0) =>
     subSameCase($0, "luv"),
   )
   // OwO translation
   // /*result = result replace all "r" to "w", no exception! */
   //     result = result.replace(/r/gi, $0 => subSameCase($0, "w"))
   /*result = result replace all "r" to "w", unless r is alone */
-  result = result.replace(/(?<=\w)r/gi, ($0) => subSameCase($0, "w"))
-  result = result.replace(/r(?=\w)/gi, ($0) => subSameCase($0, "w"))
+  text = text.replace(/(?<=\w)r/gi, ($0) => subSameCase($0, "w"))
+  text = text.replace(/r(?=\w)/gi, ($0) => subSameCase($0, "w"))
   /* lame -> wame, goal -> goaw, gallery -> gallewy, lol -> lol, null -> null */
   // loaded -> woaded
   // url -> uwl instead of uww
-  result = result.replace(
+  text = text.replace(
     reg`/(?<!([wl]${vowel}*))(?:l(?=\\w)|(?<=\\w)l)(?!([wl]))/gi`,
     ($0) => subSameCase($0, "w"),
   )
   /* na -> nya, nu -> nyu, no -> nyo, ne -> nye */
   // completionInfo -> compwetionInfo instead of compwetionYInfo
-  result = result.replace(reg`/[nN](${vowelNoE}+)/g`, ($0, $vowel) =>
+  text = text.replace(reg`/[nN](${vowelNoE}+)/g`, ($0, $vowel) =>
     subSameCase($0 + $vowel, `ny${$vowel}`),
   )
-  result = result.replace(
+  text = text.replace(
     reg`/N(${vowelNoE.toUpperCase()}+)/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `ny${$vowel}`),
   )
   /* ma -> mya, mu -> myu, mo -> myo */
-  result = result.replace(
+  text = text.replace(
     reg`/[mM](${vowelNoIE}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `my${$vowel}`),
   )
-  result = result.replace(
+  text = text.replace(
     reg`/M(${vowelNoE.toUpperCase()}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `my${$vowel}`),
   )
   /* pa -> pwa, pu -> pwu, po -> pwo */
   // AhkStopAlt -> AhkStopAwt instead of AhkStopWAwt
-  result = result.replace(
+  text = text.replace(
     reg`/[pP](${vowelNoIE}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `pw${$vowel}`),
   )
-  result = result.replace(
+  text = text.replace(
     reg`/P(${vowelNoIE.toUpperCase()}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `pw${$vowel}`),
   )
 
-  return result
+  return text
 }
 
 function subOwoEmote(emote) {
