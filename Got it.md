@@ -2148,7 +2148,6 @@ xcursorgen
   }
 
   waitForVideo().then(video => {
-
     const canvas = document.createElement("canvas");
     canvas.style.position = "fixed";
     canvas.style.top = "0";
@@ -2243,7 +2242,6 @@ xcursorgen
 
       if (canvas.width !== video.videoWidth ||
           canvas.height !== video.videoHeight) {
-
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -2704,7 +2702,7 @@ If you want, I can help turn this into a **watch script** that continually print
 [2]: https://lightrun.com/answers/brave-brave-browser-remote-debugging-should-be-proxied-and-enabled-by-default?utm_source=chatgpt.com "Remote debugging should be proxied and enabled by default"
 
 
-only allow connections frof first connected ip pashare
+only allow connections frof first connected ip pwashare
 decoration {
     screen_shader = /path/to/your_shader.frag
 }

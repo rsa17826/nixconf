@@ -148,7 +148,7 @@ in
               options = [ "NOPASSWD" ];
             }
             {
-              command = "/etc/profiles/per-user/${userConfig.uname}/bin/pashare";
+              command = "/etc/profiles/per-user/${userConfig.uname}/bin/pwashare";
               options = [ "NOPASSWD" ];
             }
             {
