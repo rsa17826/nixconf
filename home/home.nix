@@ -29,7 +29,7 @@ in
     ./hyprland/home.nix
     # ./waybar/home.nix
     ./cursors/home.nix
-    ./zsh/plugins.nix
+    ./zsh/home.nix
     ./kitty/home.nix
     ./multiGameLauncher/home.nix
     ./fileAssocs/home.nix
