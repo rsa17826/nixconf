@@ -148,10 +148,10 @@
         pkgFromInp =
           inputName: pkgName: inputs.${inputName}.packages.${pkgs.stdenv.hostPlatform.system}.${pkgName};
         listDir =
-          cb:
+          start: cb:
           (
             let
-              dir = builtins.readDir ./.;
+              dir = builtins.readDir start;
             in
             (builtins.map cb (
               builtins.filter (name: dir.${name} == "directory" && builtins.pathExists (cb name)) (

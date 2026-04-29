@@ -21,7 +21,7 @@ in
     ./alias.nix
 
   ]
-  ++ (listDir (p: ./${p}/conf.nix));
+  ++ (listDir ./. (p: ./${p}/conf.nix));
   security.pam.services.hyprlock = {
     text = ''
       auth include login
