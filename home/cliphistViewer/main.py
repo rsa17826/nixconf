@@ -120,9 +120,9 @@ def run(stdscr: curses._CursesWindow) -> None:
         return
       try:
         if attr:
-            stdscr.addstr(row, col, clipped, attr)
+          stdscr.addstr(row, col, clipped, attr)
         else:
-            stdscr.addstr(row, col, clipped)
+          stdscr.addstr(row, col, clipped)
       except curses.error:
         pass
 

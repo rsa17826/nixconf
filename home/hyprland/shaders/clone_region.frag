@@ -14,7 +14,7 @@ void main() {
 
   // Anything outside the display rect → black
   if (v_texcoord.x < dispStart.x || v_texcoord.x > dispEnd.x ||
-      v_texcoord.y < dispStart.y || v_texcoord.y > dispEnd.y) {
+  v_texcoord.y < dispStart.y || v_texcoord.y > dispEnd.y) {
     gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     return;
   }

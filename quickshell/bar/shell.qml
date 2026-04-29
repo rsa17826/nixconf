@@ -89,7 +89,6 @@ Scope {
         }
         GithubNotif {
           id: githubWidget
-
         }
         Tray {
           anchors {
