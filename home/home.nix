@@ -25,17 +25,17 @@ in
   };
   imports = [
     inputs.sops-nix.homeManagerModules.sops
-    ./vscode/conf.nix
-    ./hyprland/conf.nix
-    # ./waybar/conf.nix
-    ./cursors/conf.nix
+    ./vscode/home.nix
+    ./hyprland/home.nix
+    # ./waybar/home.nix
+    ./cursors/home.nix
     ./zsh/plugins.nix
-    ./kitty/conf.nix
-    ./multiGameLauncher/conf.nix
-    ./fileAssocs/conf.nix
-    # ./brave/conf.nix
-    ./git/conf.nix
-    ./vex++/conf.nix
+    ./kitty/home.nix
+    ./multiGameLauncher/home.nix
+    ./fileAssocs/home.nix
+    # ./brave/home.nix
+    ./git/home.nix
+    ./vex++/home.nix
   ];
   systemd = {
     user = {
