@@ -11,6 +11,7 @@ let
     gtk-application-prefer-dark-theme = 1;
     gtk-enable-animations = 0;
   };
+  dir = builtins.readDir ./.;
 in
 {
   home.username = userConfig.uname;
@@ -25,17 +26,11 @@ in
   };
   imports = [
     inputs.sops-nix.homeManagerModules.sops
-    ./vscode/home.nix
-    ./hyprland/home.nix
-    # ./waybar/home.nix
-    ./cursors/home.nix
-    ./zsh/home.nix
-    ./kitty/home.nix
-    ./multiGameLauncher/home.nix
-    ./fileAssocs/home.nix
-    # ./brave/home.nix
-    ./git/home.nix
-    ./vex++/home.nix
+    lib.map
+    (lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/home.nix)) (
+      builtins.attrNames dir
+    ))
+    (p: ./${p}/home.nix)
   ];
   systemd = {
     user = {

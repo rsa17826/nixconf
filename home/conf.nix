@@ -14,21 +14,26 @@ let
     "NIXOS_LABEL_VERSION"
     "NIXOS_LABEL"
   ];
+  dir = builtins.readDir ./.;
 in
 {
   imports = [
     ./alias.nix
-    ./sops/conf.nix
-    ./copyparty/conf.nix
-    ./firewall/conf.nix
-    ./brave/conf.nix
-    ./syncthing/conf.nix
-    ./unbound/conf.nix
-    ./godot/conf.nix
-    ./thumbnails/conf.nix
-    ./mitmproxy/conf.nix
+    # ./sops/conf.nix
+    # ./copyparty/conf.nix
+    # ./firewall/conf.nix
+    # ./brave/conf.nix
+    # ./syncthing/conf.nix
+    # ./unbound/conf.nix
+    # ./godot/conf.nix
+    # ./thumbnails/conf.nix
+    # ./mitmproxy/conf.nix
+    lib.map
+    (lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)) (
+      builtins.attrNames dir
+    ))
+    (p: ./${p}/conf.nix)
     # ./browserSelector/conf.nix
-    # ./tts/conf.nix
   ];
   security.pam.services.hyprlock = {
     text = ''
