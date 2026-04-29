@@ -19,22 +19,10 @@ in
 {
   imports = [
     ./alias.nix
-    # ./sops/conf.nix
-    # ./copyparty/conf.nix
-    # ./firewall/conf.nix
-    # ./brave/conf.nix
-    # ./syncthing/conf.nix
-    # ./unbound/conf.nix
-    # ./godot/conf.nix
-    # ./thumbnails/conf.nix
-    # ./mitmproxy/conf.nix
-    lib.map
-    (lib.filter (name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)) (
-      builtins.attrNames dir
-    ))
-    (p: ./${p}/conf.nix)
-    # ./browserSelector/conf.nix
-  ];
+  ]
+  ++ lib.map (lib.filter (
+    name: dir.${name} == "directory" && builtins.pathExists (./${name}/conf.nix)
+  ) (builtins.attrNames dir)) (p: ./${p}/conf.nix);
   security.pam.services.hyprlock = {
     text = ''
       auth include login
