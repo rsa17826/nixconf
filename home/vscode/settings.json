@@ -828,4 +828,7 @@
   },
   "fixAllJson.insertMissingCommaOnEnter": true,
   "fixAllJson.insertMissingDoubleQuotesOnColon": true,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "\ufe0f": true,
+  },
 }
