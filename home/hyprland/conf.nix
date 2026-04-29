@@ -43,11 +43,7 @@
   services.hyprpaper = {
     enable = true;
   };
-  security.pam.services.hyprlock = {
-    text = ''
-      auth include login
-    '';
-  };
+
   # xdg.configFile."hypr/hm.conf".text = ''
   #   plugin = hypr-darkwindow.packages.${pkgs.stdenv.hostPlatform.system}.Hypr-DarkWindow
   # '';

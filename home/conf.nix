@@ -30,6 +30,11 @@ in
     # ./browserSelector/conf.nix
     # ./tts/conf.nix
   ];
+  security.pam.services.hyprlock = {
+    text = ''
+      auth include login
+    '';
+  };
   boot = {
     loader = {
       efi = {
