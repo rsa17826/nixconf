@@ -72,7 +72,7 @@ read -rp "$(echo -e "${BOLD}Continue with git pull? [y/N]:${RESET} ")" CONFIRM
 if [[ "${CONFIRM,,}" == "y" ]]; then
   echo ""
   echo -e "${GREEN}Pulling...${RESET}"
-  git pull "$REMOTE" "$REMOTE_BRANCH"
+  git pull "$REMOTE" "$REMOTE_BRANCH" --rebase
   echo -e "${GREEN}${BOLD}Done.${RESET}"
 else
   echo -e "${YELLOW}Aborted. No changes made.${RESET}"
