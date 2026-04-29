@@ -1,3 +1,4 @@
+Object.assign(window, console)
 /**
  * @param {String} inputText
  * @returns {String}
@@ -77,12 +78,12 @@ function owowify(inputText) {
 function subOwoEmote(emote) {
   const matchEndSpace = /^\s+$/g
 
-  return ($0, $setenceBeforeEnd, $endSentence) => {
+  return ($0, $sentenceBeforeEnd, $endSentence) => {
     if (
       $endSentence == undefined ||
       matchEndSpace.test($endSentence)
     ) {
-      return `${$setenceBeforeEnd} ${emote}`
+      return `${$sentenceBeforeEnd} ${emote}`
     } else return $0
   }
 }
@@ -127,16 +128,27 @@ const lastValue = new WeakMap()
 
 const mify = (node) => {
   // 1. PROTECT THE EDITOR: Do not touch code lines or the terminal
+  const blocklist = [
+    ".monaco-editor",
+    "style",
+    "script",
+    // ".terminal",
+    // ".monaco-list-rows",
+    // ".lines-content",
+    // ".editor-instance",
+  ]
+  // Element Node
+  var showDebug = false
   if (node.nodeType === 1) {
-    // Element Node
-    const blocklist = [
-      ".monaco-editor",
-      ".terminal",
-      ".monaco-list-rows",
-      ".lines-content",
-    ]
-    if (node.closest(blocklist.join(","))) return
-
+    if (node.closest(blocklist.join(","))) {
+      if (showDebug)
+        node.style.setProperty(
+          "outline",
+          "1px solid red",
+          "important",
+        )
+      return
+    }
     // Target Attributes
     const attrs = ["aria-label", "title", "placeholder"]
     attrs.forEach((attr) => {
@@ -157,6 +169,18 @@ const mify = (node) => {
   }
 
   if (node.nodeType === 3) {
+    if (
+      node.parentElement &&
+      node.parentElement.closest(blocklist.join(","))
+    ) {
+      if (showDebug)
+        node.parentElement.style.setProperty(
+          "outline",
+          "1px solid red",
+          "important",
+        )
+      return
+    }
     // Text Node
     const currentVal = node.nodeValue
     if (!currentVal.trim()) return
@@ -170,34 +194,89 @@ const mify = (node) => {
   }
 }
 
-const observer = new MutationObserver((mutations) => {
-  for (const mutation of mutations) {
-    if (mutation.type === "childList") {
-      mutation.addedNodes.forEach((n) => {
-        if (n.nodeType === 1) {
-          mify(n)
-          n.querySelectorAll("*").forEach(mify)
-        } else if (n.nodeType === 3) {
-          mify(n)
-        }
-      })
-    } else if (
-      mutation.type === "attributes" ||
-      mutation.type === "characterData"
-    ) {
-      // characterData catches when the text inside an existing text node changes
-      mify(mutation.target)
-    }
-  }
-})
+// Keep track of observed shadow roots to avoid duplicate observers
+const observedShadowRoots = new WeakSet()
 
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  characterData: true, // Crucial for catching text updates
-  attributeFilter: ["aria-label", "title", "placeholder"],
-})
+const observeAll = (root) => {
+  // 1. Observe the current root (document body or a shadow root)
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "childList") {
+        mutation.addedNodes.forEach((n) => {
+          if (n.nodeType === 1) {
+            mifyRecursive(n)
+            // If the added node has a shadow root, observe it
+            if (n.shadowRoot) observeAll(n.shadowRoot)
+          } else if (n.nodeType === 3) {
+            mify(n)
+          }
+        })
+      } else {
+        mify(mutation.target)
+      }
+    }
+  })
+
+  observer.observe(root, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true,
+    attributeFilter: ["aria-label", "title", "placeholder"],
+  })
+}
+
+// 2. Monkey-patch attachShadow to catch newly created Shadow Roots
+const originalAttachShadow = Element.prototype.attachShadow
+Element.prototype.attachShadow = function (init) {
+  const shadowRoot = originalAttachShadow.call(this, init)
+  // Give it a tiny delay to ensure content is populated or handled by the next tick
+  setTimeout(() => {
+    if (!observedShadowRoots.has(shadowRoot)) {
+      observedShadowRoots.add(shadowRoot)
+      mifyRecursive(shadowRoot)
+      observeAll(shadowRoot)
+    }
+  }, 0)
+  return shadowRoot
+}
+
+// 3. Deep recursive mify that pierces Shadow Roots
+const mifyRecursive = (root) => {
+  // Create a walker that catches both Elements (for attributes) and Text nodes
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+    null,
+    false,
+  )
+
+  let currentNode = walker.currentNode
+
+  while (currentNode) {
+    // Apply the owoify logic
+    mify(currentNode)
+
+    // PIERCE SHADOW DOM:
+    // If the element has a shadow root, we need to treat it as a new "root"
+    if (currentNode.nodeType === 1 && currentNode.shadowRoot) {
+      if (!observedShadowRoots.has(currentNode.shadowRoot)) {
+        observedShadowRoots.add(currentNode.shadowRoot)
+
+        // Recurse into the shadow root
+        mifyRecursive(currentNode.shadowRoot)
+
+        // Start observing this shadow root for future changes
+        observeAll(currentNode.shadowRoot)
+      }
+    }
+
+    currentNode = walker.nextNode()
+  }
+}
+// 4. Start the initial run on the document
+mifyRecursive(document.body)
+observeAll(document.body)
 
 // Initial run
 document.querySelectorAll("*").forEach(mify)
