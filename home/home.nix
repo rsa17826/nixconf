@@ -94,20 +94,29 @@ in
 
     portal = {
       enable = true;
-      config.common.default = "*";
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
       ];
+      config.common.default = [
+        "hyprland"
+        "gtk"
+      ];
+      # enable = true;
+      # config.common.default = "*";
+      # extraPortals = with pkgs; [
+      #   xdg-desktop-portal-gtk
+      #   xdg-desktop-portal-hyprland
+      # ];
 
-      config = {
-        # common.default = [
-        #   "hyprland"
-        # ];
-        # gtk.default = [
-        #   "gtk"
-        # ];
-      };
+      # config = {
+      #   # common.default = [
+      #   #   "hyprland"
+      #   # ];
+      #   # gtk.default = [
+      #   #   "gtk"
+      #   # ];
+      # };
     };
   };
   home.stateVersion = "26.05";

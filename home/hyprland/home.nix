@@ -36,10 +36,10 @@
       source = ln "${userConfig.nixConf}/home/hyprland/scripts";
       recursive = true;
     };
+    "hypr/hm.conf".text = ''
+      plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
+    '';
   };
-  xdg.configFile."hypr/hm.conf".text = ''
-    plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
-  '';
   services.hyprpaper = {
     enable = true;
   };
