@@ -366,6 +366,7 @@ in
     lazygit
     # nginx
     unbound-with-systemd
+    adwaita-qt
   ];
   fonts.packages =
     with pkgs;
