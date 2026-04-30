@@ -287,8 +287,16 @@ in
       # Disable PulseAudio itself (optional, safer on NixOS)
       enable = false;
     };
+    kdeconnect = {
+      enable = true;
+      package = pkgs.kdePackages.kdeconnect-kde;
+      indicator = true;
+    };
   };
   programs = {
+    kdeconnect = {
+      enable = true;
+    };
     appimage = {
       enable = true;
       binfmt = true;
