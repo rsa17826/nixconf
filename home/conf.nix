@@ -79,6 +79,7 @@ in
           "nvidia-x11"
           "nvidia-settings"
           "nvidia-persistenced"
+          "nvidia-kernel-modules"
           "steam"
           "steam-original"
           "steam-unwrapped"
