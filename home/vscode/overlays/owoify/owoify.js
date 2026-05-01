@@ -161,7 +161,7 @@ const mify = (node) => {
   ]
   const allowList = [
     ".sticky-widget-lines-scrollable",
-    '.mtk1[class*="dyn-rule-"]',
+    // '.mtk1[class*="dyn-rule-"]',
   ]
   // Element Node
   var showDebug = false
