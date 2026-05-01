@@ -150,7 +150,7 @@ const attrs = [
  */
 const mify = (node) => {
   // 1. PROTECT THE EDITOR: Do not touch code lines or the terminal
-  const blocklist = [
+  const blockList = [
     ".monaco-editor",
     "style",
     "script",
@@ -159,16 +159,26 @@ const mify = (node) => {
     // ".lines-content",
     // ".editor-instance",
   ]
+  const allowList = [
+    ".sticky-widget-lines-scrollable",
+    '.mtk1[class*="dyn-rule-"]',
+  ]
   // Element Node
   var showDebug = false
   if (node instanceof HTMLElement) {
-    if (node.closest(blocklist.join(","))) {
-      if (showDebug)
+    const isBlocked = node.closest(blockList.join(","))
+    // Check if it's in the specific "safe" sub-zone
+    const isException = node.closest(allowList.join(","))
+
+    // Logic: Block it ONLY if it's in the blocklist AND NOT in the exception
+    if (isBlocked && !isException) {
+      if (showDebug) {
         node.style.setProperty(
           "outline",
-          "1px solid red",
+          "1px solid #a00",
           "important",
         )
+      }
       return
     }
     // Target Attributes
@@ -190,16 +200,16 @@ const mify = (node) => {
   }
 
   if (node.nodeType === 3) {
-    if (
-      node.parentElement &&
-      node.parentElement.closest(blocklist.join(","))
-    ) {
-      if (showDebug)
-        node.parentElement.style.setProperty(
-          "outline",
-          "1px solid red",
-          "important",
-        )
+    var np = node.parentElement
+    const isBlocked = np && np.closest(blockList.join(","))
+    // Check if it's in the specific "safe" sub-zone
+    const isException = np && np.closest(allowList.join(","))
+
+    // Logic: Block it ONLY if it's in the blocklist AND NOT in the exception
+    if (isBlocked && !isException) {
+      if (showDebug) {
+        np.style.setProperty("outline", "1px solid #a00", "important")
+      }
       return
     }
     // Text Node
