@@ -94,6 +94,13 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    autocorrect-daemon = {
+      url = "github:rsa17826/autocorrect-daemon";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     # ext
     ext-vscode-void-color-theme = {
       url = "github:rsa17826/vscode-void-color-theme";
