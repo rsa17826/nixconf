@@ -1,3 +1,4 @@
+// @ts-check
 Object.assign(window, console)
 /**
  * @param {String} text
@@ -74,9 +75,21 @@ function owowify(text) {
   return text
 }
 
+/**
+ *
+ * @param {string} emote
+ * @returns
+ */
 function subOwoEmote(emote) {
   const matchEndSpace = /^\s+$/g
 
+  /**
+   *
+   * @param {string} $0
+   * @param {string} $sentenceBeforeEnd
+   * @param {string} $endSentence
+   * @returns
+   */
   return ($0, $sentenceBeforeEnd, $endSentence) => {
     if (
       $endSentence == undefined ||
@@ -111,7 +124,7 @@ function subSameCase(inputText, replaceText) {
   return result
 }
 
-/** @param {[string[], ...any[]]} templateArgs */
+/** @param {[TemplateStringsArray, ...any[]]} templateArgs */
 function reg(...templateArgs) {
   const rawString = String.raw(...templateArgs)
   const pattern = rawString.substring(1, rawString.lastIndexOf("/"))
@@ -124,7 +137,17 @@ function reg(...templateArgs) {
 }
 
 const lastValue = new WeakMap()
+const attrs = [
+  // "aria-label",
+  "title",
+  "placeholder",
+]
 
+/**
+ *
+ * @param {Node} node
+ * @returns
+ */
 const mify = (node) => {
   // 1. PROTECT THE EDITOR: Do not touch code lines or the terminal
   const blocklist = [
@@ -138,7 +161,7 @@ const mify = (node) => {
   ]
   // Element Node
   var showDebug = false
-  if (node.nodeType === 1) {
+  if (node instanceof HTMLElement) {
     if (node.closest(blocklist.join(","))) {
       if (showDebug)
         node.style.setProperty(
@@ -149,7 +172,6 @@ const mify = (node) => {
       return
     }
     // Target Attributes
-    const attrs = ["aria-label", "title", "placeholder"]
     attrs.forEach((attr) => {
       const currentVal = node.getAttribute(attr)
       if (!currentVal) return
@@ -182,7 +204,7 @@ const mify = (node) => {
     }
     // Text Node
     const currentVal = node.nodeValue
-    if (!currentVal.trim()) return
+    if (!currentVal?.trim?.()) return
 
     // If the text changed from what we last set it to, re-mify
     if (currentVal !== lastValue.get(node)) {
@@ -196,6 +218,10 @@ const mify = (node) => {
 // Keep track of observed shadow roots to avoid duplicate observers
 const observedShadowRoots = new WeakSet()
 
+/**
+ *
+ * @param {HTMLElement|ShadowRoot} root
+ */
 const observeAll = (root) => {
   // 1. Observe the current root (document body or a shadow root)
   const observer = new MutationObserver((mutations) => {
@@ -203,14 +229,18 @@ const observeAll = (root) => {
       if (mutation.type === "childList") {
         mutation.addedNodes.forEach((n) => {
           if (n.nodeType === 1) {
+            // @ts-ignore
             mifyRecursive(n)
             // If the added node has a shadow root, observe it
+            // @ts-ignore
             if (n.shadowRoot) observeAll(n.shadowRoot)
           } else if (n.nodeType === 3) {
+            // @ts-ignore
             mify(n)
           }
         })
       } else {
+        // @ts-ignore
         mify(mutation.target)
       }
     }
@@ -221,12 +251,17 @@ const observeAll = (root) => {
     subtree: true,
     attributes: true,
     characterData: true,
-    attributeFilter: ["aria-label", "title", "placeholder"],
+    attributeFilter: attrs,
   })
 }
 
 // 2. Monkey-patch attachShadow to catch newly created Shadow Roots
 const originalAttachShadow = Element.prototype.attachShadow
+/**
+ *
+ * @param {*} init
+ * @returns {ShadowRoot}
+ */
 Element.prototype.attachShadow = function (init) {
   const shadowRoot = originalAttachShadow.call(this, init)
   // Give it a tiny delay to ensure content is populated or handled by the next tick
@@ -241,15 +276,21 @@ Element.prototype.attachShadow = function (init) {
 }
 
 // 3. Deep recursive mify that pierces Shadow Roots
+/**
+ *
+ * @param {HTMLElement|ShadowRoot} root
+ */
 const mifyRecursive = (root) => {
   // Create a walker that catches both Elements (for attributes) and Text nodes
   const walker = document.createTreeWalker(
     root,
     NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
     null,
-    false,
   )
 
+  /**
+   * @type {Node|null}
+   */
   let currentNode = walker.currentNode
 
   while (currentNode) {
@@ -258,7 +299,7 @@ const mifyRecursive = (root) => {
 
     // PIERCE SHADOW DOM:
     // If the element has a shadow root, we need to treat it as a new "root"
-    if (currentNode.nodeType === 1 && currentNode.shadowRoot) {
+    if (currentNode instanceof Element && currentNode.shadowRoot) {
       if (!observedShadowRoots.has(currentNode.shadowRoot)) {
         observedShadowRoots.add(currentNode.shadowRoot)
 
@@ -269,7 +310,6 @@ const mifyRecursive = (root) => {
         observeAll(currentNode.shadowRoot)
       }
     }
-
     currentNode = walker.nextNode()
   }
 }
@@ -282,6 +322,12 @@ document.querySelectorAll("*").forEach(mify)
 const originalDeleteRule = CSSStyleSheet.prototype.deleteRule
 const originalInsertRule = CSSStyleSheet.prototype.insertRule
 
+/**
+ *
+ * @param {string} rule
+ * @param {number} index
+ * @returns
+ */
 CSSStyleSheet.prototype.insertRule = function (rule, index) {
   try {
     // Only touch rules that actually contain `content:`
@@ -303,6 +349,11 @@ CSSStyleSheet.prototype.insertRule = function (rule, index) {
 if (CSSStyleSheet.prototype.replaceSync) {
   const originalReplaceSync = CSSStyleSheet.prototype.replaceSync
 
+  /**
+   *
+   * @param {string} text
+   * @returns
+   */
   CSSStyleSheet.prototype.replaceSync = function (text) {
     try {
       if (text.includes("content")) {
