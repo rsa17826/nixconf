@@ -22,6 +22,10 @@ in
 
   ]
   ++ (listDir ./. (p: ./${p}/conf.nix));
+  boot.kernelModules = [ "uinput" ];
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="input", MODE="0660"
+  '';
   security.pam.services.hyprlock = {
     text = ''
       auth include login
