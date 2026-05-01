@@ -289,9 +289,6 @@ in
     };
   };
   programs = {
-    # kdeconnect = {
-    #   enable = true;
-    # };
     appimage = {
       enable = true;
       binfmt = true;

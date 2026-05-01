@@ -43,11 +43,6 @@ in
   services = {
     swaync.enable = true;
     playerctld.enable = true;
-    kdeconnect = {
-      enable = true;
-      package = pkgs.kdePackages.kdeconnect-kde;
-      indicator = true;
-    };
   };
   xdg = {
     enable = true;
