@@ -1,7 +1,7 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable/2d0720da19a2a0d330059aeb82183c8f71e9050b";
     flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {

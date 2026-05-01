@@ -250,7 +250,7 @@ in
       (callPackage ./progress-daemon/progress-daemon.nix { })
       (callPackage ./winspy/winspy.nix { })
       goldberg-emu
-      deno
+      # deno
       zuban
       libreoffice
       jdk
