@@ -831,4 +831,7 @@
   "editor.unicodeHighlight.allowedCharacters": {
     "\ufe0f": true,
   },
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  "js/ts.implicitProjectConfig.target": "ESNext",
 }
