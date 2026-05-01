@@ -56,6 +56,29 @@
         "type": "github"
       }
     },
+    "autocorrect-daemon": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777597146,
+        "narHash": "sha256-kOfRLWUmVbAAtS+ubYDO12SYjOWxMClMkGwtQVz9ahM=",
+        "owner": "rsa17826",
+        "repo": "autocorrect-daemon",
+        "rev": "886fe58ebffa94164fdf62abe0191c12434e3567",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "autocorrect-daemon",
+        "type": "github"
+      }
+    },
     "browser-selector": {
       "inputs": {
         "nixpkgs": [
@@ -821,6 +844,7 @@
     "root": {
       "inputs": {
         "audio-manager": "audio-manager",
+        "autocorrect-daemon": "autocorrect-daemon",
         "browser-selector": "browser-selector",
         "copyparty": "copyparty",
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
