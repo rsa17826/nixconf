@@ -11,7 +11,7 @@ hl.bind(mainMod .. " + e", hl.dsp.focus({workspace=7}))
 hl.bind(mainMod .. " + r", hl.dsp.focus({workspace=8}))
 
 -- ─── Move windows to workspaces ────────────────────────────────────────────
-hl.bind("SUPER + Down",          hl.dsp.window.move({ workspace = 1 ,silent = true }))
+hl.bind("SUPER + Down",          hl.dsp.window.move({ workspace = 8 ,follow = false }))
 hl.bind(mainMod .. " + SHIFT + a", hl.dsp.window.move({ workspace = 1 }))
 hl.bind(mainMod .. " + SHIFT + s", hl.dsp.window.move({ workspace = 2 }))
 hl.bind(mainMod .. " + SHIFT + d", hl.dsp.window.move({ workspace = 3 }))

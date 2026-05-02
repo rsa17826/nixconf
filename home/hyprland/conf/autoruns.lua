@@ -20,5 +20,4 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("kitten panel --edge=background -o background_opacity=0.2 --margin-top 30 -o background=black dgop")
   end)
 
-
 -- hl.exec_cmd("~/.config/hypr/scripts/edge-focus.sh")

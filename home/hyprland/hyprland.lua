@@ -117,6 +117,10 @@ hl.gesture({
   action = "workspace"
 })
 
+hl.curve("squashy", { type = "bezier", points = { {0.68, -0.55}, {0.265, 1.55} } })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 5, bezier = "squashy" })
+
+
 -- ─── Sub-configs ───────────────────────────────────────────────────────────
 require("conf/autoruns")
 require("conf/window rules")

@@ -144,6 +144,7 @@ hl.window_rule({
 })
 
 -- Godot: 80% column width in scrolling layout
+-- #TODO -
 hl.window_rule({
   match           = { class = "^Godot_Engine$" },
   scrolling_width = 0.8,
