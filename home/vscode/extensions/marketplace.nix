@@ -3,6 +3,12 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "stylua";
+        publisher = "JohnnyMorganz";
+        version = "1.7.1";
+        hash = "sha256-AbMCYYyK6Ywm/VljzAdmjk0VWm7JRH5GgJAC38T3j/c=";
+      }
+      {
         name = "Kotlin";
         publisher = "mathiasfrohlich";
         version = "1.7.1";
@@ -25,12 +31,6 @@
         publisher = "timonwong";
         version = "0.39.3";
         hash = "sha256-A87dG+bBNCMZ8ERDGpVJIP7lXL8rfRely2Uo/ZMsgVI=";
-      }
-      {
-        name = "hyprlang-vscode";
-        publisher = "fireblast";
-        version = "0.0.3";
-        hash = "sha256-iMCyomgMGGUXaVqq1l7bgyvFgZa/W/eWHaqkA5RmExE=";
       }
       {
         name = "zubanls";
@@ -185,8 +185,8 @@
       {
         name = "basedpyright";
         publisher = "detachhead";
-        version = "1.39.2";
-        hash = "sha256-iSjwEPSlPWmg3cYLSCp2YmHOR8EShGuPHzXMHGoa4iM=";
+        version = "1.39.3";
+        hash = "sha256-uuWkSxjsY7ZL1QUwqkiwPTN8oGUktfm7/Hgv3Enmgqc=";
       }
       # {
       #   name = "synthwave-fluoromachine-cursor";
@@ -227,26 +227,26 @@
       {
         name = "black-formatter";
         publisher = "ms-python";
-        version = "2026.3.11061015";
-        hash = "sha256-BWnMuPUca/IXgtj6587YTA9ZleRH5v6eqbJHteptv+w=";
+        version = "2026.5.11201012";
+        hash = "sha256-LaAS1vdcIygo3yozWmC9zwRU9qCQ5bW9j7qKJK8mH7Q=";
       }
       {
         name = "debugpy";
         publisher = "ms-python";
-        version = "2026.3.2026032701";
-        hash = "sha256-GE4bu1KaBWzyucSgPMd7Z5Wn8EKkTvuOkaO3c4+C08M=";
+        version = "2026.7.11211011";
+        hash = "sha256-p9EMxXFY9G7eO7cW1guDCFQzBRA2tcTRAH6TbqRmGLY=";
       }
       {
         name = "python";
         publisher = "ms-python";
-        version = "2026.5.2026032701";
-        hash = "sha256-UxduP78GTTu0JjhC1tJ86gnjlCNvYyK6QavJwmDmavk=";
+        version = "2026.5.2026042602";
+        hash = "sha256-fq/5kNNBN+1hu4x0UmIsomdYM0UO+NhmB0PSUiVztQ0=";
       }
       {
         name = "vscode-pylance";
         publisher = "ms-python";
-        version = "2026.2.100";
-        hash = "sha256-c970X2POFoNZoGhTwQ7CDNw0NZB+LkIgiNV0Nk1TJQw=";
+        version = "2026.2.101";
+        hash = "sha256-ieDCADB243tc5waCLpOKr3Nwd0ky6yqwbOra+bi5t64=";
       }
       {
         name = "hexeditor";
@@ -336,7 +336,7 @@
         name = "typos-vscode";
         publisher = "tekumara";
         version = "0.1.52";
-        hash = "sha256-o+AQDdToXTV/pUSt2zw19hf7nwbOb4gb9dlSsB7t32E=";
+        hash = "sha256-zCZnedU1M8IelPYFkbmYil5URVkJc9nIDtK6gXDhfmQ=";
       }
       {
         name = "autolink";
