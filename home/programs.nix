@@ -129,6 +129,18 @@ let
   #   )
 in
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      pince = prev.pince.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          substituteInPlace lib/pince/GUI/TableViews/HexView.py \
+            --replace-fail \
+              "if event.modifiers() == Qt.KeyboardModifier.ControlModifier:" \
+              "if event is not None and event.modifiers() == Qt.KeyboardModifier.ControlModifier:"
+        '';
+      });
+    })
+  ];
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -318,6 +330,7 @@ in
   };
   environment.systemPackages = with pkgs; [
     # nix-direnv
+    pince # cheat engine
     tumbler
     gsettings-desktop-schemas
     glib # provides gio
