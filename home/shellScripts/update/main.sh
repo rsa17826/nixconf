@@ -4,7 +4,7 @@ STATE_FILE="$HOME/.local/share/nix-update-target"
 DEFAULT_TARGET="nyx"
 
 mkdir -p "$(dirname "$STATE_FILE")"
-
+err=0
 # Flag for nogit
 NO_GIT=false
 if [[ "$*" == *"--nogit"* ]]; then
