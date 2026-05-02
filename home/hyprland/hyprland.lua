@@ -84,7 +84,7 @@ hl.config({
   },
 
   animations = {
-    enabled = false,
+    enabled = true,
   },
 
   dwindle = {
@@ -98,7 +98,8 @@ hl.config({
 
   -- Scrolling layout (was plugin:hyprscrolling in old config)
   scrolling = {
-    column_width     = 1.0,
+    column_width     = .5,
+    fullscreen_on_one_column = false,
     focus_fit_method = 0,
   },
 })

@@ -30,11 +30,11 @@ hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd("hyprctl keyword decoration:s
 
 -- Fullscreen
 hl.bind("SUPER + c",        hl.dsp.window.fullscreen())
-hl.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
+-- hl.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
 
 -- Note: original had both fullscreen and fullscreenstate,1 1 on SHIFT+ALT+RETURN.
 -- fullscreenstate sets client=1 internal=1 — uncomment below if you want that instead:
--- hl.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
+hl.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
 
 -- Reload / kill wtype
 hl.bind("CTRL + escape", hl.dsp.exec_cmd("killall wtype ; hyprctl reload"))
@@ -48,6 +48,7 @@ hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m window"))
 
 -- Window management
 hl.bind("CTRL + SHIFT + Q", hl.dsp.window.close())
+-- #TODO uwsm stop
 hl.bind(mainMod .. " + M",  hl.dsp.exit())
 hl.bind("SHIFT + ALT + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P",  hl.dsp.window.pseudo())
