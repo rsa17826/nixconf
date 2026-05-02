@@ -18,7 +18,7 @@ cleanup() {
   pactl unload-module module-simple-protocol-tcp 2>/dev/null
   pactl unload-module module-null-sink 2>/dev/null
 
-  # notify-send -u low "$TITLE" "Stream stopped and ports cleaned."
+  notify-send -t 3000 -u low "$TITLE" "Stream stopped and ports cleaned."
 }
 
 case "$1" in
@@ -66,7 +66,7 @@ start)
       sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
 
       echo "Locked to IP: $FIRST_IP"
-      # notify-send -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
+      notify-send -t 3000 -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
       exit 0
     fi
     sleep 1
