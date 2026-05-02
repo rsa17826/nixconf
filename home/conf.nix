@@ -25,6 +25,7 @@ in
   boot.kernelModules = [ "uinput" ];
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="input", MODE="0660"
+    KERNEL=="tty0", GROUP="tty", MODE="0660"
   '';
   security.pam.services.hyprlock = {
     text = ''
