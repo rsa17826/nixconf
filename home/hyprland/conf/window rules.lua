@@ -120,7 +120,8 @@ hl.window_rule({
   match           = { class = "^steam_app_default$", title = "^Eets$" },
   no_max_size     = true,
   fullscreen      = true,
-  fullscreen_state = { client = 2, internal = 0 },
+  -- #TODO string
+  -- fullscreen_state = { client = 2, internal = 0 },
 })
 
 -- HyprSpy: pin, float

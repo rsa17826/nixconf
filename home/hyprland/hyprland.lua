@@ -6,10 +6,10 @@ local mainMod = "SUPER"
 
 -- ─── Monitor ───────────────────────────────────────────────────────────────
 hl.monitor({
-  name       = "",          -- catch-all for any monitor
-  resolution = "preferred",
-  position   = "auto",
-  scale      = 1,
+  output   = "",
+  mode     = "preferred",
+  position = "auto",
+  scale    = "auto",
 })
 
 -- ─── Environment variables ─────────────────────────────────────────────────
@@ -24,12 +24,15 @@ hl.env("HYPRCURSOR_THEME",       "mew")
 -- ─── Core config ───────────────────────────────────────────────────────────
 hl.config({
   general = {
+	  -- asd=
     layout       = "scrolling",
     gaps_in      = 2,
     gaps_out     = 0,
     border_size  = 2,
-    active_border_color   = "rgba(000000ee) rgba(ff00ffee) 45deg",
-    inactive_border_color = "rgba(000000ee) rgba(ff00ffee) 45deg",
+    col = {
+      active_border   = { colors = {"rgba(000000ee)", "rgba(ff00ffee)"}, angle = 45 },
+      inactive_border = { colors = {"rgba(000000ee)", "rgba(ff00ffee)"}, angle = 45 },
+  },
     resize_on_border = false,
     allow_tearing    = false,
   },
@@ -85,7 +88,7 @@ hl.config({
   },
 
   dwindle = {
-    pseudotile     = true,
+    -- pseudotile     = true,
     preserve_split = true,
   },
 
@@ -109,16 +112,16 @@ hl.device({
 -- ─── Gestures ──────────────────────────────────────────────────────────────
 -- Old: gesture = 3, horizontal, workspace
 hl.gesture({
-  fingers    = 3,
-  direction  = "horizontal",
-  dispatcher = hl.dsp.workspace("e+1"),  -- swipe right = next workspace
+  fingers = 3,
+  direction = "horizontal",
+  action = "workspace"
 })
 
 -- ─── Sub-configs ───────────────────────────────────────────────────────────
-require("autoruns")
-require("window rules")
-require("windows")
-require("binds")
-require("launcher")
-require("screenshot")
-require("dynamic cursors")
+require("conf/autoruns")
+require("conf/window rules")
+require("conf/binds/windows")
+require("conf/binds/binds")
+require("conf/binds/launcher")
+require("conf/binds/screenshot")
+-- require("conf/dynamic cursors")
