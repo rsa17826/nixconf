@@ -133,10 +133,7 @@ in
     (final: prev: {
       pince = prev.pince.overrideAttrs (old: {
         postPatch = (old.postPatch or "") + ''
-          substituteInPlace lib/pince/GUI/TableViews/HexView.py \
-            --replace-fail \
-              "if event.modifiers() == Qt.KeyboardModifier.ControlModifier:" \
-              "if event is not None and event.modifiers() == Qt.KeyboardModifier.ControlModifier:"
+          find . -name "HexView.py"
         '';
       });
     })
