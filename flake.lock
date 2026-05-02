@@ -157,11 +157,11 @@
     "ext-better-end-line-actions": {
       "flake": false,
       "locked": {
-        "lastModified": 1777567455,
-        "narHash": "sha256-1V+LtpvMyUlrE32s8qgTsLrMxkjrKyoNuK8Jpf8HPOU=",
+        "lastModified": 1777759127,
+        "narHash": "sha256-JKmqDR1yemWI5PIbD65mgfO/xPlRt17USflRuGhSe5Q=",
         "owner": "rsa17826",
         "repo": "fixed-line-actions-vscode-extension",
-        "rev": "d1d9fc80bfde8b3c48005208cebc6e2224c88b3e",
+        "rev": "a16f7bbb94c5b11a530611b23fdebecf64096fe8",
         "type": "github"
       },
       "original": {

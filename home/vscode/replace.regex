@@ -139,20 +139,22 @@ GODOT
 @replace .$2
 @flags gm
 @endregex
+@flags gm
+@replace
+@regex  +$
+@file \.gd$
 
 @name replace print with log.pp
-@file \.gd$
-@regex (?<=  |^)print\(
-@replace log.pp(
-@flags gm
+@endregex
+@name replace print with log.pp
 @endregex
 
 @name extra end spaces
-@file \.gd$
-@regex  +$
-@replace
-@flags gm
 @endregex
+@flags gm
+@replace log.pp(
+@regex (?<=  |^)print\(
+@file \.gd$
 
 @name instance to instantiate
 @file \.gd$
