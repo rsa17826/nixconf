@@ -13,4 +13,4 @@ hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("~/.config/hypr/scripts/clone_view.sh
 
 -- Toggle inwhi shader
 -- # TODO
-hl.bind("CTRL + ALT + SHIFT + slash", hl.dsp.exec_cmd("toggle_inwhi"))
+hl.bind("CTRL + ALT + SHIFT + slash", hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle_inwhi.sh"))
