@@ -181,6 +181,7 @@ in
       python313
       python313Packages.py7zr
       godot # programing
+      stylua
       # appimage-run
       # firejail
       # motrix # download manager
