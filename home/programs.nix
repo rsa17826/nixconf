@@ -139,6 +139,7 @@ in
       "opensnitch"
       "input"
       "audio"
+      "tty"
     ];
     packages = with pkgs; [
       (newestGodot "4.7-dev4")
@@ -203,6 +204,7 @@ in
       winetricks
       unixtools.watch # watch cmd
       htop # process info
+      valent # kdeconnect
       # htop-vim
       # mission-center # task manager
       ydotool

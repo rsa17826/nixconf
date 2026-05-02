@@ -120,7 +120,7 @@ hl.animation({ leaf = "global", enabled = false, speed = 10, bezier = "default" 
 hl.animation({ leaf = "global", enabled = false, speed = 10, bezier = "default" })
 
 hl.curve("bounce", { type = "bezier", points = { { 0.68, -0.55 }, { 0.265, 1.55 } } })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, bezier = "bounce" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "bounce" })
 
 -- ─── Sub-configs ───────────────────────────────────────────────────────────
 require("conf/autoruns")
