@@ -43,11 +43,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775310649,
-        "narHash": "sha256-um+3EzpX1yNWzbhzBEd+kGVCcwC362pJogWMZi+UD3E=",
+        "lastModified": 1777730890,
+        "narHash": "sha256-KDKSeiy8k43Wqqkx1xxsfbedHEHb+0zhVilBAn5xKPc=",
         "owner": "rsa17826",
         "repo": "audio-manager",
-        "rev": "9913331236636a583310a4c1e75d85721de26d76",
+        "rev": "bb336ae0bf4dca404912d7deca7b07ed97215eff",
         "type": "github"
       },
       "original": {
