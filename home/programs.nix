@@ -133,9 +133,14 @@ in
     (final: prev: {
       pince = prev.pince.overrideAttrs (old: {
         postPatch = (old.postPatch or "") + ''
-          find . -name "HexView.py" -exec sed -i \
-            's/if event\.modifiers() == Qt\.KeyboardModifier\.ControlModifier:/if event is not None and event.modifiers() == Qt.KeyboardModifier.ControlModifier:/' \
-            {} \;
+                    python3 -c "
+          import re, pathlib
+          f = pathlib.Path('path/to/HexView.py')
+          f.write_text(f.read_text().replace(
+            'if event.modifiers()',
+            'if event is not None and event.modifiers()'
+          ))
+          "
         '';
       });
     })
