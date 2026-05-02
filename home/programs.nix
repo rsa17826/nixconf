@@ -133,7 +133,9 @@ in
     (final: prev: {
       pince = prev.pince.overrideAttrs (old: {
         postPatch = (old.postPatch or "") + ''
-          find . -name "HexView.py"
+          find . -name "HexView.py" -exec sed -i \
+            's/if event\.modifiers() == Qt\.KeyboardModifier\.ControlModifier:/if event is not None and event.modifiers() == Qt.KeyboardModifier.ControlModifier:/' \
+            {} \;
         '';
       });
     })
