@@ -24,17 +24,17 @@
       };
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland/521ece463c4a9d3d128670688a34756805a4328f";
+      url = "github:hyprwm/Hyprland";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        hyprwire.url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
+        # nixpkgs.follows = "nixpkgs";
+        # hyprwire.url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
       };
     };
     # TODO follow https://github.com/VirtCode/hypr-dynamic-cursors/raw/refs/heads/main/hyprpm.toml
-    hypr-dynamic-cursors = {
-      url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
-      inputs.hyprland.follows = "hyprland";
-    };
+    # hypr-dynamic-cursors = {
+    #   url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
     hypr-darkwindow = {
       url = "github:micha4w/Hypr-DarkWindow"; # Make sure to change the tag to match your hyprland version
       inputs.hyprland.follows = "hyprland";

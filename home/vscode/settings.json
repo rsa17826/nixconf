@@ -222,7 +222,7 @@
       "rssaromeo.auto-regex",
     ],
   },
-  "godotTools.editorPath.godot4": "/etc/profiles/per-user/nyix/bin/godot-4.7-dev3",
+  "godotTools.editorPath.godot4": "/etc/profiles/per-user/nyix/bin/godot-newest",
   "ahk++.file.interpreterPathV2": "D:\\Program Files\\AutoHotkey\\v2\\AutoHotkey64.exe",
   "files.autoSaveWhenNoErrors": true,
   "vscode-ahk-plus.compilePath": "c:\\Program Files\\AutoHotkey\\Compiler\\Ahk2Exe.exe",
