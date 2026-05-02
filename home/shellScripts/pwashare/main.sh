@@ -66,7 +66,7 @@ start)
       sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
 
       echo "Locked to IP: $FIRST_IP"
-      notify-send -t 3000 -u critical "$TITLE" "Locked to connection from: $FIRST_IP"
+      notify-send -t 3000 "$TITLE" "Locked to connection from: $FIRST_IP"
       exit 0
     fi
     sleep 1
