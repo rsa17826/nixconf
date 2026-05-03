@@ -325,6 +325,7 @@ in
           {} \;
       '';
     })) # cheat engine
+    gdb
     tumbler
     gsettings-desktop-schemas
     glib # provides gio
