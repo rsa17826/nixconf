@@ -128,6 +128,12 @@ in
     };
   };
   security = {
+    wrappers.pince = {
+      source = "${pkgs.pince}/bin/pince";
+      capabilities = "cap_sys_ptrace+eip";
+      owner = "root";
+      group = "root";
+    };
     sudo = {
       extraConfig = ''
         Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
