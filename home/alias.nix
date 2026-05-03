@@ -36,6 +36,9 @@ in
 {
   environment.shellAliases = shellAliases;
   programs = {
+    dconf = {
+      enable = true;
+    };
     bash = {
       enable = true;
       shellAliases = shellAliases;

@@ -22,17 +22,13 @@ in
 
   ]
   ++ (listDir ./. (p: ./${p}/conf.nix));
-  boot.kernelModules = [ "uinput" ];
-  services.udev.extraRules = ''
-    KERNEL=="uinput", GROUP="input", MODE="0660"
-    KERNEL=="tty0", GROUP="tty", MODE="0660"
-  '';
-  security.pam.services.hyprlock = {
-    text = ''
-      auth include login
-    '';
-  };
   boot = {
+    kernel = {
+      sysctl."kernel.yama.ptrace_scope" = 0;
+    };
+
+    kernelModules = [ "uinput" ];
+
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -46,6 +42,16 @@ in
     # boot.kernelPackages = pkgs.linuxPackages_latest;
     # boot.kernelPackages = pkgs.linuxPackages;
     kernelPackages = pkgs.linuxPackages;
+
+  };
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="input", MODE="0660"
+    KERNEL=="tty0", GROUP="tty", MODE="0660"
+  '';
+  security.pam.services.hyprlock = {
+    text = ''
+      auth include login
+    '';
   };
 
   nix = {
@@ -54,8 +60,10 @@ in
       trusted-substituters = [ "https://hyprland.cachix.org" ];
       trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
-    # 1. This pins the 'nixpkgs' flake to your system's input
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry = {
+      # 1. This pins the 'nixpkgs' flake to your system's input
+      nixpkgs.flake = inputs.nixpkgs;
+    };
 
     # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
     # (Fixes older tools that don't know about flakes yet)
@@ -205,9 +213,11 @@ in
       # Optionally, specify the package to ensure you stay on a compatible version
       package = pkgs.linuxPackages_6_18.nvidiaPackages.legacy_580;
     };
-    # TODO
-    # uinput things
-    uinput.enable = true;
+    uinput = {
+      # TODO
+      # uinput things
+      enable = true;
+    };
   };
   programs = {
     nix-ld = {
