@@ -129,17 +129,6 @@ let
   #   )
 in
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      pince = prev.pince.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          find $out -name "HexView.py" -exec sed -i \
-            's/if event\.modifiers()/if event is not None and event.modifiers()/' \
-            {} \;
-        '';
-      });
-    })
-  ];
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -329,7 +318,13 @@ in
   };
   environment.systemPackages = with pkgs; [
     # nix-direnv
-    pince # cheat engine
+    (pince.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        find $out -name "HexView.py" -exec sed -i \
+          's/if event\.modifiers()/if event is not None and event.modifiers()/' \
+          {} \;
+      '';
+    })) # cheat engine
     tumbler
     gsettings-desktop-schemas
     glib # provides gio
