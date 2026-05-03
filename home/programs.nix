@@ -321,7 +321,7 @@ in
     (pince.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
         find $out -name "HexView.py" -exec sed -i \
-          's/if event\.modifiers()/if event is not None and event.modifiers()/' \
+          's/if event\.modifiers/if event is not None and event.modifiers/' \
           {} \;
       '';
     })) # cheat engine
