@@ -132,15 +132,10 @@ in
   nixpkgs.overlays = [
     (final: prev: {
       pince = prev.pince.overrideAttrs (old: {
-        postPatch = (old.postPatch or "") + ''
-                    python3 -c "
-          import re, pathlib
-          f = pathlib.Path('path/to/HexView.py')
-          f.write_text(f.read_text().replace(
-            'if event.modifiers()',
-            'if event is not None and event.modifiers()'
-          ))
-          "
+        postInstall = (old.postInstall or "") + ''
+          find $out -name "HexView.py" -exec sed -i \
+            's/if event\.modifiers()/if event is not None and event.modifiers()/' \
+            {} \;
         '';
       });
     })
