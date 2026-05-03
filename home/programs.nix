@@ -42,6 +42,7 @@ let
       "video/webm"
       "video/mp4"
       "audio/mp4"
+      "audio/mp3"
     ];
     startupNotify = false;
     noDisplay = false;
@@ -129,6 +130,7 @@ let
   #   )
 in
 {
+  overlays = [ inputs.millennium.overlays.default ];
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -173,7 +175,8 @@ in
       (pkgFromInp "quickshell" "default") # widget thing
       wtype
       cliphist
-      steam
+      # steam
+      millennium-steam
       losslesscut-bin # video editor
       uwsm
       # typos

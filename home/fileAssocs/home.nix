@@ -34,10 +34,11 @@
       "x-scheme-handler/chrome" = "browser-selector.desktop";
       "x-scheme-handler/about" = "browser-selector.desktop";
       "x-scheme-handler/unknown" = "browser-selector.desktop";
-      "audio/webm" = "browser-selector.desktop";
-      "video/webm" = "browser-selector.desktop";
-      "video/mp4" = "browser-selector.desktop";
-      "audio/mp4" = "browser-selector.desktop";
+      # "audio/webm" = "browser-selector.desktop";
+      # "video/webm" = "browser-selector.desktop";
+      # "video/mp4" = "browser-selector.desktop";
+      # "audio/mp4" = "browser-selector.desktop";
+      # "audio/mp3" = "browser-selector.desktop";
     };
   };
 }
