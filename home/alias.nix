@@ -46,9 +46,7 @@ in
     };
     zsh = {
       enable = true;
-      shellAliases = shellAliases // {
-        "#" = "echo";
-      };
+      shellAliases = shellAliases;
       interactiveShellInit = commonInit;
     };
     # fish = {
