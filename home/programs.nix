@@ -204,7 +204,7 @@ in
       winetricks
       unixtools.watch # watch cmd
       htop # process info
-      valent # kdeconnect
+      # valent # kdeconnect
       # htop-vim
       # mission-center # task manager
       ydotool
