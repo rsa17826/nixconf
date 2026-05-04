@@ -840,4 +840,5 @@
   "[perl]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
   },
+  // "files.simpleDialog.enable": true,
 }

@@ -93,10 +93,18 @@ in
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
       ];
-      config.common.default = [
-        "hyprland"
-        "gtk"
-      ];
+      config = {
+        common = {
+          default = [
+            "hyprland"
+            "gtk"
+          ];
+        };
+        vscodium = {
+          "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+        };
+      };
+
       # enable = true;
       # config.common.default = "*";
       # extraPortals = with pkgs; [
@@ -248,6 +256,7 @@ in
     ADW_DISABLE_PORTAL = "0";
     GTK_THEME = "Adwaita-dark";
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+    GTK_USE_PORTAL = "1";
   };
 
   # Bootloader.
