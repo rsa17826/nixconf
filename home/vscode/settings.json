@@ -837,4 +837,7 @@
   "[lua]": {
     "editor.defaultFormatter": "JohnnyMorganz.stylua",
   },
+  "[perl]": {
+    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
+  },
 }

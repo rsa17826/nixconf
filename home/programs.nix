@@ -130,7 +130,9 @@ let
   #   )
 in
 {
-  nixpkgs.overlays = [ inputs.millennium.overlays.default ];
+  nixpkgs = {
+    overlays = [ inputs.millennium.overlays.default ];
+  };
   users.users."${userConfig.uname}" = {
     shell = pkgs.zsh;
     isNormalUser = true;

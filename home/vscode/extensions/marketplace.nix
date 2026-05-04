@@ -3,6 +3,36 @@
   programs.vscode.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "csstools-design-tokens";
+        publisher = "RomainMenke";
+        version = "1.2.1";
+        hash = "sha256-YVtByhQxebH3fdnNweVSBsTugm9hhhi4qNM21EWxOW8=";
+      }
+      {
+        name = "css-varbuddy";
+        publisher = "schalkneethling";
+        version = "0.5.3";
+        hash = "sha256-EPWr4U3qEBpg9jH5ysxs4Vxiz3wJ5K7QJiRBd0OVSG4=";
+      }
+      {
+        name = "css-custom-property-inspector";
+        publisher = "schalkneethling";
+        version = "0.1.1";
+        hash = "sha256-SA7AX9pam3mBm18JlGEMyh/bua2xEWnyoI9zQYq3Gg8=";
+      }
+      {
+        name = "search-everywhere-lite";
+        publisher = "Maorlevinshtein";
+        version = "0.2.4";
+        hash = "sha256-8GL1s72CR9A3OkcLQNnalyfDWEoAYGVbrsTDZNKxQ6I=";
+      }
+      {
+        name = "language-stylus";
+        publisher = "sysoev";
+        version = "1.16.0";
+        hash = "sha256-9Wwlz6IXQiqevFSu3oZkKbyg+ix99JNpYKUSgOQpd6k=";
+      }
+      {
         name = "stylua";
         publisher = "JohnnyMorganz";
         version = "1.7.1";
