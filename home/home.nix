@@ -100,7 +100,7 @@ in
             "gtk"
           ];
         };
-        vscode = {
+        vscodium = {
           "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
         };
       };

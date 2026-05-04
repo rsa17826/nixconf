@@ -17,9 +17,8 @@
     ./extensions/githubAndLocal.nix
     ./extensions/marketplace.nix
   ];
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
-    package = pkgs.vscodium;
     mutableExtensionsDir = false;
   };
   # Use the full XDG path so VSCodium actually sees them
