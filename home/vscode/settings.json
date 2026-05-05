@@ -610,7 +610,6 @@
   "AHK++.v1.file": {
     "interpreterPath": "C:\\Program Files\\AutoHotkey\\v1.1.37.02\\AutoHotkeyU64.exe",
   },
-  "workbench.colorTheme": "Void",
   "powershell.startAutomatically": false,
   "powershell.integratedConsole.showOnStartup": false,
   "terminal.integrated.hideOnStartup": "whenEmpty",
