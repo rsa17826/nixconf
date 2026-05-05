@@ -2,10 +2,10 @@
 set -eu -o pipefail
 
 # can be added to your configuration with the following command and snippet:
-# $ ./pkgs/applications/editors/vscodium/extensions/update_installed_exts.sh > extensions.nix
+# $ ./pkgs/applications/editors/vscode/extensions/update_installed_exts.sh > extensions.nix
 #
 # packages = with pkgs;
-#   (vscodium-with-extensions.override {
+#   (vscode-with-extensions.override {
 #     vscodeExtensions = map
 #       (extension: vscode-utils.buildVscodeMarketplaceExtension {
 #         mktplcRef = {
