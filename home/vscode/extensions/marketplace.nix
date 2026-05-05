@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  programs.vscode.profiles.default = {
-    extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+  programs.vscodium.profiles.default = {
+    extensions = pkgs.vscodium-utils.extensionsFromVscodeMarketplace [
       {
         name = "csstools-design-tokens";
         publisher = "RomainMenke";
