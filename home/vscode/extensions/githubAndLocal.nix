@@ -158,7 +158,7 @@ let
   #   };
 in
 {
-  programs.vscode.profiles.default = {
+  programs.vscodium.profiles.default = {
     extensions = [
       (buildFromFlake {
         src = inputs.ext-vscode-void-color-theme;
