@@ -839,5 +839,6 @@
   "[perl]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
   },
+  "workbench.colorTheme": "Void",
   // "files.simpleDialog.enable": true,
 }
