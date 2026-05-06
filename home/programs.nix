@@ -151,7 +151,6 @@ in
       (pkgFromInp "wayland-keepass-autotype" "default")
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
-      (pkgFromInp "autocorrect" "default")
       (pkgFromInp "file-sorter" "default")
       # (pkgFromInp "file-sorter" "default")
       browserSelectorPkg
@@ -324,14 +323,15 @@ in
     };
   };
   environment.systemPackages = with pkgs; [
+    (pkgFromInp "autocorrect" "default")
     # nix-direnv
-    (pince.overrideAttrs (old: {
-      postInstall = (old.postInstall or "") + ''
-        find $out -name "HexView.py" -exec sed -i \
-          's/if event\.modifiers/if event is not None and event.modifiers/' \
-          {} \;
-      '';
-    })) # cheat engine
+    # (pince.overrideAttrs (old: {
+    #   postInstall = (old.postInstall or "") + ''
+    #     find $out -name "HexView.py" -exec sed -i \
+    #       's/if event\.modifiers/if event is not None and event.modifiers/' \
+    #       {} \;
+    #   '';
+    # })) # cheat engine
     gdb
     tumbler
     gsettings-desktop-schemas

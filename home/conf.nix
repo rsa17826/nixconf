@@ -253,21 +253,38 @@ in
     };
     mouse-actions.enable = true;
   };
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  systemd.services.nix-custom-gc = {
-    description = "Custom GFS Garbage Collection";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "/etc/profiles/per-user/nyix/bin/customGC";
-    };
-  };
+  systemd = {
+    services = {
+      nix-custom-gc = {
+        description = "Custom GFS Garbage Collection";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "/etc/profiles/per-user/nyix/bin/customGC";
+        };
+      };
+      autocorrect = {
+        description = "Autocorrect Daemon";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
 
-  systemd.timers.nix-custom-gc = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "daily";
-      Persistent = true;
+        serviceConfig = {
+          ExecStart = "/run/current-system/sw/bin/autocorrect"; # adjust flags as needed
+          Restart = "on-failure";
+          RestartSec = "5s";
+
+          # Optional hardening
+          DynamicUser = true;
+          NoNewPrivileges = true;
+        };
+      };
+    };
+
+    timers.nix-custom-gc = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+      };
     };
   };
   # This value determines the NixOS release from which the default
