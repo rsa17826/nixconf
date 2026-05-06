@@ -13,7 +13,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("progress-daemon")
 	hl.exec_cmd("gpu-screen-recorder -w screen -f 60 -a default_output -r 300 -c mp4 -o ~/videos/flashback")
 	hl.exec_cmd("qs -p ~/nixconf/quickshell/bar/")
-	hl.exec_cmd("python -m http.server -d ~/projects/jira-project-ui/ 15432")
+	-- hl.exec_cmd("python -m http.server -d ~/projects/jira-project-ui/ 15432")
 	-- Clipboard history
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
