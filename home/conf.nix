@@ -262,19 +262,35 @@ in
           ExecStart = "/etc/profiles/per-user/nyix/bin/customGC";
         };
       };
-      autocorrect = {
-        description = "Autocorrect Daemon";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
+      # autocorrect = {
+      #   description = "Autocorrect Daemon";
+      #   wantedBy = [ "multi-user.target" ];
+      #   after = [ "network.target" ];
 
-        serviceConfig = {
-          ExecStart = "/run/current-system/sw/bin/autocorrect"; # adjust flags as needed
-          Restart = "on-failure";
-          RestartSec = "5s";
+      #   serviceConfig = {
+      #     ExecStart = "/run/current-system/sw/bin/autocorrect"; # adjust flags as needed
+      #     Restart = "on-failure";
+      #     RestartSec = "5s";
 
-          # Optional hardening
-          DynamicUser = true;
-          NoNewPrivileges = true;
+      #     # Optional hardening
+      #     DynamicUser = true;
+      #     NoNewPrivileges = true;
+      #   };
+      # };
+    };
+    user = {
+      services = {
+        autocorrect = {
+          description = "Autocorrect Daemon";
+          wantedBy = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "/run/current-system/sw/bin/autocorrect";
+            Restart = "on-failure";
+            RestartSec = "5s";
+          };
         };
       };
     };
