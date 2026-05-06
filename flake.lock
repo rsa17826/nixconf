@@ -90,7 +90,7 @@
         "type": "github"
       }
     },
-    "autocorrect-daemon": {
+    "autocorrect": {
       "inputs": {
         "flake-utils": [
           "flake-utils"
@@ -103,13 +103,13 @@
         "lastModified": 1777597241,
         "narHash": "sha256-mOwV+Q/koCaIZzc9/iqdS4bkR5TFCn8wQrh9amUJZQs=",
         "owner": "rsa17826",
-        "repo": "autocorrect-daemon",
+        "repo": "autocorrect",
         "rev": "f404d05f6ccf0dc2d89c6c0d0bf8ae07e0e7b908",
         "type": "github"
       },
       "original": {
         "owner": "rsa17826",
-        "repo": "autocorrect-daemon",
+        "repo": "autocorrect",
         "type": "github"
       }
     },
@@ -314,6 +314,26 @@
       "original": {
         "owner": "rsa17826",
         "repo": "vscode-void-color-theme",
+        "type": "github"
+      }
+    },
+    "file-sorter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778026425,
+        "narHash": "sha256-zBzEsISHDherVcqzuWOYvUF0rJhZMWK0yCRZOJCyMHw=",
+        "owner": "rsa17826",
+        "repo": "file-sorter",
+        "rev": "76ae94f1fb65ca4b51b5cfdbd7a3516721d80ee8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "file-sorter",
         "type": "github"
       }
     },
@@ -1094,7 +1114,7 @@
     "root": {
       "inputs": {
         "audio-manager": "audio-manager",
-        "autocorrect-daemon": "autocorrect-daemon",
+        "autocorrect": "autocorrect",
         "browser-selector": "browser-selector",
         "copyparty": "copyparty",
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
@@ -1106,6 +1126,7 @@
         "ext-simple-auto-formatter": "ext-simple-auto-formatter",
         "ext-textreplace": "ext-textreplace",
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
+        "file-sorter": "file-sorter",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "hypr-darkwindow": "hypr-darkwindow",

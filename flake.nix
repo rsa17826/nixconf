@@ -96,8 +96,8 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    autocorrect-daemon = {
-      url = "github:rsa17826/autocorrect-daemon";
+    autocorrect = {
+      url = "github:rsa17826/autocorrect";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
