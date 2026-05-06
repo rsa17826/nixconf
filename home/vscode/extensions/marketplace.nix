@@ -3,6 +3,18 @@
   programs.vscodium.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "hide-error-cases";
+        publisher = "taqanori";
+        version = "1.0.8";
+        hash = "sha256-U3W7gO2EvMuZWrBmdHSPSWQbJNL4wIoo9IL/6GKB+pc=";
+      }
+      {
+        name = "Go";
+        publisher = "golang";
+        version = "0.53.1";
+        hash = "sha256-sgZFI3iWioecvh05bTvT/gJU0zEf79P1xs6vzGkBTWU=";
+      }
+      {
         name = "csstools-design-tokens";
         publisher = "RomainMenke";
         version = "1.2.1";

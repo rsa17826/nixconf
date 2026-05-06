@@ -160,6 +160,7 @@ in
       openssl
       zlib
       #
+      go
       socat
       kdlfmt
       libxkbcommon
