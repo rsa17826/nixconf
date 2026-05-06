@@ -161,6 +161,7 @@ in
       zlib
       #
       go
+      gopls
       socat
       kdlfmt
       libxkbcommon
