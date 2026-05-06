@@ -162,6 +162,7 @@ in
       #
       go
       gopls
+      gcc
       socat
       kdlfmt
       libxkbcommon
