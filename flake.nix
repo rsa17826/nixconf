@@ -103,6 +103,12 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    file-sorter = {
+      url = "github:rsa17826/file-sorter";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     # ext
     ext-vscode-void-color-theme = {
       url = "github:rsa17826/vscode-void-color-theme";
