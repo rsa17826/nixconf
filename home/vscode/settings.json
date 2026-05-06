@@ -843,6 +843,9 @@
   "fixAllJson.enableFixes": {
     "removeTrailingCommas": false,
   },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+  },
 
   // "files.simpleDialog.enable": true,
 }
