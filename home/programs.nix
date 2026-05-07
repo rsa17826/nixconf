@@ -357,7 +357,7 @@ in
     kitty # terminal emulator
     # rofi
     # albert
-    keyd # disables capslock and enables numlock
+    # keyd # disables capslock and enables numlock
     anyrun # application launcher
     nix-output-monitor # nix update formatter
     cascadia-code # font

@@ -58,6 +58,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 -- Disable Num_Lock (intercept and do nothing)
 hl.bind("Num_Lock", function() end)
+hl.bind("Caps_Lock", function() end)
 
 -- Clipboard viewer
 hl.bind(

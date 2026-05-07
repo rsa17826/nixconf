@@ -328,21 +328,21 @@ in
     xserver = {
       videoDrivers = [ "nvidia" ];
     };
-    keyd = {
-      enable = true;
-      keyboards = {
-        default = {
-          ids = [ "*" ];
-          settings = {
-            main = {
-              numlock = "noop";
-              capslock = "overload(control, esc)";
-              # numlock = "repeat";
-            };
-          };
-        };
-      };
-    };
+    # keyd = {
+    #   enable = true;
+    #   keyboards = {
+    #     default = {
+    #       ids = [ "*" ];
+    #       settings = {
+    #         main = {
+    #           numlock = "noop";
+    #           capslock = "overload(control, esc)";
+    #           # numlock = "repeat";
+    #         };
+    #       };
+    #     };
+    #   };
+    # };
     # opensnitch = {
     #   enable = true;
     # };
