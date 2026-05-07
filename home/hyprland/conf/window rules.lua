@@ -43,11 +43,11 @@ hl.window_rule({
 	workspace = "8 silent",
 })
 
--- hl.window_rule({
--- 	name = "asdd",
--- 	match = { class = "^xdman-Main$" },
--- 	workspace = "8 silent",
--- })
+hl.window_rule({
+	name = "asdd",
+	match = { class = "^xdman-Main$" },
+	workspace = "8 silent",
+})
 
 -- hyprland-run popup: float, bottom-left area
 hl.window_rule({

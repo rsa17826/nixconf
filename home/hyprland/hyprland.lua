@@ -20,6 +20,7 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "24")
 hl.env("HYPRCURSOR_THEME", "mew")
+hl.env("YDOTOOL_SOCKET", "/tmp/.ydotool_socket")
 
 -- ─── Core config ───────────────────────────────────────────────────────────
 hl.config({

@@ -220,6 +220,9 @@ in
     };
   };
   programs = {
+    ydotool = {
+      enable = true;
+    };
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
