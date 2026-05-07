@@ -206,9 +206,9 @@ in
       javaPackages.compiler.temurin-bin.jre-25 # for running java apps
       file # like die
       # opensnitch-ui # firewall
-      (vscodium.override {
-        commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-      }) # text editor
+      # (vscodium.override {
+      #   commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+      # }) # text editor
       wineWow64Packages.unstableFull # windows apps
       winetricks
       unixtools.watch # watch cmd

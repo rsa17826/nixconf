@@ -309,7 +309,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  # sudo codium --no-sandbox --user-data-dir "/home/${userConfig.uname}/.config/VSCodium/"
   networking.hostName = "${hostName}";
   system = {
     stateVersion = "25.05";
