@@ -10,7 +10,7 @@ let
     clearallcache = "sudo nix-collect-garbage --delete-older-than 15d";
     worm = "magic-wormhole send";
     hole = "magic-wormhole receive";
-    q = "exit";
+    q = "exit 0";
     c = "clear";
     nix-shell-alias = "nix-shell";
     repairStore = "sudo nix-store --verify --check-contents --repair";
