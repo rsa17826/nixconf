@@ -17,10 +17,6 @@ let
 in
 {
   programs = {
-    pay-respects = {
-      enable = true;
-      enableZshIntegration = true;
-    };
     zsh = {
       dotDir = "${config.xdg.configHome}/zsh";
       enable = true;

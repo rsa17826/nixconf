@@ -3,6 +3,8 @@
   services.unbound = {
     enable = true;
     settings = {
+      remote-control.control-enable = true;
+
       forward-zone = [
         {
           name = ".";
