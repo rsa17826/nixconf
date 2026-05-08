@@ -47,7 +47,7 @@ in
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="input", MODE="0660"
     KERNEL=="tty0", GROUP="tty", MODE="0660"
-    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*::scrolllock", RUN+="${pkgs.coreutils}/bin/chmod 666 /sys/class/leds/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*::scrolllock", GROUP="video", MODE="0664"
   '';
   security.pam.services.hyprlock = {
     text = ''
