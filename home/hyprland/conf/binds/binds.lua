@@ -55,7 +55,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 -- Clipboard viewer
 hl.bind(
-	"CTRL + KP_Insert",
+	"CTRL + KP_0",
 	hl.dsp.exec_cmd(
 		"/run/current-system/sw/bin/kitten quick-access-terminal python3.14 ~/nixconf/home/cliphistViewer/main.py"
 	)
