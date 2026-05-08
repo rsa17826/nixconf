@@ -100,11 +100,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778193021,
-        "narHash": "sha256-XOw1ieSY6gugPcUmUpYFaOd9DR7hl4wqCw7W1fx1bpM=",
+        "lastModified": 1778196685,
+        "narHash": "sha256-mxcuK9/52VdGLfblR3fuvt4o3GiHzrK/YkbHf0PqCVc=",
         "owner": "rsa17826",
         "repo": "autocorrect",
-        "rev": "50cf8074acf0d5af6ad9c43f27858f5e4f111948",
+        "rev": "b508ab8e8ae3105228e7fa376e1ab6651448fb09",
         "type": "github"
       },
       "original": {
@@ -1200,11 +1200,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778165300,
-        "narHash": "sha256-f+Gf01C6lj2d6mEegiaPA2LPoDutemBHegkIcaSpPb8=",
+        "lastModified": 1778197862,
+        "narHash": "sha256-LzPC3J9cNp1Kz96ekWXsyMZPv5lq0ti+dolfwSekh38=",
         "owner": "rsa17826",
         "repo": "wayland-keepass-autotype",
-        "rev": "fa7944ac827ff222e6523046a9e05bcc756db384",
+        "rev": "b0748f3b81259344edcb8d677b189fbfbebfea91",
         "type": "github"
       },
       "original": {
