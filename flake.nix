@@ -73,7 +73,6 @@
       url = "github:rsa17826/go-autoclicker";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
       };
     };
     multi-game-launcher = {
