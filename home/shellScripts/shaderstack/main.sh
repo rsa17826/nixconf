@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 # Directories
 SHADER_DIR="$HOME/.config/hypr/shaders"
 TEMP_SHADER="$HOME/.config/hypr/shaders/.active_stack.glsl"
@@ -11,6 +11,7 @@ rebuild_stack() {
   local active_shaders
   active_shaders=$(cat "$STATE_FILE" 2>/dev/null)
 
+  # Reset to default if no shaders are active
   if [ -z "$(echo "$active_shaders" | tr -d '[:space:]')" ]; then
     hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
     return
@@ -20,34 +21,38 @@ rebuild_stack() {
     echo "precision highp float;"
     echo "varying vec2 v_texcoord;"
     echo "uniform sampler2D tex;"
-    echo "void main() {"
-    echo "    vec4 pix = texture2D(tex, v_texcoord);"
+    echo "vec4 pix;" # Global pixel variable for layers to modify
 
+    # 1. Define each shader as its own unique function
     while read -r name; do
       [ -z "$name" ] && continue
       local shader_file="$SHADER_DIR/$name.glsl"
 
       if [ -f "$shader_file" ]; then
-        echo "    { // Layer: $name"
-        # 1. Strip global headers
-        # 2. Remove 'void main() {'
-        # 3. Replace gl_FragColor with pix
-        # 4. CRITICAL: Replace 'texture2D(tex, v_texcoord)' with 'pix'
-        #    so layers actually STACK instead of overwriting each other.
-        sed -e '/precision/d' -e '/varying/d' -e '/uniform sampler2D/d' \
-          -e 's/void main() *{ *//' \
-          -e 's/gl_FragColor\s*=\s*/pix = /g' \
-          -e 's/texture2D(tex, v_texcoord)/pix/g' "$shader_file" |
-          sed '$ d' # This removes the very last '}' of the individual file
-        echo "    }"
+        echo "// --- Function for Layer: $name ---"
+        # Rename 'void main()' to a unique function name
+        # Remove global headers to avoid redefinition errors
+        sed -e "s/void main()/void layer_${name}()/" \
+          -e '/precision/d' -e '/varying/d' -e '/uniform sampler2D tex/d' \
+          -e 's/gl_FragColor/pix/g' \
+          -e 's/texture2D(tex, v_texcoord)/pix/g' "$shader_file"
+        echo ""
       fi
     done <<<"$active_shaders"
 
+    # 2. Main entry point calls the functions in order
+    echo "void main() {"
+    echo "    pix = texture2D(tex, v_texcoord);"
+    while read -r name; do
+      [ -z "$name" ] && continue
+      if [ -f "$SHADER_DIR/$name.glsl" ]; then
+        echo "    layer_${name}();"
+      fi
+    done <<<"$active_shaders"
     echo "    gl_FragColor = pix;"
     echo "}"
   } >"$TEMP_SHADER"
 
-  hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
   hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
 }
 
@@ -74,7 +79,8 @@ case $1 in
 enable) enable_shader "$2" ;;
 disable) disable_shader "$2" ;;
 toggle)
-  if grep -qx "$2" "$FILE_STATE"; then
+  # Change $FILE_STATE to $STATE_FILE
+  if grep -qx "$2" "$STATE_FILE"; then
     disable_shader "$2"
   else
     enable_shader "$2"

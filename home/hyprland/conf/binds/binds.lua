@@ -27,10 +27,6 @@ hl.bind(
 		'sh -c \'PID=$(hyprctl activewindow -j | jq -r .pid); BIN=$(readlink /proc/$PID/exe); kill -9 "$PID" && sleep 0.3 && "$BIN" &\''
 	)
 )
-
--- Disable screen shader
-hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd('hyprctl keyword decoration:screen_shader "[[EMPTY]]"'))
-
 -- Fullscreen
 hl.bind("SUPER + c", hl.dsp.window.fullscreen())
 -- hl.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
