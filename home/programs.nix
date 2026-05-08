@@ -160,6 +160,7 @@ in
       openssl
       zlib
       #
+      clang-tools
       go
       gopls
       gcc

@@ -149,13 +149,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[ahk2]": {},
-  "files.associations": {
-    "*.ahk": "ahk2",
-    "*.gd": "gdscript",
-    "*.js": "javascript",
-    "*.ts": "typescript",
-    "*.slang": "hlsl",
-  },
   "workbench.settings.applyToAllProfiles": [
     "editor.fontFamily",
     "editor.wordWrap",
@@ -846,6 +839,18 @@
   "[go]": {
     "editor.defaultFormatter": "golang.go",
   },
-
+  "files.associations": {
+    "*.ahk": "ahk2",
+    "*.gd": "gdscript",
+    "*.js": "javascript",
+    "*.ts": "typescript",
+    "*.slang": "hlsl",
+    "*.frag": "glsl",
+    "*.vert": "glsl",
+    "*.glsl": "glsl",
+  },
+  "[glsl]": {
+    "editor.defaultFormatter": "xaver.clang-format",
+  },
   // "files.simpleDialog.enable": true,
 }
