@@ -3,6 +3,8 @@
 # Pathing
 SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.frag"
 SHADER_RUNTIME="$HOME/.config/hypr/shaders/active_clone.frag"
+if shaderstack enabled active_clone
+shaderstack disable active_clone
 
 # 1. Get Screen Resolution
 MONITOR_INFO=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true)')
@@ -45,4 +47,4 @@ sed \
   "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
 # 6. Apply
-hyprctl keyword decoration:screen_shader "$SHADER_RUNTIME"
+shaderstack enable active_clone
