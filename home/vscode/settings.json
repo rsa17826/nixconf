@@ -852,5 +852,20 @@
   "[glsl]": {
     "editor.defaultFormatter": "xaver.clang-format",
   },
+  "go.diagnostic.vulncheck": "Imports",
+  "go.editorContextMenuCommands": {
+    "toggleTestFile": false,
+  },
+  "go.inlayHints.compositeLiteralFields": true,
+  "go.inlayHints.compositeLiteralTypes": true,
+  "go.inlayHints.constantValues": true,
+  "go.inlayHints.functionTypeParameters": true,
+  "go.inlayHints.ignoredError": true,
+  "go.inlayHints.parameterNames": true,
+  "go.inlayHints.rangeVariableTypes": true,
+  "go.lintOnSave": "workspace",
+  "go.showWelcome": false,
+  "go.testExplorer.enable": false,
+  "go.testExplorer.showOutput": false,
   // "files.simpleDialog.enable": true,
 }
