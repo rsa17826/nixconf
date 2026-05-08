@@ -52,10 +52,6 @@ hl.bind(mainMod .. " + M", hl.dsp.exit())
 hl.bind("SHIFT + ALT + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
--- Disable Num_Lock (intercept and do nothing)
-hl.bind("Num_Lock", function() end)
-hl.bind("Caps_Lock", function() end)
-
 -- Clipboard viewer
 hl.bind(
 	"CTRL + KP_Insert",
@@ -63,3 +59,8 @@ hl.bind(
 		"/run/current-system/sw/bin/kitten quick-access-terminal python3.14 ~/nixconf/home/cliphistViewer/main.py"
 	)
 )
+hl.config({
+	input = {
+		kb_options = "caps:none,numpad:mac",
+	},
+})

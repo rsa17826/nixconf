@@ -16,11 +16,11 @@ in
 {
   home.username = userConfig.uname;
   home.homeDirectory = "/home/${userConfig.uname}";
-  wayland.windowManager.hyprland.settings = {
-    input = {
-      numlock_by_default = true;
-    };
-  };
+  # wayland.windowManager.hyprland.settings = {
+  #   input = {
+  #     numlock_by_default = true;
+  #   };
+  # };
   _module.args = {
     ln = config.lib.file.mkOutOfStoreSymlink;
   };

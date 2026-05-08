@@ -259,3 +259,9 @@ $2
 @replace -
 @endregex
 
+@name no interface{}
+@file \.go$
+@regex (?<!\w)interface\{\}(?!\w)
+@replace any
+@endregex
+
