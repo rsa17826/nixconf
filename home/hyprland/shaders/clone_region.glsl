@@ -16,13 +16,13 @@ void main() {
   if (v_texcoord.x < dispStart.x || v_texcoord.x > dispEnd.x ||
   v_texcoord.y < dispStart.y || v_texcoord.y > dispEnd.y) {
     gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    return;
   }
-
+else{
   // Map the display viewport position (0-1) into the source region
   vec2 relPos = (v_texcoord - dispStart) / dispSize;
   vec2 sourceCoord = offset + (relPos * size);
 
   sourceCoord = clamp(sourceCoord, 0.0, 1.0);
   gl_FragColor = texture2D(tex, sourceCoord);
+}
 }

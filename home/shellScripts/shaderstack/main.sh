@@ -61,15 +61,22 @@ rebuild_stack() {
 
     while read -r name; do
       [ -z "$name" ] && continue
-      echo "    // --- Layer: $name ---"
-      echo "    {"
-      # 1. Extract the code inside main()
-      # 2. Remove any line that tries to declare 'gl_FragColor'
-      # 3. Replace the final assignment so it updates our global 'pix'
-      sed -n '/main()/,/}/p' "$SHADER_DIR/$name.glsl" |
-        sed '1d;$d' |
-        sed 's/gl_FragColor\s*=\s*/pix = /g'
-      echo "    }"
+
+      # FIX 1: Look for .frag files instead of .glsl
+      local shader_file="$SHADER_DIR/$name.frag"
+
+      if [ -f "$shader_file" ]; then
+        echo "    // --- Layer: $name ---"
+        echo "    {"
+        # FIX 2: Capture everything *including* declarations,
+        # but remove the original main() wrapping lines
+        sed -e '/void main() {/d' -e '/^}$/d' "$shader_file" |
+          grep -v "precision" |
+          grep -v "varying" |
+          grep -v "uniform sampler2D tex" |
+          sed 's/gl_FragColor\s*=\s*/pix = /g'
+        echo "    }"
+      fi
     done <<<"$active_shaders"
 
     echo ""

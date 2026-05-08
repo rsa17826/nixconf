@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 # Pathing
-SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.frag"
-SHADER_RUNTIME="$HOME/.config/hypr/shaders/active_clone.frag"
-if shaderstack enabled active_clone
-shaderstack disable active_clone
+SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.glsl"
+SHADER_RUNTIME="$HOME/.config/hypr/shaders/active_clone.glsl"
+if shaderstack enabled active_clone; then
+  shaderstack disable active_clone
+  exit 0
+fi
 
 # 1. Get Screen Resolution
 MONITOR_INFO=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true)')
