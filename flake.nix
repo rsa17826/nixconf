@@ -69,6 +69,13 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    go-autoclicker = {
+      url = "github:rsa17826/go-autoclicker";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     multi-game-launcher = {
       url = "github:rsa17826/multi-game-launcher";
       inputs = {

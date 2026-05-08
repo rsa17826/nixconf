@@ -153,6 +153,7 @@ in
       (pkgFromInp "multi-game-launcher" "default")
       (pkgFromInp "audio-manager" "default")
       (pkgFromInp "file-sorter" "default")
+      (pkgFromInp "go-autoclicker" "default")
       # (pkgFromInp "file-sorter" "default")
       browserSelectorPkg
       browserSelectorDesktop
