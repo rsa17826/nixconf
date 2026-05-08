@@ -204,7 +204,9 @@ const mify = (node) => {
     const isBlocked = np && np.closest(blockList.join(","))
     // Check if it's in the specific "safe" sub-zone
     const isException = np && np.closest(allowList.join(","))
-
+    if (!np) {
+      return
+    }
     // Logic: Block it ONLY if it's in the blocklist AND NOT in the exception
     if (isBlocked && !isException) {
       if (showDebug) {

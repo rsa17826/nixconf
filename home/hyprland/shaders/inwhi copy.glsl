@@ -11,9 +11,9 @@ void main() {
 
   // 2. Subtract the whiteness to push it toward black
   // Using a power (like 2.0) makes the transition sharper
-  c.r -= pow(whiteness*0.9, 2.0);
-  c.g -= pow(whiteness*0.9, 2.0);
-  c.b -= pow(whiteness*0.9, 2.0);
+  c.r -= pow(whiteness * 0.9, 2.0);
+  c.g -= pow(whiteness * 0.9, 2.0);
+  c.b -= pow(whiteness * 0.9, 2.0);
 
   // 3. Ensure values don't go below zero
   c = max(c, 0.0);

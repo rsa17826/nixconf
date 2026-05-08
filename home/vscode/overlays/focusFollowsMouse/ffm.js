@@ -1,3 +1,6 @@
+/**
+ * @type {HTMLElement|null}
+ */
 let lastTarget = null
 let lastPos = { x: 0, y: 0 }
 
@@ -23,6 +26,11 @@ onmousemove = (e) => {
   applyFocus(target)
 }
 
+/**
+ *
+ * @param {HTMLElement|Element} el
+ * @returns {HTMLElement|null}
+ */
 function resolveTarget(el) {
   // 1. Direct real inputs (search box etc)
   if (
@@ -30,6 +38,8 @@ function resolveTarget(el) {
       '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"]',
     )
   ) {
+    // if matching it is htmlelement
+    // @ts-ignore
     return el
   }
 
@@ -54,7 +64,11 @@ function resolveTarget(el) {
   // 5. Generic fallback
   return el.closest('[role="textbox"], [contenteditable="true"]')
 }
-
+/**
+ *
+ * @param {HTMLElement} target
+ * @returns {void}
+ */
 function applyFocus(target) {
   if (!target) return
 
