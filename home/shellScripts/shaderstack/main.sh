@@ -5,48 +5,13 @@ SHADER_DIR="$HOME/.config/hypr/shaders"
 TEMP_SHADER="$HOME/.config/hypr/shaders/.active_stack.glsl"
 STATE_FILE="/tmp/shaderstack_state"
 
-# Ensure state file exists
 touch "$STATE_FILE"
-
-toggle_shader() {
-  local shader_name=$1
-  local shader_path="$SHADER_DIR/$shader_name.glsl"
-
-  if [ ! -f "$shader_path" ]; then
-    echo "Error: Shader $shader_name not found in $SHADER_DIR"
-    exit 1
-  fi
-
-  # Check if already in state
-  if grep -qx "$shader_name" "$STATE_FILE"; then
-    disable_shader "$shader_name"
-  else
-    enable_shader "$shader_name"
-  fi
-}
-
-disable_shader() {
-  local name=$1 # Accept the argument
-  sed -i "/^$name$/d" "$STATE_FILE"
-  echo "Disabled $name"
-  rebuild_stack
-}
-
-enable_shader() {
-  local name=$1 # Accept the argument
-  # Extra safety: don't add if it's already there
-  if ! grep -qx "$name" "$STATE_FILE"; then
-    echo "$name" >>"$STATE_FILE"
-  fi
-  echo "Enabled $name"
-  rebuild_stack
-}
 
 rebuild_stack() {
   local active_shaders
   active_shaders=$(cat "$STATE_FILE" 2>/dev/null)
 
-  if [ -z "$active_shaders" ]; then
+  if [ -z "$(echo "$active_shaders" | tr -d '[:space:]')" ]; then
     hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
     return
   fi
@@ -55,58 +20,75 @@ rebuild_stack() {
     echo "precision highp float;"
     echo "varying vec2 v_texcoord;"
     echo "uniform sampler2D tex;"
-    echo ""
     echo "void main() {"
     echo "    vec4 pix = texture2D(tex, v_texcoord);"
 
     while read -r name; do
       [ -z "$name" ] && continue
-
-      # FIX 1: Look for .frag files instead of .glsl
-      local shader_file="$SHADER_DIR/$name.frag"
+      local shader_file="$SHADER_DIR/$name.glsl"
 
       if [ -f "$shader_file" ]; then
-        echo "    // --- Layer: $name ---"
-        echo "    {"
-        # FIX 2: Capture everything *including* declarations,
-        # but remove the original main() wrapping lines
-        sed -e '/void main() {/d' -e '/^}$/d' "$shader_file" |
-          grep -v "precision" |
-          grep -v "varying" |
-          grep -v "uniform sampler2D tex" |
-          sed 's/gl_FragColor\s*=\s*/pix = /g'
+        echo "    { // Layer: $name"
+        # 1. Strip global headers
+        # 2. Remove 'void main() {'
+        # 3. Replace gl_FragColor with pix
+        # 4. CRITICAL: Replace 'texture2D(tex, v_texcoord)' with 'pix'
+        #    so layers actually STACK instead of overwriting each other.
+        sed -e '/precision/d' -e '/varying/d' -e '/uniform sampler2D/d' \
+          -e 's/void main() *{ *//' \
+          -e 's/gl_FragColor\s*=\s*/pix = /g' \
+          -e 's/texture2D(tex, v_texcoord)/pix/g' "$shader_file" |
+          sed '$ d' # This removes the very last '}' of the individual file
         echo "    }"
       fi
     done <<<"$active_shaders"
 
-    echo ""
     echo "    gl_FragColor = pix;"
     echo "}"
   } >"$TEMP_SHADER"
 
+  hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
   hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
 }
+
+enable_shader() {
+  local name=$1
+  [ -z "$name" ] && return
+  if ! grep -qx "$name" "$STATE_FILE"; then
+    echo "$name" >>"$STATE_FILE"
+  fi
+  echo "ok"
+  rebuild_stack
+}
+
+disable_shader() {
+  local name=$1
+  sed -i "/^$name$/d" "$STATE_FILE"
+  # Auto-clean empty lines to prevent the " - " blank entries
+  sed -i '/^$/d' "$STATE_FILE"
+  echo "ok"
+  rebuild_stack
+}
+
 case $1 in
-toggle) toggle_shader "$2" ;;
 enable) enable_shader "$2" ;;
 disable) disable_shader "$2" ;;
+toggle)
+  if grep -qx "$2" "$FILE_STATE"; then
+    disable_shader "$2"
+  else
+    enable_shader "$2"
+  fi
+  ;;
 enabled)
   if [ -n "$2" ]; then
-    # Check if a specific shader is in the state file
-    grep -qx "$2" "$STATE_FILE"
+    grep -qx "$2" "$STATE_FILE" # Silent exit code for scripts [cite: 1, 9]
   else
-    # Default behavior: list all
-    if [ -s "$STATE_FILE" ]; then
-      echo "Currently active shaders:"
-      sed 's/^/  - /' "$STATE_FILE"
-    else
-      echo "None"
-    fi
+    [ -s "$STATE_FILE" ] && sed 's/^/  - /' "$STATE_FILE" || echo "None"
   fi
   ;;
 clear)
-  : >"$STATE_FILE"
+  : >"$STATE_FILE" # SC2188 fix [cite: 1]
   rebuild_stack
   ;;
-*) echo "Usage: shaderstack toggle <filename_without_ext> | clear" ;;
 esac
