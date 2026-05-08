@@ -18,9 +18,5 @@ void main() {
   // 3. Ensure values don't go below zero
   c = max(c, 0.0);
 
-  // Optional: Apply your CAP if you still want to limit brightness
-  const float CAP = 0.867;
-  c = clamp(c, 0.0, CAP);
-
   gl_FragColor = vec4(c, px.a);
 }

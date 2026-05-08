@@ -3,6 +3,18 @@
   programs.vscodium.profiles.default = {
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
+        name = "shader";
+        publisher = "slevesque";
+        version = "1.1.5";
+        hash = "sha256-Pf37FeQMNlv74f7LMz9+CKscF6UjTZ7ZpcaZFKtX2ZM=";
+      }
+      {
+        name = "clang-format";
+        publisher = "xaver";
+        version = "1.9.0";
+        hash = "sha256-q9DvkXbv+GTyeMVIyUQDK49Njsl9msbnOD1gyS4ljC8=";
+      }
+      {
         name = "hide-error-cases";
         publisher = "taqanori";
         version = "1.0.8";
@@ -19,12 +31,6 @@
         publisher = "RomainMenke";
         version = "1.2.1";
         hash = "sha256-YVtByhQxebH3fdnNweVSBsTugm9hhhi4qNM21EWxOW8=";
-      }
-      {
-        name = "css-varbuddy";
-        publisher = "schalkneethling";
-        version = "0.5.3";
-        hash = "sha256-EPWr4U3qEBpg9jH5ysxs4Vxiz3wJ5K7QJiRBd0OVSG4=";
       }
       {
         name = "css-custom-property-inspector";
