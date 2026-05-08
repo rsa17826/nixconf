@@ -19,20 +19,32 @@ toggle_shader() {
 
   # Check if already in state
   if grep -qx "$shader_name" "$STATE_FILE"; then
-    # Remove it
-    sed -i "/^$shader_name$/d" "$STATE_FILE"
-    echo "Disabled $shader_name"
+    disable_shader "$shader_name"
   else
-    # Add it
-    echo "$shader_name" >>"$STATE_FILE"
-    echo "Enabled $shader_name"
+    enable_shader "$shader_name"
   fi
+}
 
+disable_shader() {
+  local name=$1 # Accept the argument
+  sed -i "/^$name$/d" "$STATE_FILE"
+  echo "Disabled $name"
+  rebuild_stack
+}
+
+enable_shader() {
+  local name=$1 # Accept the argument
+  # Extra safety: don't add if it's already there
+  if ! grep -qx "$name" "$STATE_FILE"; then
+    echo "$name" >>"$STATE_FILE"
+  fi
+  echo "Enabled $name"
   rebuild_stack
 }
 
 rebuild_stack() {
-  local active_shaders=$(cat "$STATE_FILE")
+  local active_shaders
+  active_shaders=$(cat "$STATE_FILE" 2>/dev/null)
 
   if [ -z "$active_shaders" ]; then
     hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
@@ -48,6 +60,7 @@ rebuild_stack() {
     echo "    vec4 pix = texture2D(tex, v_texcoord);"
 
     while read -r name; do
+      [ -z "$name" ] && continue
       echo "    // --- Layer: $name ---"
       echo "    {"
       # 1. Extract the code inside main()
@@ -68,8 +81,24 @@ rebuild_stack() {
 }
 case $1 in
 toggle) toggle_shader "$2" ;;
+enable) enable_shader "$2" ;;
+disable) disable_shader "$2" ;;
+enabled)
+  if [ -n "$2" ]; then
+    # Check if a specific shader is in the state file
+    grep -qx "$2" "$STATE_FILE"
+  else
+    # Default behavior: list all
+    if [ -s "$STATE_FILE" ]; then
+      echo "Currently active shaders:"
+      sed 's/^/  - /' "$STATE_FILE"
+    else
+      echo "None"
+    fi
+  fi
+  ;;
 clear)
-  echo "" >"$STATE_FILE"
+  : >"$STATE_FILE"
   rebuild_stack
   ;;
 *) echo "Usage: shaderstack toggle <filename_without_ext> | clear" ;;
