@@ -351,6 +351,21 @@ in
             RestartSec = "5s";
           };
         };
+        autoclicker = {
+          description = "Autoclicker Daemon";
+          wantedBy = [ "graphical-session.target" ];
+          after = [
+            "graphical-session.target"
+            "autocorrect.service"
+          ];
+          requires = [ "autocorrect.service" ]; # hard dep
+
+          serviceConfig = {
+            ExecStart = "/path/to/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
+            Restart = "on-failure";
+            RestartSec = "2s";
+          };
+        };
       };
     };
     timers = {

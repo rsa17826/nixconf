@@ -278,3 +278,13 @@ $2
 @replace $1$2
 @endregex
 
+@name fail on err
+@file \.go$
+@regex (^(?:[^/]|/(?!/))+[^\s]), _ :=(.*)
+@untilfail
+@replace $1, err :=$2
+if err != nil {
+  panic(err)
+}
+@endregex
+
