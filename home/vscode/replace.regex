@@ -278,13 +278,23 @@ $2
 @replace $1$2
 @endregex
 
-@name fail on err
+@name fail on err - mousePath, err := getDevice(mouseid)
 @file \.go$
-@regex (^(?:[^/]|/(?!/))+[^\s]), _ :=(.*)
+@regex (^(?:[^/]|/(?!/))+[^\s]), (?:_|err) :=(.*)
 @untilfail
 @replace $1, err :=$2
 if err != nil {
   panic(err)
 }
+@endregex
+
+@name fail on err - err = binary.Write(vMouse, binary.LittleEndian, ev)
+@file \.go$
+@regex ^([ \t]*)(?<=\s)(err|_)([ \t].*$)(?:\n[^\S\n]*)*\n[^\S\n]*(?![ \t])(?!if err)(?=[^\s])
+@replace $1err$3
+if err != nil {
+  panic(err)
+}
+
 @endregex
 
