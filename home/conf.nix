@@ -361,7 +361,7 @@ in
           requires = [ "autocorrect.service" ]; # hard dep
 
           serviceConfig = {
-            ExecStart = "/path/to/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
+            ExecStart = "/etc/profiles/per-user/nyix/bin/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
             Restart = "on-failure";
             RestartSec = "2s";
           };
