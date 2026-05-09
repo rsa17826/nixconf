@@ -1,7 +1,6 @@
 {
   userConfig,
   inputs,
-  config,
   hostName,
   lib,
   pkgs,
@@ -22,9 +21,57 @@ in
 
   ]
   ++ (listDir ./. (p: ./${p}/conf.nix));
+  services = {
+    udev = {
+      extraRules = ''
+        KERNEL=="uinput", GROUP="input", MODE="0660"
+        KERNEL=="tty0", GROUP="tty", MODE="0660"
+      '';
+      # ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*::scrolllock", GROUP="video", MODE="0664"
+    };
+
+    speechd = {
+      # Enable the Speech Dispatcher daemon
+      enable = true;
+    };
+
+    udisks2 = {
+      enable = true;
+    };
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+    };
+    journald = {
+      # keyd = {
+      #   enable = true;
+      #   keyboards = {
+      #     default = {
+      #       ids = [ "*" ];
+      #       settings = {
+      #         main = {
+      #           numlock = "noop";
+      #           capslock = "overload(control, esc)";
+      #           # numlock = "repeat";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
+      # opensnitch = {
+      #   enable = true;
+      # };
+
+      storage = "persistent";
+    };
+    resolved = {
+      enable = false;
+    };
+  };
   boot = {
     kernel = {
-      sysctl."kernel.yama.ptrace_scope" = 0;
+      sysctl = {
+        "kernel.yama.ptrace_scope" = 0;
+      };
     };
 
     kernelModules = [ "uinput" ];
@@ -38,111 +85,35 @@ in
         configurationLimit = 35;
       };
     };
-    # Use latest kernel.
-    # boot.kernelPackages = pkgs.linuxPackages_latest;
-    # boot.kernelPackages = pkgs.linuxPackages;
+    # boot = {
+    #   # Use latest kernel.
+    #   # kernelPackages = pkgs.linuxPackages_latest;
+    #   # kernelPackages = pkgs.linuxPackages;
+    # };
     kernelPackages = pkgs.linuxPackages;
-
-  };
-  services.udev.extraRules = ''
-    KERNEL=="uinput", GROUP="input", MODE="0660"
-    KERNEL=="tty0", GROUP="tty", MODE="0660"
-  '';
-  # ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*::scrolllock", GROUP="video", MODE="0664"
-  security.pam.services.hyprlock = {
-    text = ''
-      auth include login
-    '';
-  };
-
-  nix = {
-    settings = {
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-    };
-    registry = {
-      # 1. This pins the 'nixpkgs' flake to your system's input
-      nixpkgs.flake = inputs.nixpkgs;
-    };
-
-    # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
-    # (Fixes older tools that don't know about flakes yet)
-    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
-  };
-  nixpkgs = {
-    overlays = [
-      (final: prev: {
-        pkgsi686Linux = prev.pkgsi686Linux.extend (
-          _: p: {
-            openldap = p.openldap.overrideAttrs (_: {
-              doCheck = false;
-            });
-          }
-        );
-      })
-    ];
-    config = {
-      allowUnfreePredicate =
-        pkg:
-        builtins.elem (pkgs.lib.getName pkg) [
-          "nvidia-x11"
-          "nvidia-settings"
-          "nvidia-persistenced"
-          "nvidia-kernel-modules"
-          "steam"
-          "steam-original"
-          "steam-unwrapped"
-        ];
-    };
-  };
-  nix.settings = {
-    auto-optimise-store = true;
-  };
-  # nix.gc = {
-  #   persistent = true;
-  #   automatic = true;
-  #   dates = "daily";
-  #   options = "--delete-older-than 7d";
-  # };
-  environment = {
-    variables = {
-      EDITOR = "nvim";
-      SOPS_EDITOR = "codium --wait";
-      VISUAL = "nvim";
-      HYPRCURSOR_THEME = "mew";
-      # QT_STYLE_OVERRIDE = "adwaita-dark";
-    };
-  };
-
-  # systemd.services.numlock = {
-  #   description = "Enable NumLock at startup";
-  #   wantedBy = [ "multi-user.target" ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = "yes";
-  #     ExecStart = "setleds +num";
-  #   };
-  # };
-  console.useXkbConfig = true;
-  fonts = {
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
-        serif = [ "JetBrainsMono Nerd Font Propo" ];
-        monospace = [ "JetBrainsMono Nerd Font Mono" ];
-        emoji = [ "Noto Color Emoji" ];
-      };
+    tmp = {
+      cleanOnBoot = true;
     };
   };
   security = {
-    wrappers.pince = {
-      source = "${pkgs.pince}/bin/pince";
-      capabilities = "cap_sys_ptrace+eip";
-      owner = "root";
-      group = "root";
+    pam = {
+      services = {
+        hyprlock = {
+          text = ''
+            auth include login
+          '';
+        };
+      };
     };
+    # wrappers = {
+    #   pince = {
+    #     source = "${pkgs.pince}/bin/pince";
+    #     capabilities = "cap_sys_ptrace+eip";
+    #     owner = "root";
+    #     group = "root";
+    #   };
+    # };
+
     sudo = {
       extraConfig = ''
         Defaults env_keep += "${lib.concatStringsSep " " sudoKeepVars}"
@@ -184,16 +155,96 @@ in
       ];
       enable = true;
     };
-    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    # networking = {
+    #   wireless = {
+    #     enable = true;
+    #   };
+    #   proxy = {
+    #     # Enables wireless support via wpa_supplicant.
+    #     # Configure network proxy if necessary
+    #     default = "http://user:password@proxy:port/";
+    #     noProxy = "127.0.0.1,localhost,internal.domain";
+    #   };
+    # };
+    # services = {
+    #   printing = {
+    #     # Enable CUPS to print documents.
+    #     enable = true;
+    #   };
+    # };
+    # rtkit = {
+    #   # Enable sound with pipewire.
+    #   enable = true;
+    # };
+  };
+  nixpkgs = {
+    overlays = [
+      (final: prev: {
+        pkgsi686Linux = prev.pkgsi686Linux.extend (
+          _: p: {
+            openldap = p.openldap.overrideAttrs (_: {
+              doCheck = false;
+            });
+          }
+        );
+      })
+    ];
+    config = {
+      allowUnfreePredicate =
+        pkg:
+        builtins.elem (pkgs.lib.getName pkg) [
+          "nvidia-x11"
+          "nvidia-settings"
+          "nvidia-persistenced"
+          "nvidia-kernel-modules"
+          "steam"
+          "steam-original"
+          "steam-unwrapped"
+        ];
+    };
+  };
+  nix = {
+    registry = {
+      nixpkgs = {
+        # 1. This pins the 'nixpkgs' flake to your system's input
+        flake = inputs.nixpkgs;
+      };
+    };
 
-    # Enable CUPS to print documents.
-    # services.printing.enable = true;
+    # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
+    # (Fixes older tools that don't know about flakes yet)
+    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
+    settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
 
-    # Enable sound with pipewire.
-    rtkit.enable = true;
+      auto-optimise-store = true;
+    };
+  };
+
+  environment = {
+    variables = {
+      EDITOR = "nvim";
+      SOPS_EDITOR = "codium --wait";
+      VISUAL = "nvim";
+      HYPRCURSOR_THEME = "mew";
+      # QT_STYLE_OVERRIDE = "adwaita-dark";
+    };
+  };
+  console = {
+    useXkbConfig = true;
+  };
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
+        serif = [ "JetBrainsMono Nerd Font Propo" ];
+        monospace = [ "JetBrainsMono Nerd Font Mono" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
   };
   hardware = {
     graphics = {
@@ -201,8 +252,10 @@ in
       enable = true;
     };
     nvidia = {
-      # Modesetting is required for most modern Wayland/X11 setups
-      modesetting.enable = true;
+      modesetting = {
+        # Modesetting is required for most modern Wayland/X11 setups
+        enable = true;
+      };
 
       # This is the line Nix is complaining about:
       # Set to false because you have a Maxwell (GM200) GPU.
@@ -255,7 +308,9 @@ in
         openssl
       ];
     };
-    mouse-actions.enable = true;
+    mouse-actions = {
+      enable = true;
+    };
   };
   systemd = {
     services = {
@@ -298,95 +353,20 @@ in
         };
       };
     };
-
-    timers.nix-custom-gc = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-        Persistent = true;
+    timers = {
+      nix-custom-gc = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+        };
       };
     };
   };
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  networking.hostName = "${hostName}";
+  networking = {
+    hostName = "${hostName}";
+  };
   system = {
     stateVersion = "25.05";
   };
-  services = {
-    speechd = {
-      # Enable the Speech Dispatcher daemon
-      enable = true;
-    };
-
-    udisks2 = {
-      enable = true;
-    };
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-    };
-    # keyd = {
-    #   enable = true;
-    #   keyboards = {
-    #     default = {
-    #       ids = [ "*" ];
-    #       settings = {
-    #         main = {
-    #           numlock = "noop";
-    #           capslock = "overload(control, esc)";
-    #           # numlock = "repeat";
-    #         };
-    #       };
-    #     };
-    #   };
-    # };
-    # opensnitch = {
-    #   enable = true;
-    # };
-
-    journald.storage = "persistent";
-    resolved.enable = false;
-  };
-
-  #  fileSystems."/data" =
-  #    { device = "/dev/disk/by-uuid/A801-0866";
-  #      fsType = "ext4";
-  #    };
-  # services.kanata = {
-  #   enable = true;
-
-  #   keyboards.default = {
-  #     devices = [
-  #       "/dev/input/by-path/*-event-kbd"
-  #     ];
-
-  #     config = ''
-  #       (defsrc
-  #         a b c d e f g h i j k l m n o p q r s t u v w x y z
-  #         spc bspc
-  #       )
-
-  #       ;; passthrough base layer (REQUIRED)
-  #       (deflayer base
-  #         a b c d e f g h i j k l m n o p q r s t u v w x y z
-  #         spc bspc
-  #       )
-
-  #       ;; AHK-style text expansion
-  #       (defseq
-  #         (i n s s t e a d spc) (instead spc)
-  #         (s u j e s t i o n s spc) (suggestions spc)
-  #         (s u j e s t i o n spc) (suggestion spc)
-  #         (b u t i f i e r spc) (beautifier spc)
-  #         (p r o p i g a t o r spc) (propagator spc)
-  #         (m u n i t e s spc) (minutes spc)
-  #         (m i n i t s spc) (minutes spc)
-  #       )
-  #     '';
-  #   };
-  # };
 }

@@ -14,15 +14,27 @@ let
   };
 in
 {
-  home.username = userConfig.uname;
-  home.homeDirectory = "/home/${userConfig.uname}";
-  # wayland.windowManager.hyprland.settings = {
-  #   input = {
-  #     numlock_by_default = true;
-  #   };
-  # };
-  _module.args = {
-    ln = config.lib.file.mkOutOfStoreSymlink;
+  home = {
+    username = userConfig.uname;
+    homeDirectory = "/home/${userConfig.uname}";
+    stateVersion = "26.05";
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      SOPS_EDITOR = "codium --wait";
+      VISUAL = "nvim";
+      HYPRCURSOR_THEME = "mew";
+      QT_STYLE_OVERRIDE = "adwaita-dark";
+      ADW_DISABLE_PORTAL = "0";
+      GTK_THEME = "Adwaita-dark";
+      GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+      GTK_USE_PORTAL = "1";
+    };
+  };
+  _module = {
+    args = {
+      ln = config.lib.file.mkOutOfStoreSymlink;
+    };
   };
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -31,18 +43,33 @@ in
   systemd = {
     user = {
       services = {
-        swaync.Service.Restart = lib.mkForce "no";
-        xdg-desktop-portal-gtk.Service.Restart = lib.mkForce "no";
-
-        # Also, prevent Home Manager from trying to start them during activation
-        swaync.Install.WantedBy = lib.mkForce [ ];
-        xdg-desktop-portal-gtk.Install.WantedBy = lib.mkForce [ ];
+        swaync = {
+          Service = {
+            Restart = lib.mkForce "no";
+          };
+          Install = {
+            # Also, prevent Home Manager from trying to start them during activation
+            WantedBy = lib.mkForce [ ];
+          };
+        };
+        xdg-desktop-portal-gtk = {
+          Service = {
+            Restart = lib.mkForce "no";
+          };
+          Install = {
+            WantedBy = lib.mkForce [ ];
+          };
+        };
       };
     };
   };
   services = {
-    swaync.enable = true;
-    playerctld.enable = true;
+    swaync = {
+      enable = true;
+    };
+    playerctld = {
+      enable = true;
+    };
   };
   xdg = {
     enable = true;
@@ -122,7 +149,6 @@ in
       # };
     };
   };
-  home.stateVersion = "26.05";
   programs = {
     direnv = {
       enable = true;
@@ -220,16 +246,21 @@ in
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-    gtk3.extraConfig = gtkExtraConfig;
-    gtk4.extraConfig = gtkExtraConfig;
-    # gtk4.theme = config.gtk.theme;
-    gtk4.theme = null;
+    gtk3 = {
+      extraConfig = gtkExtraConfig;
+    };
+    gtk4 = {
+      extraConfig = gtkExtraConfig;
+      # gtk4.theme = config.gtk.theme;
+      theme = null;
+    };
   };
 
   qt = {
     enable = true;
-
-    platformTheme.name = "gtk2";
+    platformTheme = {
+      name = "gtk2";
+    };
     style = {
       name = "adwaita-dark";
       package = pkgs.symlinkJoin {
@@ -241,22 +272,12 @@ in
       };
     };
   };
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
+  dconf = {
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
     };
-  };
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    SOPS_EDITOR = "codium --wait";
-    VISUAL = "nvim";
-    HYPRCURSOR_THEME = "mew";
-    QT_STYLE_OVERRIDE = "adwaita-dark";
-    ADW_DISABLE_PORTAL = "0";
-    GTK_THEME = "Adwaita-dark";
-    GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-    GTK_USE_PORTAL = "1";
   };
 
   # Bootloader.

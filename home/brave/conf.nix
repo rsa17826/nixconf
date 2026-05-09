@@ -1,26 +1,28 @@
 { lib, ... }:
 {
-  programs.chromium = {
-    enable = true;
+  programs = {
+    chromium = {
+      enable = true;
 
-    extraOpts = {
-      "CommandLineFlagSecurityWarningsEnabled" = false;
+      extraOpts = {
+        "CommandLineFlagSecurityWarningsEnabled" = false;
 
-      "ExtensionSettings" =
-        lib.genAttrs
-          [
-            "mnjggcdmjocbbbhaepdhchncahnbgone"
-            "ocgpenflpmgnfapjedencafcfakcekcd"
-            "icallnadddjmdinamnolclfjanhfoafe"
-            "edibdbjcniadpccecjdfdjjppcpchdlm"
-            "eimadpbcbfnmbkopoojfekhnkhdbieeh"
-            "ejddcgojdblidajhngkogefpkknnebdh"
-            "fbeffbjdlemaoicjdapfpikkikjoneco"
-          ]
-          (k: {
-            installation_mode = "force_installed";
-            update_url = "https://clients2.google.com/service/update2/crx";
-          });
+        "ExtensionSettings" =
+          lib.genAttrs
+            [
+              "mnjggcdmjocbbbhaepdhchncahnbgone"
+              "ocgpenflpmgnfapjedencafcfakcekcd"
+              "icallnadddjmdinamnolclfjanhfoafe"
+              "edibdbjcniadpccecjdfdjjppcpchdlm"
+              "eimadpbcbfnmbkopoojfekhnkhdbieeh"
+              "ejddcgojdblidajhngkogefpkknnebdh"
+              "fbeffbjdlemaoicjdapfpikkikjoneco"
+            ]
+            (k: {
+              installation_mode = "force_installed";
+              update_url = "https://clients2.google.com/service/update2/crx";
+            });
+      };
     };
   };
 }

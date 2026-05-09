@@ -20,10 +20,16 @@ in
     zsh = {
       dotDir = "${config.xdg.configHome}/zsh";
       enable = true;
-      history.size = 10000;
+      history = {
+        size = 10000;
+      };
       enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+      autosuggestion = {
+        enable = true;
+      };
+      syntaxHighlighting = {
+        enable = true;
+      };
       plugins = lib.mapAttrsToList (name: path: {
         name = name;
         src = pkgs.${name};

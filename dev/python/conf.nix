@@ -28,5 +28,11 @@ let
   python314Pkgs = pkgs.python314.withPackages (_: extraPackages);
 in
 {
-  users.users."${userConfig.uname}".packages = [ python314Pkgs ];
+  users = {
+    users = {
+      "${userConfig.uname}" = {
+        packages = [ python314Pkgs ];
+      };
+    };
+  };
 }

@@ -265,3 +265,16 @@ $2
 @replace any
 @endregex
 
+@name no . notation for assignment
+@file \.nix$
+@regex ^[^#]*?((?:(?:[\w\d\-]|"[^\n"]+?")+\.)+(?:[\w\d\-]|"[^\n"]+?")+)(?<!text|source|toLocaleString) =
+@error using . notation for assignment
+@errgroup 1
+@endregex
+
+@name no . notation for assignment
+@file \.nix$
+@regex (\};? *?\n)\s+(^ *\};?)
+@replace $1$2
+@endregex
+

@@ -34,7 +34,7 @@ let
   # '';
 in
 {
-  environment.shellAliases = shellAliases;
+  environment = { inherit shellAliases; };
   programs = {
     dconf = {
       enable = true;

@@ -1,6 +1,10 @@
 { ... }:
 {
-  security.pki.certificateFiles = [
-    ./mitmproxy-pem.crt
-  ];
+  security = {
+    pki = {
+      certificateFiles = [
+        ./mitmproxy-pem.crt
+      ];
+    };
+  };
 }

@@ -1,4 +1,4 @@
-{ pkgs, userConfig, ... }:
+{ pkgs, ... }:
 let
   pythonEnv = pkgs.python3.withPackages (
     ps: with ps; [
@@ -22,27 +22,33 @@ let
   };
 in
 {
-  systemd.user.services.ydotoold = {
-    description = "ydotool daemon";
-    wantedBy = [ "default.target" ];
-    serviceConfig = with pkgs; {
-      ExecStart = "${ydotool}/bin/ydotoold";
-      Restart = "always";
-    };
-  };
+  systemd = {
+    user = {
+      services = {
+        ydotoold = {
+          description = "ydotool daemon";
+          wantedBy = [ "default.target" ];
+          serviceConfig = with pkgs; {
+            ExecStart = "${ydotool}/bin/ydotoold";
+            Restart = "always";
+          };
+        };
 
-  systemd.user.services.godot-dismiss = {
-    description = "Auto-dismiss Godot dialogs";
-    after = [
-      "graphical-session.target"
-      "ydotoold.service"
-    ];
-    wants = [ "ydotool.service" ];
-    wantedBy = [ "graphical-session.target" ];
-    serviceConfig = {
-      ExecStart = "${godot-dismiss}/bin/godot-dismiss";
-      Restart = "on-failure";
-      RestartSec = "3s";
+        godot-dismiss = {
+          description = "Auto-dismiss Godot dialogs";
+          after = [
+            "graphical-session.target"
+            "ydotoold.service"
+          ];
+          wants = [ "ydotool.service" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = "${godot-dismiss}/bin/godot-dismiss";
+            Restart = "on-failure";
+            RestartSec = "3s";
+          };
+        };
+      };
     };
   };
 }

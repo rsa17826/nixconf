@@ -133,154 +133,160 @@ in
   nixpkgs = {
     overlays = [ inputs.millennium.overlays.default ];
   };
-  users.users."${userConfig.uname}" = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    description = "${userConfig.uname}";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "opensnitch"
-      "input"
-      "audio"
-      "tty"
-      "video"
-    ];
-    packages = with pkgs; [
-      (newestGodot "4.7-dev4")
-      xdm
-      (pkgFromInp "wayland-keepass-autotype" "default")
-      (pkgFromInp "multi-game-launcher" "default")
-      (pkgFromInp "audio-manager" "default")
-      (pkgFromInp "file-sorter" "default")
-      (pkgFromInp "go-autoclicker" "default")
-      # (pkgFromInp "file-sorter" "default")
-      browserSelectorPkg
-      browserSelectorDesktop
-      # why everything want these?
-      icu
-      openssl
-      zlib
-      #
-      clang-tools
-      go
-      gopls
-      gcc
-      socat
-      kdlfmt
-      libxkbcommon
-      fzf
-      rofi
-      typescript
-      nodejs
-      jpexs # ffdec
-      deluged
-      calibre
-      gh
-      portablemc
-      dgop # process stat screen thing
-      bc # fp math in bash
-      gamescope
-      (pkgFromInp "quickshell" "default") # widget thing
-      wtype
-      cliphist
-      # steam
-      millennium-steam
-      losslesscut-bin # video editor
-      uwsm
-      # typos
-      typos-lsp # spellchecker
-      # keepass # password manager
-      python313
-      python313Packages.py7zr
-      godot # programing
-      stylua
-      # appimage-run
-      # firejail
-      # motrix # download manager
-      # nix-tree
-      kid3 # audio tagger
-      yt-dlp # media downloader
-      # syncthingtray
-      syncthing # file sync
-      mp3gain # audio volume normilizer
-      python314
-      filen-desktop # cloud storage
-      javaPackages.compiler.temurin-bin.jre-25 # for running java apps
-      file # like die
-      # opensnitch-ui # firewall
-      # (vscodium.override {
-      #   commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-      # }) # text editor
-      wineWow64Packages.unstableFull # windows apps
-      winetricks
-      unixtools.watch # watch cmd
-      htop # process info
-      # valent # kdeconnect
-      # htop-vim
-      # mission-center # task manager
-      ydotool
-      vlc # media player
-      nicotine-plus # soulseek
-      conky # like rainmeter
-      wl-clipboard # clipboard cli tool
-      dxvk
-      # wl-clipboard-rs # what is the difference?
-      wl-clicker # autoclicker
-      # see if can change to scrolllock/z
-      magic-wormhole # file transfer
-      jq # json parser
-      nil # nix language server
-      # testing
-      cascadia-code # font
-      texlivePackages.cascadiamono-otf
-      gpu-screen-recorder # screen recorder
-      lutris-free
-      faugus-launcher
-      # thunar # wiztree
-      # bottles
-      # https://github.com/anyrun-org/anyrun
-      # ulauncher
-      qt6.qtdeclarative
-      zenity
-      libnotify
-      simplex-chat-desktop # simple x chat
-      copyq # clipboard manager
-      # openshot-qt # vid editor
-      # pay-respects
-      imagemagick
-      shfmt # shell formatter
-      cfm # tui file manager
-      keepassxc # password manager
-      grim
-      slurp
-      tesseract5 # ocr
-      thunar # gui file manager
-      yazi # tui file manager
-      hyprshot
-      gnome-themes-extra
-      adwaita-icon-theme
-      python313Packages.black
-      audacity
-      (callPackage ./progress-daemon/progress-daemon.nix { })
-      (callPackage ./winspy/winspy.nix { })
-      goldberg-emu
-      deno
-      zuban
-      libreoffice
-      jdk
-      xemu # xbox emu
-      wl-clip-persist # keep clip past app death
-      # blender
-      ffmpeg
-      fdupes
-      dunst # notifier
-      perl
-      kdePackages.qtdeclarative
-    ];
+  users = {
+    users = {
+      "${userConfig.uname}" = {
+        shell = pkgs.zsh;
+        isNormalUser = true;
+        description = "${userConfig.uname}";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "opensnitch"
+          "input"
+          "audio"
+          "tty"
+          "video"
+        ];
+        packages = with pkgs; [
+          (newestGodot "4.7-dev4")
+          xdm
+          (pkgFromInp "wayland-keepass-autotype" "default")
+          (pkgFromInp "multi-game-launcher" "default")
+          (pkgFromInp "audio-manager" "default")
+          (pkgFromInp "file-sorter" "default")
+          (pkgFromInp "go-autoclicker" "default")
+          # (pkgFromInp "file-sorter" "default")
+          browserSelectorPkg
+          browserSelectorDesktop
+          # why everything want these?
+          icu
+          openssl
+          zlib
+          #
+          clang-tools
+          go
+          gopls
+          gcc
+          socat
+          kdlfmt
+          libxkbcommon
+          fzf
+          rofi
+          typescript
+          nodejs
+          jpexs # ffdec
+          deluged
+          calibre
+          gh
+          portablemc
+          dgop # process stat screen thing
+          bc # fp math in bash
+          gamescope
+          (pkgFromInp "quickshell" "default") # widget thing
+          wtype
+          cliphist
+          # steam
+          millennium-steam
+          losslesscut-bin # video editor
+          uwsm
+          # typos
+          typos-lsp # spellchecker
+          # keepass # password manager
+          python313
+          python313Packages.py7zr
+          godot # programing
+          stylua
+          # appimage-run
+          # firejail
+          # motrix # download manager
+          # nix-tree
+          kid3 # audio tagger
+          yt-dlp # media downloader
+          # syncthingtray
+          syncthing # file sync
+          mp3gain # audio volume normilizer
+          python314
+          filen-desktop # cloud storage
+          javaPackages.compiler.temurin-bin.jre-25 # for running java apps
+          file # like die
+          # opensnitch-ui # firewall
+          # (vscodium.override {
+          #   commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+          # }) # text editor
+          wineWow64Packages.unstableFull # windows apps
+          winetricks
+          unixtools.watch # watch cmd
+          htop # process info
+          # valent # kdeconnect
+          # htop-vim
+          # mission-center # task manager
+          ydotool
+          vlc # media player
+          nicotine-plus # soulseek
+          conky # like rainmeter
+          wl-clipboard # clipboard cli tool
+          dxvk
+          # wl-clipboard-rs # what is the difference?
+          wl-clicker # autoclicker
+          # see if can change to scrolllock/z
+          magic-wormhole # file transfer
+          jq # json parser
+          nil # nix language server
+          # testing
+          cascadia-code # font
+          texlivePackages.cascadiamono-otf
+          gpu-screen-recorder # screen recorder
+          lutris-free
+          faugus-launcher
+          # thunar # wiztree
+          # bottles
+          # https://github.com/anyrun-org/anyrun
+          # ulauncher
+          qt6.qtdeclarative
+          zenity
+          libnotify
+          simplex-chat-desktop # simple x chat
+          copyq # clipboard manager
+          # openshot-qt # vid editor
+          # pay-respects
+          imagemagick
+          shfmt # shell formatter
+          cfm # tui file manager
+          keepassxc # password manager
+          grim
+          slurp
+          tesseract5 # ocr
+          thunar # gui file manager
+          yazi # tui file manager
+          hyprshot
+          gnome-themes-extra
+          adwaita-icon-theme
+          python313Packages.black
+          audacity
+          (callPackage ./progress-daemon/progress-daemon.nix { })
+          (callPackage ./winspy/winspy.nix { })
+          goldberg-emu
+          deno
+          zuban
+          libreoffice
+          jdk
+          xemu # xbox emu
+          wl-clip-persist # keep clip past app death
+          # blender
+          ffmpeg
+          fdupes
+          dunst # notifier
+          perl
+          kdePackages.qtdeclarative
+        ];
+      };
+    };
   };
   services = {
-    tumbler.enable = true;
+    tumbler = {
+      enable = true;
+    };
     dbus = {
       enable = true;
     };
@@ -290,13 +296,20 @@ in
     pipewire = {
       # Enable PipeWire
       enable = true;
-      wireplumber.enable = true;
-
-      # PulseAudio compatibility (so applications using PulseAudio work)
-      pulse.enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      jack.enable = true;
+      wireplumber = {
+        enable = true;
+      };
+      pulse = {
+        # PulseAudio compatibility (so applications using PulseAudio work)
+        enable = true;
+      };
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      jack = {
+        enable = true;
+      };
     };
     pulseaudio = {
       # Disable PulseAudio itself (optional, safer on NixOS)
@@ -322,81 +335,88 @@ in
     };
     direnv = {
       enable = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+      };
     };
     gpu-screen-recorder = {
       enable = true;
     };
   };
-  environment.systemPackages = with pkgs; [
-    (pkgFromInp "autocorrect" "default")
-    # nix-direnv
-    # (pince.overrideAttrs (old: {
-    #   postInstall = (old.postInstall or "") + ''
-    #     find $out -name "HexView.py" -exec sed -i \
-    #       's/if event\.modifiers/if event is not None and event.modifiers/' \
-    #       {} \;
-    #   '';
-    # })) # cheat engine
-    gdb
-    tumbler
-    gsettings-desktop-schemas
-    glib # provides gio
-    tumbler # thumbnail/icon service
-    awww # wallpaper manager
-    gvfs
-    espeak-ng # tts
-    speechd # tts
-    neovim # tui text editor
-    wget # cmd dl util
-    (brave.override {
-      commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-    }) # web browser
-    nixfmt # nix language formatter
-    git # git is required
-    # kdePackages.kget
-    _7zz # archival tool
-    nix-ld # run linux programs
-    kitty # terminal emulator
-    # rofi
-    # albert
-    # keyd # disables capslock and enables numlock
-    anyrun # application launcher
-    nix-output-monitor # nix update formatter
-    cascadia-code # font
-    swaynotificationcenter # notification daemon
-    font-awesome # For additional icons
-    wlogout # For the power menu click
-    pavucontrol # For audio control
-    ly # tui login manager
-    sops # secrets manager
-    direnv
-    copyparty
-    home-manager
-    pulseaudio
-    pipewire
-    wireplumber
-    hyprlock # lockscreen
-    killall
-    losslesscut-bin
-    eza # ls
-    swappy # image editor
-    satty # image editor
-    ncdu
-    shellcheck
-    lazygit
-    # nginx
-    unbound-with-systemd
-    adwaita-qt
-  ];
-  fonts.packages =
-    with pkgs;
-    with nerd-fonts;
-    [
-      jetbrains-mono
-      hack
+  environment = {
+    systemPackages = with pkgs; [
+      (pkgFromInp "autocorrect" "default")
+      # nix-direnv
+      # (pince.overrideAttrs (old: {
+      #   postInstall = (old.postInstall or "") + ''
+      #     find $out -name "HexView.py" -exec sed -i \
+      #       's/if event\.modifiers/if event is not None and event.modifiers/' \
+      #       {} \;
+      #   '';
+      # })) # cheat engine
+      gdb
+      tumbler
+      gsettings-desktop-schemas
+      glib # provides gio
+      tumbler # thumbnail/icon service
+      awww # wallpaper manager
+      gvfs
+      espeak-ng # tts
+      speechd # tts
+      neovim # tui text editor
+      wget # cmd dl util
+      (brave.override {
+        commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+      }) # web browser
+      nixfmt # nix language formatter
+      git # git is required
+      # kdePackages.kget
+      _7zz # archival tool
+      nix-ld # run linux programs
+      kitty # terminal emulator
+      # rofi
+      # albert
+      # keyd # disables capslock and enables numlock
+      anyrun # application launcher
+      nix-output-monitor # nix update formatter
+      cascadia-code # font
+      swaynotificationcenter # notification daemon
+      font-awesome # For additional icons
+      wlogout # For the power menu click
+      pavucontrol # For audio control
+      ly # tui login manager
+      sops # secrets manager
+      direnv
+      copyparty
+      home-manager
+      pulseaudio
+      pipewire
+      wireplumber
+      hyprlock # lockscreen
+      killall
+      losslesscut-bin
+      eza # ls
+      swappy # image editor
+      satty # image editor
+      ncdu
+      shellcheck
+      lazygit
+      # nginx
+      unbound-with-systemd
+      adwaita-qt
     ];
-
-  # This is crucial for the system to "see" them
-  fonts.fontconfig.enable = true;
+  };
+  fonts = {
+    packages =
+      with pkgs;
+      with nerd-fonts;
+      [
+        jetbrains-mono
+        hack
+      ];
+    fontconfig = {
+      # This is crucial for the system to "see" them
+      enable = true;
+    };
+  };
 }

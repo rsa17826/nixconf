@@ -5,26 +5,30 @@
   ...
 }:
 {
-  nixpkgs.overlays = [
-    (import ./overlays/dokiTheme/conf.nix)
-    (import ./overlays/owoify/conf.nix)
-    (import ./overlays/focusFollowsMouse/conf.nix)
-    ((import ./overlays/customFolderIcons/conf.nix) userConfig)
-    (import ./overlays/toLocaleStringFix/conf.nix)
-    (import ./overlays/updateHash/conf.nix)
-  ];
+  nixpkgs = {
+    overlays = [
+      (import ./overlays/dokiTheme/conf.nix)
+      (import ./overlays/owoify/conf.nix)
+      (import ./overlays/focusFollowsMouse/conf.nix)
+      ((import ./overlays/customFolderIcons/conf.nix) userConfig)
+      (import ./overlays/toLocaleStringFix/conf.nix)
+      (import ./overlays/updateHash/conf.nix)
+    ];
+  };
   imports = [
     ./extensions/githubAndLocal.nix
     ./extensions/marketplace.nix
   ];
-  programs.vscodium = {
-    enable = true;
-    mutableExtensionsDir = false;
-    package = (
-      pkgs.vscodium.override {
-        commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-      }
-    );
+  programs = {
+    vscodium = {
+      enable = true;
+      mutableExtensionsDir = false;
+      package = (
+        pkgs.vscodium.override {
+          commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+        }
+      );
+    };
   };
   # Use the full XDG path so VSCodium actually sees them
   xdg.configFile."VSCodium/User/settings.json".source =

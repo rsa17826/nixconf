@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -13,48 +12,56 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" = {
-    device = "/dev/mapper/luks-28439dc9-600a-4b2e-a170-5627335aea46";
-    fsType = "ext4";
+  boot = {
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+      luks = {
+        devices = {
+          "luks-28439dc9-600a-4b2e-a170-5627335aea46" = {
+            device = "/dev/disk/by-uuid/28439dc9-600a-4b2e-a170-5627335aea46";
+          };
+        };
+      };
+    };
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
+  fileSystems = {
+    "/" = {
+      device = "/dev/mapper/luks-28439dc9-600a-4b2e-a170-5627335aea46";
+      fsType = "ext4";
+    };
 
-  boot.initrd.luks.devices."luks-28439dc9-600a-4b2e-a170-5627335aea46".device =
-    "/dev/disk/by-uuid/28439dc9-600a-4b2e-a170-5627335aea46";
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5CDB-9BD1";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-  fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/4752ae65-da00-4f1d-8a1d-33f0098d4abc";
-    fsType = "ext4"; # or ntfs, btrfs, etc.
-    # options = [
-    #   "defaults"
-    #   "nofail"
-    #   "x-systemd.device-timeout=5s"
-    #   "x-systemd.mount-timeout=5s"
-    # ];
-    options = [
-      "nofail"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=600"
-    ];
+    "/boot" = {
+      device = "/dev/disk/by-uuid/5CDB-9BD1";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
+    "/data" = {
+      device = "/dev/disk/by-uuid/4752ae65-da00-4f1d-8a1d-33f0098d4abc";
+      fsType = "ext4"; # or ntfs, btrfs, etc.
+      # options = [
+      #   "defaults"
+      #   "nofail"
+      #   "x-systemd.device-timeout=5s"
+      #   "x-systemd.mount-timeout=5s"
+      # ];
+      options = [
+        "nofail"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=600"
+      ];
+    };
   };
   # swapDevices =
   #   [ { device = "/dev/mapper/luks-b7bc4b47-2765-48c4-9068-ee0083727616"; }
@@ -65,6 +72,14 @@
       size = 20480;
     } # Set the swap file size in MB (2048MB in this case)
   ];
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs = {
+    hostPlatform = lib.mkDefault "x86_64-linux";
+  };
+  hardware = {
+    cpu = {
+      amd = {
+        updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      };
+    };
+  };
 }

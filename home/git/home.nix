@@ -1,16 +1,20 @@
-{ userConfig, pkgs, ... }:
+{ userConfig, ... }:
 {
-  programs.git = {
-    settings = {
-      user = {
-        name = userConfig.uname;
-        email = userConfig.email;
+  programs = {
+    git = {
+      settings = {
+        user = {
+          name = userConfig.uname;
+          email = userConfig.email;
+        };
+        credential = {
+          helper = "!gh auth git-credential";
+        };
+        init = {
+          defaultBranch = "main";
+        };
       };
-      credential = {
-        helper = "!gh auth git-credential";
-      };
-      init.defaultBranch = "main";
+      enable = true;
     };
-    enable = true;
   };
 }

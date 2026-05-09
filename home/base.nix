@@ -1,6 +1,10 @@
 { userConfig, ... }:
 {
-  nixpkgs.config.allowUnfree = false;
+  nixpkgs = {
+    config = {
+      allowUnfree = false;
+    };
+  };
   networking = {
     nameservers = [
       "127.0.0.1"
@@ -13,18 +17,22 @@
       dns = "none";
     };
   };
-  time.timeZone = "America/New_York";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+  time = {
+    timeZone = "America/New_York";
+  };
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "en_US.UTF-8";
+    };
   };
   nix = {
     settings = {
@@ -70,7 +78,9 @@
     displayManager = {
       sddm = {
         enable = false;
-        wayland.enable = false;
+        wayland = {
+          enable = false;
+        };
       };
       ly = {
         enable = true;
@@ -85,7 +95,6 @@
         enable = true;
         user = "${userConfig.uname}";
       };
-
     };
     pipewire = {
       enable = true;
@@ -103,6 +112,8 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
-    system76-scheduler.enable = true;
+    system76-scheduler = {
+      enable = true;
+    };
   };
 }

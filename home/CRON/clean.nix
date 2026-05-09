@@ -12,7 +12,9 @@ in
       cleanup = {
         description = "Check for old files";
         wantedBy = [ "timers.target" ];
-        timerConfig.OnCalendar = "daily";
+        timerConfig = {
+          OnCalendar = "daily";
+        };
       };
     };
     services = {

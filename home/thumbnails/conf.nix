@@ -30,5 +30,7 @@ let
   };
 in
 {
-  environment.systemPackages = [ folderThumbnailer ];
+  environment = {
+    systemPackages = [ folderThumbnailer ];
+  };
 }

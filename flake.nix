@@ -1,45 +1,68 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
     millennium = {
       url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     copyparty = {
       url = "github:9001/copyparty";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        # hyprwire.url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        # hyprwire = {
+        #   url = "git+https://github.com/hyprwm/hyprwire?rev=4e1933ae5602b350c5b6633f5c932549c9b8aca2";
+        # };
       };
     };
     # TODO follow https://github.com/VirtCode/hypr-dynamic-cursors/raw/refs/heads/main/hyprpm.toml
     # hypr-dynamic-cursors = {
     #   url = "github:VirtCode/hypr-dynamic-cursors/57e14edd0ae265b01828e466e287e96eb1e84dd3";
-    #   inputs.hyprland.follows = "hyprland";
+    #   inputs = {
+    #     hyprland.follows = "hyprland";
+    #   };
     # };
     hypr-darkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow"; # Make sure to change the tag to match your hyprland version
-      inputs.hyprland.follows = "hyprland";
+      url = "github:micha4w/Hypr-DarkWindow";
+      inputs = {
+        hyprland = {
+          # Make sure to change the tag to match your hyprland version
+          follows = "hyprland";
+        };
+      };
     };
 
     # impermanence = {
@@ -60,59 +83,85 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     go-autoclicker = {
       url = "github:rsa17826/go-autoclicker";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     multi-game-launcher = {
       url = "github:rsa17826/multi-game-launcher";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     wayland-keepass-autotype = {
       url = "github:rsa17826/wayland-keepass-autotype";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     audio-manager = {
       url = "github:rsa17826/audio-manager";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     browser-selector = {
       url = "github:rsa17826/browserSelector";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     autocorrect = {
       url = "github:rsa17826/autocorrect";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     file-sorter = {
       url = "github:rsa17826/file-sorter";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
       };
     };
     # ext
@@ -201,7 +250,11 @@
             specialArgs = args;
             modules = userConfig.modules ++ [
               {
-                system.nixos.label = if builtins.pathExists ./label.nix then import ./label.nix else "unlabeled";
+                system = {
+                  nixos = {
+                    label = if builtins.pathExists ./label.nix then import ./label.nix else "unlabeled";
+                  };
+                };
               }
               ./hardware-configurations/${hostName}.nix
 

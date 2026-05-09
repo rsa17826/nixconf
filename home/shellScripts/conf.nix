@@ -27,5 +27,11 @@ let
 
 in
 {
-  users.users."${userConfig.uname}".packages = map newsh scriptNames;
+  users = {
+    users = {
+      "${userConfig.uname}" = {
+        packages = map newsh scriptNames;
+      };
+    };
+  };
 }

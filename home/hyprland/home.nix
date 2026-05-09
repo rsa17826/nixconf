@@ -1,48 +1,49 @@
 {
   ln,
-  inputs,
-  pkgs,
   userConfig,
-  pkgFromInp,
-  config,
   lib,
   ...
 }:
 {
-  home.activation.enableAllScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    nixconf="${userConfig.nixConf}"
-    chmod +x "$nixconf/home/hyprland/scripts/"*.sh
-  '';
-  # xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
-  # xdg.configFile."hypr/shaders".source = ./shaders;
-  # sudo ln -sf /home/nyx/nixconf/home/hyprland/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
-  xdg.configFile = {
-    "hypr/hyprland.lua".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.lua";
-    "hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
-    "hypr/hyprlock.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprlock.conf";
-    "hypr/hyprpaper.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprpaper.conf";
-    "hypr/shaders" = {
-      source = ln "${userConfig.nixConf}/home/hyprland/shaders";
-      recursive = true;
+  home = {
+    activation = {
+      enableAllScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        nixconf="${userConfig.nixConf}"
+        chmod +x "$nixconf/home/hyprland/scripts/"*.sh
+      '';
     };
-    "hypr/wallpapers" = {
-      source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
-      recursive = true;
-    };
-    "hypr/conf" = {
-      source = ln "${userConfig.nixConf}/home/hyprland/conf";
-      recursive = true;
-    };
-    "hypr/scripts" = {
-      source = ln "${userConfig.nixConf}/home/hyprland/scripts";
-      recursive = true;
-    };
-    # "hypr/hm.conf".text = ''
-    #   plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
-    # '';
   };
-  services.hyprpaper = {
-    enable = true;
+  xdg = {
+    configFile = {
+      "hypr/hyprland.lua".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.lua";
+      "hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
+      "hypr/hyprlock.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprlock.conf";
+      "hypr/hyprpaper.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprpaper.conf";
+      "hypr/shaders" = {
+        source = ln "${userConfig.nixConf}/home/hyprland/shaders";
+        recursive = true;
+      };
+      "hypr/wallpapers" = {
+        source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
+        recursive = true;
+      };
+      "hypr/conf" = {
+        source = ln "${userConfig.nixConf}/home/hyprland/conf";
+        recursive = true;
+      };
+      "hypr/scripts" = {
+        source = ln "${userConfig.nixConf}/home/hyprland/scripts";
+        recursive = true;
+      };
+      # "hypr/hm.conf".text = ''
+      #   plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
+      # '';
+    };
+  };
+  services = {
+    hyprpaper = {
+      enable = false;
+    };
   };
 
   # xdg.configFile."hypr/hm.conf".text = ''
