@@ -21,6 +21,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-clip-persist --clipboard regular")
 	hl.exec_cmd("xdm")
 	hl.exec_cmd("kitten panel --edge=background -o background_opacity=0.2 --margin-top 30 -o background=black dgop")
+	hl.exec_cmd("shaderstack clear")
 end)
 
 -- hl.exec_cmd("~/.config/hypr/scripts/edge-focus.sh")
