@@ -267,12 +267,12 @@ $2
 
 @name no . notation for assignment
 @file \.nix$
-@regex ^[^#]*?((?:(?:[\w\d\-]|"[^\n"]+?")+\.)+(?:[\w\d\-]|"[^\n"]+?")+)(?<!text|source|toLocaleString) =
+@regex ^[^#]*?((?:[\w\d\-]|"[^\n"]+?")+)\.(?:(?:([\w\d\-]|"[^\n"]+?")+\.)*(?:[\w\d\-]|"[^\n"]+?")+)(?<!text|source|toLocaleString) =
 @error using . notation for assignment
 @errgroup 1
 @endregex
 
-@name no . notation for assignment
+@name no duplicate newlines between } and next }
 @file \.nix$
 @regex (\};? *?\n)\s+(^ *\};?)
 @replace $1$2

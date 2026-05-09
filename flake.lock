@@ -418,11 +418,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1778338095,
-        "narHash": "sha256-gP4pQQDRLTRyDHni+fgM/SLbbuyQAdD5yONJI8YlPx4=",
+        "lastModified": 1778338217,
+        "narHash": "sha256-3/LBtfN+D8T6l+l86LnIDdKR/9DswjrIkprih129NrQ=",
         "owner": "rsa17826",
         "repo": "go-autoclicker",
-        "rev": "53efa14a8224faebfefa63d3295b533793fffbe7",
+        "rev": "ebbc2e404c085b297e2c42164a7bbdbbfb4943b3",
         "type": "github"
       },
       "original": {
