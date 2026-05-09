@@ -867,5 +867,6 @@
   "go.showWelcome": false,
   "go.testExplorer.enable": false,
   "go.testExplorer.showOutput": false,
+  "owoify-editor.onlyVisibleRangesThreshold": 3000,
   // "files.simpleDialog.enable": true,
 }
