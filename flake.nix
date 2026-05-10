@@ -64,6 +64,10 @@
         };
       };
     };
+    perkins = {
+      url = "github:Mr-Robot-err-404/perkins";
+      flake = false;
+    };
 
     # impermanence = {
     #   url = "github:nix-community/impermanence";

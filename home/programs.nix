@@ -164,6 +164,12 @@ in
           openssl
           zlib
           #
+          (pkgs.buildGoModule {
+            pname = "perkins";
+            version = "0.1.0";
+            src = perkins;
+            vendorHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          })
           clang-tools
           go
           gopls
