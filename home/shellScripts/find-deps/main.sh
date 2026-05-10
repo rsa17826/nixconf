@@ -304,8 +304,11 @@ parse_missing() {
   done <<<"$combined"
 
   # Deduplicate within this batch
-  NEW_CMDS=($(printf '%s\n' "${NEW_CMDS[@]:-}" | sort -u | grep -v '^$' || true))
-  NEW_PYTHON=($(printf '%s\n' "${NEW_PYTHON[@]:-}" | sort -u | grep -v '^$' || true))
+  # For NEW_CMDS
+  mapfile -t NEW_CMDS < <(printf '%s\n' "${NEW_CMDS[@]:-}" | sort -u | grep -v '^$' || true)
+
+  # For NEW_PYTHON
+  mapfile -t NEW_PYTHON < <(printf '%s\n' "${NEW_PYTHON[@]:-}" | sort -u | grep -v '^$' || true)
 }
 
 # ── Array helpers ─────────────────────────────────────────────────────────────
