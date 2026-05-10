@@ -167,7 +167,6 @@ in
               extName = "math-on-selections";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
-              dontNpmBuild = true;
             })
             (buildFromFlake {
               src = inputs.ext-vscode-void-color-theme;
