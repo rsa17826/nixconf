@@ -288,7 +288,7 @@ in
         libXinerama
         libXrandr
         libxcb
-
+        libXxf86vm
         # Input & fonts
         libxkbcommon
         fontconfig
@@ -300,7 +300,6 @@ in
         libGL
         vulkan-loader
 
-        icu
         glibc
         icu
         gcc
