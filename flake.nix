@@ -106,6 +106,9 @@
         nixpkgs = {
           follows = "nixpkgs";
         };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     go-autoclicker = {
