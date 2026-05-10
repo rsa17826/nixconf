@@ -165,6 +165,10 @@
       };
     };
     # ext
+    ext-vscode-math-on-selected-nums = {
+      url = "github:rsa17826/vscode-ext---math-on-selected-nums";
+      flake = false;
+    };
     ext-vscode-void-color-theme = {
       url = "github:rsa17826/vscode-void-color-theme";
       flake = false;

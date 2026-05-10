@@ -280,8 +280,7 @@ $2
 
 @name fail on err - mousePath, err := getDevice(mouseid)
 @file \.go$
-@regex (^(?:[^/]|/(?!/))+[^\s]), (?:_|err) :=(.*)
-@untilfail
+@regex (^(?:[^/\n]|/(?!/))+[^\s]), (?:_|err) :=(.*)\n *(?!if err)(?![ \t])
 @replace $1, err :=$2
 if err != nil {
   panic(err)

@@ -860,7 +860,6 @@
   "go.inlayHints.ignoredError": true,
   "go.inlayHints.parameterNames": true,
   "go.inlayHints.rangeVariableTypes": true,
-  "go.lintOnSave": "workspace",
   "go.showWelcome": false,
   "go.testExplorer.enable": false,
   "go.testExplorer.showOutput": false,

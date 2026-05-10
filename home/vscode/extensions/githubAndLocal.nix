@@ -163,6 +163,13 @@ in
         default = {
           extensions = [
             (buildFromFlake {
+              src = inputs.ext-vscode-math-on-selected-nums;
+              extName = "void-theme";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-Dsx9bVQlpDoPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
+              dontNpmBuild = true;
+            })
+            (buildFromFlake {
               src = inputs.ext-vscode-void-color-theme;
               extName = "void-theme";
               extCreator = "rssaromeo";
