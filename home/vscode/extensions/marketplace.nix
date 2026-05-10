@@ -371,12 +371,12 @@
               version = "0.0.49";
               hash = "sha256-YBHJmVBRu37Xtc76cp2V60pQUBwKqBcsprVKDxeGHlY=";
             }
-            {
-              name = "chrome-extension-api";
-              publisher = "solomonkinard";
-              version = "0.0.5";
-              hash = "sha256-pAAoRu7IAbwk3rVzTti2rD3tNot7uD4mrASzm66NSuk=";
-            }
+            # {
+            #   name = "chrome-extension-api";
+            #   publisher = "solomonkinard";
+            #   version = "0.0.5";
+            #   hash = "sha256-pAAoRu7IAbwk3rVzTti2rD3tNot7uD4mrASzm66NSuk=";
+            # }
             {
               name = "typos-vscode";
               publisher = "tekumara";
