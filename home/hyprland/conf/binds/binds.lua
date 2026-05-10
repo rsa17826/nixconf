@@ -48,7 +48,8 @@ hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m window"))
 -- Window management
 hl.bind("CTRL + SHIFT + Q", hl.dsp.window.close())
 
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
+-- hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop && loginctl terminate-user"))
+hl.bind(mainMod .. " + M", hl.dsp.exit())
 -- hl.bind(mainMod .. " + M", hl.dsp.exit())
 hl.bind("SHIFT + ALT + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

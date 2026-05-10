@@ -83,6 +83,11 @@
         };
       };
       ly = {
+        settings = {
+          tty = 2;
+          blank = true;
+          animate = true;
+        };
         enable = true;
       };
 
