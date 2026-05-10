@@ -71,6 +71,7 @@ in
     kernel = {
       sysctl = {
         "kernel.yama.ptrace_scope" = 0;
+        "kernel.core_pattern" = "|/bin/false";
       };
     };
 
@@ -312,9 +313,6 @@ in
     };
   };
   systemd = {
-    coredump = {
-      enable = false;
-    };
     services = {
       nix-custom-gc = {
         description = "Custom GFS Garbage Collection";
