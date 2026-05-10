@@ -1,0 +1,2 @@
+auto regex set default @errgroup to 0
+auto regex make \n\n in @replace not break @file
