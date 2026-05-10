@@ -294,12 +294,6 @@
               hash = "sha256-fq/5kNNBN+1hu4x0UmIsomdYM0UO+NhmB0PSUiVztQ0=";
             }
             {
-              name = "vscode-pylance";
-              publisher = "ms-python";
-              version = "2026.2.101";
-              hash = "sha256-ieDCADB243tc5waCLpOKr3Nwd0ky6yqwbOra+bi5t64=";
-            }
-            {
               name = "hexeditor";
               publisher = "ms-vscode";
               version = "1.11.1";

@@ -866,6 +866,7 @@
   "editor.codeActionsOnSaveTimeout": 1500,
   "json.schemaDownload.enable": true,
   "json.schemas": [],
+  "workbench.colorTheme": "Void",
   // "editor.codeActionsOnSave": {
   //
   // },
