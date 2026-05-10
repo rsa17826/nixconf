@@ -84,8 +84,7 @@
       };
       ly = {
         settings = {
-          tty = 2;
-          blank = true;
+          tty = 1;
           animate = true;
         };
         enable = true;
@@ -95,7 +94,6 @@
       # defaultSession = "hyprland";
       defaultSession = "hyprland-uwsm";
 
-      # programs.twm.enable=true;
       autoLogin = {
         enable = true;
         user = "${userConfig.uname}";
@@ -110,12 +108,6 @@
       pulse = {
         enable = true;
       };
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
     };
     system76-scheduler = {
       enable = true;
