@@ -167,7 +167,7 @@ in
           (pkgs.buildGoModule {
             pname = "perkins";
             version = "0.1.0";
-            src = perkins;
+            src = inputs.perkins;
             vendorHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
           })
           clang-tools

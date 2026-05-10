@@ -1088,6 +1088,22 @@
         "type": "github"
       }
     },
+    "perkins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778428478,
+        "narHash": "sha256-1b2Ar/sVmls1g3wbEtbv4nIxXbHld7MhQWRe6N17MYs=",
+        "owner": "Mr-Robot-err-404",
+        "repo": "perkins",
+        "rev": "a51b8bdfce3af7c68eaa2a612748047c77c8f750",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mr-Robot-err-404",
+        "repo": "perkins",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -1174,6 +1190,7 @@
         "multi-game-launcher": "multi-game-launcher",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_2",
+        "perkins": "perkins",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",
         "wayland-keepass-autotype": "wayland-keepass-autotype"
