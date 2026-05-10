@@ -304,11 +304,11 @@
     "ext-vscode-math-on-selected-nums": {
       "flake": false,
       "locked": {
-        "lastModified": 1778422664,
-        "narHash": "sha256-Gk583MLunZcDxX1DzrsPf3CR+aoemlf1ppbTok0wKwU=",
+        "lastModified": 1778424838,
+        "narHash": "sha256-f4hJJtSeaoCRLo/zrV89XrZWBbcJCTKH3ua9S3/DLhs=",
         "owner": "rsa17826",
         "repo": "vscode-ext---math-on-selected-nums",
-        "rev": "0fd4ced8f30bf7ae65a8d16e553ca2ec83639861",
+        "rev": "887c52df0a2a583ed2a95e2729cba3ed61f29812",
         "type": "github"
       },
       "original": {
