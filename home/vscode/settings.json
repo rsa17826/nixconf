@@ -815,9 +815,6 @@
     "workbench.action.terminal.killEditor",
     "workbench.action.closeGroup",
   ],
-  "[json][jsonc]": {
-    "editor.codeActionsOnSave": ["source.fixAll"],
-  },
   "fixAllJson.insertMissingCommaOnEnter": true,
   "fixAllJson.insertMissingDoubleQuotesOnColon": true,
   "editor.unicodeHighlight.allowedCharacters": {
@@ -868,5 +865,12 @@
   "go.testExplorer.enable": false,
   "go.testExplorer.showOutput": false,
   "owoify-editor.onlyVisibleRangesThreshold": 3000,
+  "editor.codeActionsOnSaveTimeout": 1500,
+  "json.schemaDownload.enable": true,
+  "json.schemas": [],
+  // "editor.codeActionsOnSave": {
+  //
+  // },
+  // "editor.formatOnSaveMode": "modificationsIfAvailable",
   // "files.simpleDialog.enable": true,
 }

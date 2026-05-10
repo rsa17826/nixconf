@@ -71,12 +71,12 @@
               version = "0.30.0";
               hash = "sha256-XBMHEk5iRW6n9fjDUbD8c/FFGNRttrnV0tH1qUphXYo=";
             }
-            {
-              name = "fix-all-json";
-              publisher = "zardoy";
-              version = "0.1.6";
-              hash = "sha256-5XQqdy5BlFhtNyrzgd/P+CTOc+fhciGGwpvipTRdpqM=";
-            }
+            # {
+            #   name = "fix-all-json";
+            #   publisher = "zardoy";
+            #   version = "0.1.6";
+            #   hash = "sha256-5XQqdy5BlFhtNyrzgd/P+CTOc+fhciGGwpvipTRdpqM=";
+            # }
             {
               name = "shellcheck";
               publisher = "timonwong";
@@ -376,12 +376,6 @@
               publisher = "solomonkinard";
               version = "0.0.5";
               hash = "sha256-pAAoRu7IAbwk3rVzTti2rD3tNot7uD4mrASzm66NSuk=";
-            }
-            {
-              name = "chrome-extensions";
-              publisher = "solomonkinard";
-              version = "0.1.1";
-              hash = "sha256-T4RvRYbUw+BDvdGWSySeR7ta3k7adtSOJZfSG0t9nHA=";
             }
             {
               name = "typos-vscode";
