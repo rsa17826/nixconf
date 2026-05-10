@@ -301,6 +301,22 @@
         "type": "github"
       }
     },
+    "ext-vscode-math-on-selected-nums": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778422664,
+        "narHash": "sha256-Gk583MLunZcDxX1DzrsPf3CR+aoemlf1ppbTok0wKwU=",
+        "owner": "rsa17826",
+        "repo": "vscode-ext---math-on-selected-nums",
+        "rev": "0fd4ced8f30bf7ae65a8d16e553ca2ec83639861",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "vscode-ext---math-on-selected-nums",
+        "type": "github"
+      }
+    },
     "ext-vscode-void-color-theme": {
       "flake": false,
       "locked": {
@@ -1146,6 +1162,7 @@
         "ext-sds": "ext-sds",
         "ext-simple-auto-formatter": "ext-simple-auto-formatter",
         "ext-textreplace": "ext-textreplace",
+        "ext-vscode-math-on-selected-nums": "ext-vscode-math-on-selected-nums",
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils",

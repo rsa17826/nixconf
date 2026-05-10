@@ -164,9 +164,9 @@ in
           extensions = [
             (buildFromFlake {
               src = inputs.ext-vscode-math-on-selected-nums;
-              extName = "void-theme";
+              extName = "math-on-selections";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-Dsx9bVQlpDoPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
+              npmDepsHash = "sha256-Dsx9bVQlpDoPnk0eayiYIr+PaTnPimKUhqHQUk6IMQE=";
               dontNpmBuild = true;
             })
             (buildFromFlake {
