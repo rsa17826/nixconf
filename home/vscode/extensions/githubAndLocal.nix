@@ -166,7 +166,7 @@ in
               src = inputs.ext-vscode-math-on-selected-nums;
               extName = "math-on-selections";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-Dsx9bVQlpDoPnk0eayiYIr+PaTnPimKUhqHQUk6IMQE=";
+              npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
               dontNpmBuild = true;
             })
             (buildFromFlake {
