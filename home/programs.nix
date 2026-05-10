@@ -168,7 +168,7 @@ in
             pname = "perkins";
             version = "0.1.0";
             src = inputs.perkins;
-            vendorHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+            vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
           clang-tools
           go
