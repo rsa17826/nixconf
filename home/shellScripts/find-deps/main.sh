@@ -31,6 +31,7 @@ RESOLVED_PKGS=()   # top-level nixpkgs attrs added so far
 RESOLVED_PYTHON=() # python package attrs added so far
 RESOLVED_CMDS=()   # cmd names already resolved (dedup guard)
 RESOLVED_PYMODS=() # python module names already resolved (dedup guard)
+RESOLVED_LIBS=()   # -lFOO names already resolved (dedup guard)
 LAST_STDOUT=""
 LAST_STDERR=""
 LAST_EXIT=0
@@ -174,6 +175,60 @@ detect_system() {
   esac
 }
 
+# ── Load existing flake.nix ───────────────────────────────────────────────────
+# If OUTPUT_FILE already exists, parse its buildInputs and pre-populate
+# RESOLVED_PKGS/RESOLVED_PYTHON so this run extends rather than replaces.
+load_existing_flake() {
+  [[ -f "$OUTPUT_FILE" ]] || return 0
+  log "Found existing ${BOLD}${OUTPUT_FILE}${NC} — loading packages as starting point..."
+
+  local parsed
+  parsed=$(
+    python3 "$OUTPUT_FILE" "$PYTHON_ATTR" <<'PARSEEOF'
+import sys, re
+flake_path = sys.argv[1]
+py_attr    = sys.argv[2]
+with open(flake_path) as f:
+    text = f.read()
+bi = re.search(r'buildInputs\s*=\s*\[(.*?)\]', text, re.DOTALL)
+if not bi:
+    sys.exit(0)
+block = bi.group(1)
+for m in re.finditer(r'pkgs\.([a-zA-Z0-9_./-]+)', block):
+    attr = m.group(1)
+    if py_attr in attr or attr.startswith('python'):
+        continue
+    print("PKG:" + attr)
+py_m = re.search(r'withPackages\s*\([^)]*\)\s*\[(.*?)\]', block, re.DOTALL)
+if py_m:
+    for word in py_m.group(1).split():
+        word = word.strip()
+        if word and not word.startswith('#'):
+            print("PY:" + word)
+PARSEEOF
+  ) || true
+
+  while IFS= read -r line; do
+    case "$line" in
+    PKG:*)
+      local attr="${line#PKG:}"
+      _in_array "$attr" "${RESOLVED_PKGS[@]:-}" || {
+        RESOLVED_PKGS+=("$attr")
+        ok "  Loaded: pkgs.${attr}"
+      }
+      ;;
+    PY:*)
+      local mod="${line#PY:}"
+      _in_array "$mod" "${RESOLVED_PYTHON[@]:-}" || {
+        RESOLVED_PYTHON+=("$mod")
+        ok "  Loaded python: ${mod}"
+      }
+      ;;
+    esac
+  done <<<"$parsed"
+  echo ""
+}
+
 # ── Clean-environment runner ──────────────────────────────────────────────────
 # Strips PATH down to just nix and coreutils, then runs CMD_ARGS.
 # If RESOLVED_PKGS is non-empty, wraps in `nix shell` so those packages
@@ -240,6 +295,7 @@ run_clean() {
 parse_missing() {
   NEW_CMDS=()
   NEW_PYTHON=()
+  NEW_LIBS=()
 
   local combined
   combined=$(cat "$LAST_STDOUT" "$LAST_STDERR" 2>/dev/null)
@@ -284,6 +340,15 @@ parse_missing() {
       fi
     fi
 
+    # ── Linker "cannot find -lFOO" ──
+    #   ld.bfd: cannot find -lX11: No such file or directory
+    if [[ "$line" =~ cannot[[:space:]]find[[:space:]]-l([[:alnum:]_+.-]+) ]]; then
+      local lib="${BASH_REMATCH[1]}"
+      # Skip always-present glibc pseudo-libs
+      if ! [[ "$lib" =~ ^(m|dl|rt|pthread|resolv|c|stdc[+][+]|gcc_s|atomic)$ ]]; then
+        _in_array "$lib" "${RESOLVED_LIBS[@]:-}" || NEW_LIBS+=("$lib")
+      fi
+    fi
     # ── Python import errors ──
     #   ModuleNotFoundError: No module named 'requests'
     #   ModuleNotFoundError: No module named 'PIL'  (top-level of pillow)
@@ -422,6 +487,86 @@ PYEOF
     fi
   done
 
+  printf '%s\n' "${deduped[@]:-}"
+}
+
+# Search for a nix package providing a C library (-lFOO).
+# Prints one candidate per line: "pkgattr  # description"
+search_for_lib() {
+  local lib="$1"
+  local results=()
+
+  # Well-known -l name -> nixpkgs attr mappings.
+  # Keys with hyphens/dots MUST be quoted — unquoted [gtk-3] is arithmetic (gtk - 3).
+  local -A KNOWN=(
+    [X11]="xorg.libX11" [Xrandr]="xorg.libXrandr" [Xxf86vm]="xorg.libXxf86vm"
+    [Xi]="xorg.libXi" [Xcursor]="xorg.libXcursor" [Xinerama]="xorg.libXinerama"
+    [Xext]="xorg.libXext" [Xfixes]="xorg.libXfixes" [Xrender]="xorg.libXrender"
+    [Xtst]="xorg.libXtst" [GL]="libGL" [GLU]="libGLU"
+    [EGL]="libGL" [vulkan]="vulkan-loader" [z]="zlib"
+    [ssl]="openssl" [crypto]="openssl" [curl]="curl"
+    [sqlite3]="sqlite" [ffi]="libffi" [png]="libpng"
+    [jpeg]="libjpeg" [tiff]="libtiff" [freetype]="freetype"
+    [fontconfig]="fontconfig" [alsa]="alsa-lib" [pulse]="libpulseaudio"
+    ["gtk-3"]="gtk3" ["gtk-4"]="gtk4" ["glib-2.0"]="glib"
+    ["gobject-2.0"]="glib" ["dbus-1"]="dbus" ["wayland-client"]="wayland"
+    ["wayland-egl"]="wayland" ["pipewire-0.3"]="pipewire" ["usb-1.0"]="libusb1"
+    [avcodec]="ffmpeg" [avformat]="ffmpeg" [avutil]="ffmpeg"
+    [udev]="udev" [portaudio]="portaudio" ["pangocairo-1.0"]="pango"
+    ["pango-1.0"]="pango" [cairo]="cairo"
+  )
+  [[ -v "KNOWN[$lib]" ]] && results+=("${KNOWN[$lib]}  # (known: -l${lib})")
+
+  # nix-locate: try exact libFOO.so, then substring
+  if command -v nix-locate &>/dev/null && [[ ${#results[@]} -lt 3 ]]; then
+    local loc
+    loc=$(nix-locate --minimal --whole-name "lib/lib${lib}.so" 2>/dev/null | head -15) || true
+    [[ -z "$loc" ]] && loc=$(nix-locate --minimal "lib/lib${lib}" 2>/dev/null | head -15) || true
+    while IFS= read -r raw; do
+      [[ -z "$raw" ]] && continue
+      local attr="${raw%.*}"
+      results+=("${attr}  # (nix-locate: lib${lib}.so)")
+    done <<<"$loc"
+  fi
+
+  # nix search fallback
+  if [[ ${#results[@]} -lt 3 ]]; then
+    local json
+    json=$(nix search nixpkgs "lib${lib}" --json 2>/dev/null) || true
+    if [[ -n "$json" ]]; then
+      local py_out
+      py_out=$(echo "$json" | python3 -c "
+import json,sys
+lib=sys.argv[1] if len(sys.argv)>1 else ''
+try: data=json.load(sys.stdin)
+except: sys.exit(0)
+scored=[]
+for k,v in data.items():
+    pkg=k.split('.')[-1]; desc=(v.get('description') or '')[:70]
+    s=0
+    lo=pkg.lower(); ll=lib.lower()
+    if lo==f'lib{ll}' or lo==ll: s=80
+    elif ll in lo: s=40
+    if s>0: scored.append((s,pkg,desc))
+scored.sort(key=lambda x:(-x[0],x[1]))
+seen=set()
+for _,pkg,desc in scored[:8]:
+    if pkg not in seen: seen.add(pkg); print(f'{pkg}  # {desc}')
+" "$lib") || true
+      while IFS= read -r line; do [[ -n "$line" ]] && results+=("$line"); done <<<"$py_out"
+    fi
+  fi
+
+  # Deduplicate
+  local seen_a=() deduped=()
+  for entry in "${results[@]:-}"; do
+    local a
+    a=$(echo "$entry" | awk '{print $1}')
+    _in_array "$a" "${seen_a[@]:-}" || {
+      seen_a+=("$a")
+      deduped+=("$entry")
+    }
+  done
   printf '%s\n' "${deduped[@]:-}"
 }
 
@@ -575,17 +720,7 @@ write_flake() {
   local timestamp
   timestamp=$(date -u '+%Y-%m-%d %H:%M UTC')
 
-  # If flake.nix already exists, ask before overwriting
-  if [[ -f "$OUTPUT_FILE" ]]; then
-    echo ""
-    warn "'${OUTPUT_FILE}' already exists."
-    read -rp "  Overwrite? [y/N]: " yn
-    if [[ "$yn" != [yY] ]]; then
-      warn "Skipped writing. Showing what would have been written:\n"
-      _preview_flake "$all_inputs" "$cmd_str" "$timestamp"
-      return
-    fi
-  fi
+  # Overwrite unconditionally — existing packages were already loaded at startup
 
   _write_flake_file "$all_inputs" "$cmd_str" "$timestamp"
   ok "Wrote ${BOLD}${OUTPUT_FILE}${NC}"
@@ -685,6 +820,8 @@ main() {
   log "Output  : ${BOLD}${OUTPUT_FILE}${NC}"
   log "Max iter: ${BOLD}${MAX_ITER}${NC}"
 
+  load_existing_flake
+
   local iteration=0
 
   while ((iteration < MAX_ITER)); do
@@ -701,7 +838,7 @@ main() {
     log "Exit code ${LAST_EXIT} — scanning output for missing dependencies..."
     parse_missing # sets NEW_CMDS, NEW_PYTHON
 
-    if [[ ${#NEW_CMDS[@]} -eq 0 && ${#NEW_PYTHON[@]} -eq 0 ]]; then
+    if [[ ${#NEW_CMDS[@]} -eq 0 && ${#NEW_PYTHON[@]} -eq 0 && ${#NEW_LIBS[@]} -eq 0 ]]; then
       warn "Command failed (exit ${LAST_EXIT}) but no recognizable missing deps found."
       warn "Check the output above. You may need to add packages manually."
       break
@@ -710,6 +847,7 @@ main() {
     log "Detected missing:"
     [[ ${#NEW_CMDS[@]} -gt 0 ]] && echo -e "  Commands : ${BOLD}${NEW_CMDS[*]}${NC}"
     [[ ${#NEW_PYTHON[@]} -gt 0 ]] && echo -e "  Python   : ${BOLD}${NEW_PYTHON[*]}${NC}"
+    [[ ${#NEW_LIBS[@]} -gt 0 ]] && echo -e "  C libs   : ${BOLD}${NEW_LIBS[*]}${NC}"
 
     local added_this_round=false
 
@@ -734,6 +872,29 @@ main() {
       else
         warn "Skipped '${cmd}' — you may need to add it manually later."
         RESOLVED_CMDS+=("$cmd") # mark as handled so we don't ask again
+      fi
+    done
+
+    # ── Resolve missing C libraries (-lFOO) ──
+    for lib in "${NEW_LIBS[@]:-}"; do
+      [[ -z "$lib" ]] && continue
+      log "Searching nixpkgs for C library '${BOLD}-l${lib}${NC}'..."
+      local options=()
+      while IFS= read -r line; do
+        [[ -n "$line" ]] && options+=("$line")
+      done < <(search_for_lib "$lib")
+
+      local selected
+      selected=$(prompt_select "-l${lib}" "C library" "${options[@]:-}")
+
+      if [[ -n "$selected" ]]; then
+        RESOLVED_PKGS+=("$selected")
+        RESOLVED_LIBS+=("$lib")
+        added_this_round=true
+        ok "Added: ${BOLD}nixpkgs#${selected}${NC}"
+      else
+        warn "Skipped -l${lib}."
+        RESOLVED_LIBS+=("$lib")
       fi
     done
 
