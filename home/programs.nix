@@ -166,7 +166,7 @@ in
           #
           (pkgs.buildGoModule {
             pname = "perkins";
-            version = "0.1.0";
+            version = "1";
             src = inputs.perkins;
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
