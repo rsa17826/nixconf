@@ -100,6 +100,14 @@
         };
       };
     };
+    input-display = {
+      url = "github:rsa17826/input-display";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
     go-autoclicker = {
       url = "github:rsa17826/go-autoclicker";
       inputs = {

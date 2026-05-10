@@ -156,6 +156,7 @@ in
           (pkgFromInp "audio-manager" "default")
           (pkgFromInp "file-sorter" "default")
           (pkgFromInp "go-autoclicker" "default")
+          (pkgFromInp "input-display" "default")
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop

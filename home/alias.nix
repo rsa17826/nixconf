@@ -1,7 +1,6 @@
 { lib, ... }:
 let
   shellAliases = {
-    udpate = "update";
     vim = "nvim";
     vi = "nvim";
     nano = "nvim";
