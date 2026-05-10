@@ -69,7 +69,7 @@ hl.window_rule({
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
-	move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
+	-- move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
 	dim_around = true,
 	stay_focused = false,
 })
@@ -80,7 +80,7 @@ hl.window_rule({
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
-	move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
+	-- move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
 	dim_around = true,
 	stay_focused = false,
 })
@@ -104,9 +104,33 @@ hl.window_rule({
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
-	move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
+	-- move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
 	dim_around = true,
 	stay_focused = false,
+})
+
+hl.window_rule({
+	match = { class = "^Key Display$", title = "^Key Display$" },
+	float = true,
+	size = { "516", "142" },
+	move = { "5", "933" },
+	dim_around = false,
+	no_initial_focus = true,
+	pin = true,
+	suppress_event = "activatefocus activate",
+	stay_focused = false,
+	allows_input = false,
+	decorate = false,
+	focus_on_activate = false,
+	no_anim = true,
+	no_blur = true,
+	no_dim = true,
+	no_focus = true,
+	no_follow_mouse = true,
+	no_shadow = true,
+	opaque = false,
+	opacity = "0.8 override",
+	render_unfocused = true,
 })
 
 -- Beatblock: fullscreen
@@ -144,7 +168,7 @@ hl.window_rule({
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
-	move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
+	-- move = { "(monitor_w*0.5)-(monitor_w*0.8/2)", "(monitor_h*0.5)-(monitor_h*0.8/2)" },
 	dim_around = true,
 	stay_focused = false,
 })
