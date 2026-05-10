@@ -23,7 +23,7 @@ let
     e = "codium";
     edir = "codium";
     updatec = "cd ~/nixconf ; (nix flake metadata | grep -oE 'ext-[a-zA-Z0-9_-]+'|xargs nix flake update) && pkill -9 codium ; update && codium && q";
-    dea = "echo 'use flake'>.envrc&&echo '.direnv'>.gitignore&&git rm -r --cached .direnv&&direnv allow";
+    dea = "echo 'use flake' > .envrc && echo '.direnv' >> .gitignore && git rm -r --cached .direnv 2>/dev/null; direnv allow";
     # cd = "z";
   };
   commonInit = ''
