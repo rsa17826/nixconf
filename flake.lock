@@ -834,11 +834,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1778445028,
-        "narHash": "sha256-DTp5ZJXqMWPvzDRbMAeO7ovUrmA08LVkpqQuRQ23MHo=",
+        "lastModified": 1778445506,
+        "narHash": "sha256-cYVl2dz20qHDvI5de5ok1niEKurHbX0mQ7Be3+Egq8k=",
         "owner": "rsa17826",
         "repo": "input-display",
-        "rev": "9cf091db8c6ea6c02942e5c04b68d4bec77e4bc7",
+        "rev": "3838e576708618020c4d9b9dca396117d42d790c",
         "type": "github"
       },
       "original": {
