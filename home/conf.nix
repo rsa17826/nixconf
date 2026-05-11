@@ -91,7 +91,7 @@ in
     #   # kernelPackages = pkgs.linuxPackages_latest;
     #   # kernelPackages = pkgs.linuxPackages;
     # };
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
     tmp = {
       cleanOnBoot = true;
     };
