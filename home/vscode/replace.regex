@@ -297,3 +297,9 @@ if err != nil {
  ‣
 @endregex
 
+@name hl.bind
+@file \.lua$
+@regex (?<!(-- allow hl bind\n\s*(--\s*)?))hl\.bind\(
+@replace $1m.bind(
+@endregex
+

@@ -499,10 +499,10 @@ search_for_lib() {
   # Well-known -l name -> nixpkgs attr mappings.
   # Keys with hyphens/dots MUST be quoted — unquoted [gtk-3] is arithmetic (gtk - 3).
   local -A KNOWN=(
-    [X11]="xorg.libX11" [Xrandr]="xorg.libXrandr" [Xxf86vm]="xorg.libXxf86vm"
-    [Xi]="xorg.libXi" [Xcursor]="xorg.libXcursor" [Xinerama]="xorg.libXinerama"
-    [Xext]="xorg.libXext" [Xfixes]="xorg.libXfixes" [Xrender]="xorg.libXrender"
-    [Xtst]="xorg.libXtst" [GL]="libGL" [GLU]="libGLU"
+    [X11]="libX11" [Xrandr]="libXrandr" [Xxf86vm]="libXxf86vm"
+    [Xi]="libXi" [Xcursor]="libXcursor" [Xinerama]="libXinerama"
+    [Xext]="libXext" [Xfixes]="libXfixes" [Xrender]="libXrender"
+    [Xtst]="libXtst" [GL]="libGL" [GLU]="libGLU"
     [EGL]="libGL" [vulkan]="vulkan-loader" [z]="zlib"
     [ssl]="openssl" [crypto]="openssl" [curl]="curl"
     [sqlite3]="sqlite" [ffi]="libffi" [png]="libpng"
