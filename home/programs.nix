@@ -147,6 +147,7 @@ in
           "audio"
           "tty"
           "video"
+          "uinput"
         ];
         packages = with pkgs; [
           (newestGodot "4.7-dev4")
