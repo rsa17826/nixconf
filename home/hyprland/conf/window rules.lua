@@ -112,7 +112,7 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "^Key Display$", title = "^Key Display$" },
 	float = true,
-	size = { "516", "142" },
+	-- size = { "516", "142" },
 	move = { "5", "933" },
 	dim_around = false,
 	no_initial_focus = true,
