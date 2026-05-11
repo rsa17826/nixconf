@@ -21,6 +21,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("xdm")
 	hl.exec_cmd("kitten panel --edge=background -o background_opacity=0.2 --margin-top 30 -o background=black dgop")
 	hl.exec_cmd("shaderstack clear")
+	hl.exec_cmd("autocorrect --exclude \"USB Gaming Mouse\" & sleep 2 ; go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual &")
 end)
 
 -- hl.exec_cmd("~/.config/hypr/scripts/edge-focus.sh")

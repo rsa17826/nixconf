@@ -339,33 +339,33 @@ in
     };
     user = {
       services = {
-        autocorrect = {
-          description = "Autocorrect Daemon";
-          wantedBy = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
+        # autocorrect = {
+        #   description = "Autocorrect Daemon";
+        #   wantedBy = [ "graphical-session.target" ];
+        #   after = [ "graphical-session.target" ];
+        #   partOf = [ "graphical-session.target" ];
 
-          serviceConfig = {
-            ExecStart = "/run/current-system/sw/bin/autocorrect --exclude \"USB Gaming Mouse\"";
-            Restart = "on-failure";
-            RestartSec = "5s";
-          };
-        };
-        autoclicker = {
-          description = "Autoclicker Daemon";
-          wantedBy = [ "graphical-session.target" ];
-          after = [
-            "graphical-session.target"
-            "autocorrect.service"
-          ];
-          requires = [ "autocorrect.service" ]; # hard dep
+        #   serviceConfig = {
+        #     ExecStart = "/run/current-system/sw/bin/autocorrect --exclude \"USB Gaming Mouse\"";
+        #     Restart = "on-failure";
+        #     RestartSec = "5s";
+        #   };
+        # };
+        # autoclicker = {
+        #   description = "Autoclicker Daemon";
+        #   wantedBy = [ "graphical-session.target" ];
+        #   after = [
+        #     "graphical-session.target"
+        #     "autocorrect.service"
+        #   ];
+        #   requires = [ "autocorrect.service" ]; # hard dep
 
-          serviceConfig = {
-            ExecStart = "/etc/profiles/per-user/nyix/bin/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
-            Restart = "on-failure";
-            RestartSec = "2s";
-          };
-        };
+        #   serviceConfig = {
+        #     ExecStart = "/etc/profiles/per-user/nyix/bin/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
+        #     Restart = "on-failure";
+        #     RestartSec = "2s";
+        #   };
+        # };
       };
     };
     timers = {

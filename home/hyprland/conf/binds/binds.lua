@@ -35,8 +35,26 @@ m.bind("#c", hl.dsp.window.fullscreen())
 -- fullscreenstate sets client=1 internal=1 — uncomment below if you want that instead:
 m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
 
--- Reload / kill wtype
-m.bind("^esc", hl.dsp.exec_cmd("killall wtype ; hyprctl reload"))
+-- panic button
+do
+	local temp_config = {
+		separate = true,
+		bypass = true,
+		submap_universal = true,
+		-- locked = true,
+	}
+	local temp_cmd = hl.dsp.exec_cmd(
+		"killall wtype; pkill input-display; pkill -f -9 autocorrect.py; pkill -9 go-autoclicker; sys stop autocorrect; sys stop autoclicker; hyprctl reload"
+	)
+	m.bind("^esc", temp_cmd, temp_config)
+	m.bind("^!esc", temp_cmd, temp_config)
+	m.bind("^+esc", temp_cmd, temp_config)
+	m.bind("^#esc", temp_cmd, temp_config)
+	m.bind("^#+esc", temp_cmd, temp_config)
+	m.bind("^#!esc", temp_cmd, temp_config)
+	m.bind("^#!+esc", temp_cmd, temp_config)
+	m.bind("^!+esc", temp_cmd, temp_config)
+end
 
 -- Lock
 m.bind("#l", hl.dsp.exec_cmd("hyprlock --no-fade-in"))

@@ -5501,5 +5501,10 @@
     "key": "ctrl+shift+m",
     "command": "mathOnSelections.run",
     "when": "editorHasSelection"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'"
   }
 ]
