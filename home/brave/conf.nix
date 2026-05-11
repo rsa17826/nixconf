@@ -5,8 +5,8 @@
       enable = true;
 
       extraOpts = {
+        "DeveloperToolsAvailability" = 1;
         "CommandLineFlagSecurityWarningsEnabled" = false;
-
         "ExtensionSettings" =
           lib.genAttrs
             [
