@@ -17,6 +17,7 @@
               "eimadpbcbfnmbkopoojfekhnkhdbieeh"
               "ejddcgojdblidajhngkogefpkknnebdh"
               "fbeffbjdlemaoicjdapfpikkikjoneco"
+              "donbcfbmhbcapadipfkeojnmajbakjdc"
             ]
             (k: {
               installation_mode = "force_installed";
