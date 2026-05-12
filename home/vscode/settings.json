@@ -866,7 +866,11 @@
   "editor.codeActionsOnSaveTimeout": 1500,
   "json.schemaDownload.enable": true,
   "json.schemas": [],
-  "workbench.colorTheme": "Void"
+  "workbench.colorTheme": "Void",
+  "go.hideErrorCases.autoFold": true,
+  "go.hideErrorCases.errorCasesOpacity": 0.1,
+  "go.hideErrorCases.hideOnSave": true,
+  "go.hideErrorCases.autoMakeTransparent": false
   // "editor.codeActionsOnSave": {
   //
   // },

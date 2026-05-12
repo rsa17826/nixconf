@@ -349,6 +349,7 @@ in
             ExecStart = "/run/current-system/sw/bin/autocorrect --exclude \"USB Gaming Mouse\"";
             Restart = "on-failure";
             RestartSec = "5s";
+            KillMode = "mixed";
           };
         };
         autoclicker = {

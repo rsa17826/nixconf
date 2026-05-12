@@ -296,6 +296,11 @@ if err != nil {
 }
  ‣
 @endregex
+@name fail on err - err = binary.Write(vMouse, binary.LittleEndian, ev)
+@file \.go$
+@regex ‣
+@replace
+@endregex
 
 @name hl.bind
 @file \.lua$
