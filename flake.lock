@@ -851,6 +851,29 @@
         "type": "github"
       }
     },
+    "input-manager": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778695583,
+        "narHash": "sha256-hWkZxBuoh+QTKeuxoDUwY24lJwTGBNXUkdK/5sXlzu0=",
+        "owner": "rsa17826",
+        "repo": "input-manager",
+        "rev": "096ab26e5a37660d2c5bf201df4305a514ced663",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "input-manager",
+        "type": "github"
+      }
+    },
     "json-src": {
       "flake": false,
       "locked": {
@@ -1198,6 +1221,7 @@
         "hypr-darkwindow": "hypr-darkwindow",
         "hyprland": "hyprland",
         "input-display": "input-display",
+        "input-manager": "input-manager",
         "millennium": "millennium",
         "multi-game-launcher": "multi-game-launcher",
         "nix-index-database": "nix-index-database",
