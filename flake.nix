@@ -122,6 +122,9 @@
         nixpkgs = {
           follows = "nixpkgs";
         };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     multi-game-launcher = {
