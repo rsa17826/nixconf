@@ -372,7 +372,7 @@ in
             "graphical-session.target"
             "input-manager.service"
           ];
-          requires = [ "input-manager.service" ]; # hard dep
+          requires = [ "input-manager.service" ];
 
           serviceConfig = {
             ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/go-autoclicker startAutoclicker";
