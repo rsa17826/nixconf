@@ -340,7 +340,7 @@ in
     user = {
       services = {
         input-manager = {
-          description = "Autocorrect Daemon";
+          description = "Input Manager";
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
