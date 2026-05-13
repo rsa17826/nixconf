@@ -359,7 +359,7 @@ in
           partOf = [ "graphical-session.target" ];
 
           serviceConfig = {
-            ExecStart = "/run/current-system/sw/bin/autocorrect --exclude \"USB Gaming Mouse\"";
+            ExecStart = "/run/current-system/sw/bin/autocorrect";
             Restart = "on-failure";
             RestartSec = "5s";
             KillMode = "mixed";
