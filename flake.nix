@@ -116,6 +116,17 @@
         };
       };
     };
+    input-manager = {
+      url = "github:rsa17826/input-manager";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
+      };
+    };
     go-autoclicker = {
       url = "github:rsa17826/go-autoclicker";
       inputs = {
