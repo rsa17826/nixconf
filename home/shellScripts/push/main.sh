@@ -27,12 +27,16 @@ for remote in $REMOTES; do
 
     if git push "$url" "$BRANCH"; then
 
-      # --- NEW: AUTO-INCREMENT GO VERSION ---
+      # --- UPDATED: AUTO-INCREMENT GO VERSION ---
       if [ -f "go.mod" ]; then
         echo "Detected go.mod, handling version tag..."
 
-        # Get latest tag, default to v0.0.0 if none exist
-        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        # Sync tags from remote to ensure local view is accurate
+        git fetch --tags --quiet
+
+        # Get the highest version tag across all branches
+        LATEST_TAG=$(git tag -l "v*" | sort -V | tail -n1)
+        [ -z "$LATEST_TAG" ] && LATEST_TAG="v0.0.0"
 
         # Split version (v1.2.3 -> 1 2 3)
         VERSION_PART="${LATEST_TAG#v}"
@@ -43,8 +47,13 @@ for remote in $REMOTES; do
         NEW_TAG="v$major.$minor.$NEW_PATCH"
 
         echo "Bumping version: $LATEST_TAG -> $NEW_TAG"
-        git tag "$NEW_TAG"
-        git push "$url" "$NEW_TAG"
+
+        # Create and push the tag
+        if git tag "$NEW_TAG"; then
+          git push "$url" "$NEW_TAG"
+        else
+          echo "Failed to create tag $NEW_TAG (it might already exist)."
+        fi
       fi
       # --- END AUTO-INCREMENT ---
 

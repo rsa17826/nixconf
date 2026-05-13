@@ -116,6 +116,8 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "24")
 hl.env("HYPRCURSOR_THEME", "mew")
 hl.env("YDOTOOL_SOCKET", "/tmp/.ydotool_socket")
+hl.env("GONOPROXY", "github.com/rsa17826/*")
+hl.env("GOPRIVATE", "github.com/rsa17826/*")
 
 -- ─── Core config ───────────────────────────────────────────────────────────
 hl.config({
