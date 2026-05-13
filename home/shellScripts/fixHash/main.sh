@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
-set -eo
+set -e
+EMPTY_HASH="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+
+sanitize_hashes() {
+  local file="$1"
+  # extract all sha256 hashes in file and replace them with the empty placeholder
+  # This forces Nix to tell us the 'correct' hash for every single one
+  mapfile -t hashes < <(grep -oE 'sha256-[A-Za-z0-9+/=]{43,44}' "$file" | sort -u)
+
+  echo "found ${#hashes[@]} hashes, resetting to empty..."
+  for h in "${hashes[@]}"; do
+    sed -i "s|$h|$EMPTY_HASH|g" "$file"
+  done
+}
 
 auto_fix_hashes() {
   local tmpfile="$1"
@@ -27,10 +40,9 @@ auto_fix_hashes() {
 
   $fixed
 }
-
 TMPOUT=$(mktemp)
 err=1
-
+sanitize_hashes "$PWD/flake.nix"
 while true; do
   if nix build --json --log-format internal-json 2>"$TMPOUT"; then
     BUILD_EXIT=0
