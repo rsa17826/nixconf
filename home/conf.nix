@@ -339,6 +339,19 @@ in
     };
     user = {
       services = {
+        input-manager = {
+          description = "Autocorrect Daemon";
+          wantedBy = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "/run/current-system/sw/bin/input-manager k \"id:usb-0c45_USB_Wired_Keyboard-event-kbd\" m \"id:usb-04d9_USB_Gaming_Mouse-event-mouse\" k \"id:usb-04d9_USB_Gaming_Mouse-if01-event-kbd\"";
+            Restart = "on-failure";
+            RestartSec = "5s";
+            KillMode = "mixed";
+          };
+        };
         autocorrect = {
           description = "Autocorrect Daemon";
           wantedBy = [ "graphical-session.target" ];
@@ -357,12 +370,12 @@ in
           wantedBy = [ "graphical-session.target" ];
           after = [
             "graphical-session.target"
-            "autocorrect.service"
+            "input-manager.service"
           ];
-          requires = [ "autocorrect.service" ]; # hard dep
+          requires = [ "input-manager.service" ]; # hard dep
 
           serviceConfig = {
-            ExecStart = "/etc/profiles/per-user/nyix/bin/go-autoclicker startAutoclicker id:usb-04d9_USB_Gaming_Mouse-event-mouse name:Autocorrect-Virtual";
+            ExecStart = "/etc/profiles/per-user/nyix/bin/go-autoclicker startAutoclicker";
             Restart = "on-failure";
             RestartSec = "2s";
           };
