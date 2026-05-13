@@ -1,17 +1,42 @@
 #!/usr/bin/env bash
 set -e
-EMPTY_HASH="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
 
 sanitize_hashes() {
   local file="$1"
-  # extract all sha256 hashes in file and replace them with the empty placeholder
-  # This forces Nix to tell us the 'correct' hash for every single one
-  mapfile -t hashes < <(grep -oE 'sha256-[A-Za-z0-9+/=]{43,44}' "$file" | sort -u)
 
-  echo "found ${#hashes[@]} hashes, resetting to empty..."
-  for h in "${hashes[@]}"; do
-    sed -i "s|$h|$EMPTY_HASH|g" "$file"
-  done
+  awk '
+    function gen(i,    s, n) {
+      s = ""
+      n = i
+      do {
+        s = sprintf("%c", 65 + (n % 26)) s
+        n = int(n / 26) - 1
+      } while (n >= 0)
+
+      while (length(s) < 43) {
+        s = s "A"
+      }
+      return "sha256-" s "="
+    }
+
+    {
+      # Fixed regex: Added a-z, 0-9, and / to cover standard Base64
+      n = split($0, parts, /sha256-[A-Za-z0-9\/+=]{43,44}/, seps)
+
+      out = parts[1]
+      for (i = 2; i <= n; i++) {
+        h = seps[i-1]
+        if (h != "" && !(h in map)) {
+          map[h] = gen(idx++)
+        }
+        if (h != "") {
+          out = out map[h]
+        }
+        out = out parts[i]
+      }
+      print out
+    }
+  ' "$file" >"$file.tmp" && mv "$file.tmp" "$file"
 }
 
 auto_fix_hashes() {
