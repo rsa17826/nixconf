@@ -20,13 +20,8 @@ m.bind("^!s", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.k
 m.bind("^!d", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.kdbx -c 30 --otp-only"))
 
 -- ─── Window / session actions ──────────────────────────────────────────────
--- Kill active window's process and relaunch it
-m.bind(
-	"^+#r",
-	hl.dsp.exec_cmd(
-		'sh -c \'PID=$(hyprctl activewindow -j | jq -r .pid); BIN=$(readlink /proc/$PID/exe); kill -9 "$PID" && sleep 0.3 && "$BIN" &\''
-	)
-)
+-- Kill active window's process and relaunch it (preserving D-Bus/portal env)
+m.bind("^+#r", hl.dsp.exec_cmd("~/.config/hypr/scripts/relaunch-active.sh"))
 -- Fullscreen
 m.bind("#c", hl.dsp.window.fullscreen())
 -- m.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
@@ -34,27 +29,6 @@ m.bind("#c", hl.dsp.window.fullscreen())
 -- Note: original had both fullscreen and fullscreenstate,1 1 on SHIFT+ALT+RETURN.
 -- fullscreenstate sets client=1 internal=1 — uncomment below if you want that instead:
 m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
-
--- panic button
-do
-	local temp_config = {
-		separate = true,
-		bypass = true,
-		submap_universal = true,
-		-- locked = true,
-	}
-	local temp_cmd = hl.dsp.exec_cmd(
-		"killall wtype; pkill input-display; pkill -f -9 autocorrect.py; pkill -9 go-autoclicker; sys stop autocorrect; sys stop autoclicker; hyprctl reload"
-	)
-	m.bind("^esc", temp_cmd, temp_config)
-	m.bind("^!esc", temp_cmd, temp_config)
-	m.bind("^+esc", temp_cmd, temp_config)
-	m.bind("^#esc", temp_cmd, temp_config)
-	m.bind("^#+esc", temp_cmd, temp_config)
-	m.bind("^#!esc", temp_cmd, temp_config)
-	m.bind("^#!+esc", temp_cmd, temp_config)
-	m.bind("^!+esc", temp_cmd, temp_config)
-end
 
 -- Lock
 m.bind("#l", hl.dsp.exec_cmd("hyprlock --no-fade-in"))
