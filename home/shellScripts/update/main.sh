@@ -32,6 +32,18 @@ else
   fi
 fi
 
+if [ "$PWD" != "$HOME/nixconf/" ]; then
+  if [ -f "$PWD/flake.nix" ]; then
+    echo "fixing hash before updating"
+    lastText=$(<"$PWD/flake.nix")
+    fixHash
+    newText=$(<"$PWD/flake.nix")
+    if [[ "$newText" != "$lastText" ]]; then
+      push fixed the hashes
+    fi
+  fi
+fi
+
 # Save current directory and move to nixconf
 # We use pushd/popd because it's cleaner for directory management in scripts
 pushd "$HOME/nixconf" >/dev/null || {
