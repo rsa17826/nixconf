@@ -92,8 +92,10 @@ while true; do
   fi
 done
 
-if [[ "$err" == 0 ]]; then
+if [[ -d "$PWD/result" ]]; then
   rm -rf "$PWD/result"
+fi
+if [[ "$err" == 0 ]]; then
   echo "hash is now valid"
 fi
 
