@@ -159,6 +159,22 @@ if [ "$SKIP_GIT" = false ]; then
   git add -A
   git commit -m "$NIXOS_LABEL_VERSION"
   git push
+  # shellcheck disable=SC2329
+  cleanup_abort() {
+    echo -e "\n🛑 Interruption detected!"
+    if [[ "$SKIP_GIT" == false ]]; then
+      echo "📝 Amending commit to ABORTED..."
+      pushd "$HOME/nixconf" >/dev/null || exit 1
+      git commit --amend -m "ABORTED: $NIXOS_LABEL_VERSION"
+      git push --force-with-lease
+      popd >/dev/null || exit 1
+    fi
+    exit 1
+  }
+
+  # Trap SIGINT (Ctrl+C) and SIGTERM
+  trap cleanup_abort SIGINT SIGTERM
+
 fi
 
 echo "🚀 Switching to #$TARGET..."
