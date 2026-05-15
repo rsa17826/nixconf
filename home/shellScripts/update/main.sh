@@ -190,7 +190,7 @@ else
       tee "$TMPOUT" |
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}
-
+    echo "$BUILD_EXIT" BUILD_EXIT
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
       # SUCCESS: Update the commit message to reflect success
