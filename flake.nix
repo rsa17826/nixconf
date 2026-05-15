@@ -9,11 +9,11 @@
     };
     millennium = {
       url = "github:SteamClientHomebrew/Millennium/next?dir=packages/nix";
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
+      # inputs = {
+      #   nixpkgs = {
+      #     follows = "nixpkgs";
+      #   };
+      # };
     };
     home-manager = {
       url = "github:nix-community/home-manager";
