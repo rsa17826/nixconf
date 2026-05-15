@@ -53,7 +53,7 @@ m.bind(
 		"/run/current-system/sw/bin/kitten quick-access-terminal python3.14 ~/nixconf/home/cliphistViewer/main.py"
 	)
 )
-m.bind("^ins", hl.dsp.exec_cmd("pkill input-display || input-display d socket"))
+m.bind("^ins", hl.dsp.exec_cmd("pkill input-display || input-display s"))
 hl.config({
 	input = {
 		kb_options = "caps:none,numpad:mac",
