@@ -870,7 +870,8 @@
   "go.hideErrorCases.autoFold": true,
   "go.hideErrorCases.errorCasesOpacity": 0.1,
   "go.hideErrorCases.hideOnSave": true,
-  "go.hideErrorCases.autoMakeTransparent": false
+  "go.hideErrorCases.autoMakeTransparent": false,
+  "diffEditor.hideUnchangedRegions.enabled": true
   // "editor.codeActionsOnSave": {
   //
   // },

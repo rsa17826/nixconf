@@ -175,8 +175,8 @@ hl.window_rule({
 	scrolling_width = 0.8,
 })
 
-hl.window_rule({
-	name = "asdd",
-	match = { class = "^xdman-Main$" },
-	workspace = "8 silent",
-})
+-- hl.window_rule({
+-- 	name = "asdd",
+-- 	match = { class = "^xdman-Main$" },
+-- 	workspace = "8 silent",
+-- })
