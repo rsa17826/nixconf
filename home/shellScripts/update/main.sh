@@ -180,19 +180,35 @@ else
       break
     fi
 
-    echo "❌ Build failed. Scanning for hash mismatches..."
-    if auto_fix_hashes "$TMPOUT"; then
-      echo "🔁 Hash patched — retrying..."
+    if [[ $BUILD_EXIT -eq 0 ]]; then
+      # SUCCESS: Update the commit message to reflect success
       if [[ "$SKIP_GIT" == false ]]; then
-        git add -A
-        git commit --amend --no-edit
+        echo "✅ Build success! Updating commit message..."
+        git commit --amend -m "SUCCESS: $NIXOS_LABEL_VERSION"
         git push --force-with-lease
       fi
       rm -f "$TMPOUT"
       err=0
+      break
+    fi
+
+    echo "❌ Build failed. Scanning for hash mismatches..."
+    if auto_fix_hashes "$TMPOUT"; then
+      echo "🔁 Hash patched — retrying..."
+      # We commit the fix here so the next attempt starts clean
+      if [[ "$SKIP_GIT" == false ]]; then
+        git add -A
+        git commit --amend --no-edit
+      fi
+      rm -f "$TMPOUT"
+      continue # Re-run the while loop
     else
-      echo "⚠️  No fixable hashes found. Manual intervention needed."
-      echo "$TMPOUT"
+      # PERMANENT FAILURE: Update commit message to reflect failure
+      echo "⚠️ No fixable hashes found."
+      if [[ "$SKIP_GIT" == false ]]; then
+        git commit --amend -m "FAILED: $NIXOS_LABEL_VERSION"
+        git push --force-with-lease
+      fi
       err=1
       break
     fi
