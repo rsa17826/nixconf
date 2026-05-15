@@ -114,7 +114,7 @@ log)
   fi
 
   if [[ ${#follow[@]} -eq 0 ]]; then
-    journalctl "${args[@]}" --no-pager -r
+    journalctl "${args[@]}" --no-pager
   else
     journalctl "${args[@]}" --no-pager
   fi

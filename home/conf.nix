@@ -314,26 +314,11 @@ in
   };
   systemd = {
     services = {
-      nix-custom-gc = {
-        description = "Custom GFS Garbage Collection";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "/etc/profiles/per-user/nyix/bin/customGC";
-        };
-      };
-      # autocorrect = {
-      #   description = "Autocorrect Daemon";
-      #   wantedBy = [ "multi-user.target" ];
-      #   after = [ "network.target" ];
-
+      # nix-custom-gc = {
+      #   description = "Custom GFS Garbage Collection";
       #   serviceConfig = {
-      #     ExecStart = "/run/current-system/sw/bin/autocorrect"; # adjust flags as needed
-      #     Restart = "on-failure";
-      #     RestartSec = "5s";
-
-      #     # Optional hardening
-      #     DynamicUser = true;
-      #     NoNewPrivileges = true;
+      #     Type = "oneshot";
+      #     ExecStart = "/etc/profiles/per-user/nyix/bin/customGC";
       #   };
       # };
     };
