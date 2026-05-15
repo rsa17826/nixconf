@@ -32,7 +32,7 @@ else
   fi
 fi
 
-if [ "$PWD" != "$HOME/nixconf/" ]; then
+if [ "$PWD" != "$HOME/nixconf" ]; then
   if [ -f "$PWD/flake.nix" ]; then
     echo "fixing hash before updating"
     lastText=$(<"$PWD/flake.nix")
