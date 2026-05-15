@@ -159,23 +159,23 @@ if [ "$SKIP_GIT" = false ]; then
   git add -A
   git commit -m "$NIXOS_LABEL_VERSION"
   git push
-  # shellcheck disable=SC2329
-  cleanup_abort() {
-    echo -e "\n🛑 Interruption detected!"
-    if [[ "$SKIP_GIT" == false ]]; then
-      echo "📝 Amending commit to ABORTED..."
-      pushd "$HOME/nixconf" >/dev/null || exit 1
-      git commit --amend -m "ABORTED: $NIXOS_LABEL_VERSION"
-      git push --force-with-lease
-      popd >/dev/null || exit 1
-    fi
-    exit 1
-  }
-
-  # Trap SIGINT (Ctrl+C) and SIGTERM
-  trap cleanup_abort SIGINT SIGTERM
-
 fi
+
+# shellcheck disable=SC2329
+cleanup_abort() {
+  echo -e "\n🛑 Interruption detected!"
+  if [[ "$SKIP_GIT" == false ]]; then
+    echo "📝 Amending commit to ABORTED..."
+    pushd "$HOME/nixconf" >/dev/null || exit 1
+    git commit --amend -m "ABORTED: $NIXOS_LABEL_VERSION"
+    git push --force-with-lease
+    popd >/dev/null || exit 1
+  fi
+  exit 1
+}
+
+# Trap SIGINT (Ctrl+C) and SIGTERM
+trap cleanup_abort SIGINT SIGTERM
 
 echo "🚀 Switching to #$TARGET..."
 echo "hm is: $hm"
@@ -191,6 +191,9 @@ else
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}
     echo "$BUILD_EXIT" BUILD_EXIT
+    if [[ $BUILD_EXIT -eq 130 ]]; then
+      1
+    fi
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
       # SUCCESS: Update the commit message to reflect success
