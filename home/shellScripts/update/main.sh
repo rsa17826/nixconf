@@ -177,10 +177,6 @@ else
 
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
-      break
-    fi
-
-    if [[ $BUILD_EXIT -eq 0 ]]; then
       # SUCCESS: Update the commit message to reflect success
       if [[ "$SKIP_GIT" == false ]]; then
         echo "✅ Build success! Updating commit message..."
