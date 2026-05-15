@@ -190,9 +190,9 @@ else
       tee "$TMPOUT" |
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}
-    echo "$BUILD_EXIT" BUILD_EXIT
+
     if [[ $BUILD_EXIT -eq 130 ]]; then
-      1
+      cleanup_abort
     fi
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
@@ -207,6 +207,7 @@ else
       break
     fi
 
+    echo "$BUILD_EXIT" BUILD_EXIT
     echo "❌ Build failed. Scanning for hash mismatches..."
     if auto_fix_hashes "$TMPOUT"; then
       echo "🔁 Hash patched — retrying..."

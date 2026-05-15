@@ -7,7 +7,7 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    millennium= = {
+    millennium = {
       url = "github:SteamClientHomebrew/Millennium/next?dir=packages/nix";
       # inputs = {
       #   nixpkgs = {
