@@ -194,6 +194,7 @@ else
     if [[ $BUILD_EXIT -eq 130 ]]; then
       cleanup_abort
     fi
+
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
       # SUCCESS: Update the commit message to reflect success
