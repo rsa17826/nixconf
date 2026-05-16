@@ -344,7 +344,7 @@ in
           partOf = [ "graphical-session.target" ];
 
           serviceConfig = {
-            ExecStart = "/run/current-system/sw/bin/autocorrect";
+            ExecStart = "/run/current-system/sw/bin/autocorrect --capsHasBeenDisabled";
             Restart = "on-failure";
             RestartSec = "5s";
             KillMode = "mixed";
