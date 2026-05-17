@@ -34,9 +34,6 @@ m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
 m.bind("#l", hl.dsp.exec_cmd("hyprlock --no-fade-in"))
 -- m.bind("^#l", hl.dsp.exec_cmd("armLock"))
 
--- Screenshots (see screenshot.lua for the rest)
-m.bind("print", hl.dsp.exec_cmd("hyprshot -m window"))
-
 -- Window management
 m.bind("^+Q", hl.dsp.window.close())
 

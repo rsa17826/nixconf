@@ -43,7 +43,6 @@ hl.window_rule({
 	workspace = "8 silent",
 })
 
-
 -- hyprland-run popup: float, bottom-left area
 hl.window_rule({
 	name = "move-hyprland-run",
@@ -170,6 +169,14 @@ hl.window_rule({
 
 -- Godot: 80% column width in scrolling layout
 -- #TODO -
+hl.window_rule({
+	match = { class = "^Audacity$" },
+	scrolling_width = 1.0,
+})
+hl.window_rule({
+	match = { title = "^Kid3$", class = "^org.kde.kid3$" },
+	scrolling_width = 1.0,
+})
 hl.window_rule({
 	match = { class = "^Godot_Engine$" },
 	scrolling_width = 0.8,
