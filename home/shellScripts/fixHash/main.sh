@@ -65,39 +65,49 @@ auto_fix_hashes() {
 
   $fixed
 }
-TMPOUT=$(mktemp)
-err=1
-sanitize_hashes "$PWD/flake.nix"
-while true; do
-  if nix build --json --log-format internal-json 2>"$TMPOUT"; then
-    BUILD_EXIT=0
-  else
-    BUILD_EXIT=$?
+if [ -f "$PWD/flake.nix" ]; then
+  lastText=$(<"$PWD/flake.nix")
+
+  TMPOUT=$(mktemp)
+  err=1
+  sanitize_hashes "$PWD/flake.nix"
+  while true; do
+    if nix build --json --log-format internal-json 2>"$TMPOUT"; then
+      BUILD_EXIT=0
+    else
+      BUILD_EXIT=$?
+    fi
+
+    if [[ $BUILD_EXIT -eq 0 ]]; then
+      rm -f "$TMPOUT"
+      break
+    fi
+
+    if auto_fix_hashes "$TMPOUT"; then
+      echo "🔁 Hash patched — retrying..."
+      rm -f "$TMPOUT"
+      err=0
+    else
+      echo "⚠️  No fixable hashes found. Manual intervention needed."
+      echo "$TMPOUT"
+      err=1
+      break
+    fi
+  done
+
+  if [[ -d "$PWD/result" ]]; then
+    rm -rf "$PWD/result"
+  fi
+  if [[ "$err" == 0 ]]; then
+    echo "hash is now valid"
+    push "hash is now valid"
   fi
 
-  if [[ $BUILD_EXIT -eq 0 ]]; then
-    rm -f "$TMPOUT"
-    break
+  newText=$(<"$PWD/flake.nix")
+  if [[ "$newText" != "$lastText" ]]; then
+    push fixed the hashes
   fi
-
-  if auto_fix_hashes "$TMPOUT"; then
-    echo "🔁 Hash patched — retrying..."
-    rm -f "$TMPOUT"
-    err=0
-  else
-    echo "⚠️  No fixable hashes found. Manual intervention needed."
-    echo "$TMPOUT"
-    err=1
-    break
-  fi
-done
-
-if [[ -d "$PWD/result" ]]; then
-  rm -rf "$PWD/result"
+  exit "$err"
+else
+  exit 0
 fi
-if [[ "$err" == 0 ]]; then
-  echo "hash is now valid"
-  push "hash is now valid"
-fi
-
-exit "$err"
