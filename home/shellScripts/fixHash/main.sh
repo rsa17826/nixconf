@@ -97,6 +97,7 @@ if [[ -d "$PWD/result" ]]; then
 fi
 if [[ "$err" == 0 ]]; then
   echo "hash is now valid"
+  push "hash is now valid"
 fi
 
 exit "$err"
