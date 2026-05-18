@@ -168,6 +168,7 @@ in
           zlib
           #
           steam-run-free
+          nixd # nix language server
           (pkgs.buildGoModule {
             pname = "perkins";
             version = "1";
