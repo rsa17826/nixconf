@@ -167,6 +167,7 @@ in
           openssl
           zlib
           #
+          steam-run-free
           (pkgs.buildGoModule {
             pname = "perkins";
             version = "1";

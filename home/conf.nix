@@ -275,9 +275,6 @@ in
     };
   };
   programs = {
-    ydotool = {
-      enable = true;
-    };
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
@@ -306,6 +303,8 @@ in
         gcc
         zlib
         openssl
+
+        libdecor
       ];
     };
     mouse-actions = {
