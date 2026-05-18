@@ -56,8 +56,8 @@
             {
               name = "stylua";
               publisher = "JohnnyMorganz";
-              version = "1.7.1";
-              hash = "sha256-AbMCYYyK6Ywm/VljzAdmjk0VWm7JRH5GgJAC38T3j/c=";
+              version = "1.7.2";
+              hash = "sha256-l/znKp+myNqS8RYVAyBGn5Up9LfXs0HPUr1ZrV4CrKE=";
             }
             {
               name = "Kotlin";
@@ -80,8 +80,8 @@
             {
               name = "shellcheck";
               publisher = "timonwong";
-              version = "0.39.3";
-              hash = "sha256-A87dG+bBNCMZ8ERDGpVJIP7lXL8rfRely2Uo/ZMsgVI=";
+              version = "0.39.5";
+              hash = "sha256-8f9LGmNE8ilPYZmbJpmmAx9DkKJXbQzAia11rM3wTec=";
             }
             {
               name = "zubanls";
@@ -224,8 +224,8 @@
             {
               name = "nix-ide";
               publisher = "jnoortheen";
-              version = "0.5.5";
-              hash = "sha256-epdEMPAkSo0IXsd+ozicI8bjPPquDKIzB3ONRUYWwn8=";
+              version = "0.5.9";
+              hash = "sha256-hPOcp6Yksgfu1+In21/gJ3MthV8JUV5WaRpYHvo5GGk=";
             }
             {
               name = "multi-formatter";
@@ -236,8 +236,8 @@
             {
               name = "basedpyright";
               publisher = "detachhead";
-              version = "1.39.3";
-              hash = "sha256-uuWkSxjsY7ZL1QUwqkiwPTN8oGUktfm7/Hgv3Enmgqc=";
+              version = "1.39.5";
+              hash = "sha256-S6AAcPseIHYDLEt+9QyqpZ3i/hxhnLTB/2yZuEPUAbg=";
             }
             # {
             #   name = "synthwave-fluoromachine-cursor";
@@ -278,20 +278,20 @@
             {
               name = "black-formatter";
               publisher = "ms-python";
-              version = "2026.5.11201012";
-              hash = "sha256-LaAS1vdcIygo3yozWmC9zwRU9qCQ5bW9j7qKJK8mH7Q=";
+              version = "2026.5.11321003";
+              hash = "sha256-4p/uKwSHg5HP4qp18eb35Lkb+SDhk4k+oIlEjIqBLOs=";
             }
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.11211011";
-              hash = "sha256-p9EMxXFY9G7eO7cW1guDCFQzBRA2tcTRAH6TbqRmGLY=";
+              version = "2026.7.11331010";
+              hash = "sha256-WG6uB+q3qnIw5+RWN/774dL04YSdGCE3bN8fzhjl4ck=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.5.2026042602";
-              hash = "sha256-fq/5kNNBN+1hu4x0UmIsomdYM0UO+NhmB0PSUiVztQ0=";
+              version = "2026.5.2026051501";
+              hash = "sha256-Ky00OB4iJ3HpEaBas+MX8bh8qBzVuzg0tsbuFLqUeOw=";
             }
             {
               name = "hexeditor";
