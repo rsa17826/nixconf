@@ -368,11 +368,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778786440,
-        "narHash": "sha256-3jEX5QKxPtYh0f6EP6SJQaULpSVfbF7oY+IT5f0pZNY=",
+        "lastModified": 1779069863,
+        "narHash": "sha256-IWX0XZZ+h+wdsfQJln+PwFkTW9kSJb7X+DrfNJjjWlw=",
         "owner": "rsa17826",
         "repo": "go-autoclicker",
-        "rev": "c06890b8e6f0f1a6ce8c45b87689b910cf4c2302",
+        "rev": "d87ff0e3062068ef4e4d0319bc2dcf34ca87d68e",
         "type": "github"
       },
       "original": {
