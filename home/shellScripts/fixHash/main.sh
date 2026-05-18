@@ -66,6 +66,7 @@ auto_fix_hashes() {
   $fixed
 }
 if [ -f "$PWD/flake.nix" ]; then
+  git add flake.nix
   lastText=$(<"$PWD/flake.nix")
 
   TMPOUT=$(mktemp)

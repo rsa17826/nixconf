@@ -871,7 +871,10 @@
   "go.hideErrorCases.errorCasesOpacity": 0.1,
   "go.hideErrorCases.hideOnSave": true,
   "go.hideErrorCases.autoMakeTransparent": false,
-  "diffEditor.hideUnchangedRegions.enabled": true
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go"
+  }
   // "editor.codeActionsOnSave": {
   //
   // },
