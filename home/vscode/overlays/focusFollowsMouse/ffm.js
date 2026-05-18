@@ -35,7 +35,7 @@ function resolveTarget(el) {
   // 1. Direct real inputs (search box etc)
   if (
     el.matches(
-      '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"]',
+      '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"], .editor-container',
     )
   ) {
     // if matching it is htmlelement
@@ -53,6 +53,9 @@ function resolveTarget(el) {
   const editor = el.closest(".monaco-editor")
   if (editor) {
     return editor.querySelector(".native-edit-context")
+  }
+  if (el.querySelector(".monaco-editor-pane-placeholder")) {
+    return el.querySelector(".monaco-editor-pane-placeholder")
   }
 
   // 4. Search / input panels
