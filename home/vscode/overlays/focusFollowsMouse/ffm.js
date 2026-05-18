@@ -54,6 +54,7 @@ function resolveTarget(el) {
   if (editor) {
     return editor.querySelector(".native-edit-context")
   }
+
   if (el.querySelector(".monaco-editor-pane-placeholder")) {
     return el.querySelector(".monaco-editor-pane-placeholder")
   }
