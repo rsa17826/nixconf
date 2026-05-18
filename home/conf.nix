@@ -307,9 +307,6 @@ in
         libdecor
       ];
     };
-    mouse-actions = {
-      enable = true;
-    };
   };
   systemd = {
     services = {
