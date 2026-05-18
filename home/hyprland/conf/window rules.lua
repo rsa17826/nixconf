@@ -34,6 +34,7 @@ hl.window_rule({
 	focus_on_activate = true,
 	allows_input = true,
 	center = true,
+	workspace = "special",
 })
 
 -- XDM main window → workspace 8 silent
