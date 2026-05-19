@@ -1,3 +1,9 @@
+hl.window_rule({
+	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
+	scrolling_width = 0.3,
+	workspace = "3",
+})
+
 -- window_rules.lua
 
 -- Suppress maximize requests from all windows
@@ -168,8 +174,6 @@ hl.window_rule({
 	stay_focused = false,
 })
 
--- Godot: 80% column width in scrolling layout
--- #TODO -
 hl.window_rule({
 	match = { class = "^Audacity$" },
 	scrolling_width = 1.0,
@@ -179,8 +183,8 @@ hl.window_rule({
 	scrolling_width = 1.0,
 })
 hl.window_rule({
-	match = { class = "^Godot_Engine$" },
-	scrolling_width = 0.8,
+	match = { class = "^Godot$" },
+	scrolling_width = 0.7,
 })
 
 -- hl.window_rule({
@@ -188,3 +192,8 @@ hl.window_rule({
 -- 	match = { class = "^xdman-Main$" },
 -- 	workspace = "8 silent",
 -- })
+hl.window_rule({
+	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
+	scrolling_width = 0.3,
+	workspace = "3",
+})

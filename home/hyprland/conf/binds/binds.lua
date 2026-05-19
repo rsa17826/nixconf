@@ -1,6 +1,5 @@
 -- binds.lua
 
-local mainMod = "SUPER"
 
 -- ─── Media / hardware keys ─────────────────────────────────────────────────
 m.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { repeating = true })
@@ -37,9 +36,7 @@ m.bind("#l", hl.dsp.exec_cmd("hyprlock --no-fade-in"))
 -- Window management
 m.bind("^+Q", hl.dsp.window.close())
 
--- m.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop && loginctl terminate-user"))
 m.bind("#M", hl.dsp.exit())
--- m.bind(mainMod .. " + M", hl.dsp.exit())
 m.bind("+!spc", hl.dsp.window.float({ action = "toggle" }))
 m.bind("#P", hl.dsp.window.pseudo())
 

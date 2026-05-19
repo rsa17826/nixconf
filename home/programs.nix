@@ -208,6 +208,7 @@ in
           python313Packages.py7zr
           godot # programing
           stylua
+          lua
           # appimage-run
           # firejail
           # motrix # download manager

@@ -2,7 +2,6 @@
 -- Main config entry point. Use require() to load sub-files.
 -- Each require() is its own scope so errors in one don't kill others.
 
-local mainMod = "SUPER"
 -- do
 -- m={}
 -- function bind(keys, func, args?{}){

@@ -1,6 +1,6 @@
 {
   "workspace": {
-    "library": ["/usr/share/hypr/stubs"]
+    "library": ["/home/nyix/projects/superws/a/Hyprland-main/meta/"]
   },
   "diagnostics": {
     "globals": ["hl"]
