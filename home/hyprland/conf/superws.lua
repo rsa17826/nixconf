@@ -99,4 +99,3 @@ function sw.focus_relative(delta)
 end
 
 return sw
-

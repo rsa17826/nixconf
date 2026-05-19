@@ -9,7 +9,7 @@
               name = "lua";
               publisher = "sumneko";
               version = "3.18.2";
-              hash = "sha256-8mvauayksFk/3A7VMJ3EZYyRK8YLgX03W7bzEIdGkXQ=";
+              hash = "sha256-SiKD/bDjuZMZIy5V7yTUcpo7ojt9L/VD/Rp51Iuyc9c=";
             }
             {
               name = "shader";

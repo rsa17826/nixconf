@@ -875,9 +875,13 @@
   "[go.mod]": {
     "editor.defaultFormatter": "golang.go",
   },
+  "Lua.codeLens.enable": true,
+  "Lua.completion.callSnippet": "Both",
+  "Lua.completion.displayContext": 5,
   // "editor.codeActionsOnSave": {
   //
   // },
   // "editor.formatOnSaveMode": "modificationsIfAvailable",
   // "files.simpleDialog.enable": true,
+  "Lua.misc.executablePath": "/etc/profiles/per-user/nyix/bin/lua-language-server",
 }
