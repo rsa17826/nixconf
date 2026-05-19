@@ -55,7 +55,7 @@ let
       pname = "godot-${version}";
       src = pkgs.fetchurl {
         url = "https://github.com/godotengine/godot-builds/releases/download/${version}/Godot_v${version}_linux.x86_64.zip";
-        sha256 = "sha256-9oBqCTVpt9Zhv4rA8qyoEIQul6w3PRswhH33TPhNg9M=";
+        sha256 = "sha256-8+f+9IBJoRp2aQN+RAcbb+NhW1B4tM+1+PyNjDnoLzs=";
       };
       nativeBuildInputs = with pkgs; [ unzip ];
       sourceRoot = ".";
@@ -150,7 +150,7 @@ in
           "uinput"
         ];
         packages = with pkgs; [
-          (newestGodot "4.7-dev4")
+          (newestGodot "4.7-beta2")
           xdm
           (pkgFromInp "wayland-keepass-autotype" "default")
           (pkgFromInp "multi-game-launcher" "default")
