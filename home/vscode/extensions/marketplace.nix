@@ -6,10 +6,10 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "Lua";
-              publisher = "keyring";
-              version = "0.0.9";
-              hash = "sha256-IAG9pgXeErpWmQ2gPr6QEadbcvcE95iIb+W3h/EZ++0=";
+              name = "lua";
+              publisher = "sumneko";
+              version = "3.18.2";
+              hash = "sha256-8mvauayksFk/3A7VMJ3EZYyRK8YLgX03W7bzEIdGkXQ=";
             }
             {
               name = "shader";
