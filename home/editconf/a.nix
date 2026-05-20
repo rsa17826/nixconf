@@ -74,6 +74,7 @@ let
       for d in "''${_dirs[@]}";  do rm -rf "$_dest/$d"; ln -s "$_src/$d" "$_dest/$d"; done
       touch "$marker"
       echo "$app: edit mode active ($_src)"
+      hyprctl reload
     }
 
     exit_app() {
@@ -104,6 +105,7 @@ let
 
       rm -f "$marker"
       echo "$app: restored"
+      hyprctl reload
     }
 
     status_app() {
@@ -146,14 +148,11 @@ let
         for app in "''${APPS[@]}"; do status_app "$app"; done
         ;;
       *)
-        echo "Usage: edit-conf <enter|exit|status> [app]"
-        echo ""
-        echo "  enter [app]   Symlink app config(s) to nixconf for live editing"
-        echo "  exit  [app]   Restore saved symlinks"
-        echo "  status        Show edit mode state for all apps"
-        echo ""
-        echo "  Apps: ''${APPS[*]}"
-        exit 1
+        for app in $(resolve_apps); do enter_app "$app"; done
+        if [[ -z "$TARGET" ]]; then
+          read -r
+          for app in $(resolve_apps); do exit_app "$app"; done
+        done
         ;;
     esac
   '';
