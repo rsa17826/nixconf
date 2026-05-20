@@ -1,101 +1,164 @@
 -- superws.lua
--- Super-workspace navigation module.
---
--- Real workspaces are grouped into blocks of SIZE.
--- Group 1 → ws 1..SIZE,  Group 2 → ws SIZE+1..SIZE*2, etc.
---
--- Usage (in binds.lua):
---   local sw = require("superws")
---
---   m.bind("#a",   sw.focus(1))          -- go to sub-ws 1 of current group
---   m.bind("#+a",  sw.move(1))           -- throw window to sub-ws 1 of current group
---   m.bind("!#1",  sw.switch_group(1))   -- jump to group 1, keep sub-ws position
---   m.bind("!#+1", sw.move_to_group(1))  -- throw window to group 1
+-- Super-workspace navigation + window routing via native Hyprland Lua API.
+-- No subprocesses, no external daemons.
 
 local sw = {}
 
-local SIZE = 10 -- workspaces per group; must match groupSize in main.go
+local SIZE = 10 -- workspaces per group
+local route_map = {
+	-- Group-agnostic: same sub-ws regardless of which group you're in
+	["brave-browser"] = 2,
+	["firefox"] = 2,
+	["vscodium"] = 1,
+	["code"] = 1,
+	["godot"] = 1,
+	["godot_editor"] = 1,
+	["kitty"] = 3,
+	["foot"] = 3,
+}
 
+hl.on("window.open", function(win)
+	local class = (win.class or ""):lower()
+	local ws = hl.get_active_workspace()
+	if not ws then
+		return
+	end
+
+	local group = math.floor((ws.id - 1) / SIZE)
+
+	-- ── group-specific overrides ──────────────────────────────────────────
+	-- e.g. in group 2 (godot), send codium to sub-ws 2 instead of sub-ws 1
+	if group == 1 then -- group 2 is index 1 (0-based)
+		if class == "vscodium" or class == "code" then
+			hl.dispatch(hl.dsp.window.move({ workspace = group * SIZE + 2, follow = false }))
+			return
+		end
+	end
+
+	-- ── default routing from map ──────────────────────────────────────────
+	local sub = route_map[class]
+	if not sub then
+		return
+	end
+
+	local target = group * SIZE + sub
+	if win.workspace and win.workspace.id == target then
+		return
+	end
+	hl.dispatch(hl.dsp.window.move({ workspace = target, follow = false }))
+end)
 -- ── helpers ──────────────────────────────────────────────────────────────────
 
+local function active_id()
+	-- hl.get_active_workspace() is a native call: instant, no subprocess.
+	local ws = hl.get_active_workspace()
+	return ws and ws.id or 1
+end
+
 local function current_group()
-	return math.floor((hl.get_active_workspace() - 1) / SIZE)
+	return math.floor((active_id() - 1) / SIZE)
 end
 
 local function current_sub()
-	return ((hl.get_active_workspace() - 1) % SIZE) + 1
+	return ((active_id() - 1) % SIZE) + 1
 end
 
--- ── public API ───────────────────────────────────────────────────────────────
+-- ── navigation API ───────────────────────────────────────────────────────────
 
---- Focus sub-workspace `sub` within the current group.
 function sw.focus(sub)
 	return function()
-		local target = current_group() * SIZE + sub
-		hl.dsp.focus({ workspace = target })()
+		hl.dispatch(hl.dsp.focus({ workspace = current_group() * SIZE + sub }))
 	end
 end
 
---- Move the active window to sub-workspace `sub` within the current group.
 function sw.move(sub)
 	return function()
-		local target = current_group() * SIZE + sub
-		hl.dsp.window.move({ workspace = target })()
+		hl.dispatch(hl.dsp.window.move({ workspace = current_group() * SIZE + sub }))
 	end
 end
 
---- Move silently (window moves, focus stays).
 function sw.move_silent(sub)
 	return function()
-		local target = current_group() * SIZE + sub
-		hl.dsp.window.move({ workspace = target, follow = false })()
+		hl.dispatch(hl.dsp.window.move({ workspace = current_group() * SIZE + sub, follow = false }))
 	end
 end
 
---- Switch to group `n` (1-based), preserving the current sub-workspace slot.
 function sw.switch_group(n)
 	return function()
-		local target = (n - 1) * SIZE + current_sub()
-		hl.dsp.focus({ workspace = target })()
+		hl.dispatch(hl.dsp.focus({ workspace = (n - 1) * SIZE + current_sub() }))
 	end
 end
 
---- Move the active window to group `n` (1-based), sub-ws 1.
 function sw.move_to_group(n)
 	return function()
-		local target = (n - 1) * SIZE + 1
-		hl.dsp.window.move({ workspace = target })()
+		hl.dispatch(hl.dsp.window.move({ workspace = (n - 1) * SIZE + 1 }))
 	end
 end
 
---- Cycle to the next group, wrapping after `max_groups`.
 function sw.next_group(max_groups)
 	max_groups = max_groups or 5
 	return function()
-		local next_g = (current_group() + 1) % max_groups
-		local target = next_g * SIZE + current_sub()
-		hl.dsp.focus({ workspace = target })()
+		local g = (current_group() + 1) % max_groups
+		hl.dispatch(hl.dsp.focus({ workspace = g * SIZE + current_sub() }))
 	end
 end
 
---- Cycle to the previous group.
 function sw.prev_group(max_groups)
 	max_groups = max_groups or 5
 	return function()
-		local prev_g = (current_group() - 1 + max_groups) % max_groups
-		local target = prev_g * SIZE + current_sub()
-		hl.dsp.focus({ workspace = target })()
+		local g = (current_group() - 1 + max_groups) % max_groups
+		hl.dispatch(hl.dsp.focus({ workspace = g * SIZE + current_sub() }))
 	end
 end
 
---- Move relatively within the current group's sub-workspaces.
---- `delta` is +1 (forward) or -1 (backward), clamped to [1, SIZE].
 function sw.focus_relative(delta)
 	return function()
 		local sub = math.max(1, math.min(SIZE, current_sub() + delta))
-		local target = current_group() * SIZE + sub
-		hl.dsp.focus({ workspace = target })()
+		hl.dispatch(hl.dsp.focus({ workspace = current_group() * SIZE + sub }))
 	end
 end
+
+-- ── window routing ───────────────────────────────────────────────────────────
+-- Replaces the Go daemon entirely. hl.on("window.open") fires with a HL.Window.
+-- Moves new windows to the right sub-workspace within the currently active group.
+
+local route_map = {
+	["brave-browser"] = 2,
+	["brave"] = 2,
+	["firefox"] = 2,
+	["chromium"] = 2,
+	["vscodium"] = 1,
+	["code"] = 1,
+	["code-oss"] = 1,
+	["godot"] = 1,
+	["godot_editor"] = 1,
+	["godot4"] = 1,
+	["kitty"] = 3,
+	["alacritty"] = 3,
+	["foot"] = 3,
+	["ghostty"] = 3,
+}
+
+hl.on("window.open", function(win)
+	local sub = route_map[(win.class or ""):lower()]
+	if not sub then
+		return
+	end
+
+	local ws = hl.get_active_workspace()
+	if not ws then
+		return
+	end
+
+	local group = math.floor((ws.id - 1) / SIZE)
+	local target = group * SIZE + sub
+
+	-- Already on the right workspace, nothing to do
+	if win.workspace and win.workspace.id == target then
+		return
+	end
+
+	hl.dispatch(hl.dsp.window.move({ workspace = target, follow = false }))
+end)
 
 return sw
