@@ -11,7 +11,8 @@ let
       name = "hypr";
       src = root + "/home/hyprland";
       srcStr = "${userConfig.nixConf}/home/hyprland";
-      dest = "$HOME/.config/hypr";
+      nixKey = "hypr"; # key for xdg.configFile (relative to ~/.config/)
+      dest = "$HOME/.config/hypr"; # full path for the shell script
       files = [
         "hyprland.lua"
         "hyprlock.conf"
@@ -36,7 +37,7 @@ in
     packages = [ editable.editScript ];
   };
   xdg = {
-    configFile = editable.xdgEntries;
+    configFile = editable.entries;
   };
   services = {
     hyprpaper = {

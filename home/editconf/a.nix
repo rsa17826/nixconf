@@ -2,31 +2,32 @@
 
 configs:
 # configs is a list of:
-# { name = "hypr"; src = "/home/user/nixconf/home/hyprland"; dest = "hypr"; files = [...]; dirs = [...]; }
+# { name = "hypr"; src = <path>; srcStr = "..."; nixKey = "hypr"; dest = "$HOME/.config/hypr"; files = [...]; dirs = [...]; }
+# nixKey  = key prefix for xdg.configFile or home.file (relative)
+# dest    = full shell path used in the edit-conf script
 
 let
-  # ── xdg.configFile entries ───────────────────────────────────────────────
+  # ── entries for xdg.configFile or home.file ──────────────────────────────
   mkFile = cfg: f: {
-    name = "${cfg.dest}/${f}";
+    name = "${cfg.nixKey}/${f}";
     value.source = cfg.src + "/${f}";
   };
   mkDir = cfg: d: {
-    name = "${cfg.dest}/${d}";
+    name = "${cfg.nixKey}/${d}";
     value = {
       source = cfg.src + "/${d}";
       recursive = true;
     };
   };
 
-  xdgEntries = lib.foldl (
+  entries = lib.foldl (
     acc: cfg:
     acc
     // builtins.listToAttrs (map (mkFile cfg) (cfg.files or [ ]))
     // builtins.listToAttrs (map (mkDir cfg) (cfg.dirs or [ ]))
   ) { } configs;
 
-  # ── Bake app configs into the script ────────────────────────────────────
-  # Renders:  FILES_hypr=(a b c)  DIRS_hypr=(x y)  etc.
+  # ── Bake app configs into the script ─────────────────────────────────────
   appBlock = cfg: ''
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
@@ -92,7 +93,7 @@ let
       if [[ -f "$saved" ]]; then
         while IFS=$'\t' read -r name target; do
           case "$target" in
-            FILE|DIR|MISSING) ;;  # leave absent; hm restores on next switch
+            FILE|DIR|MISSING) ;;
             *) ln -s "$target" "$_dest/$name" && echo "  restored $name → $target" ;;
           esac
         done < "$saved"
@@ -123,7 +124,7 @@ let
 
     # ── Dispatch ──────────────────────────────────────────────────────────
     CMD="''${1:-}"
-    TARGET="''${2:-}"  # optional app name; empty = all
+    TARGET="''${2:-}"
 
     resolve_apps() {
       if [[ -n "$TARGET" ]]; then
@@ -136,11 +137,10 @@ let
     case "$CMD" in
       enter)
         for app in $(resolve_apps); do enter_app "$app"; done
-        [[ -z "$TARGET" ]] && { echo ""; echo "Rebuilding to restore is not needed — run 'edit-conf exit' when done."; }
+        [[ -z "$TARGET" ]] && echo -e "\nRun 'edit-conf exit' when done."
         ;;
       exit)
         for app in $(resolve_apps); do exit_app "$app"; done
-        hyprctl reload
         ;;
       status)
         for app in "''${APPS[@]}"; do status_app "$app"; done
@@ -149,7 +149,7 @@ let
         echo "Usage: edit-conf <enter|exit|status> [app]"
         echo ""
         echo "  enter [app]   Symlink app config(s) to nixconf for live editing"
-        echo "  exit  [app]   Remove symlinks and restore via home-manager switch"
+        echo "  exit  [app]   Restore saved symlinks"
         echo "  status        Show edit mode state for all apps"
         echo ""
         echo "  Apps: ''${APPS[*]}"
@@ -160,5 +160,5 @@ let
 
 in
 {
-  inherit xdgEntries editScript;
+  inherit entries editScript;
 }
