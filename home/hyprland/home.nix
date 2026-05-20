@@ -12,6 +12,7 @@ let
     {
       name = "hypr";
       src = root + "/home/hyprland";
+      srcStr = "${userConfig.nixConf}/home/hyprland";
       dest = "hypr";
       files = [
         "hyprland.conf"

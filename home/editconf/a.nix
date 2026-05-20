@@ -111,8 +111,8 @@ let
         ;;
       exit)
         for app in $(resolve_apps); do exit_app "$app"; done
-        echo "Running home-manager switch to restore..."
-        home-manager switch
+        echo "Running restore command..."
+        update hm --nogit
         ;;
       status)
         for app in "''${APPS[@]}"; do status_app "$app"; done
