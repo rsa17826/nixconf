@@ -1,9 +1,11 @@
 -- superws.lua
+-- sw is a global so other files loaded by auto_require can access it directly.
 
-local sw = {}
+sw = {}
+sw._subs = {} -- held on sw so GC never collects subscriptions
 
 local SIZE = 10
-local TAG_PREFIX = "sw." -- prefix for auto-generated rule tags
+local TAG_PREFIX = "sw."
 
 -- ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -35,7 +37,6 @@ end
 local function has_tag(win, tag)
 	local t = win.tags
 	if type(t) == "string" then
-		-- tags may arrive as a space-separated string
 		for word in t:gmatch("%S+") do
 			if word == tag then
 				return true
@@ -108,60 +109,46 @@ end
 
 -- ── window rule system ───────────────────────────────────────────────────────
 --
--- sw.window_rule(spec) registers a rule.
+-- sw.window_rule(spec)
 --
--- Matching uses Hyprland's native regex engine via hl.window_rule — full regex
--- including alternation (|), groups, lookaheads all work.
---
--- spec.match fields (all optional, all regex strings unless noted):
---   class    string   Hyprland regex against WM_CLASS
---   title    string   Hyprland regex against window title
---   float    bool     match floating state
+-- spec.match  (all optional, Hyprland regex):
+--   class    string
+--   title    string
+--   float    bool     Lua-side check (not passed to Hyprland)
 --   group    int      only fire in this super-group (1-based), 0 = any
 --
--- spec fields:
---   workspace  {super, sub}   where to send the window
---                             0 in either slot means "current"
---                             {0,0} = don't move (exec-only rule)
---   follow     bool           focus follows window after move (default false)
---   exec       string         shell command to run on match
+-- spec:
+--   workspace  {super, sub}  0 = current in that slot, {0,0} = don't move
+--   follow     bool          focus follows window (default false)
+--   exec       string        shell command (run async via exec_cmd)
 --
--- workspace notation:
---   {0,1}  same group,  sub-ws 1
---   {1,0}  group 1,     same sub-ws
---   {2,3}  group 2,     sub-ws 3
---   {0,0}  no move
+-- static effects forwarded directly to hl.window_rule:
+--   pin, opacity, animation, border_color, idle_inhibit, stay_focused
+--   float (when used as an effect, not a match condition — put in spec not match)
 
-local _rules = {} -- { tag, spec } entries in registration order
+local _rules = {}
+local _effect_keys = {
+	"pin",
+	"opacity",
+	"animation",
+	"border_color",
+	"idle_inhibit",
+	"stay_focused",
+	"float",
+}
 
--- Try to register the tag effect via hl.window_rule.
--- HL.WindowRuleSpec doesn't document `tag` but Hyprland's engine supports it;
--- if this throws, fall through to the hyprctl fallback below.
 local function register_native(match, tag)
 	local ok = pcall(function()
-		hl.window_rule({
-			name = tag,
-			match = match,
-			tag = "+" .. tag, -- dynamic effect: set tag on matching windows
-		})
+		hl.window_rule({ name = tag, match = match, tag = "+" .. tag })
 	end)
 	return ok
 end
-sw.window_rule({
-	match = { title = "^HyprSpy$" },
-	pin = true,
-	float = true,
-	workspace = { 1, 0 },
-})
--- Fallback: inject a classic windowrule via hyprctl for one match field.
--- Supports class and title. float/group are handled in the event handler.
+
 local function register_hyprctl(match, tag)
 	local function add(field, value)
-		-- hyprctl keyword windowrule "tag +sw.1, class:^codium$"
 		local cmd = string.format("hyprctl keyword windowrule 'tag +%s, %s:%s'", tag, field, value)
-		hl.dispatch(hl.dsp.exec_cmd(cmd))
+		os.execute(cmd) -- fine here: config load time, not inside an event
 	end
-
 	if match.class then
 		add("class", match.class)
 	end
@@ -175,6 +162,7 @@ function sw.window_rule(spec)
 	local tag = TAG_PREFIX .. idx
 	table.insert(_rules, { tag = tag, spec = spec })
 
+	-- strip Lua-side match keys before passing to Hyprland
 	local match = {}
 	for k, v in pairs(spec.match or {}) do
 		if k ~= "float" and k ~= "group" then
@@ -184,33 +172,60 @@ function sw.window_rule(spec)
 
 	-- forward static effects to hl.window_rule
 	local effects = { match = spec.match }
-	local effect_keys = { "pin", "float", "opacity", "animation", "border_color", "idle_inhibit", "stay_focused" }
-	for _, k in ipairs(effect_keys) do
+	for _, k in ipairs(_effect_keys) do
 		if spec[k] ~= nil then
 			effects[k] = spec[k]
 		end
 	end
-	hl.window_rule(effects)
+	pcall(hl.window_rule, effects) -- pcall: silently skip unknown effect keys
 
 	if not register_native(match, tag) then
 		register_hyprctl(match, tag)
 	end
 end
+
 -- ── window.open handler ──────────────────────────────────────────────────────
+-- IMPORTANT: never use os.execute inside a compositor event — it blocks the
+-- main thread and freezes Hyprland. Use hl.dispatch(hl.dsp.exec_cmd(...)).
 
-hl.on("window.open", function(win)
-	-- read the tags table
+local function lua_checks_pass(win, m)
+	if m.float ~= nil and win.floating ~= m.float then
+		return false
+	end
+	if m.group ~= nil and m.group ~= 0 then
+		if current_group() ~= (m.group - 1) then
+			return false
+		end
+	end
+	return true
+end
+
+sw._subs.open = hl.on("window.open", function(win)
 	local tags = type(win.tags) == "table" and table.concat(win.tags, ", ") or tostring(win.tags)
-
 	hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. win.class .. " tags=[" .. tags .. "]'"))
-
-	-- catch the notification error instead of silently dying
-	-- local ok, err = pcall(function()
-	-- 	hl.notification.create({ text = "test", timeout = 3 })
-	-- end)
-	-- if not ok then
-	-- 	hl.dispatch(hl.dsp.exec_cmd("notify-send 'notif err: " .. tostring(err) .. "'"))
-	-- end
+	for _, entry in ipairs(_rules) do
+		hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. entry.tag .. "'"))
+		if has_tag(win, entry.tag) then
+			local spec = entry.spec
+			if spec.exec then
+				hl.dispatch(hl.dsp.exec_cmd(spec.exec))
+			end
+			local target = resolve_ws(spec.workspace)
+			if target and not (win.workspace and win.workspace.id == target) then
+				hl.dispatch(hl.dsp.window.move({
+					workspace = target,
+					follow = spec.follow or false,
+				}))
+			end
+			return -- first match wins
+		end
+	end
 end)
-
+-- local function notify(msg)
+--   hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. win.class .. " tags=[" .. tags .. "]'")
+-- end
+sw.window_rule({
+	match = { title = "^HyprSpy$" },
+	workspace = { 1, 0 },
+})
 return sw
