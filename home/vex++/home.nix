@@ -1,7 +1,6 @@
 {
   userConfig,
   mkEditableConfig,
-  root,
   ...
 }:
 let

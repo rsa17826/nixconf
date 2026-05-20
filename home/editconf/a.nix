@@ -31,7 +31,7 @@ let
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}=${cfg.dest}"
+    DEST_${cfg.name}="${cfg.dest}"
   '';
 
   appNames = map (c: c.name) configs;
@@ -46,75 +46,59 @@ let
     # ── Helpers ───────────────────────────────────────────────────────────
     enter_app() {
       local app=$1
-      local src dest files_var dirs_var marker saved
-      eval "src=\$SRC_$app"
-      eval "dest=\$DEST_$app"
-      eval "files_var=(\"\''${FILES_$app[@]}\")"
-      eval "dirs_var=(\"\''${DIRS_$app[@]}\")"
-      marker="$dest/.editmode"
-      saved="$dest/.editmode_saved_$app"
+      local -n _files="FILES_"
+      local -n _dirs="DIRS_"
+      local -n _src="SRC_"
+      local -n _dest="DEST_"
+      local marker="$_dest/.editmode"
+      local saved="$_dest/.editmode_saved_"
 
       [[ -f "$marker" ]] && { echo "$app: already in edit mode"; return; }
 
-      # Save existing link targets before replacing — format: "name<TAB>target"
-      # If the path is a regular file/dir (not a symlink), record it as "FILE" so
-      # exit_app knows not to try to ln it (hm will restore it on next switch anyway)
       rm -f "$saved"
-      for f in "''${files_var[@]}"; do
-        if [[ -L "$dest/$f" ]]; then
-          echo "$f	$(readlink "$dest/$f")" >> "$saved"
-        elif [[ -e "$dest/$f" ]]; then
-          echo "$f	FILE" >> "$saved"
-        else
-          echo "$f	MISSING" >> "$saved"
+      for f in "''${_files[@]}"; do
+        if   [[ -L "$_dest/$f" ]]; then printf '%s\t%s\n' "$f" "$(readlink "$_dest/$f")" >> "$saved"
+        elif [[ -e "$_dest/$f" ]]; then printf '%s\tFILE\n'    "$f"                       >> "$saved"
+        else                            printf '%s\tMISSING\n' "$f"                       >> "$saved"
         fi
       done
-      for d in "''${dirs_var[@]}"; do
-        if [[ -L "$dest/$d" ]]; then
-          echo "$d	$(readlink "$dest/$d")" >> "$saved"
-        elif [[ -e "$dest/$d" ]]; then
-          echo "$d	DIR" >> "$saved"
-        else
-          echo "$d	MISSING" >> "$saved"
+      for d in "''${_dirs[@]}"; do
+        if   [[ -L "$_dest/$d" ]]; then printf '%s\t%s\n' "$d" "$(readlink "$_dest/$d")" >> "$saved"
+        elif [[ -e "$_dest/$d" ]]; then printf '%s\tDIR\n'     "$d"                      >> "$saved"
+        else                            printf '%s\tMISSING\n' "$d"                      >> "$saved"
         fi
       done
 
-      for f in "''${files_var[@]}"; do rm -f   "$dest/$f"; ln -s "$src/$f" "$dest/$f"; done
-      for d in "''${dirs_var[@]}"; do rm -rf   "$dest/$d"; ln -s "$src/$d" "$dest/$d"; done
+      for f in "''${_files[@]}"; do rm -f  "$_dest/$f"; ln -s "$_src/$f" "$_dest/$f"; done
+      for d in "''${_dirs[@]}";  do rm -rf "$_dest/$d"; ln -s "$_src/$d" "$_dest/$d"; done
       touch "$marker"
-      echo "$app: edit mode active ($src)"
+      echo "$app: edit mode active ($_src)"
     }
 
     exit_app() {
       local app=$1
-      local dest files_var dirs_var marker saved name target
-      eval "dest=\$DEST_$app"
-      eval "files_var=(\"\''${FILES_$app[@]}\")"
-      eval "dirs_var=(\"\''${DIRS_$app[@]}\")"
-      marker="$dest/.editmode"
-      saved="$dest/.editmode_saved_$app"
+      local -n _files="FILES_"
+      local -n _dirs="DIRS_"
+      local -n _dest="DEST_"
+      local marker="$_dest/.editmode"
+      local saved="$_dest/.editmode_saved_"
+      local name target
 
       [[ ! -f "$marker" ]] && { echo "$app: not in edit mode"; return; }
 
-      # Remove live edit symlinks
-      for f in "''${files_var[@]}"; do rm -f "$dest/$f"; done
-      for d in "''${dirs_var[@]}"; do rm -f "$dest/$d"; done
+      for f in "''${_files[@]}"; do rm -f "$_dest/$f"; done
+      for d in "''${_dirs[@]}";  do rm -f "$_dest/$d"; done
 
-      # Restore saved symlinks
       if [[ -f "$saved" ]]; then
         while IFS=$'\t' read -r name target; do
           case "$target" in
-            FILE|DIR|MISSING)
-              # Was not a symlink before — leave absent so hm restores on next switch
-              ;;
-            *)
-              ln -s "$target" "$dest/$name" && echo "  restored $name → $target"
-              ;;
+            FILE|DIR|MISSING) ;;  # leave absent; hm restores on next switch
+            *) ln -s "$target" "$_dest/$name" && echo "  restored $name → $target" ;;
           esac
         done < "$saved"
         rm -f "$saved"
       else
-        echo "  warning: no saved state found for $app — run a rebuild to fully restore"
+        echo "  warning: no saved state for $app — run a rebuild to fully restore"
       fi
 
       rm -f "$marker"
@@ -123,14 +107,15 @@ let
 
     status_app() {
       local app=$1
-      local dest marker
-      eval "dest=\$DEST_$app"
-      marker="$dest/.editmode"
+      local -n _files="FILES_"
+      local -n _dirs="DIRS_"
+      local -n _dest="DEST_"
+      local marker="$_dest/.editmode"
+
       if [[ -f "$marker" ]]; then
         echo "$app: ACTIVE"
-        eval "files_var=(\"\''${FILES_$app[@]}\") dirs_var=(\"\''${DIRS_$app[@]}\")"
-        for f in "''${files_var[@]}"; do [[ -L "$dest/$f" ]] && echo "    $dest/$f → $(readlink "$dest/$f")"; done
-        for d in "''${dirs_var[@]}"; do [[ -L "$dest/$d" ]] && echo "    $dest/$d → $(readlink "$dest/$d")"; done
+        for f in "''${_files[@]}"; do [[ -L "$_dest/$f" ]] && echo "    $_dest/$f → $(readlink "$_dest/$f")"; done
+        for d in "''${_dirs[@]}";  do [[ -L "$_dest/$d" ]] && echo "    $_dest/$d → $(readlink "$_dest/$d")"; done
       else
         echo "$app: inactive"
       fi
