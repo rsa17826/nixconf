@@ -1,19 +1,17 @@
 {
-  pkgs,
+  mkEditableConfig,
   userConfig,
   lib,
   root,
   ...
 }:
 let
-  mkEditableConfig = import (root + "/home/editconf/a.nix") { inherit pkgs lib; };
-
   editable = mkEditableConfig [
     {
       name = "hypr";
       src = root + "/home/hyprland";
       srcStr = "${userConfig.nixConf}/home/hyprland";
-      dest = "hypr";
+      dest = "$HOME/.config/hypr";
       files = [
         "hyprland.lua"
         "hyprlock.conf"
