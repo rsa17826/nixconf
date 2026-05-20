@@ -37,7 +37,7 @@ let
 
   appNames = map (c: c.name) configs;
 
-  editScript = pkgs.writeShellScriptBin "edit-conf" ''
+  editScript = pkgs.writeShellScriptBin "edit-${configs.name}" ''
     set -euo pipefail
 
     # ── Baked-in app configs ──────────────────────────────────────────────
@@ -71,7 +71,7 @@ let
       done
 
       for f in "''${_files[@]}"; do rm -f  "''${_dest}/$f"; ln -s "''${_src}/$f" "''${_dest}/$f"; done
-      for d in "''${_dirs[@]}";  do rm -rf "''${_dest}/$d"; ln -s "''${_src}/$d" "''${_dest}/$d"; done
+      for d in "''${_dirs[@]}";  do rm -rf "''${_dest:?}/$d"; ln -s "''${_src}/$d" "''${_dest}/$d"; done
       touch "$marker"
       echo "$app: edit mode active (''${_src})"
       hyprctl reload
