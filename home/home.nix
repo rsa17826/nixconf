@@ -34,7 +34,7 @@ in
   _module = {
     args = {
       ln = config.lib.file.mkOutOfStoreSymlink;
-      mkEditableConfig = import ./home/editconf/a.nix { inherit pkgs lib; };
+      mkEditableConfig = import ./editconf/a.nix { inherit pkgs lib; };
     };
   };
   imports = [
