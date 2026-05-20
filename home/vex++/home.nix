@@ -9,7 +9,7 @@ let
     {
       name = "hypr";
       src = ./.;
-      srcStr = "${userConfig.nixConf}/home/hyprland";
+      srcStr = "${userConfig.nixConf}/home/vex++";
       dest = "$HOME/.local/share/godot/app_userdata/vex";
       files = [
         "main - EDITOR.sds"
