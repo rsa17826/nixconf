@@ -220,7 +220,7 @@
   "files.autoSaveWhenNoErrors": true,
   "vscode-ahk-plus.compilePath": "c:\\Program Files\\AutoHotkey\\Compiler\\Ahk2Exe.exe",
   "ahk++.file.compilerPath": "D:\\Program Files\\AutoHotkey\\Compiler\\Ahk2Exe.exe",
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "cmake.options.statusBarVisibility": "compact",
   "cmake.pinnedCommands": [
     "workbench.action.tasks.configureTaskRunner",
