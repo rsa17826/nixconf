@@ -17,32 +17,28 @@ in
 {
   home = {
     file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
-    home = {
-      username = userConfig.uname;
-      homeDirectory = "/home/${userConfig.uname}";
-      stateVersion = "26.05";
+    username = userConfig.uname;
+    homeDirectory = "/home/${userConfig.uname}";
+    stateVersion = "26.05";
 
-      sessionVariables = {
-        EDITOR = "nvim";
-        SOPS_EDITOR = "codium --wait";
-        VISUAL = "nvim";
-        HYPRCURSOR_THEME = "mew";
-        QT_STYLE_OVERRIDE = "adwaita-dark";
-        ADW_DISABLE_PORTAL = "0";
-        GTK_THEME = "Adwaita-dark";
-        GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-        GTK_USE_PORTAL = "1";
-      };
+    sessionVariables = {
+      EDITOR = "nvim";
+      SOPS_EDITOR = "codium --wait";
+      VISUAL = "nvim";
+      HYPRCURSOR_THEME = "mew";
+      QT_STYLE_OVERRIDE = "adwaita-dark";
+      ADW_DISABLE_PORTAL = "0";
+      GTK_THEME = "Adwaita-dark";
+      GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+      GTK_USE_PORTAL = "1";
     };
     packages = [ editable.editScript ];
   };
   _module = {
     args = {
       ln = config.lib.file.mkOutOfStoreSymlink;
-      mkEditableConfig = import ./editconf/a.nix { inherit pkgs lib; };
     };
   };
-  # Distribute files correctly based on whether they go to home or xdg
   xdg = {
     configFile = lib.filterAttrs (n: v: !lib.hasPrefix ".local" n) editable.entries;
   };
