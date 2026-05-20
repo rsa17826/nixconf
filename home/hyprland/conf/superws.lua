@@ -147,19 +147,19 @@ local function register_native(match, tag)
 	end)
 	return ok
 end
--- sw.window_rule({
---   	match = { title = "^HyprSpy$" },
---   	pin = true,
---   	float = true,
---     workspace=[1,0]
---   })
+sw.window_rule({
+	match = { title = "^HyprSpy$" },
+	pin = true,
+	float = true,
+	workspace = { 1, 0 },
+})
 -- Fallback: inject a classic windowrule via hyprctl for one match field.
 -- Supports class and title. float/group are handled in the event handler.
 local function register_hyprctl(match, tag)
 	local function add(field, value)
 		-- hyprctl keyword windowrule "tag +sw.1, class:^codium$"
 		local cmd = string.format("hyprctl keyword windowrule 'tag +%s, %s:%s'", tag, field, value)
-		os.execute(cmd)
+		hl.dispatch(hl.dsp.exec_cmd(cmd))
 	end
 
 	if match.class then
@@ -173,38 +173,44 @@ end
 function sw.window_rule(spec)
 	local idx = #_rules + 1
 	local tag = TAG_PREFIX .. idx
-
 	table.insert(_rules, { tag = tag, spec = spec })
 
 	local match = {}
 	for k, v in pairs(spec.match or {}) do
-		-- float and group are Lua-side checks; strip them from the hl match table
 		if k ~= "float" and k ~= "group" then
 			match[k] = v
 		end
 	end
 
+	-- forward static effects to hl.window_rule
+	local effects = { match = spec.match }
+	local effect_keys = { "pin", "float", "opacity", "animation", "border_color", "idle_inhibit", "stay_focused" }
+	for _, k in ipairs(effect_keys) do
+		if spec[k] ~= nil then
+			effects[k] = spec[k]
+		end
+	end
+	hl.window_rule(effects)
+
 	if not register_native(match, tag) then
 		register_hyprctl(match, tag)
 	end
 end
-
 -- ── window.open handler ──────────────────────────────────────────────────────
 
 hl.on("window.open", function(win)
 	-- read the tags table
 	local tags = type(win.tags) == "table" and table.concat(win.tags, ", ") or tostring(win.tags)
 
-	os.execute("notify-send '" .. win.class .. " tags=[" .. tags .. "]'")
+	hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. win.class .. " tags=[" .. tags .. "]'"))
 
 	-- catch the notification error instead of silently dying
 	-- local ok, err = pcall(function()
 	-- 	hl.notification.create({ text = "test", timeout = 3 })
 	-- end)
 	-- if not ok then
-	-- 	os.execute("notify-send 'notif err: " .. tostring(err) .. "'")
+	-- 	hl.dispatch(hl.dsp.exec_cmd("notify-send 'notif err: " .. tostring(err) .. "'"))
 	-- end
 end)
-
 
 return sw
