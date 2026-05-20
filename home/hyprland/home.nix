@@ -1,9 +1,32 @@
 {
-  ln,
+  pkgs,
   userConfig,
   lib,
   ...
 }:
+let
+  mkEditableConfig = import ./lib/mkEditableConfig.nix { inherit pkgs lib; };
+
+  editable = mkEditableConfig [
+    {
+      name = "hypr";
+      src = "${userConfig.nixConf}/home/hyprland";
+      dest = "hypr";
+      files = [
+        "hyprland.conf"
+        "hyprland.lua"
+        "hyprlock.conf"
+        "hyprpaper.conf"
+      ];
+      dirs = [
+        "shaders"
+        "wallpapers"
+        "conf"
+        "scripts"
+      ];
+    }
+  ];
+in
 {
   home = {
     activation = {
@@ -12,33 +35,10 @@
         chmod +x "$nixconf/home/hyprland/scripts/"*.sh
       '';
     };
+    packages = [ editable.editScript ];
   };
   xdg = {
-    configFile = {
-      "hypr/hyprland.lua".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.lua";
-      "hypr/hyprland.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprland.conf";
-      "hypr/hyprlock.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprlock.conf";
-      "hypr/hyprpaper.conf".source = ln "${userConfig.nixConf}/home/hyprland/hyprpaper.conf";
-      "hypr/shaders" = {
-        source = ln "${userConfig.nixConf}/home/hyprland/shaders";
-        recursive = true;
-      };
-      "hypr/wallpapers" = {
-        source = ln "${userConfig.nixConf}/home/hyprland/wallpapers";
-        recursive = true;
-      };
-      "hypr/conf" = {
-        source = ln "${userConfig.nixConf}/home/hyprland/conf";
-        recursive = true;
-      };
-      "hypr/scripts" = {
-        source = ln "${userConfig.nixConf}/home/hyprland/scripts";
-        recursive = true;
-      };
-      # "hypr/hm.conf".text = ''
-      #   plugin = ${(pkgFromInp "hypr-dynamic-cursors" "hypr-dynamic-cursors")}/lib/libhypr-dynamic-cursors.so
-      # '';
-    };
+    configFile = editable.xdgEntries;
   };
   services = {
     hyprpaper = {
