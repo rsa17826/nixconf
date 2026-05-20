@@ -15,10 +15,8 @@ let
       srcStr = "${userConfig.nixConf}/home/hyprland";
       dest = "hypr";
       files = [
-        "hyprland.conf"
         "hyprland.lua"
         "hyprlock.conf"
-        "hyprpaper.conf"
       ];
       dirs = [
         "shaders"
