@@ -21,15 +21,15 @@ let
   xdgEntries = lib.foldl (
     acc: cfg:
     acc
-    // builtins.listToAttrs (map (mkFile cfg) cfg.files)
-    // builtins.listToAttrs (map (mkDir cfg) cfg.dirs)
+    // builtins.listToAttrs (map (mkFile cfg) (cfg.files or [ ]))
+    // builtins.listToAttrs (map (mkDir cfg) (cfg.dirs or [ ]))
   ) { } configs;
 
   # ── Bake app configs into the script ────────────────────────────────────
   # Renders:  FILES_hypr=(a b c)  DIRS_hypr=(x y)  etc.
   appBlock = cfg: ''
-    FILES_${cfg.name}=(${builtins.concatStringsSep " " cfg.files})
-    DIRS_${cfg.name}=(${builtins.concatStringsSep " " cfg.dirs})
+    FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
+    DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
     DEST_${cfg.name}=${cfg.dest}"
   '';
