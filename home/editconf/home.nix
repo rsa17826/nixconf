@@ -1,4 +1,3 @@
-# lib/mkEditableConfig.nix
 { pkgs, lib }:
 
 configs:
