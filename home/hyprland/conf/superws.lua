@@ -38,13 +38,14 @@ local function has_tag(win, tag)
 	local t = win.tags
 	if type(t) == "string" then
 		for word in t:gmatch("%S+") do
-			if word == tag then
+			if word == tag or word == tag .. "*" then
 				return true
 			end
 		end
 	elseif type(t) == "table" then
 		for _, v in ipairs(t) do
-			if v == tag then
+			local bare = v:sub(-1) == "*" and v:sub(1, -2) or v
+			if bare == tag then
 				return true
 			end
 		end
@@ -187,18 +188,6 @@ end
 -- ── window.open handler ──────────────────────────────────────────────────────
 -- IMPORTANT: never use os.execute inside a compositor event — it blocks the
 -- main thread and freezes Hyprland. Use hl.dispatch(hl.dsp.exec_cmd(...)).
-
-local function lua_checks_pass(win, m)
-	if m.float ~= nil and win.floating ~= m.float then
-		return false
-	end
-	if m.group ~= nil and m.group ~= 0 then
-		if current_group() ~= (m.group - 1) then
-			return false
-		end
-	end
-	return true
-end
 
 sw._subs.open = hl.on("window.open", function(win)
 	local tags = type(win.tags) == "table" and table.concat(win.tags, ", ") or tostring(win.tags)
