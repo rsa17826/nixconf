@@ -11,7 +11,7 @@ let
   editable = mkEditableConfig [
     {
       name = "hypr";
-      src = "${userConfig.nixConf}/home/hyprland";
+      src = root + "/home/hyprland";
       dest = "hypr";
       files = [
         "hyprland.conf"
