@@ -31,7 +31,7 @@ let
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}="${cfg.dest}"
+    DEST_${cfg.name}="$HOME/.config/${cfg.dest}"
   '';
 
   appNames = map (c: c.name) configs;
@@ -46,12 +46,12 @@ let
     # ── Helpers ───────────────────────────────────────────────────────────
     enter_app() {
       local app=$1
-      local -n _files="FILES_"
-      local -n _dirs="DIRS_"
-      local -n _src="SRC_"
-      local -n _dest="DEST_"
+      local -n _files="FILES_''${app}"
+      local -n _dirs="DIRS_''${app}"
+      local -n _src="SRC_''${app}"
+      local -n _dest="DEST_''${app}"
       local marker="$_dest/.editmode"
-      local saved="$_dest/.editmode_saved_"
+      local saved="$_dest/.editmode_saved_''${app}"
 
       [[ -f "$marker" ]] && { echo "$app: already in edit mode"; return; }
 
@@ -77,11 +77,11 @@ let
 
     exit_app() {
       local app=$1
-      local -n _files="FILES_"
-      local -n _dirs="DIRS_"
-      local -n _dest="DEST_"
+      local -n _files="FILES_''${app}"
+      local -n _dirs="DIRS_''${app}"
+      local -n _dest="DEST_''${app}"
       local marker="$_dest/.editmode"
-      local saved="$_dest/.editmode_saved_"
+      local saved="$_dest/.editmode_saved_''${app}"
       local name target
 
       [[ ! -f "$marker" ]] && { echo "$app: not in edit mode"; return; }
@@ -107,9 +107,9 @@ let
 
     status_app() {
       local app=$1
-      local -n _files="FILES_"
-      local -n _dirs="DIRS_"
-      local -n _dest="DEST_"
+      local -n _files="FILES_''${app}"
+      local -n _dirs="DIRS_''${app}"
+      local -n _dest="DEST_''${app}"
       local marker="$_dest/.editmode"
 
       if [[ -f "$marker" ]]; then
