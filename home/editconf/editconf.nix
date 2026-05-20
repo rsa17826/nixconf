@@ -10,13 +10,17 @@ let
   # ── entries for xdg.configFile or home.file ──────────────────────────────
   mkFile = cfg: f: {
     name = "${cfg.nixKey}/${f}";
-    value.source = cfg.src + "/${f}";
+    value = {
+      source = cfg.src + "/${f}";
+      force = true;
+    };
   };
   mkDir = cfg: d: {
     name = "${cfg.nixKey}/${d}";
     value = {
       source = cfg.src + "/${d}";
       # recursive = true;
+      force = true;
     };
   };
 
