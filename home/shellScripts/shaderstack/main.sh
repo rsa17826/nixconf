@@ -2,7 +2,7 @@
 set -e
 # Directories
 SHADER_DIR="$HOME/.config/hypr/shaders"
-TEMP_SHADER="$HOME/.config/hypr/shaders/.active_stack.glsl"
+TEMP_SHADER="$HOME/.config/hypr/.active_stack.glsl"
 STATE_FILE="/tmp/shaderstack_state"
 
 touch "$STATE_FILE"
