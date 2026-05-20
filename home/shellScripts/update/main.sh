@@ -159,7 +159,7 @@ cleanup_abort() {
   if [[ "$SKIP_GIT" == false ]]; then
     echo "📝 Amending commit to ABORTED..."
     pushd "$HOME/nixconf" >/dev/null || exit 1
-    git commit --amend -m "ABORTED: $NIXOS_LABEL_VERSION"
+    git commit --amend -m "🛑 $NIXOS_LABEL_VERSION"
     git push --force-with-lease
     popd >/dev/null || exit 1
   fi
@@ -192,7 +192,7 @@ else
       # SUCCESS: Update the commit message to reflect success
       if [[ "$SKIP_GIT" == false ]]; then
         echo "✅ Build success! Updating commit message..."
-        git commit --amend -m "SUCCESS: $NIXOS_LABEL_VERSION"
+        git commit --amend -m "✅ $NIXOS_LABEL_VERSION"
         git push --force-with-lease
       fi
       rm -f "$TMPOUT"
@@ -215,7 +215,7 @@ else
       # PERMANENT FAILURE: Update commit message to reflect failure
       echo "⚠️ No fixable hashes found."
       if [[ "$SKIP_GIT" == false ]]; then
-        git commit --amend -m "FAILED: $NIXOS_LABEL_VERSION"
+        git commit --amend -m "❌ $NIXOS_LABEL_VERSION"
         git push --force-with-lease
       fi
       err=1
