@@ -37,7 +37,7 @@ let
 
   appNames = map (c: c.name) configs;
 
-  editScript = pkgs.writeShellScriptBin "edit-${configs.name}" ''
+  editScript = pkgs.writeShellScriptBin "edit-conf" ''
     set -euo pipefail
 
     # ── Baked-in app configs ──────────────────────────────────────────────
