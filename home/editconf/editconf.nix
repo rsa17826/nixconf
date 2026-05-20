@@ -49,53 +49,67 @@ let
       local app=$1
       local -n _files="FILES_''${app}"
       local -n _dirs="DIRS_''${app}"
-      local -n _src="SRC_''${app}"
-      local -n _dest="DEST_''${app}"
-      local marker="''${_dest}/.editmode"
-      local saved="''${_dest}/.editmode_saved_''${app}"
+      local -n _srcRef="SRC_''${app}"
+      local -n _destRef="DEST_''${app}"
+
+      # Resolve namerefs to normal strings to prevent expansion bugs
+      local src="''${_srcRef}"
+      local dest="''${_destRef}"
+
+      # Dynamically expand $HOME if present in strings
+      dest=$(eval echo "''${dest}")
+
+      local marker="''${dest}/.editmode"
+      local saved="''${dest}/.editmode_saved_''${app}"
 
       [[ -f "$marker" ]] && { echo "$app: already in edit mode"; return; }
 
       rm -f "$saved"
+      mkdir -p "''${dest}"
+
       for f in "''${_files[@]}"; do
-        if   [[ -L "''${_dest}/$f" ]]; then printf '%s\t%s\n' "$f" "$(readlink "''${_dest}/$f")" >> "$saved"
-        elif [[ -e "''${_dest}/$f" ]]; then printf '%s\tFILE\n'    "$f"                       >> "$saved"
+        if   [[ -L "''${dest}/$f" ]]; then printf '%s\t%s\n' "$f" "$(readlink "''${dest}/$f")" >> "$saved"
+        elif [[ -e "''${dest}/$f" ]]; then printf '%s\tFILE\n'    "$f"                       >> "$saved"
         else                            printf '%s\tMISSING\n' "$f"                       >> "$saved"
         fi
       done
       for d in "''${_dirs[@]}"; do
-        if   [[ -L "''${_dest}/$d" ]]; then printf '%s\t%s\n' "$d" "$(readlink "''${_dest}/$d")" >> "$saved"
-        elif [[ -e "''${_dest}/$d" ]]; then printf '%s\tDIR\n'     "$d"                      >> "$saved"
-        else                            printf '%s\tMISSING\n' "$d"                      >> "$saved"
+        if   [[ -L "''${dest}/$d" ]]; then printf '%s\t%s\n' "$d" "$(readlink "''${dest}/$d")" >> "$saved"
+        elif [[ -e "''${dest}/$d" ]]; then printf '%s\tDIR\n'     "$d"                      >> "$saved"
+        else                            printf '%s\tMISSING\n' "$d"                       >> "$saved"
         fi
       done
 
-      for f in "''${_files[@]}"; do rm -f  "''${_dest}/$f"; ln -s "''${_src}/$f" "''${_dest}/$f"; done
-      for d in "''${_dirs[@]}";  do rm -rf "''${_dest:?}/$d"; ln -s "''${_src}/$d" "''${_dest}/$d"; done
+      for f in "''${_files[@]}"; do rm -f  "''${dest}/$f"; ln -s "''${src}/$f" "''${dest}/$f"; done
+      for d in "''${_dirs[@]}";  do rm -rf "''${dest:?}/$d"; ln -s "''${src}/$d" "''${dest}/$d"; done
       touch "$marker"
-      echo "$app: edit mode active (''${_src})"
-      hyprctl reload
+      echo "$app: edit mode active (''${src})"
+      hyprctl reload || true
     }
 
     exit_app() {
       local app=$1
       local -n _files="FILES_''${app}"
       local -n _dirs="DIRS_''${app}"
-      local -n _dest="DEST_''${app}"
-      local marker="''${_dest}/.editmode"
-      local saved="''${_dest}/.editmode_saved_''${app}"
+      local -n _destRef="DEST_''${app}"
+
+      local dest="''${_destRef}"
+      dest=$(eval echo "''${dest}")
+
+      local marker="''${dest}/.editmode"
+      local saved="''${dest}/.editmode_saved_''${app}"
       local name target
 
       [[ ! -f "$marker" ]] && { echo "$app: not in edit mode"; return; }
 
-      for f in "''${_files[@]}"; do rm -f "''${_dest}/$f"; done
-      for d in "''${_dirs[@]}";  do rm -f "''${_dest}/$d"; done
+      for f in "''${_files[@]}"; do rm -f "''${dest}/$f"; done
+      for d in "''${_dirs[@]}";  do rm -rf "''${dest:?}/$d"; done
 
       if [[ -f "$saved" ]]; then
         while IFS=$'\t' read -r name target; do
           case "$target" in
             FILE|DIR|MISSING) ;;
-            *) ln -s "$target" "''${_dest}/$name" && echo "  restored $name → $target" ;;
+            *) ln -s "$target" "''${dest}/$name" && echo "  restored $name → $target" ;;
           esac
         done < "$saved"
         rm -f "$saved"
@@ -105,20 +119,23 @@ let
 
       rm -f "$marker"
       echo "$app: restored"
-      hyprctl reload
+      hyprctl reload || true
     }
 
     status_app() {
       local app=$1
       local -n _files="FILES_''${app}"
       local -n _dirs="DIRS_''${app}"
-      local -n _dest="DEST_''${app}"
-      local marker="''${_dest}/.editmode"
+      local -n _destRef="DEST_''${app}"
+
+      local dest="''${_destRef}"
+      dest=$(eval echo "''${dest}")
+      local marker="''${dest}/.editmode"
 
       if [[ -f "$marker" ]]; then
         echo "$app: ACTIVE"
-        for f in "''${_files[@]}"; do [[ -L "''${_dest}/$f" ]] && echo "    ''${_dest}/$f → $(readlink "''${_dest}/$f")"; done
-        for d in "''${_dirs[@]}";  do [[ -L "''${_dest}/$d" ]] && echo "    ''${_dest}/$d → $(readlink "''${_dest}/$d")"; done
+        for f in "''${_files[@]}"; do [[ -L "''${dest}/$f" ]] && echo "    ''${dest}/$f → $(readlink "''${dest}/$f")"; done
+        for d in "''${_dirs[@]}";  do [[ -L "''${dest}/$d" ]] && echo "    ''${dest}/$d → $(readlink "''${dest}/$d")"; done
       else
         echo "$app: inactive"
       fi
