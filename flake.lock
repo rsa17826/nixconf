@@ -66,11 +66,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779205621,
-        "narHash": "sha256-R3pUkvGS2E0viGhpMvEFPXIfsMZpO/MBkF6naeVfzTA=",
+        "lastModified": 1779300189,
+        "narHash": "sha256-jLq6wTRUiThP7ByEVHrMFeMY5p83YnOSI9M7MgPvjTU=",
         "owner": "rsa17826",
         "repo": "autocorrect",
-        "rev": "43ef92e18973bc4df9b2dbf0bc5617c79170353c",
+        "rev": "ab199afef02a0158d3d9c0ea7e1805409146a4e7",
         "type": "github"
       },
       "original": {
@@ -368,11 +368,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779069863,
-        "narHash": "sha256-IWX0XZZ+h+wdsfQJln+PwFkTW9kSJb7X+DrfNJjjWlw=",
+        "lastModified": 1779300640,
+        "narHash": "sha256-BUsJ2F1L6A8UCGF9ohA4+WlfRy8MPu+yYXk+nXbHxnw=",
         "owner": "rsa17826",
         "repo": "go-autoclicker",
-        "rev": "d87ff0e3062068ef4e4d0319bc2dcf34ca87d68e",
+        "rev": "34ab7b8f06e4b0076958810dfcbacc7e73c9d1bb",
         "type": "github"
       },
       "original": {
@@ -776,11 +776,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779149517,
-        "narHash": "sha256-Mc+B/1Pch2KwI3karp5nzYNLvFupXjnBe/r92bG/usQ=",
+        "lastModified": 1779300201,
+        "narHash": "sha256-JHmWMySPyR7x/F6fHVvlTa6g3pBHZafHgqY0U7YC5xg=",
         "owner": "rsa17826",
         "repo": "input-manager",
-        "rev": "86e9ba5875b0a39b1eaa08e4327c6104eff02eb6",
+        "rev": "26ccea1374a362f3e0bf3c5de26cb063e3bf5348",
         "type": "github"
       },
       "original": {
