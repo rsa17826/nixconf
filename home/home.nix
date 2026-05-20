@@ -15,6 +15,15 @@ let
   editable = (import ./editconf/editconf.nix { inherit pkgs lib; }) config.myProfile.editableConfigs;
 in
 {
+  options = {
+    myProfile = {
+      editableConfigs = lib.mkOption {
+        type = lib.types.listOf lib.types.attrs;
+        default = [ ];
+        description = "List of collected configurations for edit-conf.";
+      };
+    };
+  };
   home = {
     file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
     username = userConfig.uname;
