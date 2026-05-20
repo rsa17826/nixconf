@@ -8,12 +8,12 @@ let
   # ── xdg.configFile entries ───────────────────────────────────────────────
   mkFile = cfg: f: {
     name = "${cfg.dest}/${f}";
-    value.source = /. + "${cfg.src}/${f}";
+    value.source = "${cfg.src}/${f}";
   };
   mkDir = cfg: d: {
     name = "${cfg.dest}/${d}";
     value = {
-      source = /. + "${cfg.src}/${d}";
+      source = "${cfg.src}/${d}";
       recursive = true;
     };
   };
@@ -30,7 +30,7 @@ let
   appBlock = cfg: ''
     FILES_${cfg.name}=(${builtins.concatStringsSep " " cfg.files})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " cfg.dirs})
-    SRC_${cfg.name}="${cfg.src}"
+    SRC_${cfg.name}="${toString cfg.src}"   # toString gives /home/nyix/... not a store path
     DEST_${cfg.name}="$HOME/.config/${cfg.dest}"
   '';
 
