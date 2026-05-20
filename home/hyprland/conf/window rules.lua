@@ -156,11 +156,11 @@ hl.window_rule({
 })
 
 -- HyprSpy: pin, float
-hl.window_rule({
-	match = { title = "^HyprSpy$" },
-	pin = true,
-	float = true,
-})
+-- hl.window_rule({
+-- 	match = { title = "^HyprSpy$" },
+-- 	pin = true,
+-- 	float = true,
+-- })
 
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({
