@@ -16,7 +16,7 @@ let
     name = "${cfg.nixKey}/${d}";
     value = {
       source = cfg.src + "/${d}";
-      recursive = true;
+      # recursive = true;
     };
   };
 
