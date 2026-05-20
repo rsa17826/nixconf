@@ -8,7 +8,7 @@ let
   editable = mkEditableConfig [
     {
       name = "hypr";
-      src = root + "/home/hyprland";
+      src = ./.;
       srcStr = "${userConfig.nixConf}/home/hyprland";
       dest = "$HOME/.local/share/godot/app_userdata/vex";
       files = [
