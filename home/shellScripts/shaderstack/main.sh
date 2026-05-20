@@ -76,10 +76,25 @@ disable_shader() {
 }
 
 case $1 in
-enable) enable_shader "$2" ;;
-disable) disable_shader "$2" ;;
+enable)
+  if [[ -n $2 ]]; then
+    hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
+    exit 0
+  fi
+  enable_shader "$2"
+  ;;
+disable)
+  if [[ -n $2 ]]; then
+    hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
+    exit 0
+  fi
+  disable_shader "$2"
+  ;;
 toggle)
-  # Change $FILE_STATE to $STATE_FILE
+  # if [[ -n $2 ]]; then
+  #   hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
+  #   exit 0
+  # fi
   if grep -qx "$2" "$STATE_FILE"; then
     disable_shader "$2"
   else
