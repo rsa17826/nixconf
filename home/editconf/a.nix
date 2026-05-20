@@ -31,7 +31,7 @@ let
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}="$HOME/.config/${cfg.dest}"
+    DEST_${cfg.name}="${cfg.dest}"
   '';
 
   appNames = map (c: c.name) configs;
