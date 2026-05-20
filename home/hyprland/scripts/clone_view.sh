@@ -2,7 +2,7 @@
 
 # Pathing
 SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.glsl"
-SHADER_RUNTIME="$HOME/.config/hypr/shaders/active_clone.glsl"
+SHADER_RUNTIME="/tmp/active_clone.glsl"
 if shaderstack enabled active_clone; then
   shaderstack disable active_clone
   exit 0
