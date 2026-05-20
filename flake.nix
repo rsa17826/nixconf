@@ -253,6 +253,7 @@
     let
       globalArgs = {
         inherit inputs;
+        root = ./.;
         pkgFromInp =
           inputName: pkgName: inputs.${inputName}.packages.${pkgs.stdenv.hostPlatform.system}.${pkgName};
         listDir =
@@ -261,7 +262,7 @@
             let
               dir = builtins.readDir start;
             in
-            (builtins.map cb (
+            (map cb (
               builtins.filter (name: dir.${name} == "directory" && builtins.pathExists (cb name)) (
                 builtins.attrNames dir
               )

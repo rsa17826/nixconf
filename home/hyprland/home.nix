@@ -2,10 +2,11 @@
   pkgs,
   userConfig,
   lib,
+  root,
   ...
 }:
 let
-  mkEditableConfig = import /. "${userConfig.nixConf}/home/editconf/a.nix" { inherit pkgs lib; };
+  mkEditableConfig = import (root + "/home/editconf/a.nix") { inherit pkgs lib; };
 
   editable = mkEditableConfig [
     {
