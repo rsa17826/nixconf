@@ -1,32 +1,31 @@
 {
-  mkEditableConfig,
   userConfig,
   lib,
   root,
   ...
 }:
-let
-  editable = mkEditableConfig [
-    {
-      name = "hypr";
-      src = root + "/home/hyprland";
-      srcStr = "${userConfig.nixConf}/home/hyprland";
-      nixKey = "hypr"; # key for xdg.configFile (relative to ~/.config/)
-      dest = "$HOME/.config/hypr"; # full path for the shell script
-      files = [
-        "hyprland.lua"
-        "hyprlock.conf"
-      ];
-      dirs = [
-        "shaders"
-        "wallpapers"
-        "conf"
-        "scripts"
-      ];
-    }
-  ];
-in
 {
+  myProfile = {
+    editableConfigs = [
+      {
+        name = "hypr";
+        src = root + "/home/hyprland";
+        srcStr = "${userConfig.nixConf}/home/hyprland";
+        nixKey = "hypr"; # key for xdg.configFile (relative to ~/.config/)
+        dest = "$HOME/.config/hypr"; # full path for the shell script
+        files = [
+          "hyprland.lua"
+          "hyprlock.conf"
+        ];
+        dirs = [
+          "shaders"
+          "wallpapers"
+          "conf"
+          "scripts"
+        ];
+      }
+    ];
+  };
   home = {
     activation = {
       enableAllScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -34,10 +33,6 @@ in
         chmod +x "$nixconf/home/hyprland/scripts/"*.sh
       '';
     };
-    packages = [ editable.editScript ];
-  };
-  xdg = {
-    configFile = editable.entries;
   };
   services = {
     hyprpaper = {
