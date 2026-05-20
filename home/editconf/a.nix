@@ -152,7 +152,7 @@ let
         if [[ -z "$TARGET" ]]; then
           read -r
           for app in $(resolve_apps); do exit_app "$app"; done
-        done
+        fi
         ;;
     esac
   '';
