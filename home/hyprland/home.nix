@@ -5,7 +5,7 @@
   ...
 }:
 let
-  mkEditableConfig = import ./lib/mkEditableConfig.nix { inherit pkgs lib; };
+  mkEditableConfig = import /. "${userConfig.nixConf}/home/editconf/home.nix" { inherit pkgs lib; };
 
   editable = mkEditableConfig [
     {
