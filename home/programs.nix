@@ -292,6 +292,8 @@ in
           dunst # notifier
           perl
           kdePackages.qtdeclarative
+          gsettings-desktop-schemas
+          kdePackages.kdenlive
         ];
       };
     };
