@@ -49,4 +49,4 @@ sed \
   "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
 # 6. Apply
-shaderstack enable active_clone
+shaderstack enable $SHADER_RUNTIME
