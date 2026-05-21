@@ -160,6 +160,10 @@ end
 -- end
 
 function sw.window_rule(spec)
+	if not spec.workspace then
+		hl.window_rule(spec)
+		return
+	end
 	local idx = #_rules + 1
 	local tag = TAG_PREFIX .. idx
 	table.insert(_rules, { tag = tag, spec = spec })
