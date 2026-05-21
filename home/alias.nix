@@ -26,9 +26,9 @@ let
     "7z" = "7zz";
     # cd = "z";
   };
-  commonInit = ''
-    export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
-  '';
+  # commonInit = ''
+  #   export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+  # '';
 
   # fishInit = ''
   #   set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/"(id -u)"/bus"
@@ -43,12 +43,12 @@ in
     bash = {
       enable = true;
       shellAliases = shellAliases;
-      interactiveShellInit = commonInit;
+      # interactiveShellInit = commonInit;
     };
     zsh = {
       enable = true;
       shellAliases = shellAliases;
-      interactiveShellInit = commonInit;
+      # interactiveShellInit = commonInit;
     };
     # fish = {
     #   enable = true;

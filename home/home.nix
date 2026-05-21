@@ -47,6 +47,7 @@ in
         stateVersion = "26.05";
 
         sessionVariables = {
+          QT_QPA_PLATFORMTHEME = "generic";
           EDITOR = "nvim";
           SOPS_EDITOR = "codium --wait";
           VISUAL = "nvim";
