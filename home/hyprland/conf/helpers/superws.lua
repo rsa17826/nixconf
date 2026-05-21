@@ -1,8 +1,4 @@
--- superws.lua
--- sw is a global so other files loaded by auto_require can access it directly.
-
 sw = {}
-sw._subs = {} -- held on sw so GC never collects subscriptions
 
 local SIZE = 10
 local TAG_PREFIX = "sw."
@@ -17,6 +13,7 @@ end
 local function current_group()
 	return math.floor((active_id() - 1) / SIZE)
 end
+
 local function current_sub()
 	return ((active_id() - 1) % SIZE) + 1
 end
@@ -29,7 +26,11 @@ local function resolve_ws(spec)
 	if s == 0 and sub == 0 then
 		return nil
 	end
+
+	-- IF s == 0, use current_group() directly (which is 0-indexed)
+	-- IF s >= 1, subtract 1 to convert your 1-indexed rule into 0-indexed math
 	local g = (s == 0) and current_group() or (s - 1)
+
 	local b = (sub == 0) and current_sub() or sub
 	return g * SIZE + b
 end
@@ -145,18 +146,18 @@ local function register_native(match, tag)
 	return ok
 end
 
-local function register_hyprctl(match, tag)
-	local function add(field, value)
-		local cmd = string.format("hyprctl keyword windowrule 'tag +%s, %s:%s'", tag, field, value)
-		os.execute(cmd) -- fine here: config load time, not inside an event
-	end
-	if match.class then
-		add("class", match.class)
-	end
-	if match.title then
-		add("title", match.title)
-	end
-end
+-- local function register_hyprctl(match, tag)
+-- 	local function add(field, value)
+-- 		local cmd = string.format("hyprctl keyword windowrule 'tag +%s, %s:%s'", tag, field, value)
+-- 		os.execute(cmd) -- fine here: config load time, not inside an event
+-- 	end
+-- 	if match.class then
+-- 		add("class", match.class)
+-- 	end
+-- 	if match.title then
+-- 		add("title", match.title)
+-- 	end
+-- end
 
 function sw.window_rule(spec)
 	local idx = #_rules + 1
@@ -180,33 +181,55 @@ function sw.window_rule(spec)
 	end
 	pcall(hl.window_rule, effects) -- pcall: silently skip unknown effect keys
 
-	if not register_native(match, tag) then
-		register_hyprctl(match, tag)
-	end
+	register_native(match, tag)
+	-- if not register_native(match, tag) then
+	-- 	-- register_hyprctl(match, tag)
+	-- end
 end
 
 -- ── window.open handler ──────────────────────────────────────────────────────
 -- IMPORTANT: never use os.execute inside a compositor event — it blocks the
 -- main thread and freezes Hyprland. Use hl.dispatch(hl.dsp.exec_cmd(...)).
 
-sw._subs.open = hl.on("window.open", function(win)
+hl.on("window.open", function(win)
 	local tags = type(win.tags) == "table" and table.concat(win.tags, ", ") or tostring(win.tags)
 	hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. win.class .. " tags=[" .. tags .. "]'"))
+
 	for _, entry in ipairs(_rules) do
-		hl.dispatch(hl.dsp.exec_cmd("notify-send '" .. entry.tag .. "'"))
+		hl.dispatch(hl.dsp.exec_cmd("notify-send 'checking " .. entry.tag .. "'"))
 		if has_tag(win, entry.tag) then
+			-- ← if you see this notify, has_tag matched
+			hl.dispatch(hl.dsp.exec_cmd("notify-send 'MATCHED " .. entry.tag .. "'"))
+
 			local spec = entry.spec
 			if spec.exec then
 				hl.dispatch(hl.dsp.exec_cmd(spec.exec))
 			end
+
 			local target = resolve_ws(spec.workspace)
+			hl.dispatch(
+				hl.dsp.exec_cmd(
+					"notify-send 'target="
+						.. tostring(target)
+						.. " winws="
+						.. tostring(win.workspace and win.workspace.id)
+						.. "'"
+				)
+			)
+
 			if target and not (win.workspace and win.workspace.id == target) then
-				hl.dispatch(hl.dsp.window.move({
-					workspace = target,
-					follow = spec.follow or false,
-				}))
+				-- target the window by address instead of relying on focus
+				hl.dispatch(
+					hl.dsp.exec_cmd(
+						string.format(
+							"hyprctl dispatch movetoworkspacesilent %d,address:%s",
+							target,
+							tostring(win.address)
+						)
+					)
+				)
 			end
-			return -- first match wins
+			return
 		end
 	end
 end)
@@ -215,6 +238,7 @@ end)
 -- end
 sw.window_rule({
 	match = { title = "^HyprSpy$" },
-	workspace = { 1, 0 },
+	workspace = { 0, 0 },
+	pin = true,
+	float = true,
 })
-return sw

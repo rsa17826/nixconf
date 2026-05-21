@@ -25,6 +25,6 @@ hl.on("hyprland.start", function()
 end)
 
 hl.on("config.reloaded", function()
-	hl.exec_cmd("shaderstack enable")
+	-- hl.exec_cmd("shaderstack enable")
 end)
 -- hl.exec_cmd("~/.config/hypr/scripts/edge-focus.sh")

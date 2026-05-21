@@ -1,4 +1,4 @@
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
 	scrolling_width = 0.3,
 	workspace = "3",
@@ -7,14 +7,14 @@ hl.window_rule({
 -- window_rules.lua
 
 -- Suppress maximize requests from all windows
-hl.window_rule({
+sw.window_rule({
 	name = "suppress-maximize-events",
 	match = { class = ".*" },
 	suppress_event = "maximize",
 })
 
 -- yad: float, unmaximize, pin, center
-hl.window_rule({
+sw.window_rule({
 	name = "a",
 	match = { class = "^yad$" },
 	float = true,
@@ -24,14 +24,14 @@ hl.window_rule({
 })
 
 -- XWayland drag fix: no focus on empty-class floating windows
-hl.window_rule({
+sw.window_rule({
 	name = "fix-xwayland-drags",
 	match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
 	no_focus = true,
 })
 
 -- zenity: keep focused and centered
-hl.window_rule({
+sw.window_rule({
 	name = "fzenity",
 	match = { class = "^zenity$" },
 	fullscreen = false,
@@ -44,14 +44,14 @@ hl.window_rule({
 })
 
 -- XDM main window → workspace 8 silent
-hl.window_rule({
+sw.window_rule({
 	name = "asd",
 	match = { class = "^xdman-Main$", title = "^Xtreme Download Manager$" },
 	workspace = "8 silent",
 })
 
 -- hyprland-run popup: float, bottom-left area
-hl.window_rule({
+sw.window_rule({
 	name = "move-hyprland-run",
 	match = { class = "hyprland-run" },
 	move = { "20", "monitor_h-120" },
@@ -59,13 +59,13 @@ hl.window_rule({
 })
 
 -- Codium: tile on workspace 1 (excluding file dialogs)
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^codium$", title = "negative:^(Save As|Open (File|Folder))$", float = false },
 	workspace = "1",
 })
 
 -- Codium: file dialogs → float, centered, large
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^codium$", title = "^(Save As|Open (File|Folder))$" },
 	float = true,
 	center = true,
@@ -76,7 +76,7 @@ hl.window_rule({
 })
 
 -- LosslessCut: file open dialog → float, centered, large
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Losslesscut$", title = "^(Open file)$" },
 	float = true,
 	center = true,
@@ -87,20 +87,20 @@ hl.window_rule({
 })
 
 -- Global Progress: full opacity, floating
-hl.window_rule({
+sw.window_rule({
 	match = { title = "^Global Progress$" },
 	opacity = "1.0 override 1.0 override",
 	float = true,
 })
 
 -- Brave: Save As → float
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^brave-browser$", title = "^Save As$" },
 	float = true,
 })
 
 -- Brave: Save File dialog → float, centered, large
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^brave$", title = "^Save File$" },
 	float = true,
 	center = true,
@@ -110,7 +110,7 @@ hl.window_rule({
 	stay_focused = false,
 })
 
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Key Display$", title = "^Key Display$" },
 	float = true,
 	-- size = { "516", "142" },
@@ -135,19 +135,19 @@ hl.window_rule({
 })
 
 -- Beatblock: fullscreen
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Beatblock$", title = "^Beatblock$" },
 	fullscreen = true,
 })
 
 -- Brave browser → workspace 2
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^brave-browser$" },
 	workspace = "2",
 })
 
 -- Eets (steam game)
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^steam_app_default$", title = "^Eets$" },
 	no_max_size = true,
 	fullscreen = true,
@@ -156,14 +156,14 @@ hl.window_rule({
 })
 
 -- HyprSpy: pin, float
--- hl.window_rule({
+-- sw.window_rule({
 -- 	match = { title = "^HyprSpy$" },
 -- 	pin = true,
 -- 	float = true,
 -- })
 
 -- Browser Selector (Tk): pin, float, centered, large
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Tk$", title = "^Browser Selector$" },
 	pin = true,
 	float = true,
@@ -174,25 +174,25 @@ hl.window_rule({
 	stay_focused = false,
 })
 
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Audacity$" },
 	scrolling_width = 1.0,
 })
-hl.window_rule({
+sw.window_rule({
 	match = { title = "^Kid3$", class = "^org.kde.kid3$" },
 	scrolling_width = 1.0,
 })
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^Godot$" },
 	scrolling_width = 0.7,
 })
 
--- hl.window_rule({
+-- sw.window_rule({
 -- 	name = "asdd",
 -- 	match = { class = "^xdman-Main$" },
 -- 	workspace = "8 silent",
 -- })
-hl.window_rule({
+sw.window_rule({
 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
 	scrolling_width = 0.3,
 	workspace = "3",
