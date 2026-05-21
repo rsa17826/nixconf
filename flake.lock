@@ -776,11 +776,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779304518,
-        "narHash": "sha256-x7Sdw8CP2QRTXbxt5y+eLkDTOgwOuMg03WuPL1IjCvk=",
+        "lastModified": 1779402242,
+        "narHash": "sha256-Ese/njTYFvGIYg32gNuwQnENkXdkWGH4QzaCwAj7q6g=",
         "owner": "rsa17826",
         "repo": "input-manager",
-        "rev": "5e27db42537b8540fe059d1f1d06f4757aa28b6a",
+        "rev": "2c54c15fe7cba6cdce92c21adffed41fd0d8f0c7",
         "type": "github"
       },
       "original": {

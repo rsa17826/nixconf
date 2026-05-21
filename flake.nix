@@ -105,6 +105,17 @@
         };
       };
     };
+    key-modifier = {
+      url = "github:rsa17826/key-modifier";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
+      };
+    };
     input-display = {
       url = "github:rsa17826/input-display";
       inputs = {

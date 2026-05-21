@@ -159,6 +159,7 @@ in
           (pkgFromInp "go-autoclicker" "default")
           (pkgFromInp "input-display" "default")
           (pkgFromInp "input-manager" "default")
+          (pkgFromInp "key-modifier" "default")
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
