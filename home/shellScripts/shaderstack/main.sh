@@ -78,7 +78,11 @@ disable_shader() {
 case $1 in
 enable)
   if [[ -z "$2" ]]; then
-    hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
+    if [ -z "$(echo "$active_shaders" | tr -d '[:space:]')" ]; then
+      hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
+    else
+      hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
+    fi
     exit 0
   fi
   enable_shader "$2"
