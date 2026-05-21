@@ -33,10 +33,6 @@ onmousemove = (e) => {
  */
 function resolveTarget(el) {
   // 1. Direct real inputs (search box etc)
-  if (el.querySelector(".monaco-editor-pane-placeholder")) {
-    return el.querySelector(".monaco-editor-pane-placeholder")
-  }
-
   if (
     el.matches(
       '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"], .editor-container',
@@ -45,6 +41,10 @@ function resolveTarget(el) {
     // if matching it is htmlelement
     // @ts-ignore
     return el
+  }
+
+  if (el.closest(".monaco-editor-pane-placeholder")) {
+    return el.closest(".monaco-editor-pane-placeholder")
   }
 
   // 2. Terminal
