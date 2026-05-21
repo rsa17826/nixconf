@@ -205,8 +205,13 @@ hl.on("window.open", function(win)
 			if spec.exec then
 				hl.dispatch(hl.dsp.exec_cmd(spec.exec))
 			end
-
-			local target = resolve_ws(spec.workspace)
+			local target
+			if not spec.workspace then
+				hl.dispatch(hl.dsp.exec_cmd("notify-send 'no workspace set " .. entry.tag .. "'"))
+				target = resolve_ws({ 0, 0 })
+			else
+				target = resolve_ws(spec.workspace)
+			end
 			hl.dispatch(
 				hl.dsp.exec_cmd(
 					"notify-send 'target="
@@ -231,6 +236,7 @@ hl.on("window.open", function(win)
 			end
 			return
 		end
+		::continue::
 	end
 end)
 -- local function notify(msg)
