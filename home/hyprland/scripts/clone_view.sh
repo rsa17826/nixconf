@@ -3,8 +3,8 @@
 # Pathing
 SHADER_TEMPLATE="$HOME/.config/hypr/shaders/clone_region.glsl"
 SHADER_RUNTIME="/tmp/active_clone.glsl"
-if shaderstack enabled active_clone; then
-  shaderstack disable active_clone
+if shaderstack enabled "$SHADER_RUNTIME"; then
+  shaderstack disable "$SHADER_RUNTIME"
   exit 0
 fi
 
@@ -49,4 +49,4 @@ sed \
   "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
 # 6. Apply
-shaderstack enable $SHADER_RUNTIME
+shaderstack enable "$SHADER_RUNTIME"
