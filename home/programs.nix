@@ -371,6 +371,7 @@ in
       #       {} \;
       #   '';
       # })) # cheat engine
+      gtk3
       gdb
       tumbler
       gsettings-desktop-schemas
