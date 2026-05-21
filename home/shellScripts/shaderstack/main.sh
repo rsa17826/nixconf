@@ -77,21 +77,21 @@ disable_shader() {
 
 case $1 in
 enable)
-  if [[ -n $2 ]]; then
+  if [[ -n "$2" ]]; then
     hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
     exit 0
   fi
   enable_shader "$2"
   ;;
 disable)
-  if [[ -n $2 ]]; then
+  if [[ -n "$2" ]]; then
     hyprctl eval "hl.config({ decoration = { screen_shader = '' } })"
     exit 0
   fi
   disable_shader "$2"
   ;;
 toggle)
-  # if [[ -n $2 ]]; then
+  # if [[ -n "$2" ]]; then
   #   hyprctl eval "hl.config({ decoration = { screen_shader = '$TEMP_SHADER' } })"
   #   exit 0
   # fi
