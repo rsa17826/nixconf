@@ -347,6 +347,7 @@ in
 
     hyprland = {
       enable = true;
+      withUWSM = true;
       package = pkgFromInp "hyprland" "hyprland";
     };
     direnv = {
