@@ -294,6 +294,7 @@ in
           kdePackages.qtdeclarative
           gsettings-desktop-schemas
           kdePackages.kdenlive
+          hicolor-icon-theme
         ];
       };
     };
