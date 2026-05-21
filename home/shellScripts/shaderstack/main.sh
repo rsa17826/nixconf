@@ -103,13 +103,13 @@ toggle)
   ;;
 enabled)
   if [ -n "$2" ]; then
-    grep -qx "$2" "$STATE_FILE" # Silent exit code for scripts [cite: 1, 9]
+    grep -qx "$2" "$STATE_FILE"
   else
     [ -s "$STATE_FILE" ] && sed 's/^/  - /' "$STATE_FILE" || echo "None"
   fi
   ;;
 clear)
-  : >"$STATE_FILE" # SC2188 fix [cite: 1]
+  : >"$STATE_FILE"
   rebuild_stack
   ;;
 esac
