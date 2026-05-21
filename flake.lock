@@ -789,6 +789,29 @@
         "type": "github"
       }
     },
+    "key-modifier": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779405284,
+        "narHash": "sha256-sTR0F3rH0Q41BqptA/ARlZ5VvAKQ1kfoeLUCXnhfBKs=",
+        "owner": "rsa17826",
+        "repo": "key-modifier",
+        "rev": "2c1a5271ba543f7f7d54409d6177c6a75ba83ccc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "key-modifier",
+        "type": "github"
+      }
+    },
     "luajit-src": {
       "flake": false,
       "locked": {
@@ -1019,6 +1042,7 @@
         "hyprland": "hyprland",
         "input-display": "input-display",
         "input-manager": "input-manager",
+        "key-modifier": "key-modifier",
         "millennium": "millennium",
         "multi-game-launcher": "multi-game-launcher",
         "nix-index-database": "nix-index-database",
