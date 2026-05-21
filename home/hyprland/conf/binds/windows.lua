@@ -15,7 +15,7 @@
 -- m.bind("#+q", hl.dsp.window.move({ workspace = 5 }))
 -- m.bind("#+w", hl.dsp.window.move({ workspace = 6 }))
 -- m.bind("#+e", hl.dsp.window.move({ workspace = 7 }))
--- m.bind("#+r", hl.dsp.window.move({ workspace = 8 }))
+m.bind("#+r", hl.dsp.window.move({ workspace = 8 }))
 
 -- -- ─── Special workspace (scratchpad) ───────────────────────────────────────
 -- m.bind("#z", hl.dsp.workspace.toggle_special("magic"))
@@ -50,19 +50,21 @@ m.bind("#+f", sw.move(4))
 
 -- ─── Switch groups (ALT + SUPER + number) ────────────────────────────────────
 -- Jumps to group N, landing on the same sub-ws slot you were on.
-m.bind("!#1", sw.switch_group(1))   -- general dev
-m.bind("!#2", sw.switch_group(2))   -- godot
-m.bind("!#3", sw.switch_group(3))   -- free
+m.bind("#1", sw.switch_group(1)) -- general dev
+m.bind("#2", sw.switch_group(2)) -- godot
+m.bind("#3", sw.switch_group(3)) -- free
 
 -- ─── Move window to a different group ────────────────────────────────────────
-m.bind("!#+1", sw.move_to_group(1))
-m.bind("!#+2", sw.move_to_group(2))
-m.bind("!#+3", sw.move_to_group(3))
+m.bind("#+1", sw.move_to_group(1))
+m.bind("#+2", sw.move_to_group(2))
+m.bind("#+3", sw.move_to_group(3))
 
 -- ─── Cycle groups ────────────────────────────────────────────────────────────
-m.bind("#grave",  sw.next_group(3))
+m.bind("#grave", sw.next_group(3))
 m.bind("#+grave", sw.prev_group(3))
+m.bind("#mouse_down", sw.next_group(1))
+m.bind("#mouse_up", sw.prev_group(-1))
 
 -- ─── Scroll through sub-workspaces ───────────────────────────────────────────
-m.bind("#mouse_down", sw.focus_relative(1))
-m.bind("#mouse_up",   sw.focus_relative(-1))
+-- m.bind("#mouse_down", sw.focus_relative(1))
+-- m.bind("#mouse_up",   sw.focus_relative(-1))
