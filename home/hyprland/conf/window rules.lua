@@ -1,8 +1,8 @@
-sw.window_rule({
-	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
-	scrolling_width = 0.3,
-	workspace = "3",
-})
+-- sw.window_rule({
+-- 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
+-- 	scrolling_width = 0.3,
+-- 	workspace = "3",
+-- })
 
 -- window_rules.lua
 
@@ -47,7 +47,7 @@ sw.window_rule({
 sw.window_rule({
 	name = "asd",
 	match = { class = "^xdman-Main$", title = "^Xtreme Download Manager$" },
-	workspace = "8 silent",
+	workspace = { 1, 8, "silent" },
 })
 
 -- hyprland-run popup: float, bottom-left area
@@ -61,7 +61,7 @@ sw.window_rule({
 -- Codium: tile on workspace 1 (excluding file dialogs)
 sw.window_rule({
 	match = { class = "^codium$", title = "negative:^(Save As|Open (File|Folder))$", float = false },
-	workspace = "1",
+	workspace = { 0, 1 },
 })
 
 -- Codium: file dialogs → float, centered, large
@@ -143,7 +143,7 @@ sw.window_rule({
 -- Brave browser → workspace 2
 sw.window_rule({
 	match = { class = "^brave-browser$" },
-	workspace = "2",
+	workspace = { 1, 2 },
 })
 
 -- Eets (steam game)
@@ -190,10 +190,10 @@ sw.window_rule({
 -- sw.window_rule({
 -- 	name = "asdd",
 -- 	match = { class = "^xdman-Main$" },
--- 	workspace = "8 silent",
+-- 	workspace = {1,8, "silent"},
 -- })
-sw.window_rule({
-	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
-	scrolling_width = 0.3,
-	workspace = "3",
-})
+-- sw.window_rule({
+-- 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
+-- 	scrolling_width = 0.3,
+-- 	workspace = "3",
+-- })

@@ -160,7 +160,7 @@ end
 -- end
 
 function sw.window_rule(spec)
-	if not spec.workspace then
+	if not spec.workspace or spec.workspace == "special" then
 		hl.window_rule(spec)
 		return
 	end
@@ -209,12 +209,10 @@ hl.on("window.open", function(win)
 			if spec.exec then
 				hl.dispatch(hl.dsp.exec_cmd(spec.exec))
 			end
-			local target
-			if not spec.workspace then
-				hl.dispatch(hl.dsp.exec_cmd("notify-send 'no workspace set " .. entry.tag .. "'"))
-				target = resolve_ws({ 0, 0 })
-			else
-				target = resolve_ws(spec.workspace)
+			-- hl.dispatch(hl.dsp.exec_cmd("notify-send 'ws is set to " .. table.concat(spec.workspace, ",") .. "'"))
+			local target = resolve_ws(spec.workspace)
+			if not target then
+				goto continue
 			end
 			hl.dispatch(
 				hl.dsp.exec_cmd(
