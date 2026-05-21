@@ -305,6 +305,10 @@ in
     };
     dbus = {
       enable = true;
+      packages = with pkgs; [
+        gsettings-desktop-schemas
+        gtk3
+      ];
     };
     gvfs = {
       enable = true;
