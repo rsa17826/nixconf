@@ -128,9 +128,5 @@ function precmd() {
   fi
 }
 if [ -z "$TMUX" ] && [ -n "$PS1" ]; then
-  # Optional: Ensure tmux is actually installed on the system
-  if command -v tmux >/dev/null 2>&1; then
-    # Attaches to a session named "main", or creates it if it doesn't exist
-    exec tmux new-session -A -s main
-  fi
+  exec tmux new-session -A -s $$
 fi
