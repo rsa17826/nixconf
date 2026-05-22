@@ -19,6 +19,11 @@
         group = "copyparty";
         mode = "0440";
       };
+      copypartySongs = {
+        restartUnits = [ "copyparty.service" ];
+        group = "copyparty";
+        mode = "0440";
+      };
       # syncthingApiKey = { };
       # syncthingRpId = { };
     };

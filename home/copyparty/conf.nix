@@ -30,6 +30,9 @@
         s = {
           passwordFile = "/run/secrets/copypartyS";
         };
+        songs = {
+          passwordFile = "/run/secrets/copypartySongs";
+        };
       };
 
       volumes = {
@@ -91,6 +94,22 @@
             rwmd = "s";
             A = [
               "admin"
+            ];
+          };
+          flags = {
+            fk = 4;
+            scan = 60;
+            # volflag "e2d" enables the uploads database
+            e2d = true;
+            nodupe = true;
+          };
+        };
+        "/songs" = {
+          path = "/home/${userConfig.uname}/songs";
+          access = {
+            r = [
+              "songs"
+              "s"
             ];
           };
           flags = {

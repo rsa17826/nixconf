@@ -35,7 +35,7 @@ function resolveTarget(el) {
   // 1. Direct real inputs (search box etc)
   if (
     el.matches(
-      '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"], .editor-container',
+      '.terminal, .monaco-editor, .editor-scrollable, .repl, .interactive, .inputbox, [role="textbox"], [id="workbench.parts.sidebar"], .editor-container, iframe.webview',
     )
   ) {
     // if matching it is htmlelement
