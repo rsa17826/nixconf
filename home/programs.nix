@@ -187,11 +187,32 @@ in
           fzf
           (rofi.override {
             plugins = with pkgs; [
-              # Take the existing rofi-blocks package and just swap the source code
-              (rofi-blocks.overrideAttrs (oldAttrs: {
+              (stdenv.mkDerivation {
+                pname = "rofi-blocks";
                 version = "unstable-2024-05";
+
                 src = inputs.rofi-blocks-main;
-              }))
+
+                # --- THE PR #269086 METHOD ---
+                # This tricks pkg-config into returning our writeable Nix store path
+                # when Meson asks it where Rofi's plugin directory lives.
+                PKG_CONFIG_ROFI_PLUGINSDIR = "${placeholder "out"}/lib/rofi";
+                PKG_CONFIG_VAR_pluginsdir = "${placeholder "out"}/lib/rofi";
+                # -----------------------------
+
+                nativeBuildInputs = with pkgs; [
+                  pkg-config
+                  meson
+                  ninja
+                ];
+
+                buildInputs = with pkgs; [
+                  glib
+                  cairo
+                  json-glib
+                  rofi-unwrapped
+                ];
+              })
             ];
           })
           typescript
