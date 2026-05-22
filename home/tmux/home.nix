@@ -5,7 +5,7 @@
       {
         name = "tmux";
         src = ./.;
-        srcStr = "${userConfig.nixConf}/home/tmux";
+        srcStr = "${userConfig.nixConf}/home";
         nixKey = "tmux";
         dest = "$HOME";
         files = [
