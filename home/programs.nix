@@ -193,6 +193,14 @@ in
 
                 src = inputs.rofi-blocks-main;
 
+                # --- THE CORRECT PATCH ---
+                # This exactly matches the assignment line and forces it to use $out
+                postPatch = ''
+                  substituteInPlace meson.build \
+                    --replace-fail "plugins_dir = rofi_dep.get_variable(pkgconfig: 'pluginsdir')" "plugins_dir = join_paths(get_option('prefix'), 'lib', 'rofi')"
+                '';
+                # -------------------------
+
                 nativeBuildInputs = with pkgs; [
                   pkg-config
                   meson
@@ -205,15 +213,6 @@ in
                   json-glib
                   rofi-unwrapped
                 ];
-
-                # --- USE THIS INSTEAD ---
-                # This passes a direct instruction to Meson's dependency resolver,
-                # forcing it to rewire the plugin path variable to our $out store path.
-                mesonFlags = [
-                  "-Dpkg_config_path=${rofi-unwrapped}/lib/pkgconfig"
-                  "--define-variable=pluginsdir=${placeholder "out"}/lib/rofi"
-                ];
-                # ------------------------
               })
             ];
           })
