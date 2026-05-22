@@ -14,18 +14,14 @@ in
   xdg.configFile."rofi/launchers/type-${x}".source =
     "${inputs.rofi-themes}/files/launchers/type-${x}";
   xdg.configFile."rofi/images".source = "${inputs.rofi-themes}/files/images";
-  users = {
-    users = {
-      "${userConfig.uname}" = {
-        packages = [
-          (pkgs.writeShellApplication {
-            name = "rofi-launcher";
-            text = "rofi -modi blocks -show blocks -show-icons -blocks-wrap /d/a.py";
-            runtimeInputs = [ ./launcher.py ];
-          })
-        ];
-      };
-    };
+  home = {
+    packages = [
+      (pkgs.writeShellApplication {
+        name = "rofi-launcher";
+        text = "rofi -modi blocks -show blocks -show-icons -blocks-wrap /d/a.py";
+        runtimeInputs = [ ./launcher.py ];
+      })
+    ];
   };
   xdg.configFile."rofi/config.rasi".text = ''
     @theme "${inputs.rofi-themes}/files/launchers/type-${x}/style-${y}.rasi"
