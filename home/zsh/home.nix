@@ -91,8 +91,10 @@ function preexec() {
         local start_time=$(date +%s.%3N)
     fi
 
-    # Run the background loop
+    # SILENCE START MESSAGE: Wrap the background launch in a subshell
+    # and turn off monitor mode (+m) so the job ID is never printed.
     (
+        set +m
         while true; do
             if [[ -n "$ZSH_VERSION" ]]; then
                 local now=$EPOCHREALTIME
@@ -114,33 +116,38 @@ function preexec() {
             tmux refresh-client -S
             sleep 0.05
         done
-    ) &
+    ) & 2>/dev/null
     TMUX_TIMER_PID=$!
 }
 
 function precmd() {
+    # SILENCE TERMINATE MESSAGE: Use a clean kill sequence
     if [ -n "$TMUX_TIMER_PID" ]; then
-        # Temporarily turn off job monitoring notifications
-        if [[ -n "$ZSH_VERSION" ]]; then
-            unsetopt NOTIFY 2>/dev/null
-        else
-            set +m 2>/dev/null
-        fi
+        # Disable job notifications completely for this operation
+        unsetopt NOTIFY 2>/dev/null
 
-        # Kill the background process cleanly
+        # Send kill signal silently
         kill $TMUX_TIMER_PID 2>/dev/null
-        wait $TMUX_TIMER_PID 2>/dev/null
 
-        # Restore default job monitoring notifications
-        if [[ -n "$ZSH_VERSION" ]]; then
-            setopt NOTIFY 2>/dev/null
-        else
-            set -m 2>/dev/null
-        fi
+        # Abandon tracking of the job so Zsh doesn't complain on exit
+        disown $TMUX_TIMER_PID 2>/dev/null
 
         unset TMUX_TIMER_PID
     fi
 }
+
+# --- Shortcuts for Exiting ---
+# Custom function to kill the timer loop right before exiting
+# so Zsh never warns you about "running jobs".
+function quick_exit() {
+    if [ -n "$TMUX_TIMER_PID" ]; then
+        kill $TMUX_TIMER_PID 2>/dev/null
+        disown $TMUX_TIMER_PID 2>/dev/null
+    fi
+    exit
+}
+
+alias q!="quick_exit"
       '';
     };
   };
