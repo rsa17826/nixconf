@@ -192,7 +192,7 @@ in
                 version = "unstable-2024-05";
                 postPatch = ''
                   substituteInPlace meson.build \
-                    --replace-fail "rofi.get_variable(pkgconfig: 'pluginsdir')" "'$out/lib/rofi'"
+                    --replace-fail "plugins_dir = " "plugins_dir = '$out' + "
                 '';
                 src = inputs.rofi-blocks-main;
 
