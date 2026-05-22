@@ -1,6 +1,5 @@
 {
   inputs,
-  userConfig,
   pkgs,
   ...
 }:
@@ -18,8 +17,12 @@ in
     packages = [
       (pkgs.writeShellApplication {
         name = "rofi-launcher";
-        text = "rofi -modi blocks -show blocks -show-icons -blocks-wrap /d/a.py";
-        runtimeInputs = [ ./launcher.py ];
+        text = "rofi -modi blocks -show blocks -show-icons -blocks-wrap ${./launcher.py}";
+        runtimeInputs = with pkgs; [
+          python3
+          wl-clipboard
+          libnotify
+        ];
       })
     ];
   };
