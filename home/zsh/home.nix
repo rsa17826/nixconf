@@ -82,39 +82,65 @@ in
         bindkey "\e[3;5~" kill-word
         bindkey '^[[Z' reverse-menu-complete
 
-        setopt INTERACTIVE_COMMENTS
         [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-        function precmd() {
-            # 1. If a background timer is ticking, kill it silently
-            if [ -n "$TMUX_TIMER_PID" ]; then
-                # Direct stderr and stdout to /dev/null
-                kill $TMUX_TIMER_PID 2>/dev/null
+function preexec() {
+    if [[ -n "$ZSH_VERSION" ]]; then
+        local start_time=$EPOCHREALTIME
+    else
+        local start_time=$(date +%s.%3N)
+    fi
 
-                # Disown tells the shell to stop monitoring this background job,
-                # which completely suppresses the "+ terminated" message.
-                if [[ -n "$ZSH_VERSION" ]]; then
-                    disown $TMUX_TIMER_PID 2>/dev/null
-                else
-                    # For Bash, we disown the job before waiting
-                    eval "disown $TMUX_TIMER_PID" 2>/dev/null
-                fi
-
-                wait $TMUX_TIMER_PID 2>/dev/null
-                unset TMUX_TIMER_PID
+    # Run the background loop
+    (
+        while true; do
+            if [[ -n "$ZSH_VERSION" ]]; then
+                local now=$EPOCHREALTIME
+            else
+                local now=$(date +%s.%3N)
             fi
-        }
 
-        function precmd() {
-            # 1. If a background timer is ticking, kill it
-            if [ -n "$TMUX_TIMER_PID" ]; then
-                kill $TMUX_TIMER_PID 2>/dev/null
-                wait $TMUX_TIMER_PID 2>/dev/null
-                unset TMUX_TIMER_PID
-            fi
-            # The last recorded value inside TMUX_TIMER_DISPLAY will naturally freeze
-            # at the bottom of your screen until your next command starts!
-        }
+            local delta=$(awk "BEGIN {print $now - $start_time}")
+            local formatted=$(awk "BEGIN {
+                d = $delta;
+                m = int(d / 60);
+                s = int(d % 60);
+                ms = int((d - int(d)) * 1000);
+                if (m > 0) printf \"%dm \", m;
+                printf \"%ds %dms\", s, ms;
+            }")
+
+            tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
+            tmux refresh-client -S
+            sleep 0.05
+        done
+    ) &
+    TMUX_TIMER_PID=$!
+}
+
+function precmd() {
+    if [ -n "$TMUX_TIMER_PID" ]; then
+        # Temporarily turn off job monitoring notifications
+        if [[ -n "$ZSH_VERSION" ]]; then
+            unsetopt NOTIFY 2>/dev/null
+        else
+            set +m 2>/dev/null
+        fi
+
+        # Kill the background process cleanly
+        kill $TMUX_TIMER_PID 2>/dev/null
+        wait $TMUX_TIMER_PID 2>/dev/null
+
+        # Restore default job monitoring notifications
+        if [[ -n "$ZSH_VERSION" ]]; then
+            setopt NOTIFY 2>/dev/null
+        else
+            set -m 2>/dev/null
+        fi
+
+        unset TMUX_TIMER_PID
+    fi
+}
       '';
     };
   };
