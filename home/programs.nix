@@ -191,6 +191,7 @@ in
           jpexs # ffdec
           deluged
           calibre
+          rofi-calc
           gh
           portablemc
           dgop # process stat screen thing
