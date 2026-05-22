@@ -75,7 +75,7 @@ in
           kitty-audd = {
             name = "audd";
             genericName = "audio download";
-            exec = "kitty sh -c \"audd && exit\"";
+            exec = "kitty sh -c \"audd && exit || read\"";
             icon = "utilities-terminal";
             categories = [ "Utility" ];
             terminal = false;
@@ -83,7 +83,7 @@ in
           kitty-vidd = {
             name = "vidd";
             genericName = "video download";
-            exec = "kitty sh -c \"vidd && exit\"";
+            exec = "kitty sh -c \"vidd && exit || read\"";
             icon = "utilities-terminal";
             categories = [ "Utility" ];
             terminal = false;
