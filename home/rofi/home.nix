@@ -34,11 +34,11 @@ in
           kb-move-front: "Home";
           kb-move-end: "End,Control+e";
 
-          /* 2. Map Ctrl+Delete to delete word forward AND ensure it's not bound elsewhere */
+          /* 2. Map Ctrl+Delete to delete the word in front of the cursor */
           kb-remove-word-forward: "Control+Delete";
 
-          /* FIX: Explicitly bind Control+Backspace to remove word backward */
-          kb-remove-word-back: "Control+Backspace";
+          /* FIX: Explicitly map Ctrl+BackSpace with correct capital 'S' */
+          kb-remove-word-back: "Control+BackSpace";
 
           /* 3. Enable Word-by-Word cursor jumps */
           kb-move-word-back: "Control+Left";
@@ -48,12 +48,13 @@ in
           kb-row-first: "KP_Home";
           kb-row-last: "KP_End";
 
-          /* 5. Disable Shift+Left/Right mode switching */
+          /* 5. Disable Shift+Left/Right mode switches */
           kb-mode-previous: "Control+ISO_Left_Tab";
           kb-mode-next: "Control+Tab";
 
           kb-clear-line: "Control+a";
-        }'';
+        }
+      '';
     };
   };
 }
