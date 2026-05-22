@@ -5,17 +5,18 @@ import subprocess
 import os
 import glob
 import re
+from typing import cast
 
 
-def get_desktop_apps():
+def get_desktop_apps() -> list[dict[str, str]]:
   """Scans system paths for installed desktop applications and extracts names, execs, and icons."""
-  apps = []
+  apps: list[dict[str, str]] = []
   paths = [
     "/run/current-system/sw/share/applications/*.desktop",
     os.path.expanduser("~/.local/share/applications/*.desktop"),
   ]
 
-  seen_names = set()
+  seen_names: set[str] = set()
   for path_pattern in paths:
     for filepath in glob.glob(path_pattern):
       try:
@@ -46,16 +47,16 @@ def get_desktop_apps():
   return sorted(apps, key=lambda x: x["name"].lower())
 
 
-def copy_to_clipboard(text):
+def copy_to_clipboard(text: str):
   """Copies math text to clipboard."""
   clean_text = text.replace("➔", "").strip()
   try:
-    subprocess.run(
+    _ = subprocess.run(
       ["wl-copy"], input=clean_text, text=True, check=True, env=os.environ
     )
   except Exception:
     try:
-      subprocess.run(
+      _ = subprocess.run(
         ["xclip", "-selection", "clipboard"],
         input=clean_text,
         text=True,
@@ -79,8 +80,8 @@ def launch_app(exec_command: str):
     pass
 
 
-def format_rofi_lines(math_result, app_list):
-  lines = []
+def format_rofi_lines(math_result: str, app_list: list[dict[str, str]]):
+  lines: list[dict[str, str]] = []
   if math_result:
     lines.append(
       {
@@ -108,9 +109,13 @@ def main():
 
   for line in sys.stdin:
     try:
-      payload = json.loads(line)
-      event_name = payload.get("name", "")
-      user_input = payload.get("value", "").strip()
+      payload = json.loads(line) # pyright: ignore[reportAny]
+      event_name: str = cast(
+        str, payload.get("name", "") # pyright: ignore[reportAny]
+      )
+      user_input: str = cast(
+        str, payload.get("value", "").strip() # pyright: ignore[reportAny]
+      )
 
       # 1. HANDLE SELECTION ACTIONS (WHEN USER PRESSES ENTER)
       if event_name == "select entry":
@@ -145,8 +150,10 @@ def main():
         ]
 
         try:
-          result = eval(user_input, {"__builtins__": None}, {})
-          active_math_calculation = str(result)
+          result = eval( # pyright: ignore[reportAny]
+            user_input, {"__builtins__": None}, {}
+          )
+          active_math_calculation = str(result) # pyright: ignore[reportAny]
           response = {
             "input action": "send",
             "message": f"Result: {result}",
@@ -170,4 +177,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-
