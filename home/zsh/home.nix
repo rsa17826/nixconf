@@ -84,31 +84,34 @@ in
 # Ensure high-precision time is available
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-# Explicitly initialize the bar so it doesn't show old data on startup
+# Setup a single, consistent file name for the PID tracking
+TIMER_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
+
+# Reset tmux variable on terminal startup
 if [ -n "$TMUX" ]; then
     tmux set-env -g TMUX_TIMER_DISPLAY "0s 0ms"
 fi
 
-TMUX_TIMER_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
-
 function preexec() {
-    # Safely mute job notifications ONLY inside this function scope
-    setopt localoptions no_monitor
-
     # Clear out any ghost timer that might still be lingering
-    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
-        kill -9 $(cat "$TMUX_TIMER_PID_FILE") 2>/dev/null
-        > "$TMUX_TIMER_PID_FILE"
+    if [ -s "$TIMER_PID_FILE" ]; then
+        local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+        if [ -n "$old_pid" ]; then
+            kill -9 "$old_pid" 2>/dev/null
+        fi
+        rm -f "$TIMER_PID_FILE" 2>/dev/null
     fi
 
     local start_time=$EPOCHREALTIME
     local parent_pid=$$
 
-    # Launch the precision loop completely detached
+    # Temporarily drop monitor mode so Zsh doesn't announce the background task
+    unsetopt MONITOR 2>/dev/null
+
     (
         trap "exit" INT TERM EXIT
         while true; do
-            # Integrity check: if the main terminal window closes, kill this loop
+            # Safety check: if main terminal window closes, kill this loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
@@ -126,39 +129,45 @@ function preexec() {
             }")
 
             tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
-            tmux refresh-client -S
+            tmux refresh-client -S 2>/dev/null
 
             sleep 0.05
         done
-    ) >/dev/null 2>&1 &
+    ) >/dev/null 2>&1 &! # '&!' launches the job completely detached from Zsh'
 
-    # Save the background system PID
-    echo $! > "$TMUX_TIMER_PID_FILE"
+    # Save the background system PID safely
+    echo $! > "$TIMER_PID_FILE"
+
+    # Restore job monitoring for your everyday terminal operations
+    setopt MONITOR 2>/dev/null
 }
 
 function precmd() {
-    setopt localoptions no_monitor
-
-    # Command finished: Terminate the loop instantly without waiting around
-    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
-        local target_pid=$(cat "$TMUX_PID_FILE")
+    # Command finished: Terminate the loop instantly
+    if [ -s "$TIMER_PID_FILE" ]; then
+        local target_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
         if [ -n "$target_pid" ]; then
-            # Using kill -9 forcefully cuts the process, preventing terminal hangs
+            unsetopt MONITOR 2>/dev/null
             kill -9 "$target_pid" 2>/dev/null
+            setopt MONITOR 2>/dev/null
         fi
-        > "$TMUX_PID_FILE"
+        rm -f "$TIMER_PID_FILE" 2>/dev/null
     fi
 }
 
 # --- Shortcuts for Exiting ---
 function quick_exit() {
-    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
-        kill -9 $(cat "$TMUX_TIMER_PID_FILE") 2>/dev/null
-        rm -f "$TMUX_TIMER_PID_FILE"
+    if [ -s "$TIMER_PID_FILE" ]; then
+        local target_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+        if [ -n "$target_pid" ]; then
+            kill -9 "$target_pid" 2>/dev/null
+        fi
+        rm -f "$TIMER_PID_FILE" 2>/dev/null
     fi
     exit
 }
 
+alias q="quick_exit"
 alias q!="quick_exit"
       '';
     };
