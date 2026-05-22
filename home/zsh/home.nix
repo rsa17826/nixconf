@@ -49,22 +49,43 @@ in
         ZSH_COMMAND_TIME_ECHO=1
 
         # --- CUSTOM WORD-BOUNDARY HISTORY SEARCH ---
+        # Track the original query and cursor position across consecutive searches
+        typeset -g LAST_HISTORY_SEARCH_QUERY=""
+        typeset -g LAST_HISTORY_SEARCH_INDEX=0
+
         custom-history-search() {
           setopt localoptions extendedglob
 
-          # shellcheck disable=SC2206
-          # Fix: Removed space after (z) and added linter bypass for Zsh array assignment
-          local words=(''${(z)LBUFFER})
-          [[ -z "$LBUFFER" ]] && { zle up-line-or-history; return }
+          # If the user is just moving up/down consecutively, reuse the original query.
+          # Otherwise, reset it to whatever they just typed on the command line.
+          if [[ "$LASTWIDGET" != custom-history-search-* ]]; then
+            LAST_HISTORY_SEARCH_QUERY="$LBUFFER"
+            LAST_HISTORY_SEARCH_INDEX=$HISTNO
+          fi
 
+          # If the line is empty, just perform normal up/down history traversal
+          [[ -z "$LAST_HISTORY_SEARCH_QUERY" ]] && {
+            if [[ "$WIDGET" == *down* ]]; then
+              zle .down-line-or-history
+            else
+              zle .up-line-or-history
+            fi
+            return
+          }
+
+          # Break the *original* query down into shell tokens
+          # shellcheck disable=SC2206
+          local words=(''${(z)LAST_HISTORY_SEARCH_QUERY})
           local pattern=""
           local word
+
           for word in $words; do
             local escaped_word="''${word//([.\\*^$])/\\\$MATCH}"
             pattern="$pattern(|.*[;\|&[:space:]])$escaped_word"
           done
           pattern="^$pattern*"
 
+          # Execute the built-in search using our sticky pattern
           if [[ "$WIDGET" == *down* ]]; then
             zle .history-beginning-search-forward "$pattern"
           else
