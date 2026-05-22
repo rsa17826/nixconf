@@ -1,7 +1,6 @@
 {
   userConfig,
   lib,
-  root,
   ...
 }:
 {
@@ -9,7 +8,7 @@
     editableConfigs = [
       {
         name = "hypr";
-        src = root + "/home/hyprland";
+        src = ./.;
         srcStr = "${userConfig.nixConf}/home/hyprland";
         nixKey = "hypr"; # key for xdg.configFile (relative to ~/.config/)
         dest = "$HOME/.config/hypr"; # full path for the shell script
