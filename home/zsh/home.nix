@@ -84,6 +84,9 @@ in
 
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
+# Define a unique temp file to hold the background timer's real system PID
+TMUX_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
+
 function preexec() {
     if [[ -n "$ZSH_VERSION" ]]; then
         local start_time=$EPOCHREALTIME
@@ -91,19 +94,16 @@ function preexec() {
         local start_time=$(date +%s.%3N)
     fi
 
-    # Save the main shell's Process ID so the background loop can monitor it
     local parent_pid=$$
 
-    # Start the background loop
+    # Launch the background loop in a completely detached subshell
     (
-        # Turn off monitor mode so job creation text is completely hidden
+        # Complete isolation from Zsh job control
         set +m
-
-        # TRAP: If this subshell receives an interrupt signal, exit immediately
         trap "exit" INT TERM
 
         while true; do
-            # SAFETY CHECK: If the main terminal shell dies or changes state, kill this loop
+            # Safety check: if parent terminal dies, kill this loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
@@ -127,32 +127,36 @@ function preexec() {
             tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
             tmux refresh-client -S
 
-            # Use a tiny sleep; if interrupted, it will break the loop gracefully
             sleep 0.05 || exit
         done
-    ) & 2>/dev/null
+    ) >/dev/null 2>&1 &
 
-    TMUX_TIMER_PID=$!
+    # Save the absolute system PID directly to our file
+    echo $! > "$TMUX_PID_FILE"
 }
 
 function precmd() {
-    # Clean up the background timer when a command finishes OR is interrupted via ^C
-    if [ -n "$TMUX_TIMER_PID" ]; then
-        unsetopt NOTIFY 2>/dev/null
-
-        # Send a termination signal to the background process group safely
-        kill -TERM $TMUX_TIMER_PID 2>/dev/null
-        disown $TMUX_TIMER_PID 2>/dev/null
-
-        unset TMUX_TIMER_PID
+    # Read the system PID from the file and kill it directly
+    if [ -s "$TMUX_PID_FILE" ]; then
+        local target_pid=$(cat "$TMUX_PID_FILE")
+        if [ -n "$target_pid" ]; then
+            # Kill the process directly via system PID, bypassing Zsh completely
+            kill -TERM "$target_pid" 2>/dev/null
+            wait "$target_pid" 2>/dev/null
+        fi
+        # Clear the file
+        > "$TMUX_PID_FILE"
     fi
 }
 
 # --- Shortcuts for Exiting ---
 function quick_exit() {
-    if [ -n "$TMUX_TIMER_PID" ]; then
-        kill -TERM $TMUX_TIMER_PID 2>/dev/null
-        disown $TMUX_TIMER_PID 2>/dev/null
+    if [ -s "$TMUX_PID_FILE" ]; then
+        local target_pid=$(cat "$TMUX_PID_FILE")
+        if [ -n "$target_pid" ]; then
+            kill -TERM "$target_pid" 2>/dev/null
+        fi
+        rm -f "$TMUX_PID_FILE"
     fi
     exit
 }
