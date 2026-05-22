@@ -89,7 +89,7 @@ if [ -n "$TMUX" ]; then
     tmux set-env -g TMUX_TIMER_DISPLAY "0s 0ms"
 fi
 
-TMUX_TIMER_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
+TMUX_TIMER_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
 
 function preexec() {
     # Safely mute job notifications ONLY inside this function scope
