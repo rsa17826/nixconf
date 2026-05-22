@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-from typing import Any
-
-
 from tkinter import Canvas, Frame, Label, Tk
 
 

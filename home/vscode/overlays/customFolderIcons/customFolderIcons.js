@@ -1,3 +1,4 @@
+// @ts-nocheck
 const USERHOME = "${USERHOME}"
 const styleElement = document.createElement("style")
 styleElement.id = "dynamic-folder-icons-style"
