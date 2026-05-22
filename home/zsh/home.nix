@@ -49,31 +49,34 @@ in
         ZSH_COMMAND_TIME_ECHO=1
 
         # --- CUSTOM WORD-BOUNDARY HISTORY SEARCH ---
-        # Track the original query and cursor position across consecutive searches
         typeset -g LAST_HISTORY_SEARCH_QUERY=""
-        typeset -g LAST_HISTORY_SEARCH_INDEX=0
+        typeset -g IS_EMPTY_SEARCH=0
 
         custom-history-search() {
           setopt localoptions extendedglob
 
-          # If the user is just moving up/down consecutively, reuse the original query.
-          # Otherwise, reset it to whatever they just typed on the command line.
+          # 1. Reset or capture state when initiating a brand new keypress sequence
           if [[ "$LASTWIDGET" != custom-history-search-* ]]; then
-            LAST_HISTORY_SEARCH_QUERY="$LBUFFER"
-            LAST_HISTORY_SEARCH_INDEX=$HISTNO
+            if [[ -z "$LBUFFER" ]]; then
+              IS_EMPTY_SEARCH=1
+              LAST_HISTORY_SEARCH_QUERY=""
+            else
+              IS_EMPTY_SEARCH=0
+              LAST_HISTORY_SEARCH_QUERY="$LBUFFER"
+            fi
           fi
 
-          # If the line is empty, just perform normal up/down history traversal
-          [[ -z "$LAST_HISTORY_SEARCH_QUERY" ]] && {
+          # 2. Hard bypass: If this sequence started on an empty line, behave normally
+          if (( IS_EMPTY_SEARCH )); then
             if [[ "$WIDGET" == *down* ]]; then
               zle .down-line-or-history
             else
               zle .up-line-or-history
             fi
             return
-          }
+          fi
 
-          # Break the *original* query down into shell tokens
+          # 3. Process the sticky pattern search for non-empty queries
           # shellcheck disable=SC2206
           local words=(''${(z)LAST_HISTORY_SEARCH_QUERY})
           local pattern=""
@@ -85,7 +88,6 @@ in
           done
           pattern="^$pattern*"
 
-          # Execute the built-in search using our sticky pattern
           if [[ "$WIDGET" == *down* ]]; then
             zle .history-beginning-search-forward "$pattern"
           else
