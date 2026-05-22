@@ -190,7 +190,10 @@ in
               (stdenv.mkDerivation {
                 pname = "rofi-blocks";
                 version = "unstable-2024-05";
-
+                postPatch = ''
+                  substituteInPlace meson.build \
+                    --replace-fail "rofi.get_variable(pkgconfig: 'pluginsdir')" "'$out/lib/rofi'"
+                '';
                 src = inputs.rofi-blocks-main;
 
                 nativeBuildInputs = with pkgs; [
@@ -203,7 +206,7 @@ in
                   glib
                   cairo
                   json-glib
-                  rofi-unwrapped # Note: Switch this to `rofi-wayland` if you use the Wayland fork
+                  rofi
                 ];
               })
             ];

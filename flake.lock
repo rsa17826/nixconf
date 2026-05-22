@@ -1018,6 +1018,22 @@
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       }
     },
+    "rofi-blocks-main": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722986209,
+        "narHash": "sha256-PtmYBS7L5waAstdZcrUnioGnDRtNZcAvk2bHS6Vk5uY=",
+        "owner": "OmarCastro",
+        "repo": "rofi-blocks",
+        "rev": "d75a9da1516daeef33a13714dfe19d2da9d6c819",
+        "type": "github"
+      },
+      "original": {
+        "owner": "OmarCastro",
+        "repo": "rofi-blocks",
+        "type": "github"
+      }
+    },
     "rofi-themes": {
       "flake": false,
       "locked": {
@@ -1065,6 +1081,7 @@
         "nixpkgs": "nixpkgs_2",
         "perkins": "perkins",
         "quickshell": "quickshell",
+        "rofi-blocks-main": "rofi-blocks-main",
         "rofi-themes": "rofi-themes",
         "sops-nix": "sops-nix",
         "wayland-keepass-autotype": "wayland-keepass-autotype"
