@@ -190,10 +190,9 @@ in
               (stdenv.mkDerivation {
                 pname = "rofi-blocks";
                 version = "unstable-2024-05";
-                postPatch = ''
-                  substituteInPlace meson.build \
-                    --replace-fail "plugins_dir = " "plugins_dir = '$out' + "
-                '';
+                mesonFlags = [
+                  "--libdir=${placeholder "out"}/lib"
+                ];
                 src = inputs.rofi-blocks-main;
 
                 nativeBuildInputs = with pkgs; [
@@ -206,7 +205,7 @@ in
                   glib
                   cairo
                   json-glib
-                  rofi
+                  rofi-unwrapped
                 ];
               })
             ];
