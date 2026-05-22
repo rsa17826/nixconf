@@ -193,12 +193,13 @@ in
 
                 src = inputs.rofi-blocks-main;
 
-                # --- THE PR #269086 METHOD ---
-                # This tricks pkg-config into returning our writeable Nix store path
-                # when Meson asks it where Rofi's plugin directory lives.
+                # --- THIS RESOLVES THE RUNTIME WARNING ---
+                postPatch = ''
+                  sed -i 's/\.name *= *"blocks"/&, .type = 1/' src/blocks.c
+                '';
+
                 PKG_CONFIG_ROFI_PLUGINSDIR = "${placeholder "out"}/lib/rofi";
                 PKG_CONFIG_VAR_pluginsdir = "${placeholder "out"}/lib/rofi";
-                # -----------------------------
 
                 nativeBuildInputs = with pkgs; [
                   pkg-config
