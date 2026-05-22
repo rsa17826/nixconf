@@ -91,7 +91,11 @@
     # };
     rofi-themes = {
       url = "github:adi1090x/rofi";
-      flake = false; # Crucial: tells Nix this is a raw git repo, not a flake
+      flake = false;
+    };
+    rofi-blocks-main = {
+      url = "github:OmarCastro/rofi-blocks";
+      flake = false;
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";

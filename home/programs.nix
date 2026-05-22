@@ -185,13 +185,34 @@ in
           kdlfmt
           libxkbcommon
           fzf
-          (rofi.override { plugins = with pkgs; [ rofi-calc ]; })
+          (rofi.override {
+            plugins = with pkgs; [
+              (stdenv.mkDerivation {
+                pname = "rofi-blocks";
+                version = "unstable-2024-05";
+
+                src = inputs.rofi-blocks-main;
+
+                nativeBuildInputs = with pkgs; [
+                  pkg-config
+                  meson
+                  ninja
+                ];
+
+                buildInputs = with pkgs; [
+                  glib
+                  cairo
+                  json-glib
+                  rofi-unwrapped # Note: Switch this to `rofi-wayland` if you use the Wayland fork
+                ];
+              })
+            ];
+          })
           typescript
           nodejs
           jpexs # ffdec
           deluged
           calibre
-          rofi-calc
           gh
           portablemc
           dgop # process stat screen thing
