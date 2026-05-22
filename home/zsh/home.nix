@@ -81,38 +81,41 @@ in
         bindkey '^[d' kill-word
         bindkey "\e[3;5~" kill-word
         bindkey '^[[Z' reverse-menu-complete
+# Ensure high-precision time is available
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-# Unique temp file for the timer's real system PID
-TMUX_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
+# Explicitly initialize the bar so it doesn't show old data on startup
+if [ -n "$TMUX" ]; then
+    tmux set-env -g TMUX_TIMER_DISPLAY "0s 0ms"
+fi
+
+TMUX_TIMER_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
 
 function preexec() {
-    if [[ -n "$ZSH_VERSION" ]]; then
-        local start_time=$EPOCHREALTIME
-    else
-        local start_time=$(date +%s.%3N)
+    # Safely mute job notifications ONLY inside this function scope
+    setopt localoptions no_monitor
+
+    # Clear out any ghost timer that might still be lingering
+    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
+        kill -9 $(cat "$TMUX_TIMER_PID_FILE") 2>/dev/null
+        > "$TMUX_TIMER_PID_FILE"
     fi
 
+    local start_time=$EPOCHREALTIME
     local parent_pid=$$
 
-    # 1. FORCE PARENT SHELL TO IGNORE JOB: Turn off monitoring in the main shell
-    setopt NO_MONITOR 2>/dev/null
-
+    # Launch the precision loop completely detached
     (
-        trap "exit" INT TERM
+        trap "exit" INT TERM EXIT
         while true; do
-            # Safety check: if main shell dies, close the loop
+            # Integrity check: if the main terminal window closes, kill this loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
 
-            if [[ -n "$ZSH_VERSION" ]]; then
-                local now=$EPOCHREALTIME
-            else
-                local now=$(date +%s.%3N)
-            fi
-
+            local now=$EPOCHREALTIME
             local delta=$(awk "BEGIN {print $now - $start_time}")
+
             local formatted=$(awk "BEGIN {
                 d = $delta;
                 m = int(d / 60);
@@ -125,30 +128,23 @@ function preexec() {
             tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
             tmux refresh-client -S
 
-            sleep 0.05 || exit
+            sleep 0.05
         done
     ) >/dev/null 2>&1 &
 
-    # Save the absolute system PID
-    local bg_pid=$!
-    echo $bg_pid > "$TMUX_PID_FILE"
-
-    # 2. DISOWN IMMEDIATELY: Completely strip it from Zsh's memory
-    disown $bg_pid 2>/dev/null
-
-    # 3. RESTORE MONITORING: Turn job tracking back on for your normal commands
-    setopt MONITOR 2>/dev/null
+    # Save the background system PID
+    echo $! > "$TMUX_TIMER_PID_FILE"
 }
 
 function precmd() {
-    if [ -s "$TMUX_PID_FILE" ]; then
+    setopt localoptions no_monitor
+
+    # Command finished: Terminate the loop instantly without waiting around
+    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
         local target_pid=$(cat "$TMUX_PID_FILE")
         if [ -n "$target_pid" ]; then
-            # Turn off monitor mode briefly so the kill/wait sequence is silent
-            setopt NO_MONITOR 2>/dev/null
-            kill -TERM "$target_pid" 2>/dev/null
-            wait "$target_pid" 2>/dev/null
-            setopt MONITOR 2>/dev/null
+            # Using kill -9 forcefully cuts the process, preventing terminal hangs
+            kill -9 "$target_pid" 2>/dev/null
         fi
         > "$TMUX_PID_FILE"
     fi
@@ -156,12 +152,9 @@ function precmd() {
 
 # --- Shortcuts for Exiting ---
 function quick_exit() {
-    if [ -s "$TMUX_PID_FILE" ]; then
-        local target_pid=$(cat "$TMUX_PID_FILE")
-        if [ -n "$target_pid" ]; then
-            kill -TERM "$target_pid" 2>/dev/null
-        fi
-        rm -f "$TMUX_PID_FILE"
+    if [ -s "$TMUX_TIMER_PID_FILE" ]; then
+        kill -9 $(cat "$TMUX_TIMER_PID_FILE") 2>/dev/null
+        rm -f "$TMUX_TIMER_PID_FILE"
     fi
     exit
 }
