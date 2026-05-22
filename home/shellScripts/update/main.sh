@@ -18,12 +18,14 @@ if [[ "$*" == *"hm"* ]]; then
 fi
 
 # Determine the target
-if [ -n "${1:-}" ]; then
+if [[ -n "${1:-}" ]]; then
   TARGET="$1"
-  [[ "$NO_GIT" == false ]] && echo "$TARGET" >"$STATE_FILE"
+  if [[ "$NO_GIT" == false ]]; then
+    echo "$TARGET" >"$STATE_FILE"
+  fi
   echo "🎯 Target set to: $TARGET"
 else
-  if [ -f "$STATE_FILE" ]; then
+  if [[ -f "$STATE_FILE" ]]; then
     TARGET=$(cat "$STATE_FILE")
     echo "🔄 Using last target: $TARGET"
   else
@@ -64,7 +66,7 @@ now=$(date +"%Y_%m_%d_%H_%M_%S")
 #   fi
 # done
 # 1. Fetch remote status without merging
-# SKIP_GIT=true
+# NO_NEW_COMMIT=true
 # next_generation=40
 echo "📡 Checking remote for updates..."
 git fetch --quiet
@@ -123,15 +125,17 @@ prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+
 [[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
 # Fallback to 0 if no generation is found in history
 
-if git diff-index --quiet HEAD --; then
-  echo "0️⃣ No changes detected. Staying on current generation."
-  next_generation=$prev_generation
+if [[ "$NO_GIT" == false ]]; then
+  if git diff-index --quiet HEAD --; then
+    echo "0️⃣ No changes detected. Staying on current generation."
+    next_generation=$prev_generation
 
-  SKIP_GIT=true
-else
-  echo "📝 Changes detected. Incrementing generation."
-  next_generation=$((prev_generation + 1))
-  SKIP_GIT=false
+    NO_NEW_COMMIT=true
+  else
+    echo "📝 Changes detected. Incrementing generation."
+    next_generation=$((prev_generation + 1))
+    NO_NEW_COMMIT=false
+  fi
 fi
 echo "$next_generation"
 
@@ -143,20 +147,19 @@ cat >"$HOME/nixconf/label.nix" <<EOF
 EOF
 # Output the label to verify
 echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
-if [[ "$NO_GIT" == 'true' ]]; then
-  SKIP_GIT=true
+if [[ "$NO_GIT" == true ]]; then
+  NO_NEW_COMMIT=true
 fi
 # Commit and push changes
-if [ "$SKIP_GIT" = false ]; then
+if [[ "$NO_NEW_COMMIT" == false && "$NO_GIT" == false ]]; then
   git add -A
   git commit -m "$NIXOS_LABEL_VERSION"
   git push
 fi
 
-# shellcheck disable=SC2329
 cleanup_abort() {
   echo -e "\n🛑 Interruption detected!"
-  if [[ "$SKIP_GIT" == false ]]; then
+  if [[ "$NO_NEW_COMMIT" == false ]]; then
     echo "📝 Amending commit to ABORTED..."
     pushd "$HOME/nixconf" >/dev/null || exit 1
     git commit --amend -m "🛑 $NIXOS_LABEL_VERSION"
@@ -190,7 +193,7 @@ else
     if [[ $BUILD_EXIT -eq 0 ]]; then
       rm -f "$TMPOUT"
       # SUCCESS: Update the commit message to reflect success
-      if [[ "$SKIP_GIT" == false ]]; then
+      if [[ "$NO_GIT" == false ]]; then
         echo "✅ Build success! Updating commit message..."
         git commit --amend -m "✅ $NIXOS_LABEL_VERSION"
         git push --force-with-lease
@@ -205,7 +208,7 @@ else
     if auto_fix_hashes "$TMPOUT"; then
       echo "🔁 Hash patched — retrying..."
       # We commit the fix here so the next attempt starts clean
-      if [[ "$SKIP_GIT" == false ]]; then
+      if [[ "$NO_GIT" == false ]]; then
         git add -A
         git commit --amend --no-edit
       fi
@@ -214,7 +217,7 @@ else
     else
       # PERMANENT FAILURE: Update commit message to reflect failure
       echo "⚠️ No fixable hashes found."
-      if [[ "$SKIP_GIT" == false ]]; then
+      if [[ "$NO_GIT" == false ]]; then
         git commit --amend -m "❌ $NIXOS_LABEL_VERSION"
         git push --force-with-lease
       fi
