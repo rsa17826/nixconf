@@ -82,7 +82,7 @@ in
         bindkey "\e[3;5~" kill-word
         bindkey '^[[Z' reverse-menu-complete
 
-        [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
+[[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
 function preexec() {
     if [[ -n "$ZSH_VERSION" ]]; then
@@ -91,11 +91,23 @@ function preexec() {
         local start_time=$(date +%s.%3N)
     fi
 
-    # SILENCE START MESSAGE: Wrap the background launch in a subshell
-    # and turn off monitor mode (+m) so the job ID is never printed.
+    # Save the main shell's Process ID so the background loop can monitor it
+    local parent_pid=$$
+
+    # Start the background loop
     (
+        # Turn off monitor mode so job creation text is completely hidden
         set +m
+
+        # TRAP: If this subshell receives an interrupt signal, exit immediately
+        trap "exit" INT TERM
+
         while true; do
+            # SAFETY CHECK: If the main terminal shell dies or changes state, kill this loop
+            if ! kill -0 $parent_pid 2>/dev/null; then
+                exit
+            fi
+
             if [[ -n "$ZSH_VERSION" ]]; then
                 local now=$EPOCHREALTIME
             else
@@ -114,22 +126,22 @@ function preexec() {
 
             tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
             tmux refresh-client -S
-            sleep 0.05
+
+            # Use a tiny sleep; if interrupted, it will break the loop gracefully
+            sleep 0.05 || exit
         done
     ) & 2>/dev/null
+
     TMUX_TIMER_PID=$!
 }
 
 function precmd() {
-    # SILENCE TERMINATE MESSAGE: Use a clean kill sequence
+    # Clean up the background timer when a command finishes OR is interrupted via ^C
     if [ -n "$TMUX_TIMER_PID" ]; then
-        # Disable job notifications completely for this operation
         unsetopt NOTIFY 2>/dev/null
 
-        # Send kill signal silently
-        kill $TMUX_TIMER_PID 2>/dev/null
-
-        # Abandon tracking of the job so Zsh doesn't complain on exit
+        # Send a termination signal to the background process group safely
+        kill -TERM $TMUX_TIMER_PID 2>/dev/null
         disown $TMUX_TIMER_PID 2>/dev/null
 
         unset TMUX_TIMER_PID
@@ -137,15 +149,14 @@ function precmd() {
 }
 
 # --- Shortcuts for Exiting ---
-# Custom function to kill the timer loop right before exiting
-# so Zsh never warns you about "running jobs".
 function quick_exit() {
     if [ -n "$TMUX_TIMER_PID" ]; then
-        kill $TMUX_TIMER_PID 2>/dev/null
+        kill -TERM $TMUX_TIMER_PID 2>/dev/null
         disown $TMUX_TIMER_PID 2>/dev/null
     fi
     exit
 }
+
 
 alias q!="quick_exit"
       '';
