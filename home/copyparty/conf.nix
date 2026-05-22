@@ -110,6 +110,7 @@
             r = [
               "songs"
               "s"
+              "admin"
             ];
           };
           flags = {
