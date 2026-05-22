@@ -190,9 +190,7 @@ in
               (stdenv.mkDerivation {
                 pname = "rofi-blocks";
                 version = "unstable-2024-05";
-                mesonFlags = [
-                  "--libdir=${placeholder "out"}/lib"
-                ];
+
                 src = inputs.rofi-blocks-main;
 
                 nativeBuildInputs = with pkgs; [
@@ -207,6 +205,15 @@ in
                   json-glib
                   rofi-unwrapped
                 ];
+
+                # --- USE THIS INSTEAD ---
+                # This passes a direct instruction to Meson's dependency resolver,
+                # forcing it to rewire the plugin path variable to our $out store path.
+                mesonFlags = [
+                  "-Dpkg_config_path=${rofi-unwrapped}/lib/pkgconfig"
+                  "--define-variable=pluginsdir=${placeholder "out"}/lib/rofi"
+                ];
+                # ------------------------
               })
             ];
           })
