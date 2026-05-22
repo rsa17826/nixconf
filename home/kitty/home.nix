@@ -3,6 +3,10 @@
   programs = {
     kitty = {
       enable = true;
+      settings = {
+        confirm_os_window_close = 0;
+
+      };
       keybindings = {
         # Navigation (Ctrl + Arrows)
         # "ctrl+left" = "send_text all \\x1bb";
@@ -16,7 +20,7 @@
         # "ctrl+backspace" = "send_text all \\x17";
         # "ctrl+delete" = "send_text all \\x1bd";
         # Optional: Rebind Interrupt so you can still stop processes
-        confirm_os_window_close = 0;
+
         "ctrl+c" = "copy_and_clear_or_interrupt";
         "ctrl+v" = "paste_from_clipboard";
         # "ctrl+left" = "send_text all \\x1bb";
