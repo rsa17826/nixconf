@@ -85,58 +85,36 @@ in
         setopt INTERACTIVE_COMMENTS
         [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-function preexec() {
-    # 1. Get exact start time
-    if [[ -n "$ZSH_VERSION" ]]; then
-        local start_time=$EPOCHREALTIME
-    else
-        local start_time=$(date +%s.%3N)
-    fi
+        function precmd() {
+            # 1. If a background timer is ticking, kill it silently
+            if [ -n "$TMUX_TIMER_PID" ]; then
+                # Direct stderr and stdout to /dev/null
+                kill $TMUX_TIMER_PID 2>/dev/null
 
-    # 2. Start a background loop that updates tmux rapidly
-    (
-        while true; do
-            if [[ -n "$ZSH_VERSION" ]]; then
-                local now=$EPOCHREALTIME
-            else
-                local now=$(date +%s.%3N)
+                # Disown tells the shell to stop monitoring this background job,
+                # which completely suppresses the "+ terminated" message.
+                if [[ -n "$ZSH_VERSION" ]]; then
+                    disown $TMUX_TIMER_PID 2>/dev/null
+                else
+                    # For Bash, we disown the job before waiting
+                    eval "disown $TMUX_TIMER_PID" 2>/dev/null
+                fi
+
+                wait $TMUX_TIMER_PID 2>/dev/null
+                unset TMUX_TIMER_PID
             fi
+        }
 
-            # Calculate delta
-            local delta=$(awk "BEGIN {print $now - $start_time}")
-
-            # Format time string
-            local formatted=$(awk "BEGIN {
-                d = $delta;
-                m = int(d / 60);
-                s = int(d % 60);
-                ms = int((d - int(d)) * 1000);
-                if (m > 0) printf \"%dm \", m;
-                printf \"%ds %dms\", s, ms;
-            }")
-
-            # Push to tmux and force a visual refresh
-            tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
-            tmux refresh-client -S
-
-            # Sleep for ~50ms for smooth millisecond updates
-            sleep 0.05
-        done
-    ) &
-    # Save the background process PID so we can kill it when the command ends
-    TMUX_TIMER_PID=$!
-}
-
-function precmd() {
-    # 1. If a background timer is ticking, kill it
-    if [ -n "$TMUX_TIMER_PID" ]; then
-        kill $TMUX_TIMER_PID 2>/dev/null
-        wait $TMUX_TIMER_PID 2>/dev/null
-        unset TMUX_TIMER_PID
-    fi
-    # The last recorded value inside TMUX_TIMER_DISPLAY will naturally freeze
-    # at the bottom of your screen until your next command starts!
-}
+        function precmd() {
+            # 1. If a background timer is ticking, kill it
+            if [ -n "$TMUX_TIMER_PID" ]; then
+                kill $TMUX_TIMER_PID 2>/dev/null
+                wait $TMUX_TIMER_PID 2>/dev/null
+                unset TMUX_TIMER_PID
+            fi
+            # The last recorded value inside TMUX_TIMER_DISPLAY will naturally freeze
+            # at the bottom of your screen until your next command starts!
+        }
       '';
     };
   };
