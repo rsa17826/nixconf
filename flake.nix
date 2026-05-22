@@ -89,6 +89,10 @@
     # flake-utils.follows="flake-utils";
     # };
     # };
+    rofi-themes = {
+      url = "github:adi1090x/rofi";
+      flake = false; # Crucial: tells Nix this is a raw git repo, not a flake
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
