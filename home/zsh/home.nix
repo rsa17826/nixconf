@@ -83,16 +83,15 @@ in
         bindkey '^[[Z' reverse-menu-complete
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-# File to track this specific shell session's background timer PID
 TIMER_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
+TIMER_START_FILE="/tmp/tmux_timer_start_''${USER}_$$.txt"
 
-# Initialize the active pane's timer to 0s on startup
 if [ -n "$TMUX_PANE" ]; then
-    tmux set -t "$TMUX_PANE" @pane_timer "0s 0ms"
+    tmux set-t "$TMUX_PANE" @pane_timer "0s 0ms"
 fi
 
 function preexec() {
-    # Clean up any lingering timer file/process for this specific shell safely
+    # Clean up any lingering timer files/processes
     if [ -s "$TIMER_PID_FILE" ]; then
         local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
         if [ -n "$old_pid" ]; then
@@ -105,13 +104,14 @@ function preexec() {
     local parent_pid=$$
     local parent_pane=$TMUX_PANE
 
-    # Drop job monitoring briefly so Zsh doesn't output job creation text
+    # Save the start time to a file so precmd can read it for the final calculation
+    echo "$start_time" > "$TIMER_START_FILE"
+
     unsetopt MONITOR 2>/dev/null
 
     (
         trap "exit" INT TERM EXIT
         while true; do
-            # Integrity check: if main shell dies, kill this loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
@@ -128,23 +128,41 @@ function preexec() {
                 printf \"%ds %dms\", s, ms;
             }")
 
-            # Target ONLY the exact pane that spawned this command
-            tmux set -t "$parent_pane" @pane_timer "$formatted"
+            tmux set-t "$parent_pane" @pane_timer "$formatted"
             tmux refresh-client -S 2>/dev/null
 
             sleep 0.05
         done
     ) >/dev/null 2>&1 &!
 
-    # Save the background system PID safely
     echo $! > "$TIMER_PID_FILE"
-
-    # Restore job monitoring for your everyday tasks
     setopt MONITOR 2>/dev/null
 }
 
 function precmd() {
-    # Command finished: Terminate the loop instantly
+    local exact_end_time=$EPOCHREALTIME
+
+    # 1. PUSH THE FINAL TRUE TIME: Calculate the absolute final duration right now
+    if [ -s "$TIMER_START_FILE" ] && [ -n "$TMUX_PANE" ]; then
+        local start_time=$(cat "$TIMER_START_FILE" 2>/dev/null)
+        if [ -n "$start_time" ]; then
+            local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
+            local final_formatted=$(awk "BEGIN {
+                d = $delta;
+                m = int(d / 60);
+                s = int(d % 60);
+                ms = int((d - int(d)) * 1000);
+                if (m > 0) printf \"%dm \", m;
+                printf \"%ds %dms\", s, ms;
+            }")
+            # Overwrite tmux bar one last time with the absolute exact final time
+            tmux set-t "$TMUX_PANE" @pane_timer "$final_formatted"
+            tmux refresh-client -S 2>/dev/null
+        fi
+        rm -f "$TIMER_START_FILE" 2>/dev/null
+    fi
+
+    # 2. KILL THE BACKGROUND PROCESS
     if [ -s "$TIMER_PID_FILE" ]; then
         local target_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
         if [ -n "$target_pid" ]; then
@@ -165,6 +183,7 @@ function quick_exit() {
         fi
         rm -f "$TIMER_PID_FILE" 2>/dev/null
     fi
+    rm -f "$TIMER_START_FILE" 2>/dev/null
     exit
 }
 
