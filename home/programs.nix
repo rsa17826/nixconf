@@ -185,7 +185,7 @@ in
           kdlfmt
           libxkbcommon
           fzf
-          rofi
+          (rofi.override { plugins = with pkgs; [ rofi-calc ]; })
           typescript
           nodejs
           jpexs # ffdec
@@ -399,7 +399,6 @@ in
       _7zz # archival tool
       nix-ld # run linux programs
       kitty # terminal emulator
-      # rofi
       # albert
       # keyd # disables capslock and enables numlock
       anyrun # application launcher
