@@ -286,7 +286,6 @@ in
           faugus-launcher
           # thunar # wiztree
           # bottles
-          # https://github.com/anyrun-org/anyrun
           # ulauncher
           qt6.qtdeclarative
           zenity
@@ -430,7 +429,6 @@ in
       kitty # terminal emulator
       # albert
       # keyd # disables capslock and enables numlock
-      anyrun # application launcher
       nix-output-monitor # nix update formatter
       cascadia-code # font
       swaynotificationcenter # notification daemon

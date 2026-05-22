@@ -26,4 +26,4 @@ hl.define_submap("launcher", function()
 end)
 
 -- Global launcher (works outside of submap too)
-m.bind("^+spc", hl.dsp.exec_cmd("anyrun"))
+m.bind("^+spc", hl.dsp.exec_cmd("rofi-launcher"))
