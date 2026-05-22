@@ -308,3 +308,9 @@ $2
 @replace $1m.bind(
 @endregex
 
+@name remove some wrong pos pyright comments
+@file \.py$
+@regex ^( *\)) # pyright:.*
+@replace $1
+@endregex
+

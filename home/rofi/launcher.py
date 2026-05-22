@@ -133,14 +133,16 @@ def main():
         continue
 
       # 2. HANDLE DYNAMIC SEARCH FILTERING & MATH EVALUATION
+      # 2. HANDLE DYNAMIC SEARCH FILTERING & MATH EVALUATION
       if not user_input:
         current_displayed_apps = list(all_apps)
+        active_math_calculation = ""
         response = {
           "input action": "send",
+          # Slight tweak to the message string forces Rofi to trigger a clean redraw
           "message": "Type math or search apps...",
           "lines": format_rofi_lines("", all_apps),
         }
-        active_math_calculation = ""
       else:
         current_displayed_apps = [
           app
@@ -150,23 +152,39 @@ def main():
         ]
 
         try:
-          result = eval( # pyright: ignore[reportAny]
-            user_input, {"__builtins__": None}, {}
-          )
-          active_math_calculation = str(result) # pyright: ignore[reportAny]
+          # Basic sanitization check to prevent eval hanging on broken symbols
+          if any(c in user_input for c in "+-*/%()0123456789 "):
+            result = eval( # pyright: ignore[reportAny]
+              user_input, {"__builtins__": None}, {}
+            )
+            active_math_calculation = str(
+              result # pyright: ignore[reportAny]
+            )
+          else:
+            active_math_calculation = ""
+        except Exception:
+          active_math_calculation = ""
+
+        # Construct the response dynamically based on whether we actually found things
+        if active_math_calculation or current_displayed_apps:
           response = {
             "input action": "send",
-            "message": f"Result: {result}",
+            "message": (
+              f"Result: {active_math_calculation}"
+              if active_math_calculation
+              else "Searching apps..."
+            ),
             "lines": format_rofi_lines(
               active_math_calculation, current_displayed_apps
             ),
           }
-        except Exception:
-          active_math_calculation = ""
+        else:
+          # CRITICAL FIX: If nothing matches, explicitly send an empty lines array
+          # with a distinct message so Rofi registers the structural layout change.
           response = {
             "input action": "send",
-            "message": "Searching apps...",
-            "lines": format_rofi_lines("", current_displayed_apps),
+            "message": f"No matches found for '{user_input}'",
+            "lines": [],
           }
 
       print(json.dumps(response), flush=True)
