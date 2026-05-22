@@ -188,7 +188,7 @@ def main():
           }
       _ = response["lines"].append( # type: ignore[union-attr] # pyright: ignore[reportUnknownMemberType, reportAttributeAccessIssue, reportUnknownVariableType]
         {
-          "text": f"No applications match '{user_input}'",
+          "text": f"",
           "icon": "dialog-warning", # Keeps the UI structure intact
         }
       )
