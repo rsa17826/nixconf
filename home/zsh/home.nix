@@ -83,50 +83,60 @@ in
         bindkey '^[[Z' reverse-menu-complete
 
         setopt INTERACTIVE_COMMENTS
-        # Ensure float math/millisecond support is available (required for Zsh)
         [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-        # Record start time and flag that a command is active
-        function preexec() {
-            # Get current epoch time in seconds with millisecond precision
+function preexec() {
+    # 1. Get exact start time
+    if [[ -n "$ZSH_VERSION" ]]; then
+        local start_time=$EPOCHREALTIME
+    else
+        local start_time=$(date +%s.%3N)
+    fi
+
+    # 2. Start a background loop that updates tmux rapidly
+    (
+        while true; do
             if [[ -n "$ZSH_VERSION" ]]; then
-                CMD_START_TIME=$EPOCHREALTIME
+                local now=$EPOCHREALTIME
             else
-                CMD_START_TIME=$(date +%s.%3N)
+                local now=$(date +%s.%3N)
             fi
-            # Store start time globally for tmux to read
-            tmux set-env -g TMUX_CMD_START "$CMD_START_TIME"
-            tmux set-env -g TMUX_CMD_STATE "running"
-        }
 
-        # Command finished: calculate and lock the final duration
-        function precmd() {
-            if [ -n "$CMD_START_TIME" ]; then
-                if [[ -n "$ZSH_VERSION" ]]; then
-                    local end_time=$EPOCHREALTIME
-                else
-                    local end_time=$(date +%s.%3N)
-                fi
+            # Calculate delta
+            local delta=$(awk "BEGIN {print $now - $start_time}")
 
-                # Calculate duration
-                local delta=$(awk "BEGIN {print $end_time - $CMD_START_TIME}")
+            # Format time string
+            local formatted=$(awk "BEGIN {
+                d = $delta;
+                m = int(d / 60);
+                s = int(d % 60);
+                ms = int((d - int(d)) * 1000);
+                if (m > 0) printf \"%dm \", m;
+                printf \"%ds %dms\", s, ms;
+            }")
 
-                # Format the final duration into a clean string (e.g., 1m 4s 230ms)
-                local formatted_time=$(awk "BEGIN {
-                    d = $delta;
-                    m = int(d / 60);
-                    s = int(d % 60);
-                    ms = int((d - int(d)) * 1000);
-                    if (m > 0) printf \"%dm \", m;
-                    printf \"%ds %dms\", s, ms;
-                }")
+            # Push to tmux and force a visual refresh
+            tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
+            tmux refresh-client -S
 
-                # Pass final state to tmux
-                tmux set-env -g TMUX_CMD_STATE "finished"
-                tmux set-env -g TMUX_LAST_DURATION "$formatted_time"
-                unset CMD_START_TIME
-            fi
-        }
+            # Sleep for ~50ms for smooth millisecond updates
+            sleep 0.05
+        done
+    ) &
+    # Save the background process PID so we can kill it when the command ends
+    TMUX_TIMER_PID=$!
+}
+
+function precmd() {
+    # 1. If a background timer is ticking, kill it
+    if [ -n "$TMUX_TIMER_PID" ]; then
+        kill $TMUX_TIMER_PID 2>/dev/null
+        wait $TMUX_TIMER_PID 2>/dev/null
+        unset TMUX_TIMER_PID
+    fi
+    # The last recorded value inside TMUX_TIMER_DISPLAY will naturally freeze
+    # at the bottom of your screen until your next command starts!
+}
       '';
     };
   };
