@@ -11,13 +11,22 @@ from typing import cast
 def get_desktop_apps() -> list[dict[str, str]]:
   """Scans system paths for installed desktop applications and extracts names, execs, and icons."""
   apps: list[dict[str, str]] = []
-  paths = [
-    "/run/current-system/sw/share/applications/*.desktop",
-    os.path.expanduser("~/.local/share/applications/*.desktop"),
-  ]
+  # 1. Grab XDG data directories from the environment, fallback to defaults if empty
+  xdg_data_dirs = os.environ.get(
+    "XDG_DATA_DIRS", "/usr/local/share:/usr/share"
+  ).split(":")
+  xdg_data_home = os.environ.get(
+    "XDG_DATA_HOME", os.path.expanduser("~/.local/share")
+  )
 
-  seen_names: set[str] = set()
-  for path_pattern in paths:
+  # 2. Combine them into a single list of search paths
+  search_paths = [os.path.join(xdg_data_home, "applications/*.desktop")]
+  for data_dir in xdg_data_dirs:
+    if os.path.exists(os.path.join(data_dir, "applications")):
+      search_paths.append(os.path.join(data_dir, "applications/*.desktop"))
+
+  seen_names: set[str] = set[str]()
+  for path_pattern in search_paths:
     for filepath in glob.glob(path_pattern):
       try:
         with open(filepath, "r", errors="ignore") as f:
