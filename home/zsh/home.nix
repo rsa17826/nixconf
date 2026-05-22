@@ -83,6 +83,50 @@ in
         bindkey '^[[Z' reverse-menu-complete
 
         setopt INTERACTIVE_COMMENTS
+        # Ensure float math/millisecond support is available (required for Zsh)
+        [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
+
+        # Record start time and flag that a command is active
+        function preexec() {
+            # Get current epoch time in seconds with millisecond precision
+            if [[ -n "$ZSH_VERSION" ]]; then
+                CMD_START_TIME=$EPOCHREALTIME
+            else
+                CMD_START_TIME=$(date +%s.%3N)
+            fi
+            # Store start time globally for tmux to read
+            tmux set-env -g TMUX_CMD_START "$CMD_START_TIME"
+            tmux set-env -g TMUX_CMD_STATE "running"
+        }
+
+        # Command finished: calculate and lock the final duration
+        function precmd() {
+            if [ -n "$CMD_START_TIME" ]; then
+                if [[ -n "$ZSH_VERSION" ]]; then
+                    local end_time=$EPOCHREALTIME
+                else
+                    local end_time=$(date +%s.%3N)
+                fi
+
+                # Calculate duration
+                local delta=$(awk "BEGIN {print $end_time - $CMD_START_TIME}")
+
+                # Format the final duration into a clean string (e.g., 1m 4s 230ms)
+                local formatted_time=$(awk "BEGIN {
+                    d = $delta;
+                    m = int(d / 60);
+                    s = int(d % 60);
+                    ms = int((d - int(d)) * 1000);
+                    if (m > 0) printf \"%dm \", m;
+                    printf \"%ds %dms\", s, ms;
+                }")
+
+                # Pass final state to tmux
+                tmux set-env -g TMUX_CMD_STATE "finished"
+                tmux set-env -g TMUX_LAST_DURATION "$formatted_time"
+                unset CMD_START_TIME
+            fi
+        }
       '';
     };
   };
