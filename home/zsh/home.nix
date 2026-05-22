@@ -85,7 +85,7 @@ in
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
 # Define a unique temp file to hold the background timer's real system PID
-TMUX_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
+TMUX_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
 
 function preexec() {
     if [[ -n "$ZSH_VERSION" ]]; then
