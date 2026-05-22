@@ -6,67 +6,11 @@ import os
 import glob
 import re
 from typing import cast
-import threading
-
-CACHE_DIR = os.path.expanduser("~/.cache/rofi-launcher-icons")
-os.makedirs(CACHE_DIR, exist_ok=True)
-
-
-def resolve_and_cache_icon_bg(icon_name: str, cache_path: str):
-  """Background task to extract/copy the real theme icon to our fast cache."""
-  if not icon_name or icon_name == "application-x-executable":
-    return
-
-  # Use system tools (like lxappearance, gtk-update-icon-cache lookups, or directly finding it)
-  # A fast, reliable way in NixOS/Linux to resolve an icon name to a file path:
-  try:
-    # We look for the icon using a quick fallback sequence or xdg tools if available
-    # For simplicity, we can use a quick search or match common sizes.
-    # To keep it blazing fast and non-blocking, we use 'xdg-icon-resource' or 'find'
-    # But even better: let's use a standard look up path.
-    for base_path in [
-      "/run/current-system/sw/share/icons/hicolor/48x48/apps",
-      os.path.expanduser("~/.local/share/icons"),
-    ]:
-      found = glob.glob(f"{base_path}/{icon_name}.*")
-      if found:
-        # Cache the real file path so Rofi doesn't have to resolve the theme string next time
-        with open(cache_path, "w") as f:
-          _ = f.write(found[0])
-        break
-  except Exception:
-    pass
-
-
-def get_fast_icon(icon_name: str) -> str:
-  """Returns a cached absolute path instantly, while spinning up a background check."""
-  if not icon_name or "/" in icon_name:
-    return icon_name or "application-x-executable"
-
-  cache_path = os.path.join(CACHE_DIR, f"{icon_name}.path")
-
-  # If we already have the resolved path cached from last time, use it instantly!
-  if os.path.exists(cache_path):
-    try:
-      with open(cache_path, "r") as f:
-        cached_real_path = f.read().strip()
-        if os.path.exists(cached_real_path):
-          return cached_real_path
-    except Exception:
-      pass
-
-  # If it's a new icon or missing, trigger a background thread to cache it for next time
-  # but immediately return the text name so Rofi doesn't freeze right now.
-  threading.Thread(
-    target=resolve_and_cache_icon_bg, args=(icon_name, cache_path), daemon=True
-  ).start()
-  return icon_name
 
 
 def get_desktop_apps() -> list[dict[str, str]]:
   """Scans system paths for installed desktop applications and extracts names, execs, and icons."""
   apps: list[dict[str, str]] = []
-
   xdg_data_dirs = os.environ.get(
     "XDG_DATA_DIRS", "/usr/local/share:/run/current-system/sw/share:/usr/share"
   ).split(":")
@@ -74,13 +18,13 @@ def get_desktop_apps() -> list[dict[str, str]]:
     "XDG_DATA_HOME", os.path.expanduser("~/.local/share")
   )
 
-  paths = [os.path.join(xdg_data_home, "applications/*.desktop")]
+  search_paths = [os.path.join(xdg_data_home, "applications/*.desktop")]
   for data_dir in xdg_data_dirs:
     if os.path.exists(os.path.join(data_dir, "applications")):
-      paths.append(os.path.join(data_dir, "applications/*.desktop"))
+      search_paths.append(os.path.join(data_dir, "applications/*.desktop"))
 
-  seen_names: set[str] = set()
-  for path_pattern in paths:
+  seen_names: set[str] = set[str]()
+  for path_pattern in search_paths:
     for filepath in glob.glob(path_pattern):
       try:
         with open(filepath, "r", errors="ignore") as f:
@@ -96,20 +40,14 @@ def get_desktop_apps() -> list[dict[str, str]]:
           executable = exec_match.group(1).strip()
           executable = re.sub(r" %Internal| %[uUfFdiInm]", "", executable)
 
-          raw_icon = (
+          icon = (
             icon_match.group(1).strip()
             if icon_match
             else "application-x-executable"
           )
 
-          # --- MAGIC HAPPENS HERE ---
-          # Instead of giving Rofi the raw icon name, we give it our lightning-fast cached path
-          fast_icon = get_fast_icon(raw_icon)
-
           if name not in seen_names:
-            apps.append(
-              {"name": name, "exec": executable, "icon": fast_icon}
-            )
+            apps.append({"name": name, "exec": executable, "icon": icon})
             seen_names.add(name)
       except Exception:
         continue
