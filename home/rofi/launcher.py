@@ -167,7 +167,7 @@ def main():
 
         # Construct the response dynamically based on whether we actually found things
         if active_math_calculation or current_displayed_apps:
-          response = {
+          response: dict[str, str | list[dict[str, str]]] = {
             "input action": "send",
             "message": (
               f"Result: {active_math_calculation}"
@@ -186,7 +186,12 @@ def main():
             "message": f"No matches found for '{user_input}'",
             "lines": [],
           }
-
+      _ = response["lines"].append( # type: ignore[union-attr] # pyright: ignore[reportUnknownMemberType, reportAttributeAccessIssue, reportUnknownVariableType]
+        {
+          "text": f"No applications match '{user_input}'",
+          "icon": "dialog-warning", # Keeps the UI structure intact
+        }
+      )
       print(json.dumps(response), flush=True)
 
     except Exception as e:
