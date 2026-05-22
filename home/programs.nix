@@ -187,33 +187,11 @@ in
           fzf
           (rofi.override {
             plugins = with pkgs; [
-              (stdenv.mkDerivation {
-                pname = "rofi-blocks";
+              # Take the existing rofi-blocks package and just swap the source code
+              (rofi-blocks.overrideAttrs (oldAttrs: {
                 version = "unstable-2024-05";
-
                 src = inputs.rofi-blocks-main;
-
-                # --- THE CORRECT PATCH ---
-                # This exactly matches the assignment line and forces it to use $out
-                postPatch = ''
-                  substituteInPlace meson.build \
-                    --replace-fail "plugins_dir = rofi_dep.get_variable(pkgconfig: 'pluginsdir')" "plugins_dir = join_paths(get_option('prefix'), 'lib', 'rofi')"
-                '';
-                # -------------------------
-
-                nativeBuildInputs = with pkgs; [
-                  pkg-config
-                  meson
-                  ninja
-                ];
-
-                buildInputs = with pkgs; [
-                  glib
-                  cairo
-                  json-glib
-                  rofi-unwrapped
-                ];
-              })
+              }))
             ];
           })
           typescript
