@@ -81,19 +81,18 @@ in
         bindkey '^[d' kill-word
         bindkey "\e[3;5~" kill-word
         bindkey '^[[Z' reverse-menu-complete
-# Ensure high-precision time is available
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-# Setup a single, consistent file name for the PID tracking
+# File to track this specific shell session's background timer PID
 TIMER_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
 
-# Reset tmux variable on terminal startup
-if [ -n "$TMUX" ]; then
-    tmux set-env -g TMUX_TIMER_DISPLAY "0s 0ms"
+# Initialize the active pane's timer to 0s on startup
+if [ -n "$TMUX_PANE" ]; then
+    tmux set -t "$TMUX_PANE" @pane_timer "0s 0ms"
 fi
 
 function preexec() {
-    # Clear out any ghost timer that might still be lingering
+    # Clean up any lingering timer file/process for this specific shell safely
     if [ -s "$TIMER_PID_FILE" ]; then
         local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
         if [ -n "$old_pid" ]; then
@@ -104,14 +103,15 @@ function preexec() {
 
     local start_time=$EPOCHREALTIME
     local parent_pid=$$
+    local parent_pane=$TMUX_PANE
 
-    # Temporarily drop monitor mode so Zsh doesn't announce the background task
+    # Drop job monitoring briefly so Zsh doesn't output job creation text
     unsetopt MONITOR 2>/dev/null
 
     (
         trap "exit" INT TERM EXIT
         while true; do
-            # Safety check: if main terminal window closes, kill this loop
+            # Integrity check: if main shell dies, kill this loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
@@ -128,17 +128,18 @@ function preexec() {
                 printf \"%ds %dms\", s, ms;
             }")
 
-            tmux set-env -g TMUX_TIMER_DISPLAY "$formatted"
+            # Target ONLY the exact pane that spawned this command
+            tmux set -t "$parent_pane" @pane_timer "$formatted"
             tmux refresh-client -S 2>/dev/null
 
             sleep 0.05
         done
-    ) >/dev/null 2>&1 &! # '&!' launches the job completely detached from Zsh'
+    ) >/dev/null 2>&1 &!
 
     # Save the background system PID safely
     echo $! > "$TIMER_PID_FILE"
 
-    # Restore job monitoring for your everyday terminal operations
+    # Restore job monitoring for your everyday tasks
     setopt MONITOR 2>/dev/null
 }
 
