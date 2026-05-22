@@ -81,11 +81,10 @@ in
         bindkey '^[d' kill-word
         bindkey "\e[3;5~" kill-word
         bindkey '^[[Z' reverse-menu-complete
-
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-# Define a unique temp file to hold the background timer's real system PID
-TMUX_PID_FILE="/tmp/tmux_timer_''${USER}_$$.pid"
+# Unique temp file for the timer's real system PID
+TMUX_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
 
 function preexec() {
     if [[ -n "$ZSH_VERSION" ]]; then
@@ -96,14 +95,13 @@ function preexec() {
 
     local parent_pid=$$
 
-    # Launch the background loop in a completely detached subshell
-    (
-        # Complete isolation from Zsh job control
-        set +m
-        trap "exit" INT TERM
+    # 1. FORCE PARENT SHELL TO IGNORE JOB: Turn off monitoring in the main shell
+    setopt NO_MONITOR 2>/dev/null
 
+    (
+        trap "exit" INT TERM
         while true; do
-            # Safety check: if parent terminal dies, kill this loop
+            # Safety check: if main shell dies, close the loop
             if ! kill -0 $parent_pid 2>/dev/null; then
                 exit
             fi
@@ -131,20 +129,27 @@ function preexec() {
         done
     ) >/dev/null 2>&1 &
 
-    # Save the absolute system PID directly to our file
-    echo $! > "$TMUX_PID_FILE"
+    # Save the absolute system PID
+    local bg_pid=$!
+    echo $bg_pid > "$TMUX_PID_FILE"
+
+    # 2. DISOWN IMMEDIATELY: Completely strip it from Zsh's memory
+    disown $bg_pid 2>/dev/null
+
+    # 3. RESTORE MONITORING: Turn job tracking back on for your normal commands
+    setopt MONITOR 2>/dev/null
 }
 
 function precmd() {
-    # Read the system PID from the file and kill it directly
     if [ -s "$TMUX_PID_FILE" ]; then
         local target_pid=$(cat "$TMUX_PID_FILE")
         if [ -n "$target_pid" ]; then
-            # Kill the process directly via system PID, bypassing Zsh completely
+            # Turn off monitor mode briefly so the kill/wait sequence is silent
+            setopt NO_MONITOR 2>/dev/null
             kill -TERM "$target_pid" 2>/dev/null
             wait "$target_pid" 2>/dev/null
+            setopt MONITOR 2>/dev/null
         fi
-        # Clear the file
         > "$TMUX_PID_FILE"
     fi
 }
@@ -160,7 +165,6 @@ function quick_exit() {
     fi
     exit
 }
-
 
 alias q!="quick_exit"
       '';
