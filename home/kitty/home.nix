@@ -7,6 +7,7 @@
         confirm_os_window_close = 0;
       };
       settings = {
+        shell_integration = "no-title";
         tab_bar_min_tabs = 1;
         # Navigation (Ctrl + Arrows)
         # "ctrl+left" = "send_text all \\x1bb";
