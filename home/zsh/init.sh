@@ -103,6 +103,20 @@ function preexec() {
   setopt MONITOR 2>/dev/null
 }
 
+# --- CLEANUP ON SHELL EXIT ---
+function zsh-timer-exit-cleanup() {
+  # Kill the live-updating background subshell immediately so tmux doesn't
+  # wait on the process group after zsh itself has already exited.
+  if [ -s "$TIMER_PID_FILE" ]; then
+    local _exit_pid
+    _exit_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+    [ -n "$_exit_pid" ] && kill -9 "$_exit_pid" 2>/dev/null
+    rm -f "$TIMER_PID_FILE" 2>/dev/null
+  fi
+  rm -f "$TIMER_START_FILE" 2>/dev/null
+}
+add-zsh-hook zshexit zsh-timer-exit-cleanup
+
 function precmd() {
   local exact_end_time=$EPOCHREALTIME
 

@@ -125,17 +125,15 @@ prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+
 [[ ! "$prev_generation" =~ ^[0-9]+$ ]] && prev_generation=0
 # Fallback to 0 if no generation is found in history
 
-if [[ "$NO_GIT" == false ]]; then
-  if git diff-index --quiet HEAD --; then
-    echo "0️⃣ No changes detected. Staying on current generation."
-    next_generation=$prev_generation
+if [[ "$NO_GIT" == false && $(git diff-index --quiet HEAD --) ]]; then
+  echo "0️⃣ No changes detected. Staying on current generation."
+  next_generation=$prev_generation
 
-    NO_NEW_COMMIT=true
-  else
-    echo "📝 Changes detected. Incrementing generation."
-    next_generation=$((prev_generation + 1))
-    NO_NEW_COMMIT=false
-  fi
+  NO_NEW_COMMIT=true
+else
+  echo "📝 Changes detected. Incrementing generation."
+  next_generation=$((prev_generation + 1))
+  NO_NEW_COMMIT=false
 fi
 echo "$next_generation"
 

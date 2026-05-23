@@ -41,7 +41,8 @@ in
     in
     {
       home = {
-        file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
+        file = editable.entries;
+        # file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
         username = userConfig.uname;
         homeDirectory = "/home/${userConfig.uname}";
         stateVersion = "26.05";
@@ -66,7 +67,7 @@ in
         };
       };
       xdg = {
-        configFile = lib.filterAttrs (n: v: !lib.hasPrefix ".local" n) editable.entries;
+        # configFile = lib.filterAttrs (n: v: !lib.hasPrefix ".local" n) editable.entries;
         enable = true;
         dataHome = "/home/${userConfig.uname}/.local/share";
         configHome = "/home/${userConfig.uname}/.config";

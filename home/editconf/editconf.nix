@@ -2,21 +2,21 @@
 
 configs:
 # configs is a list of:
-# { name = "hypr"; src = <path>; srcStr = "..."; nixKey = "hypr"; dest = "$HOME/.config/hypr"; files = [...]; dirs = [...]; }
-# nixKey  = key prefix for xdg.configFile or home.file (relative)
+# { name = "hypr"; src = <path>; srcStr = "..."; destDir = "hypr"; destDir = "$HOME/.config/hypr"; files = [...]; dirs = [...]; }
+# destDir  = key prefix for xdg.configFile or home.file (relative)
 # dest    = full shell path used in the edit-conf script
 
 let
   # ── entries for xdg.configFile or home.file ──────────────────────────────
   mkFile = cfg: f: {
-    name = "${cfg.nixKey}/${f}";
+    name = "${cfg.destDir}/${f}";
     value = {
       source = cfg.src + "/${f}";
       force = true;
     };
   };
   mkDir = cfg: d: {
-    name = "${cfg.nixKey}/${d}";
+    name = "${cfg.destDir}/${d}";
     value = {
       source = cfg.src + "/${d}";
       # recursive = true;
@@ -36,7 +36,7 @@ let
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}="${cfg.dest}"
+    DEST_${cfg.name}="${if cfg.destDirSet then "$HOME/${cfg.destDir}" else "$HOME"}"
   '';
 
   appNames = map (c: c.name) configs;

@@ -10,8 +10,7 @@
         name = "hypr";
         src = ./.;
         srcStr = "${userConfig.nixConf}/home/hyprland";
-        nixKey = "hypr"; # key for xdg.configFile (relative to ~/.config/)
-        dest = "$HOME/.config/hypr"; # full path for the shell script
+        destDir = ".config/hypr"; # full path for the shell script
         files = [
           "hyprland.lua"
           "hyprlock.conf"

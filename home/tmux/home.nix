@@ -6,8 +6,7 @@
         name = "tmux";
         src = ./.;
         srcStr = "${userConfig.nixConf}/home/tmux";
-        nixKey = "tmux";
-        dest = "$HOME";
+        destDir = "";
         files = [
           ".tmux.conf"
         ];
