@@ -160,6 +160,7 @@ in
           (pkgFromInp "input-display" "default")
           (pkgFromInp "input-manager" "default")
           (pkgFromInp "key-modifier" "default")
+          (pkgFromInp "autocorrect" "default")
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
@@ -397,7 +398,7 @@ in
   };
   environment = {
     systemPackages = with pkgs; [
-      (pkgFromInp "autocorrect" "default")
+      (pkgFromInp "termbar" "default")
       # nix-direnv
       # (pince.overrideAttrs (old: {
       #   postInstall = (old.postInstall or "") + ''
