@@ -20,8 +20,8 @@
         # "ctrl+delete" = "send_text all \\x1bd";
         # Optional: Rebind Interrupt so you can still stop processes
 
-        "ctrl+c" = "copy_and_clear_or_interrupt";
-        "ctrl+v" = "paste_from_clipboard";
+        "map ctrl+c" = "copy_and_clear_or_interrupt";
+        "map ctrl+v" = "paste_from_clipboard";
         # "ctrl+left" = "send_text all \\x1bb";
         # "ctrl+right" = "send_text all \\x1bf";
 

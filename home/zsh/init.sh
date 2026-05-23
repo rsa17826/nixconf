@@ -142,6 +142,6 @@ function precmd() {
     rm -f "$TIMER_PID_FILE" 2>/dev/null
   fi
 }
-if [ -z "$TMUX" ] && [ -n "$PS1" ]; then
+if [ -z "$TMUX" ] && [ -n "$PS1" ] && tty | grep -qv tty; then
   exec tmux new-session -A -s $$
 fi
