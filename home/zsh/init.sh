@@ -15,9 +15,7 @@ bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
-function _update_timer() {
-  printf '\033]0;%s\007' "$1"
-}
+
 # --- WORD BOUNDARY REPLACEMENT LOGIC ---
 # This interceptor hook executes every time you press Enter to execute a command.
 # If you typed 'e bash', it ensures it expands cleanly in history so future
@@ -93,7 +91,8 @@ function preexec() {
       local delta=$(awk "BEGIN {print $now - $start_time}")
       local formatted=$(format_tmux_duration "$delta")
 
-      _update_timer "$formatted"
+      tmux set -t "$parent_pane" @pane_timer "$formatted"
+      tmux refresh-client -S 2>/dev/null
 
       sleep 0.05
     done
@@ -112,7 +111,8 @@ function precmd() {
       local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
       local final_formatted=$(format_tmux_duration "$delta")
 
-      _update_timer "$final_formatted"
+      tmux set -t "$TMUX_PANE" @pane_timer "$final_formatted"
+      tmux refresh-client -S 2>/dev/null
     fi
     rm -f "$TIMER_START_FILE" 2>/dev/null
   fi
@@ -127,3 +127,6 @@ function precmd() {
     rm -f "$TIMER_PID_FILE" 2>/dev/null
   fi
 }
+if [ -z "$TMUX" ] && [ -n "$PS1" ]; then
+  exec tmux new-session -A -s $$
+fi
