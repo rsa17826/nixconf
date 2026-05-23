@@ -5,6 +5,7 @@ import subprocess
 import os
 import glob
 import re
+import shlex
 from typing import cast
 
 
@@ -78,7 +79,7 @@ def launch_app(exec_command: str):
   """Launches an application in the background detached from Rofi."""
   try:
     _ = subprocess.Popen(
-      exec_command.split(),
+      shlex.split(exec_command),
       stdout=subprocess.DEVNULL,
       stderr=subprocess.DEVNULL,
       env=os.environ,

@@ -10,7 +10,7 @@
         name = "hypr";
         src = ./.;
         srcStr = "${userConfig.nixConf}/home/hyprland";
-        destDir = ".config/hypr"; # full path for the shell script
+        destDir = ".config/hypr";
         files = [
           "hyprland.lua"
           "hyprlock.conf"

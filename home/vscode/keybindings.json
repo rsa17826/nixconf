@@ -3905,11 +3905,6 @@
     "when": "terminalHasBeenCreated || terminalProcessSupported"
   },
   {
-    "key": "ctrl+shift+c",
-    "command": "workbench.action.terminal.openNativeConsole",
-    "when": "!terminalFocus"
-  },
-  {
     "key": "ctrl+shift+v",
     "command": "workbench.action.terminal.paste",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
@@ -5506,5 +5501,10 @@
     "key": "ctrl+shift+j",
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!isSessionsWindow && !terminalFocus"
   }
 ]
