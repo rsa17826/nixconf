@@ -25,8 +25,6 @@ bindkey '^H' backward-kill-word
 bindkey '^[d' kill-word
 bindkey "\e[3;5~" kill-word
 bindkey '^[[Z' reverse-menu-complete
-#!/usr/bin/env zsh
-# shellcheck disable=SC1071
 [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
 TIMER_PID_FILE="/tmp/termbar_timer_${USER}_$$.pid"
@@ -95,13 +93,28 @@ function zsh-timer-exit-cleanup() {
 add-zsh-hook zshexit zsh-timer-exit-cleanup
 
 function precmd() {
+  # Capture pipestatus immediately — it's overwritten by the next command.
+  local -a _codes=("${pipestatus[@]}")
   local exact_end_time=$EPOCHREALTIME
+
+  # Build exit code string: omit entirely if all zero, else e.g. "1,0,1"
+  local code_str=""
+  local all_ok=true
+  for c in "${_codes[@]}"; do
+    [[ $c -ne 0 ]] && all_ok=false
+    code_str+="${code_str:+,}$c"
+  done
 
   if [[ -s "$TIMER_START_FILE" && -n "$TERMBAR_ENABLED" ]]; then
     local start_time=$(cat "$TIMER_START_FILE" 2>/dev/null)
     if [[ -n "$start_time" ]]; then
       local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
-      _set_status "$(format_duration "$delta")"
+      local time_str="$(format_duration "$delta")"
+      if $all_ok; then
+        _set_status "$time_str"
+      else
+        _set_status "[$code_str] $time_str"
+      fi
     fi
     rm -f "$TIMER_START_FILE"
   fi
