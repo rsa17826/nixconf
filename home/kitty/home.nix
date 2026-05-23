@@ -6,6 +6,10 @@
       settings = {
         confirm_os_window_close = 0;
       };
+      mouseBindings = {
+        "left doublepress grabbed" = "mouse_selection word";
+        "left triplepress grabbed" = "mouse_selection line";
+      };
       keybindings = {
         # Navigation (Ctrl + Arrows)
         # "ctrl+left" = "send_text all \\x1bb";
