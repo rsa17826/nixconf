@@ -36,112 +36,112 @@ bindkey '^H' backward-kill-word
 bindkey '^[d' kill-word
 bindkey "\e[3;5~" kill-word
 bindkey '^[[Z' reverse-menu-complete
-[[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
+# [[ -n "$ZSH_VERSION" ]] && zmodload zsh/datetime
 
-TIMER_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
-TIMER_START_FILE="/tmp/tmux_timer_start_${USER}_$$.txt"
+# TIMER_PID_FILE="/tmp/tmux_timer_${USER}_$$.pid"
+# TIMER_START_FILE="/tmp/tmux_timer_start_${USER}_$$.txt"
 
-if [ -n "$TMUX_PANE" ]; then
-  tmux set -t "$TMUX_PANE" @pane_timer "0s 000ms"
-fi
+# if [ -n "$TMUX_PANE" ]; then
+#   tmux set -t "$TMUX_PANE" @pane_timer "0s 000ms"
+# fi
 
-# The core math and formatting block extracted so both hooks format exactly the same way
-function format_tmux_duration() {
-  local delta=$1
-  awk "BEGIN {
-    d = $delta;
-    m = int(d / 60);
-    s = int(d % 60);
-    ms = int((d - int(d)) * 1000);
+# # The core math and formatting block extracted so both hooks format exactly the same way
+# function format_tmux_duration() {
+#   local delta=$1
+#   awk "BEGIN {
+#     d = $delta;
+#     m = int(d / 60);
+#     s = int(d % 60);
+#     ms = int((d - int(d)) * 1000);
 
-    # Format string building
-    if (m > 0) {
-      # Minutes are active: pad seconds to 2 digits (e.g., 1m 02s 005ms)
-      printf \"%dm %02ds %03dms\", m, s, ms;
-    } else {
-      # Under a minute: do not pad seconds (e.g., 5s 042ms)
-      printf \"%ds %03dms\", s, ms;
-    }
-  }"
-}
+#     # Format string building
+#     if (m > 0) {
+#       # Minutes are active: pad seconds to 2 digits (e.g., 1m 02s 005ms)
+#       printf \"%dm %02ds %03dms\", m, s, ms;
+#     } else {
+#       # Under a minute: do not pad seconds (e.g., 5s 042ms)
+#       printf \"%ds %03dms\", s, ms;
+#     }
+#   }"
+# }
 
-function preexec() {
-  if [ -s "$TIMER_PID_FILE" ]; then
-    local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
-    if [ -n "$old_pid" ]; then
-      kill -9 "$old_pid" 2>/dev/null
-    fi
-    rm -f "$TIMER_PID_FILE" 2>/dev/null
-  fi
+# function preexec() {
+#   if [ -s "$TIMER_PID_FILE" ]; then
+#     local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+#     if [ -n "$old_pid" ]; then
+#       kill -9 "$old_pid" 2>/dev/null
+#     fi
+#     rm -f "$TIMER_PID_FILE" 2>/dev/null
+#   fi
 
-  local start_time=$EPOCHREALTIME
-  local parent_pid=$$
-  local parent_pane=$TMUX_PANE
+#   local start_time=$EPOCHREALTIME
+#   local parent_pid=$$
+#   local parent_pane=$TMUX_PANE
 
-  echo "$start_time" >"$TIMER_START_FILE"
-  unsetopt MONITOR 2>/dev/null
+#   echo "$start_time" >"$TIMER_START_FILE"
+#   unsetopt MONITOR 2>/dev/null
 
-  (
-    trap "exit" INT TERM EXIT
-    while true; do
-      if ! kill -0 $parent_pid 2>/dev/null; then
-        exit
-      fi
+#   (
+#     trap "exit" INT TERM EXIT
+#     while true; do
+#       if ! kill -0 $parent_pid 2>/dev/null; then
+#         exit
+#       fi
 
-      local now=$EPOCHREALTIME
-      local delta=$(awk "BEGIN {print $now - $start_time}")
-      local formatted=$(format_tmux_duration "$delta")
+#       local now=$EPOCHREALTIME
+#       local delta=$(awk "BEGIN {print $now - $start_time}")
+#       local formatted=$(format_tmux_duration "$delta")
 
-      tmux set -t "$parent_pane" @pane_timer "$formatted"
-      tmux refresh-client -S 2>/dev/null
+#       tmux set -t "$parent_pane" @pane_timer "$formatted"
+#       tmux refresh-client -S 2>/dev/null
 
-      sleep 0.05
-    done
-  ) >/dev/null 2>&1 &|
+#       sleep 0.05
+#     done
+#   ) >/dev/null 2>&1 &|
 
-  echo $! >"$TIMER_PID_FILE"
-  setopt MONITOR 2>/dev/null
-}
+#   echo $! >"$TIMER_PID_FILE"
+#   setopt MONITOR 2>/dev/null
+# }
 
-# --- CLEANUP ON SHELL EXIT ---
-function zsh-timer-exit-cleanup() {
-  # Kill the live-updating background subshell immediately so tmux doesn't
-  # wait on the process group after zsh itself has already exited.
-  if [ -s "$TIMER_PID_FILE" ]; then
-    local _exit_pid
-    _exit_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
-    [ -n "$_exit_pid" ] && kill -9 "$_exit_pid" 2>/dev/null
-    rm -f "$TIMER_PID_FILE" 2>/dev/null
-  fi
-  rm -f "$TIMER_START_FILE" 2>/dev/null
-}
-add-zsh-hook zshexit zsh-timer-exit-cleanup
+# # --- CLEANUP ON SHELL EXIT ---
+# function zsh-timer-exit-cleanup() {
+#   # Kill the live-updating background subshell immediately so tmux doesn't
+#   # wait on the process group after zsh itself has already exited.
+#   if [ -s "$TIMER_PID_FILE" ]; then
+#     local _exit_pid
+#     _exit_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+#     [ -n "$_exit_pid" ] && kill -9 "$_exit_pid" 2>/dev/null
+#     rm -f "$TIMER_PID_FILE" 2>/dev/null
+#   fi
+#   rm -f "$TIMER_START_FILE" 2>/dev/null
+# }
+# add-zsh-hook zshexit zsh-timer-exit-cleanup
 
-function precmd() {
-  local exact_end_time=$EPOCHREALTIME
+# function precmd() {
+#   local exact_end_time=$EPOCHREALTIME
 
-  if [ -s "$TIMER_START_FILE" ] && [ -n "$TMUX_PANE" ]; then
-    local start_time=$(cat "$TIMER_START_FILE" 2>/dev/null)
-    if [ -n "$start_time" ]; then
-      local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
-      local final_formatted=$(format_tmux_duration "$delta")
+#   if [ -s "$TIMER_START_FILE" ] && [ -n "$TMUX_PANE" ]; then
+#     local start_time=$(cat "$TIMER_START_FILE" 2>/dev/null)
+#     if [ -n "$start_time" ]; then
+#       local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
+#       local final_formatted=$(format_tmux_duration "$delta")
 
-      tmux set -t "$TMUX_PANE" @pane_timer "$final_formatted"
-      tmux refresh-client -S 2>/dev/null
-    fi
-    rm -f "$TIMER_START_FILE" 2>/dev/null
-  fi
+#       tmux set -t "$TMUX_PANE" @pane_timer "$final_formatted"
+#       tmux refresh-client -S 2>/dev/null
+#     fi
+#     rm -f "$TIMER_START_FILE" 2>/dev/null
+#   fi
 
-  if [ -s "$TIMER_PID_FILE" ]; then
-    local target_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
-    if [ -n "$target_pid" ]; then
-      unsetopt MONITOR 2>/dev/null
-      kill -9 "$target_pid" 2>/dev/null
-      setopt MONITOR 2>/dev/null
-    fi
-    rm -f "$TIMER_PID_FILE" 2>/dev/null
-  fi
-}
-if [ -z "$TMUX" ] && [ -n "$PS1" ] && tty | grep -qv tty; then
-  exec tmux new-session -A -s $$
-fi
+#   if [ -s "$TIMER_PID_FILE" ]; then
+#     local target_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
+#     if [ -n "$target_pid" ]; then
+#       unsetopt MONITOR 2>/dev/null
+#       kill -9 "$target_pid" 2>/dev/null
+#       setopt MONITOR 2>/dev/null
+#     fi
+#     rm -f "$TIMER_PID_FILE" 2>/dev/null
+#   fi
+# }
+# if [ -z "$TMUX" ] && [ -n "$PS1" ] && tty | grep -qv tty; then
+#   exec tmux new-session -A -s $$
+# fi
