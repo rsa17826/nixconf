@@ -297,7 +297,7 @@
               name = "python";
               publisher = "ms-python";
               version = "2026.5.2026051501";
-              hash = "sha256-Ky00OB4iJ3HpEaBas+MX8bh8qBzVuzg0tsbuFLqUeOw=";
+              hash = "sha256-Wzn2R8F4NInwGcl60ZpDVP4YwxGAbKh+e+ls0Wmf77M=";
             }
             {
               name = "hexeditor";
@@ -381,7 +381,7 @@
               name = "typos-vscode";
               publisher = "tekumara";
               version = "0.1.52";
-              hash = "sha256-zCZnedU1M8IelPYFkbmYil5URVkJc9nIDtK6gXDhfmQ=";
+              hash = "sha256-o+AQDdToXTV/pUSt2zw19hf7nwbOb4gb9dlSsB7t32E=";
             }
             {
               name = "autolink";
