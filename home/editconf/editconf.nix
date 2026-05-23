@@ -156,14 +156,16 @@ let
         echo "''${APPS[@]}"
       fi
     }
-
+    restore(){
+      for app in $(resolve_apps); do exit_app "$app"; done
+    }
     case "$CMD" in
       enter)
         for app in $(resolve_apps); do enter_app "$app"; done
         [[ -z "$TARGET" ]] && echo -e "\nRun 'edit-conf exit' when done."
         ;;
       exit)
-        for app in $(resolve_apps); do exit_app "$app"; done
+        restore
         ;;
       status)
         for app in "''${APPS[@]}"; do status_app "$app"; done
@@ -171,8 +173,9 @@ let
       *)
         for app in $(resolve_apps); do enter_app "$app"; done
         if [[ -z "$TARGET" ]]; then
+          trap restore EXIT
           read -r
-          for app in $(resolve_apps); do exit_app "$app"; done
+          restore
         fi
         ;;
     esac
