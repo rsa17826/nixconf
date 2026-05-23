@@ -7,6 +7,7 @@ ZSH_COMMAND_TIME_ECHO=1
 # Force Zsh history lookups to skip identical commands entirely during cycling
 setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
+setopt INTERACTIVE_COMMENTS
 
 # --- NATIVE KEYBINDINGS FOR EXTENDED MATCHING ---
 # If the line is empty, these default to normal up/down line movement natively.
