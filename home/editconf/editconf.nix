@@ -36,7 +36,7 @@ let
     FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
     DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
     SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}="${if cfg.destDirSet then "$HOME/${cfg.destDir}" else "$HOME"}"
+    DEST_${cfg.name}="${if cfg.destDir != "" then "$HOME/${cfg.destDir}" else "$HOME"}"
   '';
 
   appNames = map (c: c.name) configs;
