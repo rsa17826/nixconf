@@ -3,11 +3,6 @@
   ...
 }:
 {
-  home = {
-    file = {
-      "kitty/bg.png".source = ./kittybg.png;
-    };
-  };
   myProfile = {
     editableConfigs = [
       {
