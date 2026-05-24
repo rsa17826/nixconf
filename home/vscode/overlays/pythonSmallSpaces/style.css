@@ -1,6 +1,6 @@
 .editor-instance[data-mode-id="python"] .view-line .mtk1 {
   /* Targets the specific text span containing the 4 raw spaces */
-  /* letter-spacing: -0.22em !important; */
-  scale: 0.5 !important;
-  display: inline-block !important;
+  letter-spacing: -0.24em !important;
+  /* scale: 0.5 !important; */
+  /* display: inline-block !important; */
 }
