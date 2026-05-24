@@ -327,3 +327,10 @@ $1
 @replace
 @endregex
 
+@name no description
+@file \.nix$
+@regex \bdescription =
+@warn
+@errgroup 0
+@endregex
+
