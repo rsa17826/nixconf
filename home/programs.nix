@@ -179,6 +179,7 @@ in
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
           clang-tools
+          delve
           iosevka
           go
           gopls
