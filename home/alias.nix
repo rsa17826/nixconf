@@ -10,6 +10,7 @@ let
     worm = "magic-wormhole send";
     hole = "magic-wormhole receive";
     q = "exit 0";
+    "q!" = "kill -9 -$(ps -o sid= -p $$ | tr -d ' ') 2>/dev/null";
     c = "clear";
     nix-shell-alias = "nix-shell";
     repairStore = "sudo nix-store --verify --check-contents --repair";
