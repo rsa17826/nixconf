@@ -1,4 +1,4 @@
-{ userConfig, ... }:
+{ pkgs, userConfig, ... }:
 {
   nixpkgs = {
     config = {
@@ -47,6 +47,9 @@
         layout = "us";
         #    variant = "";
       };
+      excludePackages = with pkgs; [
+        xterm
+      ];
     };
     dnscrypt-proxy = {
       enable = true;
