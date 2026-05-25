@@ -193,8 +193,10 @@ hl.window_rule({
 -- hl.window_rule({
 -- 	name = "asdd",
 -- 	match = { class = "^xdman-Main$" },
--- 	workspace = {1,8, "silent"},
+-- 	workspace = "8 silent",
+-- 	-- workspace = {1,8, "silent"},
 -- })
+
 -- hl.window_rule({
 -- 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
 -- 	scrolling_width = 0.3,
