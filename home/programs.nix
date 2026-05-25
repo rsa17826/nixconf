@@ -170,6 +170,7 @@ in
           openssl
           zlib
           #
+          python313Packages.wsgidav
           steam-run-free
           nixd # nix language server
           (pkgs.buildGoModule {
