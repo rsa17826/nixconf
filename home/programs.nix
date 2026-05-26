@@ -174,7 +174,7 @@ in
           steam-run-free
           nixd # nix language server
           (pkgs.buildGoModule {
-          pname = "perkins";
+            pname = "perkins";
             version = "1";
             src = inputs.perkins;
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
