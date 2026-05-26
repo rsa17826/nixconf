@@ -157,13 +157,17 @@ fi
 
 cleanup_abort() {
   echo -e "\n🛑 Interruption detected!"
-  if [[ "$NO_NEW_COMMIT" == false ]]; then
-    echo "📝 Amending commit to ABORTED..."
-    pushd "$HOME/nixconf" >/dev/null || exit 1
-    git commit --amend -m "🛑 $NIXOS_LABEL_VERSION"
-    git push --force-with-lease
-    popd >/dev/null || exit 1
-  fi
+  (
+    if [[ "$NO_NEW_COMMIT" == false ]]; then
+      echo "📝 Amending commit to ABORTED..."
+      cd "$HOME/nixconf" 2>/dev/null || exit 1
+
+      git commit --amend -m "🛑 $NIXOS_LABEL_VERSION" >/dev/null 2>&1
+      git push --force-with-lease >/dev/null 2>&1
+    fi
+  ) &
+  disown
+
   exit 1
 }
 
