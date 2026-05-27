@@ -40,13 +40,12 @@ Rectangle {
 
             syncthingRemainingData = needBytes
 
-            var printPercent = percent.toFixed(1)
             var remainingStr = formatRemainingBytes(needBytes)
 
-            if (printPercent === "100.0" || needBytes === 0) {
+            if (percent === "100.0" || needBytes === 0) {
               statusText = ""
             } else {
-              statusText = printPercent + "% (" + remainingStr + " left)"
+              statusText = remainingStr + " left"
             }
             error = false
             return
@@ -84,7 +83,7 @@ Rectangle {
     id: label
 
     anchors.centerIn: parent
-    color: '#4800ff'
+    color: '#ffffff'
     font.pixelSize: 11
     text: statusText
   }
@@ -97,7 +96,7 @@ Rectangle {
   Timer {
     id: refreshTimer
 
-    interval: 10000
+    interval: 1000
     repeat: true
     running: true
     triggeredOnStart: true
