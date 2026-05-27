@@ -10,8 +10,6 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Rectangle {
-  id: ghBadge
-
   property string newestAge: ""
 
   function timeSince(dateString) {

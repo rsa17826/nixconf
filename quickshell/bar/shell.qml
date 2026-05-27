@@ -87,15 +87,26 @@ Scope {
           horizontalCenter: parent.right
           verticalCenter: parent.verticalCenter
         }
-        GithubNotif {
-          id: githubWidget
-        }
         Tray {
+          id: trayWidget
+
+          anchors {
+            right: syncthingWidget.left
+            rightMargin: 15
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        Syncthing {
+          id: syncthingWidget
+
           anchors {
             right: githubWidget.left
             rightMargin: 15
             verticalCenter: parent.verticalCenter
           }
+        }
+        GithubNotif {
+          id: githubWidget
         }
       }
     }
