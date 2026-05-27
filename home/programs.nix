@@ -433,7 +433,6 @@ in
       kitty # terminal emulator
       # albert
       # keyd # disables capslock and enables numlock
-      tmux
       nix-output-monitor # nix update formatter
       cascadia-code # font
       swaynotificationcenter # notification daemon
