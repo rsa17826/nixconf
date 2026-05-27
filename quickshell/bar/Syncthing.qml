@@ -15,14 +15,15 @@ Rectangle {
   readonly property string url: "http://127.0.0.1:8384"
 
   function formatRemainingBytes(bytes) {
+    // syncthing uses 1000 bytes not 1024
     if (bytes === 0)
       return "0 MB"
-    if (bytes < 1048576)
+    if (bytes < 1000 * 1000)
       return "< 1 MB"
-    if (bytes < 1073741824) {
-      return (bytes / 1024 / 1024).toFixed(1) + " MB"
+    if (bytes < 1000 * 1000 * 1000) {
+      return (bytes / 1000 / 1000).toFixed(1) + " MB"
     }
-    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB"
+    return (bytes / 1000 / 1000 / 1000).toFixed(2) + " GB"
   }
   function getSyncthingStatus() {
     var xhr = new XMLHttpRequest()
@@ -52,8 +53,8 @@ Rectangle {
           } catch (e) {
             statusText = "Error parsing JSON"
             error = true
-            return
             console.log("Error parsing JSON: " + e)
+            return
           }
         } else {
           console.log("HTTP error! status: " + xhr.status)

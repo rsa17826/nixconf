@@ -133,6 +133,7 @@ in
   nixpkgs = {
     overlays = [ inputs.millennium.overlays.default ];
   };
+
   users = {
     users = {
       "${userConfig.uname}" = {
@@ -179,6 +180,7 @@ in
             src = inputs.perkins;
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
+          opensnitch-ui
           clang-tools
           delve
           iosevka
