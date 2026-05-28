@@ -41,10 +41,14 @@ function format_duration() {
   local delta=$1
   awk "BEGIN {
     d = $delta;
-    m = int(d / 60);
+    h = int(d / 3600);
+    m = int((d % 3600) / 60);
     s = int(d % 60);
     ms = int((d - int(d)) * 1000);
-    if (m > 0) {
+
+    if (h > 0) {
+      printf \"%dh %02dm %02ds %03dms\", h, m, s, ms;
+    } else if (m > 0) {
       printf \"%dm %02ds %03dms\", m, s, ms;
     } else {
       printf \"%ds %03dms\", s, ms;
