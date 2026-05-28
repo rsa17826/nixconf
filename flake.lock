@@ -1073,22 +1073,6 @@
         "type": "github"
       }
     },
-    "rofi-themes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1777563407,
-        "narHash": "sha256-pM183MHOMuKJyLgthozM1MRsmhBM25VQgWc7CmLL2HI=",
-        "owner": "adi1090x",
-        "repo": "rofi",
-        "rev": "b0bfe927531e365f009d01810c26878c003f7cb8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "adi1090x",
-        "repo": "rofi",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "audio-manager": "audio-manager",
@@ -1122,7 +1106,6 @@
         "perkins": "perkins",
         "quickshell": "quickshell",
         "rofi-blocks-main": "rofi-blocks-main",
-        "rofi-themes": "rofi-themes",
         "sops-nix": "sops-nix",
         "termbar": "termbar",
         "wayland-keepass-autotype": "wayland-keepass-autotype"
