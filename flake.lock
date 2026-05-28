@@ -1209,11 +1209,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778802298,
-        "narHash": "sha256-4jdJqE6kxEab4jp/0LWSHD8lUPXTjZ1L0N0X2UVJDgU=",
+        "lastModified": 1780008581,
+        "narHash": "sha256-LWzqBVZmkOxFsdZmyZjhiAkotMIwiYaVFFSDJzUuqtA=",
         "owner": "rsa17826",
         "repo": "wayland-keepass-autotype",
-        "rev": "71f5c000dcc8686677f64f0c55cdc1b1e8773243",
+        "rev": "883256ca69f8b5deda80b0a34398e29e4c1afc0f",
         "type": "github"
       },
       "original": {
