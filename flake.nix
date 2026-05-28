@@ -89,10 +89,6 @@
     # flake-utils.follows="flake-utils";
     # };
     # };
-    rofi-themes = {
-      url = "github:adi1090x/rofi";
-      flake = false;
-    };
     rofi-blocks-main = {
       url = "github:OmarCastro/rofi-blocks";
       flake = false;

@@ -1,13 +1,8 @@
 {
-  inputs,
   pkgs,
+  userConfig,
   ...
 }:
-let
-  x = "3";
-  y = "3";
-
-in
 {
   home = {
     packages = [
@@ -22,39 +17,20 @@ in
       })
     ];
   };
-  xdg = {
-    configFile = {
-      "rofi/colors".source = "${inputs.rofi-themes}/files/colors";
-      "rofi/launchers/type-${x}".source = "${inputs.rofi-themes}/files/launchers/type-${x}";
-      "rofi/images".source = "${inputs.rofi-themes}/files/images";
-      "rofi/config.rasi".text = ''
-        @theme "${inputs.rofi-themes}/files/launchers/type-${x}/style-${y}.rasi"
-        configuration {
-          /* 1. Fix Home and End for text cursor navigation */
-          kb-move-front: "Home";
-          kb-move-end: "End,Control+e";
-
-          /* 2. Map Ctrl+Delete to delete the word in front of the cursor */
-          kb-remove-word-forward: "Control+Delete";
-
-          /* FIX: Explicitly map Ctrl+BackSpace with correct capital 'S' */
-          kb-remove-word-back: "Control+BackSpace";
-
-          /* 3. Enable Word-by-Word cursor jumps */
-          kb-move-word-back: "Control+Left";
-          kb-move-word-forward: "Control+Right";
-
-          /* 4. Unbind Home/End from jumping rows */
-          kb-row-first: "KP_Home";
-          kb-row-last: "KP_End";
-
-          /* 5. Disable Shift+Left/Right mode switches */
-          kb-mode-previous: "Control+ISO_Left_Tab";
-          kb-mode-next: "Control+Tab";
-
-          kb-clear-line: "Control+a";
-        }
-      '';
-    };
+  myProfile = {
+    editableConfigs = [
+      {
+        name = "rofi";
+        src = ./.;
+        srcStr = "${userConfig.nixConf}/home/rofi";
+        destDir = ".config/rofi";
+        files = [
+          "config.rasi"
+        ];
+        dirs = [
+          "themes"
+        ];
+      }
+    ];
   };
 }

@@ -1,0 +1,270 @@
+/**
+ * ██╗   ██╗ ██████╗ ██╗██████╗
+ * ██║   ██║██╔═══██╗██║██╔══██╗
+ * ██║   ██║██║   ██║██║██║  ██║
+ * ╚██╗ ██╔╝██║   ██║██║██║  ██║
+ *  ╚████╔╝ ╚██████╔╝██║██████╔╝
+ *   ╚═══╝   ╚═════╝ ╚═╝╚═════╝
+ *
+ * Rofi theme — "Void"
+ * The space between stars. One signal in the dark.
+ *
+ * Place at: ~/.config/rofi/themes/void.rasi
+ * Apply:    rofi -theme void
+ * Or set in ~/.config/rofi/config.rasi:
+ *           @theme "void"
+ */
+
+@import "void-colors.rasi"
+
+/* ──────────────────────────────────────────────────
+   WINDOW
+   ────────────────────────────────────────────────── */
+window {
+    transparency:        "real";
+    location:            center;
+    anchor:              center;
+    fullscreen:          false;
+
+    width:               560px;
+
+    background-color:    @void-bg0;
+    border:              1px solid;
+    border-color:        @void-accent-dim;
+    border-radius:       6px;
+
+    cursor:              "default";
+    padding:             0px;
+}
+
+/* ──────────────────────────────────────────────────
+   MAINBOX  (top-level container)
+   ────────────────────────────────────────────────── */
+mainbox {
+    background-color:    transparent;
+    border:              0px;
+    spacing:             0px;
+    padding:             0px;
+    children:            [ inputbar, message, listview, mode-switcher ];
+}
+
+/* ──────────────────────────────────────────────────
+   INPUT BAR
+   ────────────────────────────────────────────────── */
+inputbar {
+    background-color:    @void-bg2;
+    text-color:          @void-fg0;
+    border:              0px 0px 1px 0px;
+    border-color:        @void-border;
+    border-radius:       5px 5px 0px 0px;
+    padding:             12px 16px;
+    spacing:             8px;
+    children:            [ prompt, textbox-prompt-colon, entry, case-indicator, num-filtered-rows, textbox-num-sep, num-rows ];
+}
+
+prompt {
+    background-color:    transparent;
+    text-color:          @void-accent;
+    font:                "monospace 10";
+    vertical-align:      0.5;
+}
+
+textbox-prompt-colon {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    str:                 " ❯ ";
+    font:                "monospace 10";
+    vertical-align:      0.5;
+}
+
+entry {
+    background-color:    transparent;
+    text-color:          @void-fg0;
+    cursor:              text;
+    font:                "monospace 11";
+    placeholder:         "search the void…";
+    placeholder-color:   @void-fg2;
+    vertical-align:      0.5;
+    expand:              true;
+}
+
+case-indicator {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    font:                "monospace 9";
+}
+
+num-filtered-rows {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    font:                "monospace 9";
+}
+
+textbox-num-sep {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    str:                 "/";
+    font:                "monospace 9";
+}
+
+num-rows {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    font:                "monospace 9";
+}
+
+/* ──────────────────────────────────────────────────
+   LIST VIEW
+   ────────────────────────────────────────────────── */
+listview {
+    background-color:    transparent;
+    border:              0px;
+    padding:             6px 0px;
+    spacing:             0px;
+    lines:               8;
+    columns:             1;
+    cycle:               true;
+    dynamic:             true;
+    layout:              vertical;
+    fixed-height:        false;
+    scrollbar:           true;
+    scrollbar-width:     2px;
+}
+
+scrollbar {
+    width:               2px;
+    border:              0px;
+    handle-color:        @void-accent-dim;
+    handle-width:        2px;
+    background-color:    @void-bg0;
+}
+
+/* ──────────────────────────────────────────────────
+   ELEMENT  (list item)
+   ────────────────────────────────────────────────── */
+element {
+    background-color:    transparent;
+    text-color:          @void-fg1;
+    border:              0px;
+    border-radius:       0px;
+    padding:             9px 16px;
+    spacing:             10px;
+    cursor:              pointer;
+    orientation:         horizontal;
+}
+
+element.normal.normal {
+    background-color:    transparent;
+    text-color:          @void-fg1;
+}
+
+element.normal.urgent {
+    background-color:    transparent;
+    text-color:          @void-urgent;
+}
+
+element.normal.active {
+    background-color:    transparent;
+    text-color:          @void-active;
+}
+
+element.selected.normal {
+    background-color:    @void-bg3;
+    text-color:          @void-fg0;
+    border:              0px 0px 0px 2px;
+    border-color:        @void-accent;
+}
+
+element.selected.urgent {
+    background-color:    @void-bg3;
+    text-color:          @void-urgent;
+    border:              0px 0px 0px 2px;
+    border-color:        @void-urgent;
+}
+
+element.selected.active {
+    background-color:    @void-bg3;
+    text-color:          @void-active;
+    border:              0px 0px 0px 2px;
+    border-color:        @void-active;
+}
+
+element.alternate.normal {
+    background-color:    @void-bg1;
+    text-color:          @void-fg1;
+}
+
+element.alternate.urgent {
+    background-color:    @void-bg1;
+    text-color:          @void-urgent;
+}
+
+element.alternate.active {
+    background-color:    @void-bg1;
+    text-color:          @void-active;
+}
+
+element-icon {
+    background-color:    transparent;
+    size:                20px;
+    cursor:              inherit;
+}
+
+element-text {
+    background-color:    transparent;
+    text-color:          inherit;
+    font:                "monospace 11";
+    cursor:              inherit;
+    vertical-align:      0.5;
+    highlight:           bold #4d6fff;
+}
+
+/* ──────────────────────────────────────────────────
+   MESSAGE BOX  (shown on error / no results)
+   ────────────────────────────────────────────────── */
+message {
+    background-color:    @void-bg2;
+    border:              0px 0px 1px 0px;
+    border-color:        @void-border;
+    padding:             6px 16px;
+}
+
+textbox {
+    background-color:    transparent;
+    text-color:          @void-fg1;
+    font:                "monospace 10";
+    vertical-align:      0.5;
+    highlight:           bold #4d6fff;
+}
+
+error-message {
+    background-color:    @void-bg2;
+    border:              0px;
+    padding:             8px 16px;
+}
+
+/* ──────────────────────────────────────────────────
+   MODE SWITCHER  (drun / run / window tabs)
+   ────────────────────────────────────────────────── */
+mode-switcher {
+    background-color:    @void-bg2;
+    border:              1px 0px 0px 0px;
+    border-color:        @void-border;
+    border-radius:       0px 0px 5px 5px;
+    spacing:             0px;
+    padding:             4px 8px;
+}
+
+button {
+    background-color:    transparent;
+    text-color:          @void-fg2;
+    font:                "monospace 9";
+    padding:             4px 10px;
+    cursor:              pointer;
+    border-radius:       3px;
+}
+
+button.selected {
+    background-color:    @void-bg3;
+    text-color:          @void-accent;
+}
