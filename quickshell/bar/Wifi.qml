@@ -34,11 +34,13 @@ Item {
     "disconnected": "#7f849c"        // Muted slate status
 
     ,
-    "goodCon": "#89b4fa"             // Soft blue/indigo for good connection
+    "goodCon": '#89fa9a'             // Soft blue/indigo for good connection
     ,
-    "mehCon": "#f9e2af"              // Soft pastel yellow for okay connection
+    "mehCon": '#f6f074'              // Soft pastel yellow for okay connection
     ,
-    "badCon": "#f38ba8"               // Soft pastel red/pink for bad connection
+    "badCon": '#edb575'               // Soft pastel red/pink for bad connection
+    ,
+    "worstCon": '#d8456f'               // Soft pastel red/pink for bad connection
   }
   //
   property bool connected: false
@@ -49,19 +51,22 @@ Item {
   // ── Public state ──────────────────────────────────────────────
   property string ssid: ""
 
-  function signalColor(pct) {
-    if (!connected || pct <= 0)
+  function signalColor(pct, useConnected) {
+    console.log(pct, useConnected)
+    if ((useConnected && !connected) || pct <= 0)
       return c.disconnected
-    if (pct >= 60)
+    if (pct >= 75)
       return c.goodCon
-    if (pct >= 30)
+    if (pct >= 50)
       return c.mehCon
-    return c.badCon
+    if (pct >= 25)
+      return c.badCon
+    return c.worstCon
   }
 
   // Map signal strength (0-100) → one of 4 block characters
-  function signalIcon(pct) {
-    if (!connected || pct <= 0)
+  function signalIcon(pct, useConnected) {
+    if ((useConnected && !connected) || pct <= 0)
       return "󰤭"
     if (pct >= 75)
       return "󰤨"
@@ -101,9 +106,9 @@ Item {
     Text {
       id: iconText
 
-      color: signalColor(root.signal)
+      color: signalColor(root.signal, true)
       font.pixelSize: 12
-      text: signalIcon(root.signal)
+      text: signalIcon(root.signal, true)
 
       anchors {
         left: parent.left
@@ -249,9 +254,9 @@ Item {
           Text {
             id: signalBadge
 
-            color: signalColor(modelData.signal)
+            color: signalColor(modelData.signal, false)
             font.pixelSize: 11
-            text: signalIcon(modelData.signal)
+            text: signalIcon(modelData.signal, false)
 
             anchors {
               right: parent.right
