@@ -29,6 +29,9 @@ bindkey '^[[Z' reverse-menu-complete
 
 TIMER_PID_FILE="/tmp/termbar_timer_${USER}_$$.pid"
 TIMER_START_FILE="/tmp/termbar_timer_start_${USER}_$$.txt"
+# Shared ownership file — whichever shell most recently ran a command owns the display.
+# Derived from TERMBAR_STATUS_FILE so it's scoped to this termbar session.
+TERMBAR_OWNER_FILE="${TERMBAR_STATUS_FILE:+${TERMBAR_STATUS_FILE}.owner}"
 
 # Write to the termbar status file (no-op if not running under termbar)
 function _set_status() {
@@ -63,6 +66,9 @@ function preexec() {
     rm -f "$TIMER_PID_FILE"
   fi
 
+  # Claim display ownership — nested shells will also do this, taking priority.
+  [[ -n "$TERMBAR_OWNER_FILE" ]] && echo "$$" >|"$TERMBAR_OWNER_FILE"
+
   local start_time=$EPOCHREALTIME
   local parent_pid=$$
 
@@ -73,6 +79,14 @@ function preexec() {
     trap "exit" INT TERM EXIT
     while true; do
       kill -0 $parent_pid 2>/dev/null || exit
+
+      # If a nested shell has claimed ownership, idle instead of writing —
+      # this prevents flickering between two concurrent timer loops.
+      if [[ -n "$TERMBAR_OWNER_FILE" ]] &&
+        [[ "$(cat "$TERMBAR_OWNER_FILE" 2>/dev/null)" != "$$" ]]; then
+        sleep 0.05
+        continue
+      fi
 
       local now=$EPOCHREALTIME
       local delta=$(awk "BEGIN {print $now - $start_time}")
@@ -93,6 +107,12 @@ function zsh-timer-exit-cleanup() {
     rm -f "$TIMER_PID_FILE"
   fi
   rm -f "$TIMER_START_FILE"
+  # Release display ownership only if this shell still holds it, so the
+  # parent shell's timer can resume once we exit.
+  if [[ -n "$TERMBAR_OWNER_FILE" ]] &&
+    [[ "$(cat "$TERMBAR_OWNER_FILE" 2>/dev/null)" == "$$" ]]; then
+    rm -f "$TERMBAR_OWNER_FILE"
+  fi
 }
 add-zsh-hook zshexit zsh-timer-exit-cleanup
 
