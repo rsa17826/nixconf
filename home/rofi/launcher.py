@@ -152,12 +152,25 @@ def main():
           "lines": format_rofi_lines("", all_apps),
         }
       else:
-        current_displayed_apps = [
-          app
-          for app in all_apps
-          if user_input.lower() in app["name"].lower()
-          or user_input.lower() in app["exec"].lower()
-        ]
+        query = user_input.lower()
+
+        def match_rank(app: dict[str, str]) -> int:
+          name = app["name"].lower()
+          exec_ = app["exec"].lower()
+          if name == query:
+            return 0
+          if name.startswith(query):
+            return 1
+          if query in name:
+            return 2
+          if query in exec_:
+            return 3
+          return 99
+
+        current_displayed_apps = sorted(
+          [app for app in all_apps if match_rank(app) < 99],
+          key=lambda app: (match_rank(app), app["name"].lower()),
+        )
 
         try:
           # Basic sanitization check to prevent eval hanging on broken symbols
