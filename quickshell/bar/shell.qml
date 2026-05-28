@@ -91,8 +91,17 @@ Scope {
           id: trayWidget
 
           anchors {
-            right: syncthingWidget.left
+            right: wifiWidget.left
             rightMargin: 15
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        Wifi {
+          id: wifiWidget
+
+          anchors {
+            right: syncthingWidget.left
+            rightMargin: 12
             verticalCenter: parent.verticalCenter
           }
         }

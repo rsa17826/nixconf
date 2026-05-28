@@ -115,7 +115,7 @@ elif [ "$LOCAL" = "$BASE" ]; then
   echo "⚠️ Remote has new changes! Pulling now..."
   git pull --rebase
 elif [ "$REMOTE" = "$BASE" ]; then
-  echo "⬆️ Local has unpushed commits."
+  echo "⬆️  Local has unpushed commits."
 else
   echo "❌ Diverged! You have local and remote changes that conflict."
   echo "Please resolve manually in ~/nixconf before running this script."
