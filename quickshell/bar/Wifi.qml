@@ -16,6 +16,8 @@ Item {
     ,
     "hovered": "#45475a"             // Muted medium purple for hover states
     ,
+    "scanning": "#7f849c"              // Vibrant lavender/light purple for actions
+    ,
     "rescan": "#cba6f7"              // Vibrant lavender/light purple for actions
     ,
     "wifiSelectLogo": "#cba6f7"      // Matching lavender logo
@@ -64,14 +66,14 @@ Item {
     if (pct >= 75)
       return "󰤨"
     if (pct >= 50)
-      return "󰤥"
-    if (pct >= 25)
       return "󰤢"
-    return "󰤟"
+    if (pct >= 25)
+      return "󰤟"
+    return "󰤯"
   }
 
   implicitHeight: pill.implicitHeight
-  implicitWidth: pill.implicitWidth
+  implicitWidth: pill.width
 
   // ── Status pill ───────────────────────────────────────────────
   Rectangle {
@@ -79,7 +81,7 @@ Item {
 
     color: "transparent"
     implicitHeight: 20
-    implicitWidth: iconText.implicitWidth + ssidText.implicitWidth + 8
+    implicitWidth: iconText.width + ssidText.width + 8
 
     MouseArea {
       anchors.fill: parent
@@ -132,8 +134,8 @@ Item {
 
     color: "transparent"
     implicitHeight: menuColumn.implicitHeight + 12 // Content implicitHeight + padding
+    implicitWidth: 240
     visible: false
-    width: 240
 
     anchors {
       right: true
@@ -193,7 +195,7 @@ Item {
       Rectangle {
         color: c.divider
         implicitHeight: 1
-        width: parent.width
+        implicitWidth: parent.width
       }
 
       // Network entries
@@ -208,8 +210,8 @@ Item {
 
           color: hovered ? c.hovered : "transparent"
           implicitHeight: 24
+          implicitWidth: parent.width
           radius: 4
-          width: parent.width
 
           MouseArea {
             anchors.fill: parent
@@ -233,8 +235,8 @@ Item {
 
             color: isActive ? c.activeWifi : "transparent"
             implicitHeight: 5
+            implicitWidth: 5
             radius: 3
-            width: 5
 
             anchors {
               left: parent.left
