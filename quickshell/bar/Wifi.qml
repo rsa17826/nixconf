@@ -36,6 +36,8 @@ Item {
     ,
     "goodCon": '#89fa9a'             // Soft blue/indigo for good connection
     ,
+    "okCon": '#b0fa89'             // Soft blue/indigo for good connection
+    ,
     "mehCon": '#f6f074'              // Soft pastel yellow for okay connection
     ,
     "badCon": '#edb575'               // Soft pastel red/pink for bad connection
@@ -55,11 +57,13 @@ Item {
     console.log(pct, useConnected)
     if ((useConnected && !connected) || pct <= 0)
       return c.disconnected
-    if (pct >= 75)
+    if (pct >= 80)
       return c.goodCon
-    if (pct >= 50)
+    if (pct >= 60)
+      return c.okCon
+    if (pct >= 40)
       return c.mehCon
-    if (pct >= 25)
+    if (pct >= 20)
       return c.badCon
     return c.worstCon
   }
@@ -68,11 +72,13 @@ Item {
   function signalIcon(pct, useConnected) {
     if ((useConnected && !connected) || pct <= 0)
       return "󰤭"
-    if (pct >= 75)
+    if (pct >= 80)
       return "󰤨"
-    if (pct >= 50)
+    if (pct >= 60)
+      return "󰤥"
+    if (pct >= 40)
       return "󰤢"
-    if (pct >= 25)
+    if (pct >= 20)
       return "󰤟"
     return "󰤯"
   }
@@ -108,7 +114,7 @@ Item {
 
       color: signalColor(root.signal, true)
       font.pixelSize: 12
-      text: signalIcon(root.signal, true)
+      text: root.signal + " " + signalIcon(root.signal, true)
 
       anchors {
         left: parent.left
@@ -262,7 +268,7 @@ Item {
 
             color: signalColor(modelData.signal, false)
             font.pixelSize: 11
-            text: signalIcon(modelData.signal, false)
+            text: modelData.signal + " " + signalIcon(modelData.signal, false)
 
             anchors {
               right: parent.right
