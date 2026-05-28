@@ -134,21 +134,27 @@ Item {
 
   // ── Network list Window ───────────────────────────────────────
   // Replaced Popup with PanelWindow so it doesn't get clipped by your bar's boundaries
-  PanelWindow {
+  PopupWindow {
     id: networkPopup
 
     color: "transparent"
-    implicitHeight: menuColumn.implicitHeight + 12 // Content implicitHeight + padding
+
+    // 1. Automatically dismisses the window and sets visible to false on click outside
+    grabFocus: true
+    implicitHeight: menuColumn.implicitHeight + 12
     implicitWidth: 240
     visible: false
 
-    anchors {
-      right: true
-      top: true
-    }
-    margins {
-      right: 3
-      top: 0
+    // 2. Position it relative to your pill item so it dynamically aligns below it
+    anchor {
+      edges: Edges.Bottom | Edges.Left   // Anchor point is the bottom-right of the pill
+      gravity: Edges.Bottom | Edges.Right  // Grow downwards and to the left
+      item: pill
+
+      margins {
+        right: 0
+        top: 26
+      }
     }
     Rectangle {
       anchors.fill: parent
