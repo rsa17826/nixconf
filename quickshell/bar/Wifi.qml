@@ -1,4 +1,3 @@
-// Wifi.qml
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
@@ -8,6 +7,38 @@ import QtQuick.Controls
 Item {
   id: root
 
+  property var c: {
+    "bg": "#1e1e2e"                  // Deep obsidian purple background
+    ,
+    "border": "#313244"              // Dark purple-gray border
+    ,
+    "divider": "#313244"             // Matching dark divider
+    ,
+    "hovered": "#45475a"             // Muted medium purple for hover states
+    ,
+    "rescan": "#cba6f7"              // Vibrant lavender/light purple for actions
+    ,
+    "wifiSelectLogo": "#cba6f7"      // Matching lavender logo
+
+    ,
+    "activeWifi": "#a6e3a1"          // Soft pastel green for active connection
+    ,
+    "inactiveWifi": "#cdd6f4"        // Soft off-white/light lavender for inactive text
+    ,
+    "lockColor": "#7f849c"           // Muted slate purple for locks
+    ,
+    "noNetworksFoundText": "#7f849c" // Muted slate text
+    ,
+    "disconnected": "#7f849c"        // Muted slate status
+
+    ,
+    "goodCon": "#89b4fa"             // Soft blue/indigo for good connection
+    ,
+    "mehCon": "#f9e2af"              // Soft pastel yellow for okay connection
+    ,
+    "badCon": "#f38ba8"               // Soft pastel red/pink for bad connection
+  }
+  //
   property bool connected: false
   property var networks: []     // [{ssid, signal, security, active}]
   property bool scanning: false
@@ -18,12 +49,12 @@ Item {
 
   function signalColor(pct) {
     if (!connected || pct <= 0)
-      return "#888888"
+      return c.disconnected
     if (pct >= 60)
-      return "#88c0d0"
+      return c.goodCon
     if (pct >= 30)
-      return "#ebcb8b"
-    return "#d08770"
+      return c.mehCon
+    return c.badCon
   }
 
   // Map signal strength (0-100) → one of 4 block characters
@@ -100,7 +131,7 @@ Item {
     id: networkPopup
 
     color: "transparent"
-    height: menuColumn.implicitHeight + 12 // Content height + padding
+    implicitHeight: menuColumn.implicitHeight + 12 // Content implicitHeight + padding
     visible: false
     width: 240
 
@@ -114,9 +145,9 @@ Item {
     }
     Rectangle {
       anchors.fill: parent
-      border.color: "#3b4252"
+      border.color: c.border
       border.width: 1
-      color: "#2e3440"
+      color: c.bg
       radius: 6
     }
     Column {
@@ -135,7 +166,7 @@ Item {
         width: parent.width
 
         Text {
-          color: "#81a1c1"
+          color: c.wifiSelectLogo
           font.bold: true
           font.pixelSize: 9
           text: "WiFi"
@@ -144,7 +175,7 @@ Item {
         Text {
           id: rescanButton
 
-          color: root.scanning ? "#888888" : "#81a1c1"
+          color: root.scanning ? c.scanning : c.rescan
           font.pixelSize: 9
           text: root.scanning ? "scanning…" : "↻ rescan"
 
@@ -160,8 +191,8 @@ Item {
 
       // Thin divider
       Rectangle {
-        color: "#3b4252"
-        height: 1
+        color: c.divider
+        implicitHeight: 1
         width: parent.width
       }
 
@@ -175,8 +206,8 @@ Item {
           property bool hovered: false
           property bool isActive: modelData.active === "yes" // nmcli terse returns "yes"/"no"
 
-          color: hovered ? "#3b4252" : "transparent"
-          height: 24
+          color: hovered ? c.hovered : "transparent"
+          implicitHeight: 24
           radius: 4
           width: parent.width
 
@@ -200,8 +231,8 @@ Item {
           Rectangle {
             id: activeDot
 
-            color: isActive ? "#a3be8c" : "transparent"
-            height: 5
+            color: isActive ? c.activeWifi : "transparent"
+            implicitHeight: 5
             radius: 3
             width: 5
 
@@ -231,7 +262,7 @@ Item {
           Text {
             id: lockIcon
 
-            color: "#888888"
+            color: c.lockColor
             font.pixelSize: 8
             text: (modelData.security !== "--" && modelData.security !== "") ? "󰌾" : ""
 
@@ -244,7 +275,7 @@ Item {
 
           // SSID (Uses explicit anchor bounds instead of broken sibling math)
           Text {
-            color: isActive ? "#a3be8c" : "#d8dee9"
+            color: isActive ? c.activeWifi : c.inactiveWifi
             elide: Text.ElideRight
             font.pixelSize: 10
             text: modelData.ssid
@@ -262,7 +293,7 @@ Item {
 
       // Empty state
       Text {
-        color: "#888888"
+        color: c.noNetworksFoundText
         font.pixelSize: 9
         horizontalAlignment: Text.AlignHCenter
         text: "no networks found"
