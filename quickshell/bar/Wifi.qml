@@ -17,7 +17,6 @@ Item {
   property string ssid: ""
 
   function signalColor(pct) {
-    console.log(pct, connected)
     if (!connected || pct <= 0)
       return "#888888"
     if (pct >= 60)
@@ -27,25 +26,17 @@ Item {
     return "#d08770"
   }
 
-  // ── Helpers ───────────────────────────────────────────────────
-
   // Map signal strength (0-100) → one of 4 block characters
   function signalIcon(pct) {
-    console.log(pct)
     if (!connected || pct <= 0)
       return "󰤭"
-    // NF: nf-md-wifi_off
     if (pct >= 75)
       return "󰤨"
-    // nf-md-wifi_strength_4
     if (pct >= 50)
       return "󰤥"
-    // nf-md-wifi_strength_3
     if (pct >= 25)
       return "󰤢"
-    // nf-md-wifi_strength_2
     return "󰤟"
-    // nf-md-wifi_strength_1
   }
 
   implicitHeight: pill.implicitHeight
@@ -66,9 +57,9 @@ Item {
       onClicked: {
         if (!networkPopup.visible) {
           scanNetworks.running = true
-          networkPopup.open()
+          networkPopup.visible = true
         } else {
-          networkPopup.close()
+          networkPopup.visible = false
         }
       }
     }
@@ -103,31 +94,40 @@ Item {
     }
   }
 
-  // ── Network list popup ────────────────────────────────────────
-  Popup {
+  // ── Network list Window ───────────────────────────────────────
+  // Replaced Popup with PanelWindow so it doesn't get clipped by your bar's boundaries
+  PanelWindow {
     id: networkPopup
 
-    bottomInset: 0
-    leftInset: 0
-    padding: 6
-    rightInset: 0
-    topInset: 0
+    color: "transparent"
+    height: menuColumn.implicitHeight + 12 // Content height + padding
+    visible: false
     width: 240
 
-    // Position above (or below) the pill — adjust y if your bar is at the bottom
-    x: pill.x - width + pill.implicitWidth
-    y: pill.implicitHeight + 4
-
-    background: Rectangle {
+    anchors {
+      right: true
+      top: true
+    }
+    margins {
+      right: 3
+      top: 0
+    }
+    Rectangle {
+      anchors.fill: parent
       border.color: "#3b4252"
       border.width: 1
       color: "#2e3440"
       radius: 6
     }
-
     Column {
+      id: menuColumn
+
       spacing: 2
-      width: parent.width
+
+      anchors {
+        fill: parent
+        margins: 6
+      }
 
       // Header row
       Row {
@@ -170,8 +170,10 @@ Item {
         model: root.networks
 
         delegate: Rectangle {
+          id: delegateRow
+
           property bool hovered: false
-          property bool isActive: modelData.active === "*"
+          property bool isActive: modelData.active === "yes" // nmcli terse returns "yes"/"no"
 
           color: hovered ? "#3b4252" : "transparent"
           height: 24
@@ -187,7 +189,7 @@ Item {
               if (!isActive) {
                 connectProcess.command = ["nmcli", "dev", "wifi", "connect", modelData.ssid]
                 connectProcess.running = true
-                networkPopup.close()
+                networkPopup.visible = false
               }
             }
             onEntered: parent.hovered = true
@@ -196,6 +198,8 @@ Item {
 
           // Active indicator dot
           Rectangle {
+            id: activeDot
+
             color: isActive ? "#a3be8c" : "transparent"
             height: 5
             radius: 3
@@ -208,17 +212,17 @@ Item {
             }
           }
 
-          // SSID
+          // Signal strength badge (Declared near top / clean tracking)
           Text {
-            color: isActive ? "#a3be8c" : "#d8dee9"
-            elide: Text.ElideRight
-            font.pixelSize: 10
-            text: modelData.ssid
-            width: parent.width - signalBadge.width - lockIcon.width - 28
+            id: signalBadge
+
+            color: signalColor(modelData.signal)
+            font.pixelSize: 11
+            text: signalIcon(modelData.signal)
 
             anchors {
-              left: parent.left
-              leftMargin: 14
+              right: parent.right
+              rightMargin: 6
               verticalCenter: parent.verticalCenter
             }
           }
@@ -238,16 +242,17 @@ Item {
             }
           }
 
-          // Signal strength badge
+          // SSID (Uses explicit anchor bounds instead of broken sibling math)
           Text {
-            id: signalBadge
-
-            color: signalColor(modelData.signal)
-            font.pixelSize: 11
-            text: signalIcon(modelData.signal)
+            color: isActive ? "#a3be8c" : "#d8dee9"
+            elide: Text.ElideRight
+            font.pixelSize: 10
+            text: modelData.ssid
 
             anchors {
-              right: parent.right
+              left: activeDot.right
+              leftMargin: 6
+              right: lockIcon.left
               rightMargin: 6
               verticalCenter: parent.verticalCenter
             }
@@ -273,7 +278,6 @@ Item {
   Process {
     id: statusProcess
 
-    // Output: "yes:MySSID:72" or "no:--:0"
     command: ["bash", "-c", "nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | head -1"]
 
     stdout: StdioCollector {
@@ -323,7 +327,6 @@ Item {
             security: parts[3] ?? ""
           }
         }).filter(n => n.ssid !== "" && n.ssid !== "--")
-        console.log(lines, JSON.stringify(parsed))
         root.networks = parsed
       }
     }
@@ -338,10 +341,8 @@ Item {
   Process {
     id: connectProcess
 
-    // command is set dynamically before running = true
     stdout: StdioCollector {
       onStreamFinished: {
-        // Refresh status after a short delay to let nmcli settle
         refreshTimer.start()
       }
     }
