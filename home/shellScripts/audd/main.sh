@@ -12,7 +12,7 @@ else
   # - grep: extracts anything starting with http(s)
   # - sed: removes time parameters (&t or &startTime)
   # - tr: removes single and double quotes
-  readarray -t url_list < <(echo "$raw_clipboard" | grep -oE "https?://[^[:space:\"]+" |
+  readarray -t url_list < <(echo "$raw_clipboard" | grep -oE "https?://[^[:space:]\"]+" |
     sed -E 's/(&t=|&startTime=)[0-9]+//g' |
     tr -d "'\"")
 fi
