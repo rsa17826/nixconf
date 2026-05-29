@@ -53,6 +53,25 @@ Item {
   // ── Public state ──────────────────────────────────────────────
   property string ssid: ""
 
+  function parseNets(text) {
+    const lines = text.trim().split("\n").filter(l => l.length > 0)
+    const parsed = lines.map(line => {
+      let sanitized = line.replace("\\:", '___COLON___')
+      let parts = sanitized.split(':')
+      parts = parts.map(function (item) {
+        return item.replace(/___COLON___/g, ':')
+      })
+      return {
+        active: parts[0] ?? "",
+        ssid: (parts[1] ?? "").replace(/\\:/g, ":"),
+        signal: parseInt(parts[2]) || 0,
+        security: parts[3] ?? ""
+      }
+    }).filter(n => n.ssid !== "" && n.ssid !== "--")
+
+    root.networks = parsed
+    return parsed
+  }
   function signalColor(pct, useConnected) {
     console.log(pct, useConnected)
     if ((useConnected && !connected) || pct <= 0)
@@ -101,6 +120,7 @@ Item {
       onClicked: {
         if (!networkPopup.visible) {
           scanNetworks.running = true
+          scanNetworksNoCache.running = true
           networkPopup.visible = true
         } else {
           networkPopup.visible = false
@@ -203,7 +223,7 @@ Item {
             cursorShape: Qt.PointingHandCursor
             enabled: !root.scanning
 
-            onClicked: scanNetworks.running = true
+            onClicked: scanNetworksNoCache.running = true
           }
         }
       }
@@ -328,21 +348,23 @@ Item {
   Process {
     id: statusProcess
 
-    command: ["bash", "-c", "nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | head -1"]
+    // Two-step: trigger rescan and wait (discard output), then read fresh cache.
+    // --rescan yes corrupts the active flag mid-scan; --rescan no after it is correct.
+    command: ["bash", "-c", "nmcli dev wifi list --rescan yes >/dev/null 2>&1; nmcli -t -f active,ssid,signal,security dev wifi list --rescan no 2>/dev/null | sort -t: -k1,1r -k3,3rn | awk -F: '!seen[$2]++'"]
 
     stdout: StdioCollector {
       onStreamFinished: {
-        const line = text.trim()
-        if (line === "") {
+        const nets = parseNets(text)
+        const activeNet = nets.find(n => n.active === "yes")
+        if (activeNet) {
+          root.connected = true
+          root.ssid = activeNet.ssid
+          root.signal = activeNet.signal
+        } else {
           root.connected = false
           root.ssid = ""
           root.signal = 0
-          return
         }
-        const parts = line.split(":")
-        root.connected = parts[0] === "yes"
-        root.ssid = parts[1] ?? ""
-        root.signal = parseInt(parts[2]) || 0
       }
     }
 
@@ -356,28 +378,41 @@ Item {
     onTriggered: statusProcess.running = true
   }
   Process {
-    id: scanNetworks
+    id: scanNetworksNoCache
 
-    command: ["bash", "-c", "nmcli -t -f active,ssid,signal,security dev wifi list --rescan no 2>/dev/null | sort -t: -k3 -rn | awk -F: '!seen[$2]++'"]
+    command: ["bash", "-c", "nmcli dev wifi list --rescan yes >/dev/null 2>&1; nmcli -t -f active,ssid,signal,security dev wifi list --rescan no 2>/dev/null | sort -t: -k1,1r -k3,3rn | awk -F: '!seen[$2]++'"]
 
     stdout: StdioCollector {
       onStreamFinished: {
         root.scanning = false
-        const lines = text.trim().split("\n").filter(l => l.length > 0)
-        const parsed = lines.map(line => {
-          let sanitized = line.replace("\\:", '___COLON___')
-          let parts = sanitized.split(':')
-          parts = parts.map(function (item) {
-            return item.replace(/___COLON___/g, ':')
-          })
-          return {
-            active: parts[0] ?? "",
-            ssid: (parts[1] ?? "").replace(/\\:/g, ":"),
-            signal: parseInt(parts[2]) || 0,
-            security: parts[3] ?? ""
-          }
-        }).filter(n => n.ssid !== "" && n.ssid !== "--")
-        root.networks = parsed
+        const activeNet = parseNets(text).find(n => n.active === "yes")
+        if (activeNet) {
+          root.connected = true
+          root.ssid = activeNet.ssid
+          root.signal = activeNet.signal
+        }
+      }
+    }
+
+    onRunningChanged: {
+      if (running)
+        root.scanning = true
+    }
+  }
+  Process {
+    id: scanNetworks
+
+    command: ["bash", "-c", "nmcli -t -f active,ssid,signal,security dev wifi list --rescan no 2>/dev/null | sort -t: -k1,1r -k3,3rn | awk -F: '!seen[$2]++'"]
+
+    stdout: StdioCollector {
+      onStreamFinished: {
+        const nets = parseNets(text)
+        const activeNet = nets.find(n => n.active === "yes")
+        if (activeNet) {
+          root.connected = true
+          root.ssid = activeNet.ssid
+          root.signal = activeNet.signal
+        }
       }
     }
 
@@ -395,6 +430,10 @@ Item {
       onStreamFinished: {
         refreshTimer.start()
       }
+    }
+
+    Component.onCompleted: {
+      statusProcess.running = true
     }
   }
   Timer {
