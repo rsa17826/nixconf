@@ -237,12 +237,41 @@ in
     useXkbConfig = true;
   };
   fonts = {
+    packages =
+      with pkgs;
+      with nerd-fonts;
+      [
+        jetbrains-mono
+        hack
+        nerdfonts
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        noto-fonts-emoji
+      ];
     fontconfig = {
       enable = true;
       defaultFonts = {
-        sansSerif = [ "JetBrainsMono Nerd Font Propo" ];
-        serif = [ "JetBrainsMono Nerd Font Propo" ];
-        monospace = [ "JetBrainsMono Nerd Font Mono" ];
+        sansSerif = [
+          "JetBrainsMono Nerd Font Propo"
+          "Noto Sans CJK JP"
+          "Noto Sans CJK KR"
+          "Noto Sans CJK SC"
+          "Noto Sans CJK TC"
+        ];
+        serif = [
+          "JetBrainsMono Nerd Font Propo"
+          "Noto Serif CJK JP"
+          "Noto Serif CJK KR"
+          "Noto Serif CJK SC"
+          "Noto Serif CJK TC"
+        ];
+        monospace = [
+          "JetBrainsMono Nerd Font Mono"
+          "Noto Sans Mono CJK JP"
+          "Noto Sans Mono CJK KR"
+          "Noto Sans Mono CJK SC"
+          "Noto Sans Mono CJK TC"
+        ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

@@ -464,17 +464,4 @@ in
       adwaita-qt
     ];
   };
-  fonts = {
-    packages =
-      with pkgs;
-      with nerd-fonts;
-      [
-        jetbrains-mono
-        hack
-      ];
-    fontconfig = {
-      # This is crucial for the system to "see" them
-      enable = true;
-    };
-  };
 }
