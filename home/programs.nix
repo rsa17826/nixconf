@@ -142,6 +142,7 @@ in
         description = "${userConfig.uname}";
         extraGroups = [
           "networkmanager"
+          "docker"
           "wheel"
           "opensnitch"
           "input"
@@ -173,6 +174,7 @@ in
           #
           python313Packages.wsgidav
           steam-run-free
+          docker
           nixd # nix language server
           (pkgs.buildGoModule {
             pname = "perkins";

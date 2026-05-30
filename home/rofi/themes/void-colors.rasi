@@ -7,30 +7,30 @@
  */
 
 * {
-    /* ── Backgrounds ─────────────────────────────── */
-    void-bg0:         #03030a;   /* abyss — window background        */
-    void-bg1:         #08081400; /* transparent layer (for mainbox)  */
-    void-bg2:         #0d0d1e;   /* surface — inputbar, normal items */
-    void-bg3:         #12122c;   /* raised — selected items          */
-    void-bg4:         #1a1a3a;   /* hover / alternate rows           */
+  /* ── Backgrounds ─────────────────────────────── */
+  void-bg0:         #03030a;   /* abyss — window background        */
+  void-bg1:         #08081400; /* transparent layer (for mainbox)  */
+  void-bg2:         #0d0d1e;   /* surface — inputbar, normal items */
+  void-bg3:         #12122c;   /* raised — selected items          */
+  void-bg4:         #1a1a3a;   /* hover / alternate rows           */
 
-    /* ── Text ────────────────────────────────────── */
-    void-fg0:         #c4cce8;   /* primary — bright cold white      */
-    void-fg1:         #6a72a0;   /* secondary — muted slate-purple   */
-    void-fg2:         #30324a;   /* ghost — nearly invisible         */
+  /* ── Text ────────────────────────────────────── */
+  void-fg0:         #c4cce8;   /* primary — bright cold white      */
+  void-fg1:         #6a72a0;   /* secondary — muted slate-purple   */
+  void-fg2:         #30324a;   /* ghost — nearly invisible         */
 
-    /* ── Accents ─────────────────────────────────── */
-    void-accent:      #4d6fff;   /* signal blue — the only light     */
-    void-accent-dim:  #2a3a8a;   /* deep signal — borders/lines      */
-    void-glow:        #4d6fff44; /* translucent glow for borders     */
+  /* ── Accents ─────────────────────────────────── */
+  void-accent:      #4d6fff;   /* signal blue — the only light     */
+  void-accent-dim:  #2a3a8a;   /* deep signal — borders/lines      */
+  void-glow:        #4d6fff44; /* translucent glow for borders     */
 
-    /* ── Semantic ────────────────────────────────── */
-    void-urgent:      #9933cc;   /* violet — urgent/warn             */
-    void-active:      #336688;   /* teal — active state              */
-    void-border:      #1e1e40;   /* subtle border                    */
-    void-separator:   #0f0f22;   /* almost-invisible line            */
+  /* ── Semantic ────────────────────────────────── */
+  void-urgent:      #9933cc;   /* violet — urgent/warn             */
+  void-active:      #336688;   /* teal — active state              */
+  void-border:      #1e1e40;   /* subtle border                    */
+  void-separator:   #0f0f22;   /* almost-invisible line            */
 
-    /* ── Passthrough aliases (used by rofi internals) */
-    background-color: transparent;
-    text-color:       @void-fg0;
+  /* ── Passthrough aliases (used by rofi internals) */
+  background-color: transparent;
+  text-color:       @void-fg0;
 }
