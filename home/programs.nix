@@ -418,6 +418,7 @@ in
       #       {} \;
       #   '';
       # })) # cheat engine
+      nethogs
       gtk3
       gdb
       tumbler
