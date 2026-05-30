@@ -15,7 +15,7 @@ INPUT_FILE=$(basename "$INPUT_PATH")
 shift
 
 # Run Docker, mounting the video's directory to /workspace inside the container
-docker run --rm \
+docker run \
   -v "$INPUT_DIR":/workspace \
   ghcr.io/sirozha1337/faster-auto-subtitle:latest \
   "/workspace/$INPUT_FILE" "$@"
