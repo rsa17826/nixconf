@@ -431,7 +431,7 @@ in
       neovim # tui text editor
       wget # cmd dl util
       (brave.override {
-        commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll --force-dark-mode";
+        commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
       }) # web browser
       nixfmt # nix language formatter
       git # git is required
