@@ -243,7 +243,10 @@ function replaceText(text) {
   return text
 }
 ;(async () => {
-  console.log(Deno.args)
+  if (!Deno.args[0]) {
+    console.error("add a path")
+    return
+  }
   await Deno.writeTextFile(
     Deno.args[0],
     replaceText(await Deno.readTextFile(Deno.args[0])),

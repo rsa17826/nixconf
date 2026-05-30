@@ -12,6 +12,7 @@ INPUT_DIR=$(dirname "$INPUT_PATH")
 
 # Run the transcription tool
 docker run -it --rm \
+  --user "$(id -u):$(id -g)" \
   --device nvidia.com/gpu=all \
   -e HF_TOKEN \
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface/hub" \
@@ -22,6 +23,7 @@ docker run -it --rm \
 
 # Safely rename video.srt to [original_name].srt
 if [ -f "$INPUT_DIR/video.srt" ]; then
+  decen-text "$INPUT_DIR/video.srt"
   mv "$INPUT_DIR/video.srt" "${INPUT_PATH%.*}.srt"
   echo "Success! Subtitles saved to: ${INPUT_PATH%.*}.srt"
 else
