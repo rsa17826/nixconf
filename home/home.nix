@@ -121,23 +121,6 @@ in
       systemd = {
         user = {
           services = {
-            swaync = {
-              Service = {
-                Restart = lib.mkForce "no";
-              };
-              Install = {
-                # Also, prevent Home Manager from trying to start them during activation
-                WantedBy = lib.mkForce [ ];
-              };
-            };
-            xdg-desktop-portal-gtk = {
-              Service = {
-                Restart = lib.mkForce "no";
-              };
-              Install = {
-                WantedBy = lib.mkForce [ ];
-              };
-            };
           };
         };
       };
