@@ -4,16 +4,13 @@
     users = {
       "${userConfig.uname}" = {
         packages = with pkgs; [
-          writeShellApplication
-          {
+          (writeShellApplication {
             name = "decen-text";
-            runtimeInputs = with pkgs; [
-              deno
-            ];
+            runtimeInputs = [ pkgs.deno ];
             text = ''
-              exec deno run --allow-read --allow-write ${./main.js} "$@"
+              exec deno run --no-remote --allow-read --allow-write ${./main.js} "$@"
             '';
-          }
+          })
         ];
       };
     };
