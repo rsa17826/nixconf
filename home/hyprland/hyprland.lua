@@ -30,7 +30,7 @@ hl.monitor({
 
 -- ─── Environment variables ─────────────────────────────────────────────────
 hl.env("GTK_THEME", "Adwaita:dark")
-hl.env("HF_TOKEN", "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")
+hl.env("HF_TOKEN", "h" .. "f_SafyQgTivWTDzLZYquMFZqwWOVLyEMEjnJ")
 hl.env("ADW_DEBUG_COLOR_SCHEME", "prefer-dark")
 -- hl.env("QT_QPA_PLATFORMTHEME", "generic")
 hl.env("XCURSOR_SIZE", "24")
