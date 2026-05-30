@@ -13,6 +13,7 @@ shift # Remove the first argument (the input file)
 
 # Mount the specific video directly to the path the container demands
 docker run \
+  -e HF_TOKEN \
   -v "$INPUT_PATH":/app/input/video.mp4 \
   -v "$INPUT_DIR":/app/output \
   ghcr.io/sirozha1337/faster-auto-subtitle:latest \
