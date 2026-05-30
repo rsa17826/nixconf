@@ -133,7 +133,11 @@ in
   nixpkgs = {
     overlays = [ inputs.millennium.overlays.default ];
   };
-
+  virtualisation = {
+    docker = {
+      enable = true;
+    };
+  };
   users = {
     users = {
       "${userConfig.uname}" = {
