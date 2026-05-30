@@ -280,6 +280,9 @@ in
       enable32Bit = true;
       enable = true;
     };
+    nvidia-container-toolkit = {
+      enable = true;
+    };
     nvidia = {
       modesetting = {
         # Modesetting is required for most modern Wayland/X11 setups
