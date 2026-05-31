@@ -203,6 +203,22 @@ hl.window_rule({
 	scrolling_width = 1,
 	workspace = "3 silent",
 })
+hl.window_rule({
+	name = "Mathasdbreakers",
+	match = {
+		class = "^Mathbreakers$",
+		-- title = "^kitten$",
+	},
+	suppress_event = "fullscreen activatefocus activate fullscreenoutput",
+	pin = true,
+	float = true,
+	no_focus = true,
+	no_initial_focus = true,
+	size = { "250", "250" },
+	move = { "0", "30" },
+	opacity = "1 override",
+	border_size = 0,
+})
 
 -- hl.window_rule({
 -- 	name = "asdd",

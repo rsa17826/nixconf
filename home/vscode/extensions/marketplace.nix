@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "vscode-autohotkey2-lsp";
+              publisher = "thqby";
+              version = "3.0.9";
+              hash = "sha256-ZU4Qf2oQtPOJHAfVhAFfM6M8c6N6NescOh7X5gitGO8=";
+            }
+            {
               name = "lua";
               publisher = "sumneko";
               version = "3.18.2";

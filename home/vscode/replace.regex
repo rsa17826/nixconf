@@ -327,6 +327,12 @@ $1
 @replace
 @endregex
 
+@name remove placeholders
+@file (?<!\.regex)$
+@regex ×
+@replace x
+@endregex
+
 @name no description
 @file \.nix$
 @regex \bdescription =
