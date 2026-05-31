@@ -195,6 +195,14 @@ hl.window_rule({
 	match = { class = "^steam$" },
 	workspace = "3 silent",
 })
+hl.window_rule({
+	name = "Mathbreakers",
+	match = { class = "^mathbreakers.exe$" },
+	suppress_event = "fullscreen activatefocus activate fullscreenoutput",
+	content = "game",
+	scrolling_width = 1,
+	workspace = "3 silent",
+})
 
 -- hl.window_rule({
 -- 	name = "asdd",
