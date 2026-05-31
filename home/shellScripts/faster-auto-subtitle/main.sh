@@ -15,7 +15,9 @@ docker run -it --rm \
   --user "$(id -u):$(id -g)" \
   --device nvidia.com/gpu=all \
   -e HF_TOKEN \
-  -v "$HOME/.cache/huggingface:/root/.cache/huggingface/hub" \
+  -e HF_HOME=/hf-cache \
+  -e HF_HUB_CACHE=/hf-cache \
+  -v "$HOME/.cache/huggingface:/hf-cache" \
   -v "$INPUT_PATH:/app/input/video.mp4" \
   -v "$INPUT_DIR:/app/output" \
   ghcr.io/sirozha1337/faster-auto-subtitle:latest \
