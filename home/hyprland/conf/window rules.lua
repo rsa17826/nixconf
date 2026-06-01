@@ -202,7 +202,6 @@ hl.window_rule({
 	scrolling_width = 1,
 	workspace = "3 silent",
 	content = "none",
-	confine_pointer = true,
 })
 hl.window_rule({
 	name = "hjhhkMathasdbreakers",
