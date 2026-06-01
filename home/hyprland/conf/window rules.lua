@@ -213,7 +213,7 @@ hl.window_rule({
 	float = true,
 	no_focus = true,
 	no_initial_focus = true,
-	size = { "500", "25" },
+	size = { "480.0", "200" },
 	move = { "0", "30" },
 	opacity = "1 override",
 	border_size = 0,
