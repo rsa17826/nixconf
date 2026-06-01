@@ -71,7 +71,7 @@ Rectangle {
   }
 
   color: error ? "#ff9100" : syncthingRemainingData === 0 ? '#1fafd3' : '#11a42c'
-  height: 11
+  height: 10
   implicitWidth: Math.max(height, label.implicitWidth + 8)
   radius: 20
 
