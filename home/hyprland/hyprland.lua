@@ -46,6 +46,7 @@ hl.config({
 	general = {
 		-- asd=
 		layout = "scrolling",
+		-- layout = "master",
 		gaps_in = 0,
 		gaps_out = 0,
 		border_size = 2,
