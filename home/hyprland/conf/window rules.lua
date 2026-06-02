@@ -213,12 +213,20 @@ hl.window_rule({
 	float = true,
 	no_focus = true,
 	no_initial_focus = true,
-	size = { "480.0", "200" },
+	size = { "710.0", "200" },
 	move = { "0", "30" },
-	opacity = "1 override",
 	border_size = 0,
 })
-
+hl.window_rule({
+	name = "math-hidden",
+	match = { class = "^Mathbreakers$", tag = "math_hide" },
+	opacity = "0 override",
+})
+hl.window_rule({
+	name = "math-visible",
+	match = { class = "^Mathbreakers$" },
+	opacity = "1 override",
+})
 -- hl.window_rule({
 -- 	name = "asdd",
 -- 	match = { class = "^xdman-Main$" },
