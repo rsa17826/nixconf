@@ -35,6 +35,14 @@ if [ "$FOUND" = true ]; then
   if zenity --question --text="Delete this clip?" --title="Replay Saved"; then
     rm "$CURRENT_VIDEO"
     notify-send "Deleted" "Recording removed."
+  else
+    LAST_VIDEO=$CURRENT_VIDEO
+    losslesscut -- "$CURRENT_VIDEO"
+    CURRENT_VIDEO=$(find "$VIDEO_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
+    if [ "$CURRENT_VIDEO" != "$LAST_VIDEO" ] && [ -f "$CURRENT_VIDEO" ]; then
+      rm "$LAST_VIDEO"
+      mv "$CURRENT_VIDEO" "$LAST_VIDEO"
+    fi
   fi
 else
   notify-send "Error" "Save timed out after ${MAX_WAIT}s."
