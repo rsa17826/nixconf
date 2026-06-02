@@ -1,4 +1,4 @@
 pkgs: with pkgs; [
   zenity
-  losslesscut
+  losslesscut-bin
 ]
