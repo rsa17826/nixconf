@@ -175,6 +175,7 @@ in
           icu
           openssl
           zlib
+          inotify-info
           #
           python313Packages.wsgidav
           steam-run-free
