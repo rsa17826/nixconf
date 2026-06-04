@@ -176,6 +176,7 @@ in
           openssl
           zlib
           inotify-info
+          bandwhich
           #
           python313Packages.wsgidav
           steam-run-free
