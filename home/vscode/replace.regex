@@ -340,3 +340,10 @@ $1
 @errgroup 0
 @endregex
 
+@name use the autofix
+@file \.go$
+@regex \.WriteString\(\s*fmt\.
+@warn
+@errgroup 0
+@endregex
+

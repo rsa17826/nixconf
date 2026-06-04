@@ -56,6 +56,26 @@
             nodupe = true;
           };
         };
+        "/Mathbreakers LeveL speedrun" = {
+          path = "/home/${userConfig.uname}/copyparty/Mathbreakers LeveL speedrun";
+          access = {
+            rwmd = "*";
+            A = [
+              "admin"
+            ];
+          };
+          flags = {
+            fk = 4;
+            scan = 60;
+            # volflag "e2d" enables the uploads database
+            e2d = true;
+            # "d2t" disables multimedia parsers (in case the uploads are malicious)
+            d2t = true;
+            # skips hashing file contents if path matches *.iso
+            # nohash = "\.iso$";
+            nodupe = true;
+          };
+        };
         # "/lwts" = {
         #   path = "/home/${userConfig.uname}/projects/decen/lwts/not_censored/";
         #   access = {
