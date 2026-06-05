@@ -34,6 +34,7 @@ def get_desktop_apps() -> list[dict[str, str]]:
         name_match = re.search(r"^Name=(.+)$", content, re.MULTILINE)
         exec_match = re.search(r"^Exec=(.+)$", content, re.MULTILINE)
         icon_match = re.search(r"^Icon=(.+)$", content, re.MULTILINE)
+        path_match = re.search(r"^Path=(.+)$", content, re.MULTILINE)
         no_display = re.search(r"^NoDisplay=[Tt]rue$", content, re.MULTILINE)
 
         if name_match and exec_match and not no_display:
@@ -46,9 +47,17 @@ def get_desktop_apps() -> list[dict[str, str]]:
             if icon_match
             else "application-x-executable"
           )
+          workdir = path_match.group(1).strip() if path_match else ""
 
           if name not in seen_names:
-            apps.append({"name": name, "exec": executable, "icon": icon})
+            apps.append(
+              {
+                "name": name,
+                "exec": executable,
+                "icon": icon,
+                "workdir": workdir,
+              }
+            )
             seen_names.add(name)
       except Exception:
         continue
@@ -75,7 +84,7 @@ def copy_to_clipboard(text: str):
       pass
 
 
-def launch_app(exec_command: str):
+def launch_app(exec_command: str, workdir: str = ""):
   """Launches an application in the background detached from Rofi."""
   try:
     _ = subprocess.Popen(
@@ -83,6 +92,7 @@ def launch_app(exec_command: str):
       stdout=subprocess.DEVNULL,
       stderr=subprocess.DEVNULL,
       env=os.environ,
+      cwd=workdir if workdir else None,
     )
   except Exception:
     pass
@@ -136,7 +146,7 @@ def main():
           # Scenario B: Match the selected app text directly against our app registry
           for app in all_apps:
             if app["name"] == user_input:
-              launch_app(app["exec"])
+              launch_app(app["exec"], app.get("workdir", ""))
               sys.exit(0)
         continue
 
