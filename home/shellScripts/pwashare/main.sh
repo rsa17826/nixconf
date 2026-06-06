@@ -2,8 +2,8 @@
 
 PORT=1234
 SINK_NAME="VirtualSink"
-RATE=12000
-# RATE=11025
+# RATE=12000
+RATE=48000
 # TITLE="Audio Streamer"
 
 # Function to clean up on exit or stop

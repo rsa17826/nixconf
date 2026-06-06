@@ -40,6 +40,7 @@ hl.env("HYPRCURSOR_THEME", "mew")
 hl.env("YDOTOOL_SOCKET", "/tmp/.ydotool_socket")
 hl.env("GONOPROXY", "github.com/rsa17826/*")
 hl.env("GOPRIVATE", "github.com/rsa17826/*")
+-- hl.env("PROTON_USE_WINED3D", "1")
 
 -- ─── Core config ───────────────────────────────────────────────────────────
 hl.config({
