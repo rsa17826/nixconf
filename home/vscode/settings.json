@@ -32,7 +32,7 @@
     "**/.vscode": true,
     "**/*.tscn": true,
     "**/*.uid": true,
-    "**/docs": true,
+    // "**/docs": true,
     "**/icon.ico": true,
     "**/js globals": true,
     "**/node_modules": true,
