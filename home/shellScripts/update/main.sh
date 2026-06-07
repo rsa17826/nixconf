@@ -216,6 +216,7 @@ else
       rm -f "$TMPOUT"
       continue # Re-run the while loop
     else
+      echo "$TMPOUT"
       # PERMANENT FAILURE: Update commit message to reflect failure
       echo "⚠️ No fixable hashes found."
       if [[ "$NO_GIT" == false ]]; then
