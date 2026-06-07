@@ -19,7 +19,7 @@ Rectangle {
   Text {
     id: clipboardDisplay
 
-    color: "#cccccc"
+    color: "#6a72a0"
     elide: Text.ElideRight
     font.pixelSize: 11
     text: clipboardLogic.clipboardItems.length > 0 ? clipboardLogic.clipboardItems[0].preview : "Empty"

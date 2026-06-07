@@ -25,10 +25,23 @@ Scope {
       WlrLayershell.keyboardFocus: WlrLayershell.None
       WlrLayershell.layer: WlrLayer.Overlay
       color: "transparent"
-      implicitHeight: 32
+      implicitHeight: 28
       implicitWidth: Screen.width
       screen: modelData
 
+      // ── Void bar background ──────────────────────────────────
+      Rectangle {
+        anchors.fill: parent
+        color: "#03030a"
+
+        Rectangle {
+          anchors.bottom: parent.bottom
+          anchors.left: parent.left
+          anchors.right: parent.right
+          color: "#1e1e40"
+          height: 1
+        }
+      }
       MediaProgress {
       }
       anchors {

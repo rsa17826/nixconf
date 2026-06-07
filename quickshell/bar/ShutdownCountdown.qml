@@ -23,7 +23,7 @@ Item {
     property int m: Math.floor(root.secondsLeft / 60)
     property int s: root.secondsLeft % 60
 
-    color: "#ff6b6b"
+    color: "#c680f0"
     font.pixelSize: 11
     text: `󰐥 Shuts Down in ${m}m${s < 10 ? "0" + s : s}s`
   }

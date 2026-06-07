@@ -32,9 +32,10 @@ Rectangle {
     return "just now"
   }
 
-  color: ghNotifCount > 0 ? '#d31f31' : "#888888"
+  border.color: ghNotifCount > 0 ? "#2a3a8a" : "#2a3a8a"
+  border.width: 1
+  color: ghNotifCount > 0 ? "#12122c" : "#12122c"
   height: 10
-  // Width grows/shrinks based on number of digits
   implicitWidth: Math.max(height, ghNotifCountTextItem.implicitWidth + 8)
   radius: 20
 
@@ -96,7 +97,7 @@ Rectangle {
     id: ghNotifCountTextItem
 
     anchors.centerIn: parent
-    color: "white"
+    color: "#4d6fff"
     font.bold: true
     font.pixelSize: 8
     text: ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : ""

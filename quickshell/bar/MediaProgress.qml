@@ -10,14 +10,14 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Rectangle {
-  color: root.activePlayer ? "rgba(0, 0, 0, 0.4)" : "transparent"
+  color: root.activePlayer ? "#0d0d1e" : "transparent"
   height: 2
   width: parent.width
 
   Rectangle {
     id: progressFill
 
-    color: '#d12121'
+    color: "#4d6fff"
     height: 2
     width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
   }

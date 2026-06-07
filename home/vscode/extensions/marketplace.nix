@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "color--combine";
+              publisher = "Aritz-Garciaa";
+              version = "1.0.1";
+              hash = "sha256-Y/iqVGmMBVuPBxr7P/SpWJpfqRlQOQg682g+huFK49U=";
+            }
+            {
               name = "vscode-pets";
               publisher = "tonybaloney";
               version = "1.35.0";
@@ -14,8 +20,8 @@
             {
               name = "vscode-autohotkey2-lsp";
               publisher = "thqby";
-              version = "3.0.9";
-              hash = "sha256-ZU4Qf2oQtPOJHAfVhAFfM6M8c6N6NescOh7X5gitGO8=";
+              version = "3.0.10";
+              hash = "sha256-ESshpZk2zG8ADqhzqpiAYK/W6jWmlySzyf31IZxlWZg=";
             }
             {
               name = "lua";
@@ -128,26 +134,26 @@
             {
               name = "qt-python";
               publisher = "theqtcompany";
-              version = "1.13.0";
-              hash = "sha256-Kl2b+NMfBYhB4ir6YMK9nQEfit991d7e3iyX+s9CO7E=";
+              version = "1.15.0";
+              hash = "sha256-Rt0oqIO3+J81FcLftSZDSgrFrCr/GHphItKKKNMScd0=";
             }
             {
               name = "qt-core";
               publisher = "theqtcompany";
-              version = "1.13.0";
-              hash = "sha256-/SAoJmKfOfLtbYn4jvtbAFIa6O7kDouv0xQVhnxFOKM=";
+              version = "1.15.0";
+              hash = "sha256-GVffx5YoLyemzLJ7jIEk0+0vwfP9mACwDJtenyhEN0Y=";
             }
             {
               name = "qt-ui";
               publisher = "theqtcompany";
-              version = "1.13.0";
-              hash = "sha256-Ie6cY8Q5gqRRfKczlK5QhQ6k2W6Su0NoGcJ9eee+tlo=";
+              version = "1.15.0";
+              hash = "sha256-IrU8NCNFv2Sjun5019SRzCNHlnkvmJlzLBX5y+F0WeA=";
             }
             {
               name = "qt-qml";
               publisher = "theqtcompany";
-              version = "1.13.0";
-              hash = "sha256-WPzierXLQM+HdVb0XAx80f4Fdd34Vf7WbFzFapr5VHE=";
+              version = "1.15.0";
+              hash = "sha256-UiInoW6OYRpTeiMQlQ9IQChb7k2o4ploxeNRNgAv3do=";
             }
             {
               name = "indent-jump";
@@ -188,14 +194,14 @@
             {
               name = "vscode-eslint";
               publisher = "dbaeumer";
-              version = "3.0.24";
-              hash = "sha256-ZQVzpSSLf3tpO4QtLjbCOje3L5/EqzT9A9IOssl6e54=";
+              version = "3.0.29";
+              hash = "sha256-hUNmRQZiIZmvThRB7dJBgILMtpCQjFGRopyjG3TCiqw=";
             }
             {
               name = "godot-format";
               publisher = "dohe";
-              version = "0.2.15";
-              hash = "sha256-jJaf29/wCcvYJgRRsUFMvb21SQ+55Ffn38Z9XLd6vQw=";
+              version = "0.2.18";
+              hash = "sha256-7Um28UWJm8hJuQA5cOaTfz6xHFnSZu1ptGedilUz4Q0=";
             }
             {
               name = "githistory";
@@ -254,8 +260,8 @@
             {
               name = "basedpyright";
               publisher = "detachhead";
-              version = "1.39.5";
-              hash = "sha256-S6AAcPseIHYDLEt+9QyqpZ3i/hxhnLTB/2yZuEPUAbg=";
+              version = "1.39.7";
+              hash = "sha256-hm5jDcBVaRfmzhDTXFOpReN227lFyYT/i+HGPcpdkX0=";
             }
             # {
             #   name = "synthwave-fluoromachine-cursor";
@@ -296,20 +302,20 @@
             {
               name = "black-formatter";
               publisher = "ms-python";
-              version = "2026.5.11321003";
-              hash = "sha256-4p/uKwSHg5HP4qp18eb35Lkb+SDhk4k+oIlEjIqBLOs=";
+              version = "2026.7.11561004";
+              hash = "sha256-apfJ525mSkPlhkVAZCut0hd1MPnnwC64I/0zH1TZIz4=";
             }
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.11331010";
-              hash = "sha256-WG6uB+q3qnIw5+RWN/774dL04YSdGCE3bN8fzhjl4ck=";
+              version = "2026.7.11551014";
+              hash = "sha256-Jb4/ffusA1G2Y4smVQynO093VuLjGGNP501g4cKgVo0=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.5.2026051501";
-              hash = "sha256-Wzn2R8F4NInwGcl60ZpDVP4YwxGAbKh+e+ls0Wmf77M=";
+              version = "2026.5.2026052901";
+              hash = "sha256-aWtGDmqfJiwkO72MFLYjX16Vb//ltqAY3IinGH0OpfI=";
             }
             {
               name = "hexeditor";

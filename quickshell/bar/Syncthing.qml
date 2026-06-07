@@ -38,7 +38,8 @@ Rectangle {
             var data = JSON.parse(xhr.responseText)
             var percent = data.completion || 0
             var needBytes = data.needBytes || 0
-
+            // needBytes += 99
+            // throw new Error()
             syncthingRemainingData = needBytes
 
             var remainingStr = formatRemainingBytes(needBytes)
@@ -70,22 +71,23 @@ Rectangle {
     xhr.send()
   }
 
-  color: error ? "#ff9100" : syncthingRemainingData === 0 ? '#1fafd3' : '#11a42c'
+  border.color: error ? "#9933cc" : syncthingRemainingData === 0 ? '#48005b' : "#48005b"
+  border.width: 1
+  color: error ? "#1a0a2e" : syncthingRemainingData === 0 ? '#2d232d' : '#28122c'
   height: 10
   implicitWidth: Math.max(height, label.implicitWidth + 8)
   radius: 20
 
   anchors {
     right: parent.right
-    rightMargin: 10
     verticalCenter: parent.verticalCenter
   }
   Text {
     id: label
 
     anchors.centerIn: parent
-    color: '#ffffff'
-    font.pixelSize: 11
+    color: error ? "#c680f0" : '#db4dff'
+    font.pixelSize: 10
     text: statusText
   }
   MouseArea {

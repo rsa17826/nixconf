@@ -8,41 +8,41 @@ Item {
   id: root
 
   property var c: {
-    "bg": "#1e1e2e"                  // Deep obsidian purple background
+    "bg": "#0d0d1e"   // void surface
     ,
-    "border": "#313244"              // Dark purple-gray border
+    "border": "#1e1e40"   // void border
     ,
-    "divider": "#313244"             // Matching dark divider
+    "divider": "#1e1e40"   // matching divider
     ,
-    "hovered": "#45475a"             // Muted medium purple for hover states
+    "hovered": "#12122c"   // void raised
     ,
-    "scanning": "#7f849c"              // Vibrant lavender/light purple for actions
+    "scanning": "#30324a"   // ghost — muted while scanning
     ,
-    "rescan": "#cba6f7"              // Vibrant lavender/light purple for actions
+    "rescan": "#4d6fff"   // accent blue
     ,
-    "wifiSelectLogo": "#cba6f7"      // Matching lavender logo
+    "wifiSelectLogo": "#4d6fff"   // accent blue
 
     ,
-    "activeWifi": "#a6e3a1"          // Soft pastel green for active connection
+    "activeWifi": "#4d6fff"   // signal blue for active connection
     ,
-    "inactiveWifi": "#cdd6f4"        // Soft off-white/light lavender for inactive text
+    "inactiveWifi": "#6a72a0"   // fg1 — muted slate
     ,
-    "lockColor": "#7f849c"           // Muted slate purple for locks
+    "lockColor": "#30324a"   // ghost
     ,
-    "noNetworksFoundText": "#7f849c" // Muted slate text
+    "noNetworksFoundText": "#30324a"   // ghost
     ,
-    "disconnected": "#7f849c"        // Muted slate status
+    "disconnected": "#30324a"   // ghost
 
     ,
-    "goodCon": '#89fa9a'             // Soft blue/indigo for good connection
+   "goodCon": '#539268'             // Soft blue/indigo for good connection
     ,
-    "okCon": '#b0fa89'             // Soft blue/indigo for good connection
+    "okCon": '#689260'             // Soft blue/indigo for good connection
     ,
-    "mehCon": '#f6f074'              // Soft pastel yellow for okay connection
+    "mehCon": '#8e8c57'              // Soft pastel yellow for okay connection
     ,
-    "badCon": '#edb575'               // Soft pastel red/pink for bad connection
+    "badCon": '#896c54'               // Soft pastel red/pink for bad connection
     ,
-    "worstCon": '#d8456f'               // Soft pastel red/pink for bad connection
+    "worstCon": '#80314e'            // deep violet — nearly dead
   }
   //
   property bool connected: false
@@ -146,7 +146,7 @@ Item {
     Text {
       id: ssidText
 
-      color: root.connected ? "#d8dee9" : "#888888"
+      color: root.connected ? "#c4cce8" : "#30324a"
       font.pixelSize: 10
       text: root.connected ? root.ssid : "no wifi"
 
