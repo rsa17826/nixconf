@@ -33,6 +33,9 @@
         songs = {
           passwordFile = "/run/secrets/copypartySongs";
         };
+        images = {
+          passwordFile = "/run/secrets/copypartyImages";
+        };
       };
 
       volumes = {

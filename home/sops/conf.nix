@@ -24,6 +24,11 @@
         group = "copyparty";
         mode = "0440";
       };
+      copypartyImages = {
+        restartUnits = [ "copyparty.service" ];
+        group = "copyparty";
+        mode = "0440";
+      };
       # syncthingApiKey = { };
       # syncthingRpId = { };
     };
