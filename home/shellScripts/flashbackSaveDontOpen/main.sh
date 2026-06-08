@@ -32,7 +32,7 @@ done
 # 3. Handle Result
 if [ "$FOUND" = true ]; then
   # Ask the user how many seconds to keep from the end of the video
-  TRIM_SECS=$(zenity --entry --title="Trim Clip" --text="Enter seconds to keep from the end (e.g., 30):" --entry-text="30")
+  TRIM_SECS=$(alwaysFocusedInputBox --title="Trim Clip" --text="Enter seconds to keep from the end (e.g., 30):" --entry-text="30")
 
   # If the user cancels or provides no input, exit without deleting anything
   if [ -z "$TRIM_SECS" ]; then
