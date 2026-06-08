@@ -17,7 +17,7 @@ Rectangle {
   Rectangle {
     id: progressFill
 
-    color: "#4d6fff"
+    color: '#510084'
     height: 2
     width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
   }
