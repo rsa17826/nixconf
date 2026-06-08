@@ -883,5 +883,6 @@
   // },
   // "editor.formatOnSaveMode": "modificationsIfAvailable",
   // "files.simpleDialog.enable": true,
-  "Lua.misc.executablePath": "/etc/profiles/per-user/nyix/bin/lua-language-server"
+  "Lua.misc.executablePath": "/etc/profiles/per-user/nyix/bin/lua-language-server",
+  "qt-core.showWelcomePageOnActivation": false
 }

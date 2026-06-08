@@ -10,11 +10,11 @@ let
 
   godot-dismiss = pkgs.writeShellApplication {
     name = "godot-dismiss";
-    runtimeInputs = [
+    runtimeInputs = with pkgs;[
       pythonEnv
-      pkgs.hyprland # provides hyprctl
-      pkgs.grim
-      pkgs.ydotool
+      hyprland # provides hyprctl
+      grim
+      ydotool
     ];
     text = ''
       exec python3 ${./auto_dismiss_godot/main.py} ${./auto_dismiss_godot/ok_btn.png}

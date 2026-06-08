@@ -50,7 +50,8 @@ hl.config({
 		-- layout = "master",
 		gaps_in = 0,
 		gaps_out = 0,
-		border_size = 2,
+		-- border_size = 2,
+		border_size = 0,
 		col = {
 			active_border = { colors = { "rgba(000000ee)", "rgba(ff00ffee)" }, angle = 45 },
 			inactive_border = { colors = { "rgba(000000ee)", "rgba(ff00ffee)" }, angle = 45 },
@@ -86,7 +87,8 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
+		-- rounding = 10,
+		rounding = 0,
 		rounding_power = 2,
 		active_opacity = 1.0,
 		inactive_opacity = 0.5,
