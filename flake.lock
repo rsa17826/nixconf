@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "alwaysFocusedInputBox": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780941252,
+        "narHash": "sha256-3INchM227Fik8U9qFDBY/WEsG7eoCymzsrR9JgjSxH8=",
+        "owner": "rsa17826",
+        "repo": "alwaysFocusedInputBox",
+        "rev": "08b44cee6146d433741d46f8c6f142dfe721a513",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "alwaysFocusedInputBox",
+        "type": "github"
+      }
+    },
     "aquamarine": {
       "inputs": {
         "hyprutils": [
@@ -1075,6 +1098,7 @@
     },
     "root": {
       "inputs": {
+        "alwaysFocusedInputBox": "alwaysFocusedInputBox",
         "audio-manager": "audio-manager",
         "auto-screenshotter": "auto-screenshotter",
         "autocorrect": "autocorrect",

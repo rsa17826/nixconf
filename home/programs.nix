@@ -167,6 +167,7 @@ in
           (pkgFromInp "input-manager" "default")
           (pkgFromInp "key-modifier" "default")
           (pkgFromInp "autocorrect" "default")
+          (pkgFromInp "alwaysFocusedInputBox" "default")
           (pkgFromInp "auto-screenshotter" "default")
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg

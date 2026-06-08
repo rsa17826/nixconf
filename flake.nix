@@ -109,6 +109,17 @@
         };
       };
     };
+    alwaysFocusedInputBox = {
+      url = "github:rsa17826/alwaysFocusedInputBox";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        flake-utils = {
+          follows = "flake-utils";
+        };
+      };
+    };
     key-modifier = {
       url = "github:rsa17826/key-modifier";
       inputs = {
