@@ -32,8 +32,8 @@ hl.window_rule({
 
 -- zenity: keep focused and centered
 hl.window_rule({
-	name = "Background Input Capture",
-	match = { class = "^Background Input Capture$" },
+	name = "alwaysFocusedInputBox",
+	match = { class = "^alwaysFocusedInputBox$" },
 	fullscreen = false,
 	pin = true,
 	float = true,
