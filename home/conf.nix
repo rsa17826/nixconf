@@ -405,7 +405,7 @@ in
     # };
   };
   networking = {
-    hostName = "${hostName}";x
+    hostName = "${hostName}";
   };
   system = {
     stateVersion = "25.05";
