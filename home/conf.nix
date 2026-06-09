@@ -394,18 +394,18 @@ in
         };
       };
     };
-    timers = {
-      nix-custom-gc = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-        };
-      };
-    };
+    # timers = {
+    #   nix-custom-gc = {
+    #     wantedBy = [ "timers.target" ];
+    #     timerConfig = {
+    #       OnCalendar = "daily";
+    #       Persistent = true;
+    #     };
+    #   };
+    # };
   };
   networking = {
-    hostName = "${hostName}";
+    hostName = "${hostName}";x
   };
   system = {
     stateVersion = "25.05";
