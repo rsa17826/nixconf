@@ -5,7 +5,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd(
 		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME QT_STYLE_OVERRIDE"
 	)
-	hl.exec_cmd("opensnitch-ui")
+	-- hl.exec_cmd("opensnitch-ui")
 	hl.exec_cmd("systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 	hl.exec_cmd("~/.config/hypr/scripts/audacity-kill-dialog.sh")

@@ -41,14 +41,14 @@
     };
   };
   services = {
-    opensnitch = {
-      enable = true;
-      settings = {
-        DefaultAction = "deny"; # miss a popup → block, not allow
-        DefaultDuration = "always"; # UI decisions are saved permanently
-        InterceptUnknown = true;
-      };
-    };
+    # opensnitch = {
+    #   enable = true;
+    #   settings = {
+    #     DefaultAction = "deny"; # miss a popup → block, not allow
+    #     DefaultDuration = "always"; # UI decisions are saved permanently
+    #     InterceptUnknown = true;
+    #   };
+    # };
     xserver = {
       enable = true;
       xkb = {
