@@ -31,31 +31,32 @@ Singleton {
 
   // All notification entries.
   // Shape: { id, summary, body, appName, appIcon, urgency, addedAt,
-  //          expired, dismissed, actions: [{id, text}], _ref }
+  //          expired, dismissed, actions: [{id, text, _invoke}], _expire }
   property var notifs: []
 
   function clearHistory() {
+    root.notifs.forEach(n => {
+      if (n.expired && n._expire)
+        n._expire()
+    })
     root.notifs = root.notifs.filter(n => !n.expired)
   }
 
   // ── Public API ───────────────────────────────────────────────
   function dismiss(id) {
+    const entry = root.notifs.find(n => n.id === id)
+    if (entry && entry._expire)
+      entry._expire()
     root.notifs = root.notifs.map(n => n.id === id ? Object.assign({}, n, {
         dismissed: true
       }) : n)
   }
   function invokeAction(id, actionId) {
     const entry = root.notifs.find(n => n.id === id)
-    if (entry && entry._ref) {
-      const actions = entry._ref.actions
-      console.log(JSON.stringify(entry._ref))
-      console.log(JSON.stringify(entry))
-      for (let i = 0; i < actions.length; i++) {
-        if (actions[i].identifier === actionId) {
-          actions[i].invoke()
-          break
-        }
-      }
+    if (entry) {
+      const action = entry.actions.find(a => a.id === actionId)
+      if (action && action._invoke)
+        action._invoke()
     }
     dismiss(id)
   }
@@ -75,8 +76,7 @@ Singleton {
       const now = Date.now()
       let changed = false
       const updated = root.notifs.map(n => {
-        // TODO
-        if (!n.expired && !n.dismissed && n.urgency !== 20 && (now - n.addedAt) >= 2000) {
+        if (!n.expired && !n.dismissed && (now - n.addedAt) >= 2000) {
           changed = true
           return Object.assign({}, n, {
             expired: true
@@ -98,19 +98,38 @@ Singleton {
     bodySupported: true
     keepOnReload: true
 
-    // iconSupported: true
-
     onNotification: notif => {
-      const urgencyVal = notif.urgency === NotificationUrgency.Critical ? 2 : notif.urgency === NotificationUrgency.Low ? 0 : 1
+      const urgencyVal = notif.urgency === NotificationUrgency.Critical ? 2 : notif.urgency === NotificationUrgency.Low ? 0 : 1;
 
+      // Keep the QML notification object alive so actions remain callable.
+      notif.tracked = true;
+
+      // Capture each action's invoke as a closure RIGHT NOW while the
+      // QML object is alive. We never go through _ref again after this.
       const actions = []
-      for (let i = 0; i < notif.actions.length; i++) {
-        const a = notif.actions[i]
-        actions.push({
-          id: a.identifier,
-          text: a.text
-        })
+      const rawActions = notif.actions
+      if (rawActions) {
+        for (let i = 0; i < rawActions.length; i++) {
+          const a = rawActions[i]
+          actions.push({
+            id: a.identifier,
+            text: a.text,
+            _invoke: (function (action) {
+                return function () {
+                  action.invoke()
+                }
+              })(a)
+          })
+        }
       }
+
+      // Capture expire so dismiss/clear can remove it from the server,
+      // preventing it from reappearing after a quickshell reload.
+      const expireFn = (function (n) {
+          return function () {
+            n.expire()
+          }
+        })(notif)
 
       const entry = {
         id: notif.id,
@@ -123,7 +142,7 @@ Singleton {
         addedAt: Date.now(),
         expired: false,
         dismissed: false,
-        _ref: notif          // keep reference for action invocation
+        _expire: expireFn
       };
 
       // Replace existing notification with same id (updated notification)
