@@ -11,10 +11,6 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Scope {
-  NotifPopups {
-  }
-  NotifCenter {
-  }
   Variants {
     model: Quickshell.screens
 
@@ -37,7 +33,6 @@ Scope {
       Rectangle {
         anchors.fill: parent
         color: "#03030a"
-
         Rectangle {
           anchors.bottom: parent.bottom
           anchors.left: parent.left
@@ -46,6 +41,7 @@ Scope {
           height: 1
         }
       }
+
       MediaProgress {
       }
       anchors {

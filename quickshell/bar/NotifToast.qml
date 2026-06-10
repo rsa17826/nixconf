@@ -18,13 +18,6 @@ Rectangle {
   opacity: 0
   radius: 6
 
-  Behavior on opacity {
-    NumberAnimation {
-      duration: 120
-      easing.type: Easing.OutCubic
-    }
-  }
-
   Component.onCompleted: opacity = 1
 
   // ── 20s countdown bar (only on live popups) ─────────────────

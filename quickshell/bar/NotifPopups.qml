@@ -11,7 +11,7 @@ Variants {
 
     required property var modelData
 
-    WlrLayershell.anchors: WlrAnchors.Top | WlrAnchors.Right
+    // WlrLayershell.anchors: WlrAnchors.Top | WlrAnchors.Right
     WlrLayershell.exclusiveZone: -1
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
     WlrLayershell.layer: WlrLayer.Overlay

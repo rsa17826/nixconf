@@ -48,6 +48,8 @@ Singleton {
     const entry = root.notifs.find(n => n.id === id)
     if (entry && entry._ref) {
       const actions = entry._ref.actions
+      console.log(JSON.stringify(entry._ref))
+      console.log(JSON.stringify(entry))
       for (let i = 0; i < actions.length; i++) {
         if (actions[i].identifier === actionId) {
           actions[i].invoke()
@@ -74,7 +76,7 @@ Singleton {
       let changed = false
       const updated = root.notifs.map(n => {
         // TODO
-        if (!n.expired && !n.dismissed && n.urgency !== 2 && (now - n.addedAt) >= 200) {
+        if (!n.expired && !n.dismissed && n.urgency !== 20 && (now - n.addedAt) >= 2000) {
           changed = true
           return Object.assign({}, n, {
             expired: true
