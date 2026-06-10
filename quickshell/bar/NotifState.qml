@@ -130,7 +130,8 @@ Singleton {
       // preventing it from reappearing after a quickshell reload.
       const expireFn = (function (n) {
           return function () {
-            n.expire()
+            if (n.expire)
+              n.expire()
           }
         })(notif)
 
