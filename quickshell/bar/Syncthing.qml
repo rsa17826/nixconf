@@ -37,7 +37,7 @@ Rectangle {
           try {
             var data = JSON.parse(xhr.responseText)
             var percent = data.completion || 0
-            var needBytes = data.needBytes || 0
+            var needBytes = data.needBytes || 0;
             // needBytes += 99
             // throw new Error()
             syncthingRemainingData = needBytes

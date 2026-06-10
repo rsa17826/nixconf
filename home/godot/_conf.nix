@@ -10,7 +10,7 @@ let
 
   godot-dismiss = pkgs.writeShellApplication {
     name = "godot-dismiss";
-    runtimeInputs = with pkgs;[
+    runtimeInputs = with pkgs; [
       pythonEnv
       hyprland # provides hyprctl
       grim

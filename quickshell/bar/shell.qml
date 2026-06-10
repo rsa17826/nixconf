@@ -11,6 +11,10 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Scope {
+  NotifPopups {
+  }
+  NotifCenter {
+  }
   Variants {
     model: Quickshell.screens
 
@@ -56,14 +60,14 @@ Scope {
           horizontalCenter: parent.left
           verticalCenter: parent.verticalCenter
         }
-        // ClipHist {
-        //   id: clipboardLogic
+        ClipHist {
+          id: clipboardLogic
 
-        //   anchors {
-        //     left: root.left
-        //     verticalCenter: parent.verticalCenter
-        //   }
-        // }
+          anchors {
+            left: root.left
+            verticalCenter: parent.verticalCenter
+          }
+        }
       }
       Rectangle {
         id: _CENTER
@@ -129,6 +133,21 @@ Scope {
         }
         GithubNotif {
           id: githubWidget
+
+          anchors {
+            right: notifBell.left
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        NotifBell {
+          id: notifBell
+
+          anchors {
+            right: parent.right
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
         }
       }
     }

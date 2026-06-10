@@ -34,7 +34,7 @@ Item {
     "disconnected": "#30324a"   // ghost
 
     ,
-   "goodCon": '#539268'             // Soft blue/indigo for good connection
+    "goodCon": '#539268'             // Soft blue/indigo for good connection
     ,
     "okCon": '#689260'             // Soft blue/indigo for good connection
     ,

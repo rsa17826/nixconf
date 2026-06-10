@@ -199,7 +199,7 @@ replace.push([/what( ?ever)? the duck/gi, "what$1 the fuck"])
 replace.push([/duck(ed)? up/gi, "fuck$1 up"])
 replace.push([/R4P3/gi, "rape"])
 replace.push([/fked/gi, "fucked"])
-// replace.push([/×/gi, "x"])
+// replace.push([/x/gi, "x"])
 replace.push([/borked/gi, "fucked"])
 replace.push([/MotherF'er(s?)/gi, "motherfucker$1"])
 // replace.push([/(?<!\w)minf\*+k(s|(?:ed|er|ing)(?:s)?|)(?!\w)/gi, "mindfuck$1"]) - broken???
