@@ -43,9 +43,9 @@ Singleton {
   }
 
   // ── Public API ───────────────────────────────────────────────
-  function dismiss(id) {
+  function dismiss(id, hasClickedButton) {
     const entry = root.notifs.find(n => n.id === id)
-    if (entry && entry._expire)
+    if (!hasClickedButton && entry && entry._expire)
       entry._expire()
     root.notifs = root.notifs.map(n => n.id === id ? Object.assign({}, n, {
         dismissed: true
@@ -55,10 +55,15 @@ Singleton {
     const entry = root.notifs.find(n => n.id === id)
     if (entry) {
       const action = entry.actions.find(a => a.id === actionId)
-      if (action && action._invoke)
+      if (action && action._invoke) {
         action._invoke()
+        dismiss(id, true)
+      } else {
+        dismiss(id, false)
+      }
+    } else {
+      dismiss(id, false)
     }
-    dismiss(id)
   }
   function toggleCenter() {
     root.centerOpen = !root.centerOpen
@@ -115,9 +120,7 @@ Singleton {
             id: a.identifier,
             text: a.text,
             _invoke: (function (action) {
-                return function () {
-                  action.invoke()
-                }
+                return action.invoke.bind(action)
               })(a)
           })
         }
