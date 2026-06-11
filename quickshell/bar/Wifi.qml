@@ -73,7 +73,7 @@ Item {
     return parsed
   }
   function signalColor(pct, useConnected) {
-    console.log(pct, useConnected)
+    // console.log(pct, useConnected)
     if ((useConnected && !connected) || pct <= 0)
       return c.disconnected
     if (pct >= 80)

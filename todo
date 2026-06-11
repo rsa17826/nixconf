@@ -2,3 +2,5 @@ auto regex set default @errgroup to 0
 auto regex make \n\n in @replace not break @file
 
 fixed end line actions make work when 2 cursors are on same line
+
+show when notif button failed

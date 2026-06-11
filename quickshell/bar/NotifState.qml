@@ -163,7 +163,7 @@ Singleton {
         urgency: urgencyVal,
         actions: actions,
         addedAt: Date.now(),
-        stayVisibleFor: 1000,
+        stayVisibleFor: 5000,
         // don't show notifications that appear in the first 30ms refreshing if notif sent in that time as notifs appear one at a time as 10-30ms is how long they appear take to resend on reloading
         expired: (Date.now() - loadTime) < 30 || root.centerOpen,
         dismissed: false,
