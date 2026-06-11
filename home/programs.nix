@@ -169,6 +169,7 @@ in
           (pkgFromInp "autocorrect" "default")
           (pkgFromInp "alwaysFocusedInputBox" "default")
           (pkgFromInp "auto-screenshotter" "default")
+          (pkgFromInp "gowoify" "default")
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
