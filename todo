@@ -12,3 +12,6 @@ make history save to file
 make history show buttons
 
 when notif open notifs not added to history from transient
+
+make x button send notif to history
+make rmb on notif same as x button
