@@ -7,3 +7,5 @@ show when notif button failed
 notify-send "avail-" "Click the button below" --action="reply=Click Me"&timeout 0.1 notify-send "broken" "Click the button below" --action="reply=Click Me"
 
 clear all button not adding to history
+
+make history save to file
