@@ -2,3 +2,7 @@ auto regex set default @errgroup to 0
 auto regex make \n\n in @replace not break @file
 
 fixed end line actions make work when 2 cursors are on same line
+
+when notif open make all expire instantly
+when notif just opened make all expire instantly
+make not reset all prog bars when new notif created
