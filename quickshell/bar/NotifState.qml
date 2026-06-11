@@ -150,7 +150,7 @@ Singleton {
               n.expire()
           }
         })(notif)
-      console.log("asdasd", Date.now() - loadTime)
+      // console.log("asdasd", Date.now() - loadTime)
       if ((Date.now() - loadTime) < 30) {
         loadTime = Date.now()
       }
