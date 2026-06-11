@@ -1,35 +1,41 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Notifications
 
 Singleton {
   id: root
 
+  // Guard: don't save before the initial load has finished.
+  property bool _historyLoaded: false
   readonly property int activeCount: activeNotifs.length
 
-  // ── Active popups ────────────────────────────────────────────
+  // ── Derived views ────────────────────────────────────────────
   readonly property var activeNotifs: notifs.filter(n => !n.expired && !n.dismissed)
+
+  // ── State ────────────────────────────────────────────────────
   property bool centerOpen: false
 
-  // ── History (last 50, display-only) ─────────────────────────
-  // All notifications that were ever dismissed or expired, including
-  // transient ones. Shown in the bottom section of the center panel.
+  // History — last 50 display-only entries, persisted to disk.
+  // Shape matches notifs but _invoke/_expire are absent; actions: [].
   property var history: []
+
+  // ── History file path ────────────────────────────────────────
+  readonly property string historyFilePath: Quickshell.configDir + "/notif-history.json"
   property var loadTime: Date.now()
 
-  // All notification entries.
+  // Live notification entries (active + stored).
   // Shape: { id, summary, body, appName, appIcon, urgency, transient,
   //          addedAt, stayVisibleFor, expired, dismissed,
-  //          actions: [{id, text, _invoke}], _expire }
+  //          actions:[{id,text,_invoke}], _expire }
   property var notifs: []
   readonly property int storedCount: storedNotifs.length
 
-  // ── Stored notifications (non-transient, expired, not dismissed) ─
-  // Shown in the top section of the center panel.
+  // Non-transient expired notifications — shown in center top section
   readonly property var storedNotifs: notifs.filter(n => n.expired && !n.dismissed && !n.transient)
 
-  // ── History management ───────────────────────────────────────
+  // ── History helpers ──────────────────────────────────────────
   function addToHistory(entry) {
     const h = {
       id: entry.id,
@@ -38,20 +44,22 @@ Singleton {
       appName: entry.appName,
       appIcon: entry.appIcon,
       urgency: entry.urgency,
-      transient: entry.transient,
+      transient: !!entry.transient,
       addedAt: entry.addedAt,
-      // fields NotifToast reads — expired=true hides the countdown bar
+      stayVisibleFor: entry.stayVisibleFor,
+      // expired:true suppresses the countdown bar in NotifToast
       expired: true,
       dismissed: false,
-      actions: [],
-      stayVisibleFor: entry.stayVisibleFor
+      actions: []
     };
-    // Deduplicate by id, prepend, cap at 50
+    // Prepend, deduplicate by id, cap at 50
     root.history = [h].concat(root.history.filter(x => x.id !== entry.id)).slice(0, 50)
   }
   function clearHistory() {
     root.history = []
   }
+
+  // ── Public API ───────────────────────────────────────────────
   function clearStored() {
     root.notifs.forEach(n => {
       if (n.expired && !n.transient && n._expire)
@@ -59,8 +67,6 @@ Singleton {
     })
     root.notifs = root.notifs.filter(n => !(n.expired && !n.transient))
   }
-
-  // ── Public API ───────────────────────────────────────────────
   function dismiss(id, hasClickedButton) {
     const entry = root.notifs.find(n => n.id === id)
     if (entry) {
@@ -89,7 +95,6 @@ Singleton {
   function toggleCenter() {
     root.centerOpen = !root.centerOpen
     if (root.centerOpen) {
-      // Move all active notifications straight to stored when opening center
       let changed = false
       const updated = root.notifs.map(n => {
         if (!n.expired && !n.dismissed) {
@@ -105,6 +110,47 @@ Singleton {
     }
   }
 
+  onHistoryChanged: {
+    if (root._historyLoaded) {
+      jsonAdapter.history = root.history
+      historyFile.writeAdapter()
+    }
+  }
+
+  // ── File reader ──────────────────────────────────────────────
+  FileView {
+    id: historyFile
+
+    path: root.historyFilePath
+    preload: true
+    watchChanges: false
+
+    // 1. Log errors or status updates directly from the FileView if available
+    // (Check if your FileView component has an onStatusChanged or onError signal)
+
+    onAdapterUpdated: writeAdapter()
+    onFileChanged: reload()
+
+    JsonAdapter {
+      id: jsonAdapter
+
+      // Define the expected key from the JSON object
+      property var history
+
+      onHistoryChanged: {
+        if (history === undefined)
+          return
+
+        // 2. Only update NotifState if the contents actually differ
+        // This breaks the infinite loop chain!
+        if (JSON.stringify(NotifState.history) !== JSON.stringify(history)) {
+          console.log("History loaded:", JSON.stringify(history))
+          NotifState.history = history
+        }
+        root._historyLoaded = true
+      }
+    }
+  }
   // ── Expiry timer ─────────────────────────────────────────────
   Timer {
     interval: 250
@@ -121,7 +167,7 @@ Singleton {
           root.addToHistory(n)
 
           if (n.transient) {
-            // Transient: expire from server immediately, don't show in stored
+            // Transient: expire server-side immediately, skip stored section
             if (n._expire)
               n._expire()
             return Object.assign({}, n, {
@@ -152,9 +198,8 @@ Singleton {
     keepOnReload: true
 
     onNotification: notif => {
-      const urgencyVal = notif.urgency === NotificationUrgency.Critical ? 2 : notif.urgency === NotificationUrgency.Low ? 0 : 1;
+      const urgencyVal = notif.urgency === NotificationUrgency.Critical ? 2 : notif.urgency === NotificationUrgency.Low ? 0 : 1
 
-      // Keep QML object alive so closures remain callable
       notif.tracked = true
 
       const actions = []
@@ -182,9 +227,10 @@ Singleton {
       if ((Date.now() - loadTime) < 30)
         loadTime = Date.now();
 
-      // Read transient hint — sent as --hint=int:transient:1 or boolean
+      // Read transient hint — exposed as notif.transient by QuickShell,
+      // but also sent in hints map as --hint=int:transient:1
       const hints = notif.hints || {}
-      const isTransient = !!(notif.transient || hints["transient"] || hints["transient"] === 1)
+      const isTransient = !!(notif.transient || hints.transient)
 
       const entry = {
         id: notif.id,
@@ -196,9 +242,10 @@ Singleton {
         transient: isTransient,
         actions: actions,
         addedAt: Date.now(),
-        stayVisibleFor: 5000,
-        // Treat as already expired if arriving within 30ms of reload (replay)
-        // or if center is open
+        stayVisibleFor: 0,
+        // TODO
+        // stayVisibleFor: 5000,
+        // Treat as already expired if arriving within reload window or while center is open
         expired: (Date.now() - loadTime) < 30 || root.centerOpen,
         dismissed: false,
         _expire: expireFn
