@@ -3,6 +3,7 @@ pragma Singleton
 
 import Quickshell
 import QtQuick
+import "utils.js" as Utils
 
 Singleton {
   id: root
@@ -11,7 +12,8 @@ Singleton {
   readonly property string time: {
     // The passed format string matches the default output of
     // the `date` command.
-    Qt.formatDateTime(clock.date, "dddd MMM d HH:mm:ss t yyyy")
+    console.log(JSON.stringify(Object.getOwnPropertyNames(Utils)))
+    Utils.owowify(Qt.formatDateTime(clock.date, "dddd MMM d HH:mm:ss t yyyy"))
   }
 
   SystemClock {
