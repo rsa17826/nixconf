@@ -255,17 +255,13 @@ Item {
             id: historyFlickable
 
             anchors.fill: parent
+            anchors.rightMargin: historyFlickable.contentHeight > historyFlickable.height ? 8 : 0
             boundsBehavior: Flickable.StopAtBounds
             contentHeight: historyCol.implicitHeight
             contentWidth: width
             flickableDirection: Flickable.VerticalFlick
             // Disable touch drag and all momentum — wheel handler takes over entirely
             interactive: false
-
-            ScrollBar.vertical: ScrollBar {
-              minimumSize: 0.05
-              policy: ScrollBar.AsNeeded
-            }
 
             Column {
               id: historyCol
@@ -320,13 +316,38 @@ Item {
           WheelHandler {
             acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
             acceptedModifiers: Qt.NoModifier
-            target: null   // handle manually so we control exactly what happens
+            target: null
 
             onWheel: event => {
-              const step = (event.angleDelta.y / 120) * 40
-              // 40 px per notch
+              const step = (event.angleDelta.y / 120) * 70
               const maxY = Math.max(0, historyFlickable.contentHeight - historyFlickable.height)
               historyFlickable.contentY = Math.max(0, Math.min(historyFlickable.contentY - step, maxY))
+            }
+          }
+
+          // Explicit scrollbar — AlwaysOn so it doesn't fade on hover
+          ScrollBar {
+            id: vBar
+
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.top: parent.top
+            minimumSize: 0.05
+            orientation: Qt.Vertical
+            // AlwaysOn prevents the default hover-fade; gate visibility manually instead
+            policy: ScrollBar.AlwaysOn
+
+            // Bind position to Flickable
+            position: historyFlickable.contentY / Math.max(1, historyFlickable.contentHeight)
+            size: historyFlickable.height / Math.max(1, historyFlickable.contentHeight)
+            visible: historyFlickable.contentHeight > historyFlickable.height
+
+            // Allow dragging the scrollbar to scroll
+            onPositionChanged: {
+              if (pressed) {
+                const maxY = Math.max(0, historyFlickable.contentHeight - historyFlickable.height)
+                historyFlickable.contentY = Math.max(0, Math.min(position * historyFlickable.contentHeight, maxY))
+              }
             }
           }
         }
