@@ -6,56 +6,60 @@ import Quickshell
 Item {
   id: root
 
-  implicitWidth:  bellRow.implicitWidth + 14
   implicitHeight: bellRow.implicitHeight + 8
+  implicitWidth: bellRow.implicitWidth + 14
 
   // ── Bell pill ────────────────────────────────────────────────
   Row {
     id: bellRow
+
     anchors.centerIn: parent
     spacing: 5
 
     Text {
       id: bellIcon
+
       anchors.verticalCenter: parent.verticalCenter
-      text: NotifState.historyCount > 0 ? "󰂚" : "󰂜"
-      color: NotifState.centerOpen       ? "#c4cce8"
-           : NotifState.activeCount  > 0 ? "#4d6fff"
-           : NotifState.historyCount > 0 ? "#6a72a0"
-           :                               "#30324a"
+      color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.historyCount > 0 ? "#6a72a0" : "#30324a"
       font.family: "monospace"
       font.pointSize: 11
+      text: NotifState.historyCount > 0 ? "󰂚" : "󰂜"
 
-      Behavior on color { ColorAnimation { duration: 150 } }
+      Behavior on color {
+        ColorAnimation {
+          duration: 150
+        }
+      }
     }
 
     // Badge — history count
     Rectangle {
-      visible: NotifState.historyCount > 0
       anchors.verticalCenter: parent.verticalCenter
-      height: 13
-      width: Math.max(13, badgeText.implicitWidth + 6)
-      radius: 6
-      color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
       border.color: NotifState.centerOpen ? "#4d6fff" : "#2a3a8a"
       border.width: 1
+      color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
+      height: 13
+      radius: 6
+      visible: NotifState.historyCount > 0
+      width: Math.max(13, badgeText.implicitWidth + 6)
 
       Text {
         id: badgeText
+
         anchors.centerIn: parent
-        text: NotifState.historyCount > 99 ? "99+" : NotifState.historyCount
         color: "#4d6fff"
+        font.bold: true
         font.family: "monospace"
         font.pointSize: 7
-        font.bold: true
+        text: NotifState.historyCount > 99 ? "99+" : NotifState.historyCount
       }
     }
   }
-
   MouseArea {
     anchors.fill: parent
-    hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
+    hoverEnabled: true
+
     onClicked: NotifState.toggleCenter()
   }
 
@@ -65,25 +69,28 @@ Item {
   PopupWindow {
     id: toastPopup
 
-    visible: NotifState.activeCount > 0
-    grabFocus: false
     color: "transparent"
-    implicitWidth: 396   // 380 toast + 16 right padding
+    grabFocus: false
     implicitHeight: Math.max(1, toastCol.implicitHeight + 8)
+    implicitWidth: 396   // 380 toast + 16 right padding
+    visible: NotifState.activeCount > 0
 
     anchor {
-      item:    root
-      edges:   Edges.Bottom | Edges.Right
+      edges: Edges.Bottom | Edges.Right
       gravity: Edges.Bottom | Edges.Left
-      margins { top: 8 }
-    }
+      item: root
 
+      margins {
+        top: 8
+      }
+    }
     Column {
       id: toastCol
-      anchors.top:   parent.top
+
       anchors.right: parent.right
-      anchors.topMargin:   4
       anchors.rightMargin: 16
+      anchors.top: parent.top
+      anchors.topMargin: 4
       spacing: 8
       width: 380
 
@@ -92,6 +99,7 @@ Item {
 
         delegate: NotifToast {
           required property var modelData
+
           entry: modelData
           width: 380
         }
@@ -104,29 +112,32 @@ Item {
   PopupWindow {
     id: centerPopup
 
-    visible: NotifState.centerOpen
-    grabFocus: true
     color: "transparent"
-    implicitWidth:  400
+    grabFocus: true
     implicitHeight: 520
+    implicitWidth: 400
+    visible: NotifState.centerOpen
 
     // Sync grabFocus auto-close back into NotifState
-    onVisibleChanged: if (!visible) NotifState.centerOpen = false
+    onVisibleChanged: if (!visible)
+      NotifState.centerOpen = false
 
     anchor {
-      item:    root
-      edges:   Edges.Bottom | Edges.Right
+      edges: Edges.Bottom | Edges.Right
       gravity: Edges.Bottom | Edges.Left
-      margins { top: 8 }
-    }
+      item: root
 
+      margins {
+        top: 8
+      }
+    }
     Rectangle {
       anchors.fill: parent
-      color: "#03030a"
       border.color: "#1e1e40"
       border.width: 1
-      radius: 6
       clip: true
+      color: "#03030a"
+      radius: 6
 
       ColumnLayout {
         anchors.fill: parent
@@ -135,99 +146,99 @@ Item {
         // Header
         Rectangle {
           Layout.fillWidth: true
-          height: 40
           color: "#08081a"
+          height: 40
           radius: 6
 
           // Cover bottom radius
           Rectangle {
             anchors.bottom: parent.bottom
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            height: 6
+            anchors.left: parent.left
+            anchors.right: parent.right
             color: "#08081a"
+            height: 6
           }
 
           // Bottom divider
           Rectangle {
             anchors.bottom: parent.bottom
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            height: 1
+            anchors.left: parent.left
+            anchors.right: parent.right
             color: "#1e1e40"
+            height: 1
           }
-
           RowLayout {
             anchors.fill: parent
-            anchors.leftMargin:  14
+            anchors.leftMargin: 14
             anchors.rightMargin: 10
             spacing: 8
 
             Text {
-              text: "notifications"
               color: "#6a72a0"
               font.family: "monospace"
               font.pointSize: 10
+              text: "notifications"
             }
-
             Text {
-              text: NotifState.historyCount > 0
-                    ? NotifState.historyCount + " stored"
-                    : "quiet"
+              Layout.fillWidth: true
               color: "#30324a"
               font.family: "monospace"
               font.pointSize: 9
-              Layout.fillWidth: true
+              text: NotifState.historyCount > 0 ? NotifState.historyCount + " stored" : "quiet"
             }
 
             // Clear all
             Rectangle {
-              visible: NotifState.historyCount > 0
-              height: 22
-              implicitWidth: clearLbl.implicitWidth + 14
-              color: clearMa.containsMouse ? "#12122c" : "transparent"
               border.color: "#1e1e40"
               border.width: 1
+              color: clearMa.containsMouse ? "#12122c" : "transparent"
+              height: 22
+              implicitWidth: clearLbl.implicitWidth + 14
               radius: 3
+              visible: NotifState.historyCount > 0
 
               Text {
                 id: clearLbl
+
                 anchors.centerIn: parent
-                text: "clear all"
                 color: clearMa.containsMouse ? "#6a72a0" : "#30324a"
                 font.family: "monospace"
                 font.pointSize: 9
+                text: "clear all"
               }
-
               MouseArea {
                 id: clearMa
+
                 anchors.fill: parent
-                hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+
                 onClicked: NotifState.clearHistory()
               }
             }
 
             // Close
             Rectangle {
-              width: 22; height: 22
-              color: closeCenterMa.containsMouse ? "#12122c" : "transparent"
               border.color: "#1e1e40"
               border.width: 1
+              color: closeCenterMa.containsMouse ? "#12122c" : "transparent"
+              height: 22
               radius: 3
+              width: 22
 
               Text {
                 anchors.centerIn: parent
-                text: "✕"
                 color: closeCenterMa.containsMouse ? "#c4cce8" : "#30324a"
                 font.pointSize: 9
+                text: "✕"
               }
-
               MouseArea {
                 id: closeCenterMa
+
                 anchors.fill: parent
-                hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+
                 onClicked: NotifState.centerOpen = false
               }
             }
@@ -235,55 +246,87 @@ Item {
         }
 
         // Scrollable history list
-        ScrollView {
-          Layout.fillWidth: true
+        Item {
           Layout.fillHeight: true
+          Layout.fillWidth: true
           clip: true
-          ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-          ScrollBar.vertical.policy:   ScrollBar.AsNeeded
 
-          Column {
-            width: 400
-            spacing: 6
-            padding: 10
+          Flickable {
+            id: historyFlickable
 
-            Repeater {
-              model: NotifState.historyNotifs
+            anchors.fill: parent
+            boundsBehavior: Flickable.StopAtBounds
+            contentHeight: historyCol.implicitHeight
+            contentWidth: width
+            flickableDirection: Flickable.VerticalFlick
+            // Disable touch drag and all momentum — wheel handler takes over entirely
+            interactive: false
 
-              delegate: NotifToast {
-                required property var modelData
-                entry:  modelData
-                width:  380
-              }
+            ScrollBar.vertical: ScrollBar {
+              minimumSize: 0.05
+              policy: ScrollBar.AsNeeded
             }
 
-            // Empty state
-            Item {
-              visible: NotifState.historyCount === 0
-              width: 380
-              height: emptyCol.implicitHeight + 48
+            Column {
+              id: historyCol
 
-              Column {
-                id: emptyCol
-                anchors.centerIn: parent
-                spacing: 8
+              padding: 10
+              spacing: 6
+              width: 400
 
-                Text {
-                  anchors.horizontalCenter: parent.horizontalCenter
-                  text: "the void is quiet"
-                  color: "#30324a"
-                  font.family: "monospace"
-                  font.pointSize: 10
-                }
+              Repeater {
+                model: NotifState.historyNotifs
 
-                Text {
-                  anchors.horizontalCenter: parent.horizontalCenter
-                  text: "no notifications stored"
-                  color: "#1e1e40"
-                  font.family: "monospace"
-                  font.pointSize: 9
+                delegate: NotifToast {
+                  required property var modelData
+
+                  entry: modelData
+                  width: 380
                 }
               }
+
+              // Empty state
+              Item {
+                height: emptyCol.implicitHeight + 48
+                visible: NotifState.historyCount === 0
+                width: 380
+
+                Column {
+                  id: emptyCol
+
+                  anchors.centerIn: parent
+                  spacing: 8
+
+                  Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#30324a"
+                    font.family: "monospace"
+                    font.pointSize: 10
+                    text: "the void is quiet"
+                  }
+                  Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#1e1e40"
+                    font.family: "monospace"
+                    font.pointSize: 9
+                    text: "no notifications stored"
+                  }
+                }
+              }
+            }
+          }
+
+          // Instant step scroll — no momentum, no smooth animation
+          WheelHandler {
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            acceptedModifiers: Qt.NoModifier
+            target: null   // handle manually so we control exactly what happens
+
+            onWheel: event => {
+              const step = (event.angleDelta.y / 120) * 40
+              // 40 px per notch
+              const maxY = Math.max(0, historyFlickable.contentHeight - historyFlickable.height)
+              historyFlickable.contentY = Math.max(0, Math.min(historyFlickable.contentY - step, maxY))
             }
           }
         }

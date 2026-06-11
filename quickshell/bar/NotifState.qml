@@ -82,7 +82,7 @@ Singleton {
       const now = Date.now()
       let changed = false
       const updated = root.notifs.map(n => {
-        if (!n.expired && !n.dismissed && (now - n.addedAt) >= 2000) {
+        if (!n.expired && !n.dismissed && (now - n.addedAt) >= 20000) {
           changed = true
           return Object.assign({}, n, {
             expired: true
