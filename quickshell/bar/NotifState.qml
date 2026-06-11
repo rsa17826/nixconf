@@ -68,6 +68,21 @@ Singleton {
   }
   function toggleCenter() {
     root.centerOpen = !root.centerOpen
+    if (root.centerOpen) {
+      const now = Date.now()
+      let changed = false
+      const updated = root.notifs.map(n => {
+        if (!n.expired && !n.dismissed) {
+          changed = true
+          return Object.assign({}, n, {
+            expired: true
+          })
+        }
+        return n
+      })
+      if (changed)
+        root.notifs = updated
+    }
   }
 
   // ── Expiry timer ─────────────────────────────────────────────
@@ -134,7 +149,7 @@ Singleton {
             if (n.expire)
               n.expire()
           }
-        })(notif)
+        })(notif);
       // console.log("asdasd", Date.now() - loadTime)
       const entry = {
         id: notif.id,
