@@ -253,7 +253,6 @@ Item {
               delegate: NotifToast {
                 required property var modelData
                 entry:  modelData
-                dimmed: true
                 width:  380
               }
             }

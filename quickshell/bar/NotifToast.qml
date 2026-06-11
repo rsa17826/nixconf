@@ -4,14 +4,12 @@ import QtQuick.Layouts
 Rectangle {
   id: root
 
-  property bool dimmed: false   // true when shown in history center
-
   required property var entry
 
-  border.color: entry.urgency === 2 ? "#9933cc" : dimmed ? "#1e1e40" : "#2a3a8a"
+  border.color: entry.urgency === 2 ? "#9933cc" : "#1e1e40"
   border.width: 1
   clip: true
-  color: "#0d0d1e"
+  color: entry.urgency === 0 ? "#03030a" : entry.urgency === 1 ? "#0d0d1e" : '#1f0d25'
   implicitHeight: contentRow.implicitHeight + 24
 
   // ── Appear animation ─────────────────────────────────────────
@@ -29,7 +27,6 @@ Rectangle {
     anchors.right: parent.right
     color: "#08081a"
     height: 2
-    visible: !root.dimmed
 
     Rectangle {
       id: timerFill
@@ -37,14 +34,14 @@ Rectangle {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.top: parent.top
-      color: root.entry.urgency === 2 ? "#9933cc" : "#4d6fff"
+      color: root.entry.urgency === 2 ? "#9933cc" : root.entry.urgency === 1 ? "#4d6fff" : "#30324a"
       radius: 1
       width: timerTrack.width
 
       NumberAnimation on width {
         duration: 20000
         from: timerTrack.width
-        running: !root.dimmed
+        running: true
         to: 0
       }
     }
@@ -66,7 +63,7 @@ Rectangle {
 
     // App icon
     Rectangle {
-      color: root.entry.urgency === 2 ? "#1a0a2e" : root.dimmed ? "#0a0a18" : "#0d1030"
+      color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
       height: 28
       radius: 4
       visible: root.entry.appIcon !== ""
@@ -89,7 +86,8 @@ Rectangle {
       // App name (subtle, above summary)
       Text {
         Layout.fillWidth: true
-        color: root.dimmed ? "#30324a" : "#6a72a0"
+        // color: root.dimmed ? "#30324a" : "#6a72a0"
+        color: "#30324a"
         elide: Text.ElideRight
         font.family: "monospace"
         font.pointSize: 8
@@ -98,9 +96,9 @@ Rectangle {
       }
       Text {
         Layout.fillWidth: true
-        color: root.dimmed ? "#6a72a0" : "#c4cce8"
+        // color: root.dimmed ? "#6a72a0" : "#c4cce8"
+        color: "#6a72a0"
         elide: Text.ElideRight
-        font.bold: !root.dimmed
         font.family: "monospace"
         font.pointSize: 10
         text: root.entry.summary
@@ -108,11 +106,12 @@ Rectangle {
       }
       Text {
         Layout.fillWidth: true
-        color: root.dimmed ? "#30324a" : "#6a72a0"
+        // color: root.dimmed ? "#30324a" : "#6a72a0"
+        color: "#30324a"
         elide: Text.ElideRight
         font.family: "monospace"
         font.pointSize: 9
-        maximumLineCount: root.dimmed ? 2 : 4
+        maximumLineCount: 4
         text: root.entry.body
         visible: root.entry.body !== ""
         wrapMode: Text.WordWrap

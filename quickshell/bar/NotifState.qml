@@ -28,6 +28,7 @@ Singleton {
 
   // Expired notifications (shown in center)
   readonly property var historyNotifs: notifs.filter(n => n.expired && !n.dismissed)
+  readonly property var loadTime: Date.now()
 
   // All notification entries.
   // Shape: { id, summary, body, appName, appIcon, urgency, addedAt,
@@ -134,7 +135,7 @@ Singleton {
               n.expire()
           }
         })(notif)
-
+      // console.log("asdasd", Date.now() - loadTime)
       const entry = {
         id: notif.id,
         summary: notif.summary || "",
@@ -144,7 +145,8 @@ Singleton {
         urgency: urgencyVal,
         actions: actions,
         addedAt: Date.now(),
-        expired: false,
+        // don't show notifications that appear in the first 100ms as 10-30ms is how long they appear take to resend on reloading
+        expired: (Date.now() - loadTime) < 100,
         dismissed: false,
         _expire: expireFn
       };
