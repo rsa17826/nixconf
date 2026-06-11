@@ -16,7 +16,12 @@ Rectangle {
   opacity: 0
   radius: 6
 
-  Component.onCompleted: opacity = 1
+  NumberAnimation on opacity {
+    duration: Math.max(0, 300 - (Date.now() - root.entry.addedAt))
+    from: 0
+    running: true
+    to: 1
+  }
 
   // ── 20s countdown bar (only on live popups) ─────────────────
   Rectangle {
@@ -32,17 +37,23 @@ Rectangle {
     Rectangle {
       id: timerFill
 
+      readonly property int remainingDuration: root.entry.remainingTime !== undefined ? root.entry.remainingTime : root.entry.stayVisibleFor
+
+      // 1. Create helper properties to calculate the adjusted lifespan
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.top: parent.top
       color: root.entry.urgency === 2 ? "#9933cc" : root.entry.urgency === 1 ? "#4d6fff" : "#30324a"
       radius: 1
-      width: timerTrack.width
+
+      // 2. Set the initial width based on the remaining time fraction
+      width: root.width * (remainingDuration / root.entry.stayVisibleFor)
 
       NumberAnimation on width {
-        duration: 20000
-        from: root.width
-        running: !root.entry.expired
+        // 3. Scale down the duration and start point dynamically
+        duration: Math.max(0, root.entry.stayVisibleFor - (Date.now() - root.entry.addedAt))
+        from: root.width * ((root.entry.stayVisibleFor - (Date.now() - root.entry.addedAt)) / root.entry.stayVisibleFor)
+        running: !root.entry.expired && (root.entry.stayVisibleFor - (Date.now() - root.entry.addedAt)) > 0
         to: 0
       }
     }

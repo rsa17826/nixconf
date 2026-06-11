@@ -319,7 +319,7 @@ Item {
             target: null
 
             onWheel: event => {
-              const step = (event.angleDelta.y / 120) * 70
+              const step = (event.angleDelta.y / 120) * 150
               const maxY = Math.max(0, historyFlickable.contentHeight - historyFlickable.height)
               historyFlickable.contentY = Math.max(0, Math.min(historyFlickable.contentY - step, maxY))
             }
