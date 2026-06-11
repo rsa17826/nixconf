@@ -20,10 +20,10 @@ Item {
       id: bellIcon
 
       anchors.verticalCenter: parent.verticalCenter
-      color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.historyCount > 0 ? "#6a72a0" : "#30324a"
+      color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.storedCount > 0 ? "#6a72a0" : "#30324a"
       font.family: "monospace"
       font.pointSize: 11
-      text: NotifState.historyCount > 0 ? "󰂚" : "󰂜"
+      text: NotifState.storedCount > 0 ? "󰂚" : "󰂜"
 
       Behavior on color {
         ColorAnimation {
@@ -40,7 +40,7 @@ Item {
       color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
       height: 13
       radius: 6
-      visible: NotifState.historyCount > 0
+      visible: NotifState.storedCount > 0
       width: Math.max(13, badgeText.implicitWidth + 6)
 
       Text {
@@ -51,7 +51,7 @@ Item {
         font.bold: true
         font.family: "monospace"
         font.pointSize: 7
-        text: NotifState.historyCount > 99 ? "99+" : NotifState.historyCount
+        text: NotifState.storedCount > 99 ? "99+" : NotifState.storedCount
       }
     }
   }
@@ -184,7 +184,7 @@ Item {
               color: "#30324a"
               font.family: "monospace"
               font.pointSize: 9
-              text: NotifState.historyCount > 0 ? NotifState.historyCount + " stored" : "quiet"
+              text: NotifState.storedCount > 0 ? NotifState.storedCount + " stored" : "quiet"
             }
 
             // Clear all
@@ -195,7 +195,7 @@ Item {
               height: 22
               implicitWidth: clearLbl.implicitWidth + 14
               radius: 3
-              visible: NotifState.historyCount > 0
+              visible: NotifState.storedCount > 0
 
               Text {
                 id: clearLbl
@@ -213,7 +213,7 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
 
-                onClicked: NotifState.clearHistory()
+                onClicked: NotifState.clearStored()
               }
             }
 
@@ -270,8 +270,9 @@ Item {
               spacing: 6
               width: 400
 
+              // ── Stored notifications ─────────────────────────
               Repeater {
-                model: NotifState.historyNotifs
+                model: NotifState.storedNotifs
 
                 delegate: NotifToast {
                   required property var modelData
@@ -281,17 +282,17 @@ Item {
                 }
               }
 
-              // Empty state
+              // Empty stored state
               Item {
-                height: emptyCol.implicitHeight + 48
-                visible: NotifState.historyCount === 0
+                height: emptyStoredCol.implicitHeight + 32
+                visible: NotifState.storedCount === 0
                 width: 380
 
                 Column {
-                  id: emptyCol
+                  id: emptyStoredCol
 
                   anchors.centerIn: parent
-                  spacing: 8
+                  spacing: 6
 
                   Text {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -307,6 +308,86 @@ Item {
                     font.pointSize: 9
                     text: "no notifications stored"
                   }
+                }
+              }
+
+              // ── History divider ──────────────────────────────
+              Item {
+                height: historyHeaderRow.implicitHeight + 16
+                visible: NotifState.history.length > 0
+                width: 380
+
+                RowLayout {
+                  id: historyHeaderRow
+
+                  anchors.left: parent.left
+                  anchors.right: parent.right
+                  anchors.verticalCenter: parent.verticalCenter
+                  spacing: 8
+
+                  Rectangle {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "#1e1e40"
+                    height: 1
+                    width: 16
+                  }
+                  Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "#30324a"
+                    font.family: "monospace"
+                    font.pointSize: 8
+                    text: "history"
+                  }
+                  Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 200
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "#1e1e40"
+                    height: 1
+                  }
+
+                  // Clear history button
+                  Rectangle {
+                    anchors.verticalCenter: parent.verticalCenter
+                    border.color: "#1e1e40"
+                    border.width: 1
+                    color: clearHistMa.containsMouse ? "#12122c" : "transparent"
+                    height: 18
+                    implicitWidth: clearHistLbl.implicitWidth + 10
+                    radius: 3
+
+                    Text {
+                      id: clearHistLbl
+
+                      anchors.centerIn: parent
+                      color: clearHistMa.containsMouse ? "#6a72a0" : "#30324a"
+                      font.family: "monospace"
+                      font.pointSize: 8
+                      text: "clear"
+                    }
+                    MouseArea {
+                      id: clearHistMa
+
+                      anchors.fill: parent
+                      cursorShape: Qt.PointingHandCursor
+                      hoverEnabled: true
+
+                      onClicked: NotifState.clearHistory()
+                    }
+                  }
+                }
+              }
+
+              // ── History entries (last 50, dimmed) ────────────
+              Repeater {
+                model: NotifState.history
+
+                delegate: NotifToast {
+                  required property var modelData
+
+                  entry: modelData
+                  opacity: 0.55
+                  width: 380
                 }
               }
             }
