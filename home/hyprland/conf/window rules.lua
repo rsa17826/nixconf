@@ -175,7 +175,16 @@ hl.window_rule({
 -- 	pin = true,
 -- 	float = true,
 -- })
-
+hl.on("window.fullscreen", function(w)
+	-- 2 means the window just entered true fullscreen internally
+	if w.fullscreen == 2 then
+		hl.dispatch(hl.dsp.window.fullscreen_state({
+			internal = 1, -- Force Hyprland to maximize it instead
+			client = 2, -- Tell the app "Yes, you are fullscreen"
+			window = w, -- Target this specific window
+		}))
+	end
+end)
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({
 	match = { class = "^Tk$", title = "^Browser Selector$" },
