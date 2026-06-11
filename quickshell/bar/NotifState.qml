@@ -22,7 +22,7 @@ Singleton {
   property var history: []
 
   // ── History file path ────────────────────────────────────────
-  readonly property string historyFilePath: Quickshell.configDir + "/notif-history.json"
+  readonly property string historyFilePath: pathJoin(configPath(), "notif-history.json")
   property var loadTime: Date.now()
 
   // Live notification entries (active + stored).
@@ -67,6 +67,28 @@ Singleton {
     })
     root.notifs = root.notifs.filter(n => !(n.expired && !n.transient))
   }
+  function configPath() {
+    // Quickshell.env provides access to system environment variables
+    const ns = "qsbar"
+    var place = ''
+    const cfghome = Quickshell.env("XDG_CONFIG_HOME")
+    if (cfghome) {
+      place = pathJoin(cfghome, ns)
+    } else {
+      const home = Quickshell.env("HOME")
+      if (home) {
+        place = pathJoin(home, ".config", ns)
+      } else {
+        const uname = Quickshell.env("USER")
+        if (uname) {
+          place = pathJoin("/home", user, ".config", ns)
+        } else {
+          console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
+        }
+      }
+    }
+    return place
+  }
   function dismiss(id, hasClickedButton) {
     const entry = root.notifs.find(n => n.id === id)
     if (entry) {
@@ -91,6 +113,9 @@ Singleton {
     } else {
       dismiss(id, false)
     }
+  }
+  function pathJoin(...p) {
+    return p.map(e => e.replace(/\/$/)).join("/").replace(/\/$/, '')
   }
   function toggleCenter() {
     root.centerOpen = !root.centerOpen
@@ -123,13 +148,16 @@ Singleton {
 
     path: root.historyFilePath
     preload: true
+    printErrors: false
     watchChanges: false
-
-    // 1. Log errors or status updates directly from the FileView if available
-    // (Check if your FileView component has an onStatusChanged or onError signal)
 
     onAdapterUpdated: writeAdapter()
     onFileChanged: reload()
+    onLoadFailed: error => {
+      jsonAdapter.history = []
+      historyFile.writeAdapter()
+      root._historyLoaded = true
+    }
 
     JsonAdapter {
       id: jsonAdapter
@@ -144,13 +172,14 @@ Singleton {
         // 2. Only update NotifState if the contents actually differ
         // This breaks the infinite loop chain!
         if (JSON.stringify(NotifState.history) !== JSON.stringify(history)) {
-          console.log("History loaded:", JSON.stringify(history))
+          // console.log("History loaded:", JSON.stringify(history))
           NotifState.history = history
         }
         root._historyLoaded = true
       }
     }
   }
+
   // ── Expiry timer ─────────────────────────────────────────────
   Timer {
     interval: 250
