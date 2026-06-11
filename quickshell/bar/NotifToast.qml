@@ -27,6 +27,7 @@ Rectangle {
     anchors.right: parent.right
     color: "#08081a"
     height: 2
+    visible: !root.entry.expired
 
     Rectangle {
       id: timerFill
@@ -40,8 +41,8 @@ Rectangle {
 
       NumberAnimation on width {
         duration: 20000
-        from: timerTrack.width
-        running: true
+        from: root.width
+        running: !root.entry.expired
         to: 0
       }
     }
