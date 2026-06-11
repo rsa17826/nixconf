@@ -443,6 +443,29 @@
         "type": "github"
       }
     },
+    "gowoify": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781220801,
+        "narHash": "sha256-yymuCIn7TFMpgQlEePPgNK6ztCxqgl5kjjBM+cggbRw=",
+        "owner": "rsa17826",
+        "repo": "gowoify",
+        "rev": "c7fd80b9a7705ed4cd195aecbfec05ccec1bdf09",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "gowoify",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1117,6 +1140,7 @@
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils_2",
         "go-autoclicker": "go-autoclicker",
+        "gowoify": "gowoify",
         "home-manager": "home-manager",
         "hypr-darkwindow": "hypr-darkwindow",
         "hyprland": "hyprland",
