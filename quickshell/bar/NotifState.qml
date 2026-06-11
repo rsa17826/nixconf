@@ -161,7 +161,7 @@ Singleton {
         actions: actions,
         addedAt: Date.now(),
         // don't show notifications that appear in the first 100ms as 10-30ms is how long they appear take to resend on reloading
-        expired: (Date.now() - loadTime) < 100,
+        expired: (Date.now() - loadTime) < 100 || root.centerOpen,
         dismissed: false,
         _expire: expireFn
       };
