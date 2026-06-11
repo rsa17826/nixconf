@@ -323,32 +323,35 @@ Item {
                   anchors.left: parent.left
                   anchors.right: parent.right
                   anchors.verticalCenter: parent.verticalCenter
-                  spacing: 8
+                  spacing: 8 // RowLayout respects this, or you can use Layout.spacing
 
                   Rectangle {
-                    anchors.verticalCenter: parent.verticalCenter
+                    // Layouts handle vertical centering automatically if specified,
+                    // but keeping this alignment is safe.
+                    Layout.alignment: Qt.AlignVCenter
                     color: "#1e1e40"
                     height: 1
                     width: 16
                   }
                   Text {
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignVCenter
                     color: "#30324a"
                     font.family: "monospace"
                     font.pointSize: 8
                     text: "history"
                   }
+
+                  // This is your flex-grow: 1 rectangle
                   Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredWidth: 200
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillWidth: true // <--- THIS ACTS LIKE FLEX-GROW: 1
                     color: "#1e1e40"
                     height: 1
                   }
 
                   // Clear history button
                   Rectangle {
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignVCenter
                     border.color: "#1e1e40"
                     border.width: 1
                     color: clearHistMa.containsMouse ? "#12122c" : "transparent"
