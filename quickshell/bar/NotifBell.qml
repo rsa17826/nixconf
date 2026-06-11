@@ -340,11 +340,9 @@ Item {
                     font.pointSize: 8
                     text: "history"
                   }
-
-                  // This is your flex-grow: 1 rectangle
                   Rectangle {
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.fillWidth: true // <--- THIS ACTS LIKE FLEX-GROW: 1
+                    Layout.fillWidth: true
                     color: "#1e1e40"
                     height: 1
                   }
