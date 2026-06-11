@@ -56,14 +56,14 @@ Scope {
           horizontalCenter: parent.left
           verticalCenter: parent.verticalCenter
         }
-        ClipHist {
-          id: clipboardLogic
+        // ClipHist {
+        //   id: clipboardLogic
 
-          anchors {
-            left: root.left
-            verticalCenter: parent.verticalCenter
-          }
-        }
+        //   anchors {
+        //     left: root.left
+        //     verticalCenter: parent.verticalCenter
+        //   }
+        // }
       }
       Rectangle {
         id: _CENTER
