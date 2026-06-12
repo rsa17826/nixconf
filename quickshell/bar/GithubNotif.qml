@@ -8,6 +8,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
+import "owoify.js" as Owo
 
 Rectangle {
   property string newestAge: ""
@@ -100,7 +101,7 @@ Rectangle {
     color: "#4d6fff"
     font.bold: true
     font.pixelSize: 8
-    text: ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : ""
+    text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")
   }
   Timer {
     interval: 60000   // 60 seconds

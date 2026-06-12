@@ -8,6 +8,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
+import "owoify.js" as Owo
 
 Rectangle {
   color: "transparent"
@@ -19,7 +20,7 @@ Rectangle {
 
     anchors.centerIn: parent
     color: "#c4cce8"
-    text: Time.time
+    text: Owo.owo(Time.time)
 
     font {
       family: "monospace"

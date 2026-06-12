@@ -1,9 +1,10 @@
 .pragma library
+
 /**
  * @param {String} text
  * @returns {String}
  */
-function owowify(text) {
+function owo(text) {
   const endSentencePattern = String.raw`([\w ,.!?]+)?` // endSentencePattern
   // const endSentencePattern1 = String.raw`([\w ,.?]+)?`; // endSentencePattern without "!" sign
   // const endSentencePattern2 = String.raw`([\w ,.]+)?`; // endSentencePattern without "!" and "?" sign
@@ -131,6 +132,5 @@ function reg(...templateArgs) {
     rawString.lastIndexOf("/") + 1,
     rawString.length,
   )
-
   return new RegExp(pattern, flags)
 }

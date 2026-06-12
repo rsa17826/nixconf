@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import Quickshell.Services.Mpris
+import "owoify.js" as Owo
 
 Rectangle {
   id: root
@@ -88,7 +89,7 @@ Rectangle {
     anchors.centerIn: parent
     color: error ? "#c680f0" : '#db4dff'
     font.pixelSize: 10
-    text: statusText
+    text: Owo.owo(statusText)
   }
   MouseArea {
     anchors.fill: parent

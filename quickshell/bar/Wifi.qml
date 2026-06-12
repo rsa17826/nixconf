@@ -3,6 +3,7 @@ import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Controls
+import "owoify.js" as Owo
 
 Item {
   id: root
@@ -134,7 +135,7 @@ Item {
 
       color: signalColor(root.signal, true)
       font.pixelSize: 12
-      text: root.signal + " " + signalIcon(root.signal, true)
+      text: Owo.owo(root.signal + " " + signalIcon(root.signal, true))
 
       anchors {
         left: parent.left
@@ -148,7 +149,7 @@ Item {
 
       color: root.connected ? "#c4cce8" : "#30324a"
       font.pixelSize: 10
-      text: root.connected ? root.ssid : "no wifi"
+      text: Owo.owo(root.connected ? root.ssid : "no wifi")
 
       anchors {
         left: iconText.right
@@ -208,7 +209,7 @@ Item {
           color: c.wifiSelectLogo
           font.bold: true
           font.pixelSize: 9
-          text: "WiFi"
+          text: Owo.owo("WiFi")
           width: parent.width - rescanButton.width - 6
         }
         Text {
@@ -216,7 +217,7 @@ Item {
 
           color: root.scanning ? c.scanning : c.rescan
           font.pixelSize: 9
-          text: root.scanning ? "scanning…" : "↻ rescan"
+          text: Owo.owo(root.scanning ? "scanning…" : "↻ rescan")
 
           MouseArea {
             anchors.fill: parent
@@ -288,7 +289,7 @@ Item {
 
             color: signalColor(modelData.signal, false)
             font.pixelSize: 11
-            text: modelData.signal + " " + signalIcon(modelData.signal, false)
+            text: Owo.owo(modelData.signal + " " + signalIcon(modelData.signal, false))
 
             anchors {
               right: parent.right
@@ -303,7 +304,7 @@ Item {
 
             color: c.lockColor
             font.pixelSize: 8
-            text: (modelData.security !== "--" && modelData.security !== "") ? "󰌾" : ""
+            text: Owo.owo((modelData.security !== "--" && modelData.security !== "") ? "󰌾" : "")
 
             anchors {
               right: signalBadge.left
@@ -317,7 +318,7 @@ Item {
             color: isActive ? c.activeWifi : c.inactiveWifi
             elide: Text.ElideRight
             font.pixelSize: 10
-            text: modelData.ssid
+            text: Owo.owo(modelData.ssid)
 
             anchors {
               left: activeDot.right
@@ -335,7 +336,7 @@ Item {
         color: c.noNetworksFoundText
         font.pixelSize: 9
         horizontalAlignment: Text.AlignHCenter
-        text: "no networks found"
+        text: Owo.owo("no networks found")
         visible: root.networks.length === 0 && !root.scanning
         width: parent.width
       }

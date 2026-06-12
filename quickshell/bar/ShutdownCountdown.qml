@@ -5,6 +5,7 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import "owoify.js" as Owo
 
 Item {
   id: root
@@ -25,7 +26,7 @@ Item {
 
     color: "#c680f0"
     font.pixelSize: 11
-    text: `󰐥 Shuts Down in ${m}m${s < 10 ? "0" + s : s}s`
+    text: Owo.owo(`󰐥 Shuts Down in ${m}m${s < 10 ? "0" + s : s}s`)
   }
   Process {
     id: proc

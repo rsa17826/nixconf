@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import "owoify.js" as Owo
 
 Item {
   id: root
@@ -177,14 +178,14 @@ Item {
               color: "#6a72a0"
               font.family: "monospace"
               font.pointSize: 10
-              text: "notifications"
+              text: Owo.owo("notifications")
             }
             Text {
               Layout.fillWidth: true
               color: "#30324a"
               font.family: "monospace"
               font.pointSize: 9
-              text: NotifState.storedCount > 0 ? NotifState.storedCount + " stored" : "quiet"
+              text: Owo.owo(NotifState.storedCount > 0 ? NotifState.storedCount + " stored" : "quiet")
             }
 
             // Clear all
@@ -204,7 +205,7 @@ Item {
                 color: clearMa.containsMouse ? "#6a72a0" : "#30324a"
                 font.family: "monospace"
                 font.pointSize: 9
-                text: "clear all"
+                text: Owo.owo("clear all")
               }
               MouseArea {
                 id: clearMa
@@ -299,14 +300,14 @@ Item {
                     color: "#30324a"
                     font.family: "monospace"
                     font.pointSize: 10
-                    text: "the void is quiet"
+                    text: Owo.owo("the void is quiet")
                   }
                   Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: "#1e1e40"
                     font.family: "monospace"
                     font.pointSize: 9
-                    text: "no notifications stored"
+                    text: Owo.owo("no notifications stored")
                   }
                 }
               }
@@ -338,7 +339,7 @@ Item {
                     color: "#30324a"
                     font.family: "monospace"
                     font.pointSize: 8
-                    text: "history"
+                    text: Owo.owo("history")
                   }
                   Rectangle {
                     Layout.alignment: Qt.AlignVCenter
@@ -364,7 +365,7 @@ Item {
                       color: clearHistMa.containsMouse ? "#6a72a0" : "#30324a"
                       font.family: "monospace"
                       font.pointSize: 8
-                      text: "clear"
+                      text: Owo.owo("clear")
                     }
                     MouseArea {
                       id: clearHistMa

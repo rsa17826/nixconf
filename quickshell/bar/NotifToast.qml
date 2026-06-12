@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "owoify.js" as Owo
 
 Rectangle {
   id: root
@@ -103,7 +104,7 @@ Rectangle {
         elide: Text.ElideRight
         font.family: "monospace"
         font.pointSize: 8
-        text: root.entry.appName
+        text: Owo.owo(root.entry.appName)
         visible: root.entry.appName !== ""
       }
       Text {
@@ -113,7 +114,7 @@ Rectangle {
         elide: Text.ElideRight
         font.family: "monospace"
         font.pointSize: 10
-        text: root.entry.summary
+        text: Owo.owo(root.entry.summary)
         visible: root.entry.summary !== ""
       }
       Text {
@@ -124,7 +125,7 @@ Rectangle {
         font.family: "monospace"
         font.pointSize: 9
         maximumLineCount: 4
-        text: root.entry.body
+        text: Owo.owo(root.entry.body)
         visible: root.entry.body !== ""
         wrapMode: Text.WordWrap
       }
@@ -155,7 +156,7 @@ Rectangle {
               color: "#4d6fff"
               font.family: "monospace"
               font.pointSize: 9
-              text: modelData.text
+              text: Owo.owo(modelData.text)
             }
             MouseArea {
               id: actionMa
