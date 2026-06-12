@@ -175,6 +175,11 @@ hl.window_rule({
 -- 	pin = true,
 -- 	float = true,
 -- })
+hl.window_rule({
+	match = { class = "steam_app_4555180" }, -- Find this using the 'hyprctl clients' command
+	suppress_event = "fullscreen maximize",
+	fullscreen_state = "1 2",
+})
 hl.on("window.fullscreen", function(w)
 	-- 2 means the window just entered true fullscreen internally
 	if w.fullscreen == 2 then

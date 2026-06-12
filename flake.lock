@@ -453,11 +453,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781223589,
-        "narHash": "sha256-1oGZ4C0Bs0EhU4tpxyMD0UJwLkcK3lEAR+ZEmiyp0A0=",
+        "lastModified": 1781303556,
+        "narHash": "sha256-QyE47vr6fX23I1IPUd42IyxcUIJ4yCgJDVDknN5SQfM=",
         "owner": "rsa17826",
         "repo": "gowoify",
-        "rev": "50eac1905bc106c2e60a41c8b3506ffe104db057",
+        "rev": "8a9d5c9f5dd7cc827403f5c977458f2a1b9a5336",
         "type": "github"
       },
       "original": {
