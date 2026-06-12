@@ -293,6 +293,7 @@ Item {
                   id: emptyStoredCol
 
                   anchors.centerIn: parent
+                  rightPadding: 400
                   spacing: 6
 
                   Text {
@@ -351,6 +352,7 @@ Item {
                   // Clear history button
                   Rectangle {
                     Layout.alignment: Qt.AlignVCenter
+                    Layout.rightMargin: 4
                     border.color: "#1e1e40"
                     border.width: 1
                     color: clearHistMa.containsMouse ? "#12122c" : "transparent"

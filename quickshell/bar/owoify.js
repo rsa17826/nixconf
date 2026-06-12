@@ -6,13 +6,12 @@
  */
 function owo(text) {
   const endSentencePattern = String.raw`([\w ,.!?]+)?` // endSentencePattern
-  // const endSentencePattern1 = String.raw`([\w ,.?]+)?`; // endSentencePattern without "!" sign
-  // const endSentencePattern2 = String.raw`([\w ,.]+)?`; // endSentencePattern without "!" and "?" sign
   text = String(text)
   const vowel = "[aiueo]"
   const vowelNoE = "[aiuo]" // vowel without e
   const vowelNoIE = "[auo]" // vowel without i and e
   const zackqyWord = "[jzckq]"
+
   // OwO emote
   text = text.replace(
     reg`/(i(?:'|)m(?:\s+|\s+so+\s+)bored)${endSentencePattern}/gi`,
@@ -26,25 +25,48 @@ function owo(text) {
     reg`/(i\s+don(?:'|)t\s+care|i\s*d\s*c)${endSentencePattern}/gi`,
     subOwoEmote("0w0"),
   )
+
   // world substitution
   text = text.replace(reg`/l[ou]ve?/gi`, ($0) =>
     subSameCase($0, "luv"),
   )
+
   // OwO translation
-  // /*result = result replace all "r" to "w", no exception! */
-  //     result = result.replace(/r/gi, $0 => subSameCase($0, "w"))
-  /*result = result replace all "r" to "w", unless r is alone */
-  text = text.replace(/(?<=\w)r/gi, ($0) => subSameCase($0, "w"))
-  text = text.replace(/r(?=\w)/gi, ($0) => subSameCase($0, "w"))
+  /* replace all "r" to "w", unless r is alone */
+  // FIXED: Replaced lookbehinds by processing on a word-by-word basis
+  text = text.replace(/\w+/g, (word) => {
+    if (word.toLowerCase() === "r") return word;
+    return word.replace(/r/gi, ($0) => subSameCase($0, "w"));
+  });
+
   /* lame -> wame, goal -> goaw, gallery -> gallewy, lol -> lol, null -> null */
   // loaded -> woaded
   // url -> uwl instead of uww
-  text = text.replace(
-    reg`/(?<!([wl]${vowel}*))(?:l(?=\\w)|(?<=\\w)l)(?!([wl]))/gi`,
-    ($0) => subSameCase($0, "w"),
-  )
+  // FIXED: Replaced complex lookbehinds with manual character index inspection
+  text = text.replace(/l/gi, (match, offset, fullString) => {
+    // Check if adjacent to a word character (mimics (?:l(?=\w)|(?<=\w)l))
+    const hasPrecedingWord = offset > 0 && /\w/.test(fullString[offset - 1]);
+    const hasFollowingWord = offset + 1 < fullString.length && /\w/.test(fullString[offset + 1]);
+    if (!hasPrecedingWord && !hasFollowingWord) return match;
+
+    // Check if followed by w or l (mimics (?!([wl])))
+    if (offset + 1 < fullString.length && /[wl]/i.test(fullString[offset + 1])) {
+      return match;
+    }
+
+    // Check if preceded by [wl] followed by zero or more vowels (mimics (?<!([wl]${vowel}*)))
+    let prevIdx = offset - 1;
+    while (prevIdx >= 0 && /[aiueo]/i.test(fullString[prevIdx])) {
+      prevIdx--;
+    }
+    if (prevIdx >= 0 && /[wl]/i.test(fullString[prevIdx])) {
+      return match;
+    }
+
+    return subSameCase(match, "w");
+  });
+
   /* na -> nya, nu -> nyu, no -> nyo, ne -> nye */
-  // completionInfo -> compwetionInfo instead of compwetionYInfo
   text = text.replace(reg`/[nN](${vowelNoE}+)/g`, ($0, $vowel) =>
     subSameCase($0 + $vowel, `ny${$vowel}`),
   )
@@ -52,6 +74,7 @@ function owo(text) {
     reg`/N(${vowelNoE.toUpperCase()}+)/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `ny${$vowel}`),
   )
+
   /* ma -> mya, mu -> myu, mo -> myo */
   text = text.replace(
     reg`/[mM](${vowelNoIE}+)(?!w*${zackqyWord})/g`,
@@ -61,8 +84,8 @@ function owo(text) {
     reg`/M(${vowelNoE.toUpperCase()}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `my${$vowel}`),
   )
+
   /* pa -> pwa, pu -> pwu, po -> pwo */
-  // AhkStopAlt -> AhkStopAwt instead of AhkStopWAwt
   text = text.replace(
     reg`/[pP](${vowelNoIE}+)(?!w*${zackqyWord})/g`,
     ($0, $vowel) => subSameCase($0 + $vowel, `pw${$vowel}`),
@@ -76,20 +99,12 @@ function owo(text) {
 }
 
 /**
- *
  * @param {string} emote
  * @returns
  */
 function subOwoEmote(emote) {
   const matchEndSpace = /^\s+$/g
 
-  /**
-   *
-   * @param {string} $0
-   * @param {string} $sentenceBeforeEnd
-   * @param {string} $endSentence
-   * @returns
-   */
   return ($0, $sentenceBeforeEnd, $endSentence) => {
     if (
       $endSentence == undefined ||
