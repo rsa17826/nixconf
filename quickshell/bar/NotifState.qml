@@ -271,9 +271,9 @@ Singleton {
         transient: isTransient,
         actions: actions,
         addedAt: Date.now(),
-        stayVisibleFor: 0,
+        // stayVisibleFor: 0,
         // TODO
-        // stayVisibleFor: 5000,
+        stayVisibleFor: 5000,
         // Treat as already expired if arriving within reload window or while center is open
         expired: (Date.now() - loadTime) < 30 || root.centerOpen,
         dismissed: false,
