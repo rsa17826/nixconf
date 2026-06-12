@@ -384,7 +384,7 @@ Item {
 
               // ── History entries (last 50, dimmed) ────────────
               Repeater {
-                model: NotifState.history
+                model: NotifState.historyFiltered
 
                 delegate: NotifToast {
                   required property var modelData

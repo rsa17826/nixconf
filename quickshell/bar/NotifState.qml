@@ -23,6 +23,12 @@ Singleton {
 
   // ── History file path ────────────────────────────────────────
   readonly property string historyFilePath: pathJoin(configPath(), "notif-history.json")
+
+  // History with active/stored IDs excluded — avoids duplicates in the history section
+  readonly property var historyFiltered: {
+    const skip = new Set(notifs.filter(n => !n.dismissed).map(n => n.id))
+    return history.filter(h => !skip.has(h.id))
+  }
   property var loadTime: Date.now()
 
   // Live notification entries (active + stored).
@@ -37,23 +43,11 @@ Singleton {
 
   // ── History helpers ──────────────────────────────────────────
   function addToHistory(entry) {
-    const h = {
-      id: entry.id,
-      summary: entry.summary,
-      body: entry.body,
-      appName: entry.appName,
-      appIcon: entry.appIcon,
-      urgency: entry.urgency,
-      transient: !!entry.transient,
-      addedAt: entry.addedAt,
-      stayVisibleFor: entry.stayVisibleFor,
-      // expired:true suppresses the countdown bar in NotifToast
-      expired: true,
-      dismissed: false,
-      actions: []
-    };
     // Prepend, deduplicate by id, cap at 50
-    root.history = [h].concat(root.history.filter(x => x.id !== entry.id)).slice(0, 50)
+    root.history = [Object.assign({}, entry, {
+        expired: true,
+        dismissed: false
+      })].concat(root.history.filter(x => x.id !== entry.id)).slice(0, 50)
   }
   function clearHistory() {
     root.history = []
@@ -288,6 +282,10 @@ Singleton {
       } else {
         root.notifs = [entry].concat(root.notifs)
       }
+
+      // Add to history immediately — historyFiltered hides it while
+      // it is still active/stored, so no duplicate appears in the UI.
+      root.addToHistory(entry)
     }
   }
 }
