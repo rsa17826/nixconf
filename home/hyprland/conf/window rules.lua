@@ -176,7 +176,7 @@ hl.window_rule({
 -- 	float = true,
 -- })
 hl.window_rule({
-	match = { class = "steam_app_4555180" }, -- Find this using the 'hyprctl clients' command
+	match = { class = "steam_app_4555180|steam_app_3910870" }, -- Find this using the 'hyprctl clients' command
 	suppress_event = "fullscreen maximize",
 	fullscreen_state = "1 2",
 })
