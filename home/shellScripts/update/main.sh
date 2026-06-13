@@ -44,6 +44,10 @@ pushd "$HOME/nixconf" >/dev/null || {
   echo "❌ Could not find ~/nixconf"
   exit 1
 }
+job_id=$(job-save \
+  --name "update" \
+  --cmd "update $*")
+
 export NIXPKGS_ALLOW_INSECURE=0
 # Real update logic
 # now=$(date +%Y-%m-%d_%H-%M)
@@ -119,6 +123,7 @@ elif [ "$REMOTE" = "$BASE" ]; then
 else
   echo "❌ Diverged! You have local and remote changes that conflict."
   echo "Please resolve manually in ~/nixconf before running this script."
+  job-done "$job_id"
   exit 1
 fi
 prev_generation=$(git log -n 50 --format=%B | grep -m 1 -oP 'Generation \K[0-9]+')
@@ -159,14 +164,17 @@ cleanup_abort() {
   (
     if [[ "$NO_NEW_COMMIT" == false ]]; then
       echo "📝 Amending commit to ABORTED..."
-      cd "$HOME/nixconf" 2>/dev/null || exit 1
+      cd "$HOME/nixconf" 2>/dev/null || (
+        job-done "$job_id"
+        exit 1
+      )
 
       git commit --amend -m "🛑 $NIXOS_LABEL_VERSION" >/dev/null 2>&1
       git push --force-with-lease >/dev/null 2>&1
     fi
   ) &
   disown
-
+  job-done "$job_id"
   exit 1
 }
 
@@ -231,5 +239,6 @@ fi
 # sudo nixos-rebuild switch --profile-name "$NIXOS_LABEL_VERSION" --flake ".#$TARGET" --log-format internal-json -v --show-trace |& nom --json
 
 # Return to original directory
+job-done "$job_id"
 popd >/dev/null || exit 1
 exit "$err"
