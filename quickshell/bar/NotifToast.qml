@@ -1,3 +1,4 @@
+import Quickshell           // <── ADD THIS LINE
 import QtQuick
 import QtQuick.Layouts
 import "owoify.js" as Owo
@@ -79,15 +80,26 @@ Rectangle {
       color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
       height: 28
       radius: 4
-      visible: root.entry.appIcon !== ""
+      visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
       width: 28
 
       Image {
+        id: appIconImg
+
         anchors.fill: parent
         anchors.margins: 4
         fillMode: Image.PreserveAspectFit
         smooth: true
-        source: root.entry.appIcon !== "" ? ("image://icon/" + root.entry.appIcon) : ""
+        source: {
+          const icon = root.entry.appIcon
+          if (icon === "")
+            return ""
+          if (icon.startsWith("/") || icon.startsWith("file://"))
+            return icon
+          return Quickshell.iconPath(icon, true)
+        }
+        sourceSize.height: 64
+        sourceSize.width: 64
       }
     }
 
