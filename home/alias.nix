@@ -25,16 +25,11 @@ let
     updatec = "cd ~/nixconf ; (nix flake metadata | grep -oE 'ext-[a-zA-Z0-9_-]+'|xargs nix flake update) && pkill -9 codium ; update && codium && q";
     dea = "echo 'use flake' > .envrc && echo '.direnv' >> .gitignore && git rm -r --cached .direnv 2>/dev/null; direnv allow";
     "7z" = "7zz";
-    rm = "trash";
     # cd = "z";
   };
-  # commonInit = ''
-  #   export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
-  # '';
-
-  # fishInit = ''
-  #   set -gx DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/"(id -u)"/bus"
-  # '';
+  interactiveShellInit = ''
+    alias rm=gio trash
+  '';
 in
 {
   environment = { inherit shellAliases; };
@@ -45,17 +40,12 @@ in
     bash = {
       enable = true;
       shellAliases = shellAliases;
-      # interactiveShellInit = commonInit;
+      interactiveShellInit = interactiveShellInit;
     };
     zsh = {
       enable = true;
       shellAliases = shellAliases;
-      # interactiveShellInit = commonInit;
+      interactiveShellInit = interactiveShellInit;
     };
-    # fish = {
-    #   enable = true;
-    #   shellAliases = lib.mapAttrs (_k: v: lib.strings.replaceStrings [ "|&" ] [ "&|" ] v) shellAliases;
-    #   interactiveShellInit = fishInit;
-    # };
   };
 }
