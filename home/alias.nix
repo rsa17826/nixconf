@@ -28,7 +28,7 @@ let
     # cd = "z";
   };
   interactiveShellInit = ''
-    alias rm=gio trash
+    # alias rm=gio trash
   '';
 in
 {
