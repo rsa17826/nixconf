@@ -71,6 +71,7 @@ if [ -f "$PWD/flake.nix" ]; then
 
   TMPOUT=$(mktemp)
   err=1
+  go mod tidy
   sanitize_hashes "$PWD/flake.nix"
   while true; do
     if nix build --json --log-format internal-json 2>"$TMPOUT"; then
