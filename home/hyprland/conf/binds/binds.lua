@@ -24,6 +24,7 @@ m.bind("^+#r", hl.dsp.exec_cmd("~/.config/hypr/scripts/relaunch-active.sh"))
 -- m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
 -- m.bind("#c", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 m.bind("#c", hl.dsp.window.fullscreen())
+m.bind("#v", hl.dsp.workspace.move({ workspace = "2", monitor = "test_bottom" }))
 -- m.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
 
 -- Note: original had both fullscreen and fullscreenstate,1 1 on SHIFT+ALT+RETURN.
