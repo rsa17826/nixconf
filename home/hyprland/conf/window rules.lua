@@ -127,7 +127,7 @@ hl.window_rule({
 	match = { class = "^Key Display$", title = "^Key Display$" },
 	float = true,
 	-- size = { "516", "142" },
-	move = { "5", "933" },
+	move = { "5", "905" },
 	dim_around = false,
 	no_initial_focus = true,
 	pin = true,
@@ -175,11 +175,11 @@ hl.window_rule({
 -- 	pin = true,
 -- 	float = true,
 -- })
-hl.window_rule({
-	match = { class = "steam_app_4555180|steam_app_3910870|steam_app_2533590|steam_app_4225220|steam_app_4182710" }, -- Find this using the 'hyprctl clients' command
-	suppress_event = "fullscreen maximize",
-	fullscreen_state = "1 2",
-})
+-- hl.window_rule({
+-- 	match = { class = "steam_app_4555180|steam_app_3910870|steam_app_2533590|steam_app_4225220|steam_app_4182710" }, -- Find this using the 'hyprctl clients' command
+-- 	suppress_event = "fullscreen maximize",
+-- 	fullscreen_state = "1 2",
+-- })
 -- hl.on("window.fullscreen", function(w)
 -- 	-- 2 means the window just entered true fullscreen internally
 -- 	if w.fullscreen == 2 then
@@ -193,7 +193,7 @@ hl.window_rule({
 hl.monitor({
 	output = "HDMI-A-1",
 	mode = "1920x1080@60",
-	position = "0x0",
+	position = "0x1052",
 	scale = 1,
 })
 -- hl.monitor({
@@ -205,9 +205,9 @@ hl.monitor({
 
 hl.monitor({
 	output = "test_bottom",
-	mode = "1920x1050@60",
+	mode = "1920x1052@60",
 	-- position = "0x28",
-	position = "1920x28",
+	position = "0x0",
 	scale = 1,
 })
 hl.window_rule({
@@ -226,10 +226,15 @@ hl.window_rule({
 	no_blur = true,
 	no_dim = true,
 	no_shadow = true,
-	-- focus_on_activate = false,
+	render_unfocused = true,
+	focus_on_activate = true,
 	-- no_focus = true,
 	decorate = false,
 })
+-- hl.window_rule({
+-- 	match = { class = "at.yrlf.wl_mirror", title = "top|bottom" },
+-- 	no_focus = true,
+-- })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror", title = "bottom" },
 	size = { "monitor_w", "monitor_h-28" },
