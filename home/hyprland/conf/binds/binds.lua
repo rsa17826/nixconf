@@ -21,8 +21,9 @@ m.bind("^!d", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.k
 -- Kill active window's process and relaunch it (preserving D-Bus/portal env)
 m.bind("^+#r", hl.dsp.exec_cmd("~/.config/hypr/scripts/relaunch-active.sh"))
 -- Fullscreen
-m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
--- m.bind("#c", hl.dsp.window.fullscreen())
+-- m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
+-- m.bind("#c", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+m.bind("#c", hl.dsp.window.fullscreen())
 -- m.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
 
 -- Note: original had both fullscreen and fullscreenstate,1 1 on SHIFT+ALT+RETURN.

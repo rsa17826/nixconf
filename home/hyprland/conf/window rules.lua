@@ -190,13 +190,24 @@ hl.window_rule({
 -- 		}))
 -- 	end
 -- end)
-hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@144", position = "0x0", scale = 1 })
-hl.layer_rule({
-	match = { namespace = "quickshell" },
+hl.monitor({
+	output = "HDMI-A-1",
+	mode = "1920x1052@60",
+	position = "0x0",
+	scale = 1,
+})
+hl.window_rule({
+	monitor = "test",
 })
 hl.monitor({
 	output = "test",
-	mode = "1920x1050@144",
+	mode = "1920x28@60",
+	position = "1920x1051",
+	scale = 1,
+})
+hl.monitor({
+	output = "test",
+	mode = "1920x1050@60",
 	position = "1920x0",
 	scale = 1,
 })
