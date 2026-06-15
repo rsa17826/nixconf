@@ -284,22 +284,22 @@ def main():
         query = user_input.lower()
 
         def match_rank(app: dict[str, str]) -> int:
-          # name = app["name"].lower()
+          name = app["name"].lower()
           owo_name = app["owo_name"].lower()
           exec_ = app["exec"].lower()
 
-          # if name == query or owo_name == query:
-          #   return 0
-          # if name.startswith(query) or owo_name.startswith(query):
-          #   return 1
-          # if query in name or query in owo_name:
-          #   return 2
-          if owo_name == query:
+          if name == query or owo_name == query:
             return 0
-          if owo_name.startswith(query):
+          if name.startswith(query) or owo_name.startswith(query):
             return 1
-          if query in owo_name:
+          if query in name or query in owo_name:
             return 2
+          # if owo_name == query:
+          #   return 0
+          # if owo_name.startswith(query):
+          #   return 1
+          # if query in owo_name:
+          #   return 2
           if query in owowify(exec_):
             return 3
           return 99
