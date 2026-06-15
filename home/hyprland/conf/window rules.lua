@@ -213,14 +213,23 @@ hl.window_rule({
 	monitor = "test_bottom",
 })
 hl.window_rule({
-	match = { class = "at.yrlf.wl_mirror" },
+	match = { class = "at.yrlf.wl_mirror", title = "top|bottom" },
 	float = true,
 	pin = true,
-	size = { "monitor_w", "monitor_h-28" },
-	move = { "0", "28" },
 	dim_around = false,
 	stay_focused = false,
 	monitor = "HDMI-A-1",
+	opacity = "1 override",
+})
+hl.window_rule({
+	match = { class = "at.yrlf.wl_mirror", title = "bottom" },
+	size = { "monitor_w", "monitor_h-28" },
+	move = { "0", "28" },
+})
+hl.window_rule({
+	match = { class = "at.yrlf.wl_mirror", title = "top" },
+	size = { "monitor_w", "28" },
+	move = { "0", "0" },
 })
 -- for i = 1, 10 do
 -- 	hl.workspace_rule({ workspace = tostring(i), monitor = "test" })
