@@ -197,19 +197,20 @@ hl.monitor({
 	scale = 1,
 })
 hl.monitor({
-	output = "test",
+	output = "test_top",
 	mode = "1920x28@60",
 	position = "1920x1051",
 	scale = 1,
 })
 hl.monitor({
-	output = "test",
+	output = "test_bottom",
 	mode = "1920x1050@60",
 	position = "1920x0",
 	scale = 1,
 })
 hl.window_rule({
-	monitor = "test",
+	match = { title = ".*" },
+	monitor = "test_bottom",
 })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror" },
