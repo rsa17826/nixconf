@@ -192,12 +192,9 @@ hl.window_rule({
 -- end)
 hl.monitor({
 	output = "HDMI-A-1",
-	mode = "1920x1052@60",
+	mode = "1920x1080@60",
 	position = "0x0",
 	scale = 1,
-})
-hl.window_rule({
-	monitor = "test",
 })
 hl.monitor({
 	output = "test",
@@ -212,7 +209,7 @@ hl.monitor({
 	scale = 1,
 })
 hl.window_rule({
-	monitor = "HDMI-A-1",
+	monitor = "test",
 })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror" },
@@ -224,9 +221,9 @@ hl.window_rule({
 	stay_focused = false,
 	monitor = "HDMI-A-1",
 })
-for i = 1, 10 do
-	hl.workspace_rule({ workspace = tostring(i), monitor = "test" })
-end
+-- for i = 1, 10 do
+-- 	hl.workspace_rule({ workspace = tostring(i), monitor = "test" })
+-- end
 
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({
