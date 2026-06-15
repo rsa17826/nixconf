@@ -4,7 +4,9 @@ hl.on("hyprland.start", function()
 	-- hl.exec_cmd("python -m http.server -d ~/projects/jira-project-ui/ 15432")
 	hl.exec_cmd("hyprctl output create headless test_top")
 	hl.exec_cmd("hyprctl output create headless test_bottom")
-	hl.exec_cmd("timeout 20 sh -c 'wl-mirror  --title bottom test_bottom&wl-mirror  --title top test_top'")
+	hl.exec_cmd("wl-mirror --title top test_top")
+	hl.exec_cmd("wl-mirror --title bottom test_bottom")
+	-- hl.exec_cmd("timeout 20 sh -c 'wl-mirror --title bottom test_bottom&wl-mirror --title top test_top'")
 	hl.exec_cmd(
 		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME QT_STYLE_OVERRIDE"
 	)
