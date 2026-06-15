@@ -238,9 +238,9 @@ hl.window_rule({
 	size = { "monitor_w", "28" },
 	move = { "0", "0" },
 })
--- for i = 1, 10 do
--- 	hl.workspace_rule({ workspace = tostring(i), monitor = "test" })
--- end
+for i = 1, 100 do
+	hl.workspace_rule({ workspace = tostring(i), monitor = "test_bottom", enabled = true, persistent = true })
+end
 
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({

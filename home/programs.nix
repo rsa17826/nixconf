@@ -191,6 +191,7 @@ in
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
           opensnitch-ui
+          wl-mirror
           clang-tools
           delve
           iosevka
