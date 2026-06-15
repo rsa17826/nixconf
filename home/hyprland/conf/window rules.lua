@@ -180,24 +180,24 @@ hl.window_rule({
 	suppress_event = "fullscreen maximize",
 	fullscreen_state = "1 2",
 })
-hl.on("window.fullscreen", function(w)
-	-- 2 means the window just entered true fullscreen internally
-	if w.fullscreen == 2 then
-		hl.dispatch(hl.dsp.window.fullscreen_state({
-			internal = 1, -- Force Hyprland to maximize it instead
-			client = 2, -- Tell the app "Yes, you are fullscreen"
-			window = w, -- Target this specific window
-		}))
-	end
-end)
-hl.monitor({ output = "HDMI-A-1", mode = "1920x28@144", position = "0x0", scale = 1 })
+-- hl.on("window.fullscreen", function(w)
+-- 	-- 2 means the window just entered true fullscreen internally
+-- 	if w.fullscreen == 2 then
+-- 		hl.dispatch(hl.dsp.window.fullscreen_state({
+-- 			internal = 1, -- Force Hyprland to maximize it instead
+-- 			client = 2, -- Tell the app "Yes, you are fullscreen"
+-- 			window = w, -- Target this specific window
+-- 		}))
+-- 	end
+-- end)
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@144", position = "0x0", scale = 1 })
 hl.layer_rule({
 	match = { namespace = "quickshell" },
 })
 hl.monitor({
 	output = "test",
 	mode = "1920x1050@144",
-	position = "0x28",
+	position = "1920x0",
 	scale = 1,
 })
 hl.window_rule({
@@ -207,7 +207,7 @@ hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror" },
 	float = true,
 	pin = true,
-	size = { "monitor_w", "monitor_h-29" },
+	size = { "monitor_w", "monitor_h-28" },
 	move = { "0", "28" },
 	dim_around = false,
 	stay_focused = false,
