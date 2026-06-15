@@ -220,6 +220,12 @@ hl.window_rule({
 	stay_focused = false,
 	monitor = "HDMI-A-1",
 	opacity = "1 override",
+	no_anim = true,
+	no_blur = true,
+	no_dim = true,
+	no_shadow = true,
+	focus_on_activate = true,
+	decorate = false,
 })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror", title = "bottom" },
