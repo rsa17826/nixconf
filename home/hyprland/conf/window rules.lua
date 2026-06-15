@@ -225,7 +225,8 @@ hl.window_rule({
 	no_blur = true,
 	no_dim = true,
 	no_shadow = true,
-	focus_on_activate = true,
+	focus_on_activate = false,
+	no_focus = true,
 	decorate = false,
 })
 hl.window_rule({

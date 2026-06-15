@@ -12,7 +12,7 @@ import Quickshell.Services.Mpris
 
 Scope {
   Variants {
-    model: Quickshell.screens
+    model: Quickshell.screens.filter(screen => screen.name === "test_top")
 
     PanelWindow {
       id: root
@@ -33,6 +33,7 @@ Scope {
       Rectangle {
         anchors.fill: parent
         color: "#03030a"
+
         Rectangle {
           anchors.bottom: parent.bottom
           anchors.left: parent.left
@@ -41,7 +42,6 @@ Scope {
           height: 1
         }
       }
-
       MediaProgress {
       }
       anchors {
