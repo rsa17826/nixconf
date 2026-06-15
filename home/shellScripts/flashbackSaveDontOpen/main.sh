@@ -46,7 +46,7 @@ if [ "$FOUND" = true ]; then
   # Use ffmpeg to extract the last X seconds cleanly without re-encoding
   if ffmpeg -sseof "-$TRIM_SECS" -i "$CURRENT_VIDEO" -c copy "$TRIMMED_VIDEO" -y -loglevel error; then
     # Move original to trash
-    trash "$CURRENT_VIDEO"
+    gio trash "$CURRENT_VIDEO"
     # Rename the trimmed version to the original filename
     mv "$TRIMMED_VIDEO" "$CURRENT_VIDEO"
     notify-send "Success" "Trimmed to last ${TRIM_SECS}s and saved."

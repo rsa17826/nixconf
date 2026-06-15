@@ -176,7 +176,7 @@ hl.window_rule({
 -- 	float = true,
 -- })
 hl.window_rule({
-	match = { class = "steam_app_4555180|steam_app_3910870|steam_app_2533590" }, -- Find this using the 'hyprctl clients' command
+	match = { class = "steam_app_4555180|steam_app_3910870|steam_app_2533590|steam_app_4225220|steam_app_4182710" }, -- Find this using the 'hyprctl clients' command
 	suppress_event = "fullscreen maximize",
 	fullscreen_state = "1 2",
 })
@@ -190,6 +190,33 @@ hl.on("window.fullscreen", function(w)
 		}))
 	end
 end)
+hl.monitor({ output = "HDMI-A-1", mode = "1920x28@144", position = "0x0", scale = 1 })
+hl.layer_rule({
+	match = { namespace = "quickshell" },
+})
+hl.monitor({
+	output = "test",
+	mode = "1920x1050@144",
+	position = "0x28",
+	scale = 1,
+})
+hl.window_rule({
+	monitor = "HDMI-A-1",
+})
+hl.window_rule({
+	match = { class = "at.yrlf.wl_mirror" },
+	float = true,
+	pin = true,
+	size = { "monitor_w", "monitor_h-29" },
+	move = { "0", "28" },
+	dim_around = false,
+	stay_focused = false,
+	monitor = "HDMI-A-1",
+})
+for i = 1, 10 do
+	hl.workspace_rule({ workspace = tostring(i), monitor = "test" })
+end
+
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({
 	match = { class = "^Tk$", title = "^Browser Selector$" },
