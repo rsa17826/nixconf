@@ -20,6 +20,7 @@ m.bind("^!d", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.k
 -- ─── Window / session actions ──────────────────────────────────────────────
 -- Kill active window's process and relaunch it (preserving D-Bus/portal env)
 m.bind("^+#r", hl.dsp.exec_cmd("~/.config/hypr/scripts/relaunch-active.sh"))
+m.bind("+#r", hl.dsp.exec_cmd("kill $(hyprctl activewindow -j |jq .pid)"))
 -- Fullscreen
 -- m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
 -- m.bind("#c", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
