@@ -230,7 +230,7 @@ hl.window_rule({
 	focus_on_activate = true,
 	-- no_focus = true,
 	decorate = false,
-	suppress_events = "activate",
+	suppress_event = "activate",
 })
 -- hl.window_rule({
 -- 	match = { class = "at.yrlf.wl_mirror", title = "top|bottom" },
