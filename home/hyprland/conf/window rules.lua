@@ -198,14 +198,14 @@ hl.monitor({
 })
 hl.monitor({
 	output = "test_top",
-	mode = "1920x28@60",
+	mode = "1920x28@61",
 	position = "1920x0",
 	scale = 1,
 })
 
 hl.monitor({
 	output = "test_bottom",
-	mode = "1920x1052@60",
+	mode = "1920x1052@61",
 	-- position = "0x28",
 	position = "1920x28",
 	scale = 1,
