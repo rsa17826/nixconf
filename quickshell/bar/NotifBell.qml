@@ -149,6 +149,10 @@ Item {
     //     top: 8
     //   }
     // }
+    margins {
+      right: 4
+      top: 4
+    }
     anchors {
       right: true
       top: true

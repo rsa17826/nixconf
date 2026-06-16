@@ -175,13 +175,12 @@ Item {
       right: true
       top: true
     }
-
     MouseArea {
       anchors.fill: parent
+
       onClicked: networkPopup.visible = false
     }
   }
-
   PanelWindow {
     id: networkPopup
 
@@ -192,6 +191,11 @@ Item {
     screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: false
 
+    margins {
+      // TODO
+      right: 60
+      top: 4
+    }
     anchors {
       right: true
       top: true
