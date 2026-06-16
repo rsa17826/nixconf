@@ -160,28 +160,41 @@ Item {
   }
 
   // ── Network list Window ───────────────────────────────────────
-  // Replaced Popup with PanelWindow so it doesn't get clipped by your bar's boundaries
-  PopupWindow {
+  // Click-away dismiss layer — fullscreen transparent panel behind the popup
+  PanelWindow {
+    id: wifiDismiss
+
+    color: "transparent"
+    exclusionMode: ExclusionMode.Ignore
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
+    visible: networkPopup.visible
+
+    anchors {
+      bottom: true
+      left: true
+      right: true
+      top: true
+    }
+
+    MouseArea {
+      anchors.fill: parent
+      onClicked: networkPopup.visible = false
+    }
+  }
+
+  PanelWindow {
     id: networkPopup
 
     color: "transparent"
-
-    // 1. Automatically dismisses the window and sets visible to false on click outside
-    grabFocus: true
+    exclusionMode: ExclusionMode.Ignore
     implicitHeight: menuColumn.implicitHeight + 12
     implicitWidth: 240
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: false
 
-    // 2. Position it relative to your pill item so it dynamically aligns below it
-    anchor {
-      edges: Edges.Bottom | Edges.Left   // Anchor point is the bottom-right of the pill
-      gravity: Edges.Bottom | Edges.Right  // Grow downwards and to the left
-      item: pill
-
-      margins {
-        right: 0
-        top: 26
-      }
+    anchors {
+      right: true
+      top: true
     }
     Rectangle {
       anchors.fill: parent

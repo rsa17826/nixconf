@@ -12,7 +12,8 @@ import Quickshell.Services.Mpris
 
 Scope {
   Variants {
-    model: Quickshell.screens.filter(screen => screen.name === "HDMI-A-1")
+    model: Quickshell.screens.filter(screen => screen.name === "test_top")
+    // model: Quickshell.screens.filter(screen => screen.name === "HDMI-A-1")
 
     PanelWindow {
       id: root

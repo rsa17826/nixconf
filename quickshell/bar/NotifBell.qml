@@ -67,23 +67,19 @@ Item {
   // ── Active notification popups ───────────────────────────────
   // Appears automatically whenever there are live notifications.
   // grabFocus: false so it never steals keyboard input.
-  PopupWindow {
+  PanelWindow {
     id: toastPopup
 
     color: "transparent"
-    grabFocus: false
+    exclusionMode: ExclusionMode.Ignore
     implicitHeight: Math.max(1, toastCol.implicitHeight + 8)
     implicitWidth: 396   // 380 toast + 16 right padding
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: NotifState.activeCount > 0
 
-    anchor {
-      edges: Edges.Bottom | Edges.Right
-      gravity: Edges.Bottom | Edges.Left
-      item: root
-
-      margins {
-        top: 8
-      }
+    anchors {
+      right: true
+      top: true
     }
     Column {
       id: toastCol
@@ -110,27 +106,52 @@ Item {
 
   // ── Notification center (history) ────────────────────────────
   // Shown on bell click; grabFocus so clicking outside auto-closes it.
-  PopupWindow {
+  PanelWindow {
+    id: notifDismiss
+
+    color: "transparent"
+    exclusionMode: ExclusionMode.Ignore
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
+    visible: centerPopup.visible
+
+    anchors {
+      bottom: true
+      left: true
+      right: true
+      top: true
+    }
+    MouseArea {
+      anchors.fill: parent
+
+      onClicked: NotifState.centerOpen = false
+    }
+  }
+  PanelWindow {
     id: centerPopup
 
     color: "transparent"
-    grabFocus: true
+    // grabFocus: true
     implicitHeight: 520
     implicitWidth: 400
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: NotifState.centerOpen
 
     // Sync grabFocus auto-close back into NotifState
     onVisibleChanged: if (!visible)
       NotifState.centerOpen = false
 
-    anchor {
-      edges: Edges.Bottom | Edges.Right
-      gravity: Edges.Bottom | Edges.Left
-      item: root
+    // anchor {
+    //   edges: Edges.Bottom | Edges.Right
+    //   gravity: Edges.Bottom | Edges.Left
+    //   item: root
 
-      margins {
-        top: 8
-      }
+    //   margins {
+    //     top: 8
+    //   }
+    // }
+    anchors {
+      right: true
+      top: true
     }
     Rectangle {
       anchors.fill: parent

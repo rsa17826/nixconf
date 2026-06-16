@@ -196,18 +196,18 @@ hl.monitor({
 	position = "0x1052",
 	scale = 1,
 })
--- hl.monitor({
--- 	output = "test_top",
--- 	mode = "1920x28@60",
--- 	position = "1920x0",
--- 	scale = 1,
--- })
+hl.monitor({
+	output = "test_top",
+	mode = "1920x28@60",
+	position = "1920x0",
+	scale = 1,
+})
 
 hl.monitor({
 	output = "test_bottom",
 	mode = "1920x1052@60",
 	-- position = "0x28",
-	position = "0x0",
+	position = "1920x28",
 	scale = 1,
 })
 hl.window_rule({
@@ -240,11 +240,11 @@ hl.window_rule({
 	size = { "monitor_w", "monitor_h-28" },
 	move = { "0", "28" },
 })
--- hl.window_rule({
--- 	match = { class = "at.yrlf.wl_mirror", title = "top" },
--- 	size = { "monitor_w", "28" },
--- 	move = { "0", "150" },
--- })
+hl.window_rule({
+	match = { class = "at.yrlf.wl_mirror", title = "top" },
+	size = { "monitor_w", "28" },
+	move = { "0", "0" },
+})
 for i = 1, 100 do
 	hl.workspace_rule({ workspace = tostring(i), monitor = "test_bottom", enabled = true, persistent = true })
 end
