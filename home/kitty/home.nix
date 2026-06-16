@@ -5,7 +5,7 @@
 {
   home = {
     file = {
-      ".config/kitty/bg.png".source = ./kittybg.png;
+      ".config/kitty/bg.png".source = ./pompy.jpg;
     };
   };
   myProfile = {

@@ -4,7 +4,7 @@ self: super: {
     let
       # Define images here so they are easy to reference
       img = {
-        bg = ./aaa.png;
+        bg = ./sdasadmasdnm.png;
         emptyEditor = ./emptyEditor.png;
         sticker = ./asticker2.png;
       };
