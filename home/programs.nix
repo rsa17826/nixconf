@@ -196,6 +196,7 @@ in
           delve
           iosevka
           go
+          blender
           gopls
           gcc
           socat
