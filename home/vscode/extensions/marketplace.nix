@@ -27,7 +27,7 @@
               name = "lua";
               publisher = "sumneko";
               version = "3.18.2";
-              hash = "sha256-SiKD/bDjuZMZIy5V7yTUcpo7ojt9L/VD/Rp51Iuyc9c=";
+              hash = "sha256-8mvauayksFk/3A7VMJ3EZYyRK8YLgX03W7bzEIdGkXQ=";
             }
             {
               name = "shader";
@@ -50,8 +50,8 @@
             {
               name = "Go";
               publisher = "golang";
-              version = "0.53.1";
-              hash = "sha256-sgZFI3iWioecvh05bTvT/gJU0zEf79P1xs6vzGkBTWU=";
+              version = "0.55.0";
+              hash = "sha256-pFd7/PTVQio/L7EeTxGdxnZdgWFlIM27yXZ0X4WfFNc=";
             }
             {
               name = "csstools-design-tokens";
@@ -110,8 +110,8 @@
             {
               name = "zubanls";
               publisher = "zuban";
-              version = "0.0.7";
-              hash = "sha256-C5rJdvSFghY/nZjCM8/1EMcjzSiE+L2wNfkezTjBsxk=";
+              version = "0.2.3";
+              hash = "sha256-O46EMBoyXEYBe63UIRTLjHHNSKnQqAYj5dHnqn86/co=";
             }
             {
               name = "direnv";
@@ -201,7 +201,7 @@
               name = "godot-format";
               publisher = "dohe";
               version = "0.2.18";
-              hash = "sha256-7Um28UWJm8hJuQA5cOaTfz6xHFnSZu1ptGedilUz4Q0=";
+              hash = "sha256-r3r/kyDUxjky+OeEGngMenZh5Lyx1scUXxyEej0ut+o=";
             }
             {
               name = "githistory";
@@ -230,8 +230,8 @@
             {
               name = "godot-tools";
               publisher = "geequlim";
-              version = "2.6.1";
-              hash = "sha256-x+u5t4HB+uM2CbhSw0h/zoYPgBPTZNFaMuzL+KB9mAM=";
+              version = "2.7.1";
+              hash = "sha256-TNCMSmZdBXxAHkcFLpTDkCzaXNO4yvkCfQ8Xrb9gquo=";
             }
             {
               name = "vscode-ansi";
@@ -260,8 +260,8 @@
             {
               name = "basedpyright";
               publisher = "detachhead";
-              version = "1.39.7";
-              hash = "sha256-hm5jDcBVaRfmzhDTXFOpReN227lFyYT/i+HGPcpdkX0=";
+              version = "1.39.8";
+              hash = "sha256-MiCa1OuLvXYC5HmXNzM7LCL72weG40tDTgLWWl9Kxug=";
             }
             # {
             #   name = "synthwave-fluoromachine-cursor";
@@ -302,8 +302,8 @@
             {
               name = "black-formatter";
               publisher = "ms-python";
-              version = "2026.7.11561004";
-              hash = "sha256-apfJ525mSkPlhkVAZCut0hd1MPnnwC64I/0zH1TZIz4=";
+              version = "2026.7.11631003";
+              hash = "sha256-9xNbEasO6tzChWXa9Re3UlhHrbiS9KLiEQo5zjeoeag=";
             }
             {
               name = "debugpy";
@@ -314,8 +314,8 @@
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.5.2026052901";
-              hash = "sha256-aWtGDmqfJiwkO72MFLYjX16Vb//ltqAY3IinGH0OpfI=";
+              version = "2026.5.2026061001";
+              hash = "sha256-dePjMDC+H/ADyiaIb01C9XQCjdbsWSRoLzdenwi7koA=";
             }
             {
               name = "hexeditor";
