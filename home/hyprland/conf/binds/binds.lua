@@ -25,12 +25,13 @@ m.bind("^+#q", hl.dsp.exec_cmd("kill $(hyprctl activewindow -j |jq .pid)"))
 -- m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
 -- m.bind("#c", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 m.bind("#c", hl.dsp.window.fullscreen())
+m.bind("+!\n", hl.dsp.window.fullscreen())
 -- m.bind("#v", hl.dsp.workspace.move({ workspace = "2", monitor = "test_bottom" }))
 -- m.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
 
 -- Note: original had both fullscreen and fullscreenstate,1 1 on SHIFT+ALT+RETURN.
 -- fullscreenstate sets client=1 internal=1 — uncomment below if you want that instead:
-m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
+-- m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
 
 -- Lock
 m.bind("#l", hl.dsp.exec_cmd("shaderstack disable && hyprlock --no-fade-in && shaderstack enable"))
