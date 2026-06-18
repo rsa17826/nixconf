@@ -25,7 +25,7 @@ m.bind("^+#q", hl.dsp.exec_cmd("kill $(hyprctl activewindow -j |jq .pid)"))
 -- m.bind("#c", hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
 -- m.bind("#c", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 m.bind("#c", hl.dsp.window.fullscreen())
-m.bind("+!\n", hl.dsp.window.fullscreen())
+m.bind("+!\n", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 -- m.bind("#v", hl.dsp.workspace.move({ workspace = "2", monitor = "test_bottom" }))
 -- m.bind("SHIFT + ALT + RETURN", hl.dsp.window.fullscreen())
 
