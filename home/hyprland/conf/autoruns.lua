@@ -6,14 +6,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl output create headless test_bottom")
 	hl.exec_cmd("wl-mirror --title top test_top")
 	hl.exec_cmd("wl-mirror --title bottom test_bottom")
-	hl.timer(function()
-		hl.dsp.focus({ window = "title:^top$" })
-		hl.dsp.focus({ window = "title:^bottom$" })
-		hl.dsp.focus({ monitor = "test_bottom" })
-	end, {
-		timeout = 200,
-		type = "oneshot",
-	})
 	-- hl.exec_cmd("timeout 20 sh -c 'wl-mirror --title bottom test_bottom&wl-mirror --title top test_top'")
 	hl.exec_cmd(
 		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME QT_STYLE_OVERRIDE"
