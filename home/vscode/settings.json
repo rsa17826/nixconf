@@ -813,7 +813,8 @@
     "workbench.action.files.newUntitledFile",
     "workbench.action.closeActiveEditor",
     "workbench.action.terminal.killEditor",
-    "workbench.action.closeGroup"
+    "workbench.action.closeGroup",
+    "workbench.action.toggleSidebarVisibility"
   ],
   "fixAllJson.insertMissingCommaOnEnter": true,
   "fixAllJson.insertMissingDoubleQuotesOnColon": true,
