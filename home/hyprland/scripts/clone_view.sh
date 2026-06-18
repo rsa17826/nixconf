@@ -8,22 +8,23 @@ if shaderstack enabled "$SHADER_RUNTIME"; then
   exit 0
 fi
 
-# 1. Get Screen Resolution
+# 1. Get Screen Resolution + Position
 MONITOR_INFO=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true)')
 SCREEN_W=$(echo "$MONITOR_INFO" | jq -r '.width')
 SCREEN_H=$(echo "$MONITOR_INFO" | jq -r '.height')
+MON_X=$(echo "$MONITOR_INFO" | jq -r '.x')
+MON_Y=$(echo "$MONITOR_INFO" | jq -r '.y')
 
 # 2. Select region with slurp
 GEOM=$(slurp -f "%x %y %w %h")
 [ -z "$GEOM" ] && exit 1
 read -r X Y W H <<<"$GEOM"
 
-# 3. Calculate normalized source region (0.0 to 1.0)
-OFF_X=$(printf "%.6f" "$(echo "scale=6; $X / $SCREEN_W" | bc)")
-OFF_Y=$(printf "%.6f" "$(echo "scale=6; $Y / $SCREEN_H" | bc)")
+# 3. Calculate normalized source region (0.0 to 1.0), relative to the monitor's own origin
+OFF_X=$(printf "%.6f" "$(echo "scale=6; ($X - $MON_X) / $SCREEN_W" | bc)")
+OFF_Y=$(printf "%.6f" "$(echo "scale=6; ($Y - $MON_Y) / $SCREEN_H" | bc)")
 SIZE_W=$(printf "%.6f" "$(echo "scale=6; $W / $SCREEN_W" | bc)")
 SIZE_H=$(printf "%.6f" "$(echo "scale=6; $H / $SCREEN_H" | bc)")
-
 # 4. Calculate display size with aspect-ratio-preserving black borders
 #    Compare region AR (W/H) vs screen AR (SCREEN_W/SCREEN_H) using integer cross-multiply
 #    to avoid floating-point issues.
