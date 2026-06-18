@@ -250,6 +250,7 @@ for i = 1, 100 do
 	hl.workspace_rule({ workspace = tostring(i), monitor = "test_bottom", enabled = true, persistent = true })
 end
 
+hl.dsp.force_renderer_reload({})
 -- Browser Selector (Tk): pin, float, centered, large
 hl.window_rule({
 	match = { class = "^Tk$", title = "^Browser Selector$" },
