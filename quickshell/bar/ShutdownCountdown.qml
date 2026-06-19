@@ -21,12 +21,13 @@ Item {
   Text {
     id: label
 
-    property int m: Math.floor(root.secondsLeft / 60)
+    property int h: Math.floor(root.secondsLeft / 60 / 60)
+    property int m: Math.floor(root.secondsLeft / 60) % 60
     property int s: root.secondsLeft % 60
 
     color: "#c680f0"
     font.pixelSize: 11
-    text: Owo.owo(`󰐥 Shuts Down in ${m}m${s < 10 ? "0" + s : s}s`)
+    text: Owo.owo(`󰐥 Shuts Down in ${h ? `${h}h` : ``}${m}m${s < 10 ? "0" + s : s}s`)
   }
   Process {
     id: proc

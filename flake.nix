@@ -60,15 +60,15 @@
     #     hyprland.follows = "hyprland";
     #   };
     # };
-    hypr-darkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow";
-      inputs = {
-        hyprland = {
-          # Make sure to change the tag to match your hyprland version
-          follows = "hyprland";
-        };
-      };
-    };
+    # hypr-darkwindow = {
+    #   url = "github:micha4w/Hypr-DarkWindow";
+    #   inputs = {
+    #     hyprland = {
+    #       # Make sure to change the tag to match your hyprland version
+    #       follows = "hyprland";
+    #     };
+    #   };
+    # };
     perkins = {
       url = "github:Mr-Robot-err-404/perkins";
       flake = false;
