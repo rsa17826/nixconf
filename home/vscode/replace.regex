@@ -347,3 +347,27 @@ $1
 @errgroup 0
 @endregex
 
+@name jsonfix
+@file \.jsonc?$
+@regex (\}\s*)\{
+@replace $1,{
+@endregex
+
+@name jsonfix
+@file \.jsonc?$
+@regex (\]\s*)\[
+@replace $1,[
+@endregex
+
+@name jsonfix
+@file \.jsonc?$
+@regex ([\[\{]\s*),
+@replace $1
+@endregex
+
+@name jsonfix
+@file \.jsonc?$
+@regex ,(\s*)([\}\]])
+@replace $1$2
+@endregex
+

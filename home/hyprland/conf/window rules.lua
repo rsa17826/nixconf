@@ -7,13 +7,20 @@
 -- window_rules.lua
 
 -- Suppress maximize requests from all windows
+-- hl.window_rule({
+-- 	name = "suppress-maximize-events",
+-- 	match = { class = ".*" },
+-- 	suppress_event = "maximize",
+-- })
 hl.window_rule({
-	name = "suppress-maximize-events",
-	match = { class = ".*" },
-	suppress_event = "maximize",
+	match = { class = "3d-move-test" },
+	float = true,
+	size = { "monitor_w", "monitor_h" },
+	move = { "0", "0" },
+	suppress_event = "fullscreen maximize",
+	no_blur = true,
 })
-
--- yad: float, unmaximize, pin, center
+-- yad: flGodotoat, unmaximize, pin, center
 hl.window_rule({
 	name = "a",
 	match = { class = "^yad$" },
@@ -274,6 +281,7 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "^Godot$" },
 	scrolling_width = 0.7,
+	opacity = "1 override",
 })
 
 hl.window_rule({
