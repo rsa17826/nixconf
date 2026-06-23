@@ -197,6 +197,7 @@ in
           iosevka
           go
           blender
+          archipelago
           gopls
           gcc
           socat
