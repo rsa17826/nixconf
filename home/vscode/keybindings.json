@@ -896,8 +896,10 @@
     "command": "editor.action.submitComment",
     "when": "commentEditorFocused"
   },
-  { "key": "ctrl+m", "command": "editor.action.toggleTabFocusMode" },
-  { "key": "alt+z", "command": "editor.action.toggleWordWrap" },
+  {
+    "key": "alt+z",
+    "command": "editor.action.toggleWordWrap"
+  },
   {
     "key": "ctrl+shift+space",
     "command": "editor.action.triggerParameterHints",

@@ -15,3 +15,6 @@ when notif open notifs not added to history from transient
 
 make x button send notif to history
 make rmb on notif same as x button
+
+
+auto regex @noregex not working when file saved by defocusing and regex in replace.regex and noregex in the file

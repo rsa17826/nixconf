@@ -349,14 +349,14 @@ $1
 
 @name jsonfix
 @file \.jsonc?$
-@regex (\}\s*)\{
-@replace $1,{
+@regex (\})(\s*)\{
+@replace $1,$2{
 @endregex
 
 @name jsonfix
 @file \.jsonc?$
-@regex (\]\s*)\[
-@replace $1,[
+@regex (\])(\s*)\[
+@replace $1,$2[
 @endregex
 
 @name jsonfix
@@ -371,3 +371,51 @@ $1
 @replace $1$2
 @endregex
 
+@name jsonfix_missing_quotes
+@file \.jsonc?$
+@regex ([\{\,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:
+@replace $1"$2":
+@endregex
+
+@name jsonfix_missing_quotes
+@file \.jsonc?$
+@regex ([\{\,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:
+@replace $1"$2":
+@endregex
+
+
+@name jsonfix_single_quotes
+@file \.jsonc?$
+@regex '([^'\\]*(?:\\.[^'\\]*)*)'
+@replace "$1"
+@endregex
+
+@name jsonfix_boolean_true
+@file \.jsonc?$
+@regex \bTrue\b
+@replace true
+@endregex
+
+@name jsonfix_boolean_false
+@file \.jsonc?$
+@regex \bFalse\b
+@replace false
+@endregex
+
+@name jsonfix_null
+@file \.jsonc?$
+@regex \b(None|Null)\b
+@replace null
+@endregex
+
+@name jsonfix_strip_comments
+@file \.json$
+@regex \/\/[^\n]*|\/\*[\s\S]*?\*\/
+@replace
+@endregex
+
+@name jsonfix_missing_line_commas
+@file \.jsonc?$
+@regex ("[^"\\]*(?:\\.[^"\\]*)*"|true|false|null|\d+|[\}\]])(\s*\n\s*)(["\[\{])
+@replace $1,$2$3
+@endregex

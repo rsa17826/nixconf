@@ -6,18 +6,6 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "color--combine";
-              publisher = "Aritz-Garciaa";
-              version = "1.0.1";
-              hash = "sha256-Y/iqVGmMBVuPBxr7P/SpWJpfqRlQOQg682g+huFK49U=";
-            }
-            {
-              name = "vscode-pets";
-              publisher = "tonybaloney";
-              version = "1.35.0";
-              hash = "sha256-TWWoJ0dBwEHnbi16d0/sBodqg9l92TIzxZYvXTjxNpY=";
-            }
-            {
               name = "vscode-autohotkey2-lsp";
               publisher = "thqby";
               version = "3.0.10";
