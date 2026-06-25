@@ -894,5 +894,7 @@
   // "files.simpleDialog.enable": true,
   "Lua.misc.executablePath": "/etc/profiles/per-user/nyix/bin/lua-language-server",
   "qt-core.showWelcomePageOnActivation": false,
-  "python.languageServer": "None"
+  "python.languageServer": "None","python.analysis.extraPaths": [
+    "C:/path/to/your/Archipelago"
+]
 }

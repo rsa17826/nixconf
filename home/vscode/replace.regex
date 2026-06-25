@@ -419,3 +419,19 @@ $1
 @regex ("[^"\\]*(?:\\.[^"\\]*)*"|true|false|null|\d+|[\}\]])(\s*\n\s*)(["\[\{])
 @replace $1,$2$3
 @endregex
+
+@file \.py$
+@regex (?<!\w)Type(?!\w)
+@flags g
+@replace type
+@endregex
+@file \.py$
+@regex (?<!\w)Dict(?!\w)
+@flags g
+@replace dict
+@endregex
+@file \.py$
+@regex (?<!\w)List(?!\w)
+@flags g
+@replace list
+@endregex
