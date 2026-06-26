@@ -36,7 +36,6 @@
     "**/icon.ico": true,
     "**/js globals": true,
     "**/map*": true,
-    "**/*File*": true,
     "**/java*": true,
     "**/css*": true,
     "**/mqphp*": true,
