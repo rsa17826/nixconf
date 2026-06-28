@@ -104,7 +104,7 @@
     "editor.lightbulb.enabled": "onCode",
     "editor.linkedEditing": true,
     "multiFormatter.formatterList": [
-      "ms-python.black-formatter",
+      "sagarkarn.ruff-toolkit",
       "rssaromeo.4-to-2-formatter",
       "rssaromeo.4-to-2-formatter",
       "rssaromeo.4-to-2-formatter",

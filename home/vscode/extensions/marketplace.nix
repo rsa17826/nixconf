@@ -294,12 +294,6 @@
               hash = "sha256-dieCzNOIcZiTGu4Mv5zYlG7jLhaEsJR05qbzzzQ7RWc=";
             }
             {
-              name = "black-formatter";
-              publisher = "ms-python";
-              version = "2026.7.11631003";
-              hash = "sha256-9xNbEasO6tzChWXa9Re3UlhHrbiS9KLiEQo5zjeoeag=";
-            }
-            {
               name = "debugpy";
               publisher = "ms-python";
               version = "2026.7.11551014";
