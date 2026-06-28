@@ -443,3 +443,8 @@ $1
 @flags g
 @replace list
 @endregex
+
+@file (?<!\.regex)$
+@regex (?<!\w)armour(?!\w)
+@replace armor
+@endregex

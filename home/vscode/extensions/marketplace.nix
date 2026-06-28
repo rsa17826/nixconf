@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "ruff-toolkit";
+              publisher = "sagarkarn";
+              version = "1.0.2";
+              hash = "sha256-iJJ+Cd7qFMaGLd87E4lfI9U4yvvzDt1H5scz4dzLKBU=";
+            }
+            {
               name = "vscode-autohotkey2-lsp";
               publisher = "thqby";
               version = "3.0.10";

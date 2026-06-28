@@ -238,6 +238,7 @@ in
           typescript
           nodejs
           jpexs # ffdec
+          python314Packages.ruff
           deluged
           calibre
           gh
