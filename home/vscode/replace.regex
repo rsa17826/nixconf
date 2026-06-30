@@ -28,7 +28,7 @@
 @replace #!/usr/bin/env $1
 @endregex
 
-@file \.sh$
+@file \.sh|/[^/.]+$
 @regex #!((?:ba|z)?sh)
 @replace #!/usr/bin/env $1
 @endregex
@@ -429,9 +429,9 @@ $1
 @endregex
 
 @file \.py$
-@regex (?<!\w)Type(?!\w)
+@regex (?<!\w)Type\[
 @flags g
-@replace type
+@replace type[
 @endregex
 @file \.py$
 @regex (?<!\w)Dict(?!\w)
@@ -447,4 +447,10 @@ $1
 @file (?<!\.regex)$
 @regex (?<!\w)armour(?!\w)
 @replace armor
+@endregex
+@regex (?<!\w)item:bomb(?!\w)
+@replace item:bombs
+@endregex
+@regex (?<!\w)item:diamond(?!\w)
+@replace item:diamonds
 @endregex
