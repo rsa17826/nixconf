@@ -392,11 +392,11 @@ $1
 @endregex
 
 
-@name jsonfix_single_quotes
-@file \.jsonc?$
-@regex '([^'\\]*(?:\\.[^'\\]*)*)'
-@replace "$1"
-@endregex
+! @name jsonfix_single_quotes
+! @file \.jsonc?$
+! @regex '([^'\\]*(?:\\.[^'\\]*)*)'
+! @replace "$1"
+! @endregex
 
 @name jsonfix_boolean_true
 @file \.jsonc?$
@@ -418,7 +418,7 @@ $1
 
 @name jsonfix_strip_comments
 @file \.json$
-@regex \/\/[^\n]*|\/\*[\s\S]*?\*\/
+@regex ^ *\/\/[^\n]*|\/\*[\s\S]*?\*\/
 @replace
 @endregex
 
