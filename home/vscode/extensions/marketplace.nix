@@ -195,7 +195,7 @@
               name = "godot-format";
               publisher = "dohe";
               version = "0.2.18";
-              hash = "sha256-r3r/kyDUxjky+OeEGngMenZh5Lyx1scUXxyEej0ut+o=";
+              hash = "sha256-7Um28UWJm8hJuQA5cOaTfz6xHFnSZu1ptGedilUz4Q0=";
             }
             {
               name = "githistory";
