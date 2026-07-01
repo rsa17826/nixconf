@@ -1179,11 +1179,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780228310,
-        "narHash": "sha256-HWV8eptQBKsysqG+LFI5lEhtq/R+2UrP+UJKLSnc+GE=",
+        "lastModified": 1782911478,
+        "narHash": "sha256-O7fWB+mGkP75TJ7sv8RIg7sME9grfq66uLVg6OgAbZg=",
         "owner": "rsa17826",
         "repo": "termbar",
-        "rev": "344147e76a2cb2846ab6fa043faeefb0b522ac19",
+        "rev": "a0b872861b062cc7f685303e25847e2263d8d512",
         "type": "github"
       },
       "original": {
