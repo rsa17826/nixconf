@@ -7,18 +7,18 @@ let
   # Helper function to reduce boilerplate
   buildFromFlake =
     {
-      src, # Pass the input directly (e.g., ext-owoify)
+      src,
       extName,
       extCreator,
-      npmDepsHash, # You still need this, but only when package-lock.json changes
+      npmDepsHash,
       nativeBuildInputs ? [ ],
       buildInputs ? [ ],
       npmInstallFlags ? [ ],
       npmDepsFetcherVersion ? 1,
       dontNpmBuild ? false,
+      forceEmptyCache ? false, # <-- add this
     }:
     let
-      # Extract version from package.json in the source
       pkgJson = builtins.fromJSON (builtins.readFile "${src}/package.json");
       version = pkgJson.version;
 
@@ -30,6 +30,7 @@ let
           npmDepsHash
           npmInstallFlags
           npmDepsFetcherVersion
+          forceEmptyCache # <-- add this
           ;
         preBuild = ''
           rm -rf src/test || true
@@ -173,8 +174,9 @@ in
               src = ext-macro-syntax-highlighter;
               extName = "macro-syntax-highlighter";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-Dsx9bVQlasdPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
+              npmDepsHash = "sha256-NjLiy3WbkhY/c5OsNL/JUBCoyOO4/kxZoeIWU/rdlmg=";
               dontNpmBuild = true;
+              forceEmptyCache = true;
             })
             (buildFromFlake {
               src = ext-vscode-void-color-theme;
