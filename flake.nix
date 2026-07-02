@@ -252,6 +252,9 @@
         nixpkgs = {
           follows = "nixpkgs";
         };
+        flake-utils = {
+          follows = "flake-utils";
+        };
       };
     };
     auto-screenshotter = {

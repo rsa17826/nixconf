@@ -892,6 +892,29 @@
         "type": "github"
       }
     },
+    "macro-recorder": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782996389,
+        "narHash": "sha256-T/JfZJA1xgSkdw1KVNy+7ZMyd51tNpU1G8uy352cS44=",
+        "owner": "rsa17826",
+        "repo": "macro-recorder",
+        "rev": "5be5c9037a91c22eefe52974d3a85afdf3b4a741",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "macro-recorder",
+        "type": "github"
+      }
+    },
     "millennium": {
       "inputs": {
         "millennium-src": "millennium-src",
@@ -1109,6 +1132,7 @@
         "input-display": "input-display",
         "input-manager": "input-manager",
         "key-modifier": "key-modifier",
+        "macro-recorder": "macro-recorder",
         "millennium": "millennium",
         "multi-game-launcher": "multi-game-launcher",
         "nix-index-database": "nix-index-database",
