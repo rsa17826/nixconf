@@ -379,6 +379,7 @@ in
               "WAYLAND_DISPLAY"
               "XDG_CURRENT_DESKTOP"
               "DBUS_SESSION_BUS_ADDRESS"
+              "PATH"
             ];
           };
         };
