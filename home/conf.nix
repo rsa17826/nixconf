@@ -364,6 +364,18 @@ in
             KillMode = "mixed";
           };
         };
+        macro-recorder = {
+          wantedBy = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/macro-recorder";
+            Restart = "on-failure";
+            RestartSec = "5s";
+            KillMode = "mixed";
+          };
+        };
         autocorrect = {
           description = "Autocorrect Daemon";
           wantedBy = [ "graphical-session.target" ];
