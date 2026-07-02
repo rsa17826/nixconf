@@ -63,7 +63,7 @@ function preexec() {
   if [[ -s "$TIMER_PID_FILE" ]]; then
     local old_pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
     [[ -n "$old_pid" ]] && kill -9 "$old_pid" 2>/dev/null
-    rm -f "$TIMER_PID_FILE"
+    /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
   fi
 
   # Claim display ownership — nested shells will also do this, taking priority.
