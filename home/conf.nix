@@ -374,7 +374,7 @@ in
           ];
 
           serviceConfig = {
-            Environment = "PATH=/etc/profiles/per-user/${userConfig.uname}/bin";
+            Environment = "PATH=/etc/profiles/per-user/${userConfig.uname}/bin:/run/current-system/sw/bin/";
             ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/macro-recorder";
             Restart = "on-failure";
             RestartSec = "5s";
