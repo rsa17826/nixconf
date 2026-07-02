@@ -375,6 +375,12 @@ in
             RestartSec = "5s";
             KillMode = "mixed";
           };
+          PassEnvironment = [
+            "DISPLAY"
+            "WAYLAND_DISPLAY"
+            "XDG_CURRENT_DESKTOP"
+            "DBUS_SESSION_BUS_ADDRESS"
+          ];
         };
         autocorrect = {
           description = "Autocorrect Daemon";
