@@ -368,11 +368,13 @@ in
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          path = with pkgs; [
-            xdg-utils
-            vscodium
-          ];
+          # path = with pkgs; [
+          #   xdg-utils
+          #   vscodium
+          # ];
+
           serviceConfig = {
+            Environment = "PATH=/etc/profiles/per-user/${userConfig.uname}/bin:/run/current-system/sw/bin:${pkgs.vscodium}/bin";
             ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/macro-recorder";
             Restart = "on-failure";
             RestartSec = "5s";
