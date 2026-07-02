@@ -217,11 +217,11 @@
     "ext-macro-syntax-highlighter": {
       "flake": false,
       "locked": {
-        "lastModified": 1782995666,
-        "narHash": "sha256-imueCdDmqaMoUwr4yPTacKXznupWj93b0pjvUYSkKA4=",
+        "lastModified": 1782996159,
+        "narHash": "sha256-5z9ylfVU49LbJ67U9R7IPOU5hdFdsgw/P8DeAZPmsi8=",
         "owner": "rsa17826",
         "repo": "macro-syntax-highlighter",
-        "rev": "f28735d2fdca6b95f56dfbae74ac1779e7ffa4ea",
+        "rev": "93d6dcf8aff224d1a6693cc4530d37a670637c2e",
         "type": "github"
       },
       "original": {

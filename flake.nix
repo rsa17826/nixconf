@@ -246,6 +246,14 @@
         };
       };
     };
+    macro-recorder = {
+      url = "github:rsa17826/macro-recorder";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
     auto-screenshotter = {
       url = "github:rsa17826/auto-screenshotter";
       inputs = {
