@@ -368,10 +368,10 @@ in
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          # path = with pkgs; [
-          #   xdg-utils
-          #   vscodium
-          # ];
+          path = with pkgs; [
+            xdg-utils
+            # vscodium
+          ];
 
           serviceConfig = {
             Environment = "PATH=/etc/profiles/per-user/${userConfig.uname}/bin";
@@ -384,7 +384,7 @@ in
               "WAYLAND_DISPLAY"
               "XDG_CURRENT_DESKTOP"
               "DBUS_SESSION_BUS_ADDRESS"
-              "PATH"
+              # "PATH"
             ];
           };
         };
