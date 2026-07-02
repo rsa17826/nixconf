@@ -368,7 +368,7 @@ in
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-
+          path = [ pkgs.xdg-utils ];
           serviceConfig = {
             ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/macro-recorder";
             Restart = "on-failure";
