@@ -454,3 +454,8 @@ $1
 @regex (?<!\w)item:diamond(?!\w)
 @replace item:diamonds
 @endregex
+
+! @file \.py$
+! @regex (?<!\\)(["\]}])([\]}])
+! @replace $1,$2
+! @endregex

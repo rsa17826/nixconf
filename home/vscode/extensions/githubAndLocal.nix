@@ -7,7 +7,7 @@ let
   # Helper function to reduce boilerplate
   buildFromFlake =
     {
-      src, # Pass the input directly (e.g., inputs.ext-owoify)
+      src, # Pass the input directly (e.g., ext-owoify)
       extName,
       extCreator,
       npmDepsHash, # You still need this, but only when package-lock.json changes
@@ -58,6 +58,7 @@ let
         vscodeExtUniqueId = "${extCreator}.${extName}";
       };
     };
+
   # buildLocalEx =
   #   {
   #     name,
@@ -161,34 +162,41 @@ in
     vscodium = {
       profiles = {
         default = {
-          extensions = [
+          extensions = with inputs; [
             (buildFromFlake {
-              src = inputs.ext-vscode-math-on-selected-nums;
+              src = ext-vscode-math-on-selected-nums;
               extName = "math-on-selections";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
             })
             (buildFromFlake {
-              src = inputs.ext-vscode-void-color-theme;
+              src = ext-macro-syntax-highlighter;
+              extName = "macro-syntax-highlighter";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-Dsx9bVQlasdPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
+              dontNpmBuild = true;
+            })
+            (buildFromFlake {
+              src = ext-vscode-void-color-theme;
               extName = "void-theme";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-Dsx9bVQlpDoPnk0enyiYIr+PaTnPimKUhqHQUk6IMQE=";
               dontNpmBuild = true;
             })
             (buildFromFlake {
-              src = inputs.ext-owoify-editor;
+              src = ext-owoify-editor;
               extName = "owoify-editor";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-opTWFuuNgvs97CBGdex8kRuAZMSWBxJj3NIlKwy+ws8=";
             })
             (buildFromFlake {
-              src = inputs.ext-4-to-2-formatter;
+              src = ext-4-to-2-formatter;
               extName = "4-to-2-formatter";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-o7IA+4Kq4j2XD7dpJNje8g4G2KFi6ocsnXyaGSaXB8M=";
             })
             (buildFromFlake {
-              src = inputs.ext-auto-regex;
+              src = ext-auto-regex;
               extName = "auto-regex";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-fACMqwxxsRPoSw06yrSCxJ5cM2oATBVaxegyxk5Nq/Y=";
@@ -199,7 +207,7 @@ in
               buildInputs = with pkgs; [ libsecret ];
             })
             (buildFromFlake {
-              src = inputs.ext-multi-formatter;
+              src = ext-multi-formatter;
               extName = "multi-formatter";
               extCreator = "Jota0222";
               npmDepsHash = "sha256-wWpLlndJnrub7QVskc+jKACETjwv0niVwr6AZjFl1jU=";
@@ -210,7 +218,7 @@ in
               buildInputs = with pkgs; [ libsecret ];
             })
             (buildFromFlake {
-              src = inputs.ext-simple-auto-formatter;
+              src = ext-simple-auto-formatter;
               extName = "simple-auto-formatter";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-Ia7RJ9aHnNYSqHFjPIDCjAuontkDP6mqumo7ord4H/s=";
@@ -222,20 +230,20 @@ in
               buildInputs = with pkgs; [ libsecret ];
             })
             (buildFromFlake {
-              src = inputs.ext-sds;
+              src = ext-sds;
               extName = "simpledatastorage";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
             })
             (buildFromFlake {
-              src = inputs.ext-textreplace;
+              src = ext-textreplace;
               extName = "textreplace";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-SG/vE/ovAc48STJL8v+ACrDZVxQRufI81KO14w2hn98=";
               npmDepsFetcherVersion = 2;
             })
             (buildFromFlake {
-              src = inputs.ext-better-end-line-actions;
+              src = ext-better-end-line-actions;
               extName = "better-end-line-actions";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-lqpv0TAksBoq+hr+KZ6kKhzsxlHxTEh9jQtf92uKI+4=";

@@ -75,7 +75,7 @@ Singleton {
       } else {
         const uname = Quickshell.env("USER")
         if (uname) {
-          place = pathJoin("/home", user, ".config", ns)
+          place = pathJoin("/home", uname, ".config", ns)
         } else {
           console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
         }

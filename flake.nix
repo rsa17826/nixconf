@@ -263,6 +263,10 @@
       url = "github:rsa17826/vscode-void-color-theme";
       flake = false;
     };
+    ext-macro-syntax-highlighter = {
+      url = "github:rsa17826/macro-syntax-highlighter";
+      flake = false;
+    };
     ext-owoify-editor = {
       url = "github:rsa17826/vscodeowotest";
       flake = false;

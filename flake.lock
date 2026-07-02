@@ -214,6 +214,22 @@
         "type": "github"
       }
     },
+    "ext-macro-syntax-highlighter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782995666,
+        "narHash": "sha256-imueCdDmqaMoUwr4yPTacKXznupWj93b0pjvUYSkKA4=",
+        "owner": "rsa17826",
+        "repo": "macro-syntax-highlighter",
+        "rev": "f28735d2fdca6b95f56dfbae74ac1779e7ffa4ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "macro-syntax-highlighter",
+        "type": "github"
+      }
+    },
     "ext-multi-formatter": {
       "flake": false,
       "locked": {
@@ -1076,6 +1092,7 @@
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
         "ext-better-end-line-actions": "ext-better-end-line-actions",
+        "ext-macro-syntax-highlighter": "ext-macro-syntax-highlighter",
         "ext-multi-formatter": "ext-multi-formatter",
         "ext-owoify-editor": "ext-owoify-editor",
         "ext-sds": "ext-sds",
