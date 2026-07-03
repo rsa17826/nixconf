@@ -72,6 +72,7 @@ in
       sysctl = {
         "kernel.yama.ptrace_scope" = 0;
         "kernel.core_pattern" = "|/bin/false";
+        "vm.swappiness" = 10;
       };
     };
 
