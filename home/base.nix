@@ -121,7 +121,7 @@
       };
     };
     system76-scheduler = {
-      enable = true;
+      enable = false;
     };
   };
 }
