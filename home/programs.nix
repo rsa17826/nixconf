@@ -251,7 +251,7 @@ in
           wtype
           cliphist
           # steam
-          millennium-steam
+          # (steam.override { withMillennium = true; })
           losslesscut-bin # video editor
           uwsm
           # typos
@@ -389,6 +389,10 @@ in
     };
   };
   programs = {
+    steam = {
+      enable = true;
+      package = pkgs.millennium-steam;
+    };
     appimage = {
       enable = true;
       binfmt = true;
