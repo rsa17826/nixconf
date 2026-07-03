@@ -38,11 +38,18 @@ remaining=("${url_list[@]}")
 job_id=$(job-save \
   --name "yt-dlp: ${#remaining[@]} URL(s)" \
   --cmd "$(build_resume_cmd "${remaining[@]}")")
-
+ec=0
 for url in "${url_list[@]}"; do
   echo "--- Downloading: $url ---"
 
-  if yt-dlp --progress --cookies-from-browser brave \
+  if yt-dlp --progress \
+    --no-check-certificate --extract-audio \
+    --remote-components ejs:github --paths "$HOME/audio/" \
+    --audio-format mp3 --audio-quality 128k \
+    --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+    --write-thumbnail \
+    -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
+    "$url" || yt-dlp --progress --cookies-from-browser brave \
     --no-check-certificate --extract-audio \
     --remote-components ejs:github --paths "$HOME/audio/" \
     --audio-format mp3 --audio-quality 128k \
@@ -72,8 +79,10 @@ for url in "${url_list[@]}"; do
 
   else
     echo "--- Download failed; $url kept in job ---"
+    ec=1
   fi
 
 done
 
 echo "Finished processing all links."
+exit $ec
