@@ -42,7 +42,7 @@ ec=0
 for url in "${url_list[@]}"; do
   echo "--- Downloading: $url ---"
 
-  if yt-dlp --progress \
+  if yt-dlp --progress -vU \
     --no-check-certificate --extract-audio \
     --remote-components ejs:github --paths "$HOME/audio/" \
     --audio-format mp3 --audio-quality 128k \

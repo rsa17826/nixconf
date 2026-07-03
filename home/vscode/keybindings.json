@@ -4991,11 +4991,6 @@
   },
   { "key": "ctrl+alt+v space", "command": "paste-replaced.paste" },
   {
-    "key": "shift+enter",
-    "command": "python.execSelectionInTerminal",
-    "when": "editorTextFocus && !findInputFocussed && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
-  },
-  {
     "key": "ctrl+shift+u",
     "command": "rust-analyzer.parentModule",
     "when": "editorTextFocus && editorLangId == 'rust'"
@@ -5071,11 +5066,6 @@
     "key": "ctrl+alt+v escape",
     "command": "paste-replaced.interruptTyping",
     "when": "paste-replaced.isTyping"
-  },
-  {
-    "key": "shift+enter",
-    "command": "python.execInREPL",
-    "when": "config.python.REPL.sendToNativeREPL && editorTextFocus && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && editorLangId == 'python'"
   },
   {
     "key": "ctrl+shift+j",
@@ -5508,5 +5498,10 @@
     "key": "ctrl+shift+c",
     "command": "-workbench.action.terminal.openNativeConsole",
     "when": "!isSessionsWindow && !terminalFocus"
+  },
+  {
+    "key": "shift+enter",
+    "command": "-python.execInREPL",
+    "when": "config.python.REPL.sendToNativeREPL && editorTextFocus && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && editorLangId == 'python'"
   }
 ]
