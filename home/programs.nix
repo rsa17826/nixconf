@@ -453,6 +453,7 @@ in
       _7zz # archival tool
       nix-ld # run linux programs
       kitty # terminal emulator
+      at-spi2-core
       # albert
       # keyd # disables capslock and enables numlock
       git-filter-repo

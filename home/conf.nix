@@ -22,6 +22,12 @@ in
   ]
   ++ (listDir ./. (p: ./${p}/conf.nix));
   services = {
+    gnome = {
+      at-spi2-core = {
+        enable = true;
+      };
+    };
+
     udev = {
       extraRules = ''
         KERNEL=="uinput", GROUP="input", MODE="0660"
