@@ -3,26 +3,27 @@
 # Exit on error
 set -e
 
-TARGET_DIR="${2:-.}"
 ARCHIVE="$1"
+TARGET_DIR="${2:-.}"
 
-# 1. Create a unique temporary reference file before extraction
-NEWER_THAN=$(mktemp)
+# Ensure target directory exists
+mkdir -p "$TARGET_DIR"
 
-# Ensure the temp file is cleaned up even if the script crashes
-trap 'rm -f "$NEWER_THAN"' EXIT
+# Convert filename to lowercase to make the extension check case-insensitive
+ARCHIVE_LOWER=$(echo "$ARCHIVE" | tr '[:upper:]' '[:lower:]')
 
-# 2. Extract the first layer
-7zz x "$ARCHIVE" -o"$TARGET_DIR"
+# Check if the file extension matches tar or compressed tar formats
+if [[ "$ARCHIVE_LOWER" == *.tar || "$ARCHIVE_LOWER" == *.tgz || "$ARCHIVE_LOWER" == *.tar.gz ]]; then
+  echo "Tar archive detected. Extracting with 'tar'..."
 
-# 3. Find any .tar files created *after* our timestamp file
-TAR_FILES=$(find "$TARGET_DIR" -mindepth 1 -newer "$NEWER_THAN" -name "*.tar")
+  # Check if it's compressed (.tgz/.tar.gz) or raw (.tar)
+  if [[ "$ARCHIVE_LOWER" == *.tar ]]; then
+    tar -xf "$ARCHIVE" -C "$TARGET_DIR"
+  else
+    tar -xzf "$ARCHIVE" -C "$TARGET_DIR"
+  fi
 
-# 4. If a .tar was found, extract it and clean it up
-if [ -n "$TAR_FILES" ]; then
-  echo "$TAR_FILES" | while IFS= read -r tar_file; do
-    echo "Detected extracted tarball: $tar_file. Extracting..."
-    7zz x "$tar_file" -o"$TARGET_DIR" -y
-    rm "$tar_file"
-  done
+else
+  echo "Non-tar archive detected. Extracting with '7zz'..."
+  7zz x "$ARCHIVE" -o"$TARGET_DIR" -y
 fi
