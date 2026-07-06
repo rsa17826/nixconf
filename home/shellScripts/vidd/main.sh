@@ -42,7 +42,16 @@ job_id=$(job-save \
 for url in "${url_list[@]}"; do
   echo "--- Downloading: $url ---"
 
-  if yt-dlp --progress \
+  if yt-dlp --progress -vU \
+    --no-check-certificate \
+    -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
+    --merge-output-format mp4 \
+    --no-mtime --add-metadata \
+    --remote-components ejs:github --paths "$HOME/videos/" \
+    --audio-format wav --audio-quality 128k \
+    --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
+    -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
+    "$url" || yt-dlp --progress \
     --cookies-from-browser brave \
     --no-check-certificate \
     -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \

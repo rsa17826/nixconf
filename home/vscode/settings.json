@@ -45,7 +45,7 @@
     "**/*pictures*": true,
     "**/*img*": true,
     "**/node_modules": true,
-    // "**/images": true,
+    "**/images": true,
     ".gitattributes": true,
     "**/.foldericon.png": true,
     "VERSION": true,
