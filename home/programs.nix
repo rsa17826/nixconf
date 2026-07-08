@@ -454,6 +454,7 @@ in
       nix-ld # run linux programs
       kitty # terminal emulator
       at-spi2-core
+      ollama
       # albert
       # keyd # disables capslock and enables numlock
       git-filter-repo
