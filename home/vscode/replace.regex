@@ -207,12 +207,6 @@ $1allowUnfree = false;
 @replace RETURN
 @endregex
 
-@name always use -
-@file .
-@regex -
-@replace -
-@endregex
-
 @name admin - ensure source= line exists
 @file \.sh$
 @regex ^(?!# shellcheck source=)([^\n]*)\n(\. admin[^\n]*)$
@@ -263,7 +257,11 @@ $2
 @endregex
 
 @name force real - char
+@file (?<!\.regex)$
 @regex \u2013
+@replace -
+@endregex
+@regex \u2212
 @replace -
 @endregex
 

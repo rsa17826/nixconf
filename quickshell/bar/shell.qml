@@ -1,18 +1,15 @@
-//@ pragma UseQApplication
 import Quickshell
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Io
 
-import QtQuick
-import Quickshell
-import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 Scope {
   Variants {
     model: Quickshell.screens.filter(screen => screen.name === "test_top")
+
     // model: Quickshell.screens.filter(screen => screen.name === "HDMI-A-1")
 
     PanelWindow {
@@ -51,11 +48,19 @@ Scope {
         top: true
       }
       Rectangle {
-        id: _LEFT
+        // TODO remove the a then qmlformat gets fixed in nix
+        id: a_LEFT
 
         anchors {
           horizontalCenter: parent.left
           verticalCenter: parent.verticalCenter
+        }
+        CountdownTimer {
+          anchors {
+            left: root.left
+            leftMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
         }
         // ClipHist {
         //   id: clipboardLogic
@@ -67,7 +72,7 @@ Scope {
         // }
       }
       Rectangle {
-        id: _CENTER
+        id: a_CENTER
 
         anchors {
           horizontalCenter: parent.horizontalCenter
@@ -95,7 +100,7 @@ Scope {
         }
       }
       Rectangle {
-        id: _RIGHT
+        id: a_RIGHT
 
         anchors {
           horizontalCenter: parent.right

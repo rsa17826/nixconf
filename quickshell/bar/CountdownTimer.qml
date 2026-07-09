@@ -1,0 +1,506 @@
+// CountdownTimer.qml
+// Click to set a target date/time. Counts down until it, turning orange on
+// the day of the event and shading from orange -> red in the final 3 hours.
+import Quickshell
+import Quickshell.Io
+import QtQuick
+import "owoify.js" as Owo
+
+Item {
+  id: root
+
+  property var c: {
+    "bg": "#0d0d1e",
+    "border": "#1e1e40",
+    "divider": "#1e1e40",
+    "hovered": "#12122c",
+    "muted": "#30324a",
+    "text": "#c4cce8",
+    "normal": "#4d6fff"   // more than a day away
+    ,
+    "orange": "#e8974d"   // same calendar day, > 3h left
+    ,
+    "red": "#e84d4d"      // 0h left
+    ,
+    "expired": "#ff3b3b",
+    "accent": "#4d6fff",
+    "buttonBg": "#1e1e40"
+  }
+
+  // ── Draft state used while editing in the popup ─────────────────
+  property var draft: ({
+      y: 2026,
+      mo: 1,
+      d: 1,
+      h: 0,
+      mi: 0
+    })
+
+  // ── Persisted state ────────────────────────────────────────────
+  // 0 = no timer set
+  property real targetTimestamp: 0
+
+  function adjustDraft(field, delta, step) {
+    const dr = Object.assign({}, root.draft)
+    const s = step || 1
+    if (field === "y") {
+      dr.y += delta
+    } else if (field === "mo") {
+      let m = dr.mo - 1 + delta
+      let y = dr.y
+      while (m < 0) {
+        m += 12
+        y -= 1
+      }
+      while (m > 11) {
+        m -= 12
+        y += 1
+      }
+      dr.mo = m + 1
+      dr.y = y
+    } else if (field === "d") {
+      const maxD = daysInMonth(dr.y, dr.mo)
+      let d = dr.d + delta
+      if (d < 1)
+        d = maxD
+      if (d > maxD)
+        d = 1
+      dr.d = d
+    } else if (field === "h") {
+      let h = (dr.h + delta) % 24
+      if (h < 0)
+        h += 24
+      dr.h = h
+    } else if (field === "mi") {
+      // snap to the nearest step multiple first, so a draft loaded from an
+      // arbitrary time (e.g. "now" = :47) always lands on 0/5/10/... after
+      // the first click, instead of drifting to 52/57/2/...
+      const snapped = Math.round(dr.mi / s) * s
+      let mi = (snapped + delta * s) % 60
+      if (mi < 0)
+        mi += 60
+      dr.mi = mi
+    }
+    // keep day in range if month/year changed elsewhere
+    const maxD = daysInMonth(dr.y, dr.mo)
+    if (dr.d > maxD)
+      dr.d = maxD
+    root.draft = dr
+  }
+  function clearTimer() {
+    root.targetTimestamp = 0
+    saveTimer()
+    picker.visible = false
+  }
+  function commitDraft() {
+    const dr = root.draft
+    root.targetTimestamp = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime()
+    saveTimer()
+    picker.visible = false
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────────
+  function configPath() {
+    const ns = "qsbar"
+    const cfghome = Quickshell.env("XDG_CONFIG_HOME")
+    if (cfghome)
+      return pathJoin(cfghome, ns)
+    const home = Quickshell.env("HOME")
+    if (home)
+      return pathJoin(home, ".config", ns)
+    const uname = Quickshell.env("USER")
+    if (uname)
+      return pathJoin("/home", uname, ".config", ns)
+    console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
+    return ""
+  }
+  function daysInMonth(y, mo) {
+    return new Date(y, mo, 0).getDate()
+  }
+  function formatCountdown() {
+    if (root.targetTimestamp <= 0)
+      return "set timer"
+    const left = msLeft()
+    if (left <= 0)
+      return "expired"
+    const totalSeconds = Math.floor(left / 1000)
+    const days = Math.floor(totalSeconds / 86400)
+    const hours = Math.floor(totalSeconds / 3600) % 24
+    const mins = Math.floor(totalSeconds / 60) % 60
+    const secs = totalSeconds % 60
+    if (days > 0)
+      return `${days}d ${hours}h ${mins}m`
+    if (hours > 0)
+      return `${hours}h ${mins}m ${secs}s`
+    return `${mins}m ${secs}s`
+  }
+  function isSameDay() {
+    if (root.targetTimestamp <= 0)
+      return false
+    const t = new Date(root.targetTimestamp)
+    const n = clock.date
+    return t.getFullYear() === n.getFullYear() && t.getMonth() === n.getMonth() && t.getDate() === n.getDate()
+  }
+  function lerpColor(a, b, t) {
+    const tt = Math.max(0, Math.min(1, t))
+    const pa = parseInt(a.slice(1), 16)
+    const pb = parseInt(b.slice(1), 16)
+    const ar = (pa >> 16) & 255, ag = (pa >> 8) & 255, ab = pa & 255
+    const br = (pb >> 16) & 255, bg = (pb >> 8) & 255, bb = pb & 255
+    const rr = Math.round(ar + (br - ar) * tt)
+    const rg = Math.round(ag + (bg - ag) * tt)
+    const rb = Math.round(ab + (bb - ab) * tt)
+    return "#" + ((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1)
+  }
+
+  // ── Countdown math ───────────────────────────────────────────────
+  function msLeft() {
+    return root.targetTimestamp - clock.date.getTime()
+  }
+
+  // Load the draft either from the currently-set timer, or default to
+  // "one hour from now", whenever the popup is opened.
+  function openPicker() {
+    const base = root.targetTimestamp > 0 ? new Date(root.targetTimestamp) : new Date(clock.date.getTime() + 3600000)
+    root.draft = {
+      y: base.getFullYear(),
+      mo: base.getMonth() + 1,
+      d: base.getDate(),
+      h: base.getHours(),
+      mi: Math.round(base.getMinutes() / 5) * 5 % 60
+    }
+    picker.visible = true
+  }
+  function pad(n) {
+    return n < 10 ? "0" + n : "" + n
+  }
+  function pathJoin(...p) {
+    return p.map(e => e.replace(/\/$/, '')).join("/").replace(/\/$/, '')
+  }
+  function saveTimer() {
+    jsonAdapter.targetTimestamp = root.targetTimestamp
+    timerFile.writeAdapter()
+  }
+  function timerColor() {
+    if (root.targetTimestamp <= 0)
+      return c.muted
+    const left = msLeft()
+    if (left <= 0)
+      return blink.on ? c.expired : c.red
+    const hoursLeft = left / 3600000
+    if (!isSameDay())
+      return c.normal
+    if (hoursLeft > 3)
+      return c.orange
+    return lerpColor(c.orange, c.red, 1 - hoursLeft / 3)
+  }
+
+  implicitHeight: pill.implicitHeight
+  implicitWidth: pill.implicitWidth
+
+  // ── Ticking clock (drives re-evaluation every second) ────────────
+  SystemClock {
+    id: clock
+
+    precision: SystemClock.Seconds
+  }
+  // Blink toggle used only while expired
+  Timer {
+    id: blinkTimer
+
+    interval: 600
+    repeat: true
+    running: root.targetTimestamp > 0 && root.msLeft() <= 0
+
+    onTriggered: blink.on = !blink.on
+  }
+  QtObject {
+    id: blink
+
+    property bool on: true
+  }
+
+  // ── Persistence ───────────────────────────────────────────────────
+  // Writes happen explicitly from saveTimer() (called by commitDraft/
+  // clearTimer) rather than from a property-change watcher — watching
+  // targetTimestamp and gating on a "_loaded" flag set inside that same
+  // watcher is a footgun: QML change signals don't fire when the loaded
+  // value equals the property's default (0 == 0), so the flag never
+  // flips and every future write gets silently skipped.
+  FileView {
+    id: timerFile
+
+    path: root.pathJoin(root.configPath(), "countdown-timer.json")
+    preload: true
+    printErrors: false
+    watchChanges: false
+
+    onLoadFailed: error => {
+      root.targetTimestamp = 0
+    }
+
+    JsonAdapter {
+      id: jsonAdapter
+
+      property real targetTimestamp: 0
+
+      onTargetTimestampChanged: root.targetTimestamp = targetTimestamp
+    }
+  }
+
+  // ── Status pill ────────────────────────────────────────────────
+  Rectangle {
+    id: pill
+
+    color: "transparent"
+    implicitHeight: 20
+    implicitWidth: label.implicitWidth + 20
+
+    MouseArea {
+      anchors.fill: parent
+      cursorShape: Qt.PointingHandCursor
+
+      onClicked: picker.visible ? (picker.visible = false) : root.openPicker()
+    }
+    Text {
+      id: label
+
+      color: root.timerColor()
+      font.pixelSize: 11
+      text: Owo.owo("⏰ " + root.formatCountdown())
+
+      anchors {
+        left: parent.left
+        verticalCenter: parent.verticalCenter
+      }
+    }
+  }
+
+  // ── Click-away dismiss layer ──────────────────────────────────────
+  PanelWindow {
+    id: pickerDismiss
+
+    color: "transparent"
+    exclusionMode: ExclusionMode.Ignore
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
+    visible: picker.visible
+
+    anchors {
+      bottom: true
+      left: true
+      right: true
+      top: true
+    }
+    MouseArea {
+      anchors.fill: parent
+
+      onClicked: picker.visible = false
+    }
+  }
+
+  // ── Date/time picker popup ────────────────────────────────────────
+  PanelWindow {
+    id: picker
+
+    color: "transparent"
+    exclusionMode: ExclusionMode.Ignore
+    implicitHeight: pickerColumn.implicitHeight + 12
+    implicitWidth: 210
+    screen: Quickshell.screens.find(s => s.name === "test_bottom")
+    visible: false
+
+    margins {
+      left: 60
+      top: 4
+    }
+    anchors {
+      left: true
+      top: true
+    }
+    Rectangle {
+      anchors.fill: parent
+      border.color: c.border
+      border.width: 1
+      color: c.bg
+      radius: 6
+    }
+    Column {
+      id: pickerColumn
+
+      spacing: 6
+
+      anchors {
+        fill: parent
+        margins: 8
+      }
+      Text {
+        color: c.accent
+        font.bold: true
+        font.pixelSize: 9
+        text: Owo.owo("Set Countdown")
+      }
+      Rectangle {
+        color: c.divider
+        implicitHeight: 1
+        implicitWidth: parent.width
+      }
+      Repeater {
+        model: [
+          {
+            key: "y",
+            label: "Year",
+            step: 1
+          },
+          {
+            key: "mo",
+            label: "Month",
+            step: 1
+          },
+          {
+            key: "d",
+            label: "Day",
+            step: 1
+          },
+          {
+            key: "h",
+            label: "Hour",
+            step: 1
+          },
+          {
+            key: "mi",
+            label: "Min",
+            step: 5
+          }
+        ]
+
+        delegate: Row {
+          spacing: 6
+          width: pickerColumn.width
+
+          Text {
+            color: c.text
+            font.pixelSize: 10
+            text: Owo.owo(modelData.label)
+            width: 34
+          }
+          Rectangle {
+            id: minusBtn
+
+            color: minusArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 18
+            implicitWidth: 18
+            radius: 4
+
+            Text {
+              anchors.centerIn: parent
+              color: c.text
+              font.pixelSize: 10
+              text: "-"
+            }
+            MouseArea {
+              id: minusArea
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: root.adjustDraft(modelData.key, -1, modelData.step)
+            }
+          }
+          Text {
+            color: c.text
+            font.pixelSize: 10
+            horizontalAlignment: Text.AlignHCenter
+            text: {
+              const v = root.draft[modelData.key]
+              return modelData.key === "mo" || modelData.key === "d" || modelData.key === "h" || modelData.key === "mi" ? root.pad(v) : "" + v
+            }
+            width: 32
+          }
+          Rectangle {
+            id: plusBtn
+
+            color: plusArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 18
+            implicitWidth: 18
+            radius: 4
+
+            Text {
+              anchors.centerIn: parent
+              color: c.text
+              font.pixelSize: 10
+              text: "+"
+            }
+            MouseArea {
+              id: plusArea
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
+            }
+          }
+        }
+      }
+      Rectangle {
+        color: c.divider
+        implicitHeight: 1
+        implicitWidth: parent.width
+      }
+      Row {
+        spacing: 8
+        width: parent.width
+
+        Rectangle {
+          id: setBtn
+
+          color: setArea.containsMouse ? c.hovered : c.buttonBg
+          implicitHeight: 22
+          implicitWidth: (parent.width - 8) / 2
+          radius: 4
+
+          Text {
+            anchors.centerIn: parent
+            color: c.accent
+            font.pixelSize: 10
+            text: Owo.owo("Set")
+          }
+          MouseArea {
+            id: setArea
+
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+
+            onClicked: root.commitDraft()
+          }
+        }
+        Rectangle {
+          id: clearBtn
+
+          color: clearArea.containsMouse ? c.hovered : c.buttonBg
+          implicitHeight: 22
+          implicitWidth: (parent.width - 8) / 2
+          radius: 4
+
+          Text {
+            anchors.centerIn: parent
+            color: c.red
+            font.pixelSize: 10
+            text: Owo.owo("Clear")
+          }
+          MouseArea {
+            id: clearArea
+
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+
+            onClicked: root.clearTimer()
+          }
+        }
+      }
+    }
+  }
+}

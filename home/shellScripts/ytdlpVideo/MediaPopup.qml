@@ -58,9 +58,9 @@ PanelWindow {
             anchors.fill: parent
 
             onClicked: {
-              activeMode = "Video"
-              dlProcess.running = true
-              root.visible = false
+              activeMode = "Video";
+              dlProcess.running = true;
+              root.visible = false;
             }
           }
         }
@@ -81,9 +81,9 @@ PanelWindow {
             anchors.fill: parent
 
             onClicked: {
-              activeMode = "Audio"
-              dlProcess.running = true
-              root.visible = false
+              activeMode = "Audio";
+              dlProcess.running = true;
+              root.visible = false;
             }
           }
         }
