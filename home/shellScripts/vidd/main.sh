@@ -1,3 +1,7 @@
+#!/nix/store/zh1ijdhb6gng1509b1zrilb6xlzx60j6-bash-5.3p9/bin/bash
+
+export PATH="$PATH"
+
 #!/usr/bin/env bash
 
 # Accept URLs as arguments, or fall back to clipboard
@@ -38,6 +42,8 @@ remaining=("${url_list[@]}")
 job_id=$(job-save \
   --name "yt-dlp: ${#remaining[@]} URL(s)" \
   --cmd "$(build_resume_cmd "${remaining[@]}")")
+
+er=0
 
 for url in "${url_list[@]}"; do
   echo "--- Downloading: $url ---"
@@ -84,8 +90,11 @@ for url in "${url_list[@]}"; do
 
   else
     echo "--- Download failed; $url kept in job ---"
+    er=1
   fi
 
 done
 
 echo "Finished processing all links."
+
+exit "$er"
