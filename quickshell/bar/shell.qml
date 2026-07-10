@@ -52,13 +52,13 @@ Scope {
         id: a_LEFT
 
         anchors {
-          horizontalCenter: parent.left
+          left: parent.left
+          leftMargin: 10
           verticalCenter: parent.verticalCenter
         }
         CountdownTimer {
           anchors {
             left: root.left
-            leftMargin: 12
             verticalCenter: parent.verticalCenter
           }
         }
