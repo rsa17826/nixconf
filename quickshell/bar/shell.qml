@@ -53,7 +53,7 @@ Scope {
 
         anchors {
           left: parent.left
-          leftMargin: 10
+          leftMargin: 5
           verticalCenter: parent.verticalCenter
         }
         CountdownTimer {
