@@ -258,6 +258,7 @@ in
       enable = true;
       defaultFonts = {
         sansSerif = [
+          "Hack Nerd Font Propo"
           "JetBrainsMono Nerd Font Propo"
           "Noto Sans CJK JP"
           "Noto Sans CJK KR"
@@ -265,6 +266,7 @@ in
           "Noto Sans CJK TC"
         ];
         serif = [
+          "Hack Nerd Font Propo"
           "JetBrainsMono Nerd Font Propo"
           "Noto Serif CJK JP"
           "Noto Serif CJK KR"
@@ -272,6 +274,7 @@ in
           "Noto Serif CJK TC"
         ];
         monospace = [
+          "Hack Nerd Font Mono"
           "JetBrainsMono Nerd Font Mono"
           "Noto Sans Mono CJK JP"
           "Noto Sans Mono CJK KR"
