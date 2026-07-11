@@ -312,7 +312,6 @@ in
           zenity
           libnotify
           simplex-chat-desktop # simple x chat
-          copyq # clipboard manager
           # openshot-qt # vid editor
           # pay-respects
           imagemagick
