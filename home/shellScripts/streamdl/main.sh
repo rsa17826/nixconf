@@ -47,7 +47,7 @@ while IFS= read -r channel || [ -n "$channel" ]; do
     --download-archive "$ARCHIVE_FILE" \
     --output "$CREATOR_DIR/%(title)s [%(id)s].%(ext)s" \
     --playlist-end 10 \
-    --format "bestvideo+bestaudio/best" \
+    --format "bestvideo[height=720]+bestaudio/bestvideo[height>720]+bestaudio/bestvideo+bestaudio/best" \
     --merge-output-format mp4 \
     --postprocessor-args "ffmpeg:-c:v libx264 -crf 28 -preset fast -c:a aac -b:a 128k" \
     --no-warnings
