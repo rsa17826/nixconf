@@ -812,7 +812,7 @@
   "totalTypeScript.hideBasicTips": true,
   "terminal.integrated.initialHint": false,
   "[kotlin]": {
-    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
+    "editor.defaultFormatter": "rssaromeo.auto-regex"
   },
   "[kdl]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter"
@@ -899,5 +899,11 @@
   "python.languageServer": "Default",
   // "workbench.editor.tabSizing": "shrink",
   "workbench.editor.useModal": "off",
-  "workbench.editor.alwaysShowEditorActions": true
+  "workbench.editor.alwaysShowEditorActions": true,
+  "[groovy]": {
+    "editor.defaultFormatter": "rssaromeo.auto-regex"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "rssaromeo.auto-regex"
+  }
 }
