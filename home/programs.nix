@@ -131,7 +131,10 @@ let
 in
 {
   nixpkgs = {
-    overlays = [ inputs.millennium.overlays.default ];
+    overlays = [
+      inputs.millennium.overlays.default
+      inputs.helium-flake.overlays.default
+    ];
   };
   virtualisation = {
     docker = {
@@ -388,6 +391,14 @@ in
     };
   };
   programs = {
+    helium = {
+      enable = true;
+      flags = [
+        "--remote-debugging-port=9222"
+        "--password-store=basic"
+        "--enable-blink-features=MiddleClickAutoscroll"
+      ];
+    };
     steam = {
       enable = true;
       package = pkgs.millennium-steam;
@@ -443,9 +454,9 @@ in
       speechd # tts
       neovim # tui text editor
       wget # cmd dl util
-      (brave.override {
-        commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-      }) # web browser
+      # (brave.override {
+      #   commandLineArgs = "--remote-debugging-port=9222 --password-store=basic --enable-blink-features=MiddleClickAutoscroll";
+      # }) # web browser
       nixfmt # nix language formatter
       git # git is required
       # kdePackages.kget
