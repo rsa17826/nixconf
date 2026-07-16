@@ -397,6 +397,7 @@ in
         "--remote-debugging-port=9222"
         "--password-store=basic"
         "--enable-blink-features=MiddleClickAutoscroll"
+        "--enable-features=MiddleClickAutoscroll"
       ];
     };
     steam = {

@@ -12,7 +12,7 @@ hl.define_submap("launcher", function()
 	end
 
 	m.bind("v", launch("codium"))
-	m.bind("b", launch("brave"))
+	m.bind("b", launch("helium"))
 	m.bind("p", launch("kitty pwashare start"))
 	m.bind("g", launch("godot-newest"))
 	m.bind("s", launch("winspy"))

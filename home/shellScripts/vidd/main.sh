@@ -50,7 +50,7 @@ for url in "${url_list[@]}"; do
 
   if yt-dlp --progress -vU \
     --no-check-certificate \
-    -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
+    -f "bestvideo[height=720]+bestaudio/bestvideo[height>720]+bestaudio/bestvideo+bestaudio/best" \
     --merge-output-format mp4 \
     --no-mtime --add-metadata \
     --remote-components ejs:github --paths "$HOME/videos/" \
@@ -58,9 +58,9 @@ for url in "${url_list[@]}"; do
     --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
     -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
     "$url" || yt-dlp --progress \
-    --cookies-from-browser brave \
+    --cookies-from-browser chromium:"$HOME/.config/net.imput.helium" \
     --no-check-certificate \
-    -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
+    -f "bestvideo[height=720]+bestaudio/bestvideo[height>720]+bestaudio/bestvideo+bestaudio/best" \
     --merge-output-format mp4 \
     --no-mtime --add-metadata \
     --remote-components ejs:github --paths "$HOME/videos/" \

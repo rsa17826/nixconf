@@ -49,7 +49,7 @@ for url in "${url_list[@]}"; do
     --sponsorblock-remove "sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic" \
     --write-thumbnail \
     -o "%(fulltitle)s - by %(channel)s.%(ext)s" \
-    "$url" || yt-dlp --progress --cookies-from-browser brave \
+    "$url" || yt-dlp --progress --cookies-from-browser chromium:"$HOME/.config/net.imput.helium" \
     --no-check-certificate --extract-audio \
     --remote-components ejs:github --paths "$HOME/audio/" \
     --audio-format mp3 --audio-quality 128k \
