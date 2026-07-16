@@ -376,6 +376,7 @@
 
               inputs.sops-nix.nixosModules.sops
               inputs.copyparty.nixosModules.default
+              inputs.helium-flake.nixosModules.default
               # nix-index-database.nixosModules.nix-index
               nix-index-database.nixosModules.default
               home-manager.nixosModules.home-manager
