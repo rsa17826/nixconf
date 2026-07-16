@@ -165,10 +165,10 @@ in
         default = {
           extensions = with inputs; [
             (buildFromFlake {
-              src = ext-vscode-math-on-selected-nums;
+              src = pybrace;
               extName = "pybrace";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
+              npmDepsHash = "sha256-PAuJopxgmSUpio3z4wQSrSgKU7O+6A9EepWFwaqzoD4=";
             })
             (buildFromFlake {
               src = ext-vscode-math-on-selected-nums;
