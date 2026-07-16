@@ -110,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784163431,
-        "narHash": "sha256-6iX3pTg0czKw+EyVTiBsH1ec8mxAXMLx52Q+0bUFfcU=",
+        "lastModified": 1784244260,
+        "narHash": "sha256-9K1prcNU4qas666lT5E98EMznBW/AzLomrPNNuy9XY4=",
         "owner": "rsa17826",
         "repo": "autocorrect",
-        "rev": "319be72113789dd915a2a010d9c6026ff36b3ea8",
+        "rev": "922d5dbe06c8eb2a2f576b64583290b61672b31b",
         "type": "github"
       },
       "original": {
@@ -1065,6 +1065,22 @@
         "type": "github"
       }
     },
+    "pybrace": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784244425,
+        "narHash": "sha256-dx+ti0L6dC5Tp6C73HjmjibLEYYpnDRwL3ThLw0B7p0=",
+        "owner": "rsa17826",
+        "repo": "pybrace",
+        "rev": "f689a8d4324993a215a2fc664486e06b4cae187a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "pybrace",
+        "type": "github"
+      }
+    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -1136,6 +1152,7 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_2",
         "perkins": "perkins",
+        "pybrace": "pybrace",
         "quickshell": "quickshell",
         "rofi-blocks-main": "rofi-blocks-main",
         "sops-nix": "sops-nix",

@@ -166,6 +166,12 @@ in
           extensions = with inputs; [
             (buildFromFlake {
               src = ext-vscode-math-on-selected-nums;
+              extName = "pybrace";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
+            })
+            (buildFromFlake {
+              src = ext-vscode-math-on-selected-nums;
               extName = "math-on-selections";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";

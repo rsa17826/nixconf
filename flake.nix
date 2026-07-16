@@ -314,6 +314,10 @@
       url = "github:rsa17826/textreplace-vscode-extension";
       flake = false;
     };
+    pybrace = {
+      url = "github:rsa17826/pybrace";
+      flake = false;
+    };
     ext-better-end-line-actions = {
       url = "github:rsa17826/fixed-line-actions-vscode-extension";
       flake = false;
