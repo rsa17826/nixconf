@@ -113,15 +113,15 @@ hl.window_rule({
 	float = true,
 })
 
--- Brave: Save As → float
+-- helium: Save As → float
 hl.window_rule({
-	match = { class = "^brave-browser$", title = "^Save As$" },
+	match = { class = "^helium-browser$", title = "^Save As$" },
 	float = true,
 })
 
--- Brave: Save File dialog → float, centered, large
+-- helium: Save File dialog → float, centered, large
 hl.window_rule({
-	match = { class = "^brave$", title = "^Save File$" },
+	match = { class = "^helium$", title = "^Save File$" },
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
@@ -160,9 +160,9 @@ hl.window_rule({
 	fullscreen = true,
 })
 
--- Brave browser → workspace 2
+-- helium browser → workspace 2
 hl.window_rule({
-	match = { class = "^brave-browser$" },
+	match = { class = "^helium-browser$" },
 	workspace = "2",
 	-- workspace = { 1, 2 },
 })
