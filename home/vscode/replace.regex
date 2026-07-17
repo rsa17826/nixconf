@@ -495,3 +495,8 @@ $1
 @regex \{kpminus([^}]*)\}
 @replace {kp-$1}
 @endregex
+
+@file \.nix$
+@regex \bxorg\.(?=\w)
+@replace
+@endregex

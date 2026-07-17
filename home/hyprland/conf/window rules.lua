@@ -153,6 +153,29 @@ hl.window_rule({
 	opacity = "0.8 override",
 	render_unfocused = true,
 })
+hl.window_rule({
+	match = { class = "^macro-recorder$" },
+	float = true,
+	size = { "420", "100" },
+	move = { "1500", "0" },
+	dim_around = false,
+	no_initial_focus = true,
+	pin = true,
+	suppress_event = "activatefocus activate",
+	stay_focused = false,
+	allows_input = false,
+	decorate = false,
+	focus_on_activate = false,
+	no_anim = true,
+	no_blur = true,
+	no_dim = true,
+	no_focus = true,
+	no_follow_mouse = true,
+	no_shadow = true,
+	opaque = false,
+	opacity = "0.8 override",
+	render_unfocused = true,
+})
 
 -- Beatblock: fullscreen
 hl.window_rule({
