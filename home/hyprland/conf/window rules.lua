@@ -114,14 +114,15 @@ hl.window_rule({
 })
 
 -- helium: Save As → float
-hl.window_rule({
-	match = { class = "^helium-browser$", title = "^Save As$" },
-	float = true,
-})
+-- hl.window_rule({
+-- 	match = { class = "^helium$", title = "^Save As$" },
+-- 	float = true,
+-- })
 
 -- helium: Save File dialog → float, centered, large
 hl.window_rule({
-	match = { class = "^helium$", title = "^Save File$" },
+	match = { class = "^xdg-desktop-portal-gtk$" },
+	-- match = { class = "^helium$", title = "^Save File$" },
 	float = true,
 	center = true,
 	size = { "monitor_w*0.8", "monitor_h*0.8" },
@@ -185,7 +186,7 @@ hl.window_rule({
 
 -- helium browser → workspace 2
 hl.window_rule({
-	match = { class = "^helium-browser$" },
+	match = { class = "^helium$" },
 	workspace = "2",
 	-- workspace = { 1, 2 },
 })
