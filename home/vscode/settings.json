@@ -100,7 +100,7 @@
   "editor.detectIndentation": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[python]": {
-    "editor.defaultFormatter": "Jota0222.multi-formatter",
+    "editor.defaultFormatter": "rssaromeo.auto-regex",
     "editor.tabSize": 2,
     "editor.guides.bracketPairs": true,
     "editor.guides.bracketPairsHorizontal": true,

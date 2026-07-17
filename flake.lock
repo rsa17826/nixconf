@@ -1068,11 +1068,11 @@
     "pybrace": {
       "flake": false,
       "locked": {
-        "lastModified": 1784247103,
-        "narHash": "sha256-UezUkLpJCvRusvr4woJvIzQjeHkFe+UrSBcisshQiCk=",
+        "lastModified": 1784247190,
+        "narHash": "sha256-SIWOdr7jUD4Svr50DbpHNsGagjKEvVNK1VerngyPn2U=",
         "owner": "rsa17826",
         "repo": "pybrace",
-        "rev": "d94aa2bdfe27c5922e0305485cbaea1a7ba47d68",
+        "rev": "fbfd68624dff1f4c8c45b8eb1fe3e06a4d0aa5ee",
         "type": "github"
       },
       "original": {
