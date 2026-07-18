@@ -14,8 +14,10 @@ if [ $# -gt 0 ]; then
 else
   nix flake metadata --json | jq -r --rawfile excluded ./flake.lock.lock '
   ($excluded | split("\n") | map(select(length > 0))) as $list
-  | .locks.nodes.root.inputs | keys[]
+  | .locks as $lock
+  | $lock.nodes.root.inputs | keys[]
   | select(. as $k | $list | index($k) | not)
+  | select(($lock.nodes[.] | .locked.owner) != "rsa17826")
 ' | xargs -d '\n' nix flake update --option access-tokens "github.com=$(gh auth token)"
 fi
 
