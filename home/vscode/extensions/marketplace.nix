@@ -6,12 +6,6 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "jsdoc-generator";
-              publisher = "crystal-spider";
-              version = "2.3.4";
-              hash = "sha256-k5UrsaNuksVd5v51kIqS9rOX02wFeYOWp/omCXjYroQ=";
-            }
-            {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
               version = "1.0.2";
