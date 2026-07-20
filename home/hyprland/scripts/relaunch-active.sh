@@ -14,7 +14,7 @@ sleep 0.3
   set -a
   # shellcheck disable=SC1090
   . "$ENV_FILE"
-  exec "$BIN"
+  TERMBAR_ENABLED=0 exec "$BIN"
 ) &
 
 rm -f "$ENV_FILE"

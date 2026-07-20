@@ -17,6 +17,21 @@ void main() {
 
   // 3. Ensure values don't go below zero
   c = max(c, 0.0);
+  float max_val = max(max(c.r, c.g), c.b);
+  float min_val = min(min(c.r, c.g), c.b);
+
+  // Saturation is the difference between the strongest and weakest channel
+  float saturation = max_val - min_val;
+
+  // "Color Strength" considers both how bright and how saturated the color is
+  float color_strength = max_val * saturation;
+
+  // Scale down the channels based on how strong/vivid the color is
+  float reduction = pow(color_strength * 0.9, 2.0);
+  c -= vec3(reduction);
+
+  // Ensure values don't go below zero
+  c = max(c, vec3(0.0));
 
   gl_FragColor = vec4(c, px.a);
 }
