@@ -56,7 +56,7 @@ Scope {
           leftMargin: 5
           verticalCenter: parent.verticalCenter
         }
-        CountdownTimer {
+        CountdownTimerRow {
           anchors {
             left: root.left
             verticalCenter: parent.verticalCenter

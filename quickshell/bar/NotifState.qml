@@ -269,7 +269,7 @@ Singleton {
         // TODO
         stayVisibleFor: 5000,
         // Treat as already expired if arriving within reload window or while center is open
-        expired: (Date.now() - loadTime) < 30 || root.centerOpen,
+        expired: (Date.now() - loadTime) < 300 || root.centerOpen,
         dismissed: false,
         _expire: expireFn
       }

@@ -1,6 +1,10 @@
 // CountdownTimer.qml
 // Click to set a target date/time. Counts down until it, turning orange on
 // the day of the event and shading from orange -> red in the final 3 hours.
+//
+// This component is now "dumb": it owns no file/persistence, just draft
+// editing + display for a single (timerId, targetTimestamp) pair. The
+// parent (CountdownTimerRow) owns the list and writes it to disk.
 import Quickshell
 import Quickshell.Io
 import QtQuick
@@ -35,10 +39,16 @@ Item {
       h: 0,
       mi: 0
     })
-
-  // ── Persisted state ────────────────────────────────────────────
-  // 0 = no timer set
   property real targetTimestamp: 0
+
+  // ── Identity + external state (owned by the parent list) ─────────
+  property var timerId: 0
+
+  signal cleared(var id)
+
+  // Emitted instead of writing files directly. Parent listens and
+  // updates/persists its canonical list.
+  signal committed(var id, real ts)
 
   function adjustDraft(field, delta, step) {
     const dr = Object.assign({}, root.draft)
@@ -89,31 +99,18 @@ Item {
   }
   function clearTimer() {
     root.targetTimestamp = 0
-    saveTimer()
+    root.cleared(root.timerId)
     picker.visible = false
   }
   function commitDraft() {
     const dr = root.draft
-    root.targetTimestamp = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime()
-    saveTimer()
+    const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime()
+    root.targetTimestamp = ts
+    root.committed(root.timerId, ts)
     picker.visible = false
   }
 
   // ── Helpers ──────────────────────────────────────────────────────
-  function configPath() {
-    const ns = "qsbar"
-    const cfghome = Quickshell.env("XDG_CONFIG_HOME")
-    if (cfghome)
-      return pathJoin(cfghome, ns)
-    const home = Quickshell.env("HOME")
-    if (home)
-      return pathJoin(home, ".config", ns)
-    const uname = Quickshell.env("USER")
-    if (uname)
-      return pathJoin("/home", uname, ".config", ns)
-    console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
-    return ""
-  }
   function daysInMonth(y, mo) {
     return new Date(y, mo, 0).getDate()
   }
@@ -174,13 +171,6 @@ Item {
   function pad(n) {
     return n < 10 ? "0" + n : "" + n
   }
-  function pathJoin(...p) {
-    return p.map(e => e.replace(/\/$/, '')).join("/").replace(/\/$/, '')
-  }
-  function saveTimer() {
-    jsonAdapter.targetTimestamp = root.targetTimestamp
-    timerFile.writeAdapter()
-  }
   function timerColor() {
     if (root.targetTimestamp <= 0)
       return c.muted
@@ -218,34 +208,6 @@ Item {
     id: blink
 
     property bool on: true
-  }
-
-  // ── Persistence ───────────────────────────────────────────────────
-  // Writes happen explicitly from saveTimer() (called by commitDraft/
-  // clearTimer) rather than from a property-change watcher — watching
-  // targetTimestamp and gating on a "_loaded" flag set inside that same
-  // watcher is a footgun: QML change signals don't fire when the loaded
-  // value equals the property's default (0 == 0), so the flag never
-  // flips and every future write gets silently skipped.
-  FileView {
-    id: timerFile
-
-    path: root.pathJoin(root.configPath(), "countdown-timer.json")
-    preload: true
-    printErrors: false
-    watchChanges: false
-
-    onLoadFailed: error => {
-      root.targetTimestamp = 0
-    }
-
-    JsonAdapter {
-      id: jsonAdapter
-
-      property real targetTimestamp: 0
-
-      onTargetTimestampChanged: root.targetTimestamp = targetTimestamp
-    }
   }
 
   // ── Status pill ────────────────────────────────────────────────
