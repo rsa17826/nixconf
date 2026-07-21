@@ -318,6 +318,10 @@
       url = "github:rsa17826/pybrace";
       flake = false;
     };
+    jsdocGen-vsc-ext = {
+      url = "github:rsa17826/jsdocGen-vsc-ext";
+      flake = false;
+    };
     ext-better-end-line-actions = {
       url = "github:rsa17826/fixed-line-actions-vscode-extension";
       flake = false;

@@ -165,6 +165,12 @@ in
         default = {
           extensions = with inputs; [
             (buildFromFlake {
+              src = jsdocGen-vsc-ext;
+              extName = "jsdocGen";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-4TQh+9zAE0lYmhMCt4foV2uTRQ1lyQZwsiw1rrqOyp0=";
+            })
+            (buildFromFlake {
               src = pybrace;
               extName = "pybrace";
               extCreator = "rssaromeo";

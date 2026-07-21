@@ -867,6 +867,22 @@
         "type": "github"
       }
     },
+    "jsdocGen-vsc-ext": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784658186,
+        "narHash": "sha256-OzSWU7SrKDD7XiYC4TPxwFSKNg42YvfLnzeOqWydPR4=",
+        "owner": "rsa17826",
+        "repo": "jsdocGen-vsc-ext",
+        "rev": "94bc2c97dd5411de4f6171a9d428dde43f0a8759",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "jsdocGen-vsc-ext",
+        "type": "github"
+      }
+    },
     "key-modifier": {
       "inputs": {
         "flake-utils": [
@@ -1145,6 +1161,7 @@
         "hyprland": "hyprland",
         "input-display": "input-display",
         "input-manager": "input-manager",
+        "jsdocGen-vsc-ext": "jsdocGen-vsc-ext",
         "key-modifier": "key-modifier",
         "macro-recorder": "macro-recorder",
         "millennium": "millennium",
