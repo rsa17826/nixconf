@@ -277,6 +277,26 @@ hl.window_rule({
 	size = { "monitor_w", "28" },
 	move = { "0", "0" },
 })
+
+hl.window_rule({
+	match = { class = "at.yrlf.wl_mirror", title = "clone_active" },
+	float = true,
+	pin = true,
+	monitor = "HDMI-A-1",
+	size = { "monitor_w", "monitor_h" },
+	move = { "0", "0" },
+	dim_around = false,
+	stay_focused = false,
+	opacity = "1 override",
+	no_anim = true,
+	no_blur = true,
+	no_dim = true,
+	no_shadow = true,
+	render_unfocused = true,
+	focus_on_activate = true,
+	decorate = false,
+})
+
 for i = 1, 100 do
 	hl.workspace_rule({ workspace = tostring(i), monitor = "test_bottom", enabled = true, persistent = true })
 end
