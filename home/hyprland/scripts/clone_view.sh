@@ -13,7 +13,7 @@ fi
 SCREEN_W=1920
 SCREEN_H=1080
 MON_X=2000
-
+MON_ID=$(hyprctl monitors -j | jq -r '.[] | select(.name=="HDMI-A-1")|.id')
 # 2. Select region with slurp
 GEOM=$(slurp -f "%x %y %w %h")
 [ -z "$GEOM" ] && exit 1
@@ -49,6 +49,7 @@ sed \
   -e "s|vec2 size = .*|vec2 size = vec2($SIZE_W, $SIZE_H);|" \
   -e "s|vec2 dispSize = .*|vec2 dispSize = vec2($DISP_W, $DISP_H);|" \
   -e "s|vec2 dispOffset = .*|vec2 dispOffset = vec2($DISP_OFF_X, $DISP_OFF_Y);|" \
+  -e "s|int MON = -1|int MON = $MON_ID|" \
   "$SHADER_TEMPLATE" >"$SHADER_RUNTIME"
 
 # 6. Apply
