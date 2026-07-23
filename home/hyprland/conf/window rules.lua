@@ -365,12 +365,12 @@ hl.window_rule({
 	match = { class = "^Mathbreakers$" },
 	opacity = "1 override",
 })
--- hl.window_rule({
--- 	name = "asdd",
--- 	match = { class = "^xdman-Main$" },
--- 	workspace = "8 silent",
--- 	-- workspace = {1,8, "silent"},
--- })
+hl.window_rule({
+	name = "asdd",
+	match = { class = "^xdman-Main$" },
+	workspace = "8 silent",
+	-- workspace = {1,8, "silent"},
+})
 
 -- hl.window_rule({
 -- 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
