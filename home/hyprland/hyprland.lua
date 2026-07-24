@@ -125,6 +125,11 @@ hl.config({
 		fullscreen_on_one_column = true,
 		focus_fit_method = 1,
 	},
+
+	ecosystem = {
+		no_update_news = true,
+		no_donation_nag = true,
+	},
 })
 -- ─── Per-device input ──────────────────────────────────────────────────────
 hl.device({
