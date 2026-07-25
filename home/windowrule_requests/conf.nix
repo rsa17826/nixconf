@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   userConfig,
   ...
@@ -40,7 +39,7 @@
     users = {
       "${userConfig.uname}" = {
         packages = [
-          (lib.writeShellScriptBin ./request_windowrule.sh)
+          (pkgs.writeShellScriptBin ./request_windowrule.sh)
         ];
       };
     };
