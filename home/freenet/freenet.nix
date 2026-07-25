@@ -14,7 +14,7 @@ rustPlatform.buildRustPackage rec {
     owner = "freenet";
     repo = "freenet-core";
     tag = "v${version}";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # nix build will tell you the real one on first try
+    hash = "sha256-d9TUivzXhPNGzmVQ7dlxvJbJlcaUJ4NXxE/Nfj9ofgM="; # nix build will tell you the real one on first try
   };
 
   cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB="; # same here — replace after first failed build
