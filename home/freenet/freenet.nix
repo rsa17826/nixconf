@@ -8,7 +8,7 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "freenet-core";
-  version = "0.1.14";
+  version = "0.2.105";
 
   src = fetchFromGitHub {
     owner = "freenet";
