@@ -3,21 +3,20 @@
   userConfig,
   ...
 }:
+let
+  pythonEnv = pkgs.python314.withPackages (ps: [ ps.pygobject3 ]);
+in
 {
   systemd = {
     user = {
       services = {
-        macro-recorder = {
+        windowrule-daemon = {
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          path = with pkgs; [
-            python314Packages.pygobject3
-            libnotify
-          ];
-
+          path = [ pkgs.libnotify ];
           serviceConfig = {
-            ExecStart = ./windowrule_daemon.py;
+            ExecStart = "${pythonEnv}/bin/python3 ${./windowrule_daemon.py}";
             Restart = "on-failure";
             RestartSec = "5s";
             KillMode = "mixed";
