@@ -17,7 +17,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-d9TUivzXhPNGzmVQ7dlxvJbJlcaUJ4NXxE/Nfj9ofgM="; # nix build will tell you the real one on first try
   };
 
-  cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB="; # same here — replace after first failed build
+  cargoHash = "sha256-IuwC+GHsULHHmABSA6J7FcRCCM8T/v45PsbYx5SQf+I="; # same here — replace after first failed build
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ openssl ];
