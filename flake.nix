@@ -322,6 +322,10 @@
       url = "github:rsa17826/jsdocGen-vsc-ext";
       flake = false;
     };
+    line-sorter-vsc-ext = {
+      url = "github:rsa17826/line-sorter-vsc-ext";
+      flake = false;
+    };
     ext-better-end-line-actions = {
       url = "github:rsa17826/fixed-line-actions-vscode-extension";
       flake = false;

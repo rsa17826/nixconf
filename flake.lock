@@ -906,6 +906,22 @@
         "type": "github"
       }
     },
+    "line-sorter-vsc-ext": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784980440,
+        "narHash": "sha256-Cm1ve5QIxHenB4D4TEudSAPqVzmtDRu0J3/QivwDWlc=",
+        "owner": "rsa17826",
+        "repo": "line-sorter-vsc-ext",
+        "rev": "af489a73b6bc7ba7ae356bb46ba699dd6559ad38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "line-sorter-vsc-ext",
+        "type": "github"
+      }
+    },
     "macro-recorder": {
       "inputs": {
         "flake-utils": [
@@ -1163,6 +1179,7 @@
         "input-manager": "input-manager",
         "jsdocGen-vsc-ext": "jsdocGen-vsc-ext",
         "key-modifier": "key-modifier",
+        "line-sorter-vsc-ext": "line-sorter-vsc-ext",
         "macro-recorder": "macro-recorder",
         "millennium": "millennium",
         "multi-game-launcher": "multi-game-launcher",

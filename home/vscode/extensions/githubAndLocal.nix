@@ -165,6 +165,12 @@ in
         default = {
           extensions = with inputs; [
             (buildFromFlake {
+              src = line-sorter-vsc-ext;
+              extName = "line-sorter";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-6FbRWBGhpncN4U38jCZtsY9CaS3E4bnHwdtUtacWMQI=";
+            })
+            (buildFromFlake {
               src = jsdocGen-vsc-ext;
               extName = "jsdocGen";
               extCreator = "rssaromeo";
