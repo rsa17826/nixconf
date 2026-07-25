@@ -355,9 +355,6 @@ in
     };
   };
   services = {
-    freenet = {
-      enable = true;
-    };
     tumbler = {
       enable = true;
     };
