@@ -174,7 +174,7 @@ in
           (pkgFromInp "auto-screenshotter" "default")
           (pkgFromInp "macro-recorder" "default")
           (pkgFromInp "gowoify" "default")
-          (pkgs.callPackage ./freenet-core/freenet-core.nix)
+          (pkgs.callPackage ./freenet-core/freenet-core.nix { })
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
@@ -188,6 +188,7 @@ in
           (pkgFromInp "freenet-core" "default")
           python313Packages.wsgidav
           steam-run-free
+          fluffychat
           docker
           nixd # nix language server
           (pkgs.buildGoModule {
