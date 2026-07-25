@@ -306,6 +306,7 @@ in
           texlivePackages.cascadiamono-otf
           lua-language-server
           gpu-screen-recorder # screen recorder
+          psmisc
           lutris-free
           faugus-launcher
           # thunar # wiztree
