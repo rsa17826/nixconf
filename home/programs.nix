@@ -130,26 +130,6 @@ let
   #   )
 in
 {
-  systemd = {
-    services = {
-      freenet-core = {
-        description = "Freenet Core (Rust) daemon";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
-
-        serviceConfig = {
-          ExecStart = "${freenet-core}/bin/freenet network run";
-          User = "freenet-core";
-          Group = "freenet-core";
-          WorkingDirectory = "/var/lib/freenet-core";
-          StateDirectory = "freenet-core";
-          Restart = "on-failure";
-          RestartSec = 5;
-        };
-      };
-    };
-  };
-
   nixpkgs = {
     overlays = [
       inputs.millennium.overlays.default
@@ -162,16 +142,7 @@ in
     };
   };
   users = {
-    groups = {
-      freenet-core = { };
-    };
     users = {
-      freenet-core = {
-        isSystemUser = true;
-        group = "freenet-core";
-        home = "/var/lib/freenet-core";
-        createHome = true;
-      };
       "${userConfig.uname}" = {
         shell = pkgs.zsh;
         isNormalUser = true;
