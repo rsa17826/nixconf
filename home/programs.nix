@@ -174,6 +174,7 @@ in
           (pkgFromInp "auto-screenshotter" "default")
           (pkgFromInp "macro-recorder" "default")
           (pkgFromInp "gowoify" "default")
+          (pkgs.callPackage ./freenet-core/freenet-core.nix)
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
