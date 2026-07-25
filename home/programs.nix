@@ -6,8 +6,6 @@
   ...
 }:
 let
-  freenet-core = pkgs.callPackage ./freenet/freenet.nix { };
-
   browserSelectorPkg = pkgFromInp "browser-selector" "default";
 
   browserSelectorDesktop = pkgs.makeDesktopItem {
@@ -215,6 +213,7 @@ in
           inotify-info
           bandwhich
           #
+          (pkgFromInp "freenet-core" "default")
           python313Packages.wsgidav
           steam-run-free
           docker

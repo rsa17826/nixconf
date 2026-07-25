@@ -273,6 +273,14 @@
         };
       };
     };
+    freenet-core = {
+      url = "github:freenet/freenet-core";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
     # ext
     ext-vscode-math-on-selected-nums = {
       url = "github:rsa17826/vscode-ext---math-on-selected-nums";
