@@ -38,7 +38,7 @@ in
     users = {
       "${userConfig.uname}" = {
         packages = [
-          (pkgs.writeShellScriptBin "request_windowrule" ./request_windowrule.sh)
+          (pkgs.writeShellScriptBin "request-windowrule" (builtins.readFile ./request_windowrule.sh))
         ];
       };
     };

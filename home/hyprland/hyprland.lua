@@ -156,47 +156,6 @@ hl.animation({ leaf = "global", enabled = false, speed = 10, bezier = "default" 
 local config_dir = os.getenv("XDG_CONFIG_HOME") .. "/hypr/"
 local conf_path = "conf/"
 
--- ─── Window-rule request daemon ────────────────────────────────────────────
--- ~/.config/hypr is read-only, so the daemon keeps all of its writable
--- state (incoming requests, approved.json, granted rule files) under
--- XDG_DATA_HOME instead -- see WINDOWRULES_DIR in windowrule_daemon.py.
---
--- Any program can request a window rule be loaded by running:
---   ~/.local/share/hypr-windowrules/request_windowrule.sh /path/to/rule.lua
--- (that script itself just needs to be somewhere executable/writable --
--- it doesn't have to live under ~/.config/hypr either)
---
--- windowrule_daemon.py hashes the file, checks approved.json, and either
--- silently re-applies a previously-granted rule, silently blocks a
--- previously-denied one, or asks you via a notification (Grant/Deny/Ignore
--- for now). Granted rules are symlinked into <data_dir>/active/, which we
--- load below with dofile() -- not require()/auto_require(), since those
--- only ever look inside the read-only conf/ tree.
-local xdg_data_home = os.getenv("XDG_DATA_HOME") or (os.getenv("HOME") .. "/.local/share")
-local windowrules_data_dir = os.getenv("WINDOWRULES_DIR") or (xdg_data_home .. "/hypr-windowrules")
-local windowrules_active_dir = windowrules_data_dir .. "/active"
-
--- Prefer running the daemon via the included systemd --user unit
--- (windowrule-daemon.service) instead of relying on this; it's just a
--- fallback to make sure it's alive if you haven't set that up yet.
-os.execute(
-	"pgrep -f windowrule_daemon.py >/dev/null || "
-		.. "nohup python3 "
-		.. windowrules_data_dir
-		.. "/windowrule_daemon.py >/dev/null 2>&1 &"
-)
-
-do
-	local h = io.popen('find "' .. windowrules_active_dir .. '" -name "*.lua" 2>/dev/null')
-	if h then
-		local res = h:read("*a")
-		h:close()
-		for file in string.gmatch(res, "([^%\n]+)") do
-			dofile(file)
-		end
-	end
-end
-
 -- Function to auto-require
 local function auto_require(dir)
 	-- Use 'find' to get all .lua files in the directory recursively
