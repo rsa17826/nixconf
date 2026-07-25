@@ -17,7 +17,9 @@ in
           path = [
             pkgs.libnotify
           ];
-          GI_TYPELIB_PATH = "${pkgs.libnotify}/lib/girepository-1.0";
+          environment = {
+            GI_TYPELIB_PATH = "${pkgs.libnotify}/lib/girepository-1.0";
+          };
           serviceConfig = {
             ExecStart = "${pythonEnv}/bin/python3 ${./windowrule_daemon.py}";
             Restart = "on-failure";
