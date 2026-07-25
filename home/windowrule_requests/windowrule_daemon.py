@@ -38,10 +38,16 @@ gi.require_version("Notify", "0.7")
 from gi.repository import Notify, GLib # noqa: E402
 
 HOME = os.path.expanduser("~")
-BASE_DIR = os.path.join(HOME, ".config", "windowrule_requests")
+
+# ~/.config/hypr is read-only, so nothing writable (requests dir, db,
+# rule symlinks) can live under it. Everything the daemon writes goes to
+# XDG_DATA_HOME instead. Override with WINDOWRULES_DIR if you want it
+# somewhere else.
+XDG_DATA_HOME = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share"))
+BASE_DIR = os.getenv("WINDOWRULES_DIR", os.path.join(XDG_DATA_HOME, "hypr-windowrules"))
 INCOMING_DIR = os.path.join(BASE_DIR, "incoming")
 DB_FILE = os.path.join(BASE_DIR, "approved.json")
-RULES_DIR = os.path.join(HOME, ".config", "windowrule_requests/conf", "windowrules")
+RULES_DIR = os.path.join(BASE_DIR, "active")
 DENIED = "DENIED"
 POLL_INTERVAL = 1.0 # seconds
 
