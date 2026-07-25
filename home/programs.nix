@@ -185,6 +185,7 @@ in
           bandwhich
           #
           (pkgFromInp "freenet-core" "default")
+          freenet-core
           python313Packages.wsgidav
           steam-run-free
           docker
