@@ -1,53 +1,4 @@
 #!/usr/bin/env python3
-"""
-windowrule_daemon.py
-
-Watches a FIFO at $WINDOWRULES_DIR/requests.fifo (default:
-
-$XDG_DATA_HOME/hypr-windowrules/requests.fifo, i.e.
-~/.local/share/hypr-windowrules/requests.fifo) for requests, one per
-line: the absolute path to a .lua file that some program wants
-Hyprland to load as a window-rule module. Event-driven via
-GLib.io_add_watch -- no polling. The daemon opens the FIFO O_RDWR
-(even though it only reads) so it always holds a phantom writer open;
-this means the pipe never sees EOF and any number of short-lived
-writers (see request_windowrule.sh) can open/write/close without the
-daemon needing to reopen anything.
-
-There is exactly ONE trust database: conf/windowrule_requests/
-approved_hashes.json in your nixconf repo (WR_DIR below), keyed by a
-stable per-source-path filename -> sha256 (or the sentinel "DENIED").
-This is the same file check_windowrule_hashes.py reads at
-`home-manager switch` time, so the daemon and the rebuild-time check
-never disagree about what's approved. (An earlier version of this
-daemon kept its own separate trust db under XDG_DATA_HOME -- don't do
-that, it can drift out of sync with approved_hashes.json and cause
-silent auto-grants/blocks that don't match what's actually in git.)
-
-Flow per request:
-  1. Hash the target file's contents (sha256).
-  2. Look up this source path's slot in approved_hashes.json:
-       - same hash as before, and not DENIED -> auto-grant, no notification.
-       - hash stored as DENIED -> auto-ignore, small low-priority notice.
-       - unknown path, or hash changed since last decision -> ask via
-         a notification with Grant / Deny / Ignore-for-now actions.
-
-  3. On Grant: write the file's content directly into
-     conf/windowrule_requests/<slot>.lua (default; override with
-     WINDOWRULE_DIR) and record its hash in approved_hashes.json in the
-     same directory, then hyprctl reload so it's live immediately. No
-     staging dir, no separate approve script. You still need to git
-     add/commit approved_hashes.json + the new .lua file for it to
-     survive the next `home-manager switch` pulling a fresh checkout.
-     On Deny: record DENIED in approved_hashes.json, remove the live
-     file, reload.
-     On Ignore for now: don't touch approved_hashes.json at all, just
-     remove the live file for this request slot so nothing is
-     half-applied. You'll be asked again next time.
-
-Run this as a long-lived process (systemd --user service, see
-windowrule-daemon.service).
-"""
 
 import hashlib
 import json
@@ -75,15 +26,6 @@ WR_DIR = os.getenv(
   os.path.join(HOME, "nixconf", "home", "hyprland", "conf", "windowrule_requests"),
 )
 APPROVED_HASHES_FILE = os.path.join(WR_DIR, "approved_hashes.json")
-
-# check_windowrule_hashes.py still exists for hand-authored files you
-# drop in conf/windowrule_requests/_pending/ yourself (outside the
-# notification flow). Granting/denying here also re-runs it so any of
-# those get reconciled at the same time, and to pick up hyprctl reload.
-CHECK_SCRIPT = os.getenv(
-  "WINDOWRULE_CHECK_SCRIPT",
-  os.path.join(HOME, "nixconf", "home", "hyprland", "scripts", "check_windowrule_hashes.py"),
-)
 
 DENIED = "DENIED"
 
@@ -129,23 +71,6 @@ def save_hashes(hashes):
   os.replace(tmp, APPROVED_HASHES_FILE)
 
 
-def run_check_script():
-  # Best-effort: reconciles any hand-authored _pending/ files and
-  # gives us a single place that also does the hyprctl reload.
-  try:
-    subprocess.run(
-      [sys.executable, CHECK_SCRIPT, WR_DIR],
-      check=False,
-      stdout=subprocess.DEVNULL,
-      stderr=subprocess.DEVNULL,
-    )
-
-  except OSError:
-    pass
-
-  reload_hyprland()
-
-
 def reload_hyprland():
   try:
     subprocess.run(["hyprctl", "reload"], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -177,6 +102,9 @@ def apply_grant(path):
   dest = live_file_path(path)
   filename = os.path.basename(dest)
   try:
+    if os.path.islink(dest) or os.path.exists(dest):
+      os.remove(dest)
+
     with open(path, "rb") as src:
       content = src.read()
 
@@ -185,17 +113,24 @@ def apply_grant(path):
 
 
   except OSError as e:
-    notify_simple("windowrule request: write failed", f"{path}\n{e}", urgency="critical")
+    notify_simple("windowrule request: link failed", f"{path}\n{e}", urgency="critical")
+    return
+
+  try:
+    new_hash = sha256_of(path)
+
+  except OSError as e:
+    notify_simple("windowrule request: hash failed", f"{path}\n{e}", urgency="critical")
     return
 
   hashes = load_hashes()
-  hashes[filename] = hashlib.sha256(content).hexdigest()
+  hashes[filename] = new_hash
   save_hashes(hashes)
-  run_check_script()
+  reload_hyprland()
 
   notify_simple(
     "Window-rule granted and active",
-    f"{dest}\ngit add/commit approved_hashes.json + {filename}\nto keep it live across rebuilds",
+    f"{dest} -> {path}",
     urgency="normal",
   )
 
@@ -204,7 +139,7 @@ def revoke(path, mark_denied):
   dest = live_file_path(path)
   filename = os.path.basename(dest)
   try:
-    if os.path.exists(dest):
+    if os.path.islink(dest) or os.path.exists(dest):
       os.remove(dest)
 
 
@@ -219,7 +154,7 @@ def revoke(path, mark_denied):
     del hashes[filename]
     save_hashes(hashes)
 
-  run_check_script()
+  reload_hyprland()
 
 
 def notify_simple(title, body, urgency="normal"):
