@@ -156,24 +156,6 @@ hl.animation({ leaf = "global", enabled = false, speed = 10, bezier = "default" 
 local config_dir = os.getenv("XDG_CONFIG_HOME") .. "/hypr/"
 local conf_path = "conf/"
 
--- ─── Window-rule request daemon ────────────────────────────────────────────
--- Any program can request a window rule be loaded by running:
---   ~/.config/hypr/windowrule_requests/request_windowrule.sh /path/to/rule.lua
--- windowrule_daemon.py hashes the file, checks approved.json, and either
--- silently re-applies a previously-granted rule, silently blocks a
--- previously-denied one, or asks you via a notification (Grant/Deny/Ignore
--- for now). Granted rules are symlinked into conf/windowrules/, which
--- auto_require() below already picks up.
--- Prefer running this via the included systemd --user unit
--- (windowrule-daemon.service) instead of the line below; this os.execute
--- fallback just makes sure it's alive if you haven't set that up yet.
-os.execute(
-	"pgrep -f windowrule_daemon.py >/dev/null || "
-		.. "nohup python3 "
-		.. config_dir
-		.. "windowrule_requests/windowrule_daemon.py >/dev/null 2>&1 &"
-)
-
 -- Function to auto-require
 local function auto_require(dir)
 	-- Use 'find' to get all .lua files in the directory recursively

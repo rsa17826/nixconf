@@ -45,6 +45,13 @@ RULES_DIR = os.path.join(HOME, ".config", "windowrule_requests/conf", "windowrul
 DENIED = "DENIED"
 POLL_INTERVAL = 1.0 # seconds
 
+# PyGObject does not keep a Notification alive on its own once add_action()
+# is set up -- if nothing holds a Python reference to it, it gets garbage
+# collected before the ActionInvoked D-Bus signal comes back, and the
+# on_action callback silently never fires. Keep every notification with
+# pending actions referenced here until it's closed/handled.
+_PENDING_NOTIFICATIONS = {}
+
 os.makedirs(INCOMING_DIR, exist_ok=True)
 os.makedirs(RULES_DIR, exist_ok=True)
 
@@ -91,12 +98,7 @@ def rules_link_path(path):
 
 def reload_hyprland():
   try:
-    subprocess.run(
-      ["hyprctl", "reload"],
-      check=False,
-      stdout=subprocess.DEVNULL,
-      stderr=subprocess.DEVNULL,
-    )
+    subprocess.run(["hyprctl", "reload"], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
   except FileNotFoundError:
     pass
@@ -158,8 +160,15 @@ def prompt_and_handle(path, new_hash, old_hash, db):
   n = Notify.Notification.new(title, body)
   n.set_urgency(1)
 
+  # Keyed by id() of the notification object; see _PENDING_NOTIFICATIONS
+  # comment above for why this is necessary.
+  key = id(n)
+  _PENDING_NOTIFICATIONS[key] = n
+
+  def cleanup():
+    _PENDING_NOTIFICATIONS.pop(key, None)
+
   def on_action(notification, action, user_data=None):
-    print(action)
     if action == "grant":
       db[path] = new_hash
       save_db(db)
@@ -176,6 +185,12 @@ def prompt_and_handle(path, new_hash, old_hash, db):
 
     notification.close()
 
+  def on_closed(notification):
+    # Covers the case where the notification is dismissed/expired
+    # without an action being clicked, so it doesn't leak forever.
+    cleanup()
+
+  n.connect("closed", on_closed)
   n.add_action("grant", "Grant", on_action, None)
   n.add_action("deny", "Deny", on_action, None)
   n.add_action("ignore", "Ignore for now", on_action, None)
@@ -209,11 +224,7 @@ def handle_request_file(req_path, db):
     new_hash = sha256_of(target)
 
   except OSError as e:
-    notify_simple(
-      "Window-rule request: could not read file",
-      f"{target}\n{e}",
-      urgency="critical",
-    )
+    notify_simple("Window-rule request: could not read file", f"{target}\n{e}", urgency="critical")
     return
 
   old_hash = db.get(target)
@@ -227,11 +238,7 @@ def handle_request_file(req_path, db):
     # was denied before; if content also unchanged we can't tell
     # (DENIED doesn't store a hash) so we still just block quietly,
     # with a low-priority heads-up.
-    notify_simple(
-      "Window-rule request blocked",
-      f"{target}\n(previously denied)",
-      urgency="low",
-    )
+    notify_simple("Window-rule request blocked", f"{target}\n(previously denied)", urgency="low")
     return
 
   prompt_and_handle(target, new_hash, old_hash, db)
