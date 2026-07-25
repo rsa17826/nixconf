@@ -2,25 +2,36 @@
 """
 windowrule_daemon.py
 
-Watches ~/.config/hypr/windowrule_requests/incoming/ for request files.
-Each request file's content is a single line: the absolute path to a .lua
-file that some program wants Hyprland to load as a window-rule module.
+Watches a FIFO at $WINDOWRULES_DIR/requests.fifo (default:
+
+$XDG_DATA_HOME/hypr-windowrules/requests.fifo, i.e.
+~/.local/share/hypr-windowrules/requests.fifo) for requests, one per
+line: the absolute path to a .lua file that some program wants
+Hyprland to load as a window-rule module. Event-driven via
+GLib.io_add_watch -- no polling. The daemon opens the FIFO O_RDWR
+(even though it only reads) so it always holds a phantom writer open;
+this means the pipe never sees EOF and any number of short-lived
+writers (see request_windowrule.sh) can open/write/close without the
+daemon needing to reopen anything.
 
 Flow per request:
-  1. Read the target path, delete the request file.
-  2. Hash the target file's contents (sha256).
-  3. Look up the path in the trust database (approved.json):
+  1. Hash the target file's contents (sha256).
+  2. Look up the path in the trust database ($WINDOWRULES_DIR/approved.json):
        - same hash as before, and not DENIED -> auto-grant, no notification.
        - hash stored as DENIED -> auto-ignore, small low-priority notice.
        - unknown path, or hash changed since last decision -> ask via
          a notification with Grant / Deny / Ignore-for-now actions.
 
-  4. On Grant: symlink the file into conf/windowrules/ (already picked up
-     by the existing auto_require() in hyprland.lua), remember the hash,
-     and hyprctl reload.
-     On Deny: remember hash as DENIED, remove any existing symlink.
-     On Ignore for now: do nothing persistent, remove any existing
-     symlink for this request slot so the rule isn't half-applied.
+  3. On Grant: copy the file's content into the nixconf repo's
+     conf/windowrule_requests/_pending/ dir (default; override with
+     WINDOWRULE_PENDING_DIR). This does NOT make the rule live -- it
+     still needs approve_windowrule.py + git commit + a rebuild before
+     check_windowrule_hashes.py will actually activate it. That keeps
+     runtime-granted rules going through the same git-tracked
+     hash-approval gate as declaratively-added ones.
+     On Deny: remember hash as DENIED, remove any staged copy.
+     On Ignore for now: do nothing persistent, remove any staged copy
+     for this request slot so it isn't half-applied.
 
 Run this as a long-lived process (systemd --user service, see
 windowrule-daemon.service).
@@ -29,9 +40,9 @@ windowrule-daemon.service).
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import sys
-import time
 import gi
 
 gi.require_version("Notify", "0.7")
@@ -39,17 +50,26 @@ from gi.repository import Notify, GLib # noqa: E402
 
 HOME = os.path.expanduser("~")
 
-# ~/.config/hypr is read-only, so nothing writable (requests dir, db,
-# rule symlinks) can live under it. Everything the daemon writes goes to
-# XDG_DATA_HOME instead. Override with WINDOWRULES_DIR if you want it
+# ~/.config/hypr is read-only, so ephemeral runtime state (the incoming
+# request queue, and this daemon's own path->hash trust table) lives
+# under XDG_DATA_HOME. Override with WINDOWRULES_DIR if you want it
 # somewhere else.
 XDG_DATA_HOME = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share"))
 BASE_DIR = os.getenv("WINDOWRULES_DIR", os.path.join(XDG_DATA_HOME, "hypr-windowrules"))
-INCOMING_DIR = os.path.join(BASE_DIR, "incoming")
+FIFO_PATH = os.path.join(BASE_DIR, "requests.fifo")
 DB_FILE = os.path.join(BASE_DIR, "approved.json")
-RULES_DIR = os.path.join(BASE_DIR, "active")
+
+# Granted rules are NOT written under BASE_DIR anymore. Instead they're
+# copied into the nixconf repo's _pending dir -- the same directory
+# check_windowrule_hashes.py / approve_windowrule.py already watch --
+# so a runtime grant here still requires an explicit
+# approve_windowrule.py + git commit before it goes live on next
+# `home-manager switch`. Override with WINDOWRULE_PENDING_DIR.
+PENDING_DIR = os.getenv(
+  "WINDOWRULE_PENDING_DIR",
+  os.path.join(HOME, "nixconf", "home", "hyprland", "conf", "windowrule_requests", "_pending"),
+)
 DENIED = "DENIED"
-POLL_INTERVAL = 1.0 # seconds
 
 # PyGObject does not keep a Notification alive on its own once add_action()
 # is set up -- if nothing holds a Python reference to it, it gets garbage
@@ -58,8 +78,18 @@ POLL_INTERVAL = 1.0 # seconds
 # pending actions referenced here until it's closed/handled.
 _PENDING_NOTIFICATIONS = {}
 
-os.makedirs(INCOMING_DIR, exist_ok=True)
-os.makedirs(RULES_DIR, exist_ok=True)
+os.makedirs(BASE_DIR, exist_ok=True)
+os.makedirs(PENDING_DIR, exist_ok=True)
+
+
+def ensure_fifo():
+  if os.path.exists(FIFO_PATH):
+    if not stat.S_ISFIFO(os.stat(FIFO_PATH).st_mode):
+      raise RuntimeError(f"{FIFO_PATH} exists and is not a FIFO -- remove it manually")
+
+    return
+
+  os.mkfifo(FIFO_PATH, mode=0o600)
 
 
 def load_db():
@@ -98,8 +128,8 @@ def slot_name(path):
   return "req_" + hashlib.sha256(path.encode("utf-8")).hexdigest()[:16] + ".lua"
 
 
-def rules_link_path(path):
-  return os.path.join(RULES_DIR, slot_name(path))
+def pending_copy_path(path):
+  return os.path.join(PENDING_DIR, slot_name(path))
 
 
 def reload_hyprland():
@@ -111,30 +141,36 @@ def reload_hyprland():
 
 
 def apply_grant(path):
-  link = rules_link_path(path)
+  # Granting here no longer makes the rule live immediately -- it copies
+  # the content into the nixconf _pending dir. It only actually loads
+  # once you run approve_windowrule.py on it, commit, and
+  # `home-manager switch` (check_windowrule_hashes.py enforces that gate).
+  dest = pending_copy_path(path)
   try:
-    if os.path.islink(link) or os.path.exists(link):
-      os.remove(link)
+    with open(path, "rb") as src, open(dest, "wb") as dst:
+      dst.write(src.read())
 
-    os.symlink(path, link)
 
   except OSError as e:
-    notify_simple("windowrule request: link failed", f"{path}\n{e}", urgency="critical")
+    notify_simple("windowrule request: copy failed", f"{path}\n{e}", urgency="critical")
     return
 
-  reload_hyprland()
+  notify_simple(
+    "Window-rule copied to nixconf",
+    f"{dest}\nRun: approve_windowrule.py {os.path.basename(dest)}\nthen git commit + home-manager switch",
+    urgency="normal",
+  )
 
 
 def revoke(path):
-  link = rules_link_path(path)
-  if os.path.islink(link) or os.path.exists(link):
-    try:
-      os.remove(link)
-      reload_hyprland()
+  dest = pending_copy_path(path)
+  try:
+    if os.path.exists(dest):
+      os.remove(dest)
 
-    except OSError:
-      pass
 
+  except OSError:
+    pass
 
 
 def notify_simple(title, body, urgency="normal"):
@@ -179,7 +215,6 @@ def prompt_and_handle(path, new_hash, old_hash, db):
       db[path] = new_hash
       save_db(db)
       apply_grant(path)
-      notify_simple("Window-rule granted", path, urgency="low")
     elif action == "deny":
       db[path] = DENIED
       save_db(db)
@@ -203,20 +238,8 @@ def prompt_and_handle(path, new_hash, old_hash, db):
   n.show()
 
 
-def handle_request_file(req_path, db):
-  try:
-    with open(req_path, "r") as f:
-      target = f.readline().strip()
-
-
-  finally:
-    try:
-      os.remove(req_path)
-
-    except OSError:
-      pass
-
-
+def handle_request_line(target, db):
+  target = target.strip()
   if not target:
     return
 
@@ -254,31 +277,52 @@ def main():
   Notify.init("windowrule-daemon")
   db = load_db()
 
-  loop = GLib.MainLoop()
+  ensure_fifo()
+  # O_RDWR (not O_RDONLY) is the key trick: it makes us our own phantom
+  # writer, so the FIFO never reports EOF/hang-up even when every real
+  # writer (request_windowrule.sh invocations) has closed. O_NONBLOCK
+  # so the open() itself can't block.
+  fd = os.open(FIFO_PATH, os.O_RDWR | os.O_NONBLOCK)
 
-  def poll():
-    nonlocal db
+  buffer = b""
+
+  def on_readable(source, condition):
+    nonlocal buffer, db
     try:
-      entries = sorted(os.listdir(INCOMING_DIR))
+      chunk = os.read(fd, 65536)
+
+    except BlockingIOError:
+      return True
 
     except OSError:
-      entries = []
+      return True
 
-    for name in entries:
-      req_path = os.path.join(INCOMING_DIR, name)
-      if os.path.isfile(req_path):
-        db = load_db() # pick up any external edits
-        handle_request_file(req_path, db)
+    if not chunk:
+      # Shouldn't happen thanks to the O_RDWR trick, but don't spin if it does.
+      return True
+
+    buffer += chunk
+    while b"\n" in buffer:
+      line, buffer = buffer.split(b"\n", 1)
+      text = line.decode("utf-8", errors="replace")
+      if text.strip():
+        db = load_db() # pick up any external edits (e.g. approve_windowrule.py)
+        handle_request_line(text, db)
 
 
-    return True # keep the timeout alive
+    return True # keep watching
 
-  GLib.timeout_add(int(POLL_INTERVAL * 1000), poll)
+  GLib.io_add_watch(fd, GLib.IO_IN, on_readable)
+
+  loop = GLib.MainLoop()
   try:
     loop.run()
 
   except KeyboardInterrupt:
     sys.exit(0)
+
+  finally:
+    os.close(fd)
 
 
 if __name__ == "__main__":
