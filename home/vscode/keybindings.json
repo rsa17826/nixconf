@@ -18,6 +18,11 @@
     "when": "inReferenceSearchEditor && !config.editor.stablePeek"
   },
   {
+    "key": "ctrl+numpad1",
+    "command": "line-sorter.sortAsc",
+    "when": "editorTextFocus"
+  },
+  {
     "key": "shift+escape",
     "command": "editor.action.inlineSuggest.hide",
     "when": "inInlineEditsPreviewEditor"

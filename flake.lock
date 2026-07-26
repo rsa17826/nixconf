@@ -414,45 +414,6 @@
         "type": "github"
       }
     },
-    "flake-utils_3": {
-      "inputs": {
-        "systems": "systems_3"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "freenet-core": {
-      "inputs": {
-        "flake-utils": "flake-utils_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1785020274,
-        "narHash": "sha256-wroadHhwBPXjVkqQXy1voqWzw9KVMUflJUuZlCJIMMU=",
-        "owner": "freenet",
-        "repo": "freenet-core",
-        "rev": "1912fd4aa3b084bf64768a4a2f3c8242bf5ca631",
-        "type": "github"
-      },
-      "original": {
-        "owner": "freenet",
-        "repo": "freenet-core",
-        "type": "github"
-      }
-    },
     "go-autoclicker": {
       "inputs": {
         "flake-utils": [
@@ -612,7 +573,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks": "pre-commit-hooks",
-        "systems": "systems_4",
+        "systems": "systems_3",
         "xdph": "xdph"
       },
       "locked": {
@@ -948,11 +909,11 @@
     "line-sorter-vsc-ext": {
       "flake": false,
       "locked": {
-        "lastModified": 1784980440,
-        "narHash": "sha256-Cm1ve5QIxHenB4D4TEudSAPqVzmtDRu0J3/QivwDWlc=",
+        "lastModified": 1785085874,
+        "narHash": "sha256-Uo/Km/YPBDlksWYksCek2VoP3pu86u+M+v49UuDgecY=",
         "owner": "rsa17826",
         "repo": "line-sorter-vsc-ext",
-        "rev": "af489a73b6bc7ba7ae356bb46ba699dd6559ad38",
+        "rev": "637d071f47e55102e2ce8f4695100b47ddbdb189",
         "type": "github"
       },
       "original": {
@@ -1209,7 +1170,6 @@
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils_2",
-        "freenet-core": "freenet-core",
         "go-autoclicker": "go-autoclicker",
         "gowoify": "gowoify",
         "helium-flake": "helium-flake",
@@ -1285,21 +1245,6 @@
       }
     },
     "systems_3": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_4": {
       "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
