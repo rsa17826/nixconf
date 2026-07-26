@@ -909,11 +909,11 @@
     "line-sorter-vsc-ext": {
       "flake": false,
       "locked": {
-        "lastModified": 1785085874,
-        "narHash": "sha256-Uo/Km/YPBDlksWYksCek2VoP3pu86u+M+v49UuDgecY=",
+        "lastModified": 1785086507,
+        "narHash": "sha256-9QGkh4RxGKzOcPmStUlCgDIrSqHa6u0mj+2Q+TE91+s=",
         "owner": "rsa17826",
         "repo": "line-sorter-vsc-ext",
-        "rev": "637d071f47e55102e2ce8f4695100b47ddbdb189",
+        "rev": "8123042d2794cafe85a03965f090eea6fa8f3f27",
         "type": "github"
       },
       "original": {
