@@ -440,11 +440,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784906087,
-        "narHash": "sha256-qfjdAqX/2xKNxRiLt7tyqsNqESjy5adqVwgACMqdfSs=",
+        "lastModified": 1785020274,
+        "narHash": "sha256-wroadHhwBPXjVkqQXy1voqWzw9KVMUflJUuZlCJIMMU=",
         "owner": "freenet",
         "repo": "freenet-core",
-        "rev": "d3ae7d45829b46d4072eaa1f14ec04962e9869a4",
+        "rev": "1912fd4aa3b084bf64768a4a2f3c8242bf5ca631",
         "type": "github"
       },
       "original": {

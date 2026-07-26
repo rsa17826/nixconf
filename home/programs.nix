@@ -185,7 +185,7 @@ in
           inotify-info
           bandwhich
           #
-          (pkgFromInp "freenet-core" "default")
+          # (pkgFromInp "freenet-core" "default")
           python313Packages.wsgidav
           steam-run-free
           fluffychat
