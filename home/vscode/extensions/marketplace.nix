@@ -44,8 +44,8 @@
             {
               name = "Go";
               publisher = "golang";
-              version = "0.55.0";
-              hash = "sha256-pFd7/PTVQio/L7EeTxGdxnZdgWFlIM27yXZ0X4WfFNc=";
+              version = "0.57.0";
+              hash = "sha256-q3YnRT1CyD5/lLQ3sIewW4yGkBGbGZxTrnceAC6+qMU=";
             }
             {
               name = "csstools-design-tokens";
@@ -128,26 +128,26 @@
             {
               name = "qt-python";
               publisher = "theqtcompany";
-              version = "1.15.0";
-              hash = "sha256-Rt0oqIO3+J81FcLftSZDSgrFrCr/GHphItKKKNMScd0=";
+              version = "1.15.1";
+              hash = "sha256-OqU9IYZd1pJ+9GlD1HUqJxSnWl1c+f3Klv9q6Ypf7vg=";
             }
             {
               name = "qt-core";
               publisher = "theqtcompany";
-              version = "1.15.0";
-              hash = "sha256-GVffx5YoLyemzLJ7jIEk0+0vwfP9mACwDJtenyhEN0Y=";
+              version = "1.15.1";
+              hash = "sha256-KOQPOsoEbNkdSTbLAVmCQiy9G3bguxU+ZMNC761PzPw=";
             }
             {
               name = "qt-ui";
               publisher = "theqtcompany";
-              version = "1.15.0";
-              hash = "sha256-IrU8NCNFv2Sjun5019SRzCNHlnkvmJlzLBX5y+F0WeA=";
+              version = "1.15.1";
+              hash = "sha256-+2Cy+wqW4FBZZAAmU78keJr28MPDV+g/hQ7xtkuZGTg=";
             }
             {
               name = "qt-qml";
               publisher = "theqtcompany";
-              version = "1.15.0";
-              hash = "sha256-UiInoW6OYRpTeiMQlQ9IQChb7k2o4ploxeNRNgAv3do=";
+              version = "1.15.1";
+              hash = "sha256-pHWqTvuWJKm6Mmt5ycR9C69v+ANgu1tXCNtzliR/dHA=";
             }
             {
               name = "indent-jump";
@@ -188,14 +188,14 @@
             {
               name = "vscode-eslint";
               publisher = "dbaeumer";
-              version = "3.0.29";
-              hash = "sha256-hUNmRQZiIZmvThRB7dJBgILMtpCQjFGRopyjG3TCiqw=";
+              version = "3.0.34";
+              hash = "sha256-ynCPFzne4YS4WNjQSmGky+e2IaE3SLxj6FkjKyLPcAs=";
             }
             {
               name = "godot-format";
               publisher = "dohe";
-              version = "0.2.18";
-              hash = "sha256-7Um28UWJm8hJuQA5cOaTfz6xHFnSZu1ptGedilUz4Q0=";
+              version = "0.4.1";
+              hash = "sha256-Hjh0iB402MgWlsOQMb2ipGuCdvTxnpwYf72rnGVPg2Y=";
             }
             {
               name = "githistory";
@@ -242,8 +242,8 @@
             {
               name = "nix-ide";
               publisher = "jnoortheen";
-              version = "0.5.9";
-              hash = "sha256-hPOcp6Yksgfu1+In21/gJ3MthV8JUV5WaRpYHvo5GGk=";
+              version = "0.5.13";
+              hash = "sha256-0pMMnYFX+Ghs42Tvfcv9QqwhrEhCjIa7+6xJ51Fa0Dk=";
             }
             {
               name = "multi-formatter";
@@ -254,8 +254,8 @@
             {
               name = "basedpyright";
               publisher = "detachhead";
-              version = "1.39.8";
-              hash = "sha256-MiCa1OuLvXYC5HmXNzM7LCL72weG40tDTgLWWl9Kxug=";
+              version = "1.39.9";
+              hash = "sha256-Iycuj7EXzRwVgvpk0KXa3dNw2rL21DnG4ohqIExS6Go=";
             }
             # {
             #   name = "synthwave-fluoromachine-cursor";
@@ -296,14 +296,14 @@
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.11551014";
-              hash = "sha256-Jb4/ffusA1G2Y4smVQynO093VuLjGGNP501g4cKgVo0=";
+              version = "2026.7.12031010";
+              hash = "sha256-rxfDCNyW3zQLZrzyiu04LCm9f7TiK8Q8pBxiWk8x0rY=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.5.2026061001";
-              hash = "sha256-TovklyMLWZ0gVuBJv2tRSQLgnLrgbL1LnnLSJiHPKIQ=";
+              version = "2026.5.2026070801";
+              hash = "sha256-ft9F6Ok/0VU3P9+AAAxW51NE5RlEK6VwtFPaMYq+GLg=";
             }
             {
               name = "hexeditor";
