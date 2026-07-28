@@ -870,11 +870,11 @@
     "jsdocGen-vsc-ext": {
       "flake": false,
       "locked": {
-        "lastModified": 1784658186,
-        "narHash": "sha256-OzSWU7SrKDD7XiYC4TPxwFSKNg42YvfLnzeOqWydPR4=",
+        "lastModified": 1785265921,
+        "narHash": "sha256-mWZVm2H8FOvZyxJG3aEULUe/fkn+1e1n20l9vXAoXjI=",
         "owner": "rsa17826",
         "repo": "jsdocGen-vsc-ext",
-        "rev": "94bc2c97dd5411de4f6171a9d428dde43f0a8759",
+        "rev": "63013467722cc8cf7d275a6d82dd3b581cda82ea",
         "type": "github"
       },
       "original": {
