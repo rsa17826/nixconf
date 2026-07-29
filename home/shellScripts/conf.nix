@@ -31,7 +31,7 @@ let
         text =
           if usesDataDir then
             ''
-              SCRIPT_DATA_DIR="$out/share/${name}"
+              SCRIPT_DATA_DIR="@out@/share/${name}"
               ${rawScriptText}
             ''
           else
