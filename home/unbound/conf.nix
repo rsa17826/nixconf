@@ -1,11 +1,55 @@
 { pkgs, ... }:
 {
-  systemd.services.unbound = {
-    after = [ "systemd-tmpfiles-setup.service" ];
-    wants = [ "systemd-tmpfiles-setup.service" ];
-    preStart = ''
-      touch /var/lib/unbound/adblock.conf
+  systemd = {
+    timers = {
+      unbound-adblock = {
+        onSuccess = [ "unbound-restart-after-adblock.service" ];
+        description = "Periodic unbound adblock list update";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnBootSec = "5m";
+          OnUnitActiveSec = "1d";
+          Persistent = true;
+        };
+      };
+    };
+
+    script = ''
+      set -euo pipefail
+      tmpfile=$(mktemp)
+      ${pkgs.curl}/bin/curl -fsSL --doh-url https://9.9.9.9/dns-query "https://big.oisd.nl/unbound" -o "$tmpfile"
+      ${pkgs.gnugrep}/bin/grep -q '^local-zone' "$tmpfile"
+      mv "$tmpfile" /var/lib/unbound/adblock.conf
     '';
+    services = {
+      unbound-restart-after-adblock = {
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = ''
+          systemctl try-reload-or-restart unbound
+        '';
+      };
+
+      unbound = {
+        after = [ "systemd-tmpfiles-setup.service" ];
+        wants = [ "systemd-tmpfiles-setup.service" ];
+        preStart = ''
+          touch /var/lib/unbound/adblock.conf
+        '';
+      };
+
+      unbound-adblock = {
+        description = "Update unbound adblock list";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "unbound";
+          Group = "unbound";
+        };
+      };
+    };
   };
 
   services = {
@@ -40,41 +84,5 @@
         };
       };
     };
-  };
-  systemd.services.unbound-adblock = {
-    description = "Update unbound adblock list";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = "unbound";
-      Group = "unbound";
-    };
-    script = ''
-      set -euo pipefail
-      tmpfile=$(mktemp)
-      ${pkgs.curl}/bin/curl -fsSL --doh-url https://9.9.9.9/dns-query "https://big.oisd.nl/unbound" -o "$tmpfile"
-      ${pkgs.gnugrep}/bin/grep -q '^local-zone' "$tmpfile"
-      mv "$tmpfile" /var/lib/unbound/adblock.conf
-    '';
-  };
-
-  systemd.timers.unbound-adblock = {
-    description = "Periodic unbound adblock list update";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "1d";
-      Persistent = true;
-    };
-  };
-
-  # make sure unbound restarts/reloads after the list updates, so it actually picks up changes
-  systemd.services.unbound-adblock.onSuccess = [ "unbound-restart-after-adblock.service" ];
-  systemd.services.unbound-restart-after-adblock = {
-    serviceConfig.Type = "oneshot";
-    script = ''
-      systemctl try-reload-or-restart unbound
-    '';
   };
 }

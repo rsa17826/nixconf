@@ -500,3 +500,16 @@ $1
 @regex \bxorg\.(?=\w)
 @replace
 @endregex
+
+@file \.nix$
+@regex ^(\s*)([a-zA-Z0-9_-]+)\.([a-zA-Z0-9_-]+)\.([a-zA-Z0-9_-]+)\s*=\s*(\{[\s\S]*?\};)
+@replace $1$2={$3={$4 = $5};};
+@endregex
+
+@file \.nix$
+@regex \}(?!;)(?=\s+[^\s\]])
+@replace };
+@endregex
+@regex \};;+
+@replace };
+@endregex
