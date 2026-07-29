@@ -29,7 +29,6 @@ fi
 linked=0
 skipped=0
 
-# Use find to scan all directories recursively (excluding hidden directories)
 while IFS= read -r -d '' dir; do
   dirname="$(basename "$dir")"
   key="$(echo "$dirname" | tr '[:upper:]' '[:lower:]')"
@@ -54,7 +53,11 @@ while IFS= read -r -d '' dir; do
     echo "LINKED  $dir -> $dest (from $icon_path)"
     ((linked++))
   fi
-done < <(find "$target_dir" -type d ! -path '*/.*' -print0)
+done < <(
+  find "$target_dir" -maxdepth 20 -type d \
+    \( -name 'node_modules' -o -name '.git' -o -name 'dist' -o -name 'build' -o -name '.next' \) -prune \
+    -o -type d ! -path '*/.*' -print0
+)
 
 echo
 echo "Done. Linked: $linked, Skipped (existing): $skipped"
