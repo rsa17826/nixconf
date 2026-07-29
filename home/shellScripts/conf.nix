@@ -21,40 +21,40 @@ let
         ]
       );
 
-      # Read script text into a variable
       rawScriptText = builtins.readFile scriptPath;
-
-      # Check if SCRIPT_DATA_DIR is referenced anywhere in main.sh
       usesDataDir = pkgs.lib.hasInfix "SCRIPT_DATA_DIR" rawScriptText;
 
-      # Only prepend SCRIPT_DATA_DIR definition if used in the script
-      scriptText =
-        if usesDataDir then
-          ''
-            SCRIPT_DATA_DIR="@out@/share/${name}"
-            ${rawScriptText}
-          ''
-        else
-          rawScriptText;
-
-      app = pkgs.writeShellApplication {
+      # Create the base shell application
+      baseApp = pkgs.writeShellApplication {
         inherit name runtimeInputs;
         bashOptions = [ ];
-        text = scriptText;
+        text =
+          if usesDataDir then
+            ''
+              SCRIPT_DATA_DIR="$out/share/${name}"
+              ${rawScriptText}
+            ''
+          else
+            rawScriptText;
       };
     in
-    if extraFiles == [ ] then
-      app
+    if extraFiles == [ ] && !usesDataDir then
+      baseApp
     else
-      app.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          ${pkgs.lib.optionalString usesDataDir ''
-            substituteInPlace $out/bin/${name} --subst-var-by out $out
-          ''}
-          mkdir -p $out/share/${name}
-          ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
-        '';
-      });
+      pkgs.runCommand name { } ''
+        # Copy the original script application structure
+        cp -r ${baseApp}/* $out/
+        chmod -R +w $out
+
+        # Replace @out@ placeholder with the real store path of this wrapped derivation
+        if [ -f "$out/bin/${name}" ]; then
+          substituteInPlace "$out/bin/${name}" --subst-var-by out "$out"
+        fi
+
+        # Copy extra directories and files to $out/share/<name>/
+        mkdir -p $out/share/${name}
+        ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
+      '';
 
   contents = builtins.readDir baseDir;
 
