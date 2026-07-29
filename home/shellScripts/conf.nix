@@ -34,7 +34,6 @@ let
         else
           null;
 
-      # Strip duplicate shebangs (e.g., #!/usr/bin/env bash) since writeShellApplication adds its own
       cleanScriptText = rawScriptText;
     in
     pkgs.writeShellApplication {

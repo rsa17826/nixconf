@@ -50,7 +50,7 @@ for dir in "$target_dir"/*/; do
       continue
     fi
 
-    ln "$icon_path" "$dest"
+    ln -s "$icon_path" "$dest"
     echo "LINKED  $dirname -> $dest (from $icon_path)"
     ((linked++))
   fi
