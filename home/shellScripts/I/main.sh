@@ -4,6 +4,14 @@ set -euo pipefail
 cmd="${1:?usage: script init|update <category>... }"
 shift
 
+# cp preserves source mode bits; our templates often live in read-only
+# locations (nix store), so a plain `cp` leaves dest/base read-only and
+# every later run fails with "Permission denied". Always force writable.
+wcp() {
+  cp "$1" "$2"
+  chmod u+w "$2"
+}
+
 for cat in "$@"; do
   src_dir="$SCRIPT_DATA_DIR/$cat"
   [ -d "$src_dir" ] || {
@@ -27,27 +35,27 @@ for cat in "$@"; do
       if [ -e "$dest" ]; then
         echo "skip (exists): $dest"
       else
-        cp "$src" "$dest"
+        wcp "$src" "$dest"
         echo "created: $dest"
       fi
-      cp "$src" "$base" # record what we applied
+      wcp "$src" "$base" # record what we applied
       ;;
     update)
       if [ ! -e "$dest" ]; then
-        cp "$src" "$dest"
-        cp "$src" "$base"
+        wcp "$src" "$dest"
+        wcp "$src" "$base"
         echo "created: $dest"
         continue
       fi
       if [ ! -e "$base" ]; then
-        cp "$dest" "$base" # no history yet; treat current as base
+        wcp "$dest" "$base" # no history yet; treat current as base
       fi
       if git merge-file -q "$dest" "$base" "$src"; then
         echo "merged clean: $dest"
       else
         echo "CONFLICTS in: $dest  (resolve markers, then rerun)"
       fi
-      cp "$src" "$base" # advance base to new template regardless
+      wcp "$src" "$base" # advance base to new template regardless
       ;;
     *)
       echo "unknown cmd: $cmd" >&2
