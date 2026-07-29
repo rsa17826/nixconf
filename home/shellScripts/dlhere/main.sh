@@ -7,6 +7,26 @@
 #    file CONTENTS against each candidate and overwrite whichever is
 #    most similar (uses `diff` for text files, `cmp` for binary files)
 #  - if no match exists anywhere, just drop it in DEST (current dir)
+#
+#  - special case: if exactly one new file showed up and it's a .zip:
+#      1. if the zip's own filename matches an existing file somewhere
+#         under DEST, treat it exactly like a normal file (move/overwrite
+#         that match) -- it is NOT extracted.
+#      2. otherwise, if every entry in the zip lives under one common
+#         top-level directory (e.g. a.zip/dir/...) and a directory with
+#         that same name exists somewhere under DEST, extract the zip's
+#         contents INTO that directory (dropping the wrapping dir name),
+#         overwriting anything that collides.
+#      3. otherwise, try to match each file inside the zip (ignoring any
+#         common wrapping directory from step 2) against existing files
+#         under DEST by name, picking the closest-content match when a
+#         name has multiple candidates. Matched entries are extracted
+#         into their matched location (overwriting); entries with no
+#         match anywhere are extracted flat into DEST. If at least one
+#         entry matched, the zip is consumed (deleted) after extraction.
+#      4. if nothing at all matches (no name match on the zip itself and
+#         no entry inside it matches anything), just drop the zip into
+#         DEST unchanged, like any other unmatched file.
 
 SRC="$HOME/Downloads"
 DEST="."
@@ -55,36 +75,177 @@ file_distance() {
   fi
 }
 
-# Find files modified in the last 30 seconds, directly in Downloads
-find "$SRC" -maxdepth 1 -type f -mmin -0.5 -print0 | while IFS= read -r -d '' file; do
-  fname="$(basename "$file")"
-
-  # Find all files with the same name in subdirectories of DEST
+# Given a source file path and a target filename, find where under DEST it
+# should go: prints the target directory (empty string if no match found).
+find_best_target_dir() {
+  local src="$1" fname="$2"
   mapfile -d '' -t matches < <(find "$DEST" -mindepth 2 -type f -name "$fname" -print0 2>/dev/null)
-
-  match_count=${#matches[@]}
+  local match_count=${#matches[@]}
 
   if ((match_count == 0)); then
-    # No match anywhere -> drop in DEST as before
-    mv -t "$DEST" "$file"
-
+    echo ""
   elif ((match_count == 1)); then
-    # Exactly one match -> move into that subdirectory, overwriting it
-    target_dir="$(dirname "${matches[0]}")"
-    mv -f "$file" "$target_dir/$fname"
-
+    dirname "${matches[0]}"
   else
-    # Multiple matches -> compare file CONTENTS to pick closest match
-    best_dist=-1
-    best_path=""
+    local best_dist=-1 best_path="" dist candidate
     for candidate in "${matches[@]}"; do
-      dist=$(file_distance "$file" "$candidate")
+      dist=$(file_distance "$src" "$candidate")
       if ((best_dist == -1 || dist < best_dist)); then
         best_dist=$dist
         best_path="$candidate"
       fi
     done
-    target_dir="$(dirname "$best_path")"
+    dirname "$best_path"
+  fi
+}
+
+# Standard single-file handling (the original behavior)
+process_plain_file() {
+  local file="$1"
+  local fname target_dir
+  fname="$(basename "$file")"
+  target_dir=$(find_best_target_dir "$file" "$fname")
+
+  if [[ -z "$target_dir" ]]; then
+    mv -t "$DEST" "$file"
+  else
     mv -f "$file" "$target_dir/$fname"
   fi
-done
+}
+
+# Extract entries from a zip (optionally stripping a leading "$strip_prefix"
+# path component), matching each entry's basename against existing files
+# under DEST the same way process_plain_file does. Matched entries land in
+# their matched directory; unmatched entries land flat in DEST. If nothing
+# matched at all, the zip is left untouched in DEST instead.
+try_flat_extract() {
+  local file="$1" strip_prefix="$2"
+  local entries rel_entries=() tmp_files=() target_dirs=()
+  local any_match=0 e rel bname tmpfile tdir i
+
+  mapfile -t entries < <(unzip -Z1 "$file" 2>/dev/null)
+
+  for e in "${entries[@]}"; do
+    [[ "$e" == */ ]] && continue  # skip directory-only entries
+    rel="$e"
+    if [[ -n "$strip_prefix" ]]; then
+      [[ "$rel" == "$strip_prefix"* ]] || continue
+      rel="${rel#"$strip_prefix"}"
+    fi
+    [[ -z "$rel" ]] && continue
+    bname="$(basename "$rel")"
+
+    tmpfile=$(mktemp)
+    unzip -p "$file" "$e" > "$tmpfile" 2>/dev/null
+
+    tdir=$(find_best_target_dir "$tmpfile" "$bname")
+
+    rel_entries+=("$e")
+    tmp_files+=("$tmpfile")
+    target_dirs+=("$tdir")
+    [[ -n "$tdir" ]] && any_match=1
+  done
+
+  if ((any_match == 0)); then
+    # nothing inside the zip matches anything -> leave the zip as-is
+    for tmpfile in "${tmp_files[@]}"; do rm -f "$tmpfile"; done
+    mv -t "$DEST" "$file"
+    return
+  fi
+
+  for ((i = 0; i < ${#rel_entries[@]}; i++)); do
+    bname="$(basename "${rel_entries[$i]}")"
+    tdir="${target_dirs[$i]}"
+    if [[ -n "$tdir" ]]; then
+      mv -f "${tmp_files[$i]}" "$tdir/$bname"
+    else
+      mv -f "${tmp_files[$i]}" "$DEST/$bname"
+    fi
+  done
+  rm -f "$file"
+}
+
+# Handles the single-zip-file case per the rules described up top.
+process_zip_file() {
+  local file="$1"
+  local fname target_dir
+  fname="$(basename "$file")"
+
+  if ! command -v unzip >/dev/null 2>&1; then
+    process_plain_file "$file"
+    return
+  fi
+
+  # Step 1: does the zip's own filename match an existing file? If so,
+  # treat it exactly like any other file -- do not extract it.
+  target_dir=$(find_best_target_dir "$file" "$fname")
+  if [[ -n "$target_dir" ]]; then
+    mv -f "$file" "$target_dir/$fname"
+    return
+  fi
+
+  # Step 2: inspect the zip's contents
+  local entries files_only=() e
+  mapfile -t entries < <(unzip -Z1 "$file" 2>/dev/null)
+  for e in "${entries[@]}"; do
+    [[ "$e" == */ ]] && continue
+    files_only+=("$e")
+  done
+
+  if ((${#files_only[@]} == 0)); then
+    # empty or unreadable zip -> just drop it in DEST
+    mv -t "$DEST" "$file"
+    return
+  fi
+
+  # Does every entry live under one common top-level directory?
+  local topdir="" single_topdir=1 first
+  for e in "${files_only[@]}"; do
+    if [[ "$e" != */* ]]; then
+      single_topdir=0
+      break
+    fi
+    first="${e%%/*}"
+    if [[ -z "$topdir" ]]; then
+      topdir="$first"
+    elif [[ "$topdir" != "$first" ]]; then
+      single_topdir=0
+      break
+    fi
+  done
+
+  if ((single_topdir == 1)) && [[ -n "$topdir" ]]; then
+    # Look for an existing directory with this same name under DEST
+    local dirmatches
+    mapfile -d '' -t dirmatches < <(find "$DEST" -mindepth 1 -type d -name "$topdir" -print0 2>/dev/null)
+
+    if ((${#dirmatches[@]} == 1)); then
+      local tmpdir
+      tmpdir=$(mktemp -d)
+      unzip -oq "$file" -d "$tmpdir" 2>/dev/null
+      cp -af "$tmpdir/$topdir/." "${dirmatches[0]}/"
+      rm -rf "$tmpdir"
+      rm -f "$file"
+      return
+    fi
+
+    # No single matching directory -> fall back to matching individual
+    # files inside, ignoring the wrapping top-level directory.
+    try_flat_extract "$file" "$topdir/"
+    return
+  fi
+
+  # No common wrapping directory -> match individual files directly
+  try_flat_extract "$file" ""
+}
+
+# Find files modified in the last 30 seconds, directly in Downloads
+mapfile -d '' -t newfiles < <(find "$SRC" -maxdepth 1 -type f -mmin -0.5 -print0)
+
+if ((${#newfiles[@]} == 1)) && [[ "${newfiles[0]}" == *.zip ]]; then
+  process_zip_file "${newfiles[0]}"
+else
+  for file in "${newfiles[@]}"; do
+    process_plain_file "$file"
+  done
+fi

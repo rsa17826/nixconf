@@ -15,16 +15,10 @@ Item {
     "text": "#c4cce8",
     "border": "#1e1e40"
   }
-  property int nextId: 2
-
-  // Canonical list: [{ id, targetTimestamp }, ...]. Always start with one
-  // unset slot so there's something to click even before a file exists.
-  property var timers: [
-    {
-      id: 1,
-      targetTimestamp: 0
-    }
-  ]
+  // nextId / timers live on jsonAdapter (the single source of truth);
+  // these are plain aliases, not bindings, so there's no cycle.
+  property alias nextId: jsonAdapter.nextId
+  property alias timers: jsonAdapter.timers
 
   function addTimer() {
     const t = root.timers.slice()
@@ -50,6 +44,21 @@ Item {
     console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
     return ""
   }
+  // Guarantees there's always exactly one trailing unset ({targetTimestamp:0})
+  // slot to click on. Called after loading from disk (where every saved
+  // timer may already be set) and after every commit/clear.
+  function ensureUnsetSlot() {
+    if (root.timers.some(t => t.targetTimestamp === 0))
+      return
+    const t = root.timers.slice()
+    t.push({
+      id: root.nextId,
+      targetTimestamp: 0
+    })
+    root.timers = t
+    root.nextId += 1
+    saveTimers()
+  }
   function pathJoin(...p) {
     return p.map(e => e.replace(/\/$/, '')).join("/").replace(/\/$/, '')
   }
@@ -64,10 +73,9 @@ Item {
       root.timers = root.timers.filter(t => t.id !== id)
     }
     saveTimers()
+    root.ensureUnsetSlot()
   }
   function saveTimers() {
-    jsonAdapter.timers = root.timers
-    jsonAdapter.nextId = root.nextId
     timersFile.writeAdapter()
   }
   function updateTimer(id, ts) {
@@ -76,10 +84,13 @@ Item {
         targetTimestamp: ts
       } : t)
     saveTimers()
+    root.ensureUnsetSlot()
   }
 
   implicitHeight: rowLayout.implicitHeight
   implicitWidth: rowLayout.implicitWidth
+
+  Component.onCompleted: root.ensureUnsetSlot()
 
   // ── Persistence ───────────────────────────────────────────────────
   FileView {
@@ -93,15 +104,21 @@ Item {
     onLoadFailed: error => {
     // no file yet: keep the default single unset timer
     }
+    onLoaded: root.ensureUnsetSlot()
 
     JsonAdapter {
       id: jsonAdapter
 
-      property int nextId: root.nextId
-      property var timers: root.timers
-
-      onNextIdChanged: root.nextId = nextId
-      onTimersChanged: root.timers = timers
+      property int nextId: 2
+      // Canonical list: [{ id, targetTimestamp }, ...]. Always start with
+      // one unset slot so there's something to click even before a file
+      // exists; overwritten by whatever's loaded from disk, if anything.
+      property var timers: [
+        {
+          id: 1,
+          targetTimestamp: 0
+        }
+      ]
     }
   }
   Row {
@@ -118,32 +135,6 @@ Item {
 
         onCleared: id => root.removeTimer(id)
         onCommitted: (id, ts) => root.updateTimer(id, ts)
-      }
-    }
-    Rectangle {
-      id: addBtn
-
-      anchors.verticalCenter: parent.verticalCenter
-      color: addArea.containsMouse ? c.hovered : c.buttonBg
-      implicitHeight: 20
-      implicitWidth: 20
-      radius: 4
-
-      Text {
-        anchors.centerIn: parent
-        color: c.text
-        font.bold: true
-        font.pixelSize: 12
-        text: "+"
-      }
-      MouseArea {
-        id: addArea
-
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        hoverEnabled: true
-
-        onClicked: root.addTimer()
       }
     }
   }
