@@ -29,7 +29,7 @@ let
         if extraFiles != [ ] then
           pkgs.runCommand "${name}-data" { } ''
             mkdir -p $out
-            ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/${f}") extraFiles}
+            ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -rL ${dir}/${f} $out/${f}") extraFiles}
           ''
         else
           null;
