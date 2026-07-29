@@ -21,24 +21,36 @@ let
         ]
       );
 
+      # Read script text into a variable
+      rawScriptText = builtins.readFile scriptPath;
+
+      # Check if SCRIPT_DATA_DIR is referenced anywhere in main.sh
+      usesDataDir = pkgs.lib.hasInfix "SCRIPT_DATA_DIR" rawScriptText;
+
+      # Only prepend SCRIPT_DATA_DIR definition if used in the script
+      scriptText =
+        if usesDataDir then
+          ''
+            SCRIPT_DATA_DIR="@out@/share/${name}"
+            ${rawScriptText}
+          ''
+        else
+          rawScriptText;
+
       app = pkgs.writeShellApplication {
-        name = name;
+        inherit name runtimeInputs;
         bashOptions = [ ];
-        inherit runtimeInputs;
-        # We read the main script text, but prepend a helper variable pointing to $out
-        text = ''
-          SCRIPT_DATA_DIR="@out@/share/${name}"
-          ${builtins.readFile scriptPath}
-        '';
+        text = scriptText;
       };
     in
     if extraFiles == [ ] then
       app
     else
       app.overrideAttrs (old: {
-        # Substitute @out@ with the actual final store path
         postInstall = (old.postInstall or "") + ''
-          substituteInPlace $out/bin/${name} --subst-var-by out $out
+          ${pkgs.lib.optionalString usesDataDir ''
+            substituteInPlace $out/bin/${name} --subst-var-by out $out
+          ''}
           mkdir -p $out/share/${name}
           ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
         '';
