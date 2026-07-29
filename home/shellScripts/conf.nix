@@ -24,37 +24,33 @@ let
       rawScriptText = builtins.readFile scriptPath;
       usesDataDir = pkgs.lib.hasInfix "SCRIPT_DATA_DIR" rawScriptText;
 
-      # Create the base shell application
-      app = pkgs.writeShellApplication {
-        inherit name runtimeInputs;
-        bashOptions = [ ];
-        text =
-          if usesDataDir then
-            ''
-              SCRIPT_DATA_DIR="@out@/share/${name}"
-              ${rawScriptText}
-            ''
-          else
-            rawScriptText;
-      };
-    in
-    if extraFiles == [ ] && !usesDataDir then
-      app
-    else
-      app.overrideAttrs (old: {
-        # Using postInstall check hook to safely modify binary and copy assets
-        postInstall = (old.postInstall or "") + ''
-          ${pkgs.lib.optionalString usesDataDir ''
-            # Substitute @out@ inside the generated executable script
-            ${pkgs.gnused}/bin/sed -i "s|@out@|$out|g" "$out/bin/${name}"
-          ''}
+      # Package extra files into a store path if any exist
+      extraData =
+        if extraFiles != [ ] then
+          pkgs.runCommand "${name}-data" { } ''
+            mkdir -p $out
+            ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/${f}") extraFiles}
+          ''
+        else
+          null;
 
-          ${pkgs.lib.optionalString (extraFiles != [ ]) ''
-            mkdir -p "$out/share/${name}"
-            ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
-          ''}
-        '';
-      });
+      # Strip duplicate shebangs (e.g., #!/usr/bin/env bash) since writeShellApplication adds its own
+      cleanScriptText =
+        pkgs.lib.replaceStrings [ "#!/usr/bin/env bash\n" "#!/bin/bash\n" ] [ "" "" ]
+          rawScriptText;
+    in
+    pkgs.writeShellApplication {
+      inherit name runtimeInputs;
+      bashOptions = [ ];
+      text =
+        if usesDataDir && extraData != null then
+          ''
+            SCRIPT_DATA_DIR="${extraData}"
+            ${cleanScriptText}
+          ''
+        else
+          cleanScriptText;
+    };
 
   contents = builtins.readDir baseDir;
 
