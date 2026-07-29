@@ -14,13 +14,6 @@
       };
     };
 
-    script = ''
-      set -euo pipefail
-      tmpfile=$(mktemp)
-      ${pkgs.curl}/bin/curl -fsSL --doh-url https://9.9.9.9/dns-query "https://big.oisd.nl/unbound" -o "$tmpfile"
-      ${pkgs.gnugrep}/bin/grep -q '^local-zone' "$tmpfile"
-      mv "$tmpfile" /var/lib/unbound/adblock.conf
-    '';
     services = {
       unbound-restart-after-adblock = {
         serviceConfig = {
@@ -48,6 +41,13 @@
           User = "unbound";
           Group = "unbound";
         };
+        script = ''
+          set -euo pipefail
+          tmpfile=$(mktemp)
+          ${pkgs.curl}/bin/curl -fsSL --doh-url https://9.9.9.9/dns-query "https://big.oisd.nl/unbound" -o "$tmpfile"
+          ${pkgs.gnugrep}/bin/grep -q '^local-zone' "$tmpfile"
+          mv "$tmpfile" /var/lib/unbound/adblock.conf
+        '';
       };
     };
   };
