@@ -47,7 +47,8 @@ while IFS= read -r -d '' dir; do
       continue
     fi
 
-    ln -s "$icon_path" "$dest"
+    cp "$icon_path" "$dest"
+    # ln -s "$icon_path" "$dest"
     echo "LINKED  $dir -> $dest (from $icon_path)"
     ((linked++))
   fi
