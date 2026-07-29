@@ -35,9 +35,7 @@ let
           null;
 
       # Strip duplicate shebangs (e.g., #!/usr/bin/env bash) since writeShellApplication adds its own
-      cleanScriptText =
-        pkgs.lib.replaceStrings [ "#!/usr/bin/env bash\n" "#!/bin/bash\n" ] [ "" "" ]
-          rawScriptText;
+      cleanScriptText = rawScriptText;
     in
     pkgs.writeShellApplication {
       inherit name runtimeInputs;
