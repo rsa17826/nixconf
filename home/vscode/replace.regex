@@ -515,6 +515,6 @@ $1
 @endregex
 
 @file \.nix$
-@regex builtins.removeAttrs
+@regex builtins\.removeAttrs
 @replace removeAttrs
 @endregex
