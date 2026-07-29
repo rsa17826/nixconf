@@ -7,17 +7,42 @@ let
   newsh =
     name:
     let
-      scriptPath = baseDir + "/${name}/main.sh";
-      depsPath = baseDir + "/${name}/deps.nix";
+      dir = baseDir + "/${name}";
+      scriptPath = dir + "/main.sh";
+      depsPath = dir + "/deps.nix";
 
-      # Check if deps.nix exists, otherwise provide an empty list
       runtimeInputs = if builtins.pathExists depsPath then (import depsPath pkgs) else [ ];
+
+      dirContents = builtins.readDir dir;
+      extraFiles = builtins.attrNames (
+        removeAttrs dirContents [
+          "main.sh"
+          "deps.nix"
+        ]
+      );
+
+      app = pkgs.writeShellApplication {
+        name = name;
+        bashOptions = [ ];
+        inherit runtimeInputs;
+        # We read the main script text, but prepend a helper variable pointing to $out
+        text = ''
+          SCRIPT_DATA_DIR="@out@/share/${name}"
+          ${builtins.readFile scriptPath}
+        '';
+      };
     in
-    pkgs.writeShellApplication {
-      bashOptions = [ ];
-      inherit name runtimeInputs;
-      text = builtins.readFile scriptPath;
-    };
+    if extraFiles == [ ] then
+      app
+    else
+      app.overrideAttrs (old: {
+        # Substitute @out@ with the actual final store path
+        postInstall = (old.postInstall or "") + ''
+          substituteInPlace $out/bin/${name} --subst-var-by out $out
+          mkdir -p $out/share/${name}
+          ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
+        '';
+      });
 
   contents = builtins.readDir baseDir;
 

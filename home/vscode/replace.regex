@@ -507,9 +507,14 @@ $1
 @endregex
 
 @file \.nix$
-@regex \}(?!;)(?=\s+[^\s\]])
+@regex \}(?!;)(?=\s+\})
 @replace };
 @endregex
 @regex \};;+
 @replace };
+@endregex
+
+@file \.nix$
+@regex builtins.removeAttrs
+@replace removeAttrs
 @endregex
