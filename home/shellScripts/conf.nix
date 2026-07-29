@@ -25,7 +25,7 @@ let
       usesDataDir = pkgs.lib.hasInfix "SCRIPT_DATA_DIR" rawScriptText;
 
       # Create the base shell application
-      baseApp = pkgs.writeShellApplication {
+      app = pkgs.writeShellApplication {
         inherit name runtimeInputs;
         bashOptions = [ ];
         text =
@@ -39,22 +39,22 @@ let
       };
     in
     if extraFiles == [ ] && !usesDataDir then
-      baseApp
+      app
     else
-      pkgs.runCommand name { } ''
-        # Copy the original script application structure
-        cp -r ${baseApp}/* $out/
-        chmod -R +w $out
+      app.overrideAttrs (old: {
+        # Using postInstall check hook to safely modify binary and copy assets
+        postInstall = (old.postInstall or "") + ''
+          ${pkgs.lib.optionalString usesDataDir ''
+            # Substitute @out@ inside the generated executable script
+            ${pkgs.gnused}/bin/sed -i "s|@out@|$out|g" "$out/bin/${name}"
+          ''}
 
-        # Replace @out@ placeholder with the real store path of this wrapped derivation
-        if [ -f "$out/bin/${name}" ]; then
-          substituteInPlace "$out/bin/${name}" --subst-var-by out "$out"
-        fi
-
-        # Copy extra directories and files to $out/share/<name>/
-        mkdir -p $out/share/${name}
-        ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
-      '';
+          ${pkgs.lib.optionalString (extraFiles != [ ]) ''
+            mkdir -p "$out/share/${name}"
+            ${pkgs.lib.concatMapStringsSep "\n" (f: "cp -r ${dir}/${f} $out/share/${name}/${f}") extraFiles}
+          ''}
+        '';
+      });
 
   contents = builtins.readDir baseDir;
 
