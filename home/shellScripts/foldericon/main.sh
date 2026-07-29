@@ -29,8 +29,8 @@ fi
 linked=0
 skipped=0
 
-for dir in "$target_dir"/*/; do
-  [[ -d "$dir" ]] || continue
+# Use find to scan all directories recursively (excluding hidden directories)
+while IFS= read -r -d '' dir; do
   dirname="$(basename "$dir")"
   key="$(echo "$dirname" | tr '[:upper:]' '[:lower:]')"
 
@@ -42,19 +42,19 @@ for dir in "$target_dir"/*/; do
     if [[ -e "$dest" ]]; then
       # Already linked to correct file?
       if [[ "$dest" -ef "$icon_path" ]]; then
-        echo "OK      $dirname -> already linked"
+        echo "OK      $dir -> already linked"
       else
-        echo "SKIP    $dirname -> $dest already exists (different file)"
+        echo "SKIP    $dir -> $dest already exists (different file)"
         ((skipped++))
       fi
       continue
     fi
 
     ln -s "$icon_path" "$dest"
-    echo "LINKED  $dirname -> $dest (from $icon_path)"
+    echo "LINKED  $dir -> $dest (from $icon_path)"
     ((linked++))
   fi
-done
+done < <(find "$target_dir" -type d ! -path '*/.*' -print0)
 
 echo
 echo "Done. Linked: $linked, Skipped (existing): $skipped"
