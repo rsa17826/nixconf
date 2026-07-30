@@ -357,6 +357,7 @@ in
         libogg
         libGLU
         gtk3
+        pango
       ];
     };
   };
