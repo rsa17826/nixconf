@@ -4,16 +4,6 @@ SAVE_DIR="$HOME/videos/rec"
 PID_FILE="/tmp/gpu-screen-recorder-rec.pid"
 mkdir -p "$SAVE_DIR"
 
-zenity_focused() {
-  GDK_BACKEND=x11 DISPLAY=:0 GTK_THEME=Adwaita:dark zenity "$@" &
-  ZENITY_PID=$!
-  sleep 0.3
-  WID=$(xdotool search --sync --classname "zenity" | tail -1)
-  xdotool windowraise "$WID"
-  xdotool windowfocus "$WID"
-  wait $ZENITY_PID
-}
-
 # 1. Check if a manual recording is already running (via PID file)
 if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
   kill -SIGINT "$(cat "$PID_FILE")"
@@ -21,7 +11,7 @@ if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
 
   LATEST_FILE=$(find "$SAVE_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
 
-  if ! zenity_focused --question --text="Recording saved. Keep it?" --ok-label="Keep" --cancel-label="Delete"; then
+  if ! zenity --question --text="Recording saved. Keep it?" --ok-label="Keep" --cancel-label="Delete"; then
     rm "$LATEST_FILE"
     notify-send -e -t 1000 "Deleted" "File removed."
   fi
@@ -40,7 +30,7 @@ else
   DEFAULT_NAME="rec_$(date +%Y-%m-%d_%H-%M-%S).mp4"
 
   # 4. Ask user for a name (pre-filled with default)
-  USER_FILENAME=$(zenity_focused --entry --title="Save Recording As" --text="Enter filename:" --entry-text="$DEFAULT_NAME")
+  USER_FILENAME=$(zenity --entry --title="Save Recording As" --text="Enter filename:" --entry-text="$DEFAULT_NAME")
 
   # If user cancels the name prompt, exit
   [ -z "$USER_FILENAME" ] && exit 1
@@ -53,6 +43,6 @@ else
   notify-send -e -t 1000 "Recorder" "Recording started: $USER_FILENAME"
 
   # 5. Launch recorder and store its PID
-  gpu-screen-recorder -w region -region "$GEOM" -f 60 -a "default_output" -o "$FINAL_PATH" &
+  gpu-screen-recorder -w "$GEOM" -f 60 -a "default_output" -o "$FINAL_PATH" &
   echo $! >"$PID_FILE"
 fi
