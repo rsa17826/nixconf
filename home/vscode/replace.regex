@@ -523,3 +523,12 @@ $1
 @regex ("activationEvents": \[\s*)"\*"
 @replace $1"onStartupFinished"
 @endregex
+
+@file \.nix$
+@regex (\[[^\]"'(){};:=]*\s)([^\s\]"'#(){};:=]+)([^\]"'(){};:=]*\s)\2\s+(?=\S)
+@replace $1$2$3
+@untilfail
+@endregex
+@regex (\[[^\]"'(){};:=]*\s)([^\s\]"'#(){};:=]+)([^\]"'(){};:=]*\s)\2\s+(?=\S)
+@replace $1$2$3
+@endregex

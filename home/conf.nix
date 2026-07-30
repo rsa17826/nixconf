@@ -323,6 +323,9 @@ in
         libX11
         libXcursor
         libXext
+        libSM
+        libICE
+        libXrender
         libXi
         libXinerama
         libXrandr
