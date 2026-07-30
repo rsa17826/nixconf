@@ -75,6 +75,71 @@ file_distance() {
   fi
 }
 
+# Detect which tool we can use to read/extract zip files. Prefers python3
+# (almost always present, no extra dependency) and falls back to `unzip`.
+detect_zip_tool() {
+  if command -v python3 >/dev/null 2>&1; then
+    echo "python3"
+  elif command -v unzip >/dev/null 2>&1; then
+    echo "unzip"
+  else
+    echo ""
+  fi
+}
+
+# Print the entries (paths) inside a zip, one per line -- directory entries
+# keep their trailing slash, same convention as `unzip -Z1`.
+zip_list_entries() {
+  local tool="$1" file="$2"
+  case "$tool" in
+  python3)
+    python3 - "$file" <<'PY'
+import sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    for n in z.namelist():
+        print(n)
+PY
+    ;;
+  unzip)
+    unzip -Z1 "$file" 2>/dev/null
+    ;;
+  esac
+}
+
+# Write the contents of a single zip entry to stdout.
+zip_extract_entry_stdout() {
+  local tool="$1" file="$2" entry="$3"
+  case "$tool" in
+  python3)
+    python3 - "$file" "$entry" <<'PY'
+import sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    sys.stdout.buffer.write(z.read(sys.argv[2]))
+PY
+    ;;
+  unzip)
+    unzip -p "$file" "$entry" 2>/dev/null
+    ;;
+  esac
+}
+
+# Fully extract a zip into a destination directory.
+zip_extract_all() {
+  local tool="$1" file="$2" destdir="$3"
+  case "$tool" in
+  python3)
+    python3 - "$file" "$destdir" <<'PY'
+import sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    z.extractall(sys.argv[2])
+PY
+    ;;
+  unzip)
+    unzip -oq "$file" -d "$destdir" 2>/dev/null
+    ;;
+  esac
+}
+
 # Given a source file path and a target filename, find where under DEST it
 # should go: prints the target directory (empty string if no match found).
 find_best_target_dir() {
@@ -119,14 +184,14 @@ process_plain_file() {
 # their matched directory; unmatched entries land flat in DEST. If nothing
 # matched at all, the zip is left untouched in DEST instead.
 try_flat_extract() {
-  local file="$1" strip_prefix="$2"
+  local file="$1" strip_prefix="$2" tool="$3"
   local entries rel_entries=() tmp_files=() target_dirs=()
   local any_match=0 e rel bname tmpfile tdir i
 
-  mapfile -t entries < <(unzip -Z1 "$file" 2>/dev/null)
+  mapfile -t entries < <(zip_list_entries "$tool" "$file")
 
   for e in "${entries[@]}"; do
-    [[ "$e" == */ ]] && continue  # skip directory-only entries
+    [[ "$e" == */ ]] && continue # skip directory-only entries
     rel="$e"
     if [[ -n "$strip_prefix" ]]; then
       [[ "$rel" == "$strip_prefix"* ]] || continue
@@ -136,7 +201,7 @@ try_flat_extract() {
     bname="$(basename "$rel")"
 
     tmpfile=$(mktemp)
-    unzip -p "$file" "$e" > "$tmpfile" 2>/dev/null
+    zip_extract_entry_stdout "$tool" "$file" "$e" >"$tmpfile"
 
     tdir=$(find_best_target_dir "$tmpfile" "$bname")
 
@@ -171,7 +236,10 @@ process_zip_file() {
   local fname target_dir
   fname="$(basename "$file")"
 
-  if ! command -v unzip >/dev/null 2>&1; then
+  local tool
+  tool=$(detect_zip_tool)
+  if [[ -z "$tool" ]]; then
+    # No way to read zip contents on this system -> treat like a plain file
     process_plain_file "$file"
     return
   fi
@@ -186,7 +254,7 @@ process_zip_file() {
 
   # Step 2: inspect the zip's contents
   local entries files_only=() e
-  mapfile -t entries < <(unzip -Z1 "$file" 2>/dev/null)
+  mapfile -t entries < <(zip_list_entries "$tool" "$file")
   for e in "${entries[@]}"; do
     [[ "$e" == */ ]] && continue
     files_only+=("$e")
@@ -222,7 +290,7 @@ process_zip_file() {
     if ((${#dirmatches[@]} == 1)); then
       local tmpdir
       tmpdir=$(mktemp -d)
-      unzip -oq "$file" -d "$tmpdir" 2>/dev/null
+      zip_extract_all "$tool" "$file" "$tmpdir"
       cp -af "$tmpdir/$topdir/." "${dirmatches[0]}/"
       rm -rf "$tmpdir"
       rm -f "$file"
@@ -231,12 +299,12 @@ process_zip_file() {
 
     # No single matching directory -> fall back to matching individual
     # files inside, ignoring the wrapping top-level directory.
-    try_flat_extract "$file" "$topdir/"
+    try_flat_extract "$file" "$topdir/" "$tool"
     return
   fi
 
   # No common wrapping directory -> match individual files directly
-  try_flat_extract "$file" ""
+  try_flat_extract "$file" "" "$tool"
 }
 
 # Find files modified in the last 30 seconds, directly in Downloads

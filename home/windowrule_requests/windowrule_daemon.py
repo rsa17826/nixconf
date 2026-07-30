@@ -19,6 +19,11 @@ XDG_DATA_HOME = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share")
 RUNTIME_BASE_DIR = os.getenv("WINDOWRULES_DIR", os.path.join(XDG_DATA_HOME, "hypr-windowrules"))
 FIFO_PATH = os.path.join(RUNTIME_BASE_DIR, "requests.fifo")
 
+# Per-request response files live here. request_windowrule.sh writes a
+# unique id into its request line and then waits for
+# RESPONSES_DIR/<id> to show up.
+RESPONSES_DIR = os.path.join(RUNTIME_BASE_DIR, "responses")
+
 # Where granted rule files and approved_hashes.json actually live --
 # your nixconf repo. Override with WINDOWRULE_DIR.
 WR_DIR = os.getenv(
@@ -29,6 +34,11 @@ APPROVED_HASHES_FILE = os.path.join(WR_DIR, "approved_hashes.json")
 
 DENIED = "DENIED"
 
+# Response payloads written to RESPONSES_DIR/<id>.
+RESP_GRANTED = "GRANTED"
+RESP_DENIED = "DENIED"
+RESP_IGNORED = "IGNORED"
+
 # PyGObject does not keep a Notification alive on its own once add_action()
 # is set up -- if nothing holds a Python reference to it, it gets garbage
 # collected before the ActionInvoked D-Bus signal comes back, and the
@@ -37,6 +47,7 @@ DENIED = "DENIED"
 _PENDING_NOTIFICATIONS = {}
 
 os.makedirs(RUNTIME_BASE_DIR, exist_ok=True)
+os.makedirs(RESPONSES_DIR, exist_ok=True)
 os.makedirs(WR_DIR, exist_ok=True)
 
 
@@ -98,7 +109,26 @@ def live_file_path(path):
   return os.path.join(WR_DIR, slot_name(path))
 
 
-def apply_grant(path):
+def respond(request_id, payload):
+  # Best-effort: if no id was supplied (e.g. an older caller writing
+  # straight to the FIFO without our request-id protocol), there's
+  # nothing to answer.
+  if not request_id:
+    return
+
+  dest = os.path.join(RESPONSES_DIR, request_id)
+  tmp = dest + ".tmp"
+  try:
+    with open(tmp, "w") as f:
+      f.write(payload)
+
+    os.replace(tmp, dest)
+
+  except OSError:
+    pass
+
+
+def apply_grant(path, request_id=None):
   dest = live_file_path(path)
   filename = os.path.basename(dest)
   try:
@@ -114,6 +144,7 @@ def apply_grant(path):
 
   except OSError as e:
     notify_simple("windowrule request: link failed", f"{path}\n{e}", urgency="critical")
+    respond(request_id, RESP_DENIED)
     return
 
   try:
@@ -121,6 +152,7 @@ def apply_grant(path):
 
   except OSError as e:
     notify_simple("windowrule request: hash failed", f"{path}\n{e}", urgency="critical")
+    respond(request_id, RESP_DENIED)
     return
 
   hashes = load_hashes()
@@ -133,6 +165,7 @@ def apply_grant(path):
     f"{dest} -> {path}",
     urgency="normal",
   )
+  respond(request_id, RESP_GRANTED)
 
 
 def revoke(path, mark_denied):
@@ -168,7 +201,7 @@ def short(h):
   return h[:12] if h else "(none)"
 
 
-def prompt_and_handle(path, new_hash, old_hash):
+def prompt_and_handle(path, new_hash, old_hash, request_id=None):
   title = "Window-rule permission request"
   body_lines = [
     f"Path: {path}",
@@ -196,19 +229,26 @@ def prompt_and_handle(path, new_hash, old_hash):
 
   def on_action(notification, action, user_data=None):
     if action == "grant":
-      apply_grant(path)
+      apply_grant(path, request_id=request_id)
     elif action == "deny":
       revoke(path, mark_denied=True)
       notify_simple("Window-rule denied", path, urgency="low")
+      respond(request_id, RESP_DENIED)
     elif action == "ignore":
       # ignore for now: no persistence, don't apply this time
       revoke(path, mark_denied=False)
+      respond(request_id, RESP_IGNORED)
 
     notification.close()
 
   def on_closed(notification):
     # Covers the case where the notification is dismissed/expired
     # without an action being clicked, so it doesn't leak forever.
+    # Treat a bare dismissal the same as "ignore for now" so a waiting
+    # caller doesn't hang forever.
+    if key in _PENDING_NOTIFICATIONS:
+      respond(request_id, RESP_IGNORED)
+
     cleanup()
 
   n.connect("closed", on_closed)
@@ -218,15 +258,27 @@ def prompt_and_handle(path, new_hash, old_hash):
   n.show()
 
 
-def handle_request_line(target):
-  target = target.strip()
+def handle_request_line(line):
+  line = line.strip()
+  if not line:
+    return
+
+  # Protocol: "<request-id>\t<path>". request_windowrule.sh always sends
+  # both fields; the id may be empty for a fire-and-forget caller.
+  if "\t" in line:
+    request_id, target = line.split("\t", 1)
+  else:
+    request_id, target = "", line
+
+  request_id = request_id.strip()
+  target = os.path.expanduser(target.strip())
+
   if not target:
     return
 
-  target = os.path.expanduser(target)
-
   if not os.path.isfile(target):
     notify_simple("Window-rule request: file not found", target, urgency="critical")
+    respond(request_id, RESP_DENIED)
     return
 
   try:
@@ -234,6 +286,7 @@ def handle_request_line(target):
 
   except OSError as e:
     notify_simple("Window-rule request: could not read file", f"{target}\n{e}", urgency="critical")
+    respond(request_id, RESP_DENIED)
     return
 
   hashes = load_hashes() # always fresh: picks up manual approved_hashes.json edits too
@@ -242,14 +295,15 @@ def handle_request_line(target):
 
   if old_hash == new_hash and old_hash != DENIED:
     # previously granted, unchanged content -> auto-allow silently
-    apply_grant(target)
+    apply_grant(target, request_id=request_id)
     return
 
   if old_hash == DENIED:
     notify_simple("Window-rule request blocked", f"{target}\n(previously denied)", urgency="low")
+    respond(request_id, RESP_DENIED)
     return
 
-  prompt_and_handle(target, new_hash, old_hash)
+  prompt_and_handle(target, new_hash, old_hash, request_id=request_id)
 
 
 def main():

@@ -190,6 +190,7 @@ in
           steam-run-free
           fluffychat
           docker
+          inotify-tools
           nixd # nix language server
           (pkgs.buildGoModule {
             pname = "perkins";
