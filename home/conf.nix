@@ -349,6 +349,9 @@ in
         openssl
 
         libdecor
+        # Audio
+        libpulseaudio
+        alsa-lib
       ];
     };
   };
