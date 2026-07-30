@@ -355,6 +355,7 @@ in
 
         libvorbis
         libogg
+        glu
       ];
     };
   };

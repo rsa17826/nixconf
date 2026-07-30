@@ -322,11 +322,6 @@ parse_missing() {
       # "env: ‘go’: No such file or directory" — token between colons; quotes stripped below.
       # glibc env uses Unicode smart quotes (U+2018/2019, 0xE2 0x80 0x98/99) not ASCII 0x27.
       cmd="${BASH_REMATCH[2]}"
-      # error while loading shared libraries: libogg.so.0: cannot open shared object file: No such file or directory
-    elif [[ "$line" =~ (error while loading shared libraries):[[:space:]]+([^[:space:]:]+):[[:space:]]*(cannot open) ]]; then
-      # "env: ‘go’: No such file or directory" — token between colons; quotes stripped below.
-      # glibc env uses Unicode smart quotes (U+2018/2019, 0xE2 0x80 0x98/99) not ASCII 0x27.
-      cmd="${BASH_REMATCH[2]}"
     elif [[ "$line" =~ No[[:space:]]such[[:space:]]file[[:space:]]or[[:space:]]directory ]]; then
       # Fallback: grab the colon-delimited token before "No such"
       if [[ "$line" =~ :[[:space:]]+([^/:[:space:]]+):[[:space:]]*No[[:space:]]such ]]; then
@@ -347,8 +342,14 @@ parse_missing() {
 
     # ── Linker "cannot find -lFOO" ──
     #   ld.bfd: cannot find -lX11: No such file or directory
+    local lib
     if [[ "$line" =~ cannot[[:space:]]find[[:space:]]-l([[:alnum:]_+.-]+) ]]; then
-      local lib="${BASH_REMATCH[1]}"
+      lib="${BASH_REMATCH[1]}"
+    elif [[ "$line" =~ (error while loading shared libraries):[[:space:]]+([^[:space:]:]+):[[:space:]]*(cannot open) ]]; then
+      # error while loading shared libraries: libogg.so.0: cannot open shared object file: No such file or directory
+      cmd="${BASH_REMATCH[2]}"
+    fi
+    if [[ -n $lib ]]; then
       # Skip always-present glibc pseudo-libs
       if ! [[ "$lib" =~ ^(m|dl|rt|pthread|resolv|c|stdc[+][+]|gcc_s|atomic)$ ]]; then
         _in_array "$lib" "${RESOLVED_LIBS[@]:-}" || NEW_LIBS+=("$lib")
