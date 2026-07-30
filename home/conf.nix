@@ -356,6 +356,7 @@ in
         libvorbis
         libogg
         libGLU
+        gtk3
       ];
     };
   };

@@ -5,8 +5,6 @@
 # Requires: nix (with flakes enabled), bash 4+, python3
 # Optional: nix-index (for nix-locate, more accurate binary searches)
 
-set -uo pipefail
-
 VERSION="1"
 SCRIPT_NAME="$(basename "$0")"
 
@@ -347,7 +345,7 @@ parse_missing() {
       lib="${BASH_REMATCH[1]}"
     elif [[ "$line" =~ (error while loading shared libraries):[[:space:]]+([^[:space:]:]+):[[:space:]]*(cannot open) ]]; then
       # error while loading shared libraries: libogg.so.0: cannot open shared object file: No such file or directory
-      cmd="${BASH_REMATCH[2]}"
+      lib="${BASH_REMATCH[2]}"
     fi
     if [[ -n $lib ]]; then
       # Skip always-present glibc pseudo-libs
