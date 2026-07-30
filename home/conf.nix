@@ -354,6 +354,7 @@ in
         alsa-lib
 
         libvorbis
+        libogg
       ];
     };
   };

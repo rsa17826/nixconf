@@ -322,6 +322,11 @@ parse_missing() {
       # "env: ‘go’: No such file or directory" — token between colons; quotes stripped below.
       # glibc env uses Unicode smart quotes (U+2018/2019, 0xE2 0x80 0x98/99) not ASCII 0x27.
       cmd="${BASH_REMATCH[2]}"
+      # error while loading shared libraries: libogg.so.0: cannot open shared object file: No such file or directory
+    elif [[ "$line" =~ (error while loading shared libraries):[[:space:]]+([^[:space:]:]+):[[:space:]]*(cannot open) ]]; then
+      # "env: ‘go’: No such file or directory" — token between colons; quotes stripped below.
+      # glibc env uses Unicode smart quotes (U+2018/2019, 0xE2 0x80 0x98/99) not ASCII 0x27.
+      cmd="${BASH_REMATCH[2]}"
     elif [[ "$line" =~ No[[:space:]]such[[:space:]]file[[:space:]]or[[:space:]]directory ]]; then
       # Fallback: grab the colon-delimited token before "No such"
       if [[ "$line" =~ :[[:space:]]+([^/:[:space:]]+):[[:space:]]*No[[:space:]]such ]]; then
