@@ -352,6 +352,8 @@ in
         # Audio
         libpulseaudio
         alsa-lib
+
+        libvorbis
       ];
     };
   };
