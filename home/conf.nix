@@ -358,6 +358,11 @@ in
         libGLU
         gtk3
         pango
+        harfbuzz
+        at-spi2-atk
+        cairo
+        gdk-pixbuf
+        glib
       ];
     };
   };
