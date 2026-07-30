@@ -7,6 +7,11 @@ if [[ ! -d "$SCRIPT_DATA_DIR/icons" ]]; then
   exit 1
 fi
 
+wcp() {
+  cp "$1" "$2"
+  chmod u+w "$2"
+}
+
 # Build a lowercase-name -> filepath map for icons
 declare -A icon_map
 shopt -s nullglob
@@ -47,7 +52,7 @@ while IFS= read -r -d '' dir; do
       continue
     fi
 
-    cp "$icon_path" "$dest"
+    wcp "$icon_path" "$dest"
     # ln -s "$icon_path" "$dest"
     echo "LINKED  $dir -> $dest (from $icon_path)"
     ((linked++))
