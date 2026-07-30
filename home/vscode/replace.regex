@@ -518,3 +518,8 @@ $1
 @regex builtins\.removeAttrs
 @replace removeAttrs
 @endregex
+
+@file /package\.json$
+@regex ("activationEvents": \[\s*)"\*"
+@replace $1"onStartupFinished"
+@endregex
