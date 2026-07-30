@@ -346,6 +346,11 @@ parse_missing() {
     elif [[ "$line" =~ (error while loading shared libraries):[[:space:]]+([^[:space:]:]+):[[:space:]]*(cannot open) ]]; then
       # error while loading shared libraries: libogg.so.0: cannot open shared object file: No such file or directory
       lib="${BASH_REMATCH[2]}"
+      # Normalize "libFOO.so.N" -> "FOO" so it matches the bare form used by
+      # the -lFOO branch above (KNOWN[], nix-locate, and nix search all expect
+      # a bare name like "pangocairo-1.0", not "libpangocairo-1.0.so.0").
+      lib="${lib%.so*}" # strip trailing ".so", ".so.0", ".so.6.0", etc.
+      lib="${lib#lib}"  # strip leading "lib"
     fi
     if [[ -n $lib ]]; then
       # Skip always-present glibc pseudo-libs
@@ -528,7 +533,10 @@ search_for_lib() {
     [[ -z "$loc" ]] && loc=$(nix-locate --minimal "lib/lib${lib}" 2>/dev/null | head -15) || true
     while IFS= read -r raw; do
       [[ -z "$raw" ]] && continue
-      local attr="${raw%.*}"
+      local attr
+      attr=$(awk '{print $1}' <<<"$raw")
+      attr="${attr%.out}"
+      [[ -z "$attr" ]] && continue
       results+=("${attr}  # (nix-locate: lib${lib}.so)")
     done <<<"$loc"
   fi
