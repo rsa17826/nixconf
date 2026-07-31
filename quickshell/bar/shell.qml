@@ -106,6 +106,15 @@ Scope {
           horizontalCenter: parent.right
           verticalCenter: parent.verticalCenter
         }
+        RecIndicator {
+          id: recIndicator
+
+          anchors {
+            right: trayWidget.left
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
+        }
         Tray {
           id: trayWidget
 
