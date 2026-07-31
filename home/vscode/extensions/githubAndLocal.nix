@@ -165,6 +165,12 @@ in
         default = {
           extensions = with inputs; [
             (buildFromFlake {
+              src = regex-text-gen;
+              extName = "regex-text-gen";
+              extCreator = "rioj7";
+              npmDepsHash = "sha256-6FbasdasdncN4U38jCZtsY9CaS3E4bnHwdtUtacWMQI=";
+            })
+            (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
               extCreator = "rssaromeo";

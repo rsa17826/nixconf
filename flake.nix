@@ -286,6 +286,10 @@
       url = "github:rsa17826/vscode-ext---math-on-selected-nums";
       flake = false;
     };
+    regex-text-gen = {
+      url = "github:rioj7/regex-text-gen";
+      flake = false;
+    };
     ext-vscode-void-color-theme = {
       url = "github:rsa17826/vscode-void-color-theme";
       flake = false;
