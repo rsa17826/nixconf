@@ -157,6 +157,30 @@ let
   #       sha256 = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
   #     };
   #   };
+  buildSimpleExt =
+    {
+      src,
+      extName,
+      extCreator,
+    }:
+    let
+      pkgJson = builtins.fromJSON (builtins.readFile "${src}/package.json");
+      version = pkgJson.version;
+    in
+    pkgs.stdenv.mkDerivation {
+      pname = "vscode-extension-${extName}";
+      inherit version src;
+      dontBuild = true;
+      installPhase = ''
+        mkdir -p $out/share/vscode/extensions/${extCreator}.${extName}
+        cp -r . $out/share/vscode/extensions/${extCreator}.${extName}
+      '';
+      passthru = {
+        vscodeExtName = extName;
+        vscodeExtPublisher = extCreator;
+        vscodeExtUniqueId = "${extCreator}.${extName}";
+      };
+    };
 in
 {
   programs = {
@@ -164,13 +188,10 @@ in
       profiles = {
         default = {
           extensions = with inputs; [
-            (buildFromFlake {
+            (buildSimpleExt {
               src = regex-text-gen;
               extName = "regex-text-gen";
               extCreator = "rioj7";
-              npmDepsHash = "sha256-6FbasdasdncN4U38jCZtsY9CaS3E4bnHwdtUtacWMQI=";
-              dontNpmBuild = true;
-              forceEmptyCache = true;
             })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
