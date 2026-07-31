@@ -1133,6 +1133,22 @@
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       }
     },
+    "regex-text-gen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680501256,
+        "narHash": "sha256-ugajg7WzKD1L+aGQnpXH4g2pqFkfgNI793UgeVpZS9Y=",
+        "owner": "rioj7",
+        "repo": "regex-text-gen",
+        "rev": "37e8f304d196d7bccb97e26073b83e5c19795b65",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rioj7",
+        "repo": "regex-text-gen",
+        "type": "github"
+      }
+    },
     "rofi-blocks-main": {
       "flake": false,
       "locked": {
@@ -1188,6 +1204,7 @@
         "perkins": "perkins",
         "pybrace": "pybrace",
         "quickshell": "quickshell",
+        "regex-text-gen": "regex-text-gen",
         "rofi-blocks-main": "rofi-blocks-main",
         "sops-nix": "sops-nix",
         "termbar": "termbar",
