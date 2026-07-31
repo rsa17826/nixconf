@@ -188,11 +188,11 @@ in
       profiles = {
         default = {
           extensions = with inputs; [
-            (buildSimpleExt {
-              src = regex-text-gen;
-              extName = "regex-text-gen";
-              extCreator = "rioj7";
-            })
+            # (buildSimpleExt {
+            #   src = regex-text-gen;
+            #   extName = "regex-text-gen";
+            #   extCreator = "rioj7";
+            # })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
