@@ -26,7 +26,7 @@ let
     dea = "echo 'use flake' > .envrc && echo '\\n.direnv' >> .gitignore && git rm -r --cached .direnv 2>/dev/null; direnv allow";
     "7z" = "7zz";
     yo = "nix-shell -p nodejs --run 'npx --package yo --package generator-code -- yo code'";
-    wlreload = "pkill -9 wl-mirror;wl-mirror --title top test_top&wl-mirror --title bottom test_bottom&disown";
+    wl-reload = "pkill -9 wl-mirror;wl-mirror --title top test_top&wl-mirror --title bottom test_bottom&disown -a";
     # cd = "z";
   };
   interactiveShellInit = ''
