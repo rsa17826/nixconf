@@ -23,22 +23,22 @@ read -r X Y W H <<<"$GEOM"
 OFF_X=$(printf "%.6f" "$(echo "scale=6; ($X - $MON_X) / $SCREEN_W" | bc)")
 OFF_Y=$(printf "%.6f" "$(echo "scale=6; $Y / $SCREEN_H" | bc)")
 SIZE_W=$(printf "%.6f" "$(echo "scale=6; $W / $SCREEN_W" | bc)")
-SIZE_H=$(printf "%.6f" "$(echo "scale=6; ($H - 1) / $SCREEN_H" | bc)")
+SIZE_H=$(printf "%.6f" "$(echo "scale=6; $H / $SCREEN_H" | bc)")
 
 # 4. Calculate display size & centering offset
 # Compare region AR (W/H) vs screen AR (SCREEN_W/SCREEN_H)
-REGION_WIDER=$(echo "$W * $SCREEN_H > ($H - 1) * $SCREEN_W" | bc)
+REGION_WIDER=$(echo "$W * $SCREEN_H > $H * $SCREEN_W" | bc)
 
 if [ "$REGION_WIDER" -eq 1 ]; then
   # Fit to full width; height shrinks (letterbox top/bottom)
   DISP_W="1.000000"
-  DISP_H=$(printf "%.6f" "$(echo "scale=6; (($H - 1) * $SCREEN_W) / ($W * $SCREEN_H)" | bc)")
+  DISP_H=$(printf "%.6f" "$(echo "scale=6; ($H * $SCREEN_W) / ($W * $SCREEN_H)" | bc)")
   DISP_OFF_X="0.000000"
   DISP_OFF_Y=$(printf "%.6f" "$(echo "scale=6; (1.0 - $DISP_H) / 2.0" | bc)")
 else
   # Fit to full height; width shrinks (pillarbox left/right)
   DISP_H="1.000000"
-  DISP_W=$(printf "%.6f" "$(echo "scale=6; ($W * $SCREEN_H) / (($H - 1) * $SCREEN_W)" | bc)")
+  DISP_W=$(printf "%.6f" "$(echo "scale=6; ($W * $SCREEN_H) / ($H * $SCREEN_W)" | bc)")
   DISP_OFF_Y="0.000000"
   DISP_OFF_X=$(printf "%.6f" "$(echo "scale=6; (1.0 - $DISP_W) / 2.0" | bc)")
 fi
