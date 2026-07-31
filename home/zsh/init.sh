@@ -150,7 +150,7 @@ function precmd() {
       kill -9 "$target_pid" 2>/dev/null
       setopt MONITOR 2>/dev/null
     fi
-    rm -f "$TIMER_PID_FILE"
+    /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
   fi
 }
 
