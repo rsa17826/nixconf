@@ -10,7 +10,7 @@ let
       src,
       extName,
       extCreator,
-      npmDepsHash,
+      npmDepsHash ? "",
       nativeBuildInputs ? [ ],
       buildInputs ? [ ],
       npmInstallFlags ? [ ],
