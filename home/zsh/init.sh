@@ -156,5 +156,7 @@ function precmd() {
 
 # Auto-start termbar when in an interactive terminal that isn't already inside it
 if [[ -z "$TERMBAR_ENABLED" && -n "$PS1" ]] && tty | grep -qv tty; then
-  exec termbar
+  if [[ "$(ps -o comm= -p $PPID 2>/dev/null)" != "termbar" ]]; then
+    exec termbar
+  fi
 fi
