@@ -5,6 +5,50 @@ FLAKE_DIR="$HOME/nixconf"
 BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 MESSAGE="${*:-NO MESSAGE SET}"
 
+TRACK_FILE="$HOME/.config/goproxy-rsa17826/modules.tsv"
+
+update_tracked_go_modules() {
+  [ -f "$TRACK_FILE" ] || return 0
+
+  echo "===== go module update run: $(date -Iseconds) ====="
+
+  while IFS=$'\t' read -r module dir; do
+    [ -z "$module" ] && continue
+    [ -z "$dir" ] && continue
+
+    if [ ! -d "$dir" ]; then
+      echo "[skip] $module: dir not found: $dir"
+      continue
+    fi
+
+    if [ -f "$dir/go.mod" ] && ! grep -qF "$module" "$dir/go.mod"; then
+      echo "[ignore] $module: no longer in $dir/go.mod, skipping"
+      continue
+    fi
+
+    echo "[update] $module in $dir"
+    (
+      cd "$dir" || exit 1
+      if go get -u "${module}@latest"; then
+        echo "[ok] $module updated in $dir"
+        if [ -f go.mod ]; then
+          go mod tidy || echo "[warn] go mod tidy failed in $dir"
+        fi
+        if command -v fixHash >/dev/null 2>&1; then
+          echo "[fixHash] running in $dir"
+          (fixHash || echo "[warn] fixHash failed in $dir") &
+        else
+          echo "[warn] fixHash not found on PATH, skipping"
+        fi
+      else
+        echo "[fail] $module failed to update in $dir"
+      fi
+    )
+  done <"$TRACK_FILE"
+
+  echo "===== done ====="
+}
+
 git add -A
 if ! git diff --cached --quiet; then
   git commit -m "$MESSAGE"
@@ -101,3 +145,7 @@ for remote in $REMOTES; do
     fi
   done
 done
+
+# --- UPDATE ALL TRACKED rsa17826 GO MODULES TO LATEST ---
+echo "Updating all tracked rsa17826 go modules..."
+update_tracked_go_modules
