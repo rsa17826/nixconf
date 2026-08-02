@@ -38,7 +38,7 @@ function _set_status() {
   [[ -n "$TERMBAR_STATUS_FILE" ]] && echo "$1" >|"$TERMBAR_STATUS_FILE"
 }
 
-[[ -n "$TERMBAR_ENABLED" ]] && _set_status "0s 000ms"
+_set_status "0s 000ms"
 
 function format_duration() {
   local delta=$1
@@ -129,7 +129,7 @@ function precmd() {
     code_str+="${code_str:+,}$c"
   done
 
-  if [[ -s "$TIMER_START_FILE" && -n "$TERMBAR_ENABLED" ]]; then
+  if [[ -s "$TIMER_START_FILE" ]]; then
     local start_time=$(cat "$TIMER_START_FILE" 2>/dev/null)
     if [[ -n "$start_time" ]]; then
       local delta=$(awk "BEGIN {print $exact_end_time - $start_time}")
@@ -155,7 +155,7 @@ function precmd() {
 }
 
 # Auto-start termbar when in an interactive terminal that isn't already inside it
-if [[ -z "$TERMBAR_ENABLED" && -n "$PS1" ]] && tty | grep -qv tty; then
+if [[ -n "$PS1" ]] && tty | grep -qv tty; then
   if [[ "$(ps -o comm= -p $PPID 2>/dev/null)" != "termbar" ]]; then
     exec termbar
   fi
