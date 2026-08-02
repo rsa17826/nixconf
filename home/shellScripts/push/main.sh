@@ -51,7 +51,7 @@ update_tracked_go_modules() {
         fi
         if command -v fixHash >/dev/null 2>&1; then
           echo "[fixHash] running in $dir"
-          (MAIN_SH_UPDATING=1 fixHash || echo "[warn] fixHash failed in $dir") &
+          (fixHash || echo "[warn] fixHash failed in $dir") &
         else
           echo "[warn] fixHash not found on PATH, skipping"
         fi
@@ -156,7 +156,7 @@ for remote in $REMOTES; do
       fi
 
       # --- UPDATE ONLY THE GO MODULE(S) BELONGING TO THE REPO JUST PUSHED ---
-      if [ -z "${MAIN_SH_UPDATING:-}" ]; then
+      if [ -z "${DONT_UPDATE_GO_LIBS:-}" ]; then
         update_tracked_go_modules "$CLEAN_URL"
       else
         echo "Skipping go module update (already inside an update-triggered push)."

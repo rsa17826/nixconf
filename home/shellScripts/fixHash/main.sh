@@ -105,7 +105,7 @@ if [ -f "$PWD/flake.nix" ]; then
 
     newText=$(<"$PWD/flake.nix")
     if [[ "$newText" != "$lastText" ]]; then
-      push fixed the hashes
+      DONT_UPDATE_GO_LIBS=1 push fixed the hashes
     fi
   fi
   exit "$err"
