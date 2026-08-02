@@ -10,11 +10,6 @@ TRACK_FILE="$HOME/.config/goproxy-rsa17826/modules.tsv"
 # Guard against infinite recursion: fixHash calls `push` (this script) again
 # once it patches a hash. When that happens we must NOT re-run the go module
 # update step, or we'd loop: update -> fixHash -> push -> update -> ...
-if [ -n "${MAIN_SH_UPDATING:-}" ]; then
-  SKIP_GO_UPDATE=1
-else
-  SKIP_GO_UPDATE=0
-fi
 
 # Update only the tracked module(s) matching the repo that was just pushed
 # ($1 = owner/repo, e.g. "rsa17826/go-input-lib").
@@ -161,7 +156,7 @@ for remote in $REMOTES; do
       fi
 
       # --- UPDATE ONLY THE GO MODULE(S) BELONGING TO THE REPO JUST PUSHED ---
-      if [ "$SKIP_GO_UPDATE" -eq 0 ]; then
+      if [ -z "${MAIN_SH_UPDATING:-}" ]; then
         update_tracked_go_modules "$CLEAN_URL"
       else
         echo "Skipping go module update (already inside an update-triggered push)."

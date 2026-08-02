@@ -102,12 +102,11 @@ if [ -f "$PWD/flake.nix" ]; then
   fi
   if [[ "$err" == 0 ]]; then
     echo "hash is now valid"
-    push "hash is now valid"
-  fi
 
-  newText=$(<"$PWD/flake.nix")
-  if [[ "$newText" != "$lastText" ]]; then
-    push fixed the hashes
+    newText=$(<"$PWD/flake.nix")
+    if [[ "$newText" != "$lastText" ]]; then
+      push fixed the hashes
+    fi
   fi
   exit "$err"
 else
