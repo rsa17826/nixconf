@@ -36,7 +36,9 @@ update_tracked_go_modules() {
       continue
     fi
 
-    if [ -f "$dir/go.mod" ] && ! grep -qF "$module" "$dir/go.mod"; then
+    local moduleCheck="$module"
+    if [[ $module =~ ^(([^/]+/){2}[^/]+) ]]; then moduleCheck="${BASH_REMATCH[1]}"; fi
+    if [ -f "$dir/go.mod" ] && ! grep -qF "$moduleCheck" "$dir/go.mod"; then
       echo "[ignore] $module: no longer in $dir/go.mod, skipping"
       continue
     fi

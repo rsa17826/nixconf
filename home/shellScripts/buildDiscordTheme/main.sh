@@ -41,7 +41,7 @@ EOF
 trap 'rm -f "$TMP_BASE" "$TMP_APPEND"' EXIT
 
 echo "==> Downloading base theme CSS..."
-curl -sSL "$SRC_URL" >> "$TMP_BASE"
+curl -sSL "$SRC_URL" >>"$TMP_BASE"
 
 echo "==> Scanning for @import url(...) lines pointing to .css files..."
 : >"$TMP_APPEND"
@@ -121,3 +121,5 @@ fi
 
 echo -e "\n}" >>"$OUT_FILE"
 echo "==> Done. Output written to: $OUT_FILE"
+cat "$OUT_FILE" | wl-copy
+rm "$OUT_FILE"
