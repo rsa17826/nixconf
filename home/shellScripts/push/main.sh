@@ -7,14 +7,34 @@ MESSAGE="${*:-NO MESSAGE SET}"
 
 TRACK_FILE="$HOME/.config/goproxy-rsa17826/modules.tsv"
 
-update_tracked_go_modules() {
-  [ -f "$TRACK_FILE" ] || return 0
+# Guard against infinite recursion: fixHash calls `push` (this script) again
+# once it patches a hash. When that happens we must NOT re-run the go module
+# update step, or we'd loop: update -> fixHash -> push -> update -> ...
+if [ -n "${MAIN_SH_UPDATING:-}" ]; then
+  SKIP_GO_UPDATE=1
+else
+  SKIP_GO_UPDATE=0
+fi
 
-  echo "===== go module update run: $(date -Iseconds) ====="
+# Update only the tracked module(s) matching the repo that was just pushed
+# ($1 = owner/repo, e.g. "rsa17826/go-input-lib").
+update_tracked_go_modules() {
+  local repo_filter="$1"
+
+  [ -f "$TRACK_FILE" ] || return 0
+  [ -z "$repo_filter" ] && return 0
+
+  echo "===== go module update run: $(date -Iseconds) (filter: $repo_filter) ====="
 
   while IFS=$'\t' read -r module dir; do
     [ -z "$module" ] && continue
     [ -z "$dir" ] && continue
+
+    # Only touch entries for the module(s) belonging to the repo we just pushed
+    case "$module" in
+    *"$repo_filter"*) ;;
+    *) continue ;;
+    esac
 
     if [ ! -d "$dir" ]; then
       echo "[skip] $module: dir not found: $dir"
@@ -36,7 +56,7 @@ update_tracked_go_modules() {
         fi
         if command -v fixHash >/dev/null 2>&1; then
           echo "[fixHash] running in $dir"
-          (fixHash || echo "[warn] fixHash failed in $dir") &
+          (MAIN_SH_UPDATING=1 fixHash || echo "[warn] fixHash failed in $dir") &
         else
           echo "[warn] fixHash not found on PATH, skipping"
         fi
@@ -140,12 +160,15 @@ for remote in $REMOTES; do
         popd >/dev/null
       fi
 
+      # --- UPDATE ONLY THE GO MODULE(S) BELONGING TO THE REPO JUST PUSHED ---
+      if [ "$SKIP_GO_UPDATE" -eq 0 ]; then
+        update_tracked_go_modules "$CLEAN_URL"
+      else
+        echo "Skipping go module update (already inside an update-triggered push)."
+      fi
+
     else
       echo "Failed to push to $url, continuing..."
     fi
   done
 done
-
-# --- UPDATE ALL TRACKED rsa17826 GO MODULES TO LATEST ---
-echo "Updating all tracked rsa17826 go modules..."
-update_tracked_go_modules
