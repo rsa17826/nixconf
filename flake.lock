@@ -577,11 +577,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1785683361,
-        "narHash": "sha256-KcadGoassasEGHnoW3R0PVdbNqu7ldczeOzWyNvvr6U=",
+        "lastModified": 1785753310,
+        "narHash": "sha256-jAmsP9iHn18sEN/yxduanGVNGIHxoJCEMCjKBdM2vjk=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "4d26628276de580c69be89e734ea89931b121f02",
+        "rev": "5c6f0aa2df6d1698ee7174c69d3123cb236c6fde",
         "type": "github"
       },
       "original": {
@@ -952,11 +952,11 @@
       },
       "locked": {
         "dir": "packages/nix",
-        "lastModified": 1785693625,
-        "narHash": "sha256-AgC7q2lywLwaC8eotCny54Tgl4Q6hQ0CCXpphFgEO9k=",
+        "lastModified": 1783651774,
+        "narHash": "sha256-PuCRfdYK2RG6CAYbnjbF6ElkULdqw0G+bhKWeQsJTUw=",
         "owner": "SteamClientHomebrew",
         "repo": "Millennium",
-        "rev": "c580b8519d3f51c9bf27cfb47b43b41d7a1e129c",
+        "rev": "6d6df68fb43e11a73c0a8d0fd1566e4f81f873d1",
         "type": "github"
       },
       "original": {
@@ -970,17 +970,17 @@
     "millennium-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1785643124,
-        "narHash": "sha256-FuUCEoHif/KIG6mVnyYYkNb04PlJvcDx/6C6PdV5niQ=",
+        "lastModified": 1783612754,
+        "narHash": "sha256-97yND/JauDYEdYEHzuwkUeOUwfd+BCzHpKTmibkQZgw=",
         "owner": "SteamClientHomebrew",
         "repo": "Millennium",
-        "rev": "549f7d53ad44f6b332ee5c67d96c4b9386182574",
+        "rev": "78f1f71a63f18142289926ca435071500ac1cbad",
         "type": "github"
       },
       "original": {
         "owner": "SteamClientHomebrew",
         "repo": "Millennium",
-        "rev": "549f7d53ad44f6b332ee5c67d96c4b9386182574",
+        "rev": "78f1f71a63f18142289926ca435071500ac1cbad",
         "type": "github"
       }
     },
@@ -1045,11 +1045,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1785571196,
-        "narHash": "sha256-KoTsyMQqnXQZq8deCEnu4QkyldkwH/bpMMhUcfMdGIw=",
+        "lastModified": 1785692966,
+        "narHash": "sha256-vUfIeBEfpbAfZ5zjgIkYk7eHBeVfCYVjLbWnMkseYnk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "148bab9c1c3c53136ecb44a6ea356a0ed5b39b06",
+        "rev": "643809054d65fdd466a63e3155b8c498cb483c04",
         "type": "github"
       },
       "original": {
