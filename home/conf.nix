@@ -378,6 +378,18 @@ in
     };
     user = {
       services = {
+        dynamicRebinds = {
+          wantedBy = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "/home/nyix/projects/dynamicRebinds/dynamicRebinds";
+            Restart = "on-failure";
+            RestartSec = "5s";
+            KillMode = "mixed";
+          };
+        };
         input-manager = {
           description = "Input Manager";
           wantedBy = [ "graphical-session.target" ];
