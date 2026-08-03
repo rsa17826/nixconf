@@ -225,6 +225,7 @@ else
       continue # Re-run the while loop
     else
       echo "$TMPOUT"
+      ln "$TMPOUT" "$HOME/nixconf/updateFailure.log"
       # PERMANENT FAILURE: Update commit message to reflect failure
       echo "⚠️ No fixable hashes found."
       if [[ "$NO_GIT" == false ]]; then

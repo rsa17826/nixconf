@@ -5,3 +5,4 @@ vm/userts
 vm/Violentmonkey
 updatelog.ans
 __pycache__*.vsix
+updateFailure.log
