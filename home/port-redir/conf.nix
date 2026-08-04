@@ -17,6 +17,10 @@ let
       "ap"
       38281
     ]
+    [
+      "copyparty"
+      8086
+    ]
   ];
 
   # Generate HTML list items using .localhost
