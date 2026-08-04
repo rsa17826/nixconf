@@ -10,7 +10,7 @@
         name = "rofi-launcher";
         text = "rofi -modi blocks -show blocks -show-icons -blocks-wrap ${./launcher.py}";
         runtimeInputs = with pkgs; [
-          (python3.withPackages (with ps; [ emoji ]))
+          (python3.withPackages (ps: with ps; [ emoji ]))
           wl-clipboard
           libnotify
         ];
