@@ -21,6 +21,10 @@ let
       "copyparty"
       8086
     ]
+    [
+      "syncthing"
+      8384
+    ]
   ];
 
   # Generate HTML list items using .localhost
