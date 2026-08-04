@@ -15,7 +15,7 @@ BEGIN {
 
 # Detect UserStyle metadata block.
 # Adjust these if your delimiters differ.
-/^/\* ==UserStyle==/ {
+/^ *==UserStyle==/ {
     in_userstyle = 1
     print
     next
