@@ -43,6 +43,7 @@ Item {
 
   // ── Identity + external state (owned by the parent list) ─────────
   property var timerId: 0
+  property string timerName: ""
 
   signal cleared(var id)
 
@@ -229,7 +230,7 @@ Item {
 
       color: root.timerColor()
       font.pixelSize: 11
-      text: Owo.owo("⏰ " + root.formatCountdown())
+      text: Owo.owo("⏰ " + (root.timerName ? root.timerName + ": " : "") + root.formatCountdown())
 
       anchors {
         left: parent.left

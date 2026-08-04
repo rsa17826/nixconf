@@ -24,11 +24,59 @@ Item {
     const t = root.timers.slice()
     t.push({
       id: root.nextId,
+      name: "",
       targetTimestamp: 0
     })
     root.timers = t
     root.nextId += 1
     saveTimers()
+  }
+
+  // ── Name-based API (used by TimerServer) ─────────────────────
+  function findByName(name) {
+    return root.timers.find(t => t.name === name)
+  }
+
+  // Create or update a timer by name. If it doesn't exist yet, create it.
+  function setByName(name, targetTimestamp) {
+    const ts = targetTimestamp || 0
+    const existing = root.findByName(name)
+    if (existing) {
+      root.timers = root.timers.map(t => t.id === existing.id ? {
+          id: t.id,
+          name: t.name,
+          targetTimestamp: ts
+        } : t)
+    } else {
+      const t = root.timers.slice()
+      t.push({
+        id: root.nextId,
+        name: name,
+        targetTimestamp: ts
+      })
+      root.timers = t
+      root.nextId += 1
+    }
+    saveTimers()
+    root.ensureUnsetSlot()
+  }
+
+  // Remove a named timer entirely (or reset it in place, per removeTimer's
+  // existing min-1 rule).
+  function clearByName(name) {
+    const existing = root.findByName(name)
+    if (!existing)
+      return false
+    root.removeTimer(existing.id)
+    return true
+  }
+
+  function listNamed() {
+    return root.timers.filter(t => t.name && t.name.length > 0).map(t => ({
+          name: t.name,
+          id: t.id,
+          targetTimestamp: t.targetTimestamp
+        }))
   }
   function configPath() {
     const ns = "qsbar"
@@ -53,6 +101,7 @@ Item {
     const t = root.timers.slice()
     t.push({
       id: root.nextId,
+      name: "",
       targetTimestamp: 0
     })
     root.timers = t
@@ -67,6 +116,7 @@ Item {
       // min 1 remaining: reset in place instead of removing
       root.timers = root.timers.map(t => t.id === id ? {
           id: t.id,
+          name: t.name,
           targetTimestamp: 0
         } : t)
     } else {
@@ -81,6 +131,7 @@ Item {
   function updateTimer(id, ts) {
     root.timers = root.timers.map(t => t.id === id ? {
         id: t.id,
+        name: t.name,
         targetTimestamp: ts
       } : t)
     saveTimers()
@@ -116,6 +167,7 @@ Item {
       property var timers: [
         {
           id: 1,
+          name: "",
           targetTimestamp: 0
         }
       ]
@@ -132,6 +184,7 @@ Item {
       delegate: CountdownTimer {
         targetTimestamp: modelData.targetTimestamp
         timerId: modelData.id
+        timerName: modelData.name || ""
 
         onCleared: id => root.removeTimer(id)
         onCommitted: (id, ts) => root.updateTimer(id, ts)

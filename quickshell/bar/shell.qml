@@ -57,10 +57,15 @@ Scope {
           verticalCenter: parent.verticalCenter
         }
         CountdownTimerRow {
+          id: countdownRow
+
           anchors {
             left: root.left
             verticalCenter: parent.verticalCenter
           }
+        }
+        TimerServer {
+          timerRow: countdownRow
         }
         // ClipHist {
         //   id: clipboardLogic
