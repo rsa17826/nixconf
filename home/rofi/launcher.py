@@ -132,22 +132,13 @@ def owowify(text: str) -> str:
 
 # --- EMOJI MODE ENGINE ---
 
-try:
-  import emoji as emoji_lib # pyright: ignore[reportMissingImports]
-
-  EMOJI_LIB_AVAILABLE = True
-
-except ImportError:
-  EMOJI_LIB_AVAILABLE = False
-
 
 def build_emoji_database() -> list[dict[str, str]]:
   """Builds a flat list of {char, name} from the `emoji` package's data table."""
   items: list[dict[str, str]] = []
-  if not EMOJI_LIB_AVAILABLE:
-    return items
+  import emoji
 
-  for char, data in emoji_lib.EMOJI_DATA.items(): # pyright: ignore[reportAny]
+  for char, data in emoji.EMOJI_DATA.items(): # pyright: ignore[reportAny]
     raw_name = cast(str, data.get("en", "")) # pyright: ignore[reportAny]
     if not raw_name:
       continue
