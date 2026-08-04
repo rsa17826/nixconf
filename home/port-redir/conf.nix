@@ -70,6 +70,11 @@ in
                   "/" = {
                     proxyPass = "http://127.0.0.1:${toString port}";
                     proxyWebsockets = true;
+                    extraConfig = ''
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Forwarded-Host $http_host;
+                      proxy_set_header X-Forwarded-Proto $scheme;
+                    '';
                   };
                 };
               };
