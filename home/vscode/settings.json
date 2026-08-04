@@ -36,7 +36,7 @@
     "**/js globals": true,
     "**/map": true,
     "**/map_*": true,
-    "**/java*": true,
+    // "**/java*": true,
     "**/css*": true,
     "**/mqphp*": true,
     "**/*Sound*": true,
