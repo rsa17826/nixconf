@@ -32,6 +32,7 @@ let
   };
   interactiveShellInit = ''
     alias rm="gio trash"
+    alias OA=""
   '';
 in
 {
