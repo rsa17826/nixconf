@@ -38,40 +38,41 @@ in
     nginx = {
       enable = true;
 
-      # Define a default virtual host to catch requests to http://127.0.0.1/
-      virtualHosts."_" = {
-        default = true;
-        locations = {
-          "/" = {
-            return = "200 '${indexHtml}'";
-            extraConfig = ''
-              add_header Content-Type text/html;
-            '';
-          };
-        };
-      };
-
-      # Your existing dynamic virtual hosts for the subdomains
-      virtualHosts = lib.listToAttrs (
-        map (
-          pair:
-          let
-            name = builtins.elemAt pair 0;
-            port = builtins.elemAt pair 1;
-          in
-          {
-            name = "${name}.127.0.0.1";
-            value = {
-              locations = {
-                "/" = {
-                  proxyPass = "http://127.0.0.1:${toString port}";
-                  proxyWebsockets = true;
+      # Combine both the default host and the mapped hosts into one attribute set
+      virtualHosts =
+        (lib.listToAttrs (
+          map (
+            pair:
+            let
+              name = builtins.elemAt pair 0;
+              port = builtins.elemAt pair 1;
+            in
+            {
+              name = "${name}.127.0.0.1";
+              value = {
+                locations = {
+                  "/" = {
+                    proxyPass = "http://127.0.0.1:${toString port}";
+                    proxyWebsockets = true;
+                  };
                 };
               };
+            }
+          ) remaps
+        ))
+        // {
+          "_" = {
+            default = true;
+            locations = {
+              "/" = {
+                return = "200 '${indexHtml}'";
+                extraConfig = ''
+                  add_header Content-Type text/html;
+                '';
+              };
             };
-          }
-        ) remaps
-      );
+          };
+        };
     };
   };
 
