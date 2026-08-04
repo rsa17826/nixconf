@@ -9,6 +9,10 @@ let
       "nullserv"
       7542
     ]
+    [
+      "mathquest"
+      1533
+    ]
   ];
 
   # Generate HTML list items for the index page
