@@ -15,7 +15,7 @@ let
     ]
   ];
 
-  # Generate HTML list items for the index page
+  # Generate HTML list items using .localhost
   indexHtml = ''
     <!DOCTYPE html>
     <html>
@@ -42,7 +42,6 @@ in
     nginx = {
       enable = true;
 
-      # Combine both the default host and the mapped hosts into one attribute set
       virtualHosts =
         (lib.listToAttrs (
           map (
@@ -52,7 +51,8 @@ in
               port = builtins.elemAt pair 1;
             in
             {
-              name = "${name}.127.0.0.1";
+              # Changed from .127.0.0.1 to .localhost
+              name = "${name}.localhost";
               value = {
                 locations = {
                   "/" = {
@@ -81,8 +81,11 @@ in
   };
 
   networking = {
+    # Update extraHosts to map .localhost domains to 127.0.0.1
     extraHosts = lib.concatStringsSep "\n" (
-      map (pair: "127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1") remaps
+      map (
+        pair: "127.0.0.1 ${builtins.elemAt pair 0}.localhost\n127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1"
+      ) remaps
     );
   };
 }
