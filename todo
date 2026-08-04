@@ -18,3 +18,5 @@ make rmb on notif same as x button
 
 
 auto regex @noregex not working when file saved by defocusing and regex in replace.regex and noregex in the file
+
+owo add opytion to disable for long lines or only do visible horizontal of the line
