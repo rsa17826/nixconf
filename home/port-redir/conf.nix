@@ -29,7 +29,7 @@ let
               let
                 name = builtins.elemAt pair 0;
               in
-              "<li><a href=\"http://${name}.127.0.0.1\">${name}</a></li>"
+              "<li><a href=\"http://${name}.localhost\">${name}</a></li>"
             ) remaps
           )}
         </ul>
