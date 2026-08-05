@@ -2,6 +2,19 @@
 // Shows a pulsing "REC 00:12" indicator in the bar while toggleRec.sh has
 // an active gpu-screen-recorder session running (tracked via its PID file).
 // Hidden entirely when nothing is recording.
+//
+// ── Shader setup ──────────────────────────────────────────────────
+// Uses a real fragment shader (shaders/recglitch.frag + .vert) for
+// chromatic aberration / slice-glitch / bloom, instead of faking it with
+// layered Rectangles. Qt6's shader pipeline needs GLSL compiled to .qsb:
+//
+//   qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 \
+//       -o shaders/recglitch.vert.qsb shaders/recglitch.vert
+//   qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 \
+//       -o shaders/recglitch.frag.qsb shaders/recglitch.frag
+//
+// Run that from the directory containing shaders/, then point
+// vertexShader/fragmentShader below at the .qsb outputs (already done).
 
 import Quickshell
 import Quickshell.Io
@@ -14,8 +27,8 @@ Item {
   property bool recording: false
   property int secondsElapsed: 0
 
-  implicitHeight: recording ? label.implicitHeight : 0
-  implicitWidth: recording ? (dot.width + label.implicitWidth + 6) : 0
+  implicitHeight: recording ? Math.max(12, contentItem.implicitHeight) : 0
+  implicitWidth: recording ? contentItem.implicitWidth : 0
   visible: recording
 
   // Blink the dot while recording
@@ -29,47 +42,75 @@ Item {
     onTriggered: dot.on = !dot.on
   }
 
-  Row {
-    id: row
+  // Drives iTime for the shader — cheap monotonically increasing seconds,
+  // no need for sub-frame precision since it only seeds the slice noise.
+  Timer {
+    interval: 33
+    repeat: true
+    running: root.recording
 
-    spacing: 6
+    onTriggered: shaderEffect.iTime += 0.033
+  }
 
-    anchors {
-      left: parent.left
-      verticalCenter: parent.verticalCenter
-    }
+  // ── Plain, unstyled content — the shader does all the visual work ──
+  // This gets rendered offscreen into a texture (via layer.enabled) and
+  // fed to the ShaderEffect below. Keep it simple/high-contrast so the
+  // aberration and bloom have clean edges to work with.
+  Item {
+    id: contentItem
 
-    Rectangle {
-      id: dot
+    readonly property int dotSize: 8
 
-      property bool on: true
+    implicitHeight: Math.max(dotSize, label.implicitHeight)
+    implicitWidth: dotSize + 7 + label.implicitWidth
+    layer.enabled: true
+    layer.smooth: true
+    visible: false     // only the shaded copy below is actually shown
 
+    Row {
       anchors.verticalCenter: parent.verticalCenter
-      color: on ? "#e84d4d" : "#3a1414"
-      height: 8
-      radius: 4
-      width: 8
+      spacing: 7
 
-      Behavior on color {
-        ColorAnimation {
-          duration: 150
+      Rectangle {
+        id: dot
+
+        property bool on: true
+
+        anchors.verticalCenter: parent.verticalCenter
+        color: on ? "#ff4d6a" : "#3a1414"
+        height: contentItem.dotSize
+        radius: contentItem.dotSize / 2
+        width: contentItem.dotSize
+      }
+      Text {
+        id: label
+
+        color: "#ffffff"
+        font.pixelSize: 11
+
+        text: {
+          const h = Math.floor(root.secondsElapsed / 3600)
+          const m = Math.floor(root.secondsElapsed / 60) % 60
+          const s = root.secondsElapsed % 60
+          const pad = n => (n < 10 ? "0" + n : "" + n)
+          return Owo.owo(`REC ${h > 0 ? pad(h) + ":" : ""}${pad(m)}:${pad(s)}`)
         }
       }
     }
-    Text {
-      id: label
+  }
 
-      color: "#e84d4d"
-      font.pixelSize: 11
+  // ── Shaded output ──────────────────────────────────────────────
+  ShaderEffect {
+    id: shaderEffect
 
-      text: {
-        const h = Math.floor(root.secondsElapsed / 3600)
-        const m = Math.floor(root.secondsElapsed / 60) % 60
-        const s = root.secondsElapsed % 60
-        const pad = n => (n < 10 ? "0" + n : "" + n)
-        return Owo.owo(`REC ${h > 0 ? pad(h) + ":" : ""}${pad(m)}:${pad(s)}`)
-      }
-    }
+    property real aberration: 0.0035
+    property real glitchAmount: 0.03
+    property real iTime: 0.0
+    property variant source: contentItem
+
+    anchors.fill: contentItem
+    fragmentShader: "shaders/recglitch.frag.qsb"
+    vertexShader: "shaders/recglitch.vert.qsb"
   }
 
   // Poll once a second: is the PID in the file still alive, and since when?

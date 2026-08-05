@@ -11,6 +11,17 @@ Item {
   implicitWidth: bellRow.implicitWidth + 14
 
   // ── Bell pill ────────────────────────────────────────────────
+
+  // GlitchEffect {
+  //   id: bellGlitch
+
+  //   aberration: 0.0018
+  //   active: NotifState.activeCount > 0
+  //   anchors.centerIn: parent
+  //   anchors.verticalCenter: parent.verticalCenter
+  //   glitchAmount: 0.015
+  //   glitchRate: 0.6
+
   Row {
     id: bellRow
 
@@ -32,8 +43,6 @@ Item {
         }
       }
     }
-
-    // Badge — history count
     Rectangle {
       anchors.verticalCenter: parent.verticalCenter
       border.color: NotifState.centerOpen ? "#4d6fff" : "#2a3a8a"
@@ -56,6 +65,8 @@ Item {
       }
     }
   }
+  // }
+  // }
   MouseArea {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor

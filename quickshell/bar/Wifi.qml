@@ -128,33 +128,54 @@ Item {
         }
       }
     }
+    GlitchEffect {
+      id: wifiGlitch
 
-    // WiFi icon (Nerd Font glyph)
-    Text {
-      id: iconText
-
-      color: signalColor(root.signal, true)
-      font.pixelSize: 12
-      text: Owo.owo(root.signal + " " + signalIcon(root.signal, true))
-
-      anchors {
-        left: parent.left
-        verticalCenter: parent.verticalCenter
-      }
-    }
-
-    // SSID label
-    Text {
-      id: ssidText
-
-      color: root.connected ? "#c4cce8" : "#30324a"
-      font.pixelSize: 10
-      text: Owo.owo(root.connected ? root.ssid : "no wifi")
+      aberration: 0.0025
+      active: 1 || root.scanning
+      glitchAmount: 0.02
+      glitchRate: 1.4
 
       anchors {
-        left: iconText.right
         leftMargin: 4
         verticalCenter: parent.verticalCenter
+      }
+      Row {
+        spacing: 4
+
+        anchors {
+          leftMargin: 4
+          verticalCenter: parent.verticalCenter
+        }
+
+        // WiFi icon (Nerd Font glyph)
+        Text {
+          id: iconText
+
+          color: signalColor(root.signal, true)
+          font.pixelSize: 12
+          text: Owo.owo(root.signal + " " + signalIcon(root.signal, true))
+
+          // anchors {
+          //   left: pill.left
+          //   verticalCenter: pill.verticalCenter
+          // }
+        }
+
+        // SSID label
+        Text {
+          id: ssidText
+
+          color: root.connected ? "#c4cce8" : "#30324a"
+          font.pixelSize: 10
+          text: Owo.owo(root.connected ? root.ssid : "no wifi")
+
+          // anchors {
+          //   left: iconText.right
+          //   leftMargin: 4
+          //   verticalCenter: pill.verticalCenter
+          // }
+        }
       }
     }
   }

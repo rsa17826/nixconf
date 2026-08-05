@@ -92,16 +92,25 @@ Rectangle {
     rightMargin: 10
     verticalCenter: parent.verticalCenter
   }
+  // GlitchEffect {
+  //   id: wifiGlitch
 
-  // Text showing number of notifications
-  Text {
-    id: ghNotifCountTextItem
+  //   aberration: 0.0025
+  //   active: true
+  //   anchors.fill: parent
+  //   glitchAmount: 0.02
+  //   glitchRate: 1.4
 
-    anchors.centerIn: parent
-    color: "#4d6fff"
-    font.bold: true
-    font.pixelSize: 8
-    text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")
+    // Text showing number of notifications
+    Text {
+      id: ghNotifCountTextItem
+
+      anchors.centerIn: parent
+      color: "#4d6fff"
+      font.bold: true
+      font.pixelSize: 8
+      text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")
+    // }
   }
   Timer {
     interval: 60000   // 60 seconds
