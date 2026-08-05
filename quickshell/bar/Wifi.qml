@@ -132,7 +132,7 @@ Item {
       id: wifiGlitch
 
       aberration: 0.0025
-      active: 1 || root.scanning
+      active: root.scanning
       glitchAmount: 0.02
       glitchRate: 1.4
 
