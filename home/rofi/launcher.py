@@ -8,6 +8,37 @@ import re
 import shlex
 from typing import cast
 
+# --- CACHING ---
+
+CACHE_DIR = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+CACHE_DIR = os.path.join(CACHE_DIR, "launcher")
+APPS_CACHE_FILE = os.path.join(CACHE_DIR, "apps_cache.json")
+EMOJI_CACHE_FILE = os.path.join(CACHE_DIR, "emoji_cache.json")
+
+
+def _load_json_cache(path: str):
+  try:
+    with open(path, "r") as f:
+      return json.load(f) # pyright: ignore[reportAny]
+
+
+  except Exception:
+    return None
+
+
+def _save_json_cache(path: str, data) -> None: # pyright: ignore[reportMissingParameterType]
+  try:
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    tmp_path = f"{path}.tmp.{os.getpid()}"
+    with open(tmp_path, "w") as f:
+      json.dump(data, f)
+
+    os.replace(tmp_path, path)
+
+  except Exception:
+    pass
+
+
 # --- OWO TRANSLATION ENGINE ---
 
 VOWEL = "[aiueo]"
@@ -134,10 +165,24 @@ def owowify(text: str) -> str:
 
 
 def build_emoji_database() -> list[dict[str, str]]:
-  """Builds a flat list of {char, name} from the `emoji` package's data table."""
-  items: list[dict[str, str]] = []
+  """Builds a flat list of {char, name} from the `emoji` package's data table.
+
+  The result never changes for a given installed version of the `emoji`
+  package, so it's cached on disk and keyed by that version to avoid
+  rebuilding + resorting the (large) table on every launch.
+  """
   import emoji
 
+  pkg_version = getattr(emoji, "__version__", "unknown")
+
+  cached = _load_json_cache(EMOJI_CACHE_FILE)
+  if isinstance(cached, dict) and cached.get("version") == pkg_version:
+    items = cached.get("items")
+    if isinstance(items, list):
+      return cast(list[dict[str, str]], items)
+
+
+  items: list[dict[str, str]] = []
   for char, data in emoji.EMOJI_DATA.items(): # pyright: ignore[reportAny]
     raw_name = cast(str, data.get("en", "")) # pyright: ignore[reportAny]
     if not raw_name:
@@ -146,7 +191,9 @@ def build_emoji_database() -> list[dict[str, str]]:
     name = raw_name.strip(":").replace("_", " ")
     items.append({"char": char, "name": name})
 
-  return sorted(items, key=lambda x: x["name"])
+  items = sorted(items, key=lambda x: x["name"])
+  _save_json_cache(EMOJI_CACHE_FILE, {"version": pkg_version, "items": items})
+  return items
 
 
 def _js_escape(codepoint: int) -> str:
@@ -294,8 +341,51 @@ def format_emoji_detail_lines(char: str) -> list[dict[str, str]]:
 # --- SYSTEM INTERACTION LAYER ---
 
 
+def _desktop_file_signature() -> list[list]: # pyright: ignore[reportMissingTypeArgument]
+  """Cheap fingerprint of every .desktop file we'd scan: (path, mtime) pairs.
+
+  Computing this is just a glob + stat per file (no reading/parsing), so it's
+  fast enough to run every launch to decide whether the cache is still valid.
+  """
+  xdg_data_dirs = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/run/current-system/sw/share:/usr/share").split(":")
+  xdg_data_home = os.environ.get("XDG_DATA_HOME", os.path.expanduser("~/.local/share"))
+
+  search_paths = [os.path.join(xdg_data_home, "applications/*.desktop")]
+  for data_dir in xdg_data_dirs:
+    if os.path.exists(os.path.join(data_dir, "applications")):
+      search_paths.append(os.path.join(data_dir, "applications/*.desktop"))
+
+
+  sig: list[list] = [] # pyright: ignore[reportMissingTypeArgument]
+  for path_pattern in search_paths:
+    for filepath in glob.glob(path_pattern):
+      try:
+        sig.append([filepath, os.path.getmtime(filepath)])
+
+      except OSError:
+        continue
+
+
+
+  sig.sort(key=lambda x: x[0])
+  return sig
+
+
 def get_desktop_apps() -> list[dict[str, str]]:
-  """Scans system paths for installed desktop applications and extracts names, execs, and icons."""
+  """Scans system paths for installed desktop applications and extracts names, execs, and icons.
+
+  Parsing + owowifying every .desktop file is the slow part of startup, so
+  the result is cached on disk. The cache is reused as long as the set of
+  .desktop files and their mtimes haven't changed since it was written.
+  """
+  current_sig = _desktop_file_signature()
+  cached = _load_json_cache(APPS_CACHE_FILE)
+  if isinstance(cached, dict) and cached.get("signature") == current_sig:
+    apps = cached.get("apps")
+    if isinstance(apps, list):
+      return cast(list[dict[str, str]], apps)
+
+
   apps: list[dict[str, str]] = []
   xdg_data_dirs = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/run/current-system/sw/share:/usr/share").split(":")
   xdg_data_home = os.environ.get("XDG_DATA_HOME", os.path.expanduser("~/.local/share"))
@@ -346,7 +436,9 @@ def get_desktop_apps() -> list[dict[str, str]]:
 
 
 
-  return sorted(apps, key=lambda x: x["name"].lower())
+  apps = sorted(apps, key=lambda x: x["name"].lower())
+  _save_json_cache(APPS_CACHE_FILE, {"signature": current_sig, "apps": apps})
+  return apps
 
 
 def copy_to_clipboard(text: str):
