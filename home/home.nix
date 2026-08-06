@@ -41,7 +41,9 @@ in
     in
     {
       home = {
-        file = editable.entries;
+        file = editable.entries ++ {
+          "${userConfig.nixConf}/flake.current.lock".source = ../flake.lock;
+        };
         # file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
         username = userConfig.uname;
         homeDirectory = "/home/${userConfig.uname}";
