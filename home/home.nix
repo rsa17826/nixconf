@@ -42,7 +42,7 @@ in
     {
       home = {
         file = editable.entries // {
-          "${userConfig.nixConf}/flake.current.lock".source = ../flake.lock;
+          "${userConfig.nixConf}/current flake.lock.json".source = ../flake.lock;
         };
         # file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
         username = userConfig.uname;
