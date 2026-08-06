@@ -245,6 +245,9 @@ in
           })
           typescript
           nodejs
+          (writeShellScriptBin "pixieditor" ''
+            exec "/etc/profiles/per-user/${userConfig.uname}/bin/nonet" ${pkgs.pixieditor}/bin/pixieditor "$@"
+          '')
           jpexs # ffdec
           python314Packages.ruff
           deluged
