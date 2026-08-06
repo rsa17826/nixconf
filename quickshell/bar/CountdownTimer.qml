@@ -228,7 +228,7 @@ Item {
     GlitchEffect {
       id: timerGlitch
 
-      aberration: 0.0075
+      aberration: 0.0120
       active: isSameDay()
       glitchAmount: 0.037
       // TODO rerange root.targetTimestamp 1h 0 ~1.5 ~2.3
@@ -309,8 +309,8 @@ Item {
       GlitchEffect {
         id: settimerGlitch
 
-        aberration: 0.0025
-        glitchAmount: 0.02
+        aberration: 0.0120
+        glitchAmount: 0.07
         glitchRate: 1.4
 
         Text {
@@ -354,63 +354,69 @@ Item {
           }
         ]
 
-        delegate: GlitchEffect {
-          id: iconGlitch
+        delegate: Row {
+          spacing: 6
+          width: pickerColumn.width
 
-          aberration: 0.0025
-          glitchAmount: 0.02
-          glitchRate: 1.4
+          GlitchEffect {
+            id: labelGlitch
 
-          Row {
-            spacing: 6
-            width: pickerColumn.width
-
-            // GlitchEffect {
-            //   id: textGlitch
-
-            //   aberration: 0.0025
-            //   glitchAmount: 0.02
-            //   glitchRate: 1.4
+            aberration: 0.0120
+            anchors.verticalCenter: parent.verticalCenter
+            glitchAmount: 0.07
+            glitchRate: 1.4
 
             Text {
               color: c.text
               font.pixelSize: 10
               text: Owo.owo(modelData.label)
-              width: 34
+              width: 38
             }
-            // }
-            Rectangle {
-              id: minusBtn
+          }
+          Rectangle {
+            id: minusBtn
 
-              color: minusArea.containsMouse ? c.hovered : c.buttonBg
-              implicitHeight: 18
-              implicitWidth: 18
-              radius: 4
+            color: minusArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 18
+            implicitWidth: 18
+            radius: 4
 
-              // GlitchEffect {
-              //   id: minusGlitch
+            // Only the glyph is glitched — MouseArea must stay outside
+            // any GlitchEffect (see NotifToast's action buttons for why:
+            // GlitchEffect's real content is visible:false and never
+            // gets hit-tested).
+            GlitchEffect {
+              id: minusGlitch
 
-              //   aberration: 0.0025
-              //   glitchAmount: 0.02
-              //   glitchRate: 1.4
+              aberration: 0.0120
+              anchors.centerIn: parent
+              glitchAmount: 0.07
+              glitchRate: 1.4
 
               Text {
-                anchors.centerIn: parent
                 color: c.text
                 font.pixelSize: 10
                 text: "-"
               }
-              // }
-              MouseArea {
-                id: minusArea
-
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-
-                onClicked: root.adjustDraft(modelData.key, -1, modelData.step)
-              }
             }
+            MouseArea {
+              id: minusArea
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: root.adjustDraft(modelData.key, -1, modelData.step)
+            }
+          }
+          GlitchEffect {
+            id: valueGlitch
+
+            aberration: 0.0120
+            anchors.verticalCenter: parent.verticalCenter
+            glitchAmount: 0.07
+            glitchRate: 1.4
+
             Text {
               color: c.text
               font.pixelSize: 10
@@ -421,29 +427,37 @@ Item {
               }
               width: 32
             }
-            Rectangle {
-              id: plusBtn
+          }
+          Rectangle {
+            id: plusBtn
 
-              color: plusArea.containsMouse ? c.hovered : c.buttonBg
-              implicitHeight: 18
-              implicitWidth: 18
-              radius: 4
+            color: plusArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 18
+            implicitWidth: 18
+            radius: 4
+
+            GlitchEffect {
+              id: plusGlitch
+
+              aberration: 0.0120
+              anchors.centerIn: parent
+              glitchAmount: 0.07
+              glitchRate: 1.4
 
               Text {
-                anchors.centerIn: parent
                 color: c.text
                 font.pixelSize: 10
                 text: "+"
               }
-              MouseArea {
-                id: plusArea
+            }
+            MouseArea {
+              id: plusArea
 
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
 
-                onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
-              }
+              onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
             }
           }
         }
@@ -459,66 +473,66 @@ Item {
         spacing: 8
         width: parent.width
 
-        GlitchEffect {
-          id: setGlitch
+        Rectangle {
+          id: setBtn
 
-          aberration: 0.0025
-          glitchAmount: 0.02
+          color: setArea.containsMouse ? c.hovered : c.buttonBg
+          implicitHeight: 22
+          implicitWidth: (buttonRow.width - 8) / 2
+          radius: 4
 
-          Rectangle {
-            id: setBtn
+          GlitchEffect {
+            id: setGlitch
 
-            color: setArea.containsMouse ? c.hovered : c.buttonBg
-            implicitHeight: 22
-            implicitWidth: (buttonRow.width - 8) / 2
-            radius: 4
+            aberration: 0.0120
+            anchors.centerIn: parent
+            glitchAmount: 0.07
 
             Text {
-              anchors.centerIn: parent
               color: c.accent
               font.pixelSize: 10
               text: Owo.owo("Set")
             }
-            MouseArea {
-              id: setArea
+          }
+          MouseArea {
+            id: setArea
 
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              hoverEnabled: true
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
 
-              onClicked: root.commitDraft()
-            }
+            onClicked: root.commitDraft()
           }
         }
-        GlitchEffect {
-          id: clearGlitch
+        Rectangle {
+          id: clearBtn
 
-          aberration: 0.0025
-          glitchAmount: 0.02
+          color: clearArea.containsMouse ? c.hovered : c.buttonBg
+          implicitHeight: 22
+          implicitWidth: (buttonRow.width - 8) / 2
+          radius: 4
 
-          Rectangle {
-            id: clearBtn
+          GlitchEffect {
+            id: clearGlitch
 
-            color: clearArea.containsMouse ? c.hovered : c.buttonBg
-            implicitHeight: 22
-            implicitWidth: (buttonRow.width - 8) / 2
-            radius: 4
+            aberration: 0.0120
+            anchors.centerIn: parent
+            glitchAmount: 0.07
 
             Text {
-              anchors.centerIn: parent
               color: c.red
               font.pixelSize: 10
               text: Owo.owo("Clear")
             }
-            MouseArea {
-              id: clearArea
+          }
+          MouseArea {
+            id: clearArea
 
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              hoverEnabled: true
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
 
-              onClicked: root.clearTimer()
-            }
+            onClicked: root.clearTimer()
           }
         }
       }

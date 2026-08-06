@@ -57,8 +57,8 @@ Item {
   // `active` flips false.
   property bool _fading: false
 
-  implicitHeight: root._firstChild ? root._firstChild.implicitHeight : 0
-  implicitWidth: root._firstChild ? root._firstChild.implicitWidth : 0
+  implicitHeight: root._firstChild ? root._firstChild.height : 0
+  implicitWidth: root._firstChild ? root._firstChild.width : 0
 
   onActiveChanged: {
     if (!active) {
@@ -96,16 +96,17 @@ Item {
   }
 
   // Plain content, rendered offscreen into a texture for the shader
-  // below. Sized explicitly from _firstChild's implicit size (not its own
-  // childrenRect — see file header for why that loops with layer.enabled).
+  // below. Sized explicitly from _firstChild's own width/height (which
+  // falls back to implicitWidth/Height automatically when unset) — not
+  // childrenRect, see file header for why that loops with layer.enabled.
   Item {
     id: contentItem
 
-    height: root._firstChild ? root._firstChild.implicitHeight : 0
+    height: root._firstChild ? root._firstChild.height : 0
     layer.enabled: true
     layer.smooth: true
     visible: false
-    width: root._firstChild ? root._firstChild.implicitWidth : 0
+    width: root._firstChild ? root._firstChild.width : 0
   }
 
   ShaderEffect {
