@@ -10,8 +10,7 @@ from typing import cast
 
 # --- CACHING ---
 
-CACHE_DIR = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-CACHE_DIR = os.path.join(CACHE_DIR, "launcher")
+CACHE_DIR = os.path.join(os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache")), "launcher")
 APPS_CACHE_FILE = os.path.join(CACHE_DIR, "apps_cache.json")
 EMOJI_CACHE_FILE = os.path.join(CACHE_DIR, "emoji_cache.json")
 
