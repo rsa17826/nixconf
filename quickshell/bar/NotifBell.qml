@@ -58,26 +58,26 @@ Item {
       visible: NotifState.storedCount > 0
       width: Math.max(13, badgeText.implicitWidth + 6)
 
-      // GlitchEffect {
-      //   id: bellasdGlitch
+      GlitchEffect {
+        id: bellasdGlitch
 
-      //   aberration: 0.1075
-      //   anchors.centerIn: parent
-      //   glitchAmount: 0.18
-      //   glitchRate: 1.9
-
-      Text {
-        id: badgeText
-
+        aberration: 0.1075
         anchors.centerIn: parent
-        color: "#4d6fff"
-        font.bold: true
-        font.family: "monospace"
-        font.pointSize: 7
-        text: NotifState.storedCount > 99 ? "99+" : NotifState.storedCount
+        glitchAmount: 0.18
+        glitchRate: 1.9
+
+        Text {
+          id: badgeText
+
+          anchors.centerIn: parent
+          color: "#4d6fff"
+          font.bold: true
+          font.family: "monospace"
+          font.pointSize: 7
+          text: NotifState.storedCount > 99 ? "99+" : NotifState.storedCount
+        }
       }
     }
-    // }
   }
   MouseArea {
     anchors.fill: parent

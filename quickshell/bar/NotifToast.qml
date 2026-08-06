@@ -120,13 +120,13 @@ Rectangle {
       GlitchEffect {
         id: textGlitch
 
-        aberration: 0.0025
+        Layout.fillWidth: true
+        aberration: 0.0015
         glitchAmount: 0.02
         glitchRate: 1.4
 
         // App name (subtle, above summary)
         Text {
-          Layout.fillWidth: true
           // color: root.dimmed ? "#30324a" : "#6a72a0"
           color: "#30324a"
           elide: Text.ElideRight
@@ -134,17 +134,18 @@ Rectangle {
           font.pointSize: 8
           text: Owo.owo(root.entry.appName)
           visible: root.entry.appName !== ""
+          width: textGlitch.width
         }
       }
       GlitchEffect {
-        id: text2Glitch
+        id: textGlitchHeader
 
-        aberration: 0.0025
-        glitchAmount: 0.02
+        Layout.fillWidth: true
+        aberration: 0.0035
+        glitchAmount: 0.04
         glitchRate: 1.4
 
         Text {
-          Layout.fillWidth: true
           // color: root.dimmed ? "#6a72a0" : "#c4cce8"
           color: "#6a72a0"
           elide: Text.ElideRight
@@ -152,18 +153,18 @@ Rectangle {
           font.pointSize: 10
           text: Owo.owo(root.entry.summary)
           visible: root.entry.summary !== ""
+          width: textGlitchHeader.width
         }
       }
       GlitchEffect {
-        id: text3Glitch
+        id: textGlitchBody
 
-        aberration: 0.0025
-        glitchAmount: 0.02
+        Layout.fillWidth: true
+        aberration: 0.0015
+        glitchAmount: 0.01
         glitchRate: 1.4
 
         Text {
-          Layout.fillWidth: true
-          // color: root.dimmed ? "#30324a" : "#6a72a0"
           color: "#30324a"
           elide: Text.ElideRight
           font.family: "monospace"
@@ -171,6 +172,7 @@ Rectangle {
           maximumLineCount: 4
           text: Owo.owo(root.entry.body)
           visible: root.entry.body !== ""
+          width: textGlitchBody.width
           wrapMode: Text.WordWrap
         }
       }
@@ -200,10 +202,10 @@ Rectangle {
             GlitchEffect {
               id: actionGlitch
 
-              aberration: 0.0025
+              aberration: 0.02
               anchors.centerIn: parent
-              glitchAmount: 0.02
-              glitchRate: 1.4
+              glitchAmount: 0.1
+              glitchRate: 1.8
 
               Rectangle {
                 anchors.centerIn: parent
