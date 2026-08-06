@@ -18,16 +18,23 @@ Item {
   // Hide entirely when no shutdown is pending
   visible: secondsLeft > 0
 
-  Text {
-    id: label
+  GlitchEffect {
+    id: sdGlitch
 
-    property int h: Math.floor(root.secondsLeft / 60 / 60)
-    property int m: Math.floor(root.secondsLeft / 60) % 60
-    property int s: root.secondsLeft % 60
+    aberration: 0.0034
+    glitchAmount: 0.04
 
-    color: "#c680f0"
-    font.pixelSize: 11
-    text: Owo.owo(`󰐥 Shuts Down in ${h ? `${h}h` : ``}${m}m${s < 10 ? "0" + s : s}s`)
+    Text {
+      id: label
+
+      property int h: Math.floor(root.secondsLeft / 60 / 60)
+      property int m: Math.floor(root.secondsLeft / 60) % 60
+      property int s: root.secondsLeft % 60
+
+      color: "#c680f0"
+      font.pixelSize: 11
+      text: Owo.owo(`󰐥 Shuts Down in ${h ? `${h}h` : ``}${m}m${s < 10 ? "0" + s : s}s`)
+    }
   }
   Process {
     id: proc
