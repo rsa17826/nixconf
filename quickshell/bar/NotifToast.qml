@@ -173,50 +173,65 @@ Rectangle {
           wrapMode: Text.WordWrap
         }
       }
-      GlitchEffect {
-        id: actionGlitch
+      // Action buttons
+      Row {
+        spacing: 6
+        topPadding: 2
+        visible: root.entry.actions.length > 0
 
-        aberration: 0.0025
-        glitchAmount: 0.02
-        glitchRate: 1.4
+        Repeater {
+          model: root.entry.actions
 
-        // Action buttons
-        Row {
-          spacing: 6
-          topPadding: 2
-          visible: root.entry.actions.length > 0
+          delegate: Rectangle {
+            required property var modelData
 
-          Repeater {
-            model: root.entry.actions
+            border.color: "#00000000"
+            border.width: 1
+            color: "#00000000"
+            implicitHeight: actionLbl.implicitHeight + 8
+            implicitWidth: actionLbl.implicitWidth + 14
 
-            delegate: Rectangle {
-              required property var modelData
+            // Only the label is glitched — GlitchEffect renders its
+            // content offscreen (visible: false) and shows a separate
+            // shaded copy, so a MouseArea nested inside it never gets
+            // hit-tested. Keep interactive items (this Rectangle,
+            // MouseArea) outside any GlitchEffect.
+            GlitchEffect {
+              id: actionGlitch
 
-              border.color: "#2a3a8a"
-              border.width: 1
-              color: actionMa.containsMouse ? "#12122c" : "transparent"
-              implicitHeight: actionLbl.implicitHeight + 8
-              implicitWidth: actionLbl.implicitWidth + 14
-              radius: 3
+              aberration: 0.0025
+              anchors.centerIn: parent
+              glitchAmount: 0.02
+              glitchRate: 1.4
 
-              Text {
-                id: actionLbl
-
+              Rectangle {
                 anchors.centerIn: parent
-                color: "#4d6fff"
-                font.family: "monospace"
-                font.pointSize: 9
-                text: Owo.owo(modelData.text)
-              }
-              MouseArea {
-                id: actionMa
+                border.color: "#2a3a8a"
+                border.width: 1
+                color: actionMa.containsMouse ? "#12122c" : "transparent"
+                implicitHeight: actionLbl.implicitHeight + 8
+                implicitWidth: actionLbl.implicitWidth + 14
+                radius: 3
 
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
+                Text {
+                  id: actionLbl
 
-                onClicked: NotifState.invokeAction(root.entry.id, modelData.id)
+                  anchors.centerIn: parent
+                  color: "#4d6fff"
+                  font.family: "monospace"
+                  font.pointSize: 9
+                  text: Owo.owo(modelData.text)
+                }
               }
+            }
+            MouseArea {
+              id: actionMa
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: NotifState.invokeAction(root.entry.id, modelData.id)
             }
           }
         }
