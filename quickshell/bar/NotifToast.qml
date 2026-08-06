@@ -82,6 +82,7 @@ Rectangle {
       aberration: 0.0025
       glitchAmount: 0.02
       glitchRate: 1.4
+      visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
 
       Rectangle {
         color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
