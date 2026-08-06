@@ -14,7 +14,7 @@ self: super: {
         var temp = e.prototype.toLocaleString.bind(e.prototype)
         e.prototype.toLocaleString = function (...a) {
           return this
-        }
+        };
       });
       EOF
 

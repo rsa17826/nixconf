@@ -14,7 +14,10 @@ m.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true }
 
 -- ─── KeePass autotype ──────────────────────────────────────────────────────
 m.bind("^!a", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.kdbx -c 30 --delay-min-ms 0"))
-m.bind("^!s", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.kdbx -c 30 --delay-min-ms 0 --password-only"))
+m.bind(
+	"^!s",
+	hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.kdbx -c 30 --delay-min-ms 0 --password-only")
+)
 m.bind("^!d", hl.dsp.exec_cmd("wayland-keepass-autotype -d ~/keepassdb/keepass.kdbx -c 30 --delay-min-ms 0 --otp-only"))
 
 -- ─── Window / session actions ──────────────────────────────────────────────

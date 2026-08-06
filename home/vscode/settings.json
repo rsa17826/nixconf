@@ -134,7 +134,7 @@
     "editor.suggest.insertMode": "insert",
     "editor.guides.bracketPairs": true,
     "editor.guides.bracketPairsHorizontal": true,
-    "editor.lightbulb.enabled": "onCode",
+    "editor.lightbulb.enabled": "onCode"
     // "editor.linkedEditing": true
   },
   "js/ts.format.semicolons": "remove",
@@ -761,7 +761,7 @@
   "qmlFormat.extraArguments": ["-n", "--semicolon-rule", "essential"],
   "terminal.integrated.profiles.linux": {
     "zsh": {
-      "path": "/run/current-system/sw/bin/zsh",
+      "path": "/run/current-system/sw/bin/zsh"
       // "args": ["-l"]
     }
   },

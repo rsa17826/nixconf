@@ -39,23 +39,21 @@ import QtQuick
 Item {
   id: root
 
-  property bool active: true
-  property real aberration: 0.0035
-  property int fadeDuration: 250
-  property real glitchAmount: 0.03
-  property real glitchRate: 1.0
-
-  default property alias content: contentItem.data
+  // Internal: keeps the iTime timer alive through the fade-out so slices
+  // keep animating back to rest instead of freezing mid-tear the instant
+  // `active` flips false.
+  property bool _fading: false
 
   // The single wrapped child (see file header) — read its own implicit
   // size directly instead of childrenRect, to avoid the layer.enabled +
   // childrenRect binding loop.
   readonly property Item _firstChild: contentItem.children.length > 0 ? contentItem.children[0] : null
-
-  // Internal: keeps the iTime timer alive through the fade-out so slices
-  // keep animating back to rest instead of freezing mid-tear the instant
-  // `active` flips false.
-  property bool _fading: false
+  property real aberration: 0.0035
+  property bool active: true
+  default property alias content: contentItem.data
+  property int fadeDuration: 250
+  property real glitchAmount: 0.03
+  property real glitchRate: 1.0
 
   implicitHeight: root._firstChild ? root._firstChild.height : 0
   implicitWidth: root._firstChild ? root._firstChild.width : 0
@@ -108,7 +106,6 @@ Item {
     visible: false
     width: root._firstChild ? root._firstChild.width : 0
   }
-
   ShaderEffect {
     id: shaderEffect
 

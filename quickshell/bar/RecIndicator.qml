@@ -87,7 +87,6 @@ Item {
 
         color: "#ffffff"
         font.pixelSize: 11
-
         text: {
           const h = Math.floor(root.secondsElapsed / 3600)
           const m = Math.floor(root.secondsElapsed / 60) % 60

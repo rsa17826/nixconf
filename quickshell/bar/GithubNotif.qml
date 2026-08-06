@@ -101,15 +101,15 @@ Rectangle {
   //   glitchAmount: 0.02
   //   glitchRate: 1.4
 
-    // Text showing number of notifications
-    Text {
-      id: ghNotifCountTextItem
+  // Text showing number of notifications
+  Text {
+    id: ghNotifCountTextItem
 
-      anchors.centerIn: parent
-      color: "#4d6fff"
-      font.bold: true
-      font.pixelSize: 8
-      text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")
+    anchors.centerIn: parent
+    color: "#4d6fff"
+    font.bold: true
+    font.pixelSize: 8
+    text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")
     // }
   }
   Timer {

@@ -30,7 +30,7 @@ self: super: {
           height:100%;
           background-repeat:no-repeat;
           opacity:1;
-          ${stickerStyle}
+          ${stickerStyle};
           }
 
           /* Makes sure notification shows on top of sticker */

@@ -47,8 +47,10 @@ class HyprSpy:
           self.root.update()
           proc = subprocess.run(["hyprctl", "activewindow", "-j"], capture_output=True, text=True)
           return json.loads(proc.stdout).get("address")
+
       except:
           return None
+
 
   def get_hypr_data(self):
       try:
@@ -57,8 +59,10 @@ class HyprSpy:
           cur_proc = subprocess.run(["hyprctl", "cursorpos", "-j"], capture_output=True, text=True)
           cur_data = json.loads(cur_proc.stdout)
           return win_data, cur_data
+
       except:
           return None, None
+
 
   def copy_line(self, event):
       index = self.display.index(f"@{event.x},{event.y}")
@@ -75,6 +79,7 @@ class HyprSpy:
           self.display.tag_add("flash", f"{line_num}.0", f"{line_num}.end")
           self.display.tag_config("flash", background="#45475a")
           self.root.after(150, lambda: self.display.tag_remove("flash", "1.0", "end"))
+
 
   def update_info(self):
       win, cur = self.get_hypr_data()
@@ -118,6 +123,7 @@ class HyprSpy:
           self.root.title("HyprSpy (FROZEN - Click elsewhere to resume)")
 
       self.root.after(100, self.update_info)
+
 
 if __name__ == "__main__":
   root = tk.Tk()

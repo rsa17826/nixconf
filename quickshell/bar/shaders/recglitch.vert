@@ -5,16 +5,16 @@ layout(location = 1) in vec2 qt_MultiTexCoord0;
 layout(location = 0) out vec2 qt_TexCoord0;
 
 layout(std140, binding = 0) uniform buf {
-    mat4 qt_Matrix;
-    float qt_Opacity;
-    float iTime;
-    float glitchAmount;
-    float aberration;
+  mat4 qt_Matrix;
+  float qt_Opacity;
+  float iTime;
+  float glitchAmount;
+  float aberration;
 };
 
 out gl_PerVertex { vec4 gl_Position; };
 
 void main() {
-    qt_TexCoord0 = qt_MultiTexCoord0;
-    gl_Position = qt_Matrix * qt_Vertex;
+  qt_TexCoord0 = qt_MultiTexCoord0;
+  gl_Position = qt_Matrix * qt_Vertex;
 }

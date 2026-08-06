@@ -47,7 +47,7 @@ if [ "$STATUS" -eq 0 ] && [ "${1:-}" = "get" ]; then
   shift
   for arg in "$@"; do
     case "$arg" in
-      -*) continue ;; # skip flags like -u
+    -*) continue ;; # skip flags like -u
     esac
     if [[ "$arg" == *rsa17826* ]]; then
       # strip a trailing @version/@latest if present

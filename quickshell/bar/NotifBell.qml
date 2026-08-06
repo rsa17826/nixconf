@@ -11,61 +11,65 @@ Item {
   implicitWidth: bellRow.implicitWidth + 14
 
   // ── Bell pill ────────────────────────────────────────────────
-  GlitchEffect {
-    id: bellGlitch
+  // GlitchEffect {
+  //   id: bellGlitch
 
-    aberration: 0.0025
-    glitchAmount: 0.02
-    glitchRate: 1.4
+  //   aberration: 0.0025
+  //   glitchAmount: 0.02
+  //   glitchRate: 1.4
+
+  //   anchors {
+  //     leftMargin: 4
+  //     verticalCenter: parent.verticalCenter
+  //   }
+  Row {
+    id: bellRow
+
+    spacing: 5
 
     anchors {
       leftMargin: 4
       verticalCenter: parent.verticalCenter
     }
-    Row {
-      id: bellRow
+    Text {
+      id: bellIcon
 
-      spacing: 5
+      anchors.verticalCenter: parent.verticalCenter
+      color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.storedCount > 0 ? "#6a72a0" : "#30324a"
+      font.family: "monospace"
+      font.pointSize: 11
+      text: NotifState.storedCount > 0 ? "󰂚" : "󰂜"
 
-      Text {
-        id: bellIcon
-
-        anchors.verticalCenter: parent.verticalCenter
-        color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.storedCount > 0 ? "#6a72a0" : "#30324a"
-        font.family: "monospace"
-        font.pointSize: 11
-        text: NotifState.storedCount > 0 ? "󰂚" : "󰂜"
-
-        Behavior on color {
-          ColorAnimation {
-            duration: 150
-          }
-        }
-      }
-
-      // Badge — history count
-      Rectangle {
-        anchors.verticalCenter: parent.verticalCenter
-        border.color: NotifState.centerOpen ? "#4d6fff" : "#2a3a8a"
-        border.width: 1
-        color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
-        height: 13
-        radius: 6
-        visible: NotifState.storedCount > 0
-        width: Math.max(13, badgeText.implicitWidth + 6)
-
-        Text {
-          id: badgeText
-
-          anchors.centerIn: parent
-          color: "#4d6fff"
-          font.bold: true
-          font.family: "monospace"
-          font.pointSize: 7
-          text: NotifState.storedCount > 99 ? "99+" : NotifState.storedCount
+      Behavior on color {
+        ColorAnimation {
+          duration: 150
         }
       }
     }
+
+    // Badge — history count
+    Rectangle {
+      anchors.verticalCenter: parent.verticalCenter
+      border.color: NotifState.centerOpen ? "#4d6fff" : "#2a3a8a"
+      border.width: 1
+      color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
+      height: 13
+      radius: 6
+      visible: NotifState.storedCount > 0
+      width: Math.max(13, badgeText.implicitWidth + 6)
+
+      Text {
+        id: badgeText
+
+        anchors.centerIn: parent
+        color: "#4d6fff"
+        font.bold: true
+        font.family: "monospace"
+        font.pointSize: 7
+        text: NotifState.storedCount > 99 ? "99+" : NotifState.storedCount
+      }
+    }
+    // }
   }
   MouseArea {
     anchors.fill: parent

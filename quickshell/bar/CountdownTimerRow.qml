@@ -32,35 +32,6 @@ Item {
     saveTimers()
   }
 
-  // ── Name-based API (used by TimerServer) ─────────────────────
-  function findByName(name) {
-    return root.timers.find(t => t.name === name)
-  }
-
-  // Create or update a timer by name. If it doesn't exist yet, create it.
-  function setByName(name, targetTimestamp) {
-    const ts = targetTimestamp || 0
-    const existing = root.findByName(name)
-    if (existing) {
-      root.timers = root.timers.map(t => t.id === existing.id ? {
-          id: t.id,
-          name: t.name,
-          targetTimestamp: ts
-        } : t)
-    } else {
-      const t = root.timers.slice()
-      t.push({
-        id: root.nextId,
-        name: name,
-        targetTimestamp: ts
-      })
-      root.timers = t
-      root.nextId += 1
-    }
-    saveTimers()
-    root.ensureUnsetSlot()
-  }
-
   // Remove a named timer entirely (or reset it in place, per removeTimer's
   // existing min-1 rule).
   function clearByName(name) {
@@ -69,14 +40,6 @@ Item {
       return false
     root.removeTimer(existing.id)
     return true
-  }
-
-  function listNamed() {
-    return root.timers.filter(t => t.name && t.name.length > 0).map(t => ({
-          name: t.name,
-          id: t.id,
-          targetTimestamp: t.targetTimestamp
-        }))
   }
   function configPath() {
     const ns = "qsbar"
@@ -108,6 +71,18 @@ Item {
     root.nextId += 1
     saveTimers()
   }
+
+  // ── Name-based API (used by TimerServer) ─────────────────────
+  function findByName(name) {
+    return root.timers.find(t => t.name === name)
+  }
+  function listNamed() {
+    return root.timers.filter(t => t.name && t.name.length > 0).map(t => ({
+          name: t.name,
+          id: t.id,
+          targetTimestamp: t.targetTimestamp
+        }))
+  }
   function pathJoin(...p) {
     return p.map(e => e.replace(/\/$/, '')).join("/").replace(/\/$/, '')
   }
@@ -127,6 +102,30 @@ Item {
   }
   function saveTimers() {
     timersFile.writeAdapter()
+  }
+
+  // Create or update a timer by name. If it doesn't exist yet, create it.
+  function setByName(name, targetTimestamp) {
+    const ts = targetTimestamp || 0
+    const existing = root.findByName(name)
+    if (existing) {
+      root.timers = root.timers.map(t => t.id === existing.id ? {
+          id: t.id,
+          name: t.name,
+          targetTimestamp: ts
+        } : t)
+    } else {
+      const t = root.timers.slice()
+      t.push({
+        id: root.nextId,
+        name: name,
+        targetTimestamp: ts
+      })
+      root.timers = t
+      root.nextId += 1
+    }
+    saveTimers()
+    root.ensureUnsetSlot()
   }
   function updateTimer(id, ts) {
     root.timers = root.timers.map(t => t.id === id ? {
