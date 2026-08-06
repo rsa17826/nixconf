@@ -42,6 +42,7 @@ in
     {
       home = {
         file = editable.entries // {
+          # allow easy access to flake lock for current booted gen
           "${userConfig.nixConf}/current flake.lock.json".source = ../flake.lock;
         };
         # file = lib.filterAttrs (n: v: lib.hasPrefix ".local" n) editable.entries;
