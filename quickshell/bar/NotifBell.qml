@@ -14,14 +14,14 @@ Item {
   GlitchEffect {
     id: bellGlitch
 
-    // Subtler than the REC indicator — this fires constantly whenever
-    // there's an unread notif, so keep it from becoming visual noise.
-    aberration: 0.0018
-    active: NotifState.activeCount > 0
-    anchors.centerIn: parent
-    glitchAmount: 0.015
-    glitchRate: 0.6
+    aberration: 0.0025
+    glitchAmount: 0.02
+    glitchRate: 1.4
 
+    anchors {
+      leftMargin: 4
+      verticalCenter: parent.verticalCenter
+    }
     Row {
       id: bellRow
 

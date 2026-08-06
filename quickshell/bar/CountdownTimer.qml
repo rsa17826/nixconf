@@ -225,16 +225,25 @@ Item {
 
       onClicked: picker.visible ? (picker.visible = false) : root.openPicker()
     }
-    Text {
-      id: label
+    GlitchEffect {
+      id: timerGlitch
 
-      color: root.timerColor()
-      font.pixelSize: 11
-      text: Owo.owo("⏰ " + (root.timerName ? root.timerName + ": " : "") + root.formatCountdown())
+      aberration: 0.0025
+      active: isSameDay()
+      glitchAmount: 0.02
+      glitchRate: 1.4
 
-      anchors {
-        left: parent.left
-        verticalCenter: parent.verticalCenter
+      Text {
+        id: label
+
+        color: root.timerColor()
+        font.pixelSize: 11
+        text: Owo.owo("⏰ " + (root.timerName ? root.timerName + ": " : "") + root.formatCountdown())
+
+        anchors {
+          left: parent.left
+          verticalCenter: parent.verticalCenter
+        }
       }
     }
   }
@@ -296,11 +305,19 @@ Item {
         fill: parent
         margins: 8
       }
-      Text {
-        color: c.accent
-        font.bold: true
-        font.pixelSize: 9
-        text: Owo.owo("Set Countdown")
+      GlitchEffect {
+        id: settimerGlitch
+
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
+
+        Text {
+          color: c.accent
+          font.bold: true
+          font.pixelSize: 9
+          text: Owo.owo("Set Countdown")
+        }
       }
       Rectangle {
         color: c.divider
@@ -336,72 +353,96 @@ Item {
           }
         ]
 
-        delegate: Row {
-          spacing: 6
-          width: pickerColumn.width
+        delegate: GlitchEffect {
+          id: iconGlitch
 
-          Text {
-            color: c.text
-            font.pixelSize: 10
-            text: Owo.owo(modelData.label)
-            width: 34
-          }
-          Rectangle {
-            id: minusBtn
+          aberration: 0.0025
+          glitchAmount: 0.02
+          glitchRate: 1.4
 
-            color: minusArea.containsMouse ? c.hovered : c.buttonBg
-            implicitHeight: 18
-            implicitWidth: 18
-            radius: 4
+          Row {
+            spacing: 6
+            width: pickerColumn.width
 
-            Text {
-              anchors.centerIn: parent
-              color: c.text
-              font.pixelSize: 10
-              text: "-"
-            }
-            MouseArea {
-              id: minusArea
+            // GlitchEffect {
+            //   id: textGlitch
 
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              hoverEnabled: true
-
-              onClicked: root.adjustDraft(modelData.key, -1, modelData.step)
-            }
-          }
-          Text {
-            color: c.text
-            font.pixelSize: 10
-            horizontalAlignment: Text.AlignHCenter
-            text: {
-              const v = root.draft[modelData.key]
-              return modelData.key === "mo" || modelData.key === "d" || modelData.key === "h" || modelData.key === "mi" ? root.pad(v) : "" + v
-            }
-            width: 32
-          }
-          Rectangle {
-            id: plusBtn
-
-            color: plusArea.containsMouse ? c.hovered : c.buttonBg
-            implicitHeight: 18
-            implicitWidth: 18
-            radius: 4
+            //   aberration: 0.0025
+            //   glitchAmount: 0.02
+            //   glitchRate: 1.4
 
             Text {
-              anchors.centerIn: parent
               color: c.text
               font.pixelSize: 10
-              text: "+"
+              text: Owo.owo(modelData.label)
+              width: 34
             }
-            MouseArea {
-              id: plusArea
+            // }
+            Rectangle {
+              id: minusBtn
 
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              hoverEnabled: true
+              color: minusArea.containsMouse ? c.hovered : c.buttonBg
+              implicitHeight: 18
+              implicitWidth: 18
+              radius: 4
 
-              onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
+              // GlitchEffect {
+              //   id: minusGlitch
+
+              //   aberration: 0.0025
+              //   glitchAmount: 0.02
+              //   glitchRate: 1.4
+
+              Text {
+                anchors.centerIn: parent
+                color: c.text
+                font.pixelSize: 10
+                text: "-"
+              }
+              // }
+              MouseArea {
+                id: minusArea
+
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+
+                onClicked: root.adjustDraft(modelData.key, -1, modelData.step)
+              }
+            }
+            Text {
+              color: c.text
+              font.pixelSize: 10
+              horizontalAlignment: Text.AlignHCenter
+              text: {
+                const v = root.draft[modelData.key]
+                return modelData.key === "mo" || modelData.key === "d" || modelData.key === "h" || modelData.key === "mi" ? root.pad(v) : "" + v
+              }
+              width: 32
+            }
+            Rectangle {
+              id: plusBtn
+
+              color: plusArea.containsMouse ? c.hovered : c.buttonBg
+              implicitHeight: 18
+              implicitWidth: 18
+              radius: 4
+
+              Text {
+                anchors.centerIn: parent
+                color: c.text
+                font.pixelSize: 10
+                text: "+"
+              }
+              MouseArea {
+                id: plusArea
+
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+
+                onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
+              }
             }
           }
         }

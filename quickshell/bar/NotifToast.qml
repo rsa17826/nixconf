@@ -76,30 +76,38 @@ Rectangle {
     }
 
     // App icon
-    Rectangle {
-      color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
-      height: 28
-      radius: 4
-      visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
-      width: 28
+    GlitchEffect {
+      id: iconGlitch
 
-      Image {
-        id: appIconImg
+      aberration: 0.0025
+      glitchAmount: 0.02
+      glitchRate: 1.4
 
-        anchors.fill: parent
-        anchors.margins: 4
-        fillMode: Image.PreserveAspectFit
-        smooth: true
-        source: {
-          const icon = root.entry.appIcon
-          if (icon === "")
-            return ""
-          if (icon.startsWith("/") || icon.startsWith("file://"))
-            return icon
-          return Quickshell.iconPath(icon, true)
+      Rectangle {
+        color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
+        height: 28
+        radius: 4
+        visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
+        width: 28
+
+        Image {
+          id: appIconImg
+
+          anchors.fill: parent
+          anchors.margins: 4
+          fillMode: Image.PreserveAspectFit
+          smooth: true
+          source: {
+            const icon = root.entry.appIcon
+            if (icon === "")
+              return ""
+            if (icon.startsWith("/") || icon.startsWith("file://"))
+              return icon
+            return Quickshell.iconPath(icon, true)
+          }
+          sourceSize.height: 64
+          sourceSize.width: 64
         }
-        sourceSize.height: 64
-        sourceSize.width: 64
       }
     }
 
@@ -108,76 +116,107 @@ Rectangle {
       Layout.fillWidth: true
       spacing: 4
 
-      // App name (subtle, above summary)
-      Text {
-        Layout.fillWidth: true
-        // color: root.dimmed ? "#30324a" : "#6a72a0"
-        color: "#30324a"
-        elide: Text.ElideRight
-        font.family: "monospace"
-        font.pointSize: 8
-        text: Owo.owo(root.entry.appName)
-        visible: root.entry.appName !== ""
+      GlitchEffect {
+        id: textGlitch
+
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
+
+        // App name (subtle, above summary)
+        Text {
+          Layout.fillWidth: true
+          // color: root.dimmed ? "#30324a" : "#6a72a0"
+          color: "#30324a"
+          elide: Text.ElideRight
+          font.family: "monospace"
+          font.pointSize: 8
+          text: Owo.owo(root.entry.appName)
+          visible: root.entry.appName !== ""
+        }
       }
-      Text {
-        Layout.fillWidth: true
-        // color: root.dimmed ? "#6a72a0" : "#c4cce8"
-        color: "#6a72a0"
-        elide: Text.ElideRight
-        font.family: "monospace"
-        font.pointSize: 10
-        text: Owo.owo(root.entry.summary)
-        visible: root.entry.summary !== ""
+      GlitchEffect {
+        id: text2Glitch
+
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
+
+        Text {
+          Layout.fillWidth: true
+          // color: root.dimmed ? "#6a72a0" : "#c4cce8"
+          color: "#6a72a0"
+          elide: Text.ElideRight
+          font.family: "monospace"
+          font.pointSize: 10
+          text: Owo.owo(root.entry.summary)
+          visible: root.entry.summary !== ""
+        }
       }
-      Text {
-        Layout.fillWidth: true
-        // color: root.dimmed ? "#30324a" : "#6a72a0"
-        color: "#30324a"
-        elide: Text.ElideRight
-        font.family: "monospace"
-        font.pointSize: 9
-        maximumLineCount: 4
-        text: Owo.owo(root.entry.body)
-        visible: root.entry.body !== ""
-        wrapMode: Text.WordWrap
+      GlitchEffect {
+        id: text3Glitch
+
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
+
+        Text {
+          Layout.fillWidth: true
+          // color: root.dimmed ? "#30324a" : "#6a72a0"
+          color: "#30324a"
+          elide: Text.ElideRight
+          font.family: "monospace"
+          font.pointSize: 9
+          maximumLineCount: 4
+          text: Owo.owo(root.entry.body)
+          visible: root.entry.body !== ""
+          wrapMode: Text.WordWrap
+        }
       }
+      GlitchEffect {
+        id: actionGlitch
 
-      // Action buttons
-      Row {
-        spacing: 6
-        topPadding: 2
-        visible: root.entry.actions.length > 0
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
 
-        Repeater {
-          model: root.entry.actions
+        // Action buttons
+        Row {
+          spacing: 6
+          topPadding: 2
+          visible: root.entry.actions.length > 0
 
-          delegate: Rectangle {
-            required property var modelData
+          Repeater {
+            model: root.entry.actions
 
-            border.color: "#2a3a8a"
-            border.width: 1
-            color: actionMa.containsMouse ? "#12122c" : "transparent"
-            implicitHeight: actionLbl.implicitHeight + 8
-            implicitWidth: actionLbl.implicitWidth + 14
-            radius: 3
+            delegate: Rectangle {
+              required property var modelData
 
-            Text {
-              id: actionLbl
+              border.color: "#2a3a8a"
+              border.width: 1
+              color: actionMa.containsMouse ? "#12122c" : "transparent"
+              implicitHeight: actionLbl.implicitHeight + 8
+              implicitWidth: actionLbl.implicitWidth + 14
+              radius: 3
 
-              anchors.centerIn: parent
-              color: "#4d6fff"
-              font.family: "monospace"
-              font.pointSize: 9
-              text: Owo.owo(modelData.text)
-            }
-            MouseArea {
-              id: actionMa
+              Text {
+                id: actionLbl
 
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              hoverEnabled: true
+                anchors.centerIn: parent
+                color: "#4d6fff"
+                font.family: "monospace"
+                font.pointSize: 9
+                text: Owo.owo(modelData.text)
+              }
+              MouseArea {
+                id: actionMa
 
-              onClicked: NotifState.invokeAction(root.entry.id, modelData.id)
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+
+                onClicked: NotifState.invokeAction(root.entry.id, modelData.id)
+              }
             }
           }
         }
@@ -192,11 +231,19 @@ Rectangle {
       radius: 3
       width: 20
 
-      Text {
-        anchors.centerIn: parent
-        color: closeMa.containsMouse ? "#c4cce8" : "#30324a"
-        font.pointSize: 9
-        text: "✕"
+      GlitchEffect {
+        id: closeGlitch
+
+        aberration: 0.0025
+        glitchAmount: 0.02
+        glitchRate: 1.4
+
+        Text {
+          anchors.centerIn: parent
+          color: closeMa.containsMouse ? "#c4cce8" : "#30324a"
+          font.pointSize: 9
+          text: "✕"
+        }
       }
       MouseArea {
         id: closeMa

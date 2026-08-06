@@ -15,16 +15,28 @@ Rectangle {
   implicitHeight: clock.implicitHeight + 12
   implicitWidth: clock.implicitWidth + 12
 
-  Text {
-    id: clock
+  GlitchEffect {
+    id: clockGlitch
 
-    anchors.centerIn: parent
-    color: "#c4cce8"
-    text: Owo.owo(Time.time)
+    aberration: 0.0025
+    glitchAmount: 0.02
+    glitchRate: 1.4
 
-    font {
-      family: "monospace"
-      pointSize: 10
+    anchors {
+      leftMargin: 4
+      verticalCenter: parent.verticalCenter
+    }
+    Text {
+      id: clock
+
+      anchors.centerIn: parent
+      color: "#c4cce8"
+      text: Owo.owo(Time.time)
+
+      font {
+        family: "monospace"
+        pointSize: 10
+      }
     }
   }
 }

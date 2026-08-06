@@ -39,21 +39,23 @@ import QtQuick
 Item {
   id: root
 
-  // Internal: keeps the iTime timer alive through the fade-out so slices
-  // keep animating back to rest instead of freezing mid-tear the instant
-  // `active` flips false.
-  property bool _fading: false
+  property bool active: true
+  property real aberration: 0.0035
+  property int fadeDuration: 250
+  property real glitchAmount: 0.03
+  property real glitchRate: 1.0
+
+  default property alias content: contentItem.data
 
   // The single wrapped child (see file header) — read its own implicit
   // size directly instead of childrenRect, to avoid the layer.enabled +
   // childrenRect binding loop.
   readonly property Item _firstChild: contentItem.children.length > 0 ? contentItem.children[0] : null
-  property real aberration: 0.0035
-  property bool active: true
-  default property alias content: contentItem.data
-  property int fadeDuration: 250
-  property real glitchAmount: 0.03
-  property real glitchRate: 1.0
+
+  // Internal: keeps the iTime timer alive through the fade-out so slices
+  // keep animating back to rest instead of freezing mid-tear the instant
+  // `active` flips false.
+  property bool _fading: false
 
   implicitHeight: root._firstChild ? root._firstChild.implicitHeight : 0
   implicitWidth: root._firstChild ? root._firstChild.implicitWidth : 0
@@ -83,7 +85,14 @@ Item {
     repeat: true
     running: root.active || root._fading
 
-    onTriggered: shaderEffect.iTime += 0.033 * root.glitchRate
+    onTriggered: {
+      shaderEffect.iTime += 0.033 * root.glitchRate
+      // Re-roll amplitude jitter every tick — this is what actually makes
+      // it vary over time. A plain `property real x: Math.random()`
+      // binding only fires once at creation since QML has nothing to
+      // trigger a re-evaluation off of.
+      shaderEffect.randOffset = Math.random() * 0.5 + 0.75
+    }
   }
 
   // Plain content, rendered offscreen into a texture for the shader
@@ -98,15 +107,25 @@ Item {
     visible: false
     width: root._firstChild ? root._firstChild.implicitWidth : 0
   }
+
   ShaderEffect {
     id: shaderEffect
 
     // Eased toward 0 whenever `active` is false, instead of snapping —
     // so disabling mid-glitch settles to a clean frame over fadeDuration
     // rather than freezing on a torn one.
-    property real aberration: root.active ? root.aberration : 0
-    property real glitchAmount: root.active ? root.glitchAmount : 0
-    property real iTime: 0.0
+    property real aberration: root.active ? root.aberration * randOffset : 0
+    property real glitchAmount: root.active ? root.glitchAmount * randOffset : 0
+    // Random phase offset, picked once per instance — this is what
+    // actually desyncs instances, since the shader's slice-reseed
+    // timing (floor(iTime * 6.0)) is deterministic given iTime. Without
+    // this every GlitchEffect starts iTime at 0 and ticks identically,
+    // so they all glitch on the same frames regardless of amplitude.
+    property real iTime: Math.random() * 100
+    // Re-rolled on a timer (see below), NOT a static binding — Math.random()
+    // inside a plain property binding only evaluates once, at creation,
+    // since QML has no dependency to know it should re-run.
+    property real randOffset: 1.0
     property variant source: contentItem
 
     anchors.fill: contentItem
