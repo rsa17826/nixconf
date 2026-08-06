@@ -36,8 +36,6 @@
 //                   default 250
 import QtQuick
 
-// TODO text not wrap now
-
 Item {
   id: root
 
