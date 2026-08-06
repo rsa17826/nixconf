@@ -453,55 +453,71 @@ Item {
         implicitWidth: parent.width
       }
       Row {
+        id: buttonRow
+
         spacing: 8
         width: parent.width
 
-        Rectangle {
-          id: setBtn
+        GlitchEffect {
+          id: setGlitch
 
-          color: setArea.containsMouse ? c.hovered : c.buttonBg
-          implicitHeight: 22
-          implicitWidth: (parent.width - 8) / 2
-          radius: 4
+          aberration: 0.0025
+          glitchAmount: 0.02
 
-          Text {
-            anchors.centerIn: parent
-            color: c.accent
-            font.pixelSize: 10
-            text: Owo.owo("Set")
-          }
-          MouseArea {
-            id: setArea
+          Rectangle {
+            id: setBtn
 
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            hoverEnabled: true
+            color: setArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 22
+            implicitWidth: (buttonRow.width - 8) / 2
+            radius: 4
 
-            onClicked: root.commitDraft()
+            Text {
+              anchors.centerIn: parent
+              color: c.accent
+              font.pixelSize: 10
+              text: Owo.owo("Set")
+            }
+            MouseArea {
+              id: setArea
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: root.commitDraft()
+            }
           }
         }
-        Rectangle {
-          id: clearBtn
+        GlitchEffect {
+          id: clearGlitch
 
-          color: clearArea.containsMouse ? c.hovered : c.buttonBg
-          implicitHeight: 22
-          implicitWidth: (parent.width - 8) / 2
-          radius: 4
+          aberration: 0.0025
+          glitchAmount: 0.02
 
-          Text {
-            anchors.centerIn: parent
-            color: c.red
-            font.pixelSize: 10
-            text: Owo.owo("Clear")
-          }
-          MouseArea {
-            id: clearArea
+          Rectangle {
+            id: clearBtn
 
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            hoverEnabled: true
+            color: clearArea.containsMouse ? c.hovered : c.buttonBg
+            implicitHeight: 22
+            implicitWidth: (buttonRow.width - 8) / 2
+            radius: 4
 
-            onClicked: root.clearTimer()
+            Text {
+              anchors.centerIn: parent
+              color: c.red
+              font.pixelSize: 10
+              text: Owo.owo("Clear")
+            }
+            MouseArea {
+              id: clearArea
+
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              hoverEnabled: true
+
+              onClicked: root.clearTimer()
+            }
           }
         }
       }

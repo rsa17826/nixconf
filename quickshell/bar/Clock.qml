@@ -19,7 +19,7 @@ Rectangle {
     id: clockGlitch
 
     aberration: 0.0025
-    glitchAmount: 0.02
+    glitchAmount: 0.035
     glitchRate: 1.4
 
     anchors {
