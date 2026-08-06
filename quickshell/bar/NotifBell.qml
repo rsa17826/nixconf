@@ -58,6 +58,14 @@ Item {
       visible: NotifState.storedCount > 0
       width: Math.max(13, badgeText.implicitWidth + 6)
 
+      // GlitchEffect {
+      //   id: bellasdGlitch
+
+      //   aberration: 0.1075
+      //   anchors.centerIn: parent
+      //   glitchAmount: 0.18
+      //   glitchRate: 1.9
+
       Text {
         id: badgeText
 
