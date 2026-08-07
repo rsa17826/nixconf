@@ -249,12 +249,12 @@ in
             exec "/etc/profiles/per-user/${userConfig.uname}/bin/nonet" ${pkgs.pixieditor}/bin/pixieditor "$@"
           '')
           (pkgs.writeShellScriptBin "humanify" ''
-            "$(${
+            "${
               pkgs.fetchzip {
                 url = "https://github.com/jehna/humanify/releases/download/v3.1.1/humanify-x86_64-unknown-linux-gnu.tar.gz";
                 sha256 = "sha256-Jo9MhDmekpFBWq6IfZ+dbOB6sQbjORXtyHQtlPTNKyc=";
               }
-            }/humanify)" "$@"
+            }/humanify" "$@"
           '')
           jpexs # ffdec
           python314Packages.ruff
