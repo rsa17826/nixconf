@@ -248,6 +248,14 @@ in
           (writeShellScriptBin "pixieditor" ''
             exec "/etc/profiles/per-user/${userConfig.uname}/bin/nonet" ${pkgs.pixieditor}/bin/pixieditor "$@"
           '')
+          (pkgs.writeShellScriptBin "humanify" ''
+            "$(${
+              pkgs.fetchzip {
+                url = "https://github.com/jehna/humanify/releases/download/v3.1.1/humanify-x86_64-unknown-linux-gnu.tar.gz";
+                sha256 = "asdr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym";
+              }
+            }/humanify)" "$@"
+          '')
           jpexs # ffdec
           python314Packages.ruff
           deluged

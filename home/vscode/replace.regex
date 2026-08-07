@@ -506,13 +506,13 @@ $1
 @replace $1$2={$3={$4 = $5};};
 @endregex
 
-@file \.nix$
-@regex \}(?!;)(?=\s+\})
-@replace };
-@endregex
-@regex \};;+
-@replace };
-@endregex
+! @file \.nix$
+! @regex \}(?!;)(?=\s+\})
+! @replace };
+! @endregex
+! @regex \};;+
+! @replace };
+! @endregex
 
 @file \.nix$
 @regex builtins\.removeAttrs
