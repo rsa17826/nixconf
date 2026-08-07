@@ -252,7 +252,7 @@ in
             "$(${
               pkgs.fetchzip {
                 url = "https://github.com/jehna/humanify/releases/download/v3.1.1/humanify-x86_64-unknown-linux-gnu.tar.gz";
-                sha256 = "asdr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7dmmym";
+                sha256 = "sha256-Jo9MhDmekpFBWq6IfZ+dbOB6sQbjORXtyHQtlPTNKyc=";
               }
             }/humanify)" "$@"
           '')
