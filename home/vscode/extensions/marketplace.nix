@@ -20,8 +20,8 @@
             {
               name = "lua";
               publisher = "sumneko";
-              version = "3.18.2";
-              hash = "sha256-8mvauayksFk/3A7VMJ3EZYyRK8YLgX03W7bzEIdGkXQ=";
+              version = "3.19.0";
+              hash = "sha256-p+2LkJ97l5fQ0sshEg/+XglJWAg2XXmb1MVIFa/ebbg=";
             }
             {
               name = "shader";
@@ -56,8 +56,8 @@
             {
               name = "css-custom-property-inspector";
               publisher = "schalkneethling";
-              version = "0.1.1";
-              hash = "sha256-SA7AX9pam3mBm18JlGEMyh/bua2xEWnyoI9zQYq3Gg8=";
+              version = "0.1.2";
+              hash = "sha256-eC5dDSq8fNBMsrHPOq/+42qfBlA0deMP2A2XidUuJyk=";
             }
             {
               name = "search-everywhere-lite";
@@ -99,13 +99,13 @@
               name = "shellcheck";
               publisher = "timonwong";
               version = "0.39.5";
-              hash = "sha256-8f9LGmNE8ilPYZmbJpmmAx9DkKJXbQzAia11rM3wTec=";
+              hash = "sha256-Yh5C/Rjqtg38BT4D6IuW8Wc5Eq4GzkrpGQYU6U3T/p0=";
             }
             {
               name = "zubanls";
               publisher = "zuban";
-              version = "0.2.3";
-              hash = "sha256-O46EMBoyXEYBe63UIRTLjHHNSKnQqAYj5dHnqn86/co=";
+              version = "0.2.4";
+              hash = "sha256-qF84648gSFNkbR5V3sDyKtWUcd3gE+8En3+m28KzmXg=";
             }
             {
               name = "direnv";
@@ -194,8 +194,8 @@
             {
               name = "godot-format";
               publisher = "dohe";
-              version = "0.4.1";
-              hash = "sha256-Hjh0iB402MgWlsOQMb2ipGuCdvTxnpwYf72rnGVPg2Y=";
+              version = "0.5.1";
+              hash = "sha256-0ZmbIucRhv2t1Dhy1MuTV+VfSeNyuzn58MQbkgUMG3A=";
             }
             {
               name = "githistory";
@@ -296,14 +296,14 @@
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.12031010";
-              hash = "sha256-QVq0jHAatQcUGx3nXxdcClIgTHAHWIsn6ZOkdG0WtXk=";
+              version = "2026.7.12111009";
+              hash = "sha256-U9sS0m5ADo0+AmjcHunWJr9x+JZepXKjqTc8C3nvoGk=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.5.2026070801";
-              hash = "sha256-ft9F6Ok/0VU3P9+AAAxW51NE5RlEK6VwtFPaMYq+GLg=";
+              version = "2026.7.2026080801";
+              hash = "sha256-Y5tMdJM00ZlXUcKpEr9xiQrPNZmugXMWAb+Zf2U76UY=";
             }
             {
               name = "hexeditor";
@@ -386,8 +386,8 @@
             {
               name = "typos-vscode";
               publisher = "tekumara";
-              version = "0.1.52";
-              hash = "sha256-o+AQDdToXTV/pUSt2zw19hf7nwbOb4gb9dlSsB7t32E=";
+              version = "0.1.55";
+              hash = "sha256-xBBLKE2VceVOC6gYtIYaMxzUw428Y9T8O8BnFkf0eAI=";
             }
             {
               name = "autolink";
