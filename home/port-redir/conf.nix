@@ -54,7 +54,9 @@ in
   services = {
     nginx = {
       enable = true;
-
+      eventsConfig = ''
+        worker_connections 1024;
+      '';
       virtualHosts =
         (lib.listToAttrs (
           map (
@@ -83,6 +85,16 @@ in
           ) remaps
         ))
         // {
+          "chromewebstore.google.com" = {
+            addSSL = true;
+            sslCertificate = ./cws.localhost+3.pem; # regenerated to include this SAN
+            sslCertificateKey = ./cws.localhost+3-key.pem;
+            locations = {
+              "/" = {
+                return = "302 https://cws.localhost$request_uri";
+              };
+            };
+          };
           "cws.localhost" = {
             addSSL = true;
             sslCertificate = ./cws.localhost+3.pem;
