@@ -80,7 +80,7 @@
           harden-glue = true;
           harden-referral-path = false;
           val-clean-additional = true;
-          include = [ "/var/lib/unbound/adblock.conf" ];
+          include = [ "/var/lib/unbound/adblock.conf" ./cws.conf ];
         };
       };
     };

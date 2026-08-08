@@ -44,6 +44,7 @@ let
               "<li><a href=\"http://${name}.localhost\">${name}</a></li>"
             ) remaps
           )}
+          <li><a href="https://cws.localhost">chromewebstore (CWS)</a></li>
         </ul>
       </body>
     </html>
@@ -82,6 +83,23 @@ in
           ) remaps
         ))
         // {
+          "cws.localhost" = {
+            addSSL = true;
+            locations = {
+              "/" = {
+                proxyPass = "https://chromewebstore.google.com";
+                extraConfig = ''
+                  proxy_set_header Host chromewebstore.google.com;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_ssl_server_name on;
+                  proxy_ssl_session_reuse off;
+                  proxy_buffering off;
+                '';
+              };
+            };
+          };
           "_" = {
             default = true;
             locations = {
@@ -99,10 +117,12 @@ in
 
   networking = {
     # Update extraHosts to map .localhost domains to 127.0.0.1
-    extraHosts = lib.concatStringsSep "\n" (
-      map (
-        pair: "127.0.0.1 ${builtins.elemAt pair 0}.localhost\n127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1"
-      ) remaps
-    );
+    extraHosts =
+      lib.concatStringsSep "\n" (
+        map (
+          pair: "127.0.0.1 ${builtins.elemAt pair 0}.localhost\n127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1"
+        ) remaps
+      )
+      + "\n127.0.0.1 cws.localhost\n127.0.0.1 chromewebstore.google.com";
   };
 }
