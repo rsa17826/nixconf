@@ -101,6 +101,9 @@ in
                   proxy_ssl_name chromewebstore.google.com;
                   proxy_ssl_session_reuse off;
                   proxy_buffering off;
+                  proxy_buffer_size 16k;
+                  proxy_buffers 4 32k;
+                  proxy_busy_buffers_size 64k;
                 '';
               };
             };
