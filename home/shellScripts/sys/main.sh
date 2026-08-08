@@ -74,8 +74,10 @@ status | restart | stop | start)
     systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
   else
     systemctl "${SCOPE_ARGS[@]}" "$cmd" "$SERVICE"
-    sleep 0.5
-    systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
+    (
+      sleep 0.5
+      systemctl "${SCOPE_ARGS[@]}" status "$SERVICE" --no-pager --lines=0
+    ) &
   fi
   ;;
 
