@@ -203,6 +203,7 @@ in
         builtins.elem (pkgs.lib.getName pkg) [
           "cuda_cccl"
           "cuda_cudart"
+          "cuda_nvcc"
           "nvidia-x11"
           "nvidia-settings"
           "nvidia-persistenced"
