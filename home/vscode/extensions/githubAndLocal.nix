@@ -198,6 +198,7 @@ in
               extName = "csharp";
               extCreator = "muhammadsammy";
               npmDepsHash = "sha256-LzsXJOe9pQ5vW6pCe1NqGOOEoIoLONSxuMBr3xLR30k=";
+              npmDepsFetcherVersion = 2;
             })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
