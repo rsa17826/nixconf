@@ -89,9 +89,8 @@ in
             sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
-                proxyPass = "https://chromewebstore.google.com";
                 extraConfig = ''
-                  resolver 127.0.0.1 valid=300s;
+                  resolver 127.0.0.1:5353 valid=300s;
                   set $upstream chromewebstore.google.com;
                   proxy_pass https://$upstream;
                   proxy_set_header Host chromewebstore.google.com;
