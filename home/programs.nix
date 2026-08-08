@@ -482,6 +482,7 @@ in
       nix-ld # run linux programs
       kitty # terminal emulator
       at-spi2-core
+      omnisharp-roslyn
       dotnet-sdk_8
       # ollama
       # albert
