@@ -87,7 +87,7 @@ in
         // {
           "chromewebstore.google.com" = {
             addSSL = true;
-            sslCertificate = ./cws.localhost+3.pem; # regenerated to include this SAN
+            sslCertificate = ./cws.localhost+3.pem;
             sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
