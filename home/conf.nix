@@ -204,6 +204,7 @@ in
           "cuda_cccl"
           "cuda_cudart"
           "cuda_nvcc"
+          "libcublas"
           "nvidia-x11"
           "nvidia-settings"
           "nvidia-persistenced"
