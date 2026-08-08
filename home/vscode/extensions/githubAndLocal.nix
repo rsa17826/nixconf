@@ -197,7 +197,7 @@ in
               src = ext-vscode-muhammadsammy-free-vscode-csharp;
               extName = "csharp";
               extCreator = "muhammadsammy";
-              npmDepsHash = "sha256-LzsXJOe9pQ5vW6pCe1NqGOOEoIoLONSxuMBr3xLR30k=";
+              npmDepsHash = "sha256-tlkmbIl+tl/KRXDNPyNhGsmD0HOy3QrGljaF0j0u348=";
               npmDepsFetcherVersion = 2;
             })
             (buildFromFlake {
