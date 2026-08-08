@@ -243,6 +243,7 @@ in
               })
             ];
           })
+          (llama-cpp.override { cudaSupport = true; })
           typescript
           nodejs
           (writeShellScriptBin "pixieditor" ''
@@ -481,7 +482,7 @@ in
       nix-ld # run linux programs
       kitty # terminal emulator
       at-spi2-core
-      ollama
+      # ollama
       # albert
       # keyd # disables capslock and enables numlock
       git-filter-repo
