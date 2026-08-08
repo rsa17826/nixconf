@@ -282,6 +282,10 @@
     #   };
     # };
     # ext
+    ext-vscode-muhammadsammy-free-vscode-csharp = {
+      url = "github:muhammadsammy/free-vscode-csharp";
+      flake = false;
+    };
     ext-vscode-math-on-selected-nums = {
       url = "github:rsa17826/vscode-ext---math-on-selected-nums";
       flake = false;

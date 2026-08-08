@@ -194,6 +194,12 @@ in
             #   extCreator = "rioj7";
             # })
             (buildFromFlake {
+              src = ext-vscode-muhammadsammy-free-vscode-csharp;
+              extName = "csharp";
+              extCreator = "muhammadsammy";
+              npmDepsHash = "sha256-LzsXJOe9pQ5vW6pCe1NqGOOEoIoLONSxuMBr3xLR30k=";
+            })
+            (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
               extCreator = "rssaromeo";

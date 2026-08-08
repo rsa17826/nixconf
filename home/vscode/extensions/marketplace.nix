@@ -6,12 +6,6 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "csharp";
-              publisher = "muhammad-sammy";
-              version = "2.140.10";
-              hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-            }
-            {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
               version = "1.0.2";
