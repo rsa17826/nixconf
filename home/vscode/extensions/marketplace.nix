@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "vscode-dotnet-runtime";
+              publisher = "ms-dotnettools";
+              version = "3.1.0";
+              hash = "sha256-jmdf/l82dEMNY+KNLcBatA82yElOlUnnnTmV1yGxP1o=";
+            }
+            {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
               version = "1.0.2";
@@ -21,7 +27,7 @@
               name = "lua";
               publisher = "sumneko";
               version = "3.19.0";
-              hash = "sha256-p+2LkJ97l5fQ0sshEg/+XglJWAg2XXmb1MVIFa/ebbg=";
+              hash = "sha256-Gr1zOA/eZ+pW0Z2G5cm2f1bGNf16Q2lyNW1AYK1g5dE=";
             }
             {
               name = "shader";
@@ -99,7 +105,7 @@
               name = "shellcheck";
               publisher = "timonwong";
               version = "0.39.5";
-              hash = "sha256-Yh5C/Rjqtg38BT4D6IuW8Wc5Eq4GzkrpGQYU6U3T/p0=";
+              hash = "sha256-8f9LGmNE8ilPYZmbJpmmAx9DkKJXbQzAia11rM3wTec=";
             }
             {
               name = "zubanls";
@@ -195,7 +201,7 @@
               name = "godot-format";
               publisher = "dohe";
               version = "0.5.1";
-              hash = "sha256-0ZmbIucRhv2t1Dhy1MuTV+VfSeNyuzn58MQbkgUMG3A=";
+              hash = "sha256-f9JP4gFSYsWAdZkgoIsi4I9gR/1r9wosOzYPmDFWDMc=";
             }
             {
               name = "githistory";
