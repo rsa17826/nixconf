@@ -91,11 +91,15 @@ in
               "/" = {
                 proxyPass = "https://chromewebstore.google.com";
                 extraConfig = ''
+                  resolver 127.0.0.1 valid=300s;
+                  set $upstream chromewebstore.google.com;
+                  proxy_pass https://$upstream;
                   proxy_set_header Host chromewebstore.google.com;
                   proxy_set_header X-Real-IP $remote_addr;
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                   proxy_set_header X-Forwarded-Proto $scheme;
                   proxy_ssl_server_name on;
+                  proxy_ssl_name chromewebstore.google.com;
                   proxy_ssl_session_reuse off;
                   proxy_buffering off;
                 '';
