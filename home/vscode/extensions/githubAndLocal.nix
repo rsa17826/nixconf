@@ -195,9 +195,9 @@ in
             # })
             (buildSimpleExt {
               src = pkgs.fetchzip {
-                url = "https://open-vsx.org/api/muhammad-sammy/csharp/2.130.5/file/muhammad-sammy.csharp-2.130.5.vsix";
+                url = "https://openvsx.eclipsecontent.org/muhammad-sammy/csharp/linux-x64/2.145.21-g154a82fd27/muhammad-sammy.csharp-2.145.21-g154a82fd27@linux-x64.vsix";
                 extension = "zip";
-                sha256 = pkgs.lib.fakeHash;
+                sha256 = "sha256-DL0LonnBe1HoWRtyMymSf3S+XIk7Bl/qBOaVGoWN0RI=";
                 stripRoot = false;
               };
               extName = "csharp";
