@@ -125,6 +125,6 @@ in
           pair: "127.0.0.1 ${builtins.elemAt pair 0}.localhost\n127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1"
         ) remaps
       )
-      + "\n127.0.0.1 cws.localhost\n127.0.0.1 chromewebstore.google.com";
+      + "\n127.0.0.1 cws.localhost";
   };
 }
