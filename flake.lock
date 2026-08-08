@@ -326,22 +326,6 @@
         "type": "github"
       }
     },
-    "ext-vscode-muhammadsammy-free-vscode-csharp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1782555804,
-        "narHash": "sha256-nCjW7/NVXoaEJdtEYxmIuTWFynDvT67yaRvSlvJfXW4=",
-        "owner": "muhammadsammy",
-        "repo": "free-vscode-csharp",
-        "rev": "d94fae6e1552f1a60eacda933fc76c399b36591f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "muhammadsammy",
-        "repo": "free-vscode-csharp",
-        "type": "github"
-      }
-    },
     "ext-vscode-void-color-theme": {
       "flake": false,
       "locked": {
@@ -1197,7 +1181,6 @@
         "ext-simple-auto-formatter": "ext-simple-auto-formatter",
         "ext-textreplace": "ext-textreplace",
         "ext-vscode-math-on-selected-nums": "ext-vscode-math-on-selected-nums",
-        "ext-vscode-muhammadsammy-free-vscode-csharp": "ext-vscode-muhammadsammy-free-vscode-csharp",
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils_2",
