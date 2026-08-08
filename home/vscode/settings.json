@@ -900,5 +900,4 @@
     "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
   "diffEditor.experimental.showMoves": true,
-  "omnisharp.dotNetCliPaths": ["/run/current-system/sw/bin/dotnet"],
 }

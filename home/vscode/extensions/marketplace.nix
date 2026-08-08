@@ -6,12 +6,6 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "vscode-dotnet-runtime";
-              publisher = "ms-dotnettools";
-              version = "3.1.0";
-              hash = "sha256-jmdf/l82dEMNY+KNLcBatA82yElOlUnnnTmV1yGxP1o=";
-            }
-            {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
               version = "1.0.2";

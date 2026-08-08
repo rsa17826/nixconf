@@ -193,18 +193,18 @@ in
             #   extName = "regex-text-gen";
             #   extCreator = "rioj7";
             # })
-            (buildSimpleExt {
-              src = "${
-                pkgs.fetchzip {
-                  url = "https://openvsx.eclipsecontent.org/muhammad-sammy/csharp/linux-x64/2.145.21-g154a82fd27/muhammad-sammy.csharp-2.145.21-g154a82fd27@linux-x64.vsix";
-                  extension = "zip";
-                  sha256 = "sha256-DL0LonnBe1HoWRtyMymSf3S+XIk7Bl/qBOaVGoWN0RI=";
-                  stripRoot = false;
-                }
-              }/extension";
-              extName = "csharp";
-              extCreator = "muhammadsammy";
-            })
+            # (buildSimpleExt {
+            #   src = "${
+            #     pkgs.fetchzip {
+            #       url = "https://openvsx.eclipsecontent.org/muhammad-sammy/csharp/linux-x64/2.145.21-g154a82fd27/muhammad-sammy.csharp-2.145.21-g154a82fd27@linux-x64.vsix";
+            #       extension = "zip";
+            #       sha256 = "sha256-DL0LonnBe1HoWRtyMymSf3S+XIk7Bl/qBOaVGoWN0RI=";
+            #       stripRoot = false;
+            #     }
+            #   }/extension";
+            #   extName = "csharp";
+            #   extCreator = "muhammadsammy";
+            # })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
