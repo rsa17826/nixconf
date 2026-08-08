@@ -85,6 +85,8 @@ in
         // {
           "cws.localhost" = {
             addSSL = true;
+            sslCertificate = ./cws.localhost+3.pem;
+            sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
                 proxyPass = "https://chromewebstore.google.com";
