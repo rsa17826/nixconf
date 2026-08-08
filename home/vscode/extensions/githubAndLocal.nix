@@ -193,6 +193,16 @@ in
             #   extName = "regex-text-gen";
             #   extCreator = "rioj7";
             # })
+            (buildSimpleExt {
+              src = pkgs.fetchzip {
+                url = "https://open-vsx.org/api/muhammad-sammy/csharp/2.130.5/file/muhammad-sammy.csharp-2.130.5.vsix";
+                extension = "zip";
+                sha256 = pkgs.lib.fakeHash;
+                stripRoot = false;
+              };
+              extName = "csharp";
+              extCreator = "muhammadsammy";
+            })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
