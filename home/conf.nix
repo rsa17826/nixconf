@@ -201,6 +201,7 @@ in
       allowUnfreePredicate =
         pkg:
         builtins.elem (pkgs.lib.getName pkg) [
+          "cuda_cccl"
           "nvidia-x11"
           "nvidia-settings"
           "nvidia-persistenced"
