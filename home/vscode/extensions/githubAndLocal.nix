@@ -194,13 +194,6 @@ in
             #   extCreator = "rioj7";
             # })
             (buildFromFlake {
-              src = ext-vscode-muhammadsammy-free-vscode-csharp;
-              extName = "csharp";
-              extCreator = "muhammadsammy";
-              npmDepsHash = "sha256-tlkmbIl+tl/KRXDNPyNhGsmD0HOy3QrGljaF0j0u348=";
-              npmDepsFetcherVersion = 2;
-            })
-            (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
               extCreator = "rssaromeo";
