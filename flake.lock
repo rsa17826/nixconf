@@ -249,11 +249,11 @@
     "ext-owoify-editor": {
       "flake": false,
       "locked": {
-        "lastModified": 1785415015,
-        "narHash": "sha256-vLoeZJGaT3NWGjPVsz1MtFGYzBTwfN5BMsC0fulqjNY=",
+        "lastModified": 1786289772,
+        "narHash": "sha256-JDiVCq3GJqJFj0I97oXWTORDq6v84uzuacu9g3X6htU=",
         "owner": "rsa17826",
         "repo": "vscodeowotest",
-        "rev": "e83970616be22b7a984e5991049ac5969c0f9cc9",
+        "rev": "93038b46ccfbef3c4a1a38c3e1a6b30808404ab8",
         "type": "github"
       },
       "original": {
