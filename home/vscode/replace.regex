@@ -2,24 +2,8 @@
 @regex ^(?:(?!#)|$)
 @flags
 @replace #!sh
-ቃ
-@endregex
-@regex ^(#!sh\n)ቃ
-@flags
-@replace $1
-@endregex
 
-! @file start$
-! @regex ^(?:(?!#)|$)
-! @flags
-! @replace #!sh
-! ቃ
-! @endregex
-! @regex ^(#!sh\n)ቃ
-! @flags
-! @replace $1
-! @endregex
-
+@endregex
 
 @name a
 @file \.py$

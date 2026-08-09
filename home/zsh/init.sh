@@ -1,4 +1,9 @@
 #!/usr/bin/env zsh
+
+# @regex (?<!/)rm
+# @replace /run/current-system/sw/bin/rm
+# @endregex
+
 # shellcheck disable=SC1071
 ZSH_COMMAND_TIME_COLOR="yellow"
 ZSH_COMMAND_TIME_MIN_SECONDS=3
@@ -104,14 +109,14 @@ function zsh-timer-exit-cleanup() {
   if [[ -s "$TIMER_PID_FILE" ]]; then
     local _pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
     [[ -n "$_pid" ]] && kill -9 "$_pid" 2>/dev/null
-    rm -f "$TIMER_PID_FILE"
+    /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
   fi
-  rm -f "$TIMER_START_FILE"
+  /run/current-system/sw/bin/rm -f "$TIMER_START_FILE"
   # Release display ownership only if this shell still holds it, so the
   # parent shell's timer can resume once we exit.
   if [[ -n "$TERMBAR_OWNER_FILE" ]] &&
     [[ "$(cat "$TERMBAR_OWNER_FILE" 2>/dev/null)" == "$$" ]]; then
-    rm -f "$TERMBAR_OWNER_FILE"
+    /run/current-system/sw/bin/rm -f "$TERMBAR_OWNER_FILE"
   fi
 }
 add-zsh-hook zshexit zsh-timer-exit-cleanup
@@ -140,7 +145,7 @@ function precmd() {
         _set_status "[$code_str] $time_str"
       fi
     fi
-    rm -f "$TIMER_START_FILE"
+    /run/current-system/sw/bin/rm -f "$TIMER_START_FILE"
   fi
 
   if [[ -s "$TIMER_PID_FILE" ]]; then
