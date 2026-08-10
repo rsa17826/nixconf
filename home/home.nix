@@ -52,9 +52,9 @@ in
 
         sessionVariables = {
           QT_QPA_PLATFORMTHEME = lib.mkForce "generic";
-          EDITOR = "nvim";
+          EDITOR = "codium";
           SOPS_EDITOR = "codium --wait";
-          VISUAL = "nvim";
+          VISUAL = "codium";
           HYPRCURSOR_THEME = "mew";
           QT_STYLE_OVERRIDE = "adwaita-dark";
           ADW_DISABLE_PORTAL = "0";

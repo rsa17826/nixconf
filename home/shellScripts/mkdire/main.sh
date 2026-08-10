@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-mkdir -p "$1" && e "$1"
+mkdir -p "$1" && $EDITOR "$1"

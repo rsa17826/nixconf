@@ -237,9 +237,9 @@ in
 
   environment = {
     variables = {
-      EDITOR = "nvim";
+      EDITOR = "codium";
       SOPS_EDITOR = "codium --wait";
-      VISUAL = "nvim";
+      VISUAL = "codium";
       HYPRCURSOR_THEME = "mew";
       # QT_STYLE_OVERRIDE = "adwaita-dark";
     };
