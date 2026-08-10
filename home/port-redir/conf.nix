@@ -14,7 +14,7 @@ let
       1533
     ]
     [
-      "mathquest 2"
+      "mathquest2"
       8061
     ]
     [
