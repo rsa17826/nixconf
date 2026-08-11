@@ -5,7 +5,7 @@
 let
   cursorSrc = ./cursorImages;
   cursorName = "mew";
-  "${cursorName}CursorPackage" =
+  cursorPackage =
     pkgs.runCommand "${cursorName}-cursor"
       {
         nativeBuildInputs = with pkgs; [
@@ -77,7 +77,7 @@ in
         enable = true;
       };
       enable = true;
-      package = "${cursorName}CursorPackage";
+      package = cursorPackage;
     };
   };
   dconf = {
