@@ -22,6 +22,10 @@ textColor="#000"
 # Detect available CPU threads for parallel processing
 NPROC=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
 
+# Prevent each magick invocation from spawning its own thread pool on top of
+# our own outer parallelism (oversubscription kills throughput).
+export MAGICK_THREAD_LIMIT=1
+
 WORKDIR=$(mktemp -d)
 trap 'rm -rf "$WORKDIR"' EXIT
 
@@ -116,12 +120,14 @@ for name in "${cursors[@]}"; do
     cum_ref+=("$cum")
     tiles_ref+=("$tile_out")
 
-    # Combine resize, hotspot circle, and label annotation into 1 magick call
+    # Combine resize and hotspot circle into 1 magick call.
+    # (Label text is no longer baked into every tile -- it's added once per
+    # cursor as a row/column caption during the montage step instead.)
     cmd=(magick -background none "$src" -resize "${CELL}x${CELL}")
     if [[ "$SHOW_HOTSPOT" == "1" ]]; then
       cmd+=(-fill yellow -stroke black -strokewidth 1 -draw "circle $px,$py $((px + 3)),$py")
     fi
-    cmd+=(-background "$bg" -gravity south -splice 0x14 -font DejaVu-Sans -pointsize 12 -fill "$textColor" -annotate +0+2 "$name" "$tile_out")
+    cmd+=(-define png:compression-level=1 "$tile_out")
 
     run_job "${cmd[@]}"
   done
@@ -165,15 +171,16 @@ render_grid_frame() {
         break
       fi
     done
-    tiles+=("$selected_tile")
+    tiles+=(-label "$name" "$selected_tile")
   done
 
-  magick montage "${tiles[@]}" \
+  magick montage \
+    -font DejaVu-Sans -pointsize 12 -fill "$textColor" \
+    "${tiles[@]}" \
     -tile "${COLS}x" \
     -geometry +2+2 \
     -background "$bg" \
-    -font DejaVu-Sans \
-    "$WORKDIR/grid_$(printf '%05d' "$f").png"
+    "$WORKDIR/grid_$(printf '%05d' "$f").gif"
 }
 
 for ((f = 0; f < frame_count; f++)); do
@@ -183,5 +190,5 @@ done
 wait
 
 echo "=== Compiling final GIF ==="
-magick -delay $((TICK_MS / 10)) -loop 0 "$WORKDIR"/grid_*.png "$OUT"
+MAGICK_THREAD_LIMIT="$NPROC" magick -delay $((TICK_MS / 10)) -loop 0 "$WORKDIR"/grid_*.gif "$OUT"
 echo "Wrote $OUT"
