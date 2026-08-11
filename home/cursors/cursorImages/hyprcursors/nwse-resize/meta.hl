@@ -1,0 +1,7 @@
+resize_algorithm = none
+hotspot_x = 0.28
+hotspot_y = 0.22
+
+define_size = 32, nwse-resize_000.png, 416
+define_size = 32, nwse-resize_001.png, 416
+

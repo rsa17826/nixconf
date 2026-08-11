@@ -1,0 +1,7 @@
+resize_algorithm = none
+hotspot_x = 0.50
+hotspot_y = 0.69
+
+define_size = 32, sb_v_double_arrow_000.png, 416
+define_size = 32, sb_v_double_arrow_001.png, 416
+

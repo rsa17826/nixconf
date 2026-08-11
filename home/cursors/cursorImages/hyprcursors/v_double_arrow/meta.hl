@@ -1,0 +1,11 @@
+resize_algorithm = none
+hotspot_x = 0.50
+hotspot_y = 0.69
+
+define_size = 32, v_double_arrow_000.png, 416
+define_size = 32, v_double_arrow_001.png, 416
+
+define_override = s-resize
+define_override = n-resize
+define_override = top_side
+define_override = bottom_side

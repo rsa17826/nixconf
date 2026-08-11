@@ -1,0 +1,9 @@
+resize_algorithm = none
+hotspot_x = 0.28
+hotspot_y = 0.22
+
+define_size = 32, crossed_circle_000.png, 1000
+define_size = 32, crossed_circle_001.png, 1000
+
+define_override = not-allowed
+define_override = no-drop

@@ -1,0 +1,36 @@
+resize_algorithm = none
+hotspot_x = 0.28
+hotspot_y = 0.22
+
+define_size = 32, left_ptr_000.png, 250
+define_size = 32, left_ptr_001.png, 250
+define_size = 32, left_ptr_002.png, 250
+define_size = 32, left_ptr_003.png, 250
+define_size = 32, left_ptr_004.png, 250
+define_size = 32, left_ptr_005.png, 250
+define_size = 32, left_ptr_006.png, 250
+define_size = 32, left_ptr_007.png, 250
+define_size = 32, left_ptr_008.png, 250
+define_size = 32, left_ptr_009.png, 250
+define_size = 32, left_ptr_010.png, 250
+define_size = 32, left_ptr_011.png, 250
+define_size = 32, left_ptr_012.png, 250
+define_size = 32, left_ptr_013.png, 250
+define_size = 32, left_ptr_014.png, 250
+define_size = 32, left_ptr_015.png, 250
+define_size = 32, left_ptr_016.png, 250
+define_size = 32, left_ptr_017.png, 250
+define_size = 32, left_ptr_018.png, 250
+define_size = 32, left_ptr_019.png, 250
+define_size = 32, left_ptr_020.png, 250
+define_size = 32, left_ptr_021.png, 250
+define_size = 32, left_ptr_022.png, 250
+define_size = 32, left_ptr_023.png, 250
+define_size = 32, left_ptr_024.png, 250
+define_size = 32, left_ptr_025.png, 66
+define_size = 32, left_ptr_026.png, 66
+define_size = 32, left_ptr_027.png, 66
+define_size = 32, left_ptr_028.png, 250
+define_size = 32, left_ptr_029.png, 250
+
+define_override = default

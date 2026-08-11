@@ -2,34 +2,73 @@
   pkgs,
   ...
 }:
+let
+  cursorSrc = ./cursorImages;
+  cursorName = "mew";
+  "${cursorName}CursorPackage" =
+    pkgs.runCommand "${cursorName}-cursor"
+      {
+        nativeBuildInputs = with pkgs; [
+          xcursorgen
+          gawk
+        ];
+      }
+      ''
+              set -e
+              install -dm755 "$out/share/icons/${cursorName}/cursors"
+              install -dm755 "$out/share/icons/${cursorName}/hyprcursors"
+
+              # 1. Keep the native hyprcursor format as-is, for Hyprland's own renderer
+              cp -r "${cursorSrc}/hyprcursors"/* "$out/share/icons/${cursorName}/hyprcursors/"
+              cp "${cursorSrc}/manifest.hl" "$out/share/icons/${cursorName}/hyprcursors.hl" 2>/dev/null || true
+
+              # 2. Convert each shape's meta.hl + pngs into a classic Xcursor binary
+              for shapedir in "${cursorSrc}/hyprcursors"/*/; do
+                shape=$(basename "$shapedir")
+                meta="$shapedir/meta.hl"
+                [ -f "$meta" ] || continue
+
+                hotspot_x_frac=$(awk -F' = ' '/^hotspot_x/{print $2}' "$meta")
+                hotspot_y_frac=$(awk -F' = ' '/^hotspot_y/{print $2}' "$meta")
+
+                cfg="cfg_$shape.cursorgen"
+                : > "$cfg"
+
+                while IFS= read -r line; do
+                  size=$(echo "$line" | awk -F'[ ,=]+' '{print $2}')
+                  fname=$(echo "$line" | awk -F'[ ,=]+' '{print $3}')
+                  delay=$(echo "$line" | awk -F'[ ,=]+' '{print $4}')
+
+                  hx=$(awk -v f="$hotspot_x_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
+                  hy=$(awk -v f="$hotspot_y_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
+
+                  echo "$size $hx $hy $shapedir/$fname $delay" >> "$cfg"
+                done < <(grep '^define_size' "$meta")
+
+                if [ -s "$cfg" ]; then
+                  xcursorgen "$cfg" "$out/share/icons/${cursorName}/cursors/$shape"
+                fi
+              done
+
+              # Aliases classic Xcursor themes expect
+              cd "$out/share/icons/${cursorName}/cursors"
+              [ -f left_ptr ] && ln -sf left_ptr default
+              [ -f arrow ] && [ ! -f left_ptr ] && ln -sf arrow left_ptr && ln -sf arrow default
+
+              cat > "$out/share/icons/${cursorName}/index.theme" <<EOF
+        [Icon Theme]
+        Name="${cursorName}"
+        Comment="${cursorName}"
+        Inherits=Adwaita
+        EOF
+
+              chmod -R +r "$out/share/icons/${cursorName}"
+      '';
+in
 {
   home = {
-    # home.pointerCursor = {
-    #   name = "mew"; # The name of the cursor theme
-    #   size = 24; # Default cursor size (you can adjust this)
-    #   gtk.enable = true;
-    #   x11.enable = true;
-    #   enable = true;
-
-    #   package = pkgs.runCommand "mew" { } ''
-    #       mkdir -p $out/share/icons/mew
-    #       cp -r ${./cursorImages} $out/share/icons/mew/cursors
-    #       cat > $out/share/icons/mew/index.theme <<EOF
-    #     [Icon Theme]
-    #     Name=mew
-    #     Comment=mew
-    #     Hidden=false
-    #     Directories=cursors
-    #     Inherits=Adwaita
-    #     Example=default
-    #     EOF
-
-    #       # Fix permissions just in case
-    #       chmod -R +r $out/share/icons/mew
-    #   '';
-    # };
     pointerCursor = {
-      name = "mew";
+      name = "${cursorName}";
       size = 24;
       gtk = {
         enable = true;
@@ -38,32 +77,13 @@
         enable = true;
       };
       enable = true;
-
-      package = pkgs.runCommand "mew-cursor" { } ''
-              install -dm755 $out/share/icons/mew/cursors
-
-              # Copy the contents of your folder directly into the cursors dir
-              cp -rn ${./cursorImages}/* $out/share/icons/mew/cursors/
-
-              # Crucial: Wayland/X11 needs a 'default' file in the cursors dir
-              # Adjust 'left_ptr' to whatever your main pointer file is named in cursorImages
-              if [ -f $out/share/icons/mew/cursors/left_ptr ]; then
-                ln -s left_ptr $out/share/icons/mew/cursors/default
-              fi
-
-              cat > $out/share/icons/mew/index.theme <<EOF
-        [Icon Theme]
-        Name=mew
-        Comment=mew
-        Inherits=Adwaita
-        EOF
-      '';
+      package = "${cursorName}CursorPackage";
     };
   };
   dconf = {
     settings = {
       "org/gnome/desktop/interface" = {
-        cursor-theme = "mew";
+        cursor-theme = "${cursorName}";
         cursor-size = 24;
       };
     };

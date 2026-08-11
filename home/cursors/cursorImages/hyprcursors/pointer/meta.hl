@@ -1,0 +1,31 @@
+resize_algorithm = none
+hotspot_x = 0.28
+hotspot_y = 0.22
+
+define_size = 32, pointer_000.png, 416
+define_size = 32, pointer_001.png, 333
+define_size = 32, pointer_002.png, 100
+define_size = 32, pointer_003.png, 100
+define_size = 32, pointer_004.png, 100
+define_size = 32, pointer_005.png, 100
+define_size = 32, pointer_006.png, 100
+define_size = 32, pointer_007.png, 100
+define_size = 32, pointer_008.png, 100
+define_size = 32, pointer_009.png, 100
+define_size = 32, pointer_010.png, 100
+define_size = 32, pointer_011.png, 166
+define_size = 32, pointer_012.png, 166
+define_size = 32, pointer_013.png, 166
+define_size = 32, pointer_014.png, 166
+define_size = 32, pointer_015.png, 166
+define_size = 32, pointer_016.png, 250
+define_size = 32, pointer_017.png, 116
+define_size = 32, pointer_018.png, 116
+define_size = 32, pointer_019.png, 116
+define_size = 32, pointer_020.png, 116
+define_size = 32, pointer_021.png, 250
+
+define_override = alias
+define_override = pointing_hand
+define_override = hand1
+define_override = copy
