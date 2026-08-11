@@ -3,8 +3,8 @@
   ...
 }:
 let
-  cursorSrc = ./cursorImages;
   cursorName = "mew";
+  cursorSrc = ./${cursorName};
   cursorPackage =
     pkgs.runCommand "${cursorName}-cursor"
       {

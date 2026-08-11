@@ -21,7 +21,6 @@ let
     ls = "eza -l --icons --git --header --color-scale --group-directories-first --time-style=relative";
     wiz = "ncdu"; # wiztree
     e = "codium";
-    edir = "codium";
     updatec = "cd ~/nixconf ; (nix flake metadata | grep -oE 'ext-[a-zA-Z0-9_-]+'|xargs nix flake update) && pkill -9 codium ; update && codium && q";
     dea = "echo 'use flake' > .envrc && echo '\\n.direnv' >> .gitignore && git rm -r --cached .direnv 2>/dev/null; direnv allow";
     "7z" = "7zz";

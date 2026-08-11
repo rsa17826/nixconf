@@ -199,6 +199,7 @@ in
             src = inputs.perkins;
             vendorHash = "sha256-U9lhp3zxySA5cVwuSpOIaDca7ij/7o82YNenxZiACSI=";
           })
+          libresprite
           opensnitch-ui
           wl-mirror
           clang-tools
