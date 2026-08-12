@@ -1,6 +1,7 @@
 resize_algorithm = none
 hotspot_x = 0.28
 hotspot_y = 0.22
+define_override = fleur;left_ptr;default
 
 define_size = 32, arrow_000.png, 250
 define_size = 32, arrow_001.png, 250

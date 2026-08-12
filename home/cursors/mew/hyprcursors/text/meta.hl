@@ -26,3 +26,4 @@ define_size = 32, text_020.png, 250
 define_size = 32, text_021.png, 250
 
 define_override = ibeam
+define_override = xterm

@@ -14,55 +14,72 @@ let
         ];
       }
       ''
-              set -e
-              install -dm755 "$out/share/icons/${cursorName}/cursors"
-              install -dm755 "$out/share/icons/${cursorName}/hyprcursors"
+        set -e
+        install -dm755 "$out/share/icons/${cursorName}/cursors"
+        install -dm755 "$out/share/icons/${cursorName}/hyprcursors"
 
-              # 1. Keep the native hyprcursor format as-is, for Hyprland's own renderer
-              cp -r "${cursorSrc}/hyprcursors"/* "$out/share/icons/${cursorName}/hyprcursors/"
-              cp "${cursorSrc}/manifest.hl" "$out/share/icons/${cursorName}/hyprcursors.hl" 2>/dev/null || true
+        # 1. Keep the native hyprcursor format as-is, for Hyprland's own renderer
+        cp -r "${cursorSrc}/hyprcursors"/* "$out/share/icons/${cursorName}/hyprcursors/"
+        cp "${cursorSrc}/manifest.hl" "$out/share/icons/${cursorName}/hyprcursors.hl" 2>/dev/null || true
 
-              # 2. Convert each shape's meta.hl + pngs into a classic Xcursor binary
-              for shapedir in "${cursorSrc}/hyprcursors"/*/; do
-                shape=$(basename "$shapedir")
-                meta="$shapedir/meta.hl"
-                [ -f "$meta" ] || continue
+        # 2. Convert each shape's meta.hl + pngs into a classic Xcursor binary
+        for shapedir in "${cursorSrc}/hyprcursors"/*/; do
+          shape=$(basename "$shapedir")
+          meta="$shapedir/meta.hl"
+          [ -f "$meta" ] || continue
 
-                hotspot_x_frac=$(awk -F' = ' '/^hotspot_x/{print $2}' "$meta")
-                hotspot_y_frac=$(awk -F' = ' '/^hotspot_y/{print $2}' "$meta")
+          hotspot_x_frac=$(awk -F' = ' '/^hotspot_x/{print $2}' "$meta")
+          hotspot_y_frac=$(awk -F' = ' '/^hotspot_y/{print $2}' "$meta")
 
-                cfg="cfg_$shape.cursorgen"
-                : > "$cfg"
+          cfg="cfg_$shape.cursorgen"
+          : > "$cfg"
 
-                while IFS= read -r line; do
-                  size=$(echo "$line" | awk -F'[ ,=]+' '{print $2}')
-                  fname=$(echo "$line" | awk -F'[ ,=]+' '{print $3}')
-                  delay=$(echo "$line" | awk -F'[ ,=]+' '{print $4}')
+          while IFS= read -r line; do
+            size=$(echo "$line" | awk -F'[ ,=]+' '{print $2}')
+            fname=$(echo "$line" | awk -F'[ ,=]+' '{print $3}')
+            delay=$(echo "$line" | awk -F'[ ,=]+' '{print $4}')
 
-                  hx=$(awk -v f="$hotspot_x_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
-                  hy=$(awk -v f="$hotspot_y_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
+            hx=$(awk -v f="$hotspot_x_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
+            hy=$(awk -v f="$hotspot_y_frac" -v s="$size" 'BEGIN{printf "%d", f*s}')
 
-                  echo "$size $hx $hy $shapedir/$fname $delay" >> "$cfg"
-                done < <(grep '^define_size' "$meta")
+            echo "$size $hx $hy $shapedir/$fname $delay" >> "$cfg"
+          done < <(grep '^define_size' "$meta")
 
-                if [ -s "$cfg" ]; then
-                  xcursorgen "$cfg" "$out/share/icons/${cursorName}/cursors/$shape"
-                fi
+          if [ -s "$cfg" ]; then
+            xcursorgen "$cfg" "$out/share/icons/${cursorName}/cursors/$shape"
+          fi
+
+          # 3. Handle define_override lines, which alias other names to this shape.
+          #    They may appear as one name per line:
+          #      define_override = alias
+          #    or as a semicolon-separated list on one line:
+          #      define_override = fleur;left_ptr;default
+          if [ -s "$cfg" ]; then
+            while IFS= read -r overrideLine; do
+              overrideNames=$(echo "$overrideLine" | awk -F' = ' '{print $2}')
+              IFS=';' read -ra names <<< "$overrideNames"
+              for name in "''${names[@]}"; do
+                name=$(echo "$name" | xargs)
+                [ -n "$name" ] || continue
+                ln -sf "$shape" "$out/share/icons/${cursorName}/cursors/$name"
               done
+            done < <(grep '^define_override' "$meta")
+          fi
+        done
 
-              # Aliases classic Xcursor themes expect
-              cd "$out/share/icons/${cursorName}/cursors"
-              [ -f left_ptr ] && ln -sf left_ptr default
-              [ -f arrow ] && [ ! -f left_ptr ] && ln -sf arrow left_ptr && ln -sf arrow default
+        # Aliases classic Xcursor themes expect
+        cd "$out/share/icons/${cursorName}/cursors"
+        [ -f left_ptr ] && ln -sf left_ptr default
+        [ -f arrow ] && [ ! -f left_ptr ] && ln -sf arrow left_ptr && ln -sf arrow default
 
-              cat > "$out/share/icons/${cursorName}/index.theme" <<EOF
+        cat > "$out/share/icons/${cursorName}/index.theme" <<EOF
         [Icon Theme]
         Name="${cursorName}"
         Comment="${cursorName}"
         Inherits=Adwaita
         EOF
 
-              chmod -R +r "$out/share/icons/${cursorName}"
+        chmod -R +r "$out/share/icons/${cursorName}"
       '';
 in
 {

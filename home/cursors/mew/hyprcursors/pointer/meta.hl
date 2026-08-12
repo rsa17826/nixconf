@@ -28,4 +28,5 @@ define_size = 32, pointer_021.png, 250
 define_override = alias
 define_override = pointing_hand
 define_override = hand1
+define_override = hand2
 define_override = copy
