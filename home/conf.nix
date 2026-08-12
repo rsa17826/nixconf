@@ -201,6 +201,7 @@ in
       allowUnfreePredicate =
         pkg:
         builtins.elem (pkgs.lib.getName pkg) [
+          "cuda_nvrtc"
           "cuda_cccl"
           "cuda_cudart"
           "cuda_nvcc"
