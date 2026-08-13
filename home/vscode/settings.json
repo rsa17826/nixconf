@@ -588,7 +588,7 @@
   "js/ts.inlayHints.parameterNames.enabled": "all",
   "shadered.executablePath": "D:\\programs\\shadered\\SHADERed.exe",
   "[csharp]": {
-    "editor.defaultFormatter": "muhammad-sammy.csharp",
+    "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
   "dotnetAcquisitionExtension.enableTelemetry": false,
   "AHK++.v1.formatter": {
