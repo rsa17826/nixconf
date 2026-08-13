@@ -15,7 +15,7 @@ if [ "$1" == "watch" ]; then
   shift # Remove "watch" from arguments
 
   # Check if the next argument is a number (the interval)
-  if [[ "$1" =~ ^[0-9]+$ ]]; then
+  if [[ "$1" =~ ^[.0-9]+$ ]]; then
     INTERVAL=$1
     shift # Remove the interval from arguments
   fi

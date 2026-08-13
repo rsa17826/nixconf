@@ -901,6 +901,17 @@
   },
   "diffEditor.experimental.showMoves": true,
   "[actionscript]": {
-    "editor.defaultFormatter": "bowlerhatllc.vscode-as3mxml"
+    "editor.defaultFormatter": "bowlerhatllc.vscode-as3mxml",
   },
+  "as3mxml.sdk.framework": "/nix/store/b0sfpycjxyv8axlam45q23mljxh8p1hp-apache-flex-sdk-4.16.1",
+  "as3mxml.java.path": "/nix/store/mxf12821brqjb2kv1p3v8b9n6d5741y0-openjdk-21.0.12+8/lib/openjdk/bin/java",
+  "as3mxml.languageServer.enabled": true,
+  "as3mxml.sdk.searchPaths": [
+    "/nix/store/b0sfpycjxyv8axlam45q23mljxh8p1hp-apache-flex-sdk-4.16.1/bin",
+    "/nix/store/b0sfpycjxyv8axlam45q23mljxh8p1hp-apache-flex-sdk-4.16.1/",
+  ],
+  "as3mxml.format.semicolons": "remove",
+  "as3mxml.inlayHints.parameterNames.enabled": "all",
+  "as3mxml.lint.enabled": true,
+  "as3mxml.asconfigc.verboseOutput": true,
 }
