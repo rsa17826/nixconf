@@ -162,7 +162,8 @@ hl.window_rule({
 	move = { "1500", "0" },
 	dim_around = false,
 	no_initial_focus = true,
-	pin = true,
+	pin = false,
+	workspace = "input_display",
 	suppress_event = "activatefocus activate",
 	stay_focused = false,
 	allows_input = false,
@@ -306,6 +307,7 @@ hl.window_rule({
 for i = 1, 100 do
 	hl.workspace_rule({ workspace = tostring(i), monitor = "test_bottom", enabled = true, persistent = true })
 end
+hl.workspace_rule({ workspace = "input_display", monitor = "input_display", enabled = true, persistent = true })
 
 hl.dsp.force_renderer_reload({})
 -- Browser Selector (Tk): pin, float, centered, large
