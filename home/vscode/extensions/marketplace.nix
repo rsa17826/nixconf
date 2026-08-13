@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "vscode-nextgenas";
+              publisher = "bowlerhatllc";
+              version = "2.0.0";
+              hash = "sha256-v3GGQNkDboYQZGCihzpIOZB5Ty+3SJuFdYeLG1gLkIo=";
+            }
+            {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
               version = "1.0.2";
