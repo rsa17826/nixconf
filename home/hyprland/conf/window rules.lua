@@ -135,7 +135,7 @@ hl.window_rule({
 	match = { class = "^Key Display$", title = "^Key Display$" },
 	float = true,
 	-- size = { "516", "142" },
-	move = { "5", "905" },
+	-- move = { "5", "905" },
 	dim_around = false,
 	no_initial_focus = true,
 	pin = true,
@@ -153,6 +153,7 @@ hl.window_rule({
 	opaque = false,
 	opacity = "0.8 override",
 	render_unfocused = true,
+	monitor = "input_display",
 })
 hl.window_rule({
 	match = { class = "^macro-recorder$" },
@@ -242,8 +243,8 @@ hl.monitor({
 })
 hl.monitor({
 	output = "input_display",
-	mode = "4000x4000@61",
-	position = "560x142",
+	mode = "560x142@61",
+	position = "4000x4000",
 	scale = 1,
 })
 hl.window_rule({
