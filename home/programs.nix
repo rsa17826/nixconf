@@ -184,6 +184,7 @@ in
           zlib
           inotify-info
           bandwhich
+          apache-flex-sdk
           #
           # (pkgFromInp "freenet-core" "default")
           python313Packages.wsgidav

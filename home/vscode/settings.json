@@ -900,4 +900,7 @@
     "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
   "diffEditor.experimental.showMoves": true,
+  "[actionscript]": {
+    "editor.defaultFormatter": "bowlerhatllc.vscode-as3mxml"
+  },
 }
