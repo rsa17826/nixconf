@@ -237,8 +237,13 @@ hl.monitor({
 hl.monitor({
 	output = "test_bottom",
 	mode = "1920x1051@61",
-	-- position = "0x28",
 	position = "2000x28",
+	scale = 1,
+})
+hl.monitor({
+	output = "input_display",
+	mode = "4000x4000@61",
+	position = "560x142",
 	scale = 1,
 })
 hl.window_rule({
