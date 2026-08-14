@@ -20,6 +20,7 @@ hl.define_submap("launcher", function()
 	m.bind("e", launch("thunar"))
 	m.bind("t", launch("kitty"))
 	m.bind("x", launch("xdm"))
+	m.bind("k", launch("sh -c 'sys restart input-manager;sys restart autocorrect;sys restart autoclicker;sys restart macro-recorder;sys restart dynamicRebinds'"))
 
 	-- Exit on anything not matched
 	m.bind("catchall", hl.dsp.submap("reset"))

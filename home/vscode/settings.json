@@ -31,6 +31,8 @@
     "**/.vscode": true,
     "**/*mp3.as": true,
     "**/sb*.as": true,
+    ".import_staging": true,
+    ".import_single": true,
     "**/*Button.as": true,
     "**/*.tscn": true,
     "**/*.uid": true,
