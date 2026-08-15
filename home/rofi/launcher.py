@@ -101,7 +101,7 @@ def owowify(text: str) -> str:
   # Word replacement
   text = re.sub(
     r"l[ou]ve?",
-    lambda m: sub_same_case(m.group(0), "luv"),
+  lambda m: sub_same_case(m.group(0), "luv"),
     text,
     flags=re.IGNORECASE,
   )

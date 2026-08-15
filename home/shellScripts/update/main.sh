@@ -167,7 +167,6 @@ cleanup_abort() {
     if [[ "$NO_NEW_COMMIT" == false ]]; then
       echo "📝 Amending commit to ABORTED..."
       cd "$HOME/nixconf" 2>/dev/null || (
-        job-done "$job_id"
         exit 1
       )
 

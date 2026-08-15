@@ -18,7 +18,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("~/.config/hypr/scripts/random-wallpapers.sh 30")
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd("go run ~/projects/nulserv/main.go")
-	hl.exec_cmd("job-prompt")
+	-- hl.exec_cmd("job-prompt")
 	hl.exec_cmd(
 		"gpu-screen-recorder -w screen -f 60 -a default_output -r 300 -c mp4 -q 40000 -o ~/videos/flashback -bm cbr"
 	)
