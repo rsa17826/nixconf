@@ -3,6 +3,7 @@
   nixpkgs = {
     config = {
       allowUnfree = false;
+      cudaCapabilities = [ "6.1" ];
     };
   };
   networking = {

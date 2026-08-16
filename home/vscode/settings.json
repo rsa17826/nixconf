@@ -32,6 +32,8 @@
     "**/*mp3.as": true,
     "**/sb*.as": true,
     "**/.import_staging": true,
+    "**/.import_staging/*": true,
+    "**/.import_staging/**": true,
     "**/*Button.as": true,
     "**/*.tscn": true,
     "**/*.uid": true,
