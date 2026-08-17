@@ -29,6 +29,10 @@ let
       "syncthing"
       8384
     ]
+    [
+      "vex2"
+      4541
+    ]
   ];
 
   # Generate HTML list items using .localhost
