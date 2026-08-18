@@ -27,6 +27,7 @@ let
     yo = "nix-shell -p nodejs --run 'npx --package yo --package generator-code -- yo code'";
     wl-reload = "pkill -9 wl-mirror;wl-mirror --title top test_top&disown;wl-mirror --title bottom test_bottom&disown";
     go = "go-get-proxy";
+    gcusd = "customGC;usd";
     # cd = "z";
   };
   interactiveShellInit = ''

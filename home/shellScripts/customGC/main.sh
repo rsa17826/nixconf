@@ -116,7 +116,3 @@ echo "=========================================="
 echo "Running nix-store --gc ..."
 echo "=========================================="
 nix-store --gc
-
-echo ""
-echo "Done. Store size:"
-du -sh /nix/store
