@@ -351,7 +351,7 @@ in
           adwaita-icon-theme
           python313Packages.black
           audacity
-          (callPackage ./progress-daemon/progress-daemon.nix { })
+          # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })
           goldberg-emu
           deno

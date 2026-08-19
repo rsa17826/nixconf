@@ -106,12 +106,12 @@ hl.window_rule({
 	stay_focused = false,
 })
 
--- Global Progress: full opacity, floating
-hl.window_rule({
-	match = { title = "^Global Progress$" },
-	opacity = "1.0 override 1.0 override",
-	float = true,
-})
+-- -- Global Progress: full opacity, floating
+-- hl.window_rule({
+-- 	match = { title = "^Global Progress$" },
+-- 	opacity = "1.0 override 1.0 override",
+-- 	float = true,
+-- })
 
 -- helium: Save As → float
 -- hl.window_rule({
