@@ -47,7 +47,7 @@ let
     }
   ];
 
-  publicRemaps = builtins.filter (r: !r.public) remaps;
+  publicRemaps = builtins.filter (r: r.public) remaps;
 
   listItem = r: "<li><a href=\"http://${r.name}.localhost\">${r.name}</a></li>";
 
@@ -179,6 +179,10 @@ in
             listen = [
               {
                 addr = "127.0.0.1";
+                port = 80;
+              }
+              {
+                addr = "[::1]";
                 port = 80;
               }
             ];
