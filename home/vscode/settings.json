@@ -895,7 +895,7 @@
   // "files.simpleDialog.enable": true,
   "Lua.misc.executablePath": "/etc/profiles/per-user/nyix/bin/lua-language-server",
   "qt-core.showWelcomePageOnActivation": false,
-  "python.languageServer": "Default",
+  "python.languageServer": "None",
   // "workbench.editor.tabSizing": "shrink",
   "workbench.editor.useModal": "off",
   "workbench.editor.alwaysShowEditorActions": true,
