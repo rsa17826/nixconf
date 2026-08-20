@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        height: 100%;
+        overflow: hidden;
+      }
+      video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" autoplay muted playsinline></video>
+    <script>
+      async function start() {
+        const video = document.getElementById("video")
+        video.muted = true
+        video.defaultMuted = true
+
+        const pc = new RTCPeerConnection()
+        pc.ontrack = (event) => {
+          video.srcObject = event.streams[0]
+          video
+            .play()
+            .catch((err) => console.error("play failed:", err))
+        }
+        pc.addTransceiver("video", { direction: "recvonly" })
+
+        const offer = await pc.createOffer()
+        await pc.setLocalDescription(offer)
+
+        const res = await fetch("http://127.0.0.1:8889/stream/whep", {
+          method: "POST",
+          headers: { "Content-Type": "application/sdp" },
+          body: offer.sdp,
+        })
+        const answerSDP = await res.text()
+        await pc.setRemoteDescription({
+          type: "answer",
+          sdp: answerSDP,
+        })
+      }
+      start()
+      document.addEventListener(
+        "click",
+        () => video.play().catch(() => {}),
+        { once: true },
+      )
+      document.addEventListener(
+        "keydown",
+        () => video.play().catch(() => {}),
+        { once: true },
+      )
+    </script>
+  </body>
+</html>

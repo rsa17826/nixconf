@@ -41,6 +41,11 @@ let
       public = false;
     }
     {
+      name = "live-stream";
+      port = 46049;
+      public = false;
+    }
+    {
       name = "vex2";
       port = 4541;
       public = false;
