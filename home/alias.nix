@@ -28,6 +28,7 @@ let
     wl-reload = "pkill -9 wl-mirror;wl-mirror --title top test_top&disown;wl-mirror --title bottom test_bottom&disown";
     go = "go-get-proxy";
     gcusd = "customGC;usd";
+    ee = "thunar";
     # cd = "z";
   };
   interactiveShellInit = ''

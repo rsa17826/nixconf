@@ -27,7 +27,7 @@ in
         ignoreAllDups = true; # Only saves unique commands to history file
         expireDuplicatesFirst = true;
       };
-
+      fastSyntaxHighlighting = true;
       enableCompletion = true;
       autosuggestion = {
         enable = true;
