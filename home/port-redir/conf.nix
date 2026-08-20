@@ -231,7 +231,7 @@ in
         80
         443
       ]
-      ++ lib.mapAttrs (x: x.port) publicRemaps;
+      ++ lib.map (x: x.port) publicRemaps;
     };
   };
 }
