@@ -1,62 +1,110 @@
 { lib, ... }:
 let
+  # Added `access`: "local"  -> nginx only accepts this vhost on 127.0.0.1
+  #                 "public" -> nginx accepts it on 0.0.0.0 (and thus LAN/WAN too)
+  # The backend proxy target is always 127.0.0.1:port regardless - `access`
+  # only controls which nginx *frontend* socket will answer for that name.
   remaps = [
-    [
-      "timer"
-      8765
-    ]
-    [
-      "nullserv"
-      7542
-    ]
-    [
-      "mathquest"
-      1533
-    ]
-    [
-      "mathquest2"
-      8061
-    ]
-    [
-      "ap"
-      38281
-    ]
-    [
-      "copyparty"
-      8086
-    ]
-    [
-      "syncthing"
-      8384
-    ]
-    [
-      "vex2"
-      4541
-    ]
+    {
+      name = "timer";
+      port = 8765;
+      public = false;
+    }
+    {
+      name = "nullserv";
+      port = 7542;
+      public = false;
+    }
+    {
+      name = "mathquest";
+      port = 1533;
+      public = false;
+    }
+    {
+      name = "mathquest2";
+      port = 8061;
+      public = false;
+    }
+    {
+      name = "ap";
+      port = 38281;
+      public = true;
+    }
+    {
+      name = "copyparty";
+      port = 8086;
+      public = true;
+    }
+    {
+      name = "syncthing";
+      port = 8384;
+      public = false;
+    }
+    {
+      name = "vex2";
+      port = 4541;
+      public = false;
+    }
   ];
 
-  # Generate HTML list items using .localhost
-  indexHtml = ''
+  publicRemaps = builtins.filter (r: !r.public) remaps;
+
+  listItem = r: "<li><a href=\"http://${r.name}.localhost\">${r.name}</a></li>";
+
+  # Local dashboard (served on 127.0.0.1): show everything, since only
+  # someone on the machine itself can reach this page in the first place.
+  localIndexHtml = ''
+    <!DOCTYPE html>
+    <html>
+      <head><title>Service Dashboard (local)</title></head>
+      <body>
+        <h1>Available Services (local access)</h1>
+        <ul>
+          ${lib.concatStringsSep "\n" (map listItem remaps)}
+          <li><a href="https://cws.localhost">chromewebstore (CWS)</a></li>
+        </ul>
+      </body>
+    </html>
+  '';
+
+  # Public dashboard (served on 0.0.0.0): only list the services that are
+  # actually reachable from outside, so we're not advertising links that
+  # will just 404/fall through to this same catch-all.
+  publicIndexHtml = ''
     <!DOCTYPE html>
     <html>
       <head><title>Service Dashboard</title></head>
       <body>
         <h1>Available Services</h1>
         <ul>
-          ${lib.concatStringsSep "\n" (
-            map (
-              pair:
-              let
-                name = builtins.elemAt pair 0;
-              in
-              "<li><a href=\"http://${name}.localhost\">${name}</a></li>"
-            ) remaps
-          )}
-          <li><a href="https://cws.localhost">chromewebstore (CWS)</a></li>
+          ${lib.concatStringsSep "\n" (map listItem publicRemaps)}
         </ul>
       </body>
     </html>
   '';
+
+  mkListen =
+    public:
+    (
+      if public then
+        [
+          {
+            addr = "127.0.0.1";
+            port = 80;
+          }
+        ]
+      else
+        [
+          {
+            addr = "0.0.0.0";
+            port = 80;
+          }
+          {
+            addr = "[::]";
+            port = 80;
+          }
+        ]
+    );
 in
 {
   services = {
@@ -67,30 +115,23 @@ in
       '';
       virtualHosts =
         (lib.listToAttrs (
-          map (
-            pair:
-            let
-              name = builtins.elemAt pair 0;
-              port = builtins.elemAt pair 1;
-            in
-            {
-              # Changed from .127.0.0.1 to .localhost
-              name = "${name}.localhost";
-              value = {
-                locations = {
-                  "/" = {
-                    proxyPass = "http://127.0.0.1:${toString port}";
-                    proxyWebsockets = true;
-                    extraConfig = ''
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Forwarded-Host $http_host;
-                      proxy_set_header X-Forwarded-Proto $scheme;
-                    '';
-                  };
+          map (r: {
+            name = "${r.name}.localhost";
+            value = {
+              listen = mkListen r.public;
+              locations = {
+                "/" = {
+                  proxyPass = "http://127.0.0.1:${toString r.port}";
+                  proxyWebsockets = true;
+                  extraConfig = ''
+                    proxy_set_header Host $host;
+                    proxy_set_header X-Forwarded-Host $http_host;
+                    proxy_set_header X-Forwarded-Proto $scheme;
+                  '';
                 };
               };
-            }
-          ) remaps
+            };
+          }) remaps
         ))
         // {
           "chromewebstore.google.com" = {
@@ -128,11 +169,45 @@ in
               };
             };
           };
-          "_" = {
+
+          # Catch-all when accessed via loopback: full dashboard.
+          # This listen (127.0.0.1:80) is more specific than 0.0.0.0:80, so
+          # nginx always prefers it for connections actually arriving on
+          # loopback, regardless of Host header.
+          "_local" = {
             default = true;
+            listen = [
+              {
+                addr = "127.0.0.1";
+                port = 80;
+              }
+            ];
             locations = {
               "/" = {
-                return = "200 '${indexHtml}'";
+                return = "200 '${localIndexHtml}'";
+                extraConfig = ''
+                  add_header Content-Type text/html;
+                '';
+              };
+            };
+          };
+
+          # Catch-all for everything else (LAN/WAN interfaces): public dashboard.
+          "_public" = {
+            default = true;
+            listen = [
+              {
+                addr = "0.0.0.0";
+                port = 80;
+              }
+              {
+                addr = "[::]";
+                port = 80;
+              }
+            ];
+            locations = {
+              "/" = {
+                return = "200 '${publicIndexHtml}'";
                 extraConfig = ''
                   add_header Content-Type text/html;
                 '';
@@ -147,10 +222,16 @@ in
     # Update extraHosts to map .localhost domains to 127.0.0.1
     extraHosts =
       lib.concatStringsSep "\n" (
-        map (
-          pair: "127.0.0.1 ${builtins.elemAt pair 0}.localhost\n127.0.0.1 ${builtins.elemAt pair 0}.127.0.0.1"
-        ) remaps
+        map (r: "127.0.0.1 ${r.name}.localhost\n127.0.0.1 ${r.name}.127.0.0.1") remaps
       )
       + "\n127.0.0.1 cws.localhost";
+
+    firewall = {
+      allowedTCPPorts = [
+        80
+        443
+      ]
+      ++ lib.mapAttrs (x: x.port) publicRemaps;
+    };
   };
 }
