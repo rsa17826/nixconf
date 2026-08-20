@@ -49,7 +49,8 @@ let
 
   publicRemaps = builtins.filter (r: r.public) remaps;
 
-  listItem = r: "<li><a href=\"//${r.name}.localhost\" data-port=\"${toString r.port}\">${r.name}</a></li>";
+  listItem =
+    r: "<li><a href=\"//${r.name}.localhost\" data-port=\"${toString r.port}\">${r.name}</a></li>";
 
   # Local dashboard (served on 127.0.0.1): show everything, since only
   # someone on the machine itself can reach this page in the first place.
@@ -227,6 +228,8 @@ in
                 ssl = true;
               }
             ];
+            sslCertificate = ./cws.localhost+3.pem;
+            sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
                 return = "200 '${localIndexHtml}'";
