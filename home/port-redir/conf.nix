@@ -89,18 +89,18 @@ let
       if public then
         [
           {
-            addr = "127.0.0.1";
+            addr = "0.0.0.0";
+            port = 80;
+          }
+          {
+            addr = "[::]";
             port = 80;
           }
         ]
       else
         [
           {
-            addr = "0.0.0.0";
-            port = 80;
-          }
-          {
-            addr = "[::]";
+            addr = "127.0.0.1";
             port = 80;
           }
         ]
