@@ -89,30 +89,6 @@ let
     </html>
   '';
 
-  mkListen =
-    public:
-    if public then
-      [
-        {
-          addr = "0.0.0.0";
-          port = 80;
-        }
-        {
-          addr = "[::]";
-          port = 80;
-        }
-      ]
-    else
-      [
-        {
-          addr = "127.0.0.1";
-          port = 80;
-        }
-        {
-          addr = "[::1]";
-          port = 80;
-        }
-      ];
 in
 {
   services = {
@@ -126,12 +102,33 @@ in
           map (r: {
             name = "${r.name}.localhost";
             value = {
-              listen = mkListen r.public;
-
-              addSSL = true;
-              sslCertificate = ./cws.localhost+3.pem;
-              sslCertificateKey = ./cws.localhost+3-key.pem;
-
+              listen =
+                (
+                  public:
+                  if public then
+                    [
+                      {
+                        addr = "0.0.0.0";
+                        port = 80;
+                      }
+                      {
+                        addr = "[::]";
+                        port = 80;
+                      }
+                    ]
+                  else
+                    [
+                      {
+                        addr = "127.0.0.1";
+                        port = 80;
+                      }
+                      {
+                        addr = "[::1]";
+                        port = 80;
+                      }
+                    ]
+                )
+                  r.public;
               locations = {
                 "/" = {
                   proxyPass = "http://127.0.0.1:${toString r.port}";
@@ -200,9 +197,6 @@ in
                 port = 80;
               }
             ];
-            addSSL = true;
-            sslCertificate = ./cws.localhost+3.pem;
-            sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
                 return = "200 '${localIndexHtml}'";
@@ -226,9 +220,6 @@ in
                 port = 80;
               }
             ];
-            addSSL = true;
-            sslCertificate = ./cws.localhost+3.pem;
-            sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
                 return = "200 '${publicIndexHtml}'";
