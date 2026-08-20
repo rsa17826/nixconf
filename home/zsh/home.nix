@@ -27,13 +27,13 @@ in
         ignoreAllDups = true; # Only saves unique commands to history file
         expireDuplicatesFirst = true;
       };
-      fastSyntaxHighlighting = true;
       enableCompletion = true;
       autosuggestion = {
         enable = true;
       };
       syntaxHighlighting = {
         enable = true;
+        fastSyntaxHighlighting = true;
       };
 
       plugins = lib.mapAttrsToList (name: path: {
