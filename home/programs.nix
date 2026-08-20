@@ -351,6 +351,7 @@ in
           adwaita-icon-theme
           python313Packages.black
           audacity
+          mediamtx
           # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })
           goldberg-emu

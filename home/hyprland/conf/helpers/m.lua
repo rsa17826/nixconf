@@ -22,6 +22,8 @@ do
 		["kp8"] = "KP_8",
 		["kp9"] = "KP_9",
 		["/"] = "slash",
+		["pgup"] = "pageup",
+		["pgdown"] = "pagedown",
 	}
 
 	local map_keys = {}
