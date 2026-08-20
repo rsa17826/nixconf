@@ -10,11 +10,12 @@ E
 ) &
 mtx_pid=$!
 (
-  python -m http.server -d "$SCRIPT_DATA_DIR" 46049
+  python -m http.server -d "${SCRIPT_DATA_DIR:-.}" 46049
 ) &
 pypid=$!
 e() {
-  kill "$pypid" "$mtx_pid" "$pid" 2>/dev/null
+  kill "$gsrpid" "$pypid" "$mtx_pid" "$pid" 2>/dev/null
+  rm -f /tmp/gsr_stream.pid
 }
 trap e SIGABRT SIGINT SIGTERM
 
@@ -33,4 +34,8 @@ gpu-screen-recorder \
     -rtsp_transport tcp \
     rtsp://127.0.0.1:8554/stream &
 pid=$!
+
+gsrpid=$(pgrep -n -f gpu-screen-recorder)
+echo "$gsrpid" >/tmp/gsr_stream.pid
+
 wait
