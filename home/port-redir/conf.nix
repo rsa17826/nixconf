@@ -91,50 +91,28 @@ let
 
   mkListen =
     public:
-    (
-      if public then
-        [
-          {
-            addr = "0.0.0.0";
-            port = 80;
-          }
-          {
-            addr = "[::]";
-            port = 80;
-          }
-          {
-            addr = "0.0.0.0";
-            port = 443;
-            ssl = true;
-          }
-          {
-            addr = "[::]";
-            port = 443;
-            ssl = true;
-          }
-        ]
-      else
-        [
-          {
-            addr = "127.0.0.1";
-            port = 80;
-          }
-          {
-            addr = "[::1]";
-            port = 80;
-          }
-          {
-            addr = "127.0.0.1";
-            port = 443;
-            ssl = true;
-          }
-          {
-            addr = "[::1]";
-            port = 443;
-            ssl = true;
-          }
-        ]
-    );
+    if public then
+      [
+        {
+          addr = "0.0.0.0";
+          port = 80;
+        }
+        {
+          addr = "[::]";
+          port = 80;
+        }
+      ]
+    else
+      [
+        {
+          addr = "127.0.0.1";
+          port = 80;
+        }
+        {
+          addr = "[::1]";
+          port = 80;
+        }
+      ];
 in
 {
   services = {
@@ -149,12 +127,16 @@ in
             name = "${r.name}.localhost";
             value = {
               listen = mkListen r.public;
+
+              addSSL = true;
               sslCertificate = ./cws.localhost+3.pem;
               sslCertificateKey = ./cws.localhost+3-key.pem;
+
               locations = {
                 "/" = {
                   proxyPass = "http://127.0.0.1:${toString r.port}";
                   proxyWebsockets = true;
+
                   extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_set_header X-Forwarded-Host $http_host;
@@ -217,17 +199,8 @@ in
                 addr = "[::1]";
                 port = 80;
               }
-              {
-                addr = "127.0.0.1";
-                port = 443;
-                ssl = true;
-              }
-              {
-                addr = "[::1]";
-                port = 443;
-                ssl = true;
-              }
             ];
+            addSSL = true;
             sslCertificate = ./cws.localhost+3.pem;
             sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
@@ -252,17 +225,8 @@ in
                 addr = "[::]";
                 port = 80;
               }
-              {
-                addr = "0.0.0.0";
-                port = 443;
-                ssl = true;
-              }
-              {
-                addr = "[::]";
-                port = 443;
-                ssl = true;
-              }
             ];
+            addSSL = true;
             sslCertificate = ./cws.localhost+3.pem;
             sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
