@@ -81,7 +81,7 @@ let
         </ul>
         <script>
           document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll("a").forEach(e=>e.href = "//" + window.location.hostname + ":" + link.dataset.port)
+            document.querySelectorAll("a").forEach(e=>e.href = "//" + window.location.hostname + ":" + e.dataset.port)
           });
         </script>
       </body>
