@@ -33,7 +33,6 @@ in
       };
       syntaxHighlighting = {
         enable = true;
-        fastSyntaxHighlighting = true;
       };
 
       plugins = lib.mapAttrsToList (name: path: {
