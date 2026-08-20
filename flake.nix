@@ -338,6 +338,10 @@
       url = "github:rsa17826/fixed-line-actions-vscode-extension";
       flake = false;
     };
+    vsctextgen = {
+      url = "github:rsa17826/vsctextgen";
+      flake = false;
+    };
   };
 
   outputs =
@@ -455,7 +459,6 @@
             # ./home/CRON/clean.nix
           ];
         };
-        # tunyic
         nyix = {
           uname = "nyix";
           email = "rsa17826@email.vccs.edu";

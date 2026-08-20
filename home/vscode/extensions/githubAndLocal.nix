@@ -205,6 +205,11 @@ in
             #   extName = "csharp";
             #   extCreator = "muhammadsammy";
             # })
+            (buildSimpleExt {
+              src = vsctextgen;
+              extName = "vsctextgen";
+              extCreator = "rssaromeo";
+            })
             (buildFromFlake {
               src = line-sorter-vsc-ext;
               extName = "line-sorter";

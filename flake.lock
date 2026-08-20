@@ -1205,6 +1205,7 @@
         "rofi-blocks-main": "rofi-blocks-main",
         "sops-nix": "sops-nix",
         "termbar": "termbar",
+        "vsctextgen": "vsctextgen",
         "wayland-keepass-autotype": "wayland-keepass-autotype"
       }
     },
@@ -1293,6 +1294,22 @@
       "original": {
         "owner": "rsa17826",
         "repo": "termbar",
+        "type": "github"
+      }
+    },
+    "vsctextgen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785546070,
+        "narHash": "sha256-G0nRPySywhrlIfkRfJamR87aTfr4Huo8UXHTKSygDpI=",
+        "owner": "rsa17826",
+        "repo": "vsctextgen",
+        "rev": "64a85f7f743d9be3698de008ee41c1486a19ac53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "vsctextgen",
         "type": "github"
       }
     },
