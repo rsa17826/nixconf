@@ -49,7 +49,7 @@ let
 
   publicRemaps = builtins.filter (r: r.public) remaps;
 
-  listItem = r: "<li><a href=\"http://${r.name}.localhost\">${r.name}</a></li>";
+  listItem = r: "<li><a href=\"//${r.name}.localhost\" data-port=\"${r.port}\">${r.name}</a></li>";
 
   # Local dashboard (served on 127.0.0.1): show everything, since only
   # someone on the machine itself can reach this page in the first place.
@@ -79,6 +79,11 @@ let
         <ul>
           ${lib.concatStringsSep "\n" (map listItem publicRemaps)}
         </ul>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('a').forEach(e=>e.href = '//' + window.location.hostname + ':' + link.dataset.port)
+          });
+        </script>
       </body>
     </html>
   '';
@@ -96,6 +101,16 @@ let
             addr = "[::]";
             port = 80;
           }
+          {
+            addr = "0.0.0.0";
+            port = 443;
+            ssl = true;
+          }
+          {
+            addr = "[::]";
+            port = 443;
+            ssl = true;
+          }
         ]
       else
         [
@@ -106,6 +121,16 @@ let
           {
             addr = "[::1]";
             port = 80;
+          }
+          {
+            addr = "127.0.0.1";
+            port = 443;
+            ssl = true;
+          }
+          {
+            addr = "[::1]";
+            port = 443;
+            ssl = true;
           }
         ]
     );
@@ -123,6 +148,8 @@ in
             name = "${r.name}.localhost";
             value = {
               listen = mkListen r.public;
+              sslCertificate = ./cws.localhost+3.pem;
+              sslCertificateKey = ./cws.localhost+3-key.pem;
               locations = {
                 "/" = {
                   proxyPass = "http://127.0.0.1:${toString r.port}";
@@ -189,6 +216,16 @@ in
                 addr = "[::1]";
                 port = 80;
               }
+              {
+                addr = "127.0.0.1";
+                port = 443;
+                ssl = true;
+              }
+              {
+                addr = "[::1]";
+                port = 443;
+                ssl = true;
+              }
             ];
             locations = {
               "/" = {
@@ -212,7 +249,19 @@ in
                 addr = "[::]";
                 port = 80;
               }
+              {
+                addr = "0.0.0.0";
+                port = 443;
+                ssl = true;
+              }
+              {
+                addr = "[::]";
+                port = 443;
+                ssl = true;
+              }
             ];
+            sslCertificate = ./cws.localhost+3.pem;
+            sslCertificateKey = ./cws.localhost+3-key.pem;
             locations = {
               "/" = {
                 return = "200 '${publicIndexHtml}'";
