@@ -1300,11 +1300,11 @@
     "vsctextgen": {
       "flake": false,
       "locked": {
-        "lastModified": 1785546070,
-        "narHash": "sha256-G0nRPySywhrlIfkRfJamR87aTfr4Huo8UXHTKSygDpI=",
+        "lastModified": 1787341933,
+        "narHash": "sha256-DB/oXjxF/m0bq9WtIFYGBj8ojx8srybF3bsjQGw2HWg=",
         "owner": "rsa17826",
         "repo": "vsctextgen",
-        "rev": "64a85f7f743d9be3698de008ee41c1486a19ac53",
+        "rev": "2aea84bb40626b389d8f6a0f6dfa8bf4f9bc549c",
         "type": "github"
       },
       "original": {
