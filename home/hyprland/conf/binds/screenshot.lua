@@ -9,7 +9,9 @@ m.bind("CTRL + PRINT", hl.dsp.exec_cmd("screenshot | satty --filename -"))
 
 -- Clone view
 m.bind("#G", hl.dsp.exec_cmd("~/.config/hypr/scripts/clone_view.sh"))
-m.bind("^!pgup", hl.dsp.exec_cmd('kill -SIGUSR2 "$(cat /tmp/gsr_stream.pid)"'))
 
 -- Toggle inwhi shader
 m.bind("^!+/", hl.dsp.exec_cmd("shaderstack toggle inwhi"))
+
+-- toggle streaming
+m.bind("^!pgup", hl.dsp.exec_cmd("bash -c 'kill -SIGUSR2 \"$(cat /tmp/gsr_stream.pid)\"'"))

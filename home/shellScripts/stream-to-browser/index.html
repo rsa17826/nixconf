@@ -49,15 +49,8 @@
         })
       }
       start()
-      document.addEventListener(
-        "click",
-        () => video.play().catch(() => {}),
-        { once: true },
-      )
-      document.addEventListener(
-        "keydown",
-        () => video.play().catch(() => {}),
-        { once: true },
+      document.addEventListener("click", () =>
+        video.play().catch(() => {}),
       )
     </script>
   </body>

@@ -1,11 +1,13 @@
 m = {}
 
 do
-	local mod_map = {
+	local prefix_map = {
 		["#"] = "SUPER",
 		["!"] = "ALT",
 		["+"] = "SHIFT",
 		["^"] = "CTRL",
+	}
+	local key_map = {
 		["enter"] = "RETURN",
 		["\n"] = "RETURN",
 		["esc"] = "ESCAPE",
@@ -22,50 +24,157 @@ do
 		["kp8"] = "KP_8",
 		["kp9"] = "KP_9",
 		["/"] = "slash",
-		["pgup"] = "code:104",
-		["pgdown"] = "code:109",
+		["pgup"] = "code:112",
+		["pgdown"] = "code:117",
+		["KEY_ESC"] = "code:9",
+		["KEY_1"] = "code:10",
+		["KEY_2"] = "code:11",
+		["KEY_3"] = "code:12",
+		["KEY_4"] = "code:13",
+		["KEY_5"] = "code:14",
+		["KEY_6"] = "code:15",
+		["KEY_7"] = "code:16",
+		["KEY_8"] = "code:17",
+		["KEY_9"] = "code:18",
+		["KEY_0"] = "code:19",
+		["KEY_MINUS"] = "code:20",
+		["KEY_EQUAL"] = "code:21",
+		["KEY_BACKSPACE"] = "code:22",
+		["KEY_TAB"] = "code:23",
+		["KEY_Q"] = "code:24",
+		["KEY_W"] = "code:25",
+		["KEY_E"] = "code:26",
+		["KEY_R"] = "code:27",
+		["KEY_T"] = "code:28",
+		["KEY_Y"] = "code:29",
+		["KEY_U"] = "code:30",
+		["KEY_I"] = "code:31",
+		["KEY_O"] = "code:32",
+		["KEY_P"] = "code:33",
+		["KEY_LEFTBRACE"] = "code:34",
+		["KEY_RIGHTBRACE"] = "code:35",
+		["KEY_ENTER"] = "code:36",
+		["KEY_LEFTCTRL"] = "code:37",
+		["KEY_A"] = "code:38",
+		["KEY_S"] = "code:39",
+		["KEY_D"] = "code:40",
+		["KEY_F"] = "code:41",
+		["KEY_G"] = "code:42",
+		["KEY_H"] = "code:43",
+		["KEY_J"] = "code:44",
+		["KEY_K"] = "code:45",
+		["KEY_L"] = "code:46",
+		["KEY_SEMICOLON"] = "code:47",
+		["KEY_APOSTROPHE"] = "code:48",
+		["KEY_GRAVE"] = "code:49",
+		["KEY_LEFTSHIFT"] = "code:50",
+		["KEY_BACKSLASH"] = "code:51",
+		["KEY_Z"] = "code:52",
+		["KEY_X"] = "code:53",
+		["KEY_C"] = "code:54",
+		["KEY_V"] = "code:55",
+		["KEY_B"] = "code:56",
+		["KEY_N"] = "code:57",
+		["KEY_M"] = "code:58",
+		["KEY_COMMA"] = "code:59",
+		["KEY_DOT"] = "code:60",
+		["KEY_SLASH"] = "code:61",
+		["KEY_RIGHTSHIFT"] = "code:62",
+		["KEY_KPASTERISK"] = "code:63",
+		["KEY_LEFTALT"] = "code:64",
+		["KEY_SPACE"] = "code:65",
+		["KEY_CAPSLOCK"] = "code:66",
+		["KEY_F1"] = "code:67",
+		["KEY_F2"] = "code:68",
+		["KEY_F3"] = "code:69",
+		["KEY_F4"] = "code:70",
+		["KEY_F5"] = "code:71",
+		["KEY_F6"] = "code:72",
+		["KEY_F7"] = "code:73",
+		["KEY_F8"] = "code:74",
+		["KEY_F9"] = "code:75",
+		["KEY_F10"] = "code:76",
+		["KEY_NUMLOCK"] = "code:77",
+		["KEY_SCROLLLOCK"] = "code:78",
+		["KEY_KP7"] = "code:79",
+		["KEY_KP8"] = "code:80",
+		["KEY_KP9"] = "code:81",
+		["KEY_KPMINUS"] = "code:82",
+		["KEY_KP4"] = "code:83",
+		["KEY_KP5"] = "code:84",
+		["KEY_KP6"] = "code:85",
+		["KEY_KPPLUS"] = "code:86",
+		["KEY_KP1"] = "code:87",
+		["KEY_KP2"] = "code:88",
+		["KEY_KP3"] = "code:89",
+		["KEY_KP0"] = "code:90",
+		["KEY_KPDOT"] = "code:91",
+		["KEY_F11"] = "code:95",
+		["KEY_F12"] = "code:96",
+		["KEY_KPENTER"] = "code:104",
+		["KEY_RIGHTCTRL"] = "code:105",
+		["KEY_KPSLASH"] = "code:106",
+		["KEY_SYSRQ"] = "code:107",
+		["KEY_RIGHTALT"] = "code:108",
+		["KEY_HOME"] = "code:110",
+		["KEY_UP"] = "code:111",
+		["KEY_PAGEUP"] = "code:112",
+		["KEY_LEFT"] = "code:113",
+		["KEY_RIGHT"] = "code:114",
+		["KEY_END"] = "code:115",
+		["KEY_DOWN"] = "code:116",
+		["KEY_PAGEDOWN"] = "code:117",
+		["KEY_INSERT"] = "code:118",
+		["KEY_DELETE"] = "code:119",
+		["KEY_MUTE"] = "code:121",
+		["KEY_VOLUMEDOWN"] = "code:122",
+		["KEY_VOLUMEUP"] = "code:123",
+		["KEY_POWER"] = "code:124",
+		["KEY_KPEQUAL"] = "code:125",
+		["KEY_PAUSE"] = "code:127",
+		["KEY_LEFTMETA"] = "code:133",
+		["KEY_RIGHTMETA"] = "code:134",
+		["KEY_COMPOSE"] = "code:135",
+		["KEY_MENU"] = "code:147",
+		["KEY_CALC"] = "code:148",
+		["KEY_SLEEP"] = "code:150",
+		["KEY_WAKEUP"] = "code:151",
+		["KEY_NEXTSONG"] = "code:171",
+		["KEY_PLAYPAUSE"] = "code:172",
+		["KEY_PREVIOUSSONG"] = "code:173",
+		["KEY_STOPCD"] = "code:174",
+		["KEY_F13"] = "code:191",
+		["KEY_F14"] = "code:192",
+		["KEY_F15"] = "code:193",
+		["KEY_F16"] = "code:194",
+		["KEY_F17"] = "code:195",
+		["KEY_F18"] = "code:196",
+		["KEY_F19"] = "code:197",
+		["KEY_F20"] = "code:198",
+		["KEY_F21"] = "code:199",
+		["KEY_F22"] = "code:200",
+		["KEY_F23"] = "code:201",
+		["KEY_F24"] = "code:202",
 	}
-
-	local map_keys = {}
-	for k in pairs(mod_map) do
-		table.insert(map_keys, k)
-	end
-	table.sort(map_keys, function(a, b)
-		return #a > #b
-	end)
-
 	function m.bind(keys, func, args)
 		args = args or {}
 		local mods = {}
-		local key = ""
 		local i = 1
 
-		while i <= #keys do
-			local found = false
-
-			for _, trigger in ipairs(map_keys) do
-				if keys:sub(i, i + #trigger - 1) == trigger then
-					table.insert(mods, mod_map[trigger])
-					i = i + #trigger
-					found = true
-					break
-				end
-			end
-
-			if not found then
-				-- This is the "raw" part of the keybind (the 't' in '#t')
-				-- We take the rest of the string as the key
-				key = keys:sub(i)
-				break
-			end
+		-- only consume single-character modifier prefixes
+		while i <= #keys and prefix_map[keys:sub(i, i)] do
+			table.insert(mods, prefix_map[keys:sub(i, i)])
+			i = i + 1
 		end
 
-		-- Join modifiers with " + "
-		local mod_string = table.concat(mods, " + ")
+		-- whatever's left is the key itself
+		local raw_key = keys:sub(i)
+		local key = key_map[raw_key] or raw_key
 
+		local mod_string = table.concat(mods, " + ")
 		local final_output
 		if #mods > 0 then
-			final_output = mod_string .. "+ " .. key
+			final_output = mod_string .. " + " .. key
 		else
 			final_output = key
 		end
