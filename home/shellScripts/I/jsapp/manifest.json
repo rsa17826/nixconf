@@ -3,12 +3,21 @@
   "name": "name",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "start_url": "/index.html",
+  "screenshots": [
+    {
+      "src": "/a.png",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
   "background_color": "#000000",
   "theme_color": "#000000",
   "display": "standalone",
