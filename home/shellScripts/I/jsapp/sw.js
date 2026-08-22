@@ -65,3 +65,5 @@ async function getCached(url) {
   const cachedResponse = await cache.match(url.split("?")[0])
   return cachedResponse
 }
+
+// navigator.serviceWorker.register("/sw.js")
