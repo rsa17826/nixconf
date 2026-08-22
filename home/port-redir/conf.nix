@@ -50,6 +50,11 @@ let
       port = 4541;
       public = false;
     }
+    {
+      name = "multi-video-sync";
+      port = 60907;
+      public = false;
+    }
   ];
 
   publicRemaps = builtins.filter (r: r.public) remaps;
