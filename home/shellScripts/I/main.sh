@@ -6,7 +6,20 @@ usage() {
   echo "usage: script <category>... [-- args passed to each category's 'run' script]" >&2
   exit 1
 }
-[ $# -ge 1 ] || usage
+
+list_categories() {
+  echo "available categories:" >&2
+  if [ -d "$SCRIPT_DATA_DIR" ]; then
+    # BASE is applied automatically to every invocation, not picked by name
+    find "$SCRIPT_DATA_DIR" -mindepth 1 -maxdepth 1 -type d -printf '  %f\n' |
+      grep -v '^  BASE$' | sort >&2
+  fi
+}
+
+if [ $# -lt 1 ]; then
+  list_categories
+  exit 1
+fi
 
 # cp preserves source mode bits; our templates often live in read-only
 # locations (nix store), so a plain `cp` leaves dest/base read-only and
@@ -78,8 +91,8 @@ apply_category() {
 
     if is_fragment_file "$fname"; then
       combine_lines "$dest" "$src"
-      echo "combined: $dest"
       wcp "$src" "$base"
+      echo "combined: $dest"
       continue
     fi
 
@@ -116,6 +129,15 @@ fi
 run_args=("$@")
 
 [ ${#cats[@]} -ge 1 ] || usage
+
+# BASE is always applied, first, regardless of what the caller asked for.
+if [ -d "$SCRIPT_DATA_DIR/BASE" ]; then
+  already_has_base=0
+  for cat in "${cats[@]}"; do
+    [ "$cat" = "BASE" ] && already_has_base=1 && break
+  done
+  [ "$already_has_base" -eq 1 ] || cats=("BASE" "${cats[@]}")
+fi
 
 for cat in "${cats[@]}"; do
   apply_category "$cat"
