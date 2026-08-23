@@ -58,6 +58,6 @@ else
   notify-send -e -t 1000 "Recorder" "Recording started: $USER_FILENAME"
 
   # 5. Launch recorder and store its PID
-  gpu-screen-recorder -w "$GEOM" -f 60 -a "default_output" -o "$FINAL_PATH" &
+  gpu-screen-recorder -w "$GEOM" -f 60 -a "default_output" -k hevc_vulkan -o "$FINAL_PATH" &
   echo $! >"$PID_FILE"
 fi

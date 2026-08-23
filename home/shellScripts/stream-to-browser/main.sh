@@ -15,7 +15,7 @@ mtx_pid=$!
 pypid=$!
 e() {
   kill "$gsrpid" "$pypid" "$mtx_pid" "$pid" 2>/dev/null
-  rm -f /tmp/gsr_stream.pid
+  rm -f /tmp/gpu-screen-recorder-stream.pid
 }
 trap e SIGABRT SIGINT SIGTERM
 
@@ -36,6 +36,6 @@ gpu-screen-recorder \
 pid=$!
 
 gsrpid=$(pgrep -n -f gpu-screen-recorder)
-echo "$gsrpid" >/tmp/gsr_stream.pid
+echo "$gsrpid" >/tmp/gpu-screen-recorder-stream.pid
 
 wait

@@ -114,7 +114,21 @@ Scope {
         RecIndicator {
           id: streamIndicator
 
-          filePath: "/tmp/gpu-screen-recorder-rec.pid"
+          filePath: "/tmp/gpu-screen-recorder-stream.pid"
+          text: "STREAM"
+
+          anchors {
+            right: trayWidget.left
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        RecIndicator {
+          id: flashbackIndicator
+
+          checkDeath: true
+          filePath: "/tmp/gpu-screen-recorder-flashback.pid"
+          text: "FB"
 
           anchors {
             right: trayWidget.left
@@ -126,6 +140,7 @@ Scope {
           id: recIndicator
 
           filePath: "/tmp/gpu-screen-recorder-rec.pid"
+          text: "REC"
 
           anchors {
             right: trayWidget.left

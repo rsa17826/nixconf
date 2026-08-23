@@ -14,4 +14,4 @@ m.bind("#G", hl.dsp.exec_cmd("~/.config/hypr/scripts/clone_view.sh"))
 m.bind("^!+/", hl.dsp.exec_cmd("shaderstack toggle inwhi"))
 
 -- toggle streaming
-m.bind("^!pgup", hl.dsp.exec_cmd("bash -c 'kill -SIGUSR2 \"$(cat /tmp/gsr_stream.pid)\"'"))
+m.bind("^!pgup", hl.dsp.exec_cmd("bash -c 'kill -SIGUSR2 \"$(cat /tmp/gpu-screen-recorder-stream.pid)\"'"))

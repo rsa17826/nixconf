@@ -1,21 +1,4 @@
 // RecIndicator.qml
-// Shows a pulsing "REC 00:12" indicator in the bar while toggleRec.sh has
-// an active gpu-screen-recorder session running (tracked via its PID file).
-// Hidden entirely when nothing is recording.
-//
-// ── Shader setup ──────────────────────────────────────────────────
-// Uses a real fragment shader (shaders/recglitch.frag + .vert) for
-// chromatic aberration / slice-glitch / bloom, instead of faking it with
-// layered Rectangles. Qt6's shader pipeline needs GLSL compiled to .qsb:
-//
-//   qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 \
-//       -o shaders/recglitch.vert.qsb shaders/recglitch.vert
-//   qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 \
-//       -o shaders/recglitch.frag.qsb shaders/recglitch.frag
-//
-// Run that from the directory containing shaders/, then point
-// vertexShader/fragmentShader below at the .qsb outputs (already done).
-
 import Quickshell
 import Quickshell.Io
 import QtQuick
@@ -24,109 +7,97 @@ import "owoify.js" as Owo
 Item {
   id: root
 
+  property bool checkDeath: false   // true = "should always be running";
+  // only surface a warning when it's not
+  property bool died: false
   property string filePath: "/tmp/gpu-screen-recorder-rec.pid"
+  property bool neverStarted: false
   property bool recording: false
   property int secondsElapsed: 0
+  readonly property bool showSelf: checkDeath ? warn : recording
+  property string text: "REC"
 
-  implicitHeight: recording ? Math.max(12, contentItem.implicitHeight) : 0
-  implicitWidth: recording ? contentItem.implicitWidth : 0
-  visible: recording
+  // What this instance actually shows:
+  //  - normal mode: only while recording
+  //  - checkDeath mode: only while NOT recording (died or never started)
+  readonly property bool warn: checkDeath && (died || neverStarted)
 
-  // Blink the dot while recording
-  Timer {
-    id: blinkTimer
+  implicitHeight: showSelf ? Math.max(12, label.implicitHeight) : 0
+  implicitWidth: showSelf ? label.implicitWidth + 16 : 0
+  visible: showSelf
 
-    interval: 600
-    repeat: true
-    running: root.recording
+  Rectangle {
+    anchors.fill: parent
+    border.color: root.warn ? "#e8b93d" : "#2a3a8a"
+    border.width: 1
+    color: root.warn ? "#2e2508" : "#12122c"
+    radius: 4
 
-    onTriggered: dot.on = !dot.on
-  }
+    Text {
+      id: label
 
-  // Drives iTime for the shader — cheap monotonically increasing seconds,
-  // no need for sub-frame precision since it only seeds the slice noise.
-  Timer {
-    interval: 33
-    repeat: true
-    running: root.recording
-
-    onTriggered: shaderEffect.iTime += 0.033
-  }
-
-  // ── Plain, unstyled content — the shader does all the visual work ──
-  // This gets rendered offscreen into a texture (via layer.enabled) and
-  // fed to the ShaderEffect below. Keep it simple/high-contrast so the
-  // aberration and bloom have clean edges to work with.
-  Item {
-    id: contentItem
-
-    readonly property int dotSize: 8
-
-    implicitHeight: Math.max(dotSize, label.implicitHeight)
-    implicitWidth: dotSize + 7 + label.implicitWidth
-    layer.enabled: true
-    layer.smooth: true
-    visible: false     // only the shaded copy below is actually shown
-
-    Row {
-      anchors.verticalCenter: parent.verticalCenter
-      spacing: 7
-
-      Rectangle {
-        id: dot
-
-        property bool on: true
-
-        anchors.verticalCenter: parent.verticalCenter
-        color: on ? "#ff4d6a" : "#3a1414"
-        height: contentItem.dotSize
-        radius: contentItem.dotSize / 2
-        width: contentItem.dotSize
-      }
-      Text {
-        id: label
-
-        color: "#ffffff"
-        font.pixelSize: 11
-        text: {
-          const h = Math.floor(root.secondsElapsed / 3600)
-          const m = Math.floor(root.secondsElapsed / 60) % 60
-          const s = root.secondsElapsed % 60
-          const pad = n => (n < 10 ? "0" + n : "" + n)
-          return Owo.owo(`REC ${h > 0 ? pad(h) + ":" : ""}${pad(m)}:${pad(s)}`)
-        }
+      anchors.centerIn: parent
+      color: root.warn ? "#ffcf4d" : "#c4cce8"
+      font.pixelSize: 11
+      text: {
+        if (root.warn)
+          return Owo.owo("⚠ " + root.text + " " + (root.neverStarted ? "not running" : "died"))
+        const h = Math.floor(root.secondsElapsed / 3600)
+        const m = Math.floor(root.secondsElapsed / 60) % 60
+        const s = root.secondsElapsed % 60
+        const pad = n => (n < 10 ? "0" + n : "" + n)
+        return Owo.owo(`${root.text} ${h > 0 ? pad(h) + ":" : ""}${pad(m)}:${pad(s)}`)
       }
     }
   }
 
-  // ── Shaded output ──────────────────────────────────────────────
-  ShaderEffect {
-    id: shaderEffect
+  // Blink while warning
+  Timer {
+    interval: 500
+    repeat: true
+    running: root.warn
 
-    property real aberration: 0.0035
-    property real glitchAmount: 0.03
-    property real iTime: 0.0
-    property variant source: contentItem
-
-    anchors.fill: contentItem
-    fragmentShader: "shaders/recglitch.frag.qsb"
-    vertexShader: "shaders/recglitch.vert.qsb"
+    onTriggered: label.opacity = label.opacity === 1 ? 0.4 : 1
   }
 
-  // Poll once a second: is the PID in the file still alive, and since when?
+  // Click to acknowledge/clear a dead pidfile (only relevant once died)
+  MouseArea {
+    anchors.fill: parent
+    cursorShape: root.died ? Qt.PointingHandCursor : Qt.ArrowCursor
+    enabled: root.died
+
+    onClicked: clearProc.running = true
+  }
+  Process {
+    id: clearProc
+
+    command: ["rm", "-f", root.filePath]
+
+    onRunningChanged: if (!running)
+      root.died = false
+  }
   Process {
     id: poll
 
-    command: ["bash", "-c", "PID_FILE=\"" + filePath + "\"; if [ -f \"$PID_FILE\" ] && kill -0 \"$(cat \"$PID_FILE\")\" 2>/dev/null; then start=$(stat -c %Y \"$PID_FILE\"); now=$(date +%s); echo \"REC $((now - start))\"; else echo IDLE; fi"]
+    command: ["bash", "-c", "PID_FILE=\"" + filePath + "\"; " + "if [ ! -f \"$PID_FILE\" ]; then echo NEVER; " + "elif kill -0 \"$(cat \"$PID_FILE\")\" 2>/dev/null; then " + "start=$(stat -c %Y \"$PID_FILE\"); now=$(date +%s); echo \"REC $((now - start))\"; " + "else echo DIED; fi"]
 
     stdout: StdioCollector {
       onStreamFinished: {
         const t = text.trim()
         if (t.startsWith("REC")) {
           root.recording = true
+          root.died = false
+          root.neverStarted = false
           root.secondsElapsed = parseInt(t.split(" ")[1]) || 0
-        } else {
+        } else if (t === "DIED") {
           root.recording = false
+          root.died = true
+          root.neverStarted = false
+        } else {
+          // NEVER
+          root.recording = false
+          root.died = false
+          root.neverStarted = true
           root.secondsElapsed = 0
         }
       }
