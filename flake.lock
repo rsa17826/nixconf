@@ -110,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787418016,
-        "narHash": "sha256-5QhdNrOvEg6JMeS+eYmXbWcwNr1QVrJyhWXLGNpbBVg=",
+        "lastModified": 1787509661,
+        "narHash": "sha256-pCI30knFTGkxeTj3fRO7RFcQSskjjMSs2er9v/OyGZo=",
         "owner": "rsa17826",
         "repo": "autocorrect",
-        "rev": "0536683947b782ff9786b7aede9a3241e81e9258",
+        "rev": "8b38354b52b74ed5aa23e0eca6b11110685fbfb7",
         "type": "github"
       },
       "original": {
@@ -829,11 +829,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785677503,
-        "narHash": "sha256-sbCjpxmzHzksKAFvIH7HOCcnNWYsscvj3eqLOLN4WIc=",
+        "lastModified": 1787509837,
+        "narHash": "sha256-vEk01raBcr4ig0tL7MGHSfWjtlCZ99+Mxg1KOHdl8eE=",
         "owner": "rsa17826",
         "repo": "input-display",
-        "rev": "e5c09c5c5b6e94ada324d2ac2aaaf127720fd4db",
+        "rev": "4123853794c734c3a0b17fac05865a67c042090f",
         "type": "github"
       },
       "original": {
@@ -852,11 +852,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785676614,
-        "narHash": "sha256-0/XK9eGnfTyyFiwkqJWVwF+Zw2TFtCR1Q2Dpe2GTUDI=",
+        "lastModified": 1787509629,
+        "narHash": "sha256-tEHDwX1eP5fN/TCmItchxz67EhS+jSzgpL1Tr/2tb1A=",
         "owner": "rsa17826",
         "repo": "input-manager",
-        "rev": "374f3759629914a0916a4225e061f8381db11f00",
+        "rev": "d8185f6e435e8d6c7bd789208309213ac5b3c1f5",
         "type": "github"
       },
       "original": {
@@ -891,11 +891,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786644303,
-        "narHash": "sha256-xnXLovkzRyA2S4fqG3G/gybUFO8Kqb/2SPn7NIfufuw=",
+        "lastModified": 1787510057,
+        "narHash": "sha256-QTIL9b7slbGyUYt2plShpIlqSOnJwdUqvKtJjmVLluo=",
         "owner": "rsa17826",
         "repo": "key-modifier",
-        "rev": "0e4ec8c5a562877564d9062134d76940e85fb595",
+        "rev": "721de3984e905a9641284714947a6b074a844973",
         "type": "github"
       },
       "original": {
@@ -930,11 +930,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786042918,
-        "narHash": "sha256-kDRTfG5Gckz61oqbtDFOkYVvCpPe1owheLTmoQCO2ZQ=",
+        "lastModified": 1787509726,
+        "narHash": "sha256-8AIkYPvbyCJi6k8ihKKJ6JHiv+9Dq6b6Z9PGlmNebSw=",
         "owner": "rsa17826",
         "repo": "macro-recorder",
-        "rev": "cde0b8901e3026a119d0d1ca27f31f646831602e",
+        "rev": "9dc01efca327981f740b51f07e272218dff66ea1",
         "type": "github"
       },
       "original": {
