@@ -312,7 +312,8 @@ in
       nvidiaSettings = true;
 
       # Optionally, specify the package to ensure you stay on a compatible version
-      package = pkgs.linuxPackages_6_18.nvidiaPackages.legacy_580;
+      package = pkgs.linuxPackages_6_18.nvidiaPackages.stable;
+      # package = pkgs.linuxPackages_6_18.nvidiaPackages.legacy_580;
     };
     uinput = {
       # TODO

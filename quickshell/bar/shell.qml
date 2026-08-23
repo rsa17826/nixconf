@@ -112,7 +112,20 @@ Scope {
           verticalCenter: parent.verticalCenter
         }
         RecIndicator {
+          id: streamIndicator
+
+          filePath: "/tmp/gpu-screen-recorder-rec.pid"
+
+          anchors {
+            right: trayWidget.left
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+          }
+        }
+        RecIndicator {
           id: recIndicator
+
+          filePath: "/tmp/gpu-screen-recorder-rec.pid"
 
           anchors {
             right: trayWidget.left

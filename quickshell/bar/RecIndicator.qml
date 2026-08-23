@@ -24,6 +24,7 @@ import "owoify.js" as Owo
 Item {
   id: root
 
+  property string filePath: "/tmp/gpu-screen-recorder-rec.pid"
   property bool recording: false
   property int secondsElapsed: 0
 
@@ -116,7 +117,7 @@ Item {
   Process {
     id: poll
 
-    command: ["bash", "-c", "PID_FILE=/tmp/gpu-screen-recorder-rec.pid; if [ -f \"$PID_FILE\" ] && kill -0 \"$(cat \"$PID_FILE\")\" 2>/dev/null; then start=$(stat -c %Y \"$PID_FILE\"); now=$(date +%s); echo \"REC $((now - start))\"; else echo IDLE; fi"]
+    command: ["bash", "-c", "PID_FILE=\"" + filePath + "\"; if [ -f \"$PID_FILE\" ] && kill -0 \"$(cat \"$PID_FILE\")\" 2>/dev/null; then start=$(stat -c %Y \"$PID_FILE\"); now=$(date +%s); echo \"REC $((now - start))\"; else echo IDLE; fi"]
 
     stdout: StdioCollector {
       onStreamFinished: {
