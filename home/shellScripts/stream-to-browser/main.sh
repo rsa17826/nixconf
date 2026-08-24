@@ -22,7 +22,7 @@ trap e SIGABRT SIGINT SIGTERM
 gpu-screen-recorder \
   -w HDMI-A-1 \
   -f 60 \
-  -k hevc_vulkan \
+  -k h264_vulkan \
   -c mpegts \
   -o /dev/stdout |
   ffmpeg \
