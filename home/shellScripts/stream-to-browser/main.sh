@@ -15,16 +15,25 @@ mtx_pid=$!
 pypid=$!
 e() {
   kill "$gsrpid" "$pypid" "$mtx_pid" "$pid" 2>/dev/null
-  rm -f /tmp/gpu-screen-recorder-stream.pid
+  rm -f /tmp/gpu-screen-recorder-stream.pid /tmp/gpu-screen-recorder-stream.state
 }
 trap e SIGABRT SIGINT SIGTERM
+
+state_file=/tmp/gpu-screen-recorder-stream.state
+echo Unpaused >"$state_file"
 
 gpu-screen-recorder \
   -w HDMI-A-1 \
   -f 60 \
   -k h264_vulkan \
   -c mpegts \
-  -o /dev/stdout |
+  -o /dev/stdout \
+  2> >(
+    stdbuf -oL grep --line-buffered -oE '(Un)?Paused' | while IFS= read -r state; do
+      tmp="${state_file}.tmp"
+      printf '%s\n' "$state" >"$tmp" && mv "$tmp" "$state_file"
+    done
+  ) |
   ffmpeg \
     -f mpegts \
     -i pipe:0 \

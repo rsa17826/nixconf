@@ -117,6 +117,7 @@ Scope {
           id: streamIndicator
 
           filePath: "/tmp/gpu-screen-recorder-stream.pid"
+          stateFilePath: "/tmp/gpu-screen-recorder-stream.state"
           text: "STREAM"
 
           anchors {
