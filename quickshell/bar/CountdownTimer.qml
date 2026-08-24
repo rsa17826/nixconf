@@ -10,6 +10,7 @@ import Quickshell.Io
 import QtQuick
 import "owoify.js" as Owo
 
+// TODO make store a url and if one exists add button to open url on click
 Item {
   id: root
 
