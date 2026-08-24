@@ -29,7 +29,7 @@ gpu-screen-recorder \
   -c mpegts \
   -o /dev/stdout \
   2> >(
-    stdbuf -oL grep --line-buffered -oE '(Un)?Paused' | while IFS= read -r state; do
+    stdbuf -oL grep --line-buffered -oE '(Un)?[Pp]aused' | while IFS= read -r state; do
       tmp="${state_file}.tmp"
       printf '%s\n' "$state" >"$tmp" && mv "$tmp" "$state_file"
     done
