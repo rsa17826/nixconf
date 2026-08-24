@@ -24,6 +24,7 @@ gpu-screen-recorder \
   -f 60 \
   -k h264 \
   -c mpegts \
+  -k hevc_vulkan \
   -o /dev/stdout |
   ffmpeg \
     -f mpegts \

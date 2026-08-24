@@ -86,6 +86,8 @@ Scope {
         Clock {
           id: clock
 
+          timerRow: countdownRow
+
           anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
