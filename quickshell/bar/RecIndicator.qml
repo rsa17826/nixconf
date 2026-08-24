@@ -59,8 +59,6 @@ Item {
     interval: 500
     repeat: true
     running: root.warn || root.paused
-
-    onTriggered: label.opacity = label.opacity === 1 ? 0.4 : 1
   }
 
   // Click to acknowledge/clear a dead pidfile (only relevant once died)
