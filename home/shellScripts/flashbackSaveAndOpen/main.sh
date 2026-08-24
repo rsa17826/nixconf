@@ -32,7 +32,7 @@ done
 # 3. Handle Result
 if [ "$FOUND" = true ]; then
   vlc "$CURRENT_VIDEO"
-  if zenity --question --text="Delete this clip?" --title="Replay Saved"; then
+  if [[ $(alwaysFocusedInputBox --yes-no --title "Replay Saved - Delete this clip?") == yes ]]; then
     gio trash "$CURRENT_VIDEO"
     notify-send "Deleted" "Recording removed."
   else

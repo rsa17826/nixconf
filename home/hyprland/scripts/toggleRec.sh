@@ -16,7 +16,7 @@ if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
 
   LATEST_FILE=$(find "$SAVE_DIR" -maxdepth 1 -name "*.mp4" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
 
-  if ! zenity --question --text="Recording saved. Keep it?" --ok-label="Keep" --cancel-label="Delete"; then
+  if [[ $(alwaysFocusedInputBox --yes-no --title "Recording saved. Keep it?" --yes-text "Keep" --no-text "Delete") == no ]]; then
     rm "$LATEST_FILE"
     notify-send -e -t 1000 "Deleted" "File removed."
   fi
@@ -45,7 +45,7 @@ else
   DEFAULT_NAME="rec_$(date +%Y-%m-%d_%H-%M-%S).mp4"
 
   # 4. Ask user for a name (pre-filled with default)
-  USER_FILENAME=$(zenity --entry --title="Save Recording As" --text="Enter filename:" --entry-text="$DEFAULT_NAME")
+  USER_FILENAME=$(alwaysFocusedInputBox --title "Save Recording As" --text "Enter filename:" --default-text "$DEFAULT_NAME")
 
   # If user cancels the name prompt, exit
   [ -z "$USER_FILENAME" ] && exit 1

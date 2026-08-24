@@ -332,7 +332,7 @@ in
           # bottles
           # ulauncher
           qt6.qtdeclarative
-          zenity
+          # zenity
           libnotify
           simplex-chat-desktop # simple x chat
           # openshot-qt # vid editor
