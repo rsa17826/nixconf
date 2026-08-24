@@ -546,3 +546,9 @@ $1
 @errgroup 1
 @endregex
 
+@name add ending newline to all files
+@regex (?<!\n)$
+@flags
+@replace
+
+@endregex
