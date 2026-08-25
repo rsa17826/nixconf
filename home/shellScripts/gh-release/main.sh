@@ -132,6 +132,7 @@ else
   echo "No config file found at '$CONFIG_FILE'." >&2
   cp "$SCRIPT_DATA_DIR/release_config.txt" "$CONFIG_FILE"
   chmod u+w "$CONFIG_FILE"
+  exit 1
 fi
 
 # --- create the release ------------------------------------------------------
