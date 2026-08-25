@@ -1,0 +1,4 @@
+# asset_name:literal_path
+# asset_name:run some_command   (last non-empty line of its stdout must be a file path)
+game.exe:./game.exe
+otherthing.txt:run ./thing.sh

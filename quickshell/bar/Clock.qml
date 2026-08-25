@@ -24,9 +24,9 @@ Rectangle {
   GlitchEffect {
     id: clockGlitch
 
-    aberration: 0.00625
-    glitchAmount: 0.0875
-    glitchRate: 1.7
+    aberration: 0.00825
+    glitchAmount: 0.25
+    glitchRate: 2.2
 
     anchors {
       leftMargin: 4
