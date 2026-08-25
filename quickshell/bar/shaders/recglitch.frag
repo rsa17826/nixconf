@@ -49,6 +49,16 @@ void main() {
 
   vec3 col = vec3(r, g, b);
 
+  // // ── Pink/purple push ──
+  // // Boost red+blue (magenta) relative to green, and add a flat purple
+  // // tint that gets stronger on actively-glitching slices, so the tears
+  // // read as pink/purple instead of the default red/cyan split.
+  // col.r *= 1.15;
+  // col.b *= 1.25;
+  // col.g *= 0.85;
+  // vec3 purpleTint = vec3(0.85, 0.25, 0.95);
+  // col = mix(col, col + purpleTint * 0.25, sliceActive);
+
   // ── Cheap radial bloom ──
   // Ring-sample around the pixel and add it back additively. Not a true
   // gaussian blur, but at 8 taps it's cheap and reads as a soft glow
@@ -63,7 +73,7 @@ void main() {
   }
   glow /= float(TAPS);
 
-  col += glow * 0.85;
+  col += glow * vec3(0.95, 0.75, 1.05) * 0.85;
 
   fragColor = vec4(col, a) * qt_Opacity;
 }

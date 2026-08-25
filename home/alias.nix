@@ -29,7 +29,7 @@ let
     go = "go-get-proxy";
     gcusd = "customGC;usd";
     ee = "thunar";
-    qs-reload = "fuser -k 8765/tcp; pkill -9 quicksh; qs -p ~/nixconf/quickshell/bar/ & disown && q";
+    qs-reload = "fuser -k 8765/tcp; pkill -9 quicksh; qs -p ~/nixconf/quickshell/bar/ & disown";
     # "(/|(../){0-6}..(/|))" = "cd \1";
     #
     "/" = "cd /";
@@ -48,6 +48,7 @@ let
     "../../../../../../../" = "cd ../../../../../../../";
     "../../../../../../.." = "cd ../../../../../../..";
     "-" = "cd -";
+    "~" = "cd ~";
     #
   };
   interactiveShellInit = ''
