@@ -86,10 +86,38 @@ if [ -f "$CONFIG_FILE" ]; then
   echo "$NOTES"
 
   # --- resolve asset files from config ----------------------------------------
+  #
+  # For "run" specs, the command is started in the background. It must print
+  # the file path as its FIRST line of stdout, then may keep running (e.g.
+  # waiting to be signaled) to perform cleanup afterwards. Once the release
+  # upload is complete, this script sends SIGTERM to each such background
+  # process so it can run its own `trap ... SIGTERM` cleanup handler.
+  #
+  # Example command script (thing.sh):
+  #   #!/usr/bin/env bash
+  #   zip -r /tmp/1.zip somedir
+  #   echo /tmp/1.zip
+  #   trap 'rm -f /tmp/1.zip' SIGTERM
+  #   while true; do sleep 1; done   # stay alive to receive the signal
 
   ASSET_PATHS=()
+  CLEANUP_PIDS=()
+  FIFO_DIR="$(mktemp -d)"
+
+  cleanup_bg_processes() {
+    for pid in "${CLEANUP_PIDS[@]:-}"; do
+      [ -z "$pid" ] && continue
+      if kill -0 "$pid" 2>/dev/null; then
+        kill -TERM "$pid" 2>/dev/null || true
+        wait "$pid" 2>/dev/null || true
+      fi
+    done
+    rm -rf "$FIFO_DIR"
+  }
+  trap cleanup_bg_processes EXIT
 
   echo "Reading asset config from '$CONFIG_FILE'..."
+  entry_num=0
   while IFS= read -r line || [ -n "$line" ]; do
     # skip blanks and comments
     line="$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
@@ -108,14 +136,28 @@ if [ -f "$CONFIG_FILE" ]; then
 
     if [[ "$spec" == run\ * ]]; then
       cmd="${spec#run }"
+      entry_num=$((entry_num + 1))
+      fifo="$FIFO_DIR/fifo_$entry_num"
+      mkfifo "$fifo"
+
       echo "  Running command for '$asset_name': $cmd"
-      # Run the command; take the last non-empty line of stdout as the path.
-      out_path="$(eval "$cmd" | sed '/^[[:space:]]*$/d' | tail -n1)"
+      # Run in background, stdout -> fifo. Process may keep running
+      # after printing the path, waiting to be killed for cleanup.
+      bash -c "$cmd" >"$fifo" &
+      cmd_pid=$!
+
+      # Read only the first line (the path); the fifo stays open so the
+      # command can keep running/writing (or just idling) afterward.
+      IFS= read -r out_path <"$fifo" || true
+
       if [ -z "$out_path" ] || [ ! -f "$out_path" ]; then
-        echo "  Error: command for '$asset_name' did not return a valid file path (got: '$out_path')" >&2
+        echo "  Error: command for '$asset_name' did not return a valid file path on its first line (got: '$out_path')" >&2
+        kill -TERM "$cmd_pid" 2>/dev/null || true
         exit 1
       fi
+
       src_path="$out_path"
+      CLEANUP_PIDS+=("$cmd_pid")
     else
       src_path="$spec"
       if [ ! -f "$src_path" ]; then
@@ -145,3 +187,6 @@ gh release create "$TAG_NAME" \
   "${ASSET_PATHS[@]}"
 
 echo "Done. Release '$TAG_NAME' created."
+
+# Signal all "run" background processes so they can clean up (e.g. delete
+# temp files) now that the upload is finished. Handled by the EXIT trap.

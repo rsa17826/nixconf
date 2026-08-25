@@ -18,9 +18,20 @@ hl.define_submap("launcher", function()
 	m.bind("s", launch("winspy"))
 	m.bind("a", launch("audioMover ~/audio ~/audio/output ~/syncthing/media/audio"))
 	m.bind("e", launch("thunar"))
+	m.bind(
+		"r",
+		launch(
+			"sh -c 'pkill -9 wl-mirror;wl-mirror --title top test_top&disown;wl-mirror --title bottom test_bottom&disown'"
+		)
+	)
 	m.bind("t", launch("kitty"))
 	m.bind("x", launch("xdm"))
-	m.bind("k", launch("sh -c 'sys restart input-manager;sys restart autocorrect;sys restart autoclicker;sys restart macro-recorder;sys restart dynamicRebinds'"))
+	m.bind(
+		"k",
+		launch(
+			"sh -c 'sys restart input-manager;sys restart autocorrect;sys restart autoclicker;sys restart macro-recorder;sys restart dynamicRebinds'"
+		)
+	)
 
 	-- Exit on anything not matched
 	m.bind("catchall", hl.dsp.submap("reset"))
