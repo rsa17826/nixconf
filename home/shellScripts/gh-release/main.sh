@@ -26,69 +26,69 @@ set -euo pipefail
 
 CONFIG_FILE="${1:-release_config.txt}"
 
-# --- sanity checks ---------------------------------------------------------
-
-if ! command -v gh >/dev/null 2>&1; then
-  echo "Error: GitHub CLI 'gh' is not installed. See https://cli.github.com" >&2
-  exit 1
-fi
-
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  echo "Error: current directory is not a git repository." >&2
-  exit 1
-fi
-
-if ! gh auth status >/dev/null 2>&1; then
-  echo "Error: gh is not authenticated. Run 'gh auth login' first." >&2
-  exit 1
-fi
-
-# Determine the repo slug (owner/name) for the changelog URL.
-REPO_SLUG="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
-
-# --- determine next available integer tag ----------------------------------
-
-# Look at existing releases' tag names (falls back to git tags if gh has none),
-# keep only ones that are pure integers, and pick max+1. If none exist, start at 1.
-existing_tags="$(gh release list --limit 1000 --json tagName -q '.[].tagName' 2>/dev/null || true)"
-if [ -z "$existing_tags" ]; then
-  existing_tags="$(git tag -l || true)"
-fi
-
-max_num=0
-while IFS= read -r t; do
-  [ -z "$t" ] && continue
-  if [[ "$t" =~ ^[0-9]+$ ]]; then
-    if ((t > max_num)); then
-      max_num=$t
-    fi
-  fi
-done <<<"$existing_tags"
-
-next_num=$((max_num + 1))
-prev_num=$max_num
-
-TAG_NAME="$next_num"
-TITLE="$next_num"
-
-echo "Next release: tag='$TAG_NAME' title='$TITLE'"
-
-# --- build release notes ----------------------------------------------------
-
-if [ "$prev_num" -gt 0 ]; then
-  NOTES="**Full Changelog**: https://github.com/${REPO_SLUG}/compare/${prev_num}...${next_num}"
-else
-  NOTES="**Full Changelog**: https://github.com/${REPO_SLUG}/commits/${next_num}"
-fi
-
-echo "Release notes:"
-echo "$NOTES"
-
-# --- resolve asset files from config ----------------------------------------
-
-ASSET_PATHS=()
-
 if [ -f "$CONFIG_FILE" ]; then
+  # --- sanity checks ---------------------------------------------------------
+
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "Error: GitHub CLI 'gh' is not installed. See https://cli.github.com" >&2
+    exit 1
+  fi
+
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Error: current directory is not a git repository." >&2
+    exit 1
+  fi
+
+  if ! gh auth status >/dev/null 2>&1; then
+    echo "Error: gh is not authenticated. Run 'gh auth login' first." >&2
+    exit 1
+  fi
+
+  # Determine the repo slug (owner/name) for the changelog URL.
+  REPO_SLUG="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
+
+  # --- determine next available integer tag ----------------------------------
+
+  # Look at existing releases' tag names (falls back to git tags if gh has none),
+  # keep only ones that are pure integers, and pick max+1. If none exist, start at 1.
+  existing_tags="$(gh release list --limit 1000 --json tagName -q '.[].tagName' 2>/dev/null || true)"
+  if [ -z "$existing_tags" ]; then
+    existing_tags="$(git tag -l || true)"
+  fi
+
+  max_num=0
+  while IFS= read -r t; do
+    [ -z "$t" ] && continue
+    if [[ "$t" =~ ^[0-9]+$ ]]; then
+      if ((t > max_num)); then
+        max_num=$t
+      fi
+    fi
+  done <<<"$existing_tags"
+
+  next_num=$((max_num + 1))
+  prev_num=$max_num
+
+  TAG_NAME="$next_num"
+  TITLE="$next_num"
+
+  echo "Next release: tag='$TAG_NAME' title='$TITLE'"
+
+  # --- build release notes ----------------------------------------------------
+
+  if [ "$prev_num" -gt 0 ]; then
+    NOTES="**Full Changelog**: https://github.com/${REPO_SLUG}/compare/${prev_num}...${next_num}"
+  else
+    NOTES="**Full Changelog**: https://github.com/${REPO_SLUG}/commits/${next_num}"
+  fi
+
+  echo "Release notes:"
+  echo "$NOTES"
+
+  # --- resolve asset files from config ----------------------------------------
+
+  ASSET_PATHS=()
+
   echo "Reading asset config from '$CONFIG_FILE'..."
   while IFS= read -r line || [ -n "$line" ]; do
     # skip blanks and comments
