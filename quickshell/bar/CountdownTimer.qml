@@ -7,6 +7,7 @@
 // parent (CountdownTimerRow) owns the list and writes it to disk.
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 import QtQuick
 import "owoify.js" as Owo
 
@@ -365,6 +366,7 @@ Item {
   PanelWindow {
     id: picker
 
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     implicitHeight: pickerColumn.implicitHeight + 12
@@ -586,13 +588,26 @@ Item {
             color: c.text
             font.pixelSize: 9
             selectByMouse: true
-            text: root.draft.url || ""
             verticalAlignment: TextInput.AlignVCenter
 
-            onTextChanged: root.draft = Object.assign({}, root.draft, {
-              url: text
-            })
+            Component.onCompleted: text = root.draft.url || ""
+            onTextChanged: {
+              if (text === (root.draft.url || ""))
+                return
+              root.draft = Object.assign({}, root.draft, {
+                url: text
+              })
+            }
 
+            Connections {
+              function onDraftChanged() {
+                if (urlInput.text !== (root.draft.url || "")) {
+                  urlInput.text = root.draft.url || ""
+                }
+              }
+
+              target: root
+            }
             anchors {
               fill: parent
               leftMargin: 5
