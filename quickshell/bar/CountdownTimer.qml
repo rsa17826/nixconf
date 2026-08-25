@@ -246,11 +246,11 @@ Item {
     GlitchEffect {
       id: timerGlitch
 
-      aberration: 0.0120
-      active: isSameDay()
-      glitchAmount: 0.037
+      aberration: 0.0084 / (isSameDay() ? 1 : 3)
+      // active: isSameDay()
+      glitchAmount: 0.111 / (isSameDay() ? 1 : 3)
       // TODO rerange root.targetTimestamp 1h 0 ~1.5 ~2.3
-      glitchRate: 1.7
+      glitchRate: isSameDay() ? 2 : 1.7
 
       Text {
         id: label
