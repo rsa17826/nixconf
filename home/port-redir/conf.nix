@@ -31,6 +31,11 @@ let
       public = true;
     }
     {
+      name = "ap-slot-tracker";
+      port = 54221;
+      public = false;
+    }
+    {
       name = "copyparty";
       port = 8086;
       public = true;
