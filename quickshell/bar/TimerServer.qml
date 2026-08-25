@@ -4,10 +4,10 @@
 // unless you add a shared-secret header check below.
 //
 // API:
-//   GET    /timers            -> list named timers [{name,id,targetTimestamp}]
-//   POST   /timers            body: {name, targetTimestamp}  -> create/update by name
-//   PUT    /timers/<name>     body: {targetTimestamp}         -> update by name
-//   DELETE /timers/<name>                                     -> clear/remove by name
+//   GET    /timers            -> list named timers [{name,id,targetTimestamp,url}]
+//   POST   /timers            body: {name, targetTimestamp, url?}  -> create/update by name
+//   PUT    /timers/<name>     body: {targetTimestamp, url?}         -> update by name
+//   DELETE /timers/<name>                                           -> clear/remove by name
 import Quickshell
 import Quickshell.Io
 import QtQuick
@@ -34,14 +34,14 @@ Item {
           error: "name required"
         }
       } else {
-        timerRow.setByName(body.name, body.targetTimestamp || 0)
+        timerRow.setByName(body.name, body.targetTimestamp || 0, body.url || "")
         respBody = {
           ok: true
         }
       }
     } else if (method === "PUT" && path.startsWith("/timers/")) {
       const name = decodeURIComponent(path.substring("/timers/".length))
-      timerRow.setByName(name, body.targetTimestamp || 0)
+      timerRow.setByName(name, body.targetTimestamp || 0, body.url || "")
       respBody = {
         ok: true
       }

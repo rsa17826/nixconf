@@ -10,7 +10,6 @@ import Quickshell.Io
 import QtQuick
 import "owoify.js" as Owo
 
-// TODO make store a url and if one exists add button to open url on click
 Item {
   id: root
 
@@ -38,19 +37,25 @@ Item {
       mo: 1,
       d: 1,
       h: 0,
-      mi: 0
+      mi: 0,
+      url: ""
     })
+  // "none" (or unset) / "single" -> one-shot, shows the progress bar.
+  // "weekly" / "monthly" / "yearly" -> repeating, no progress bar.
+  property string repeatType: "none"
+  property real startTimestamp: 0
   property real targetTimestamp: 0
 
   // ── Identity + external state (owned by the parent list) ─────────
   property var timerId: 0
   property string timerName: ""
+  property string url: ""
 
   signal cleared(var id)
 
   // Emitted instead of writing files directly. Parent listens and
   // updates/persists its canonical list.
-  signal committed(var id, real ts)
+  signal committed(var id, real ts, string url, real startTs)
 
   function adjustDraft(field, delta, step) {
     const dr = Object.assign({}, root.draft)
@@ -101,14 +106,22 @@ Item {
   }
   function clearTimer() {
     root.targetTimestamp = 0
+    root.startTimestamp = 0
+    root.url = ""
     root.cleared(root.timerId)
     picker.visible = false
   }
   function commitDraft() {
     const dr = root.draft
-    const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime()
+    const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime();
+    // Only stamp a fresh "start" when this timer didn't already have a
+    // target set — editing an existing timer keeps its original start so
+    // the progress bar doesn't jump back to 100%.
+    if (root.targetTimestamp <= 0)
+      root.startTimestamp = Date.now()
     root.targetTimestamp = ts
-    root.committed(root.timerId, ts)
+    root.url = dr.url || ""
+    root.committed(root.timerId, ts, root.url, root.startTimestamp)
     picker.visible = false
   }
 
@@ -166,7 +179,8 @@ Item {
       mo: base.getMonth() + 1,
       d: base.getDate(),
       h: base.getHours(),
-      mi: Math.round(base.getMinutes() / 5) * 5 % 60
+      mi: Math.round(base.getMinutes() / 5) * 5 % 60,
+      url: root.url || ""
     }
     picker.visible = true
   }
@@ -187,7 +201,7 @@ Item {
     return lerpColor(c.orange, c.red, 1 - hoursLeft / 3)
   }
 
-  implicitHeight: pill.implicitHeight
+  implicitHeight: pill.implicitHeight + (progressTrack.visible ? progressTrack.height + 2 : 0)
   implicitWidth: pill.implicitWidth
 
   // ── Ticking clock (drives re-evaluation every second) ────────────
@@ -217,9 +231,12 @@ Item {
     id: pill
 
     color: "transparent"
-    implicitHeight: 20
-    implicitWidth: label.implicitWidth + 20
+    implicitHeight: 14
+    implicitWidth: label.implicitWidth + 4 + (root.url ? linkBtn.implicitWidth + 4 : 0)
 
+    anchors {
+      topMargin: 20
+    }
     MouseArea {
       anchors.fill: parent
       cursorShape: Qt.PointingHandCursor
@@ -246,6 +263,78 @@ Item {
           left: parent.left
           verticalCenter: parent.verticalCenter
         }
+      }
+    }
+
+    // Link button — only shown once a url is attached to this timer.
+    // Kept outside GlitchEffect so its MouseArea stays hit-testable
+    // (see NotifToast's action buttons for the same rule).
+    Rectangle {
+      id: linkBtn
+
+      color: linkMa.containsMouse ? c.hovered : "transparent"
+      implicitHeight: 16
+      implicitWidth: linkLbl.implicitWidth + 6
+      radius: 3
+      visible: root.url !== ""
+
+      anchors {
+        left: timerGlitch.right
+        leftMargin: 6
+        verticalCenter: parent.verticalCenter
+      }
+      Text {
+        id: linkLbl
+
+        anchors.centerIn: parent
+        color: c.accent
+        font.pixelSize: 10
+        text: "🔗"
+      }
+      MouseArea {
+        id: linkMa
+
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
+
+        onClicked: Qt.openUrlExternally(root.url)
+      }
+    }
+  }
+
+  // ── Progress bar (non-repeating timers only) ──────────────────────
+  // Runs from 100% width at startTimestamp down to 0% width at
+  // targetTimestamp. Repeating timers (weekly/monthly/yearly) don't have
+  // a stable "start" that makes sense to bar-ify, so they're excluded.
+  Rectangle {
+    id: progressTrack
+
+    color: "#08081a"
+    height: 2
+    radius: 1
+    visible: root.targetTimestamp > 0 && root.startTimestamp > 0 && (!root.repeatType || root.repeatType === "none" || root.repeatType === "single")
+    width: pill.width
+
+    anchors {
+      left: pill.left
+      top: pill.bottom
+      topMargin: 2
+    }
+    Rectangle {
+      id: progressFill
+
+      readonly property real fraction: Math.max(0, Math.min(1, (root.targetTimestamp - clock.date.getTime()) / span))
+      readonly property real span: Math.max(1, root.targetTimestamp - root.startTimestamp)
+
+      color: root.timerColor()
+      height: parent.height
+      radius: parent.radius
+      width: parent.width * fraction
+
+      anchors {
+        left: parent.left
+        top: parent.top
       }
     }
   }
@@ -459,6 +548,56 @@ Item {
               hoverEnabled: true
 
               onClicked: root.adjustDraft(modelData.key, 1, modelData.step)
+            }
+          }
+        }
+      }
+      Rectangle {
+        color: c.divider
+        implicitHeight: 1
+        implicitWidth: parent.width
+      }
+      Row {
+        spacing: 6
+        width: pickerColumn.width
+
+        Text {
+          anchors.verticalCenter: parent.verticalCenter
+          color: c.text
+          font.pixelSize: 10
+          text: Owo.owo("URL")
+          width: 38
+        }
+        Rectangle {
+          id: urlBox
+
+          anchors.verticalCenter: parent.verticalCenter
+          border.color: urlInput.activeFocus ? c.accent : c.buttonBg
+          border.width: 1
+          color: c.bg
+          height: 20
+          radius: 4
+          width: pickerColumn.width - 38 - 6
+
+          TextInput {
+            id: urlInput
+
+            clip: true
+            color: c.text
+            font.pixelSize: 9
+            selectByMouse: true
+            text: root.draft.url || ""
+            verticalAlignment: TextInput.AlignVCenter
+
+            onTextChanged: root.draft = Object.assign({}, root.draft, {
+              url: text
+            })
+
+            anchors {
+              fill: parent
+              leftMargin: 5
+              rightMargin: 5
+              verticalCenter: parent.verticalCenter
             }
           }
         }

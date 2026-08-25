@@ -61,7 +61,8 @@ Item {
   //   weekly:  { weekday (0-6, Sun=0), h, mi }
   //   monthly: { d, h, mi }
   //   yearly:  { mo, d, h, mi }
-  function addRepeatingTimer(repeatType, anchor) {
+  function addRepeatingTimer(repeatType, anchor, url) {
+    const u = url || ""
     const key = root.anchorKey(repeatType, anchor)
     const base = root.autoName(repeatType, anchor)
     const ts = root.nextOccurrence(repeatType, anchor, Date.now());
@@ -73,7 +74,8 @@ Item {
       const t = root.timers.slice()
       t[existingIdx] = Object.assign({}, t[existingIdx], {
         targetTimestamp: ts,
-        anchor: anchor
+        anchor: anchor,
+        url: u
       })
       root.timers = t
       saveTimers()
@@ -100,7 +102,8 @@ Item {
       name: name,
       targetTimestamp: ts,
       repeatType: repeatType,
-      anchor: anchor
+      anchor: anchor,
+      url: u
     })
     root.timers = t
     root.nextId += 1
@@ -113,7 +116,9 @@ Item {
     t.push({
       id: root.nextId,
       name: "",
-      targetTimestamp: 0
+      targetTimestamp: 0,
+      startTimestamp: 0,
+      url: ""
     })
     root.timers = t
     root.nextId += 1
@@ -186,7 +191,9 @@ Item {
     t.push({
       id: root.nextId,
       name: "",
-      targetTimestamp: 0
+      targetTimestamp: 0,
+      startTimestamp: 0,
+      url: ""
     })
     root.timers = t
     root.nextId += 1
@@ -228,7 +235,8 @@ Item {
     return root.timers.filter(t => t.name && t.name.length > 0).map(t => ({
           name: t.name,
           id: t.id,
-          targetTimestamp: t.targetTimestamp
+          targetTimestamp: t.targetTimestamp,
+          url: t.url || ""
         }))
   }
 
@@ -281,7 +289,9 @@ Item {
       root.timers = root.timers.map(t => t.id === id ? {
           id: t.id,
           name: t.name,
-          targetTimestamp: 0
+          targetTimestamp: 0,
+          startTimestamp: 0,
+          url: ""
         } : t)
     } else {
       root.timers = root.timers.filter(t => t.id !== id)
@@ -294,21 +304,24 @@ Item {
   }
 
   // Create or update a timer by name. If it doesn't exist yet, create it.
-  function setByName(name, targetTimestamp) {
+  function setByName(name, targetTimestamp, url) {
     const ts = targetTimestamp || 0
+    const u = url || ""
     const existing = root.findByName(name)
     if (existing) {
       root.timers = root.timers.map(t => t.id === existing.id ? {
           id: t.id,
           name: t.name,
-          targetTimestamp: ts
+          targetTimestamp: ts,
+          url: u
         } : t)
     } else {
       const t = root.timers.slice()
       t.push({
         id: root.nextId,
         name: name,
-        targetTimestamp: ts
+        targetTimestamp: ts,
+        url: u
       })
       root.timers = t
       root.nextId += 1
@@ -316,12 +329,12 @@ Item {
     saveTimers()
     root.ensureUnsetSlot()
   }
-  function updateTimer(id, ts) {
-    root.timers = root.timers.map(t => t.id === id ? {
-        id: t.id,
-        name: t.name,
-        targetTimestamp: ts
-      } : t)
+  function updateTimer(id, ts, url, startTs) {
+    root.timers = root.timers.map(t => t.id === id ? Object.assign({}, t, {
+        targetTimestamp: ts,
+        startTimestamp: startTs || 0,
+        url: url || ""
+      }) : t)
     saveTimers()
     root.ensureUnsetSlot()
   }
@@ -355,14 +368,17 @@ Item {
       id: jsonAdapter
 
       property int nextId: 2
-      // Canonical list: [{ id, targetTimestamp }, ...]. Always start with
-      // one unset slot so there's something to click even before a file
-      // exists; overwritten by whatever's loaded from disk, if anything.
+      // Canonical list: [{ id, name, targetTimestamp, url, repeatType?, anchor? }, ...].
+      // Always start with one unset slot so there's something to click even
+      // before a file exists; overwritten by whatever's loaded from disk,
+      // if anything.
       property var timers: [
         {
           id: 1,
           name: "",
-          targetTimestamp: 0
+          targetTimestamp: 0,
+          startTimestamp: 0,
+          url: ""
         }
       ]
     }
@@ -409,12 +425,15 @@ Item {
       model: root.visibleTimers
 
       delegate: CountdownTimer {
+        repeatType: modelData.repeatType || "none"
+        startTimestamp: modelData.startTimestamp || 0
         targetTimestamp: modelData.targetTimestamp
         timerId: modelData.id
         timerName: modelData.name || ""
+        url: modelData.url || ""
 
         onCleared: id => root.removeTimer(id)
-        onCommitted: (id, ts) => root.updateTimer(id, ts)
+        onCommitted: (id, ts, url, startTs) => root.updateTimer(id, ts, url, startTs)
       }
     }
   }
