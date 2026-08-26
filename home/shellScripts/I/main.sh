@@ -121,7 +121,6 @@ apply_category() {
   fi
 }
 
-cats=()
 while [ $# -gt 0 ] && [ "$1" != "--" ]; do
   cats+=("$1")
   shift

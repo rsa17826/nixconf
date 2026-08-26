@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 read -r -p "Enter name: " name
-sed -i 's/name": "name",/name": "'"$name"'",' ./manifest.json
+sed -i 's/name": "name",/name": "'"$name"'",/' ./manifest.json
