@@ -110,11 +110,14 @@ apply_category() {
   # optional post-setup hook, e.g. templates/go/run
   local hook="$src_dir/run"
   if [ -f "$hook" ]; then
-    if [ -x "$hook" ]; then
-      "$hook" "${run_args[@]}"
-    else
-      bash "$hook" "${run_args[@]}"
-    fi
+    (
+      cd "$src_dir"
+      if [ -x "$hook" ]; then
+        "$hook" "${run_args[@]}"
+      else
+        bash "$hook" "${run_args[@]}"
+      fi
+    )
   fi
 }
 
