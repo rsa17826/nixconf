@@ -144,7 +144,7 @@ PY
 # should go: prints the target directory (empty string if no match found).
 find_best_target_dir() {
   local src="$1" fname="$2"
-  mapfile -d '' -t matches < <(find "$DEST" -mindepth 2 -type f -name "$fname" -print0 2>/dev/null)
+  mapfile -d '' -t matches < <(find "$DEST" -mindepth 2 -not -path ".template-base/*" -type f -name "$fname" -print0 2>/dev/null)
   local match_count=${#matches[@]}
 
   if ((match_count == 0)); then
@@ -285,7 +285,7 @@ process_zip_file() {
   if ((single_topdir == 1)) && [[ -n "$topdir" ]]; then
     # Look for an existing directory with this same name under DEST
     local dirmatches
-    mapfile -d '' -t dirmatches < <(find "$DEST" -mindepth 1 -type d -name "$topdir" -print0 2>/dev/null)
+    mapfile -d '' -t dirmatches < <(find "$DEST" -mindepth 1 -not -path ".template-base/*" -type d -name "$topdir" -print0 2>/dev/null)
 
     if ((${#dirmatches[@]} == 1)); then
       local tmpdir
@@ -308,7 +308,7 @@ process_zip_file() {
 }
 
 # Find files modified in the last 30 seconds, directly in Downloads
-mapfile -d '' -t newfiles < <(find "$SRC" -maxdepth 1 -type f -mmin -0.5 -print0)
+mapfile -d '' -t newfiles < <(find "$SRC" -maxdepth 1 -not -path ".template-base/*" -type f -mmin -0.5 -print0)
 
 if ((${#newfiles[@]} == 1)) && [[ "${newfiles[0]}" == *.zip ]]; then
   process_zip_file "${newfiles[0]}"
