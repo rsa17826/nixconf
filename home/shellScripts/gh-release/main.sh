@@ -143,7 +143,7 @@ if [ -f "$CONFIG_FILE" ]; then
       echo "  Running command for '$asset_name': $cmd"
       # Run in background, stdout -> fifo. Process may keep running
       # after printing the path, waiting to be killed for cleanup.
-      bash -c "$cmd" >"$fifo" &
+      bash -c "exec $cmd" >"$fifo" &
       cmd_pid=$!
 
       # Read only the first line (the path); the fifo stays open so the
