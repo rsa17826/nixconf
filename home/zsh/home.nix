@@ -22,6 +22,7 @@ in
       enable = true;
 
       # --- 1. STRICT DEDUPLICATION ---
+      autocd = true;
       history = {
         size = 10000;
         ignoreAllDups = true; # Only saves unique commands to history file
