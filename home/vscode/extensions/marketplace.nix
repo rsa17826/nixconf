@@ -309,7 +309,7 @@
               name = "python";
               publisher = "ms-python";
               version = "2026.7.2026080801";
-              hash = "sha256-Y5tMdJM00ZlXUcKpEr9xiQrPNZmugXMWAb+Zf2U76UY=";
+              hash = "sha256-1cxwA+gWlTMiWfLVIkJN/ckLNOdR5DIZvEx1EwbOsQ8=";
             }
             {
               name = "hexeditor";
