@@ -5,8 +5,21 @@ webfs - serve your filesystem over HTTP on port 54220.
 URL path forms (Host is expected to be fs.localhost, already routed to :54220):
 
     fs.localhost/~/file.txt     -> $HOME/file.txt
-    fs.localhost/./file.txt     -> <cwd-webfs-was-started-in>/file.txt
-    fs.localhost///file.txt     -> /file.txt   (absolute, from filesystem root)
+    fs.localhost/file.txt       -> <cwd-webfs-was-started-in>/file.txt
+    fs.localhost/%2Fetc/file.txt -> /etc/file.txt   (absolute, from filesystem root)
+
+    Two normalizations make literal "./" and "//" prefixes unusable here:
+      - HTTP clients (curl included) strip "/./" out of URLs before sending,
+        so "/./file.txt" always arrives on the wire as plain "/file.txt".
+      - Python's http.server itself collapses any leading "//" down to a
+        single "/", as a built-in open-redirect mitigation.
+    So: a plain path is cwd-relative (matching what "./file.txt" collapses
+    to anyway), and an absolute path needs its leading slash percent-encoded
+    as %2F so it survives both of the above before webfs unquotes and
+    re-expands it, e.g.:
+
+        curl fs.localhost/etc/hostname            # <cwd>/etc/hostname
+        curl fs.localhost/%2Fetc/hostname          # /etc/hostname
 
     GET  -> returns file content
     HEAD -> stats the file (no body); headers report Content-Length,
@@ -47,22 +60,31 @@ import urllib.parse
 HOME = os.path.expanduser("~")
 
 
-def resolve_path(url_path: str, start_dir: str):
+def resolve_path(raw_path: str, start_dir: str):
     """Turn a request path into an absolute filesystem path, or None if
-    the form is not recognized."""
-    path = urllib.parse.unquote(url_path.split("?", 1)[0])
+    the form is not recognized.
+
+    raw_path is self.path exactly as http.server hands it to us: NOT yet
+    unquoted, and already through http.server's leading-"//" collapse.
+    We check the %2F-absolute marker before unquoting (since unquoting
+    would turn %2F into an indistinguishable "/"), then unquote once for
+    everything else.
+    """
+    raw = raw_path.split("?", 1)[0]
+
+    if raw.startswith("/%2F") or raw.startswith("/%2f"):
+        rest = urllib.parse.unquote(raw[4:]).lstrip("/")
+        return os.path.normpath("/" + rest)
+
+    path = urllib.parse.unquote(raw)
 
     if path == "/~" or path.startswith("/~/"):
         rest = path[2:].lstrip("/")
         return os.path.normpath(os.path.join(HOME, rest))
 
-    if path == "/." or path.startswith("/./"):
-        rest = path[2:].lstrip("/")
+    if path.startswith("/"):
+        rest = path[1:]
         return os.path.normpath(os.path.join(start_dir, rest))
-
-    if path.startswith("///") or (path.startswith("//") and not path.startswith("///")):
-        rest = path.lstrip("/")
-        return os.path.normpath("/" + rest)
 
     return None
 
