@@ -354,6 +354,7 @@ in
           mediamtx
           # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })
+          (callPackage ./devfs/devfs.nix { })
           goldberg-emu
           deno
           zuban
