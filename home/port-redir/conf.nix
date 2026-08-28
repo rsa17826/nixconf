@@ -36,6 +36,11 @@ let
       public = false;
     }
     {
+      name = "fs";
+      port = 54220;
+      public = false;
+    }
+    {
       name = "copyparty";
       port = 8086;
       public = true;
