@@ -257,7 +257,7 @@ Item {
         id: label
 
         color: root.timerColor()
-        font.pixelSize: 11
+        font.pixelSize: 9
         text: Owo.owo("⏰ " + (root.timerName ? root.timerName + ": " : "") + root.formatCountdown())
 
         anchors {

@@ -909,7 +909,8 @@
   "[actionscript]": {
     "editor.defaultFormatter": "bowlerhatllc.vscode-as3mxml",
   },
-  "as3mxml.sdk.framework": "/nix/store/b0sfpycjxyv8axlam45q23mljxh8p1hp-apache-flex-sdk-4.16.1/opt/apache-flex-sdk",
+  // readlink -f $(which aasdoc)
+  // "as3mxml.sdk.framework": "/nix/store/9my7nls0kz0ykv8nk45f9aiyv1hy2v89-apache-flex-sdk-4.16.1/opt/apache-flex-sdk",
   "as3mxml.languageServer.enabled": true,
   "as3mxml.inlayHints.parameterNames.enabled": "all",
   "as3mxml.lint.enabled": true,
