@@ -273,6 +273,9 @@
         };
       };
     };
+    ap-slot-tracker = {
+      url = "github:rsa17826/ap-slot-tracker";
+    };
     # freenet-core = {
     #   url = "github:freenet/freenet-core";
     #   inputs = {
