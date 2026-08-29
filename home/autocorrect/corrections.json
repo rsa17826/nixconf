@@ -5285,5 +5285,7 @@
   "flase": "false",
   "owrking": "working",
   "owrked": "worked",
-  "hjow": "how"
+  "hjow": "how",
+  "[p": { "replace": "p", "noEndActionRequired": true },
+  "m,": { "replace": ",", "noEndActionRequired": true }
 }

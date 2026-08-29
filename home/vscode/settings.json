@@ -28,6 +28,7 @@
 
     // "themes": true,
     "**/custom blocks": true,
+    ".template-base": true,
     "**/.vscode": true,
     "**/*mp3.as": true,
     "**/sb*.as": true,
