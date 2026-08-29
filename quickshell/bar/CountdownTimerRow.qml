@@ -51,6 +51,19 @@ Item {
       if (t.id === soonestId)
         return true
       return isSameDay(t.targetTimestamp)
+    }).sort((e, ee) => {
+      // Unset ("set timer") slots always sort to the far right, regardless
+      // of which side of the comparison they're on. Otherwise, ascending
+      // by time remaining (soonest/lowest first).
+      const eUnset = e.targetTimestamp === 0
+      const eeUnset = ee.targetTimestamp === 0
+      if (eUnset && eeUnset)
+        return 0
+      if (eUnset)
+        return 1
+      if (eeUnset)
+        return -1
+      return e.targetTimestamp - ee.targetTimestamp
     })
   }
 
@@ -65,7 +78,7 @@ Item {
     const u = url || ""
     const key = root.anchorKey(repeatType, anchor)
     const base = root.autoName(repeatType, anchor)
-    const ts = root.nextOccurrence(repeatType, anchor, Date.now());
+    const ts = root.nextOccurrence(repeatType, anchor, Date.now())
 
     // Exact same repeatType + day/time already scheduled -> this is an
     // edit of that same timer, just refresh it in place.
@@ -321,7 +334,8 @@ Item {
         id: root.nextId,
         name: name,
         targetTimestamp: ts,
-        url: u
+        url: u,
+        startTimestamp: Date.now()
       })
       root.timers = t
       root.nextId += 1

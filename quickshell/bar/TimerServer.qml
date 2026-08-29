@@ -34,14 +34,14 @@ Item {
           error: "name required"
         }
       } else {
-        timerRow.setByName(body.name, body.targetTimestamp || 0, body.url || "")
+        timerRow.setByName(body.name, body.targetTimestamp || Date.now(), body.url || "")
         respBody = {
           ok: true
         }
       }
     } else if (method === "PUT" && path.startsWith("/timers/")) {
       const name = decodeURIComponent(path.substring("/timers/".length))
-      timerRow.setByName(name, body.targetTimestamp || 0, body.url || "")
+      timerRow.setByName(name, body.targetTimestamp || Date.now(), body.url || "")
       respBody = {
         ok: true
       }
