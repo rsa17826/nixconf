@@ -111,7 +111,6 @@ apply_category() {
   local hook="$src_dir/run"
   if [ -f "$hook" ]; then
     (
-      cd "$src_dir"
       if [ -x "$hook" ]; then
         "$hook" "${run_args[@]}"
       else
