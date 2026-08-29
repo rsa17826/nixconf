@@ -467,11 +467,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787647203,
-        "narHash": "sha256-iX/kNLJvk4UGaZzh7jl6qXHc6FcEEx5lIftYXSZGf/Q=",
+        "lastModified": 1787946871,
+        "narHash": "sha256-3z28UlKh02RAkyLKsUOxD+l20WG6Qo+vzg1FCs6OkEw=",
         "owner": "oxcl",
         "repo": "nix-flake-helium-browser",
-        "rev": "075ddbf8d88df883becff7915feb3ed25e1f5d04",
+        "rev": "ef8847b8907e95335afa529daa6a71fc0e9ff107",
         "type": "github"
       },
       "original": {
@@ -575,11 +575,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1787861703,
-        "narHash": "sha256-sXNFhM6Ya6Uf8GQ29VhOKx9YDPEDiIA/+Eb0laEzFaI=",
+        "lastModified": 1787955202,
+        "narHash": "sha256-qT83ghzQ2WnBYuwC2QQAAwiaHta0SxWL6iymnkf/JJA=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "41718b097fb7522a8112b05706750d8310091825",
+        "rev": "60695e18c8cd17399651a9af5db3f42d1867e1e6",
         "type": "github"
       },
       "original": {
@@ -1134,11 +1134,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787726213,
-        "narHash": "sha256-HgPjiNu7XljYr7WDBriTDggCxvvHcjK2dnQjrWc2qbI=",
+        "lastModified": 1787970433,
+        "narHash": "sha256-BAkjkXBJcN6LcVWrWbKNh9zaj4l2HSP4Ce5R5VQbdww=",
         "ref": "refs/heads/master",
-        "rev": "0f9939ca4fac3a1db3653c51a3c23ca9812e2946",
-        "revCount": 852,
+        "rev": "ec0be5b36f2d409e66dfe634169a04a4702d3039",
+        "revCount": 855,
         "type": "git",
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       },
