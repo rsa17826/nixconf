@@ -188,6 +188,7 @@ if [ "$hm" = true ]; then
   home-manager switch --flake ./#nyix
 else
   TMPOUT=$(mktemp)
+  ln "$TMPOUT" "$HOME/nixconf/updateFailure.log"
   err=1
 
   while true; do
@@ -226,7 +227,6 @@ else
       continue # Re-run the while loop
     else
       echo "$TMPOUT"
-      ln "$TMPOUT" "$HOME/nixconf/updateFailure.log"
       # PERMANENT FAILURE: Update commit message to reflect failure
       echo "⚠️ No fixable hashes found."
       if [[ "$NO_GIT" == false ]]; then
@@ -243,4 +243,7 @@ fi
 # Return to original directory
 job-done "$job_id"
 popd >/dev/null || exit 1
+if [[ $err == 0 ]]; then
+  rm -f "$HOME/nixconf/updateFailure.log"
+fi
 exit "$err"
