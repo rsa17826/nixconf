@@ -5286,6 +5286,8 @@
   "owrking": "working",
   "owrked": "worked",
   "hjow": "how",
+  "puhs": "push",
   "[p": { "replace": "p", "noEndActionRequired": true },
+  "p[u": { "replace": "p", "noEndActionRequired": true },
   "m,": { "replace": ",", "noEndActionRequired": true }
 }
