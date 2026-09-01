@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+if [ -f "$HOME/nixconf/updateFailure.log" ]; then
+  # Check if the file was modified less than 1 hour ago (using find for portability)
+  if [ -n "$(find "$HOME/nixconf/updateFailure.log" -mmin -60 2>/dev/null)" ]; then
+    echo "[WARNING] last update failed - enter y to continue update"
+    read -r response
+    if [ "$response" != "y" ]; then
+      nom --json <"$HOME/nixconf/updateFailure.log"
+      exit 2
+    fi
+  fi
+fi
+
 STATE_FILE="$HOME/.local/share/nix-update-target"
 DEFAULT_TARGET="nyx"
 
