@@ -50,6 +50,7 @@ let
     "-" = "cd -";
     "~" = "cd ~";
     #
+    "+x" = "chmod +x";
   };
   interactiveShellInit = ''
     alias rm="gio trash"
