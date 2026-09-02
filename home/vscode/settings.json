@@ -882,7 +882,6 @@
   "go.hideErrorCases.errorCasesOpacity": 0.1,
   "go.hideErrorCases.hideOnSave": true,
   "go.hideErrorCases.autoMakeTransparent": false,
-  "diffEditor.hideUnchangedRegions.enabled": true,
   "[go.mod]": {
     "editor.defaultFormatter": "golang.go",
   },
@@ -916,4 +915,5 @@
   "as3mxml.inlayHints.parameterNames.enabled": "all",
   "as3mxml.lint.enabled": true,
   "as3mxml.asconfigc.verboseOutput": true,
+  "diffEditor.hideUnchangedRegions.enabled": true,
 }

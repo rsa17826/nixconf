@@ -4799,7 +4799,6 @@
   "yuo": "you",
   "yuor": "your",
   "zeebra": "zebra",
-  "stopprop": "e.preventDefault()\ne.stopPropagation()\ne.stopImmediatePropagation()",
   "accessabe": "accessible",
   "fisHash": "fixHash",
   "L:": {
@@ -5287,5 +5286,9 @@
   "puhs": "push",
   "[p": { "replace": "p", "noEndActionRequired": true },
   "p[u": { "replace": "p", "noEndActionRequired": true },
-  "m,": { "replace": ",", "noEndActionRequired": true }
+  "m,": { "replace": ",", "noEndActionRequired": true },
+  "stopprop": {
+    "replace": "e.preventDefault()\ne.stopPropagation()\ne.stopImmediatePropagation()",
+    "noEndActionRequired": true
+  }
 }
