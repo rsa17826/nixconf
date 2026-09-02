@@ -20,6 +20,26 @@ hl.window_rule({
 	suppress_event = "fullscreen maximize",
 	no_blur = true,
 })
+hl.window_rule({
+	match = { class = "ILSp", title = "" },
+	float = true,
+	dim_around = false,
+	no_initial_focus = true,
+	suppress_event = "activatefocus activate",
+	stay_focused = false,
+	allows_input = false,
+	decorate = false,
+	focus_on_activate = false,
+	no_anim = true,
+	no_blur = true,
+	no_dim = true,
+	no_focus = true,
+	no_follow_mouse = true,
+	no_shadow = true,
+	opaque = true,
+	opacity = "0 override",
+	render_unfocused = false,
+})
 -- yad: flGodotoat, unmaximize, pin, center
 hl.window_rule({
 	name = "a",
