@@ -166,6 +166,19 @@ in
                     proxy_set_header Host $host;
                     proxy_set_header X-Forwarded-Host $http_host;
                     proxy_set_header X-Forwarded-Proto $scheme;
+
+                    if ($request_method = 'OPTIONS') {
+                      add_header 'Access-Control-Allow-Origin' '*';
+                      add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                      add_header 'Access-Control-Allow-Headers' 'Content-Type';
+                      add_header 'Content-Length' 0;
+                      add_header 'Content-Type' 'text/plain charset=UTF-8';
+                      return 204;
+                    }
+
+                    add_header 'Access-Control-Allow-Origin' '*' always;
+                    add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS' always;
+                    add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
                   '';
                 };
               };
