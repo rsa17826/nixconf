@@ -552,3 +552,18 @@ $1
 @replace
 
 @endregex
+
+@name flip bools
+@file (?<!\.regex)$
+@regex (?<!\w)!true(?!\w)
+@replace false
+@endregex
+@regex (?<!\w)!false(?!\w)
+@replace true
+@endregex
+@regex (?<!\w)!True(?!\w)
+@replace False
+@endregex
+@regex (?<!\w)!False(?!\w)
+@replace True
+@endregex
