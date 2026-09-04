@@ -25,7 +25,7 @@ hl.define_submap("launcher", function()
 		)
 	)
 	m.bind("t", launch("kitty"))
-	m.bind("x", launch("xdm"))
+	-- m.bind("x", launch("xdm"))
 	m.bind(
 		"k",
 		launch(

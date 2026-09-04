@@ -66,14 +66,6 @@ let
         ln $out/bin/godot-${version} $out/bin/godot-newest
       '';
     };
-  xdm = pkgs.writeShellScriptBin "xdm" ''
-    ${pkgs.jdk}/bin/java -jar ${
-      (pkgs.fetchurl {
-        url = "https://github.com/joselmm/xdm-2023/raw/main/xdman.jar";
-        sha256 = "00wr708s1inkvb5gxmnwfqgsppa5x2shfjhvvv3y2fz8f7djmmym";
-      })
-    } "$@"
-  '';
   # (
   #     let
   #       # 1. Fetch the binary AND make it executable
@@ -160,7 +152,6 @@ in
         ];
         packages = with pkgs; [
           (newestGodot "4.7-beta2")
-          xdm
           (pkgFromInp "wayland-keepass-autotype" "default")
           (pkgFromInp "multi-game-launcher" "default")
           (pkgFromInp "audio-manager" "default")

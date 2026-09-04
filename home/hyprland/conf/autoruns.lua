@@ -40,7 +40,7 @@ hl.on("hyprland.start", function()
 		"wsgidav --host=127.0.0.1 --port=2143 --root=~/BACKUPS/webdav --server cheroot --config=~/BACKUPS/webdav/wsgidav.yaml"
 	)
 	hl.exec_cmd('sh -c "cd ~/BACKUPS && push"')
-	hl.exec_cmd("xdm")
+	-- hl.exec_cmd("xdm")
 	hl.exec_cmd("edit-conf exit")
 end)
 

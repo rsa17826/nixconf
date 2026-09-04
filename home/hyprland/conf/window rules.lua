@@ -81,14 +81,6 @@ hl.window_rule({
 	workspace = "special",
 })
 
--- XDM main window → workspace 8 silent
-hl.window_rule({
-	name = "asd",
-	match = { class = "^xdman-Main$", title = "^Xtreme Download Manager$" },
-	workspace = "8 silent",
-	-- workspace = { 1, 8, "silent" },
-})
-
 -- hyprland-run popup: float, bottom-left area
 hl.window_rule({
 	name = "move-hyprland-run",
@@ -263,13 +255,6 @@ hl.window_rule({
 	workspace = "3 silent",
 	content = "none",
 })
-
--- hl.window_rule({
--- 	name = "asdd",
--- 	match = { class = "^xdman-Main$" },
--- 	workspace = "8 silent",
--- 	-- workspace = {1,8, "silent"},
--- })
 
 -- hl.window_rule({
 -- 	match = { class = "^codium$", title = "vex-plus-plus - VSCodium" },
