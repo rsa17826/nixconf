@@ -153,6 +153,7 @@ in
         packages = with pkgs; [
           (newestGodot "4.7-beta2")
           (pkgFromInp "wayland-keepass-autotype" "default")
+          (pkgFromInp "dlman" "default")
           (pkgFromInp "multi-game-launcher" "default")
           (pkgFromInp "audio-manager" "default")
           (pkgFromInp "file-sorter" "default")
