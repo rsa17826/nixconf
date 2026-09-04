@@ -168,7 +168,11 @@ if [ -f "$CONFIG_FILE" ]; then
     fi
 
     if [ "$asset_name" = "NOTES" ]; then
-      CUSTOM_NOTES+=("$(cat "$src_path")")
+      CUSTOM_NOTES+=("$(
+        cat "$src_path"
+        printf x
+      )")
+      CUSTOM_NOTES[-1]="${CUSTOM_NOTES[-1]%x}"
       echo "  -> will prepend contents of '$src_path' to release notes"
     else
       # gh lets you rename uploaded assets via "path#displayname"
@@ -178,7 +182,10 @@ if [ -f "$CONFIG_FILE" ]; then
   done <"$CONFIG_FILE"
 
   if [ "${#CUSTOM_NOTES[@]}" -gt 0 ]; then
-    custom_notes_joined="$(printf '%s\n\n' "${CUSTOM_NOTES[@]}")"
+    custom_notes_joined=""
+    for note in "${CUSTOM_NOTES[@]}"; do
+      custom_notes_joined="${custom_notes_joined}${note}"$'\n\n'
+    done
     NOTES="${custom_notes_joined}${NOTES}"
   fi
 else
