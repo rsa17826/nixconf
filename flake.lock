@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1788465909,
-        "narHash": "sha256-IBe8TcGPDvxFoPcFK/r6CvJr+Mql6rHUCW2MEtG3+kk=",
+        "lastModified": 1788554493,
+        "narHash": "sha256-xuLCavaTpdBw1ys5Pj3SOl8yB2RYyJgYquSwhfUI0UE=",
         "owner": "rsa17826",
         "repo": "ap-slot-tracker",
-        "rev": "810b1fb99af6e7b720d9aa6c3d42f22fe432ae5a",
+        "rev": "2c3032deebf79d2c223b45680f5f5752a6bbd867",
         "type": "github"
       },
       "original": {
@@ -181,6 +181,26 @@
       "original": {
         "owner": "9001",
         "repo": "copyparty",
+        "type": "github"
+      }
+    },
+    "dlman": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788554116,
+        "narHash": "sha256-LrBdldl2Bq/2++b/JjmrHWZMzQJcTyjlCCoczLxn3dQ=",
+        "owner": "rsa17826",
+        "repo": "dlman",
+        "rev": "9dd2b3bfbdff8740e6b1c5d2825fd71329d0f3a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "dlman",
         "type": "github"
       }
     },
@@ -1206,6 +1226,7 @@
         "autocorrect": "autocorrect",
         "browser-selector": "browser-selector",
         "copyparty": "copyparty",
+        "dlman": "dlman",
         "ext-4-to-2-formatter": "ext-4-to-2-formatter",
         "ext-auto-regex": "ext-auto-regex",
         "ext-better-end-line-actions": "ext-better-end-line-actions",

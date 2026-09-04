@@ -102,6 +102,7 @@ if [ -f "$CONFIG_FILE" ]; then
 
   ASSET_PATHS=()
   CLEANUP_PIDS=()
+  CUSTOM_NOTES=()
   FIFO_DIR="$(mktemp -d)"
 
   cleanup_bg_processes() {
@@ -166,10 +167,20 @@ if [ -f "$CONFIG_FILE" ]; then
       fi
     fi
 
-    # gh lets you rename uploaded assets via "path#displayname"
-    ASSET_PATHS+=("${src_path}#${asset_name}")
-    echo "  -> will upload '$src_path' as '$asset_name'"
+    if [ "$asset_name" = "NOTES" ]; then
+      CUSTOM_NOTES+=("$(cat "$src_path")")
+      echo "  -> will prepend contents of '$src_path' to release notes"
+    else
+      # gh lets you rename uploaded assets via "path#displayname"
+      ASSET_PATHS+=("${src_path}#${asset_name}")
+      echo "  -> will upload '$src_path' as '$asset_name'"
+    fi
   done <"$CONFIG_FILE"
+
+  if [ "${#CUSTOM_NOTES[@]}" -gt 0 ]; then
+    custom_notes_joined="$(printf '%s\n\n' "${CUSTOM_NOTES[@]}")"
+    NOTES="${custom_notes_joined}${NOTES}"
+  fi
 else
   echo "No config file found at '$CONFIG_FILE'." >&2
   cp "$SCRIPT_DATA_DIR/release_config.txt" "$CONFIG_FILE"
