@@ -37,7 +37,7 @@ hl.window_rule({
 	no_follow_mouse = true,
 	no_shadow = true,
 	opaque = true,
-	opacity = "0 override",
+	opacity = "1 override",
 	render_unfocused = false,
 })
 -- yad: flGodotoat, unmaximize, pin, center
@@ -242,6 +242,11 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "^Godot$" },
 	scrolling_width = 0.7,
+	opacity = "1 override",
+})
+hl.window_rule({
+	match = { class = "^helium$" },
+	scrolling_width = 1,
 	opacity = "1 override",
 })
 
