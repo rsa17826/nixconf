@@ -67,7 +67,11 @@ in
       #   enable = true;
       # };
 
-      storage = "persistent";
+      settings = {
+        Journal = {
+          Storage = "persistent";
+        };
+      };
     };
     resolved = {
       enable = false;
