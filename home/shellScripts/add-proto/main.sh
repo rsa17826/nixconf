@@ -29,7 +29,24 @@
 
 set -euo pipefail
 
-SCRIPT_PATH="$(readlink -f "$0")"
+resolve_script_path() {
+  local p="$0"
+  if [[ "$p" != */* ]]; then
+    # invoked as a bare command name (e.g. found via PATH) - resolve to
+    # wherever PATH found it, without following that further
+    p="$(command -v -- "$p")" || {
+      echo "ERROR: cannot resolve script path from \$0='$0'" >&2
+      exit 1
+    }
+  fi
+  # make absolute, but do NOT dereference symlinks (realpath -s): on nix
+  # systems the PATH entry is a stable symlink (e.g. ~/.nix-profile/bin/foo)
+  # pointing into /nix/store/<hash>-foo, and that store path can be garbage
+  # collected later. We want the stable symlink baked into the .desktop
+  # file's Exec=, not the ephemeral store target.
+realpath -s -- "$p"
+}
+SCRIPT_PATH="$(resolve_script_path)"
 BASE_DIR="$HOME/.local/share/urlhandler"
 DESKTOP_DIR="$HOME/.local/share/applications"
 
