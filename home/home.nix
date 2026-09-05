@@ -98,7 +98,6 @@ in
           enable = true;
           defaultApplications = {
             "inode/directory" = [ "thunar.desktop" ];
-            "x-scheme-handler/mb" = "urlhandler-mb.desktop";
           };
         };
 

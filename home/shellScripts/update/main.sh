@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [ -f "$HOME/nixconf/updateFailure.log" ]; then
-  # Check if the file was modified less than 1 hour ago (using find for portability)
   if [ -z "$(find "$HOME/nixconf/updateFailure.log" -mmin -60 2>/dev/null)" ]; then
     echo "[WARNING] last update failed - enter y to continue update"
     read -r response
