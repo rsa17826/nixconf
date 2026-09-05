@@ -22,5 +22,5 @@ trap 'rm -f "$OUT"; exit 0' SIGTERM
 
 # Stay alive so the trap can fire.
 while true; do
-    sleep 1
+  sleep 1
 done

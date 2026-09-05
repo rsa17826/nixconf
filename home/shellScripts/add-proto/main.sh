@@ -44,7 +44,7 @@ resolve_script_path() {
   # pointing into /nix/store/<hash>-foo, and that store path can be garbage
   # collected later. We want the stable symlink baked into the .desktop
   # file's Exec=, not the ephemeral store target.
-realpath -s -- "$p"
+  realpath -s -- "$p"
 }
 SCRIPT_PATH="$(resolve_script_path)"
 BASE_DIR="$HOME/.local/share/urlhandler"
