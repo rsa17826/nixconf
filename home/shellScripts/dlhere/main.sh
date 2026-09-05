@@ -144,7 +144,7 @@ PY
 # should go: prints the target directory (empty string if no match found).
 find_best_target_dir() {
   local src="$1" fname="$2"
-  mapfile -d '' -t matches < <(find "$DEST" -mindepth 2 -not -path "*/.template-base/*" -type f -name "$fname" -print0 2>/dev/null)
+  mapfile -d '' -t matches < <(find "$DEST" -mindepth 1 -not -path "*/.template-base/*" -type f -name "$fname" -print0 2>/dev/null)
   local match_count=${#matches[@]}
 
   if ((match_count == 0)); then
