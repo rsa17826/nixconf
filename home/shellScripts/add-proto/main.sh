@@ -132,7 +132,8 @@ register() {
 Type=Application
 Name=urlhandler-$scheme
 Exec=$SCRIPT_PATH run %u
-NoDisplay=true
+Terminal=false
+Categories=Network;
 MimeType=x-scheme-handler/$scheme;
 EOF
 
