@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1788554493,
-        "narHash": "sha256-xuLCavaTpdBw1ys5Pj3SOl8yB2RYyJgYquSwhfUI0UE=",
+        "lastModified": 1788615501,
+        "narHash": "sha256-1H+Syg+HfoblO6SL4Hed199imS3o6q2NpAphX1ZIprc=",
         "owner": "rsa17826",
         "repo": "ap-slot-tracker",
-        "rev": "2c3032deebf79d2c223b45680f5f5752a6bbd867",
+        "rev": "44f68a28cd304663cd319e0d06c6c8174eebd253",
         "type": "github"
       },
       "original": {
