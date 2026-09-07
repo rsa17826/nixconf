@@ -191,11 +191,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788722792,
-        "narHash": "sha256-b3RdPUoE7KyIeJgNdHd/EGBe/WGJj7r7fFcm4AodRRE=",
+        "lastModified": 1788796353,
+        "narHash": "sha256-qUfRdpwO0PA0m2Qcc1BCiHpLBlh2mMrIbHpzb+t9Mxs=",
         "owner": "rsa17826",
         "repo": "dlman",
-        "rev": "57d85544507aa4df6a91e2977e843fb0c3170ab5",
+        "rev": "1430c62d9b29fc6f43e0f650c3c9c7c684205df0",
         "type": "github"
       },
       "original": {
