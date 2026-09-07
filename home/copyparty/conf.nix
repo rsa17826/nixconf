@@ -79,8 +79,8 @@
             nodupe = true;
           };
         };
-        "/Mathbreakers LeveL speedrun" = {
-          path = "/home/${userConfig.uname}/MathbreakersSpeedruns";
+        "/Mathbreakers Level speedrun" = {
+          path = "/data/vvv/MathbreakersSpeedruns";
           access = {
             rwmd = "*";
             A = [

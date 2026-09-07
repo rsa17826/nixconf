@@ -114,6 +114,7 @@ in
   services = {
     nginx = {
       enable = true;
+      clientMaxBodySize = "128m";
       eventsConfig = ''
         worker_connections 1024;
       '';
