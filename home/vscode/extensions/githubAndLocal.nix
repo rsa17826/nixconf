@@ -238,7 +238,7 @@ in
               src = ext-macro-syntax-highlighter;
               extName = "macro-syntax-highlighter";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-NjLiy3WbasdsaddsaL/JUBCoyOO4/kxZoeIWU/rdlmg=";
+              npmDepsHash = "sha256-NjLiy3WbkhY/c5OsNL/JUBCoyOO4/kxZoeIWU/rdlmg=";
               dontNpmBuild = true;
               forceEmptyCache = true;
             })
@@ -259,7 +259,7 @@ in
               src = ext-4-to-2-formatter;
               extName = "4-to-2-formatter";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-o7IA+4asdjasdadsadse8g4G2KFi6ocsnXyaGSaXB8M=";
+              npmDepsHash = "sha256-o7IA+4Kq4j2XD7dpJNje8g4G2KFi6ocsnXyaGSaXB8M=";
             })
             (buildFromFlake {
               src = ext-auto-regex;

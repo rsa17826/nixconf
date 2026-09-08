@@ -27,7 +27,7 @@
               name = "lua";
               publisher = "sumneko";
               version = "3.19.1";
-              hash = "sha256-wKdImtWDWN3yWQ9ngslPqTCAdrc6qjC0VpMjc7DYyyg=";
+              hash = "sha256-Hb9gTIzCjZKYFz5pW3IWo/09Utt1vE6MuCQqwyDYZsQ=";
             }
             {
               name = "shader";
@@ -393,7 +393,7 @@
               name = "typos-vscode";
               publisher = "tekumara";
               version = "0.1.56";
-              hash = "sha256-3na7btLQRIAb9EtHAHUSbLvdM/j/EJ9z0W5qv0Ysoz4=";
+              hash = "sha256-HZ3ssBu+WRdN4vRXtpQIuFjiiTtOHAPp9QOuac+l6nI=";
             }
             {
               name = "autolink";
