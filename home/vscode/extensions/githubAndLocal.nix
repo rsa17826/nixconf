@@ -265,7 +265,7 @@ in
               src = ext-auto-regex;
               extName = "auto-regex";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-qgX0+laLv+D3ZzKW+BU+PfXmTS4YcJYzvw4GaBnpkhI=";
+              npmDepsHash = "sha256-qgX0asdasddsadsasda+PfXmTS4YcJYzvw4GaBnpkhI=";
               nativeBuildInputs = with pkgs; [
                 pkg-config
                 python3
