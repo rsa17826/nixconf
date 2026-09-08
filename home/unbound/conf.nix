@@ -1,4 +1,4 @@
-{ pkgs, userConfig, ... }:
+{ pkgs, ... }:
 {
   systemd = {
     timers = {
@@ -52,6 +52,8 @@
     };
   };
 
+  environment.etc."unbound/cws.conf".source = ./cws.conf;
+
   services = {
     unbound = {
       enable = true;
@@ -82,8 +84,7 @@
           val-clean-additional = true;
           include = [
             "/var/lib/unbound/adblock.conf"
-            "${userConfig.nixConf}/home/unbound/cws.conf"
-            # (toString ./cws.conf)
+            "/etc/unbound/cws.conf"
           ];
         };
       };
