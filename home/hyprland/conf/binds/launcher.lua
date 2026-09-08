@@ -29,7 +29,7 @@ hl.define_submap("launcher", function()
 	m.bind(
 		"k",
 		launch(
-			"sh -c 'sys restart input-manager;sys restart autocorrect;sys restart autoclicker;sys restart macro-recorder;sys restart dynamicRebinds'"
+			"sh -c 'sys restart input-manager;sys restart autocorrect&sys restart autoclicker&sys restart macro-recorder&sys restart dynamicRebinds'"
 		)
 	)
 

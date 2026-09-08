@@ -207,11 +207,11 @@
     "ext-4-to-2-formatter": {
       "flake": false,
       "locked": {
-        "lastModified": 1772760069,
-        "narHash": "sha256-PHaOXLEX2D/nrhabylTB+U0R7/6eVSsrRulFYaNebtk=",
+        "lastModified": 1788911267,
+        "narHash": "sha256-07M0mk+pbQqqpwoa8kKWXGWGxbbFLtSBjrF2IcBWuV4=",
         "owner": "rsa17826",
         "repo": "4-to-2-formatter",
-        "rev": "8d205d877c1c7b2747846472f161729e67c634e6",
+        "rev": "321815f98e43d555ec69b49b509a9529666fcee5",
         "type": "github"
       },
       "original": {
