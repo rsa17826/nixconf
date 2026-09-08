@@ -253,7 +253,7 @@ in
               src = ext-owoify-editor;
               extName = "owoify-editor";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-opTWFuuNgvs97CBGdex8kRuAZMSWBxJj3NIlKwy+ws8=";
+              npmDepsHash = "sha256-kja/sSPuGJSCeMRvOE5t0nq/ItBU0adD5V2pLqpdHoE=";
             })
             (buildFromFlake {
               src = ext-4-to-2-formatter;

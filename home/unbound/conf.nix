@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, userConfig, ... }:
 {
   systemd = {
     timers = {
@@ -82,7 +82,8 @@
           val-clean-additional = true;
           include = [
             "/var/lib/unbound/adblock.conf"
-            (toString ./cws.conf)
+            "${userConfig.nixConf}/home/unbound/cws.conf"
+            # (toString ./cws.conf)
           ];
         };
       };
