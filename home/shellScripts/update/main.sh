@@ -203,7 +203,7 @@ else
   err=1
 
   while true; do
-    sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace 2>&1 |
+    sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --max-jobs 1 2>&1 |
       tee "$TMPOUT" |
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}

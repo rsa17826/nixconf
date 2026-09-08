@@ -105,13 +105,13 @@
               name = "shellcheck";
               publisher = "timonwong";
               version = "0.40.0";
-              hash = "sha256-Ym2NP+o9EqQLtOwHmRuXLEhd5coLJdoGRVUna3Ps+nk=";
+              hash = "sha256-iwzqNk3ga0b1NU1/uix6EmeQA04/Th5hLWbMWwQRZtU=";
             }
             {
               name = "zubanls";
               publisher = "zuban";
               version = "0.2.5";
-              hash = "sha256-eC2BQfw+YN3CwpgNtqOX+eKzsIM9rfZk8H7t2iSNHyI=";
+              hash = "sha256-4/WUGODhjxlnJrUL8+o5Zsm7yGtBREk9XclAyTMBuSU=";
             }
             {
               name = "direnv";

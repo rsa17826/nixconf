@@ -214,25 +214,25 @@ in
               src = line-sorter-vsc-ext;
               extName = "line-sorter";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-6FbRWBGhpasdads8jCZtsY9CaS3E4bnHwdtUtacWMQI=";
+              npmDepsHash = "sha256-6FbRWBGhpncN4U38jCZtsY9CaS3E4bnHwdtUtacWMQI=";
             })
             (buildFromFlake {
               src = jsdocGen-vsc-ext;
               extName = "jsdocGen";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-4TQh+9zAE0adsasdt4foV2uTRQ1lyQZwsiw1rrqOyp0=";
+              npmDepsHash = "sha256-4TQh+9zAE0lYmhMCt4foV2uTRQ1lyQZwsiw1rrqOyp0=";
             })
             (buildFromFlake {
               src = pybrace;
               extName = "pybrace";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-PAuJopasdasdio3z4wQSrSgKU7O+6A9EepWFwaqzoD4=";
+              npmDepsHash = "sha256-PAuJopxgmSUpio3z4wQSrSgKU7O+6A9EepWFwaqzoD4=";
             })
             (buildFromFlake {
               src = ext-vscode-math-on-selected-nums;
               extName = "math-on-selections";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-3EAdsGmPasdasdvEeoiRD72SVXOt/N5om/VthEX/+7M=";
+              npmDepsHash = "sha256-3EAdsGmPvLf+iEvEeoiRD72SVXOt/N5om/VthEX/+7M=";
             })
             (buildFromFlake {
               src = ext-macro-syntax-highlighter;
@@ -253,7 +253,7 @@ in
               src = ext-owoify-editor;
               extName = "owoify-editor";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-kja/sSasdasdeMRvOE5t0nq/ItBU0adD5V2pLqpdHoE=";
+              npmDepsHash = "sha256-kja/sSPuGJSCeMRvOE5t0nq/ItBU0adD5V2pLqpdHoE=";
             })
             (buildFromFlake {
               src = ext-4-to-2-formatter;
@@ -276,7 +276,7 @@ in
               src = ext-multi-formatter;
               extName = "multi-formatter";
               extCreator = "Jota0222";
-              npmDepsHash = "sha256-wWpLlndJnasddasasd+jKACETjwv0niVwr6AZjFl1jU=";
+              npmDepsHash = "sha256-wWpLlndJnrub7QVskc+jKACETjwv0niVwr6AZjFl1jU=";
               nativeBuildInputs = with pkgs; [
                 pkg-config
                 python3
@@ -287,7 +287,7 @@ in
               src = ext-simple-auto-formatter;
               extName = "simple-auto-formatter";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-Ia7RJ9aHnNadsdassdaCjAuontkDP6mqumo7ord4H/s=";
+              npmDepsHash = "sha256-Ia7RJ9aHnNYSqHFjPIDCjAuontkDP6mqumo7ord4H/s=";
               npmDepsFetcherVersion = 2;
               nativeBuildInputs = with pkgs; [
                 pkg-config
@@ -299,20 +299,20 @@ in
               src = ext-sds;
               extName = "simpledatastorage";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-INpVqlwd1ZasdadsdaswrcOPJUHZwXPn3u/cMAvTzns=";
+              npmDepsHash = "sha256-INpVqlwd1ZrYZOuiYWhwrcOPJUHZwXPn3u/cMAvTzns=";
             })
             (buildFromFlake {
               src = ext-textreplace;
               extName = "textreplace";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-SG/vE/ovAcasddasasdACrDZVxQRufI81KO14w2hn98=";
+              npmDepsHash = "sha256-SG/vE/ovAc48STJL8v+ACrDZVxQRufI81KO14w2hn98=";
               npmDepsFetcherVersion = 2;
             })
             (buildFromFlake {
               src = ext-better-end-line-actions;
               extName = "better-end-line-actions";
               extCreator = "rssaromeo";
-              npmDepsHash = "sha256-lqpv0TAksBasdasddsaasdzsxlHxTEh9jQtf92uKI+4=";
+              npmDepsHash = "sha256-lqpv0TAksBoq+hr+KZ6kKhzsxlHxTEh9jQtf92uKI+4=";
               npmDepsFetcherVersion = 2;
             })
           ];
