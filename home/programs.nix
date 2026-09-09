@@ -289,7 +289,7 @@ in
           gnome-themes-extra
           adwaita-icon-theme
           python313Packages.black
-          (inputs.audacity.legacyPackages.${pkgs.system}.audacity)
+          # (inputs.audacity.legacyPackages.${pkgs.stdenv.hostPlatform.system}.audacity)
           mediamtx
           # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })

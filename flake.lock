@@ -74,22 +74,6 @@
         "type": "github"
       }
     },
-    "audacity": {
-      "locked": {
-        "lastModified": 1750111231,
-        "narHash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "e6f23dc08d3624daab7094b701aa3954923c6bbba",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "audio-manager": {
       "inputs": {
         "flake-utils": [
@@ -100,11 +84,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783687214,
-        "narHash": "sha256-VLg0OOfdyLGk9tHMB+NPycXVYi/Euk4PGGqsEHNLIZE=",
+        "lastModified": 1788968451,
+        "narHash": "sha256-Z3DUvP9zdEukjjuZlptuzXKYb9X7Y9GuGHfmGTsXYEI=",
         "owner": "rsa17826",
         "repo": "audio-manager",
-        "rev": "e4414ae065746ce5e7dd0e275d170ec6ce5652ff",
+        "rev": "4c25bee7e98d208acddb8057c48b72ffb54599a0",
         "type": "github"
       },
       "original": {
@@ -1237,7 +1221,6 @@
       "inputs": {
         "alwaysFocusedInputBox": "alwaysFocusedInputBox",
         "ap-slot-tracker": "ap-slot-tracker",
-        "audacity": "audacity",
         "audio-manager": "audio-manager",
         "auto-screenshotter": "auto-screenshotter",
         "autocorrect": "autocorrect",
