@@ -290,7 +290,6 @@ in
           adwaita-icon-theme
           python313Packages.black
           # (inputs.audacity.legacyPackages.${pkgs.stdenv.hostPlatform.system}.audacity)
-          tenacity
           mediamtx
           # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })

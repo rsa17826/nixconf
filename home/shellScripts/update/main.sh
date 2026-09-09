@@ -221,7 +221,7 @@ else
         git commit --amend -m "✅ $NIXOS_LABEL_VERSION"
         git push --force-with-lease
       fi
-      rm -f "$TMPOUT"
+      rm -f "$TMPOUT" "$HOME/nixconf/updateFailure.log"
       err=0
       break
     fi
