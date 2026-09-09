@@ -319,11 +319,11 @@
     "ext-simple-auto-formatter": {
       "flake": false,
       "locked": {
-        "lastModified": 1775391728,
-        "narHash": "sha256-oBLIA7rxltcuIzJCAoMbCdPFv7hHi9/ZbMe31kmwB0Y=",
+        "lastModified": 1788914035,
+        "narHash": "sha256-hmI60u7coMDLPA08oQQwI2JQ0Z6QkLiMhxf5R4J0Ixc=",
         "owner": "rsa17826",
         "repo": "simple-auto-formatter",
-        "rev": "ca7580f9a70416755d9dbbd505cc25c6d6fd2d34",
+        "rev": "d80d83b8c5a7c18215935a671ac8421997ad6d87",
         "type": "github"
       },
       "original": {
@@ -335,11 +335,11 @@
     "ext-textreplace": {
       "flake": false,
       "locked": {
-        "lastModified": 1776777443,
-        "narHash": "sha256-ju94PVzXZ8z/RcF0tduZfHoEHo2M/gvRTahiRSL/oyI=",
+        "lastModified": 1788913551,
+        "narHash": "sha256-0uF8+hK+8Lfjd9xdlrL9fMgVmVFGEVpZgnY8n51hflI=",
         "owner": "rsa17826",
         "repo": "textreplace-vscode-extension",
-        "rev": "95ac2c0c3fd3fdcaf64c918942d8d3bd0bcdf820",
+        "rev": "7647064dcd60836461fbd1db877788c3970056bb",
         "type": "github"
       },
       "original": {
