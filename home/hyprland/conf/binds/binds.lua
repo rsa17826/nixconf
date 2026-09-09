@@ -44,7 +44,7 @@ m.bind("#l", hl.dsp.exec_cmd("shaderstack disable && hyprlock --no-fade-in && sh
 m.bind("^+Q", hl.dsp.window.close())
 
 m.bind("#M", hl.dsp.exit())
-m.bind("+!spc", hl.dsp.window.float({ action = "toggle" }))
+-- m.bind("+!spc", hl.dsp.window.float({ action = "toggle" }))
 m.bind("#P", hl.dsp.window.pseudo())
 
 -- Clipboard viewer
