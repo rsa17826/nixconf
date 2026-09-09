@@ -289,8 +289,10 @@ in
           gnome-themes-extra
           adwaita-icon-theme
           python313Packages.black
-          ((import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/e6f23dc08d3624daab7094b701aa3954923c6bbb.tar.gz") { })
-            .audacity
+          ((import (fetchTarball {
+            url = "https://github.com/NixOS/nixpkgs/archive/e6f23dc08d3624daab7094b701aa3954923c6bbb.tar.gz";
+            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          }) { }).audacity
           )
           mediamtx
           # (callPackage ./progress-daemon/progress-daemon.nix { })
