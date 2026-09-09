@@ -4,6 +4,9 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
+    audacity = {
+      url = "github:NixOS/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbba";
+    };
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
