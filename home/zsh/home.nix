@@ -16,6 +16,12 @@ let
   };
 in
 {
+  home = {
+    file = {
+      "${config.xdg.configHome}/zsh/completions/_keymod".source = ./completions/_keymod;
+    };
+  };
+
   programs = {
     zsh = {
       dotDir = "${config.xdg.configHome}/zsh";
@@ -47,6 +53,10 @@ in
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
       ''
       + builtins.readFile ./init.sh;
+      completionInit = ''
+        fpath=("${config.xdg.configHome}/zsh/completions" $fpath)
+        autoload -U compinit && compinit
+      '';
     };
   };
 }
