@@ -59,6 +59,9 @@ in
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
         autoload -Uz compinit
         compinit
+        if (( $+commands[key-modifier] )); then
+          compdef key-modifier key-modifier
+        fi
       ''
       + builtins.readFile ./init.sh;
     };
