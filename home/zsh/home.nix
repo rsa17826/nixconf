@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgFromInp,
   lib,
   ...
 }:
@@ -36,11 +37,22 @@ in
         enable = true;
       };
 
-      plugins = lib.mapAttrsToList (name: path: {
-        name = name;
-        src = pkgs.${name};
-        file = if (path != null) then path else "share/${name}/${name}.zsh";
-      }) zshPlugins;
+      plugins =
+        lib.mapAttrsToList (name: path: {
+          name = name;
+          src = pkgs.${name};
+          file = if (path != null) then path else "share/${name}/${name}.zsh";
+        }) zshPlugins
+        ++ [
+          {
+            name = "key-modifier-completions";
+            src = (pkgFromInp "key-modifier" "default");
+            file = "/dev/null";
+            functions = [
+              "share/zsh/site-functions"
+            ];
+          }
+        ];
 
       # --- 2. NATIVE BOUNDARY SEARCHING ---
       initContent = ''

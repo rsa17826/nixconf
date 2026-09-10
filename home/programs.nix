@@ -394,6 +394,7 @@ in
     };
   };
   environment = {
+    pathsToLink = [ "/share/zsh" ];
     systemPackages = with pkgs; [
       (pkgFromInp "termbar" "default")
       # nix-direnv
