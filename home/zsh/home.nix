@@ -57,8 +57,8 @@ in
       # --- 2. NATIVE BOUNDARY SEARCHING ---
       initContent = ''
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
-        autoload -Uz key-modifier
-        compdef key-modifier key-modifier
+        autoload -Uz _keymod
+        compdef _keymod key-modifier
       ''
       + builtins.readFile ./init.sh;
     };
