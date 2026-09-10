@@ -5291,8 +5291,9 @@
     "replace": "e.preventDefault()\ne.stopPropagation()\ne.stopImmediatePropagation()",
     "noEndActionRequired": true
   },
-  "tass":"tas",
-  "tassed":"tased",
-  "tasser":"taser",
-  "tassing":"tasing"
+  "tass": "tas",
+  "tassed": "tased",
+  "tasser": "taser",
+  "tassing": "tasing",
+  "nervious": "nervous"
 }
