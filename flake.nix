@@ -2,7 +2,9 @@
   description = "NixOS configuration";
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
+      url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+      # url = "https://github.com/NixOS/nixpkgs/archive/eabc38219184cc3e04a974fe31857d8e0eac098d.tar.gz";
+      # url = "github:nixos/nixpkgs/nixos-unstable";
     };
     # audacity = {
     #   url = "github:NixOS/nixpkgs/4684fd6b0c01e4b7d99027a34c93c2e09ecafee2";
