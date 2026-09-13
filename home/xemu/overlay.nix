@@ -4,7 +4,7 @@ final: prev: {
       substituteInPlace system/vl.c \
         --replace-fail \
           'g_strdup_printf("index=0,media=disk,file=%s%s",' \
-          'g_strdup_printf("index=0,media=disk,file=%s%s,cache=writeback",'
+          'g_strdup_printf("index=0,media=disk,file=%s%s,cache=writeback,aio=threads",'
     '';
   });
 }
