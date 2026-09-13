@@ -10,6 +10,8 @@ hl.window_rule({
 	no_shadow = true,
 	move = { 1920 - 360, 1080 - 520 },
 	opacity = "1 override",
+	no_initial_focus = true,
+	suppress_event = "activatefocus activate",
 })
 
 -- The dots overlay: one full-screen borderless window that just shows the
@@ -32,4 +34,5 @@ hl.window_rule({
 	no_dim = true,
 	no_shadow = true,
 	no_focus = true,
+	suppress_event = "activatefocus activate",
 })

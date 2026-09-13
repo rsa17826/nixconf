@@ -129,6 +129,9 @@ in
       };
 
       programs = {
+        mangohud = {
+          enable = true;
+        };
         direnv = {
           enable = true;
           nix-direnv = {

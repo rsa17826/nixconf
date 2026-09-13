@@ -72,6 +72,7 @@ in
     overlays = [
       inputs.millennium.overlays.default
       inputs.helium-flake.overlays.default
+      (import ./xemu/overlay.nix)
     ];
   };
   virtualisation = {
