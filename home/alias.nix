@@ -51,6 +51,7 @@ let
     "~" = "cd ~";
     #
     "+x" = "chmod +x";
+    "mangohud" = "LD_LIBRARY_PATH=/run/opengl-driver/lib mangohud";
   };
   interactiveShellInit = ''
     alias rm="gio trash"
