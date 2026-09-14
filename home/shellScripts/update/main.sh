@@ -157,9 +157,7 @@ rm -f "$HOME/nixconf/updateFailure.log"
 # branch=$(git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
 # revision=$(git rev-parse HEAD)
 NIXOS_LABEL_VERSION="Generation $next_generation - $TARGET - $now"
-cat >"$HOME/nixconf/label.nix" <<EOF
-"$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')"
-EOF
+echo -n '' >"$HOME/nixconf/label.nix"
 # Output the label to verify
 echo "NIXOS_LABEL_VERSION: $NIXOS_LABEL_VERSION"
 if [[ "$NO_GIT" == true ]]; then
@@ -171,12 +169,15 @@ if [[ "$NO_NEW_COMMIT" == false && "$NO_GIT" == false ]]; then
   git commit -m "$NIXOS_LABEL_VERSION"
   git push
 fi
-
+cat >"$HOME/nixconf/label.nix" <<EOF
+"$(echo "$NIXOS_LABEL_VERSION" | sed -E 's/ /./g')"
+EOF
 cleanup_abort() {
   echo -e "\n🛑 Interruption detected!"
   (
     if [[ "$NO_NEW_COMMIT" == false ]]; then
       echo "📝 Amending commit to ABORTED..."
+      echo -n '' >"$HOME/nixconf/label.nix"
       cd "$HOME/nixconf" 2>/dev/null || (
         exit 1
       )
@@ -204,7 +205,7 @@ else
 
   while true; do
     sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace 2>&1 |
-    # sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --max-jobs 1 2>&1 |
+      # sudo nixos-rebuild switch --flake ".#$TARGET" --log-format internal-json -v --show-trace --max-jobs 1 2>&1 |
       tee "$TMPOUT" |
       nom --json
     BUILD_EXIT=${PIPESTATUS[0]}
@@ -257,5 +258,6 @@ job-done "$job_id"
 if [[ $err == 0 ]]; then
   rm -f "$HOME/nixconf/updateFailure.log"
 fi
+echo -n '' >"$HOME/nixconf/label.nix"
 popd >/dev/null || exit 1
 exit "$err"
