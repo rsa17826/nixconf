@@ -776,12 +776,7 @@
   "[shellscript]": {
     "editor.defaultFormatter": "xqvvu.shell-tidy-vscode",
   },
-  "qt-core.additionalQtPaths": [
-    {
-      "name": "Qt-6.10.2-linux-g++_from_PATH",
-      "path": "/run/current-system/sw/bin/qtpaths",
-    },
-  ],
+  "qt-core.additionalQtPaths": [],
   "direnv.restart.automatic": true,
   "[properties]": {
     "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
