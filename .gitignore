@@ -4,7 +4,13 @@ vm/userjs
 vm/userts
 vm/Violentmonkey
 updatelog.ans
-__pycache__*.vsix
+__pycache__
+*.vsix
 updateFailure.log
 *.qsb
 current flake.lock.json
+*.7z
+*.zip
+**/__pycache__
+**/__pycache__/**
+.ruff_cache

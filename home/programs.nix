@@ -296,6 +296,7 @@ in
           # (callPackage ./progress-daemon/progress-daemon.nix { })
           (callPackage ./winspy/winspy.nix { })
           (callPackage ./webfs/webfs.nix { })
+          (callPackage ./wmv/wmv.nix { })
           goldberg-emu
           deno
           zuban
