@@ -41,7 +41,7 @@
     // "**/docs": true,
     "**/icon.ico": true,
     "**/js globals": true,
-    "**/map": true,
+    // "**/map": true,
     "**/map_*": true,
     // "**/java*": true,
     "**/css*": true,
