@@ -385,12 +385,6 @@ in
       withUWSM = true;
       package = pkgFromInp "hyprland" "hyprland";
     };
-    direnv = {
-      enable = true;
-      nix-direnv = {
-        enable = true;
-      };
-    };
     gpu-screen-recorder = {
       enable = true;
     };
