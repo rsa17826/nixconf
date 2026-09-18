@@ -13,7 +13,7 @@ while true; do
     while read -r line; do
       case "$line" in
       openwindow*save\ changes* | openwindow*Save\ changes*)
-        pkill -9 tenacity
+        pkill -9 auacity
         rm -f /var/tmp/audacity-nyix/*.aup3unsaved*
         ;;
       esac
