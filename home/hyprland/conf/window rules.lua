@@ -49,6 +49,31 @@ hl.window_rule({
 	pin = true,
 	center = true,
 })
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
+		class = "^ghidra-Ghidra$",
+		-- title = "^CodeBrowser: .*$"
+	},
+	float = false,
+	fullscreen = false,
+	pin = false,
+	center = false,
+})
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
+		title = "^win\\d+$",
+		class = "^ghidra-Ghidra$",
+	},
+	float = true,
+	fullscreen = false,
+	pin = false,
+	focus_on_activate = false,
+	no_initial_focus = false,
+	stay_focused = false,
+	center = false,
+})
 
 -- XWayland drag fix: no focus on empty-class floating windows
 hl.window_rule({
