@@ -19,6 +19,43 @@ bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
 
 zsh-history-cleanup-hook() { return 0; }
+
+# Directory to store command output logs
+export CC_LOG_DIR="/tmp/.cc_logs"
+mkdir -p "$CC_LOG_DIR"
+
+# Save original stdout and stderr
+exec 3>&1 4>&2
+
+cc() {
+  local count="${1:-1}"
+  local -a files
+  local i
+
+  if ! [[ "$count" == <-> ]] || ((count < 1)); then
+    print -u2 "Usage: cc [positive-count]"
+    return 2
+  fi
+
+  # Newest first.
+  files=("$CC_LOG_DIR"/*.log(Nom))
+
+  if ((${#files[@]} == 0)); then
+    print -u2 "No command logs found."
+    return 1
+  fi
+
+  # Don't use zsh array slicing.
+  # Just cat the first $count files.
+  (
+    for ((i = 1; i <= count && i <= ${#files[@]}; i++)); do
+      cat -- "${files[i]}" || return 1
+    done
+  ) | wl-copy
+}
+
+# Load Zsh modules & hooks
+zmodload zsh/datetime
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec zsh-history-cleanup-hook
 
@@ -34,18 +71,15 @@ bindkey '^[[Z' reverse-menu-complete
 
 TIMER_PID_FILE="/tmp/termbar_timer_${USER}_$$.pid"
 TIMER_START_FILE="/tmp/termbar_timer_start_${USER}_$$.txt"
-# Shared ownership file — whichever shell most recently ran a command owns the display.
-# Derived from TERMBAR_STATUS_FILE so it's scoped to this termbar session.
 TERMBAR_OWNER_FILE="${TERMBAR_STATUS_FILE:+${TERMBAR_STATUS_FILE}.owner}"
 
-# Write to the termbar status file (no-op if not running under termbar)
-function _set_status() {
+_set_status() {
   [[ -n "$TERMBAR_STATUS_FILE" ]] && echo "$1" >|"$TERMBAR_STATUS_FILE"
 }
 
 _set_status "0s 000ms"
 
-function format_duration() {
+format_duration() {
   local delta=$1
   integer d=$delta
   integer h=$((d / 3600))
@@ -62,7 +96,14 @@ function format_duration() {
   fi
 }
 
-function preexec() {
+_preexec() {
+  # Prevent 'cc' from logging itself and overwriting the target history
+  case "$1" in
+  exec\ * | cc | cc\ *)
+    return
+    ;;
+  esac
+
   if [[ -s "$TIMER_PID_FILE" ]]; then
     local old_pid=$(<"$TIMER_PID_FILE")
     [[ -n "$old_pid" ]] && kill -9 "$old_pid" 2>/dev/null
@@ -97,6 +138,8 @@ function preexec() {
       fi
 
       local now=$EPOCHREALTIME
+      # Prevent syntax errors in background subshell if EPOCHREALTIME is empty
+      [[ -z "$now" ]] && now=$(date +%s)
       local delta=$((now - start_time))
       _set_status "$(format_duration $delta)"
 
@@ -108,25 +151,12 @@ function preexec() {
   setopt MONITOR 2>/dev/null
 }
 
-function zsh-timer-exit-cleanup() {
-  if [[ -s "$TIMER_PID_FILE" ]]; then
-    local _pid=$(cat "$TIMER_PID_FILE" 2>/dev/null)
-    [[ -n "$_pid" ]] && kill -9 "$_pid" 2>/dev/null
-    /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
-  fi
-  /run/current-system/sw/bin/rm -f "$TIMER_START_FILE"
-  # Release display ownership only if this shell still holds it, so the
-  # parent shell's timer can resume once we exit.
-  if [[ -n "$TERMBAR_OWNER_FILE" ]] &&
-    [[ "$(cat "$TERMBAR_OWNER_FILE" 2>/dev/null)" == "$$" ]]; then
-    /run/current-system/sw/bin/rm -f "$TERMBAR_OWNER_FILE"
-  fi
-}
-add-zsh-hook zshexit zsh-timer-exit-cleanup
-
-function precmd() {
+_precmd() {
   local -a _codes=("${pipestatus[@]}")
   local exact_end_time=$EPOCHREALTIME
+
+  # Restore normal stdout/stderr cleanly
+  exec 1>&3 2>&4
 
   local code_str=""
   local all_ok=true
@@ -138,6 +168,8 @@ function precmd() {
   if [[ -s "$TIMER_START_FILE" ]]; then
     local start_time=$(<"$TIMER_START_FILE")
     if [[ -n "$start_time" ]]; then
+      # Ensure numeric evaluation doesn't fail
+      [[ -z "$exact_end_time" ]] && exact_end_time=$(date +%s)
       local delta=$((exact_end_time - start_time))
       local time_str="$(format_duration $delta)"
       if $all_ok; then
@@ -160,7 +192,24 @@ function precmd() {
   fi
 }
 
-# Auto-start termbar when in an interactive terminal that isn't already inside it
+_zshexit() {
+  if [[ -s "$TIMER_PID_FILE" ]]; then
+    local _pid=$(<"$TIMER_PID_FILE")
+    [[ -n "$_pid" ]] && kill -9 "$_pid" 2>/dev/null
+    /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
+  fi
+  /run/current-system/sw/bin/rm -f "$TIMER_START_FILE"
+  if [[ -n "$TERMBAR_OWNER_FILE" ]] && [[ "$(<"$TERMBAR_OWNER_FILE")" == "$$" ]]; then
+    /run/current-system/sw/bin/rm -f "$TERMBAR_OWNER_FILE"
+  fi
+}
+
+# Register hooks properly
+add-zsh-hook preexec _preexec
+add-zsh-hook precmd _precmd
+add-zsh-hook zshexit _zshexit
+
+# Safely check and launch termbar
 if [[ -n "$PS1" ]] && tty | grep -qv tty; then
   if [[ "$(ps -o comm= -p $PPID 2>/dev/null)" != "termbar" ]]; then
     exec termbar
