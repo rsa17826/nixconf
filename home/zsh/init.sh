@@ -19,6 +19,7 @@ bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
 
 zsh-history-cleanup-hook() { return 0; }
+
 # Directory to store command output logs
 export CC_LOG_DIR="$HOME/.cc_logs"
 mkdir -p "$CC_LOG_DIR"
@@ -26,32 +27,31 @@ mkdir -p "$CC_LOG_DIR"
 # Save original stdout and stderr
 exec 3>&1 4>&2
 
-# Clipboard function
 cc() {
   local count="${1:-1}"
-  local files
-  files=($(ls -1t "$CC_LOG_DIR"/*.log 2>/dev/null | head -n "$count" | sed '1!G;h;$!d'))
+  local -a files
+  local i
 
-  if [[ ${#files[@]} -eq 0 ]]; then
-    echo "No command logs found." >&2
+  if ! [[ "$count" == <-> ]] || ((count < 1)); then
+    print -u2 "Usage: cc [positive-count]"
+    return 2
+  fi
+
+  # Newest first.
+  files=("$CC_LOG_DIR"/*.log(Nom))
+
+  if ((${#files[@]} == 0)); then
+    print -u2 "No command logs found."
     return 1
   fi
 
-  cat "${files[@]}" | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' | {
-    if command -v pbcopy &>/dev/null; then
-      pbcopy
-    elif command -v xclip &>/dev/null; then
-      xclip -selection clipboard
-    elif command -v wl-copy &>/dev/null; then
-      wl-copy
-    elif command -v clip.exe &>/dev/null; then
-      clip.exe
-    else
-      cat
-      echo -e "\n[!] No clipboard tool found." >&2
-    fi
-  }
-  echo "Copied output from the last $count command(s) to clipboard."
+  # Don't use zsh array slicing.
+  # Just cat the first $count files.
+  (
+    for ((i = 1; i <= count && i <= ${#files[@]}; i++)); do
+      cat -- "${files[i]}" || return 1
+    done
+  ) | wl-copy
 }
 
 # Load Zsh modules & hooks
@@ -90,21 +90,30 @@ format_duration() {
   if ((h > 0)); then
     printf "%dh %02dm %02ds %03dms" $h $m $s $ms
   elif ((m > 0)); then
-    printf "%dm %02ds %03dms" $h $m $s $ms
+    printf "%dm %02ds %03dms" $m $s $ms
   else
     printf "%ds %03dms" $s $ms
   fi
 }
 
 _preexec() {
+  # Prevent 'cc' from logging itself and overwriting the target history
+  if [[ "$1" == cc* ]]; then
+    return
+  fi
+
   if [[ -s "$TIMER_PID_FILE" ]]; then
     local old_pid=$(<"$TIMER_PID_FILE")
     [[ -n "$old_pid" ]] && kill -9 "$old_pid" 2>/dev/null
     /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
   fi
 
-  # Native Zsh timestamp generation
-  CC_CURRENT_LOG="$CC_LOG_DIR/${EPOCHREALTIME//./_}.log"
+  # Fallback generation in case zsh/datetime fails to load
+  mkdir -p "$CC_LOG_DIR"
+  local ts="${EPOCHREALTIME//./_}"
+  [[ -z "$ts" ]] && ts="$(date +%s 2>/dev/null)_fallback"
+
+  CC_CURRENT_LOG="$CC_LOG_DIR/${ts}.log"
   echo "$ $1" >"$CC_CURRENT_LOG"
   exec 1> >(tee -a "$CC_CURRENT_LOG") 2>&1
 
@@ -127,6 +136,8 @@ _preexec() {
       fi
 
       local now=$EPOCHREALTIME
+      # Prevent syntax errors in background subshell if EPOCHREALTIME is empty
+      [[ -z "$now" ]] && now=$(date +%s)
       local delta=$((now - start_time))
       _set_status "$(format_duration $delta)"
 
@@ -141,6 +152,8 @@ _preexec() {
 _precmd() {
   local -a _codes=("${pipestatus[@]}")
   local exact_end_time=$EPOCHREALTIME
+
+  # Restore normal stdout/stderr cleanly
   exec 1>&3 2>&4
 
   local code_str=""
@@ -153,6 +166,8 @@ _precmd() {
   if [[ -s "$TIMER_START_FILE" ]]; then
     local start_time=$(<"$TIMER_START_FILE")
     if [[ -n "$start_time" ]]; then
+      # Ensure numeric evaluation doesn't fail
+      [[ -z "$exact_end_time" ]] && exact_end_time=$(date +%s)
       local delta=$((exact_end_time - start_time))
       local time_str="$(format_duration $delta)"
       if $all_ok; then
