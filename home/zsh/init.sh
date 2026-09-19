@@ -69,15 +69,6 @@ function preexec() {
     /run/current-system/sw/bin/rm -f "$TIMER_PID_FILE"
   fi
 
-  # Fallback generation in case zsh/datetime fails to load
-  mkdir -p "$CC_LOG_DIR"
-  local ts="${EPOCHREALTIME//./_}"
-  [[ -z "$ts" ]] && ts="$(date +%s 2>/dev/null)_fallback"
-
-  CC_CURRENT_LOG="$CC_LOG_DIR/${ts}.log"
-  echo "$ $1" >"$CC_CURRENT_LOG"
-  exec 1> >(tee -a "$CC_CURRENT_LOG") 2>&1
-
   [[ -n "$TERMBAR_OWNER_FILE" ]] && echo "$$" >|"$TERMBAR_OWNER_FILE"
 
   local start_time=$EPOCHREALTIME
