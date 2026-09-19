@@ -73,6 +73,11 @@ in
       inputs.millennium.overlays.default
       inputs.helium-flake.overlays.default
       (import ./xemu/overlay.nix)
+      (final: prev: {
+        nodejs-slim = prev.nodejs-slim.overrideAttrs (oldAttrs: {
+          doCheck = false;
+        });
+      })
     ];
   };
   virtualisation = {

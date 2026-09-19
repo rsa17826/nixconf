@@ -912,4 +912,7 @@
   "as3mxml.lint.enabled": true,
   "as3mxml.asconfigc.verboseOutput": true,
   "diffEditor.hideUnchangedRegions.enabled": true,
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
 }
