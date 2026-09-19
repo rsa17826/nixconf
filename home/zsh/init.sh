@@ -98,9 +98,11 @@ format_duration() {
 
 _preexec() {
   # Prevent 'cc' from logging itself and overwriting the target history
-  if [[ "$1" == cc* ]]; then
+  case "$1" in
+  exec\ * | cc | cc\ *)
     return
-  fi
+    ;;
+  esac
 
   if [[ -s "$TIMER_PID_FILE" ]]; then
     local old_pid=$(<"$TIMER_PID_FILE")
