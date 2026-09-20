@@ -63,6 +63,16 @@ hl.window_rule({
 hl.window_rule({
 	-- match = { title = "^CodeBrowser: " },
 	match = {
+		class = "^steam_app_400$",
+	},
+	float = true,
+	fullscreen = false,
+	pin = false,
+	center = true,
+})
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
 		title = "^win\\d+$",
 		class = "^ghidra-Ghidra$",
 	},
