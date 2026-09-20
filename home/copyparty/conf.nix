@@ -99,6 +99,23 @@
             nodupe = true;
           };
         };
+        "/videos/ccc" = {
+          path = "/data/s/ccc/";
+          access = {
+            rwmd = "s";
+          };
+          flags = {
+            fk = 4;
+            scan = 60;
+            # volflag "e2d" enables the uploads database
+            e2d = false;
+            # "d2t" disables multimedia parsers (in case the uploads are malicious)
+            d2t = true;
+            # skips hashing file contents if path matches *.iso
+            nohash = "$";
+            nodupe = false;
+          };
+        };
         # "/lwts" = {
         #   path = "/home/${userConfig.uname}/projects/decen/lwts/not_censored/";
         #   access = {
