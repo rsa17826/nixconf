@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1789678437,
-        "narHash": "sha256-nATXjOMcyA00ytop8mA2YxSMEIYTOoaeJougYJpssc0=",
+        "lastModified": 1790103123,
+        "narHash": "sha256-7Ctf68Upz7+kuwcHKoNvZWyYHb9RWvu2EBipGBu4k+w=",
         "owner": "rsa17826",
         "repo": "ap-slot-tracker",
-        "rev": "149ec929d8d6bea5f66e6dfda5ecc645f52f0dd3",
+        "rev": "a19c73047bdc793c7616a8f9b93c4d2afd1715d7",
         "type": "github"
       },
       "original": {
@@ -929,11 +929,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789561737,
-        "narHash": "sha256-HIkV4hH+9QRFKhzwGsRu55AS2JUwHLDNZjrhDf9FxoU=",
+        "lastModified": 1790113149,
+        "narHash": "sha256-ETbqMt78lZJ65YbDdtKMqAVtDaSYogyJl29ZF+b9yDs=",
         "owner": "rsa17826",
         "repo": "key-modifier",
-        "rev": "b21d2e88dd74af9fb0cfa66c411500491e42b824",
+        "rev": "a76b07cd8a96b295f11da0211083fbcec9a1b589",
         "type": "github"
       },
       "original": {
