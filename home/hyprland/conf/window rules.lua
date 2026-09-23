@@ -52,9 +52,21 @@ hl.window_rule({
 hl.window_rule({
 	-- match = { title = "^CodeBrowser: " },
 	match = {
-		class = "^ghidra-Ghidra$",
-		-- title = "^CodeBrowser: .*$"
+		class = "^ghidra-Ghidra|java-lang-Thread$",
+		title = "^(CodeBrowser|Ghidra): .*$",
 	},
+	float = false,
+	fullscreen = false,
+	pin = false,
+	center = false,
+})
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
+		class = "^ghidra-Ghidra|java-lang-Thread$",
+		title = "^Ghidra: .*|GhidrOllama.py$",
+	},
+	workspace = "8 silent",
 	float = false,
 	fullscreen = false,
 	pin = false,
