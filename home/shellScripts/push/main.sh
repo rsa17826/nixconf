@@ -7,9 +7,25 @@ MESSAGE="${*:-NO MESSAGE SET}"
 
 TRACK_FILE="$HOME/.config/goproxy-rsa17826/modules.tsv"
 
-# Guard against infinite recursion: fixHash calls `push` (this script) again
-# once it patches a hash. When that happens we must NOT re-run the go module
-# update step, or we'd loop: update -> fixHash -> push -> update -> ...
+# Guard against infinite recursion across a chain of repos: fixHash calls
+# `push` (this script) again once it patches a hash, and that push may in
+# turn update further downstream repos, whose fixHash calls push again, and
+# so on: A -> update B -> fixHash B -> push B -> update C -> fixHash C ->
+# push C -> ... If that chain ever comes back around to a repo already
+# visited (e.g. C depends on A again), we must stop there instead of
+# looping forever. GOPROXY_CHAIN carries the comma-separated list of
+# owner/repo entries already visited in the current propagation chain.
+CHAIN="${GOPROXY_CHAIN:-}"
+
+# True if $1 (an owner/repo) is already present in the newline-separated $CHAIN.
+chain_contains() {
+  local repo="$1"
+  local seen
+  while IFS= read -r seen; do
+    [ "$seen" = "$repo" ] && return 0
+  done <<<"$CHAIN"
+  return 1
+}
 
 # Update only the tracked module(s) matching the repo that was just pushed
 # ($1 = owner/repo, e.g. "rsa17826/go-input-lib").
@@ -19,7 +35,15 @@ update_tracked_go_modules() {
   [ -f "$TRACK_FILE" ] || return 0
   [ -z "$repo_filter" ] && return 0
 
-  echo "===== go module update run: $(date -Iseconds) (filter: $repo_filter) ====="
+  if chain_contains "$repo_filter"; then
+    echo "[cycle] $repo_filter already updated earlier in this chain (${CHAIN//$'\n'/ -> }), stopping propagation here."
+    return 0
+  fi
+
+  local NEW_CHAIN="$repo_filter"
+  [ -n "$CHAIN" ] && NEW_CHAIN="$CHAIN"$'\n'"$repo_filter"
+
+  echo "===== go module update run: $(date -Iseconds) (filter: $repo_filter, chain: ${NEW_CHAIN//$'\n'/ -> }) ====="
 
   while IFS=$'\t' read -r module dir; do
     [ -z "$module" ] && continue
@@ -51,12 +75,8 @@ update_tracked_go_modules() {
         if [ -f go.mod ]; then
           go mod tidy || echo "[warn] go mod tidy failed in $dir"
         fi
-        if command -v fixHash >/dev/null 2>&1; then
-          echo "[fixHash] running in $dir"
-          (fixHash || echo "[warn] fixHash failed in $dir") &
-        else
-          echo "[warn] fixHash not found on PATH, skipping"
-        fi
+        echo "[fixHash] running in $dir"
+        (GOPROXY_CHAIN="$NEW_CHAIN" fixHash || echo "[warn] fixHash failed in $dir") &
       else
         echo "[fail] $module failed to update in $dir"
       fi
@@ -109,11 +129,7 @@ for remote in $REMOTES; do
       fi
 
       # --- UPDATE ONLY THE GO MODULE(S) BELONGING TO THE REPO JUST PUSHED ---
-      if [ -z "${DONT_UPDATE_GO_LIBS:-}" ]; then
-        update_tracked_go_modules "$CLEAN_URL"
-      else
-        echo "Skipping go module update (already inside an update-triggered push)."
-      fi
+      update_tracked_go_modules "$CLEAN_URL"
 
     else
       echo "Failed to push to $url, continuing..."

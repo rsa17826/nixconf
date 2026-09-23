@@ -105,7 +105,12 @@ if [ -f "$PWD/flake.nix" ]; then
 
     newText=$(<"$PWD/flake.nix")
     if [[ "$newText" != "$lastText" ]]; then
-      DONT_UPDATE_GO_LIBS=1 push fixed the hashes
+      # GOPROXY_CHAIN, if set by a parent push's update_tracked_go_modules,
+      # is already in this process's environment and gets inherited here.
+      # push.sh uses it to know which repos are already in this
+      # propagation chain, so it can still cascade to further downstream
+      # repos while stopping the instant it would revisit one.
+      push fixed the hashes
     fi
   fi
   exit "$err"
