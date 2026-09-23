@@ -23,17 +23,21 @@ Item {
   // these are plain aliases, not bindings, so there's no cycle.
   property alias nextId: jsonAdapter.nextId
   property alias timers: jsonAdapter.timers
+  // How wide this row is allowed to grow before it must scroll instead of
+  // pushing further right (e.g. bound to the space before the next bar
+  // section, so timers never render underneath it). <=0 means unbounded.
+  property real maxWidth: -1
 
-  // Single/unset timers always show. Repeating timers (weekly/monthly/
-  // yearly) are hidden from the row unless they're within 12h of firing,
-  // OR they're the single soonest-to-fire repeating timer overall (so
+  // Single/unset timers always show. Repeating timers (repeatValue > 0)
+  // are hidden from the row unless they're within 12h of firing, OR
+  // they're the single soonest-to-fire repeating timer overall (so
   // there's always at least one repeating timer visible as "on deck").
   readonly property var visibleTimers: {
     root._nowTick
     // dependency, so this recomputes on the heartbeat
     const now = Date.now()
     const twelveHours = 12 * 60 * 60 * 1000
-    const repeating = root.timers.filter(t => t.repeatType && t.repeatType !== "none" && t.repeatType !== "single")
+    const repeating = root.timers.filter(t => t.repeatValue > 0)
 
     let soonestId = -1
     if (repeating.length > 0) {
@@ -46,7 +50,7 @@ Item {
     }
 
     return root.timers.filter(t => {
-      if (!t.repeatType || t.repeatType === "none" || t.repeatType === "single")
+      if (!(t.repeatValue > 0))
         return true
       if (t.id === soonestId)
         return true
@@ -67,27 +71,25 @@ Item {
     })
   }
 
-  // ── Calendar-driven repeating timers ─────────────────────────
-  // repeatType: "single" | "weekly" | "monthly" | "yearly"
-  // anchor shape:
-  //   single:  { y, mo, d, h, mi }
-  //   weekly:  { weekday (0-6, Sun=0), h, mi }
-  //   monthly: { d, h, mi }
-  //   yearly:  { mo, d, h, mi }
-  function addRepeatingTimer(repeatType, anchor, url) {
+  // ── Repeating timers ───────────────────────────────────────────
+  // A repeating timer just has a repeatValue (ms > 0): once targetTimestamp
+  // expires, it's advanced by repeatValue (possibly several times, if the
+  // app wasn't running) until it's back in the future. repeatValue <= 0
+  // means "don't repeat".
+  //
+  // targetTimestamp is the first/next occurrence and must be supplied by
+  // the caller (there's no anchor to derive it from anymore).
+  function addRepeatingTimer(name, targetTimestamp, repeatValue, url) {
     const u = url || ""
-    const key = root.anchorKey(repeatType, anchor)
-    const base = root.autoName(repeatType, anchor)
-    const ts = root.nextOccurrence(repeatType, anchor, Date.now())
 
-    // Exact same repeatType + day/time already scheduled -> this is an
-    // edit of that same timer, just refresh it in place.
-    const existingIdx = root.timers.findIndex(t => t.repeatType === repeatType && t.anchor && root.anchorKey(t.repeatType, t.anchor) === key)
+    // Same name + repeatValue already scheduled -> this is an edit of
+    // that same timer, just refresh it in place.
+    const existingIdx = root.timers.findIndex(t => t.name === name && t.repeatValue === repeatValue)
     if (existingIdx >= 0) {
       const t = root.timers.slice()
       t[existingIdx] = Object.assign({}, t[existingIdx], {
-        targetTimestamp: ts,
-        anchor: anchor,
+        targetTimestamp: targetTimestamp,
+        startTimestamp: Date.now(),
         url: u
       })
       root.timers = t
@@ -96,26 +98,13 @@ Item {
       return t[existingIdx].name
     }
 
-    // New timer. If another timer already has the same base name (e.g.
-    // two separate "Mondays" timers at different times of day), give both
-    // a time-of-day suffix so they don't collide/overwrite each other.
-    const collisionIdx = root.timers.findIndex(t => t.repeatType === repeatType && t.name === base)
-    let name = base
-    let t = root.timers.slice()
-    if (collisionIdx >= 0 && t[collisionIdx].anchor) {
-      const collision = t[collisionIdx]
-      name = base + " " + root.pad(anchor.h) + ":" + root.pad(anchor.mi)
-      t[collisionIdx] = Object.assign({}, collision, {
-        name: base + " " + root.pad(collision.anchor.h) + ":" + root.pad(collision.anchor.mi)
-      })
-    }
-
+    const t = root.timers.slice()
     t.push({
       id: root.nextId,
       name: name,
-      targetTimestamp: ts,
-      repeatType: repeatType,
-      anchor: anchor,
+      targetTimestamp: targetTimestamp,
+      startTimestamp: Date.now(),
+      repeatValue: repeatValue,
       url: u
     })
     root.timers = t
@@ -130,45 +119,13 @@ Item {
       id: root.nextId,
       name: "",
       targetTimestamp: 0,
-      startTimestamp: 0,
+      startTimestamp: Date.now(),
+      repeatValue: 0,
       url: ""
     })
     root.timers = t
     root.nextId += 1
     saveTimers()
-  }
-
-  // Identity key for a repeat rule + anchor — two timers are "the same"
-  // (an edit, not a new one) only if repeatType and every anchor field,
-  // including time-of-day, match exactly.
-  function anchorKey(repeatType, anchor) {
-    if (repeatType === "weekly")
-      return "w-" + anchor.weekday + "-" + anchor.h + "-" + anchor.mi
-    if (repeatType === "monthly")
-      return "m-" + anchor.d + "-" + anchor.h + "-" + anchor.mi
-    if (repeatType === "yearly")
-      return "y-" + anchor.mo + "-" + anchor.d + "-" + anchor.h + "-" + anchor.mi
-    return "s-" + anchor.y + "-" + anchor.mo + "-" + anchor.d + "-" + anchor.h + "-" + anchor.mi
-  }
-
-  // Builds the display/name string per the requested convention:
-  //   single  -> "12/26"
-  //   weekly  -> "Mondays"
-  //   monthly -> "the 15th"
-  //   yearly  -> "12/26 (yearly)"
-  function autoName(repeatType, anchor) {
-    if (repeatType === "weekly") {
-      const names = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"]
-      return names[anchor.weekday] || "Weekly"
-    } else if (repeatType === "monthly") {
-      const d = anchor.d
-      const suffix = (d % 10 === 1 && d !== 11) ? "st" : (d % 10 === 2 && d !== 12) ? "nd" : (d % 10 === 3 && d !== 13) ? "rd" : "th"
-      return "the " + d + suffix
-    } else if (repeatType === "yearly") {
-      return root.pad(anchor.mo) + "/" + root.pad(anchor.d) + " (yearly)"
-    }
-    // single
-    return root.pad(anchor.mo) + "/" + root.pad(anchor.d)
   }
 
   // Remove a named timer entirely (or reset it in place, per removeTimer's
@@ -205,7 +162,8 @@ Item {
       id: root.nextId,
       name: "",
       targetTimestamp: 0,
-      startTimestamp: 0,
+      startTimestamp: Date.now(),
+      repeatValue: 0,
       url: ""
     })
     root.timers = t
@@ -218,21 +176,25 @@ Item {
     return root.timers.find(t => t.name === name)
   }
 
-  // Whether any repeating/single timer fires on the given calendar date
-  // (y full year, mo 1-indexed, d day-of-month). Used by Calendar.qml to
-  // highlight days.
+  // Whether any timer fires on the given calendar date (y full year, mo
+  // 1-indexed, d day-of-month). Used by Calendar.qml to highlight days.
+  // Non-repeating timers just check their one targetTimestamp; repeating
+  // timers step forward by repeatValue from their current targetTimestamp,
+  // bounded to a year's worth of occurrences.
   function hasTimerOnDate(y, mo, d) {
+    const dayStart = new Date(y, mo - 1, d, 0, 0, 0).getTime()
+    const dayEnd = new Date(y, mo - 1, d + 1, 0, 0, 0).getTime()
     return root.timers.some(t => {
-      if (!t.repeatType || t.repeatType === "none" || !t.anchor)
+      if (t.targetTimestamp <= 0)
         return false
-      if (t.repeatType === "weekly") {
-        return new Date(y, mo - 1, d).getDay() === t.anchor.weekday
-      } else if (t.repeatType === "monthly") {
-        return d === Math.min(t.anchor.d, root.daysInMonth(y, mo))
-      } else if (t.repeatType === "yearly") {
-        return mo === t.anchor.mo && d === t.anchor.d
-      } else if (t.repeatType === "single") {
-        return y === t.anchor.y && mo === t.anchor.mo && d === t.anchor.d
+      if (!(t.repeatValue > 0))
+        return t.targetTimestamp >= dayStart && t.targetTimestamp < dayEnd
+      let ts = t.targetTimestamp
+      const cap = ts + 366 * 24 * 60 * 60 * 1000
+      while (ts < dayEnd && ts < cap) {
+        if (ts >= dayStart)
+          return true
+        ts += t.repeatValue
       }
       return false
     })
@@ -253,42 +215,14 @@ Item {
         }))
   }
 
-  // Given a repeatType + anchor, returns the timestamp (ms) of the next
-  // occurrence strictly after `fromMs`.
-  function nextOccurrence(repeatType, anchor, fromMs) {
-    const from = new Date(fromMs)
-    if (repeatType === "weekly") {
-      let d = new Date(from.getFullYear(), from.getMonth(), from.getDate(), anchor.h, anchor.mi, 0)
-      const diff = (anchor.weekday - d.getDay() + 7) % 7
-      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + diff, anchor.h, anchor.mi, 0)
-      if (d.getTime() <= fromMs)
-        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7, anchor.h, anchor.mi, 0)
-      return d.getTime()
-    } else if (repeatType === "monthly") {
-      let y = from.getFullYear(), mo = from.getMonth()
-      let day = Math.min(anchor.d, root.daysInMonth(y, mo + 1))
-      let d = new Date(y, mo, day, anchor.h, anchor.mi, 0)
-      if (d.getTime() <= fromMs) {
-        mo += 1
-        if (mo > 11) {
-          mo = 0
-          y += 1
-        }
-        day = Math.min(anchor.d, root.daysInMonth(y, mo + 1))
-        d = new Date(y, mo, day, anchor.h, anchor.mi, 0)
-      }
-      return d.getTime()
-    } else if (repeatType === "yearly") {
-      let y = from.getFullYear()
-      let d = new Date(y, anchor.mo - 1, anchor.d, anchor.h, anchor.mi, 0)
-      if (d.getTime() <= fromMs) {
-        y += 1
-        d = new Date(y, anchor.mo - 1, anchor.d, anchor.h, anchor.mi, 0)
-      }
-      return d.getTime()
-    }
-    // single
-    return new Date(anchor.y, anchor.mo - 1, anchor.d, anchor.h, anchor.mi, 0).getTime()
+  // Steps `ts` forward by `repeatValue` (ms) until it's strictly after
+  // `fromMs`. repeatValue <= 0 returns `ts` unchanged (no repeat).
+  function nextOccurrence(ts, repeatValue, fromMs) {
+    if (!(repeatValue > 0))
+      return ts
+    while (ts <= fromMs)
+      ts += repeatValue
+    return ts
   }
   function pad(n) {
     return n < 10 ? "0" + n : "" + n
@@ -303,7 +237,8 @@ Item {
           id: t.id,
           name: t.name,
           targetTimestamp: 0,
-          startTimestamp: 0,
+          startTimestamp: Date.now(),
+          repeatValue: 0,
           url: ""
         } : t)
     } else {
@@ -326,6 +261,8 @@ Item {
           id: t.id,
           name: t.name,
           targetTimestamp: ts,
+          startTimestamp: Date.now(),
+          repeatValue: t.repeatValue || 0,
           url: u
         } : t)
     } else {
@@ -335,7 +272,8 @@ Item {
         name: name,
         targetTimestamp: ts,
         url: u,
-        startTimestamp: Date.now()
+        startTimestamp: Date.now(),
+        repeatValue: 0
       })
       root.timers = t
       root.nextId += 1
@@ -346,7 +284,7 @@ Item {
   function updateTimer(id, ts, url, startTs) {
     root.timers = root.timers.map(t => t.id === id ? Object.assign({}, t, {
         targetTimestamp: ts,
-        startTimestamp: startTs || 0,
+        startTimestamp: Date.now(),
         url: url || ""
       }) : t)
     saveTimers()
@@ -354,7 +292,7 @@ Item {
   }
 
   implicitHeight: rowLayout.implicitHeight
-  implicitWidth: rowLayout.implicitWidth
+  implicitWidth: root.maxWidth > 0 ? Math.min(rowLayout.implicitWidth, root.maxWidth) : rowLayout.implicitWidth
 
   Component.onCompleted: root.ensureUnsetSlot()
 
@@ -382,7 +320,8 @@ Item {
       id: jsonAdapter
 
       property int nextId: 2
-      // Canonical list: [{ id, name, targetTimestamp, url, repeatType?, anchor? }, ...].
+      // Canonical list: [{ id, name, targetTimestamp, startTimestamp, url, repeatValue? }, ...].
+      // repeatValue is ms; 0/absent means "don't repeat".
       // Always start with one unset slot so there's something to click even
       // before a file exists; overwritten by whatever's loaded from disk,
       // if anything.
@@ -391,15 +330,16 @@ Item {
           id: 1,
           name: "",
           targetTimestamp: 0,
-          startTimestamp: 0,
+          startTimestamp: Date.now(),
+          repeatValue: 0,
           url: ""
         }
       ]
     }
   }
-  // Rolls repeating timers (weekly/monthly/yearly) forward to their next
-  // occurrence once the current target has passed. Single timers are left
-  // alone — they just show "expired" like before.
+  // Rolls repeating timers (repeatValue > 0) forward to their next
+  // occurrence once the current target has passed. Non-repeating timers
+  // are left alone — they just show "expired" like before.
   Timer {
     interval: 15000
     repeat: true
@@ -409,10 +349,11 @@ Item {
       const now = Date.now()
       let changed = false
       const updated = root.timers.map(t => {
-        if (t.repeatType && t.repeatType !== "none" && t.repeatType !== "single" && t.anchor && t.targetTimestamp > 0 && t.targetTimestamp <= now) {
+        if (t.repeatValue > 0 && t.targetTimestamp > 0 && t.targetTimestamp <= now) {
           changed = true
           return Object.assign({}, t, {
-            targetTimestamp: root.nextOccurrence(t.repeatType, t.anchor, now)
+            targetTimestamp: root.nextOccurrence(t.targetTimestamp, t.repeatValue, now),
+            startTimestamp: Date.now()
           })
         }
         return t
@@ -430,24 +371,43 @@ Item {
 
     onTriggered: root._nowTick = Date.now()
   }
-  Row {
-    id: rowLayout
+  Flickable {
+    id: scrollArea
 
-    spacing: 0
+    clip: true
+    contentHeight: rowLayout.implicitHeight
+    contentWidth: rowLayout.implicitWidth
+    flickableDirection: Flickable.HorizontalFlick
+    height: rowLayout.implicitHeight
+    width: root.implicitWidth
 
-    Repeater {
-      model: root.visibleTimers
+    WheelHandler {
+      acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
 
-      delegate: CountdownTimer {
-        repeatType: modelData.repeatType || "none"
-        startTimestamp: modelData.startTimestamp || 0
-        targetTimestamp: modelData.targetTimestamp
-        timerId: modelData.id
-        timerName: modelData.name || ""
-        url: modelData.url || ""
+      onWheel: event => {
+        const delta = event.angleDelta.y !== 0 ? event.angleDelta.y : event.angleDelta.x
+        scrollArea.contentX = Math.max(0, Math.min(scrollArea.contentWidth - scrollArea.width, scrollArea.contentX - delta))
+      }
+    }
+    Row {
+      id: rowLayout
 
-        onCleared: id => root.removeTimer(id)
-        onCommitted: (id, ts, url, startTs) => root.updateTimer(id, ts, url, startTs)
+      spacing: 0
+
+      Repeater {
+        model: root.visibleTimers
+
+        delegate: CountdownTimer {
+          repeatValue: modelData.repeatValue || 0
+          startTimestamp: modelData.startTimestamp || 0
+          targetTimestamp: modelData.targetTimestamp
+          timerId: modelData.id
+          timerName: modelData.name || ""
+          url: modelData.url || ""
+
+          onCleared: id => root.removeTimer(id)
+          onCommitted: (id, ts, url, startTs) => root.updateTimer(id, ts, url, startTs)
+        }
       }
     }
   }

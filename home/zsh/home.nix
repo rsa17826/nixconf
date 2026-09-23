@@ -58,7 +58,6 @@ in
       initContent = ''
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
         autoload -Uz _keymod
-        # compdef _key-modifier key-modifier
       ''
       + builtins.readFile ./init.sh;
     };

@@ -41,9 +41,11 @@ Item {
       mi: 0,
       url: ""
     })
-  // "none" (or unset) / "single" -> one-shot, shows the progress bar.
-  // "weekly" / "monthly" / "yearly" -> repeating, no progress bar.
-  property string repeatType: "none"
+  // 0 -> one-shot, shows the progress bar.
+  // >0 -> repeat interval in ms (e.g. one week = 7*24*60*60*1000); once
+  // expired, targetTimestamp keeps having repeatValue added until it's
+  // back in the future. No progress bar while repeating.
+  property real repeatValue: 0
   property real startTimestamp: 0
   property real targetTimestamp: 0
 
@@ -115,11 +117,9 @@ Item {
   function commitDraft() {
     const dr = root.draft
     const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime();
-    // Only stamp a fresh "start" when this timer didn't already have a
-    // target set — editing an existing timer keeps its original start so
-    // the progress bar doesn't jump back to 100%.
-    if (root.targetTimestamp <= 0)
-      root.startTimestamp = Date.now()
+    // Every commit (new or edited) restamps the start to now, so the
+    // progress bar always reflects "time since this was last set".
+    root.startTimestamp = Date.now()
     root.targetTimestamp = ts
     root.url = dr.url || ""
     root.committed(root.timerId, ts, root.url, root.startTimestamp)
@@ -306,15 +306,15 @@ Item {
 
   // ── Progress bar (non-repeating timers only) ──────────────────────
   // Runs from 100% width at startTimestamp down to 0% width at
-  // targetTimestamp. Repeating timers (weekly/monthly/yearly) don't have
-  // a stable "start" that makes sense to bar-ify, so they're excluded.
+  // targetTimestamp. Repeating timers (repeatValue > 0) don't have a
+  // stable "start" that makes sense to bar-ify, so they're excluded.
   Rectangle {
     id: progressTrack
 
     color: "#08081a"
     height: 2
     radius: 1
-    visible: root.targetTimestamp > 0 && root.startTimestamp > 0 && (!root.repeatType || root.repeatType === "none" || root.repeatType === "single")
+    visible: root.targetTimestamp > 0 && root.startTimestamp > 0 && root.repeatValue <= 0
     width: pill.width
 
     anchors {

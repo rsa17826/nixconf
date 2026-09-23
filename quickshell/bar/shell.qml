@@ -47,9 +47,8 @@ Scope {
         right: true
         top: true
       }
-      Rectangle {
-        // TODO remove the a then qmlformat gets fixed in nix
-        id: a_LEFT
+      Item {
+        id: _LEFT
 
         anchors {
           left: parent.left
@@ -59,6 +58,8 @@ Scope {
         CountdownTimerRow {
           id: countdownRow
 
+          maxWidth: _CENTER.x - countdownRow.x - 10
+
           anchors {
             left: root.left
             verticalCenter: parent.verticalCenter
@@ -67,17 +68,15 @@ Scope {
         TimerServer {
           timerRow: countdownRow
         }
-        // ClipHist {
-        //   id: clipboardLogic
-
-        //   anchors {
-        //     left: root.left
-        //     verticalCenter: parent.verticalCenter
-        //   }
-        // }
       }
-      Rectangle {
-        id: a_CENTER
+      // Center container holding just the Clock and absolute-positioned elements
+      Item {
+        id: _CENTER
+
+        height: clock.implicitHeight > 0 ? clock.implicitHeight : clock.height
+
+        // Explicitly set width to clock's width so countdownRow's math works cleanly
+        width: clock.implicitWidth > 0 ? clock.implicitWidth : clock.width
 
         anchors {
           horizontalCenter: parent.horizontalCenter
@@ -96,18 +95,12 @@ Scope {
         ShutdownCountdown {
           anchors {
             left: clock.right
-            leftMargin: 15
-            verticalCenter: parent.verticalCenter
-          }
-        }
-        Row {
-          anchors {
             verticalCenter: parent.verticalCenter
           }
         }
       }
-      Rectangle {
-        id: a_RIGHT
+      Item {
+        id: _RIGHT
 
         anchors {
           horizontalCenter: parent.right

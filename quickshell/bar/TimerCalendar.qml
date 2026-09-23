@@ -1,13 +1,3 @@
-// TimerCalendar.qml
-// Month grid used from Clock.qml's popup. Clicking a day opens an inline
-// "set timer" panel where you pick a repeat mode:
-//   Once     -> single timer for that exact date
-//   Weekly   -> repeats every <weekday> (e.g. "Mondays")
-//   Monthly  -> repeats every month on that day-of-month ("the 15th")
-//   Yearly   -> repeats every year on that month/day ("12/26 (yearly)")
-// Days that already have a timer attached (via timerRow.hasTimerOnDate)
-// get a highlighted background and a stronger glitch effect than plain
-// days, so they stand out at a glance.
 import QtQuick
 import "owoify.js" as Owo
 
@@ -26,56 +16,25 @@ Item {
     "markedBorder": "#4d2f8a",
     "selectedBorder": "#4d6fff"
   }
-
-  // Draft for the inline "set timer" panel
   property var draft: ({
       h: 9,
       mi: 0
     })
   property int selectedDay: -1
-
-  // Must be set by the parent: the CountdownTimerRow instance that owns
-  // addRepeatingTimer / hasTimerOnDate / daysInMonth.
   required property var timerRow
-  // "y" / "mo" (1-indexed) — month currently shown
   property int viewMonth: new Date().getMonth() + 1
   property int viewYear: new Date().getFullYear()
 
   signal timerSet(string name)
 
-  function commit(repeatType) {
+  function commit(repeatMs) {
     if (root.selectedDay <= 0)
       return
-    let anchor
-    if (repeatType === "single") {
-      anchor = {
-        y: root.viewYear,
-        mo: root.viewMonth,
-        d: root.selectedDay,
-        h: root.draft.h,
-        mi: root.draft.mi
-      }
-    } else if (repeatType === "weekly") {
-      anchor = {
-        weekday: new Date(root.viewYear, root.viewMonth - 1, root.selectedDay).getDay(),
-        h: root.draft.h,
-        mi: root.draft.mi
-      }
-    } else if (repeatType === "monthly") {
-      anchor = {
-        d: root.selectedDay,
-        h: root.draft.h,
-        mi: root.draft.mi
-      }
-    } else if (repeatType === "yearly") {
-      anchor = {
-        mo: root.viewMonth,
-        d: root.selectedDay,
-        h: root.draft.h,
-        mi: root.draft.mi
-      }
-    }
-    const name = root.timerRow.addRepeatingTimer(repeatType, anchor)
+    const targetDate = new Date(root.viewYear, root.viewMonth - 1, root.selectedDay, root.draft.h, root.draft.mi, 0)
+    const targetTimestamp = targetDate.getTime()
+    const name = "Timer " + root.pad(root.viewMonth) + "/" + root.pad(root.selectedDay)
+
+    root.timerRow.addRepeatingTimer(name, targetTimestamp, repeatMs, "")
     root.timerSet(name)
     root.selectedDay = -1
   }
@@ -131,7 +90,6 @@ Item {
     spacing: 8
     width: root.implicitWidth
 
-    // ── Month header ──────────────────────────────────────────
     Row {
       spacing: 6
       width: parent.width
@@ -195,8 +153,6 @@ Item {
       height: 1
       width: parent.width
     }
-
-    // ── Weekday labels ───────────────────────────────────────────
     Row {
       spacing: 0
       width: parent.width
@@ -213,8 +169,6 @@ Item {
         }
       }
     }
-
-    // ── Day grid ──────────────────────────────────────────────────
     Grid {
       columns: 7
       rowSpacing: 3
@@ -248,8 +202,6 @@ Item {
           GlitchEffect {
             id: dayGlitch
 
-            // Days with a timer glitch noticeably harder so they pop out
-            // of the grid at a glance; plain days stay very subtle.
             aberration: dayCell.hasTimer ? 0.02 : 0.0025
             anchors.centerIn: parent
             glitchAmount: dayCell.hasTimer ? 0.09 : 0.015
@@ -270,8 +222,6 @@ Item {
                 font.pixelSize: 9
                 text: dayCell.dayNum
               }
-
-              // Small dot under the number when a timer is attached
               Rectangle {
                 color: c.accent
                 height: 3
@@ -296,8 +246,6 @@ Item {
         }
       }
     }
-
-    // ── Inline "set timer" panel ────────────────────────────────
     Column {
       spacing: 6
       visible: root.selectedDay > 0
@@ -313,8 +261,6 @@ Item {
         font.pixelSize: 9
         text: Owo.owo("Set timer for " + root.pad(root.viewMonth) + "/" + root.pad(root.selectedDay))
       }
-
-      // Time-of-day picker (hour/minute)
       Row {
         spacing: 6
 
@@ -429,8 +375,6 @@ Item {
           }
         }
       }
-
-      // Repeat-mode buttons
       Grid {
         columnSpacing: 6
         columns: 2
@@ -440,19 +384,19 @@ Item {
         Repeater {
           model: [
             {
-              key: "single",
+              ms: 0,
               label: "Once"
             },
             {
-              key: "weekly",
+              ms: 7 * 24 * 60 * 60 * 1000,
               label: "Weekly"
             },
             {
-              key: "monthly",
+              ms: 30 * 24 * 60 * 60 * 1000,
               label: "Monthly"
             },
             {
-              key: "yearly",
+              ms: 365 * 24 * 60 * 60 * 1000,
               label: "Yearly"
             }
           ]
@@ -478,7 +422,7 @@ Item {
               cursorShape: Qt.PointingHandCursor
               hoverEnabled: true
 
-              onClicked: root.commit(modelData.key)
+              onClicked: root.commit(modelData.ms)
             }
           }
         }
