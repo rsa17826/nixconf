@@ -86,11 +86,62 @@ update_tracked_go_modules() {
   echo "===== done ====="
 }
 
+CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/git-push"
+mkdir -p "$CONF_DIR"
+TRUSTED_HASHES_FILE="$CONF_DIR/trusted_prepush_hashes.tsv"
+
+# Look up whether $1 (a hash) is already trusted for $2 (an absolute path)
+# in TRUSTED_HASHES_FILE (tab-separated: path<TAB>hash).
+is_trusted_hash() {
+  local path="$1" hash="$2"
+  [ -f "$TRUSTED_HASHES_FILE" ] || return 1
+  local p h
+  while IFS=$'\t' read -r p h; do
+    [ "$p" = "$path" ] && [ "$h" = "$hash" ] && return 0
+  done <"$TRUSTED_HASHES_FILE"
+  return 1
+}
+
+# Run ./prepush.sh in the current repo root if it exists. Returns nonzero
+# to signal the push should be aborted (script missing trust approval, or
+# the script itself failed).
+run_prepush() {
+  local script="$PWD/prepush.sh"
+  [ -f "$script" ] || return 0
+
+  local hash
+  hash=$(sha256sum "$script" | awk '{print $1}')
+
+  if ! is_trusted_hash "$script" "$hash"; then
+    echo "Untrusted prepush.sh found:"
+    echo "  path: $script"
+    echo "  sha256: $hash"
+    read -r -p "Trust and run this script? [y/N] " answer
+    case "$answer" in
+    [Yy]*)
+      mkdir -p "$(dirname "$TRUSTED_HASHES_FILE")"
+      printf '%s\t%s\n' "$script" "$hash" >>"$TRUSTED_HASHES_FILE"
+      ;;
+    *)
+      echo "prepush.sh not trusted, aborting push."
+      return 1
+      ;;
+    esac
+  fi
+
+  echo "Running prepush.sh..."
+  bash "$script"
+}
+
 git add -A
 if ! git diff --cached --quiet; then
   git commit -m "$MESSAGE"
 else
   echo "No changes to commit."
+fi
+
+if ! run_prepush; then
+  exit 1
 fi
 
 REMOTES=$(git remote)
