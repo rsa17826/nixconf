@@ -110,7 +110,7 @@ if [ -f "$PWD/flake.nix" ]; then
       # push.sh uses it to know which repos are already in this
       # propagation chain, so it can still cascade to further downstream
       # repos while stopping the instant it would revisit one.
-      push fixed the hashes
+      push fixed the hashes --no-hooks
     fi
   fi
   exit "$err"

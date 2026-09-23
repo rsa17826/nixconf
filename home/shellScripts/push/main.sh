@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 set -e
 
+# --- Argument Parsing ---
+SKIP_HOOKS=false
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  --no-hooks)
+    SKIP_HOOKS=true
+    shift
+    ;;
+  *)
+    POSITIONAL_ARGS+=("$1")
+    shift
+    ;;
+  esac
+done
+
+# Restore positional parameters (for the commit message)
+set -- "${POSITIONAL_ARGS[@]}"
+
 FLAKE_DIR="$HOME/nixconf"
 BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 MESSAGE="${*:-NO MESSAGE SET}"
@@ -140,8 +160,10 @@ else
   echo "No changes to commit."
 fi
 
-if ! run_prepush; then
-  exit 1
+if [ "$SKIP_HOOKS" != true ]; then
+  if ! run_prepush; then
+    exit 1
+  fi
 fi
 
 REMOTES=$(git remote)
