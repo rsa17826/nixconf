@@ -49,17 +49,7 @@ hl.window_rule({
 	pin = true,
 	center = true,
 })
-hl.window_rule({
-	-- match = { title = "^CodeBrowser: " },
-	match = {
-		class = "^ghidra-Ghidra|java-lang-Thread$",
-		title = "^(CodeBrowser|Ghidra): .*$",
-	},
-	float = false,
-	fullscreen = false,
-	pin = false,
-	center = false,
-})
+
 hl.window_rule({
 	-- match = { title = "^CodeBrowser: " },
 	match = {
@@ -308,3 +298,27 @@ hl.window_rule({
 -- 	scrolling_width = 0.3,
 -- 	workspace = "3",
 -- })
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
+		class = "^ghidra-Ghidra|java-lang-Thread$",
+		title = "^(CodeBrowser|Ghidra): .*|CodeBrowser$",
+	},
+	float = false,
+	fullscreen = false,
+	pin = false,
+	center = false,
+	scrolling_width = 1,
+})
+hl.window_rule({
+	-- match = { title = "^CodeBrowser: " },
+	match = {
+		title = "^ap slot tracker$",
+	},
+	float = false,
+	fullscreen = false,
+	pin = false,
+	workspace = "4",
+	center = false,
+	scrolling_width = 1,
+})
