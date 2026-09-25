@@ -318,7 +318,7 @@ hl.window_rule({
 	float = false,
 	fullscreen = false,
 	pin = false,
-	workspace = "4",
+	workspace = "3",
 	center = false,
 	scrolling_width = 1,
 })
