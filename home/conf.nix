@@ -80,6 +80,8 @@ in
   boot = {
     kernel = {
       sysctl = {
+        # NOTE The SysRq key sequence relies on holding Alt + SysRq (often the Print Screen key) while typing the letters R - E - I - S - U - B in order, pausing 2 to 3 seconds between each letter.The REISUB Sequence ExplainedKeyActionPurposeRunRawTakes keyboard control away from the frozen display server (X11/Wayland) and returns it to the kernel.EtErmSends SIGTERM to all running processes, giving them a chance to shut down gracefully.IkIllSends SIGKILL to any stubborn processes that failed to terminate.SSyncFlushes unwritten data from RAM to your storage drives to prevent filesystem corruption.UUnmountRemounts all filesystems as read-only to safeguard your data.BreBootImmediately reboots the computer.
+        "kernel.sysrq" = 1;
         "kernel.yama.ptrace_scope" = 0;
         "kernel.core_pattern" = "|/bin/false";
         "vm.swappiness" = 10;
