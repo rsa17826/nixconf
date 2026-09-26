@@ -33,10 +33,16 @@ let
 
   # ── Bake app configs into the script ─────────────────────────────────────
   appBlock = cfg: ''
-    FILES_${cfg.name}=(${builtins.concatStringsSep " " (cfg.files or [ ])})
-    DIRS_${cfg.name}=(${builtins.concatStringsSep " " (cfg.dirs or [ ])})
-    SRC_${cfg.name}="${cfg.srcStr}"
-    DEST_${cfg.name}="${if cfg.destDir != "" then "$HOME/${cfg.destDir}" else "$HOME"}"
+    FILES_${cfg.name}=(
+      ${builtins.concatStringsSep "\n    " (map lib.escapeShellArg (cfg.files or [ ]))}
+    )
+
+    DIRS_${cfg.name}=(
+      ${builtins.concatStringsSep "\n    " (map lib.escapeShellArg (cfg.dirs or [ ]))}
+    )
+
+    SRC_${cfg.name}=${lib.escapeShellArg cfg.srcStr}
+    DEST_${cfg.name}=${lib.escapeShellArg cfg.destDir}
   '';
 
   appNames = map (c: c.name) configs;
@@ -45,7 +51,9 @@ let
     set -euo pipefail
 
     # ── Baked-in app configs ──────────────────────────────────────────────
-    APPS=(${builtins.concatStringsSep " " appNames})
+    APPS=(
+      ${builtins.concatStringsSep "\n  " (map lib.escapeShellArg appNames)}
+    )
     ${builtins.concatStringsSep "\n" (map appBlock configs)}
 
     # ── Helpers ───────────────────────────────────────────────────────────
@@ -56,38 +64,52 @@ let
       local -n _srcRef="SRC_''${app}"
       local -n _destRef="DEST_''${app}"
 
-      # Resolve namerefs to normal strings to prevent expansion bugs
       local src="''${_srcRef}"
-      local dest="''${_destRef}"
-
-      # Dynamically expand $HOME if present in strings
-      dest=$(eval echo "''${dest}")
+      local dest="$HOME/''${_destRef}"
 
       local marker="''${dest}/.editmode"
       local saved="''${dest}/.editmode_saved_''${app}"
 
-      [[ -f "$marker" ]] && { echo "$app: already in edit mode"; return; }
+      [[ -f "$marker" ]] && {
+        echo "$app: already in edit mode"
+        return
+      }
 
       rm -f "$saved"
-      mkdir -p "''${dest}"
+      mkdir -p "$dest"
 
       for f in "''${_files[@]}"; do
-        if   [[ -L "''${dest}/$f" ]]; then printf '%s\t%s\n' "$f" "$(readlink "''${dest}/$f")" >> "$saved"
-        elif [[ -e "''${dest}/$f" ]]; then printf '%s\tFILE\n'    "$f"                       >> "$saved"
-        else                            printf '%s\tMISSING\n' "$f"                       >> "$saved"
-        fi
-      done
-      for d in "''${_dirs[@]}"; do
-        if   [[ -L "''${dest}/$d" ]]; then printf '%s\t%s\n' "$d" "$(readlink "''${dest}/$d")" >> "$saved"
-        elif [[ -e "''${dest}/$d" ]]; then printf '%s\tDIR\n'     "$d"                      >> "$saved"
-        else                            printf '%s\tMISSING\n' "$d"                       >> "$saved"
+        if [[ -L "$dest/$f" ]]; then
+          printf '%s\t%s\n' "$f" "$(readlink "$dest/$f")" >> "$saved"
+        elif [[ -e "$dest/$f" ]]; then
+          printf '%s\tFILE\n' "$f" >> "$saved"
+        else
+          printf '%s\tMISSING\n' "$f" >> "$saved"
         fi
       done
 
-      for f in "''${_files[@]}"; do rm -f  "''${dest}/$f"; ln -s "''${src}/$f" "''${dest}/$f"; done
-      for d in "''${_dirs[@]}";  do rm -rf "''${dest:?}/$d"; ln -s "''${src}/$d" "''${dest}/$d"; done
+      for d in "''${_dirs[@]}"; do
+        if [[ -L "$dest/$d" ]]; then
+          printf '%s\t%s\n' "$d" "$(readlink "$dest/$d")" >> "$saved"
+        elif [[ -e "$dest/$d" ]]; then
+          printf '%s\tDIR\n' "$d" >> "$saved"
+        else
+          printf '%s\tMISSING\n' "$d" >> "$saved"
+        fi
+      done
+
+      for f in "''${_files[@]}"; do
+        rm -f "$dest/$f"
+        ln -s "$src/$f" "$dest/$f"
+      done
+
+      for d in "''${_dirs[@]}"; do
+        rm -rf "$dest/$d"
+        ln -s "$src/$d" "$dest/$d"
+      done
+
       touch "$marker"
-      echo "$app: edit mode active (''${src})"
+      echo "$app: edit mode active ($src)"
       hyprctl reload || true
     }
 
