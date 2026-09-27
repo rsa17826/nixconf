@@ -5302,5 +5302,8 @@
   "pushb": "push",
   "pushj": "push",
   "pushg": "push",
-  "pusgh": "push"
+  "pusgh": "push",
+  "poush": "push",
+  "opush": "push",
+  "pomni": "pompi"
 }

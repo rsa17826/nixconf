@@ -911,8 +911,8 @@
   "as3mxml.inlayHints.parameterNames.enabled": "all",
   "as3mxml.lint.enabled": true,
   "as3mxml.asconfigc.verboseOutput": true,
-  "diffEditor.hideUnchangedRegions.enabled": true,
   "[c]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
+  "diffEditor.hideUnchangedRegions.enabled": true,
 }
