@@ -45,7 +45,7 @@ m.bind("^+Q", hl.dsp.window.close())
 
 m.bind("#M", hl.dsp.exit())
 m.bind("#p", hl.dsp.window.float({ action = "toggle" }))
-m.bind("#P", hl.dsp.window.pseudo())
+-- m.bind("#P", hl.dsp.window.pseudo())
 
 -- Clipboard viewer
 m.bind(

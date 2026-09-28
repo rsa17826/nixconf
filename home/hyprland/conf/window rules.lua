@@ -339,3 +339,12 @@ hl.window_rule({
 	pin = false,
 	center = false,
 })
+hl.window_rule({
+	match = {
+		class = "^mathbreakers.exe$",
+	},
+	float = false,
+	fullscreen = true,
+	pin = false,
+	center = false,
+})
