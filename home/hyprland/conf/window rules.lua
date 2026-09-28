@@ -348,3 +348,15 @@ hl.window_rule({
 	pin = false,
 	center = false,
 })
+hl.window_rule({
+	match = {
+		class = "^thunar$",
+		title = "^File Operation Progress$",
+	},
+	float = true,
+	fullscreen = false,
+	pin = false,
+	center = true,
+	no_initial_focus = true,
+	no_focus = true,
+})
