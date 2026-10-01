@@ -389,6 +389,18 @@ in
     };
     user = {
       services = {
+        flashback = {
+          wantedBy = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "sh -c 'gpu-screen-recorder -w screen -f 30 -s 1920x1080 -a default_output -r 300 -c mp4 -k h264_vulkan -bm qp -q high -fm cfr -o ~/videos/flashback & echo $! > /tmp/gpu-screen-recorder-flashback.pid; wait $!'";
+            Restart = "on-failure";
+            RestartSec = "5s";
+            KillMode = "mixed";
+          };
+        };
         dynamicRebinds = {
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];

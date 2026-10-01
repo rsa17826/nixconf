@@ -19,9 +19,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd("go run ~/projects/nulserv/main.go")
 	-- hl.exec_cmd("job-prompt")
-	hl.exec_cmd(
-		"sh -c 'gpu-screen-recorder -w screen -f 30 -s 1920x1080 -a default_output -r 300 -c mp4 -k h264_vulkan -bm qp -q high -fm cfr -o ~/videos/flashback & echo $! > /tmp/gpu-screen-recorder-flashback.pid; wait $!'"
-	)
 	-- hl.exec_cmd(
 	-- 	'gpu-screen-recorder -w "HDMI-A-1|input_display;halign=end;valign=end;width=30%;height=30%" -o video.mp4'
 	-- )
