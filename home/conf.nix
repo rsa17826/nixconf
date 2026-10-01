@@ -232,13 +232,12 @@ in
 
     # 2. This maps the legacy <nixpkgs> path to your flake's nixpkgs
     # (Fixes older tools that don't know about flakes yet)
-    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
     settings = {
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-
       auto-optimise-store = true;
+      nix-path = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
     };
   };
 
