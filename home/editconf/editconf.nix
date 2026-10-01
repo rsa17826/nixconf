@@ -104,7 +104,7 @@ let
       done
 
       for d in "''${_dirs[@]}"; do
-        rm -rf "$dest/$d"
+        rm -rf "''${dest:?}/$d"
         ln -s "$src/$d" "$dest/$d"
       done
 
@@ -119,8 +119,7 @@ let
       local -n _dirs="DIRS_''${app}"
       local -n _destRef="DEST_''${app}"
 
-      local dest="''${_destRef}"
-      dest=$(eval echo "''${dest}")
+      local dest="$HOME/''${_destRef}"
 
       local marker="''${dest}/.editmode"
       local saved="''${dest}/.editmode_saved_''${app}"
@@ -154,8 +153,7 @@ let
       local -n _dirs="DIRS_''${app}"
       local -n _destRef="DEST_''${app}"
 
-      local dest="''${_destRef}"
-      dest=$(eval echo "''${dest}")
+      local dest="$HOME/''${_destRef}"
       local marker="''${dest}/.editmode"
 
       if [[ -f "$marker" ]]; then
@@ -197,7 +195,6 @@ let
         if [[ -z "$TARGET" ]]; then
           trap restore EXIT
           read -r
-          restore
         fi
         ;;
     esac

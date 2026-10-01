@@ -91,3 +91,9 @@ hl.window_rule({
 	render_unfocused = true,
 	-- workspace = "input_display",
 })
+hl.device({
+	name = "vroot-mouse",
+	region_position = { 2000, 28 },
+	region_size = { 1920, 1051 },
+	absolute_region_position = true,
+})
