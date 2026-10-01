@@ -394,8 +394,19 @@ in
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
 
+          # Ensures binaries like gpu-screen-recorder and coreutils (echo) are in PATH
+          path = with pkgs; [
+            gpu-screen-recorder
+            coreutils
+            bash
+          ];
+
           serviceConfig = {
-            ExecStart = "sh -c 'gpu-screen-recorder -w screen -f 30 -s 1920x1080 -a default_output -r 300 -c mp4 -k h264_vulkan -bm qp -q high -fm cfr -o ~/videos/flashback & echo $! > /tmp/gpu-screen-recorder-flashback.pid; wait $!'";
+            ExecStart = "${pkgs.writeShellScript "flashback-start" ''
+              gpu-screen-recorder -w screen -f 30 -s 1920x1080 -a default_output -r 300 -c mp4 -k h264_vulkan -bm qp -q high -fm cfr -o ~/videos/flashback &
+              echo $! > /tmp/gpu-screen-recorder-flashback.pid
+              wait $!
+            ''}";
             Restart = "on-failure";
             RestartSec = "5s";
             KillMode = "mixed";
