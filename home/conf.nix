@@ -388,7 +388,26 @@ in
       # };
     };
     user = {
+      timers = {
+        gh-repo-list-fetch-repos = {
+          Timer = {
+            OnBootSec = "1min";
+            OnUnitActiveSec = "3d";
+            Persistent = true;
+          };
+          Install = {
+            WantedBy = [ "timers.target" ];
+          };
+        };
+      };
       services = {
+        gh-repo-list-fetch-repos = {
+          Service = {
+            Type = "oneshot";
+            WorkingDirectory = "%h"; # %h expands to home directory
+            ExecStart = with pkgs; "${nodejs}/bin/node %h/projects/gh-repo-list/scripts/fetch-repos.js";
+          };
+        };
         flashback = {
           wantedBy = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];

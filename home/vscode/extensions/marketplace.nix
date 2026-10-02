@@ -303,7 +303,7 @@
               name = "debugpy";
               publisher = "ms-python";
               version = "2026.7.12401012";
-              hash = "sha256-rBqSdufk2h5Y+jiZteVE/w4ZS+aClAU3U5X9cNLHbgw=";
+              hash = "sha256-tWHH8a91pIIwdEaNtMr0ux/WCPXrhoRzuAtL4Mw1gQ8=";
             }
             {
               name = "python";

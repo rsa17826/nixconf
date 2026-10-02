@@ -162,7 +162,7 @@ in
       qt = {
         enable = true;
         platformTheme = {
-          name = "gtk2";
+          name = "qt6ct";
         };
         style = {
           name = "adwaita-dark";
