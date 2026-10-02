@@ -239,7 +239,7 @@ in
           syncthing # file sync
           mp3gain # audio volume normilizer
           python314
-          filen-desktop # cloud storage
+          # filen-desktop # cloud storage
           javaPackages.compiler.temurin-bin.jre-25 # for running java apps
           file # like die
           # opensnitch-ui # firewall
