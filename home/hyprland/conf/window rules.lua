@@ -360,3 +360,16 @@ hl.window_rule({
 	no_initial_focus = true,
 	no_focus = true,
 })
+hl.window_rule({
+	match = {
+		class = "^steam$",
+		title = "^Special Offers$",
+	},
+	float = true,
+	fullscreen = false,
+	pin = false,
+	center = true,
+	no_initial_focus = true,
+	no_focus = true,
+	workspace = "8 silent",
+})
