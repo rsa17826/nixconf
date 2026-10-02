@@ -119,7 +119,7 @@ in
           (pkgFromInp "macro-recorder" "default")
           (pkgFromInp "gowoify" "default")
           (pkgFromInp "ap-slot-tracker" "default")
-          (pkgs.callPackage ./freenet-core/freenet-core.nix { })
+          # (pkgs.callPackage ./freenet-core/freenet-core.nix { })
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
