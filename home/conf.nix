@@ -403,7 +403,7 @@ in
           serviceConfig = {
             Type = "oneshot";
             WorkingDirectory = "%h"; # %h expands to home directory
-            ExecStart = with pkgs; "${sh}/bin/sh %h/projects/gh-repo-list/fetch-repos";
+            ExecStart = "%h/projects/gh-repo-list/fetch-repos";
           };
         };
         flashback = {
