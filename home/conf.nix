@@ -402,8 +402,16 @@ in
         gh-repo-list-fetch-repos = {
           serviceConfig = {
             Type = "oneshot";
-            WorkingDirectory = "%h"; # %h expands to home directory
-            ExecStart = "%h/projects/gh-repo-list/fetch-repos";
+            WorkingDirectory = "/home/${userConfig.uname}/projects/gh-repo-list";
+            ExecStart = (
+              with pkgs;
+              "${writeShellScript "fetch-repos" ''
+                GITHUB_USERNAME="rsa17826" GITHUB_TOKEN=$(cat "/run/secrets/GITHUB_TOKEN") ${nodejs}/bin/node /home/${userConfig.uname}/projects/gh-repo-list/scripts/fetch-repos.js
+                git add -A
+                git commit -m "repo list updated"
+                git push -u origin main
+              ''}"
+            );
           };
         };
         flashback = {
