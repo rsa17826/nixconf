@@ -403,7 +403,7 @@ in
           serviceConfig = {
             Type = "oneshot";
             WorkingDirectory = "%h"; # %h expands to home directory
-            ExecStart = with pkgs; "${nodejs}/bin/node %h/projects/gh-repo-list/scripts/fetch-repos.js";
+            ExecStart = with pkgs; "${sh}/bin/sh %h/projects/gh-repo-list/fetch-repos";
           };
         };
         flashback = {
