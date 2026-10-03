@@ -223,11 +223,11 @@
     "ext-auto-regex": {
       "flake": false,
       "locked": {
-        "lastModified": 1790963784,
-        "narHash": "sha256-wDOD8e3NrkccQ82tpdIIO6IXBonIqQH+ViSEteoBZ+s=",
+        "lastModified": 1791033104,
+        "narHash": "sha256-ccuvtJWAToMPSNe/6A3w8PhdB3lICZp/1Y46Z0CxcVk=",
         "owner": "rsa17826",
         "repo": "auto-regex-vscode-extension",
-        "rev": "e4ac9cf2461c9f899e1084fcceee0e0bdf9c7c1a",
+        "rev": "0dbecf07391effe2dec3709f0fa45f3e065c32be",
         "type": "github"
       },
       "original": {
