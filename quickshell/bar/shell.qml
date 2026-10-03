@@ -136,6 +136,7 @@ Scope {
           id: recIndicator
 
           filePath: "/tmp/gpu-screen-recorder-rec.pid"
+          logUnit: "flashback"
           text: "REC"
 
           anchors {

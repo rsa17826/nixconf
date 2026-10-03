@@ -11,18 +11,20 @@ Item {
   // only surface a warning when it's not
   property bool died: false
   property string filePath: "/tmp/gpu-screen-recorder-rec.pid"
+  property string logUnit: ""   // optional systemd user unit whose log should advance every second
   property bool neverStarted: false
   property bool paused: false
   property bool recording: false
   property int secondsElapsed: 0
   readonly property bool showSelf: checkDeath ? warn : recording
+  property bool stalled: false
   property string stateFilePath: ""   // optional, e.g. "/tmp/gpu-screen-recorder-stream.state"
   property string text: "REC"
 
   // What this instance actually shows:
   //  - normal mode: only while recording
   //  - checkDeath mode: only while NOT recording (died or never started)
-  readonly property bool warn: checkDeath && (died || neverStarted)
+  readonly property bool warn: checkDeath && (died || neverStarted || stalled)
 
   implicitHeight: showSelf ? Math.max(12, label.implicitHeight) : 0
   implicitWidth: showSelf ? label.implicitWidth + 16 : 0
@@ -43,7 +45,7 @@ Item {
       font.pixelSize: 11
       text: {
         if (root.warn)
-          return Owo.owo("⚠ " + root.text + " " + (root.neverStarted ? "not running" : "died"))
+          return Owo.owo("⚠ " + root.text + " " + (root.neverStarted ? "not running" : root.stalled ? "stalled" : "died"))
         const h = Math.floor(root.secondsElapsed / 3600)
         const m = Math.floor(root.secondsElapsed / 60) % 60
         const s = root.secondsElapsed % 60
@@ -80,7 +82,19 @@ Item {
   Process {
     id: poll
 
-    command: ["bash", "-c", "PID_FILE=\"" + filePath + "\"; STATE_FILE=\"" + stateFilePath + "\"; " + "if [ ! -f \"$PID_FILE\" ]; then echo NEVER; " + "elif kill -0 \"$(cat \"$PID_FILE\")\" 2>/dev/null; then " + "start=$(stat -c %Y \"$PID_FILE\"); now=$(date +%s); " + "state=Unpaused; [ -n \"$STATE_FILE\" ] && [ -f \"$STATE_FILE\" ] && state=$(cat \"$STATE_FILE\"); " + "echo \"REC $((now - start)) $state\"; " + "else echo DIED; fi"]
+    command: ["bash", "-c", `
+  PID_FILE="${filePath}"; STATE_FILE="${stateFilePath}"; UNIT="${logUnit}"
+  if [ ! -f "$PID_FILE" ]; then echo NEVER
+  elif kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+    if [ -n "$UNIT" ]; then
+      last=$(journalctl --user -u "$UNIT" -n 1 -o short-unix | head -1 | cut -d. -f1)
+      if [ $(( $(date +%s) - last )) -gt 10 ]; then echo STALLED; exit; fi
+    fi
+    start=$(stat -c %Y "$PID_FILE"); now=$(date +%s)
+    state=Unpaused; [ -n "$STATE_FILE" ] && [ -f "$STATE_FILE" ] && state=$(cat "$STATE_FILE")
+    echo "REC $((now - start)) $state"
+  else echo DIED; fi
+`]
 
     stdout: StdioCollector {
       onStreamFinished: {
@@ -92,11 +106,18 @@ Item {
           root.neverStarted = false
           root.secondsElapsed = parseInt(parts[1]) || 0
           root.paused = parts[2] === "Paused"
+        } else if (t === "STALLED") {
+          root.recording = true
+          root.died = false
+          root.neverStarted = false
+          root.paused = false
+          root.stalled = true
         } else if (t === "DIED") {
           root.recording = false
           root.died = true
           root.neverStarted = false
           root.paused = false
+          root.stalled = false
         } else {
           // NEVER
           root.recording = false
@@ -104,6 +125,7 @@ Item {
           root.neverStarted = true
           root.secondsElapsed = 0
           root.paused = false
+          root.stalled = false
         }
       }
     }
