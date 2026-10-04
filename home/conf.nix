@@ -466,7 +466,7 @@ in
           partOf = [ "graphical-session.target" ];
 
           serviceConfig = {
-            ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/input-manager k \"id:usb-0c45_USB_Wired_Keyboard-event-kbd\" m \"id:usb-04d9_USB_Gaming_Mouse-event-mouse\" k \"id:usb-04d9_USB_Gaming_Mouse-if01-event-kbd\" maxX 65535 maxY 65535";
+            ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/input-manager k \"id:usb-0c45_USB_Wired_Keyboard-event-kbd\" m \"id:usb-04d9_USB_Gaming_Mouse-event-mouse\" k \"id:usb-04d9_USB_Gaming_Mouse-if01-event-kbd\" maxX 32768 maxY 32768";
             Restart = "on-failure";
             RestartSec = "5s";
             KillMode = "mixed";
