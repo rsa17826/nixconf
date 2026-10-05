@@ -271,8 +271,7 @@ in
           lua-language-server
           gpu-screen-recorder # screen recorder
           psmisc
-          lutris-free
-          faugus-launcher
+          # lutris-free
           # thunar # wiztree
           # bottles
           # ulauncher
