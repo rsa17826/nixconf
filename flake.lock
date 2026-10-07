@@ -335,11 +335,11 @@
     "ext-textreplace": {
       "flake": false,
       "locked": {
-        "lastModified": 1791385380,
-        "narHash": "sha256-XSPv7wJp62JqsXY3Njggw4+HVVa2EwtP9jJcrmSw3s8=",
+        "lastModified": 1791385597,
+        "narHash": "sha256-21quigokfl6wH2I3Lim0fFzfmEfSxc+x6SeHtKBeIvI=",
         "owner": "rsa17826",
         "repo": "textreplace-vscode-extension",
-        "rev": "0f37ea8edf85df13c3bb93e5d9975883c9f42dde",
+        "rev": "d79e6663afbdd20fbe63c580f20ceec8e3cdb3b5",
         "type": "github"
       },
       "original": {
