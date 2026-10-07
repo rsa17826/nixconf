@@ -21,6 +21,13 @@ hl.window_rule({
 	no_blur = true,
 })
 hl.window_rule({
+	match = { class = "^flashplayer_32_sa_debug.exe$" },
+	float = false,
+	-- size = { "monitor_w", "monitor_h" },
+	-- move = { "0", "0" },
+	suppress_event = "fullscreen maximize",
+})
+hl.window_rule({
 	match = { class = "ILSp", title = "" },
 	float = true,
 	dim_around = false,

@@ -279,8 +279,6 @@ in
           # zenity
           libnotify
           simplex-chat-desktop # simple x chat
-          # openshot-qt # vid editor
-          # pay-respects
           imagemagick
           shfmt # shell formatter
           cfm # tui file manager
@@ -308,10 +306,8 @@ in
           jdk
           xemu # xbox emu
           wl-clip-persist # keep clip past app death
-          # blender
           ffmpeg
           fdupes
-          dunst # notifier
           perl
           kdePackages.qtdeclarative
           gsettings-desktop-schemas

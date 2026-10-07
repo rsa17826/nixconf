@@ -5305,5 +5305,8 @@
   "pusgh": "push",
   "poush": "push",
   "opush": "push",
-  "pomni": "pompi"
+  "pomni": "pompi",
+  "reutnr": "return",
+  "reutrn": "return",
+  "retunr": "return"
 }
