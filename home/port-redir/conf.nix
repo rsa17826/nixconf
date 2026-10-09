@@ -11,6 +11,11 @@ let
       public = false;
     }
     {
+      name = "pl2wba";
+      port = 34283;
+      public = false;
+    }
+    {
       name = "nullserv";
       port = 7542;
       public = false;
