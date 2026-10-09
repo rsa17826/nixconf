@@ -41,8 +41,8 @@ hl.env("YDOTOOL_SOCKET", "/tmp/.ydotool_socket")
 hl.env("GONOPROXY", "github.com/rsa17826/*")
 hl.env("GOPRIVATE", "github.com/rsa17826/*")
 hl.env("PUPPETEER_SKIP_DOWNLOAD", "true")
-hl.env("AP_SOURCE_DIR", "/home/nyix/projects/Archipelago")
-hl.env("TRACKER_FILE_OUT_DIR", "/home/nyix/projects/Archipelago/trackerFiles")
+hl.env("AP_SOURCE_DIR", "/home/nyix/projects/MultiworldGG")
+hl.env("TRACKER_FILE_OUT_DIR", "/home/nyix/projects/MultiworldGG/trackerFiles")
 -- hl.env("PROTON_USE_WINED3D", "1")
 
 -- ─── Core config ───────────────────────────────────────────────────────────

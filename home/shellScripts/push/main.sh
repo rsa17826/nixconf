@@ -22,7 +22,13 @@ done
 set -- "${POSITIONAL_ARGS[@]}"
 
 FLAKE_DIR="$HOME/nixconf"
-BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
+# Check if we are on a detached HEAD
+if git symbolic-ref -q HEAD >/dev/null; then
+  BRANCH=$(git symbolic-ref --short HEAD)
+else
+  echo "[warning] You are in a detached HEAD state. Pushing HEAD..."
+  BRANCH="HEAD"
+fi
 MESSAGE="${*:-NO MESSAGE SET}"
 
 TRACK_FILE="$HOME/.config/goproxy-rsa17826/modules.tsv"

@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1790551679,
-        "narHash": "sha256-ycR7B+IcwYz/CT+ob/3BMZqN2seMYFjgHZ5JTkBrwe0=",
+        "lastModified": 1791393120,
+        "narHash": "sha256-SDty34Ra4xYVMVMAdCSW/oBRtKj3NiTQFoN8nI6cUxM=",
         "owner": "rsa17826",
         "repo": "ap-slot-tracker",
-        "rev": "7595dc919e6d2db1811d54753408f25399529d54",
+        "rev": "9bf026f2d52f876102cf63e507ad71230e55cf6e",
         "type": "github"
       },
       "original": {
@@ -351,11 +351,11 @@
     "ext-vscode-math-on-selected-nums": {
       "flake": false,
       "locked": {
-        "lastModified": 1784153684,
-        "narHash": "sha256-efgaXEUyrG+3U7irtM+s8exnQxjJyXH2fTgoGOan7EU=",
+        "lastModified": 1791553384,
+        "narHash": "sha256-Laz1x6+xovH3dFYAmo0/K/sP7z8KBBTo2J9g8ZaPLSs=",
         "owner": "rsa17826",
         "repo": "vscode-ext---math-on-selected-nums",
-        "rev": "6e926668e97ceb3ae0d8ad92e3df40942e77f6a7",
+        "rev": "4266e441144203e679f38f3d10d775afb8e782d2",
         "type": "github"
       },
       "original": {
