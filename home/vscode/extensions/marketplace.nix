@@ -14,8 +14,8 @@
             {
               name = "ruff-toolkit";
               publisher = "sagarkarn";
-              version = "1.0.2";
-              hash = "sha256-iJJ+Cd7qFMaGLd87E4lfI9U4yvvzDt1H5scz4dzLKBU=";
+              version = "1.1.0";
+              hash = "sha256-e6nhJN1l3OdOBYuslPgG4yjxpe8ba5vs47F9/Etss3M=";
             }
             {
               name = "vscode-autohotkey2-lsp";
@@ -104,8 +104,8 @@
             {
               name = "shellcheck";
               publisher = "timonwong";
-              version = "0.40.0";
-              hash = "sha256-iwzqNk3ga0b1NU1/uix6EmeQA04/Th5hLWbMWwQRZtU=";
+              version = "0.46.4";
+              hash = "sha256-SixbZCIfKZrqlXQO9jcM0XENwwC6Uw7HT26rOs3D3+c=";
             }
             {
               name = "zubanls";
@@ -200,8 +200,8 @@
             {
               name = "godot-format";
               publisher = "dohe";
-              version = "0.5.3";
-              hash = "sha256-V733qabqnYPKGbg5wxR2NsKA57DUIhd9mMG7VmQOssM=";
+              version = "0.5.7";
+              hash = "sha256-YvWWXtyNpewI/RHZailj2+LsIsDAv/02yNsbyd8JCQE=";
             }
             {
               name = "githistory";
@@ -260,8 +260,8 @@
             {
               name = "basedpyright";
               publisher = "detachhead";
-              version = "1.40.0";
-              hash = "sha256-Z+RxIgOasqaH3THkcOqiggk+/v560g9QLHYzG40FgzM=";
+              version = "1.40.2";
+              hash = "sha256-nIewuZJxTKL5KYy36YvaYhYS8O6WEhqOd+5/zMzi81E=";
             }
             # {
             #   name = "synthwave-fluoromachine-cursor";
@@ -302,14 +302,14 @@
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.12401012";
-              hash = "sha256-tWHH8a91pIIwdEaNtMr0ux/WCPXrhoRzuAtL4Mw1gQ8=";
+              version = "2026.7.12811010";
+              hash = "sha256-M0RY0ao8VuyLuARql5r8/FT8FGvFelj1tYXhJxFGQVY=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.7.2026082601";
-              hash = "sha256-hTu3YsnUl2vGIGr9f/g9txpmALp1Kw9pJYsYp0MGcns=";
+              version = "2026.9.2026100801";
+              hash = "sha256-DPzmnFs3KjvCsLnqmezFUATuRdQznxLJZE10RWYXq3M=";
             }
             {
               name = "hexeditor";
@@ -393,7 +393,7 @@
               name = "typos-vscode";
               publisher = "tekumara";
               version = "0.1.56";
-              hash = "sha256-HZ3ssBu+WRdN4vRXtpQIuFjiiTtOHAPp9QOuac+l6nI=";
+              hash = "sha256-3na7btLQRIAb9EtHAHUSbLvdM/j/EJ9z0W5qv0Ysoz4=";
             }
             {
               name = "autolink";
@@ -404,8 +404,8 @@
             {
               name = "errorlens";
               publisher = "usernamehw";
-              version = "3.28.0";
-              hash = "sha256-7eu7y9IR1uxSFZ0IplDieFt3iWbcmdwf1lAcXq+S4C8=";
+              version = "3.29.0";
+              hash = "sha256-kK9Axp2tMUGZ/04VtL5hzg35zvnRIjHpnmCJt9OhHQ8=";
             }
             {
               name = "vscode-import-cost";
