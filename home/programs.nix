@@ -191,7 +191,7 @@ in
               })
             ];
           })
-          (llama-cpp.override { cudaSupport = true; })
+          (cudaPackages_12_8.pkgs.llama-cpp.override { cudaSupport = true; })
           typescript
           nodejs
           (writeShellScriptBin "pixieditor" ''
