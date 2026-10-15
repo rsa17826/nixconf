@@ -37,7 +37,7 @@ m.bind("+!\n", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" 
 -- m.bind("+!\n", hl.dsp.window.fullscreen_state({ client = 1, internal = 1 }))
 
 -- Lock
-m.bind("#l", hl.dsp.exec_cmd("shaderstack disable && hyprlock --no-fade-in && shaderstack enable"))
+m.bind("#l", hl.dsp.exec_cmd("shaderstack disable & hyprlock --no-fade-in && shaderstack enable"))
 -- m.bind("^#l", hl.dsp.exec_cmd("armLock"))
 
 -- Window management
