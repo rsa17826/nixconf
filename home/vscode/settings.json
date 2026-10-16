@@ -914,5 +914,4 @@
   "[c]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
-  "diffEditor.hideUnchangedRegions.enabled": true,
 }
