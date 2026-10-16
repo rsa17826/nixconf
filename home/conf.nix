@@ -407,9 +407,9 @@ in
               with pkgs;
               "${writeShellScript "fetch-repos" ''
                 GITHUB_USERNAME="rsa17826" GITHUB_TOKEN=$(cat "/run/secrets/GITHUB_TOKEN") ${nodejs}/bin/node /home/${userConfig.uname}/projects/gh-repo-list/scripts/fetch-repos.js
-                git add -A
-                git commit -m "repo list updated"
-                git push -u origin main
+                ${git}/bin/git add -A
+                ${git}/bin/git commit -m "repo list updated"
+                ${git}/bin/git push -u origin main
               ''}"
             );
           };
