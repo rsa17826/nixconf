@@ -400,30 +400,22 @@ in
       };
       services = {
         gh-repo-list-fetch-repos = {
+          path = with pkgs; [
+            git
+            gh
+          ];
           serviceConfig = {
             Type = "oneshot";
             WorkingDirectory = "/home/${userConfig.uname}/projects/gh-repo-list";
             ExecStart = (
               with pkgs;
               "${writeShellScript "fetch-repos" ''
-                set -euo pipefail
-
-                export GITHUB_USERNAME="rsa17826"
-                export GITHUB_TOKEN="$(cat /run/secrets/GITHUB_TOKEN)"
-
-                # never prompt, fail loudly instead
+                set -eu
                 export GIT_TERMINAL_PROMPT=0
-                export GIT_ASKPASS=${writeShellScript "askpass" ''
-                  case "$1" in
-                    Username*) echo "$GITHUB_USERNAME" ;;
-                    Password*) echo "$GITHUB_TOKEN" ;;
-                  esac
-                ''}
-                unset SSH_ASKPASS
 
-                ${nodejs}/bin/node /home/${userConfig.uname}/projects/gh-repo-list/scripts/fetch-repos.js
+                GITHUB_USERNAME="rsa17826" GITHUB_TOKEN=$(cat "/run/secrets/GITHUB_TOKEN") ${nodejs}/bin/node /home/${userConfig.uname}/projects/gh-repo-list/scripts/fetch-repos.js
                 ${git}/bin/git add -A
-                ${git}/bin/git commit -m "repo list updated"
+                ${git}/bin/git diff --cached --quiet || ${git}/bin/git commit -m "repo list updated"
                 ${git}/bin/git push -u origin main
               ''}"
             );
