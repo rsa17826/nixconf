@@ -379,7 +379,9 @@ in
   };
   documentation = {
     man = {
-      generateCaches = false;
+      cache = {
+        enable = false;
+      };
     };
     nixos = {
       enable = false;

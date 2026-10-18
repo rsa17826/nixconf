@@ -288,11 +288,11 @@
     };
     ap-slot-tracker = {
       url = "github:rsa17826/ap-slot-tracker";
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
+      # inputs = {
+      #   nixpkgs = {
+      #     follows = "nixpkgs";
+      #   };
+      # };
     };
     # freenet-core = {
     #   url = "github:freenet/freenet-core";
