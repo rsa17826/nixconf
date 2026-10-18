@@ -25,9 +25,7 @@
     },
     "ap-slot-tracker": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1792204704,
@@ -193,11 +191,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790295660,
-        "narHash": "sha256-0LxTAsTkieMzU4GOD6bOjM8dx+58FzHBkwU5FhOCqug=",
+        "lastModified": 1792364791,
+        "narHash": "sha256-4qalDWTEhxXUQEzgU8JnF48YpzIbiM9Ez+dX8CmFVUc=",
         "owner": "rsa17826",
         "repo": "dlman",
-        "rev": "af4c6113b024720041c7517af4b15431061e3958",
+        "rev": "fb4e7edf26a01852d3d2215871ec0b16bbc66bc0",
         "type": "github"
       },
       "original": {
@@ -610,7 +608,7 @@
         "hyprutils": "hyprutils",
         "hyprwayland-scanner": "hyprwayland-scanner",
         "hyprwire": "hyprwire",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems_3",
         "xdph": "xdph"
@@ -983,7 +981,7 @@
     "millennium": {
       "inputs": {
         "millennium-src": "millennium-src",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "dir": "packages/nix",
@@ -1064,6 +1062,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1780145889,
+        "narHash": "sha256-md0zn0RnwNvPyASas1yG5YUuwQ4ALA6ucL50l0DvqCo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8c50a710ddca43d7a530fb805ad55bde8d0141c5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1791734076,
         "narHash": "sha256-i5qk1kLiit98rRbh1AXmWBNT9QXC/y4l5Wk/u5EdpDQ=",
         "owner": "NixOS",
@@ -1078,7 +1092,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1781577229,
         "narHash": "sha256-lrp67w8AulE9Ks53n27I45ADSzbOCn4H+CNW1Ck8B+8=",
@@ -1094,7 +1108,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1792094642,
         "narHash": "sha256-LPFRbrCWWyNsdQLO3SX1B/5UMkFK0hfe7bZR6lENvpc=",
@@ -1234,7 +1248,7 @@
         "millennium": "millennium",
         "multi-game-launcher": "multi-game-launcher",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "perkins": "perkins",
         "pybrace": "pybrace",
         "quickshell": "quickshell",
