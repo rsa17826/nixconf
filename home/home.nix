@@ -16,18 +16,6 @@ let
   editconfBuilder = import ./editconf/editconf.nix { inherit pkgs lib; };
 in
 {
-  manual = {
-    html = {
-      enable = false;
-    };
-    json = {
-      enable = false;
-    };
-    manpages = {
-      enable = false;
-    };
-  };
-
   # ── DECLARE OPTIONS ──────────────────────────────────────────────────
   options = {
     myProfile = {
@@ -52,6 +40,17 @@ in
       editable = editconfBuilder config.myProfile.editableConfigs;
     in
     {
+      manual = {
+        html = {
+          enable = false;
+        };
+        json = {
+          enable = false;
+        };
+        manpages = {
+          enable = false;
+        };
+      };
       home = {
         file = editable.entries // {
           # allow easy access to flake lock for current booted gen
