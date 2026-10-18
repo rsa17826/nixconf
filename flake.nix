@@ -288,6 +288,11 @@
     };
     ap-slot-tracker = {
       url = "github:rsa17826/ap-slot-tracker";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
     };
     # freenet-core = {
     #   url = "github:freenet/freenet-core";
@@ -422,7 +427,7 @@
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
-                  # useGlobalPkgs = true;
+                  useGlobalPkgs = true;
                   # useUserPackages = true;
                   backupFileExtension = "backup";
                   extraSpecialArgs = args;

@@ -377,8 +377,20 @@ in
       ];
     };
   };
+  documentation = {
+    man = {
+      generateCaches = false;
+    };
+    nixos = {
+      enable = false;
+    };
+  };
+
   systemd = {
     services = {
+      NetworkManager-wait-online = {
+        enable = false;
+      };
       # nix-custom-gc = {
       #   description = "Custom GFS Garbage Collection";
       #   serviceConfig = {

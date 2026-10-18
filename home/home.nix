@@ -16,6 +16,18 @@ let
   editconfBuilder = import ./editconf/editconf.nix { inherit pkgs lib; };
 in
 {
+  manual = {
+    html = {
+      enable = false;
+    };
+    json = {
+      enable = false;
+    };
+    manpages = {
+      enable = false;
+    };
+  };
+
   # ── DECLARE OPTIONS ──────────────────────────────────────────────────
   options = {
     myProfile = {
