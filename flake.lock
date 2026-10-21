@@ -452,29 +452,6 @@
         "type": "github"
       }
     },
-    "go-autoclicker": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1779302064,
-        "narHash": "sha256-aG3MKO2PPbeEiPwFWbeM0qNa1KIECN77Ix6pajxkkMU=",
-        "owner": "rsa17826",
-        "repo": "go-autoclicker",
-        "rev": "fef425123295dd29928aba8504f837cc1610b38c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rsa17826",
-        "repo": "go-autoclicker",
-        "type": "github"
-      }
-    },
     "gowoify": {
       "inputs": {
         "flake-utils": [
@@ -1234,7 +1211,6 @@
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils_2",
-        "go-autoclicker": "go-autoclicker",
         "gowoify": "gowoify",
         "helium-flake": "helium-flake",
         "home-manager": "home-manager",
