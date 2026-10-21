@@ -530,21 +530,21 @@ in
             KillMode = "mixed";
           };
         };
-        autoclicker = {
-          description = "Autoclicker Daemon";
-          wantedBy = [ "graphical-session.target" ];
-          after = [
-            "graphical-session.target"
-            "input-manager.service"
-          ];
-          requires = [ "input-manager.service" ];
+        # autoclicker = {
+        #   description = "Autoclicker Daemon";
+        #   wantedBy = [ "graphical-session.target" ];
+        #   after = [
+        #     "graphical-session.target"
+        #     "input-manager.service"
+        #   ];
+        #   requires = [ "input-manager.service" ];
 
-          serviceConfig = {
-            ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/go-autoclicker startAutoclicker";
-            Restart = "on-failure";
-            RestartSec = "2s";
-          };
-        };
+        #   serviceConfig = {
+        #     ExecStart = "/etc/profiles/per-user/${userConfig.uname}/bin/go-autoclicker startAutoclicker";
+        #     Restart = "on-failure";
+        #     RestartSec = "2s";
+        #   };
+        # };
       };
     };
     # timers = {
