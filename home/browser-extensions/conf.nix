@@ -10,16 +10,12 @@
         "ExtensionSettings" =
           lib.genAttrs
             [
-              "mnjggcdmjocbbbhaepdhchncahnbgone"
-              "ocgpenflpmgnfapjedencafcfakcekcd"
-              "icallnadddjmdinamnolclfjanhfoafe"
-              "cclelndahbckbenkjhflpdbgdldlbecc"
-              "bppajinomefndbbmopljhbdfefnefdha"
-              "edibdbjcniadpccecjdfdjjppcpchdlm"
-              # "eimadpbcbfnmbkopoojfekhnkhdbieeh"
-              "ejddcgojdblidajhngkogefpkknnebdh"
-              "fbeffbjdlemaoicjdapfpikkikjoneco"
-              "donbcfbmhbcapadipfkeojnmajbakjdc"
+              "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock for YouTube - Skip Sponsorships
+              "icallnadddjmdinamnolclfjanhfoafe" # FastForward
+              "cclelndahbckbenkjhflpdbgdldlbecc" # Get cookies.txt LOCALLY
+              "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
+              "fbeffbjdlemaoicjdapfpikkikjoneco" # Scratch Addons
+              "donbcfbmhbcapadipfkeojnmajbakjdc" # Ruffle - Flash Emulator
             ]
             (k: {
               installation_mode = "force_installed";
@@ -30,25 +26,8 @@
   };
 }
 
-# ~/chrome extensions/dearrow
-# nebjniochfgmgoadjlnelfggcmomgopf
-
-# ~/chrome extensions/libredirect
-# oladmjdebphlnjjcnomfhhbfdldiimaf
-
-# ~/chrome extensions/stylus
-# clngdbkpkpeebahjckkjfobafhncgmne
-
-# ~/chrome extensions/violentmonkey
-# gindolcalhpefcmpmladkchjkfonglfa
-
 # edibdbjcniadpccecjdfdjjppcpchdlm
 
-# ~/chrome extensions/xdm NEW extension
-# baejcnbldekpcbiogipmdeohckapojkf
-
-# ejddcgojdblidajhngkogefpkknnebdh
-# ocgpenflpmgnfapjedencafcfakcekcd
 # mnjggcdmjocbbbhaepdhchncahnbgone
 
 # jcokkipkhhgiakinbnnplhkdbjbgcgpe

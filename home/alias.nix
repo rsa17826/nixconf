@@ -29,6 +29,7 @@ let
     go = "go-get-proxy";
     gcusd = "customGC;usd";
     ee = "thunar";
+    gc = "git clone";
     qs-reload = "fuser -k 8765/tcp; pkill -9 quicksh; qs -d -p ~/nixconf/quickshell/bar/";
     # "(/|(../){0-6}..(/|))" = "cd \1";
     #

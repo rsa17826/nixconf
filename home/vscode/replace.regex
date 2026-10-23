@@ -35,6 +35,10 @@
 @replace #!/usr/bin/env $1
 @endregex
 
+@regex ^#!([a-z])
+@replace #!/usr/bin/env $1
+@endregex
+
 @file \.sh|/[^/.]+$
 @regex #!((?:ba|z)?sh)
 @replace #!/usr/bin/env $1
