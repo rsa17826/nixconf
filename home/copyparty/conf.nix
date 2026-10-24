@@ -16,6 +16,7 @@
           8086
         ];
         # use booleans to set binary flags
+        win = false;
         no-reload = true;
         dedup = true;
         e2dsa = true;
