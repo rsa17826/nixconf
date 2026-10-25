@@ -6,6 +6,12 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
+              name = "all-files-formatter";
+              publisher = "th3pool";
+              version = "0.4.2";
+              hash = "sha256-45eAuYZZaG5Zp4OhFJpbRf3P+eJ94nkpZFLyRIBfmco=";
+            }
+            {
               name = "vscode-as3mxml";
               publisher = "bowlerhatllc";
               version = "1.24.0";
