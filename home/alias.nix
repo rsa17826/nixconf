@@ -53,6 +53,7 @@ let
     "-" = "cd -";
     "~" = "cd ~";
     #
+    "grep -h" = "grep --help";
     "+x" = "chmod +x";
     "mangohud" = "LD_LIBRARY_PATH=/run/opengl-driver/lib mangohud";
   };

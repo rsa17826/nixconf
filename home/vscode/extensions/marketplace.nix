@@ -26,8 +26,8 @@
             {
               name = "lua";
               publisher = "sumneko";
-              version = "3.19.1";
-              hash = "sha256-Hb9gTIzCjZKYFz5pW3IWo/09Utt1vE6MuCQqwyDYZsQ=";
+              version = "3.19.2";
+              hash = "sha256-0a4Ls6Lk1YL7la6o0WuVcVxlj1/XbfK/quROA2wJvtk=";
             }
             {
               name = "shader";
@@ -50,8 +50,8 @@
             {
               name = "Go";
               publisher = "golang";
-              version = "0.57.2";
-              hash = "sha256-9yeQzGo5N0Szl9QH8C/pUJfMJNIMhVdrJy7TJ9d7RdQ=";
+              version = "0.59.0";
+              hash = "sha256-zgidCgwQb3f0aUshyup2zZF6SN5y4/gzzlUKiEZm9To=";
             }
             {
               name = "csstools-design-tokens";
@@ -104,8 +104,8 @@
             {
               name = "shellcheck";
               publisher = "timonwong";
-              version = "0.46.4";
-              hash = "sha256-SixbZCIfKZrqlXQO9jcM0XENwwC6Uw7HT26rOs3D3+c=";
+              version = "0.48.4";
+              hash = "sha256-nKA1oYcQG74pVtG+GuYTMKD4ud0TWfnAmdc91ciYwYA=";
             }
             {
               name = "zubanls";
@@ -134,26 +134,26 @@
             {
               name = "qt-python";
               publisher = "theqtcompany";
-              version = "1.17.0";
-              hash = "sha256-PfjWiu3KbZeWOY0LOQeLdx11WGAeCOyxyB1DeGGj1oA=";
+              version = "1.17.1";
+              hash = "sha256-1/gajcQHHjl22UlNzolvqlkdzCElBNkR/cgtbNlPBYE=";
             }
             {
               name = "qt-core";
               publisher = "theqtcompany";
-              version = "1.17.0";
-              hash = "sha256-knBG17lcrr3NP5sxMtbgG6coiEM//caEeei2NWKfJVk=";
+              version = "1.17.1";
+              hash = "sha256-ZqiMHI6SgMLIBcxxsoPXxhqditXXtwZgXwxXv1PKLI8=";
             }
             {
               name = "qt-ui";
               publisher = "theqtcompany";
-              version = "1.17.0";
-              hash = "sha256-iSireRdao34rW82UBpXP0B4oac5zoGsTp7B8aQombSo=";
+              version = "1.17.1";
+              hash = "sha256-uFO4u2N9Pgg+NoKu4JBPaHhRG7Alz9nucVvcFIS/HLU=";
             }
             {
               name = "qt-qml";
               publisher = "theqtcompany";
-              version = "1.17.0";
-              hash = "sha256-4P0v3r1pHgLKR7Jt3Je3kBHSwVZ2djWlxQOmAbTsM/0=";
+              version = "1.17.1";
+              hash = "sha256-0QDsMojUacGBeCKzaUhSFOGDOhfuETYVc46e0MvjFIY=";
             }
             {
               name = "indent-jump";
@@ -296,14 +296,14 @@
             {
               name = "debugpy";
               publisher = "ms-python";
-              version = "2026.7.12811010";
-              hash = "sha256-M0RY0ao8VuyLuARql5r8/FT8FGvFelj1tYXhJxFGQVY=";
+              version = "2026.7.12951012";
+              hash = "sha256-ObHbygypQKHEJiT7H71oxcZ8k0mRZzFZFJStmLpKbUo=";
             }
             {
               name = "python";
               publisher = "ms-python";
-              version = "2026.9.2026100801";
-              hash = "sha256-DPzmnFs3KjvCsLnqmezFUATuRdQznxLJZE10RWYXq3M=";
+              version = "2026.11.2026102301";
+              hash = "sha256-YBUVmd6Ujae2NspqiU+bCvDctkd35j7h9m1XLUFYN9o=";
             }
             {
               name = "hexeditor";
@@ -386,8 +386,8 @@
             {
               name = "typos-vscode";
               publisher = "tekumara";
-              version = "0.1.56";
-              hash = "sha256-3na7btLQRIAb9EtHAHUSbLvdM/j/EJ9z0W5qv0Ysoz4=";
+              version = "0.1.57";
+              hash = "sha256-Fev0FZ/2qRdbBmjOGjRC+kSc4NSYx0BmuST6MrFXHKM=";
             }
             {
               name = "autolink";
@@ -398,8 +398,8 @@
             {
               name = "errorlens";
               publisher = "usernamehw";
-              version = "3.29.0";
-              hash = "sha256-kK9Axp2tMUGZ/04VtL5hzg35zvnRIjHpnmCJt9OhHQ8=";
+              version = "3.30.0";
+              hash = "sha256-yGhoWUQvxo21rkdpgS85CAgihQdS193+qux28e0sZ0g=";
             }
             {
               name = "vscode-import-cost";
