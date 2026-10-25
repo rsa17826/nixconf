@@ -6,12 +6,6 @@
         default = {
           extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "all-files-formatter";
-              publisher = "th3pool";
-              version = "0.4.2";
-              hash = "sha256-45eAuYZZaG5Zp4OhFJpbRf3P+eJ94nkpZFLyRIBfmco=";
-            }
-            {
               name = "vscode-as3mxml";
               publisher = "bowlerhatllc";
               version = "1.24.0";
@@ -226,12 +220,6 @@
               publisher = "exodiusstudios";
               version = "1.10.4";
               hash = "sha256-FvfjPpQsgCsnY1BylhLCM/qDQChf9/iTr3cKkCGfMVI=";
-            }
-            {
-              name = "workspace-formatter";
-              publisher = "franneck94";
-              version = "1.2.2";
-              hash = "sha256-YooThmx+FUMD9eSaiI1NHO2AZppSBHtYdFJ9La4k0pQ=";
             }
             {
               name = "godot-tools";

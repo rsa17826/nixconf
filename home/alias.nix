@@ -30,6 +30,8 @@ let
     gcusd = "customGC;usd";
     ee = "thunar";
     gc = "git clone";
+    ga = "git rm -r --cached --ignore-unmatch * -f && git add -A && VISUAL=echo git commit --amend";
+    gA = "git add -A";
     qs-reload = "fuser -k 8765/tcp; pkill -9 quicksh; qs -d -p ~/nixconf/quickshell/bar/";
     # "(/|(../){0-6}..(/|))" = "cd \1";
     #
