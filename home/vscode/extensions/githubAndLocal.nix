@@ -205,6 +205,12 @@ in
             #   extName = "csharp";
             #   extCreator = "muhammadsammy";
             # })
+            (buildFromFlake {
+              src = ext-vscode-vsc-format-all;
+              extName = "format-all-files-patient";
+              extCreator = "rssaromeo";
+              npmDepsHash = "sha256-NxWefijJkipSMHDLdcgJi0NE4RWkW9BOP5b3vODEd2o=";
+            })
             (buildSimpleExt {
               src = vsctextgen;
               extName = "vsctextgen";

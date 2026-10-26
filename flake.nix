@@ -307,6 +307,10 @@
       url = "github:rsa17826/vscode-ext---math-on-selected-nums";
       flake = false;
     };
+    ext-vscode-vsc-format-all = {
+      url = "github:rsa17826/vsc-format-all";
+      flake = false;
+    };
     ext-vscode-void-color-theme = {
       url = "github:rsa17826/vscode-void-color-theme";
       flake = false;

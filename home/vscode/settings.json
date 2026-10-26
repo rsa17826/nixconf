@@ -127,6 +127,7 @@
       "rssaromeo.auto-regex",
       // "rssaromeo.4-to-2-formatter",
       "rssaromeo.auto-regex",
+      "rssaromeo.format-all-files-patient",
     ],
     "diffEditor.ignoreTrimWhitespace": true,
   },
@@ -231,8 +232,10 @@
       "rssaromeo.auto-regex",
       "rssaromeo.auto-regex",
       "rssaromeo.auto-regex",
+      "rssaromeo.format-all-files-patient",
     ],
   },
+  "formatAllFiles.settleMs": 0,
   "godotTools.editorPath.godot4": "/etc/profiles/per-user/nyix/bin/godot-newest",
   "ahk++.file.interpreterPathV2": "D:\\Program Files\\AutoHotkey\\v2\\AutoHotkey64.exe",
   // "files.autoSaveWhenNoErrors": true,
@@ -912,9 +915,16 @@
   "as3mxml.lint.enabled": true,
   "as3mxml.asconfigc.verboseOutput": true,
   "[c]": {
-    "editor.defaultFormatter": "xaver.clang-format"
+    "editor.defaultFormatter": "xaver.clang-format",
   },
   "[jsonl]": {
-    "editor.defaultFormatter": "rssaromeo.auto-regex"
+    "editor.defaultFormatter": "rssaromeo.auto-regex",
+  },
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "[ignore]": {
+    "editor.defaultFormatter": "xqvvu.shell-tidy-vscode",
+  },
+  "[csv]": {
+    "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
 }

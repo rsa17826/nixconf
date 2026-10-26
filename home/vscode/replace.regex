@@ -573,3 +573,8 @@ $1
 @replace True
 @endregex
 
+! @regex "multiFormatter\.formatterList": \[[^\]]+(?<!\s*"local\.format-all-files-patient",)
+! @errgroup 0
+! @info
+! @endregex
+

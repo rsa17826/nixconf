@@ -380,6 +380,22 @@
         "type": "github"
       }
     },
+    "ext-vscode-vsc-format-all": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793018210,
+        "narHash": "sha256-35JYEDYLnatZucjkLuc3rLFVcebOpayGTE1ud0iIDTQ=",
+        "owner": "rsa17826",
+        "repo": "vsc-format-all",
+        "rev": "0b3a87cb628d0957d68d79f94abb3c4ba0dadf44",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "vsc-format-all",
+        "type": "github"
+      }
+    },
     "file-sorter": {
       "inputs": {
         "nixpkgs": [
@@ -1209,6 +1225,7 @@
         "ext-textreplace": "ext-textreplace",
         "ext-vscode-math-on-selected-nums": "ext-vscode-math-on-selected-nums",
         "ext-vscode-void-color-theme": "ext-vscode-void-color-theme",
+        "ext-vscode-vsc-format-all": "ext-vscode-vsc-format-all",
         "file-sorter": "file-sorter",
         "flake-utils": "flake-utils_2",
         "gowoify": "gowoify",
