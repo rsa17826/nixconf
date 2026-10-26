@@ -210,6 +210,11 @@ in
               extName = "format-all-files-patient";
               extCreator = "rssaromeo";
               npmDepsHash = "sha256-NxWefijJkipSMHDLdcgJi0NE4RWkW9BOP5b3vODEd2o=";
+              nativeBuildInputs = with pkgs; [
+                pkg-config
+                python3
+              ];
+              buildInputs = with pkgs; [ libsecret ];
             })
             (buildSimpleExt {
               src = vsctextgen;
