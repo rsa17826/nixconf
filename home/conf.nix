@@ -499,7 +499,6 @@ in
           partOf = [ "graphical-session.target" ];
           path = with pkgs; [
             xdg-utils
-            # vscodium
           ];
 
           serviceConfig = {

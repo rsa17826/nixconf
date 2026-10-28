@@ -9,6 +9,9 @@
     # audacity = {
     #   url = "github:NixOS/nixpkgs/4684fd6b0c01e4b7d99027a34c93c2e09ecafee2";
     # };
+    vscodium = {
+      url = "https://github.com/NixOS/nixpkgs/archive/b153953686370a8dc14231db115b058b137644de.tar.gz";
+    };
     flake-utils = {
       url = "github:numtide/flake-utils";
     };

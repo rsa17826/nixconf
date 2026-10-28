@@ -211,7 +211,7 @@ in
           calibre
           gh
           portablemc
-          dgop # process stat screen thing
+          dux-gop # process stat screen thing
           bc # fp math in bash
           gamescope
           (pkgFromInp "quickshell" "default") # widget thing
@@ -223,7 +223,6 @@ in
           uwsm
           # typos
           typos-lsp # spellchecker
-          # keepass # password manager
           python313
           python313Packages.py7zr
           godot # programing

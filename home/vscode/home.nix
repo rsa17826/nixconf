@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   ln,
   userConfig,
   ...
@@ -14,7 +15,7 @@
       enable = true;
       mutableExtensionsDir = false;
       package = (
-        pkgs.vscodium.override {
+        (inputs.vscodium.legacyPackages.${pkgs.stdenv.hostPlatform.system}.vscodium).override {
           commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
         }
       );
