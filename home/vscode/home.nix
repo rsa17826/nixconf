@@ -3,8 +3,26 @@
   inputs,
   ln,
   userConfig,
+  config,
   ...
 }:
+let
+  oldPkgs = import inputs.vscodium {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = {
+      allowUnfree = false;
+    };
+    overlays = [
+      (import ./overlays/dokiTheme/conf.nix)
+      (import ./overlays/owoify/conf.nix)
+      (import ./overlays/focusFollowsMouse/conf.nix)
+      ((import ./overlays/customFolderIcons/conf.nix) userConfig)
+      (import ./overlays/toLocaleStringFix/conf.nix)
+      # (import ./overlays/pythonSmallSpaces/conf.nix)
+      (import ./overlays/updateHash/conf.nix)
+    ];
+  };
+in
 {
   imports = [
     ./extensions/githubAndLocal.nix
@@ -14,11 +32,9 @@
     vscodium = {
       enable = true;
       mutableExtensionsDir = false;
-      package = (
-        (inputs.vscodium.legacyPackages.${pkgs.stdenv.hostPlatform.system}.vscodium).override {
-          commandLineArgs = "--password-store=basic --enable-blink-features=MiddleClickAutoscroll";
-        }
-      );
+      package = oldPkgs.vscodium.override {
+        commandLineArgs = "--password-store=basic";
+      };
     };
   };
   # Use the full XDG path so VSCodium actually sees them
