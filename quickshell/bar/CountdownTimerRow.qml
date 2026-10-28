@@ -54,7 +54,7 @@ Item {
         return true
       if (t.id === soonestId)
         return true
-      return isSameDay(t.targetTimestamp)
+      return isSameDay(root.effectiveTarget(t, now))
     }).sort((e, ee) => {
       // Unset ("set timer") slots always sort to the far right, regardless
       // of which side of the comparison they're on. Otherwise, ascending
@@ -67,7 +67,7 @@ Item {
         return 1
       if (eeUnset)
         return -1
-      return e.targetTimestamp - ee.targetTimestamp
+      return root.effectiveTarget(e, now) - root.effectiveTarget(ee, now)
     })
   }
 
@@ -211,8 +211,19 @@ Item {
           name: t.name,
           id: t.id,
           targetTimestamp: t.targetTimestamp,
+          duration: t.duration || 0,
           url: t.url || ""
         }))
+  }
+
+  // The timestamp this timer is currently counting toward: the end
+  // (target+duration) once the start has passed but the duration hasn't
+  // run out yet, otherwise the target itself.
+  function effectiveTarget(t, now) {
+    const d = t.duration || 0
+    if (d > 0 && t.targetTimestamp > 0 && t.targetTimestamp <= now && now < t.targetTimestamp + d)
+      return t.targetTimestamp + d
+    return t.targetTimestamp
   }
 
   // Steps `ts` forward by `repeatValue` (ms) until it's strictly after
@@ -239,6 +250,7 @@ Item {
           targetTimestamp: 0,
           startTimestamp: Date.now(),
           repeatValue: 0,
+          duration: 0,
           url: ""
         } : t)
     } else {
@@ -252,9 +264,10 @@ Item {
   }
 
   // Create or update a timer by name. If it doesn't exist yet, create it.
-  function setByName(name, targetTimestamp, url) {
+  function setByName(name, targetTimestamp, url, duration) {
     const ts = targetTimestamp || 0
     const u = url || ""
+    const dur = duration || 0
     const existing = root.findByName(name)
     if (existing) {
       root.timers = root.timers.map(t => t.id === existing.id ? {
@@ -263,6 +276,7 @@ Item {
           targetTimestamp: ts,
           startTimestamp: Date.now(),
           repeatValue: t.repeatValue || 0,
+          duration: dur,
           url: u
         } : t)
     } else {
@@ -271,6 +285,7 @@ Item {
         id: root.nextId,
         name: name,
         targetTimestamp: ts,
+        duration: dur,
         url: u,
         startTimestamp: Date.now(),
         repeatValue: 0
@@ -349,10 +364,12 @@ Item {
       const now = Date.now()
       let changed = false
       const updated = root.timers.map(t => {
-        if (t.repeatValue > 0 && t.targetTimestamp > 0 && t.targetTimestamp <= now) {
+        // A timer with a duration isn't done until target+duration has passed.
+        const dur = t.duration || 0
+        if (t.repeatValue > 0 && t.targetTimestamp > 0 && t.targetTimestamp + dur <= now) {
           changed = true
           return Object.assign({}, t, {
-            targetTimestamp: root.nextOccurrence(t.targetTimestamp, t.repeatValue, now),
+            targetTimestamp: root.nextOccurrence(t.targetTimestamp, t.repeatValue, now - dur),
             startTimestamp: Date.now()
           })
         }
@@ -399,6 +416,7 @@ Item {
 
         delegate: CountdownTimer {
           repeatValue: modelData.repeatValue || 0
+          duration: modelData.duration || 0
           startTimestamp: modelData.startTimestamp || 0
           targetTimestamp: modelData.targetTimestamp
           timerId: modelData.id

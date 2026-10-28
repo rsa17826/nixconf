@@ -46,6 +46,9 @@ Item {
   // expired, targetTimestamp keeps having repeatValue added until it's
   // back in the future. No progress bar while repeating.
   property real repeatValue: 0
+  // ms. When >0, once targetTimestamp has passed the timer keeps running
+  // and counts down to targetTimestamp+duration instead (see showingEnd()).
+  property real duration: 0
   property real startTimestamp: 0
   property real targetTimestamp: 0
 
@@ -150,7 +153,7 @@ Item {
   function isSameDay() {
     if (root.targetTimestamp <= 0)
       return false
-    const t = new Date(root.targetTimestamp)
+    const t = new Date(root.effectiveTarget())
     const n = clock.date
     return t.getFullYear() === n.getFullYear() && t.getMonth() === n.getMonth() && t.getDate() === n.getDate()
   }
@@ -167,8 +170,19 @@ Item {
   }
 
   // ── Countdown math ───────────────────────────────────────────────
+  // True while the start has passed but target+duration hasn't: the timer
+  // is then counting down to its END rather than its start.
+  function showingEnd() {
+    if (!(root.duration > 0) || root.targetTimestamp <= 0)
+      return false
+    const now = clock.date.getTime()
+    return root.targetTimestamp <= now && now < root.targetTimestamp + root.duration
+  }
+  function effectiveTarget() {
+    return root.showingEnd() ? root.targetTimestamp + root.duration : root.targetTimestamp
+  }
   function msLeft() {
-    return root.targetTimestamp - clock.date.getTime()
+    return root.effectiveTarget() - clock.date.getTime()
   }
 
   // Load the draft either from the currently-set timer, or default to
@@ -231,7 +245,8 @@ Item {
   Rectangle {
     id: pill
 
-    color: "transparent"
+    // Tinted background marks "this is counting to the end time"
+    color: root.showingEnd() ? "#66aa0000" : "transparent"
     implicitHeight: 14
     implicitWidth: label.implicitWidth + 4 + (root.url ? linkBtn.implicitWidth + 4 : 0)
 
@@ -325,8 +340,9 @@ Item {
     Rectangle {
       id: progressFill
 
-      readonly property real fraction: Math.max(0, Math.min(1, (root.targetTimestamp - clock.date.getTime()) / span))
-      readonly property real span: Math.max(1, root.targetTimestamp - root.startTimestamp)
+      // While showing the end time the bar spans target -> target+duration.
+      readonly property real fraction: Math.max(0, Math.min(1, (root.effectiveTarget() - clock.date.getTime()) / span))
+      readonly property real span: Math.max(1, root.showingEnd() ? root.duration : root.targetTimestamp - root.startTimestamp)
 
       color: root.timerColor()
       height: parent.height

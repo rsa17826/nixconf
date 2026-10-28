@@ -4,9 +4,12 @@
 // unless you add a shared-secret header check below.
 //
 // API:
-//   GET    /timers            -> list named timers [{name,id,targetTimestamp,url}]
-//   POST   /timers            body: {name, targetTimestamp, url?}  -> create/update by name
-//   PUT    /timers/<name>     body: {targetTimestamp, url?}         -> update by name
+//   GET    /timers            -> list named timers [{name,id,targetTimestamp,duration,url}]
+//   POST   /timers            body: {name, targetTimestamp, duration?, url?}  -> create/update by name
+//   PUT    /timers/<name>     body: {targetTimestamp, duration?, url?}         -> update by name
+//   duration is in ms. Once targetTimestamp has passed, a timer with a
+//   duration keeps running until targetTimestamp+duration (shown as an
+//   "ends in" countdown with a tinted background).
 //   DELETE /timers/<name>                                           -> clear/remove by name
 import Quickshell
 import Quickshell.Io
@@ -34,14 +37,14 @@ Item {
           error: "name required"
         }
       } else {
-        timerRow.setByName(body.name, body.targetTimestamp || Date.now(), body.url || "")
+        timerRow.setByName(body.name, body.targetTimestamp || Date.now(), body.url || "", body.duration || 0)
         respBody = {
           ok: true
         }
       }
     } else if (method === "PUT" && path.startsWith("/timers/")) {
       const name = decodeURIComponent(path.substring("/timers/".length))
-      timerRow.setByName(name, body.targetTimestamp || Date.now(), body.url || "")
+      timerRow.setByName(name, body.targetTimestamp || Date.now(), body.url || "", body.duration || 0)
       respBody = {
         ok: true
       }
