@@ -35,7 +35,11 @@ def compile_pattern(pattern: str):
   group_num = 0
   while i < len(pattern):
     c = pattern[i]
-    if c == "*":
+    if pattern.startswith("**", i):
+      group_num += 1
+      regex_parts.append("(.*)")
+      i += 2
+    elif c == "*":
       group_num += 1
       regex_parts.append("([^/]*)")
       i += 1
