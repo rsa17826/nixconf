@@ -235,7 +235,6 @@
       "rssaromeo.format-all-files-patient",
     ],
   },
-  "formatAllFiles.settleMs": 0,
   "godotTools.editorPath.godot4": "/etc/profiles/per-user/nyix/bin/godot-newest",
   "ahk++.file.interpreterPathV2": "D:\\Program Files\\AutoHotkey\\v2\\AutoHotkey64.exe",
   // "files.autoSaveWhenNoErrors": true,
@@ -931,4 +930,5 @@
     "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
   "formatAllFiles.exclude": "{**/{node_modules,.godot,.git,dist,out,build,.vscode-test,.next,coverage,.cache}/**,**/*.{png,jpg,jpeg,webp,jpegxl,tiff,ttf,otf,docx,gd.uid,svg,tres,import,log,cache,scn,mp3,mp4,wav,webm,mkv}}",
+  // "formatAllFiles.settleMs": 0,
 }
