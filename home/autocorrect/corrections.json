@@ -5284,6 +5284,7 @@
   "owrked": "worked",
   "hjow": "how",
   "puhs": "push",
+  "push'": "push",
   "[p": { "replace": "p", "noEndActionRequired": true },
   "p[u": { "replace": "pu", "noEndActionRequired": true },
   "m,": { "replace": ",", "noEndActionRequired": true },

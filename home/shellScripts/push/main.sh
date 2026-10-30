@@ -156,20 +156,22 @@ run_prepush() {
   fi
 
   echo "Running prepush.sh..."
-  bash "$script"
+  if ! bash "$script"; then
+    exit $?
+  fi
 }
+
+if [ "$SKIP_HOOKS" != true ]; then
+  if ! run_prepush; then
+    exit 1
+  fi
+fi
 
 git add -A
 if ! git diff --cached --quiet; then
   git commit -m "$MESSAGE"
 else
   echo "No changes to commit."
-fi
-
-if [ "$SKIP_HOOKS" != true ]; then
-  if ! run_prepush; then
-    exit 1
-  fi
 fi
 
 REMOTES=$(git remote)

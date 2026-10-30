@@ -170,11 +170,11 @@ GODOT
 @flags gm
 @endregex
 
-@name replace print with log.pp
-@regex (?<=  |^)print\(
-@replace log.pp(
-@flags gm
-@file \.gd$
+! @name replace print with log.pp
+! @regex (?<=  |^)print\(
+! @replace log.pp(
+! @flags gm
+! @file \.gd$
 
 @name instance to instantiate
 @file \.gd$

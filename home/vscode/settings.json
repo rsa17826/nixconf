@@ -927,4 +927,8 @@
   "[csv]": {
     "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
+  "[gdresource]": {
+    "editor.defaultFormatter": "rssaromeo.auto-regex",
+  },
+  "formatAllFiles.exclude": "{**/{node_modules,.godot,.git,dist,out,build,.vscode-test,.next,coverage,.cache}/**,**/*.{png,jpg,jpeg,webp,jpegxl,tiff,ttf,otf,docx,gd.uid,svg,tres,import,log,cache,scn,mp3,mp4,wav,webm,mkv}}",
 }
