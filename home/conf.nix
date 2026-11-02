@@ -449,7 +449,18 @@ in
 
           serviceConfig = {
             ExecStart = "${pkgs.writeShellScript "flashback-start" ''
-              gpu-screen-recorder -w screen -f 30 -s 1920x1080 -a default_output -r 300 -c mp4 -k h264_vulkan -bm qp -q high -fm cfr -o ~/videos/flashback \
+              gpu-screen-recorder \
+              -w region \
+              -region 1920x1052+0+1080 \
+              -f 30 \
+              -a default_output \
+              -r 300 \
+              -c mp4 \
+              -k h264_vulkan \
+              -bm qp \
+              -q high \
+              -fm cfr \
+              -o ~/videos/flashback \
                 > >(while IFS= read -r line; do
                       echo "$line"
                       [[ "$line" == *"update fps"* ]] && systemd-notify WATCHDOG=1
