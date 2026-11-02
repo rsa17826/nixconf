@@ -16,6 +16,11 @@ let
       public = false;
     }
     {
+      name = "tts";
+      port = 47429;
+      public = false;
+    }
+    {
       name = "nullserv";
       port = 7542;
       public = false;
