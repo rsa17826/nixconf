@@ -16,6 +16,11 @@ let
       public = false;
     }
     {
+      name = "pl2wba-level-viewer";
+      port = 52853;
+      public = false;
+    }
+    {
       name = "tts";
       port = 47429;
       public = false;
