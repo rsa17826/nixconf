@@ -578,3 +578,11 @@ $1
 ! @info
 ! @endregex
 
+
+@file /home/nyix/homestuck/whiten-to-grey\.sh
+@regex /\./
+@replace /
+@endregex
+@regex -white(\.\w+"; then)
+@replace $1
+@endregex
