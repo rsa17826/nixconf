@@ -19,14 +19,15 @@ Item {
     "text": "#c4cce8",
     "border": "#1e1e40"
   }
-  // nextId / timers live on jsonAdapter (the single source of truth);
-  // these are plain aliases, not bindings, so there's no cycle.
-  property alias nextId: jsonAdapter.nextId
-  property alias timers: jsonAdapter.timers
+  readonly property real dayMs: 24 * 60 * 60 * 1000
   // How wide this row is allowed to grow before it must scroll instead of
   // pushing further right (e.g. bound to the space before the next bar
   // section, so timers never render underneath it). <=0 means unbounded.
   property real maxWidth: -1
+  // nextId / timers live on jsonAdapter (the single source of truth);
+  // these are plain aliases, not bindings, so there's no cycle.
+  property alias nextId: jsonAdapter.nextId
+  property alias timers: jsonAdapter.timers
 
   // Single/unset timers always show. Repeating timers (repeatValue > 0)
   // are hidden from the row unless they're within 12h of firing, OR
@@ -127,6 +128,17 @@ Item {
     root.nextId += 1
     saveTimers()
   }
+  function advance(ts, repeatValue) {
+    const next = ts + repeatValue
+    // Sub-day repeats are elapsed time, so leave them alone
+    if (repeatValue % root.dayMs !== 0)
+      return next
+    // Offset is in minutes, positive west of UTC.
+    // Spring forward: offset drops (e.g. 300 -> 240), so subtract an hour.
+    // Fall back: offset rises (e.g. 240 -> 300), so add an hour.
+    const delta = new Date(next).getTimezoneOffset() - new Date(ts).getTimezoneOffset()
+    return next + delta * 60000
+  }
 
   // Remove a named timer entirely (or reset it in place, per removeTimer's
   // existing min-1 rule).
@@ -150,6 +162,16 @@ Item {
       return pathJoin("/home", uname, ".config", ns)
     console.error("NO VARS SET - CAN'T FIND CONFIG LOCATION")
     return ""
+  }
+
+  // The timestamp this timer is currently counting toward: the end
+  // (target+duration) once the start has passed but the duration hasn't
+  // run out yet, otherwise the target itself.
+  function effectiveTarget(t, now) {
+    const d = t.duration || 0
+    if (d > 0 && t.targetTimestamp > 0 && t.targetTimestamp <= now && now < t.targetTimestamp + d)
+      return t.targetTimestamp + d
+    return t.targetTimestamp
   }
   // Guarantees there's always exactly one trailing unset ({targetTimestamp:0})
   // slot to click on. Called after loading from disk (where every saved
@@ -190,6 +212,7 @@ Item {
       if (!(t.repeatValue > 0))
         return t.targetTimestamp >= dayStart && t.targetTimestamp < dayEnd
       let ts = t.targetTimestamp
+      ts = root.advance(ts, t.repeatValue)
       const cap = ts + 366 * 24 * 60 * 60 * 1000
       while (ts < dayEnd && ts < cap) {
         if (ts >= dayStart)
@@ -216,19 +239,10 @@ Item {
         }))
   }
 
-  // The timestamp this timer is currently counting toward: the end
-  // (target+duration) once the start has passed but the duration hasn't
-  // run out yet, otherwise the target itself.
-  function effectiveTarget(t, now) {
-    const d = t.duration || 0
-    if (d > 0 && t.targetTimestamp > 0 && t.targetTimestamp <= now && now < t.targetTimestamp + d)
-      return t.targetTimestamp + d
-    return t.targetTimestamp
-  }
-
   // Steps `ts` forward by `repeatValue` (ms) until it's strictly after
   // `fromMs`. repeatValue <= 0 returns `ts` unchanged (no repeat).
   function nextOccurrence(ts, repeatValue, fromMs) {
+    ts = root.advance(ts, repeatValue)
     if (!(repeatValue > 0))
       return ts
     while (ts <= fromMs)
@@ -415,8 +429,8 @@ Item {
         model: root.visibleTimers
 
         delegate: CountdownTimer {
-          repeatValue: modelData.repeatValue || 0
           duration: modelData.duration || 0
+          repeatValue: modelData.repeatValue || 0
           startTimestamp: modelData.startTimestamp || 0
           targetTimestamp: modelData.targetTimestamp
           timerId: modelData.id
