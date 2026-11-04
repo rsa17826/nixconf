@@ -191,11 +191,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792407055,
-        "narHash": "sha256-Mwol3g5uhOshvgqgjI2EnSDe7F7pPh+9/GJr5O44bfY=",
+        "lastModified": 1793748634,
+        "narHash": "sha256-cBfd82RHeZc0iEoWxq8a5Ezz0EcflL2/joXF2HbmmQA=",
         "owner": "rsa17826",
         "repo": "dlman",
-        "rev": "a6a290061b1287527d5386e7b78c62b762115353",
+        "rev": "452bf8d4c6c4e992ff2de8ce76523ba25e74ce05",
         "type": "github"
       },
       "original": {
@@ -383,11 +383,11 @@
     "ext-vscode-vsc-format-all": {
       "flake": false,
       "locked": {
-        "lastModified": 1793463540,
-        "narHash": "sha256-/MyBPIBekngi7xShv7XpfCzxXzkO8A/ySZl/JWKFrJE=",
+        "lastModified": 1793793643,
+        "narHash": "sha256-BmfY1VrbxQbApFmHY1BX4iPH+g5yE9rMPt+lkQlsjeg=",
         "owner": "rsa17826",
         "repo": "vsc-format-all",
-        "rev": "887e70bbc52087a8c6c57ca5d70fb388d1d854eb",
+        "rev": "34eefe64878ebbb66f654a8cdb1b533300d18025",
         "type": "github"
       },
       "original": {
