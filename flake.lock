@@ -383,11 +383,11 @@
     "ext-vscode-vsc-format-all": {
       "flake": false,
       "locked": {
-        "lastModified": 1793793643,
-        "narHash": "sha256-BmfY1VrbxQbApFmHY1BX4iPH+g5yE9rMPt+lkQlsjeg=",
+        "lastModified": 1793793868,
+        "narHash": "sha256-/MyBPIBekngi7xShv7XpfCzxXzkO8A/ySZl/JWKFrJE=",
         "owner": "rsa17826",
         "repo": "vsc-format-all",
-        "rev": "34eefe64878ebbb66f654a8cdb1b533300d18025",
+        "rev": "e9fd9fa587714512284ac8eb912ce1743f8fbf8b",
         "type": "github"
       },
       "original": {
