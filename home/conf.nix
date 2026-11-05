@@ -451,7 +451,7 @@ in
             ExecStart = "${pkgs.writeShellScript "flashback-start" ''
               gpu-screen-recorder \
               -w region \
-              -region 1920x1052+0+1080 \
+              -region 1920x1050+0+1080 \
               -f 30 \
               -a default_output \
               -r 300 \

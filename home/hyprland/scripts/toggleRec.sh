@@ -32,9 +32,9 @@ else
   read -r X Y W H <<<"$(echo "$RAW_GEOM" | sed -E 's/([0-9]+),([0-9]+) ([0-9]+)x([0-9]+)/\1 \2 \3 \4/')"
 
   # Source bounds: X in [2000, 3920], Y in [0, 1081]
-  # Target bounds: X in [0, 1920], Y in [1052, 2132]
+  # Target bounds: X in [0, 1920], Y in [1050, 2132]
   NEW_X=$(printf "%.0f" "$(rerange "$X" 2000 3920 0 1920)")
-  NEW_Y=$(printf "%.0f" "$(rerange "$Y" 0 1081 1052 2132)")
+  NEW_Y=$(printf "%.0f" "$(rerange "$Y" 0 1081 1050 2132)")
   NEW_W=$(printf "%.0f" "$(rerange "$W" 0 1920 0 1920)")
   NEW_H=$(printf "%.0f" "$(rerange "$H" 0 1081 0 1080)")
 

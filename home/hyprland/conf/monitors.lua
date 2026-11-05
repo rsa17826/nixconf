@@ -1,20 +1,20 @@
 hl.monitor({
 	output = "HDMI-A-1",
 	mode = "1920x1080@60",
-	position = "0x1052",
+	position = "0x1050",
 	scale = 1,
 })
 hl.monitor({
 	output = "test_top",
-	mode = "1920x28@61",
+	mode = "1920x30@61",
 	position = "2000x0",
 	scale = 1,
 })
 
 hl.monitor({
 	output = "test_bottom",
-	mode = "1920x1051@61",
-	position = "2000x28",
+	mode = "1920x1049@61",
+	position = "2000x30",
 	scale = 1,
 })
 hl.monitor({
