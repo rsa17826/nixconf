@@ -23,171 +23,201 @@ Scope {
       WlrLayershell.keyboardFocus: WlrLayershell.None
       WlrLayershell.layer: WlrLayer.Overlay
       color: "transparent"
+      // implicitHeight: 34   // a bit taller, spikes eat into the bar
+
       implicitHeight: 28
       implicitWidth: Screen.width
       screen: modelData
 
-      // ── Void bar background ──────────────────────────────────
-      Rectangle {
-        anchors.fill: parent
-        color: "#03030a"
-
-        Rectangle {
-          anchors.bottom: parent.bottom
-          anchors.left: parent.left
-          anchors.right: parent.right
-          color: "#1e1e40"
-          height: 1
-        }
-      }
-      MediaProgress {
-      }
       anchors {
         left: true
         right: true
         top: true
       }
       Item {
-        id: _LEFT
+        id: barContent
 
-        anchors {
-          left: parent.left
-          leftMargin: 5
-          verticalCenter: parent.verticalCenter
+        property real time: 0
+
+        anchors.fill: parent
+        layer.enabled: true
+
+        layer.effect: ShaderEffect {
+          property real amplitude: 8    // peak depth; a typical spike reaches about half of this
+          property real edgeWidth: 15
+          property vector2d resolution: Qt.vector2d(barContent.width, barContent.height)
+          property real sharpness: 20
+          property real speed: 2
+          property real spikeWidth: 15   // wider cells so the needles have gaps between them
+          property real time: barContent.time
+
+          fragmentShader: "shaders/barspike.frag.qsb"
+          vertexShader: "shaders/barspike.vert.qsb"
         }
-        CountdownTimerRow {
-          id: countdownRow
 
-          maxWidth: _CENTER.x - countdownRow.x - 10
+        FrameAnimation {
+          running: true
 
-          anchors {
-            left: root.left
-            verticalCenter: parent.verticalCenter
+          onTriggered: barContent.time += frameTime
+        }
+
+        // ── Void bar background ──────────────────────────────────
+        Rectangle {
+          anchors.fill: parent
+          color: "#03030a"
+
+          Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#1e1e40"
+            height: 1
           }
         }
-        TimerServer {
-          timerRow: countdownRow
+        MediaProgress {
         }
-      }
-      // Center container holding just the Clock and absolute-positioned elements
-      Item {
-        id: _CENTER
+        Item {
+          id: _LEFT
 
-        height: clock.implicitHeight > 0 ? clock.implicitHeight : clock.height
+          anchors {
+            left: parent.left
+            leftMargin: 5
+            verticalCenter: parent.verticalCenter
+          }
+          CountdownTimerRow {
+            id: countdownRow
 
-        // Explicitly set width to clock's width so countdownRow's math works cleanly
-        width: clock.implicitWidth > 0 ? clock.implicitWidth : clock.width
+            maxWidth: _CENTER.x - countdownRow.x - 10
 
-        anchors {
-          horizontalCenter: parent.horizontalCenter
-          verticalCenter: parent.verticalCenter
+            anchors {
+              left: parent.left
+              verticalCenter: parent.verticalCenter
+            }
+          }
+          TimerServer {
+            timerRow: countdownRow
+          }
         }
-        Clock {
-          id: clock
+        // Center container holding just the Clock and absolute-positioned elements
+        Item {
+          id: _CENTER
 
-          timerRow: countdownRow
+          height: clock.implicitHeight > 0 ? clock.implicitHeight : clock.height
+
+          // Explicitly set width to clock's width so countdownRow's math works cleanly
+          width: clock.implicitWidth > 0 ? clock.implicitWidth : clock.width
 
           anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
           }
-        }
-        ShutdownCountdown {
-          anchors {
-            left: clock.right
-            verticalCenter: parent.verticalCenter
+          Clock {
+            id: clock
+
+            timerRow: countdownRow
+
+            anchors {
+              horizontalCenter: parent.horizontalCenter
+              verticalCenter: parent.verticalCenter
+            }
+          }
+          ShutdownCountdown {
+            anchors {
+              left: clock.right
+              verticalCenter: parent.verticalCenter
+            }
           }
         }
-      }
-      Item {
-        id: _RIGHT
-
-        anchors {
-          horizontalCenter: parent.right
-          verticalCenter: parent.verticalCenter
-        }
-        RecIndicator {
-          id: flashbackIndicator
-
-          checkDeath: true
-          filePath: "/tmp/gpu-screen-recorder-flashback.pid"
-          text: "FB"
+        Item {
+          id: _RIGHT
 
           anchors {
-            right: streamIndicator.left
-            rightMargin: 12
+            horizontalCenter: parent.right
             verticalCenter: parent.verticalCenter
           }
-        }
-        RecIndicator {
-          id: streamIndicator
+          RecIndicator {
+            id: flashbackIndicator
 
-          filePath: "/tmp/gpu-screen-recorder-stream.pid"
-          stateFilePath: "/tmp/gpu-screen-recorder-stream.state"
-          text: "STREAM"
+            checkDeath: true
+            filePath: "/tmp/gpu-screen-recorder-flashback.pid"
+            text: "FB"
 
-          anchors {
-            right: recIndicator.left
-            rightMargin: 12
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: streamIndicator.left
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        RecIndicator {
-          id: recIndicator
+          RecIndicator {
+            id: streamIndicator
 
-          filePath: "/tmp/gpu-screen-recorder-rec.pid"
-          logUnit: "flashback"
-          text: "REC"
+            filePath: "/tmp/gpu-screen-recorder-stream.pid"
+            stateFilePath: "/tmp/gpu-screen-recorder-stream.state"
+            text: "STREAM"
 
-          anchors {
-            right: trayWidget.left
-            rightMargin: 12
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: recIndicator.left
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        Tray {
-          id: trayWidget
+          RecIndicator {
+            id: recIndicator
 
-          anchors {
-            right: wifiWidget.left
-            rightMargin: 15
-            verticalCenter: parent.verticalCenter
+            filePath: "/tmp/gpu-screen-recorder-rec.pid"
+            logUnit: "flashback"
+            text: "REC"
+
+            anchors {
+              right: trayWidget.left
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        Wifi {
-          id: wifiWidget
+          Tray {
+            id: trayWidget
 
-          anchors {
-            right: syncthingWidget.left
-            rightMargin: 12
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: wifiWidget.left
+              rightMargin: 15
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        Syncthing {
-          id: syncthingWidget
+          Wifi {
+            id: wifiWidget
 
-          anchors {
-            right: githubWidget.left
-            rightMargin: 15
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: syncthingWidget.left
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        GithubNotif {
-          id: githubWidget
+          Syncthing {
+            id: syncthingWidget
 
-          anchors {
-            right: notifBell.left
-            rightMargin: 12
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: githubWidget.left
+              rightMargin: 15
+              verticalCenter: parent.verticalCenter
+            }
           }
-        }
-        NotifBell {
-          id: notifBell
+          GithubNotif {
+            id: githubWidget
 
-          anchors {
-            right: parent.right
-            rightMargin: 12
-            verticalCenter: parent.verticalCenter
+            anchors {
+              right: notifBell.left
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
+          }
+          NotifBell {
+            id: notifBell
+
+            anchors {
+              right: parent.right
+              rightMargin: 12
+              verticalCenter: parent.verticalCenter
+            }
           }
         }
       }
