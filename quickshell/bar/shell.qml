@@ -43,12 +43,12 @@ Scope {
         layer.enabled: true
 
         layer.effect: ShaderEffect {
-          property real amplitude: 8    // peak depth; a typical spike reaches about half of this
+          property real amplitude: 4    // peak depth; a typical spike reaches about half of this
           property real edgeWidth: 15
           property vector2d resolution: Qt.vector2d(barContent.width, barContent.height)
           property real sharpness: 20
           property real speed: 2
-          property real spikeWidth: 15   // wider cells so the needles have gaps between them
+          property real spikeWidth: 10   // wider cells so the needles have gaps between them
           property real time: barContent.time
 
           fragmentShader: "shaders/barspike.frag.qsb"
