@@ -51,12 +51,12 @@ hl.window_rule({
 -- })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror", title = "bottom" },
-	size = { "monitor_w", "monitor_h-28" },
-	move = { "0", "28" },
+	size = { "monitor_w", "monitor_h-30" },
+	move = { "0", "30" },
 })
 hl.window_rule({
 	match = { class = "at.yrlf.wl_mirror", title = "top" },
-	size = { "monitor_w", "28" },
+	size = { "monitor_w", "30" },
 	move = { "0", "0" },
 })
 
@@ -93,7 +93,7 @@ hl.window_rule({
 })
 hl.device({
 	name = "vroot-mouse",
-	region_position = { 2000, 28 },
+	region_position = { 2000, 30 },
 	region_size = { 1920, 1051 },
 	absolute_region_position = true,
 })

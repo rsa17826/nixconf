@@ -25,7 +25,7 @@ Scope {
       color: "transparent"
       // implicitHeight: 34   // a bit taller, spikes eat into the bar
 
-      implicitHeight: 28
+      implicitHeight: 30
       implicitWidth: Screen.width
       screen: modelData
 
@@ -43,10 +43,9 @@ Scope {
         layer.enabled: true
 
         layer.effect: ShaderEffect {
-          property real amplitude: 4    // peak depth; a typical spike reaches about half of this
+          property real amplitude: 6    // peak depth; a typical spike reaches about half of this
           property real edgeWidth: 10
           property vector2d resolution: Qt.vector2d(barContent.width, barContent.height)
-          property real sharpness: 20
           property real speed: 2
           property real spikeWidth: 8   // wider cells so the needles have gaps between them
           property real time: barContent.time

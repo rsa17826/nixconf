@@ -10,7 +10,6 @@ layout(std140, binding = 0) uniform buf {
   float speed;
   float amplitude;
   float spikeWidth;
-  float sharpness; // unused, can be removed from both files
   float edgeWidth;
 };
 layout(binding = 1) uniform sampler2D source;
@@ -20,9 +19,22 @@ float hash(vec2 p) {
 }
 
 // Spike height of cell k at x. `seed` makes every edge different.
-float spikeAt(float x, float k, float seed) {
+// depth = px from the edge of this pixel (0 at the tip, >= amplitude at the
+// base)
+float spikeAt(float x, float k, float seed, float depth) {
   float ks = k + seed * 37.0;
-  float cx = k + 0.5 + (hash(vec2(ks, 1.0)) - 0.5) * 0.5;
+
+  // lean: random direction per spike, active only in occasional slow bursts
+  float leanGate = smoothstep(0.5, 0.9,
+                              sin(time * (0.15 + 0.25 * hash(vec2(ks, 11.0))) +
+                                  6.2831 * hash(vec2(ks, 12.0))) *
+                                      0.5 +
+                                  0.5);
+  float lean = (hash(vec2(ks, 13.0)) - 0.5) * 2.0 * 0.4 *
+               leanGate; // spike units, max ~0.6
+  float shear = 1.0 - clamp(depth / amplitude, 0.0, 1.0); // 1 at tip, 0 at base
+
+  float cx = k + 0.5 + (hash(vec2(ks, 1.0)) - 0.5) * 0.5 + lean * shear;
   float wl = mix(0.10, 0.28, hash(vec2(ks, 2.0)));
   float wr = mix(0.10, 0.28, hash(vec2(ks, 3.0)));
   float h = mix(0.4, 1.0, hash(vec2(ks, 4.0)));
@@ -44,13 +56,12 @@ float spikeAt(float x, float k, float seed) {
   return tip * h * s * pulse;
 }
 
-// along = px along the edge, m = px from the edge, dir = scroll direction
 void edge(float along, float m, float seed, float dir, out float d,
           out float mask) {
   float x = along / spikeWidth - time * speed * dir + seed * 11.3;
   float k = floor(x);
-  float tip = max(spikeAt(x, k - 1.0, seed),
-                  max(spikeAt(x, k, seed), spikeAt(x, k + 1.0, seed)));
+  float tip = max(spikeAt(x, k - 1.0, seed, m),
+                  max(spikeAt(x, k, seed, m), spikeAt(x, k + 1.0, seed, m)));
   d = amplitude * (1.0 - clamp(tip * 1, 0.0, 1.0));
   mask = smoothstep(edgeWidth, 0.0, m);
 }
