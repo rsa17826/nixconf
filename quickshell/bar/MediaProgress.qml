@@ -11,14 +11,14 @@ import Quickshell.Services.Mpris
 
 Rectangle {
   color: root.activePlayer ? "#0d0d1e" : "transparent"
-  height: 2
+  height: 0
   width: parent.width
 
   Rectangle {
     id: progressFill
 
     color: '#510084'
-    height: 2
+    height: 5
     width: (root.activePlayer && root.activePlayer.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
   }
   // Update the position from DBus
