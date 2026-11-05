@@ -41,10 +41,10 @@ Scope {
         layer.enabled: true
 
         layer.effect: ShaderEffect {
-          property real amplitude: 6
+          property real amplitude: 5
           property real edgeWidth: 10
           property vector2d resolution: Qt.vector2d(barContent.width, barContent.height)
-          property real speed: 2
+          property real speed: 0
           property real spikeWidth: 8   // wider cells so the needles have gaps between them
           property real time: barContent.time
 

@@ -47,8 +47,8 @@ float spikeAt(float x, float k, float seed, float depth) {
   float s = 1.0 + 0.45 * gate *
                       sin(time * (1.0 + hash(vec2(ks, 7.0))) +
                           6.2831 * hash(vec2(ks, 8.0)));
-  float pulse = 1.0 + 0.15 * sin(time * (3.0 + 2.0 * hash(vec2(ks, 9.0))) +
-                                 6.2831 * hash(vec2(ks, 10.0)));
+  float pulse = 1.0 + .6 * sin(time * (1 + 8.0 * hash(vec2(ks, 9.0))) +
+                               6.2831 * hash(vec2(ks, 10.0)));
 
   float dx = x - cx;
   float w = (dx < 0.0 ? wl : wr) * s;
@@ -67,7 +67,7 @@ float spikeNeon(float along, float depth, float seed, float dir) {
   float spike = smoothstep(0.02, 0.12, tip);
 
   // Fade the neon toward the inner base of each spike
-  float fade = 1.0 - smoothstep(0.65, 1.0, depth / amplitude);
+  float fade = 1.0 - smoothstep(0.65, 1.0, abs(depth) / amplitude);
 
   return spike * fade;
 }

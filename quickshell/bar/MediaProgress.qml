@@ -17,8 +17,8 @@ Rectangle {
   Rectangle {
     id: progressFill
 
-    color: '#510084'
-    height: 5
+    color: '#6f00b4'
+    height: 6
     width: (root.activePlayer?.length > 0) ? (parent.width * (root.activePlayer.position / root.activePlayer.length)) : 0
   }
   // Update the position from DBus

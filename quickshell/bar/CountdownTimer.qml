@@ -41,14 +41,14 @@ Item {
       mi: 0,
       url: ""
     })
+  // ms. When >0, once targetTimestamp has passed the timer keeps running
+  // and counts down to targetTimestamp+duration instead (see showingEnd()).
+  property real duration: 0
   // 0 -> one-shot, shows the progress bar.
   // >0 -> repeat interval in ms (e.g. one week = 7*24*60*60*1000); once
   // expired, targetTimestamp keeps having repeatValue added until it's
   // back in the future. No progress bar while repeating.
   property real repeatValue: 0
-  // ms. When >0, once targetTimestamp has passed the timer keeps running
-  // and counts down to targetTimestamp+duration instead (see showingEnd()).
-  property real duration: 0
   property real startTimestamp: 0
   property real targetTimestamp: 0
 
@@ -119,7 +119,7 @@ Item {
   }
   function commitDraft() {
     const dr = root.draft
-    const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime();
+    const ts = new Date(dr.y, dr.mo - 1, dr.d, dr.h, dr.mi, 0).getTime()
     // Every commit (new or edited) restamps the start to now, so the
     // progress bar always reflects "time since this was last set".
     root.startTimestamp = Date.now()
@@ -132,6 +132,9 @@ Item {
   // ── Helpers ──────────────────────────────────────────────────────
   function daysInMonth(y, mo) {
     return new Date(y, mo, 0).getDate()
+  }
+  function effectiveTarget() {
+    return root.showingEnd() ? root.targetTimestamp + root.duration : root.targetTimestamp
   }
   function formatCountdown() {
     if (root.targetTimestamp <= 0)
@@ -168,19 +171,6 @@ Item {
     const rb = Math.round(ab + (bb - ab) * tt)
     return "#" + ((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1)
   }
-
-  // ── Countdown math ───────────────────────────────────────────────
-  // True while the start has passed but target+duration hasn't: the timer
-  // is then counting down to its END rather than its start.
-  function showingEnd() {
-    if (!(root.duration > 0) || root.targetTimestamp <= 0)
-      return false
-    const now = clock.date.getTime()
-    return root.targetTimestamp <= now && now < root.targetTimestamp + root.duration
-  }
-  function effectiveTarget() {
-    return root.showingEnd() ? root.targetTimestamp + root.duration : root.targetTimestamp
-  }
   function msLeft() {
     return root.effectiveTarget() - clock.date.getTime()
   }
@@ -201,6 +191,16 @@ Item {
   }
   function pad(n) {
     return n < 10 ? "0" + n : "" + n
+  }
+
+  // ── Countdown math ───────────────────────────────────────────────
+  // True while the start has passed but target+duration hasn't: the timer
+  // is then counting down to its END rather than its start.
+  function showingEnd() {
+    if (!(root.duration > 0) || root.targetTimestamp <= 0)
+      return false
+    const now = clock.date.getTime()
+    return root.targetTimestamp <= now && now < root.targetTimestamp + root.duration
   }
   function timerColor() {
     if (root.targetTimestamp <= 0)
@@ -247,7 +247,7 @@ Item {
 
     // Tinted background marks "this is counting to the end time"
     color: root.showingEnd() ? "#66aa0000" : "transparent"
-    implicitHeight: 14
+    implicitHeight: 12
     implicitWidth: label.implicitWidth + 4 + (root.url ? linkBtn.implicitWidth + 4 : 0)
 
     anchors {
