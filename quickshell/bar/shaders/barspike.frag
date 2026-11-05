@@ -55,14 +55,29 @@ float spikeAt(float x, float k, float seed, float depth) {
   float tip = max(0.0, 1.0 - abs(dx) / w);
   return tip * h * s * pulse;
 }
+float spikeNeon(float along, float depth, float seed, float dir) {
+  float x = along / spikeWidth - time * speed * dir + seed * 11.3;
+  float k = floor(x);
 
+  float tip =
+      max(spikeAt(x, k - 1.0, seed, depth),
+          max(spikeAt(x, k, seed, depth), spikeAt(x, k + 1.0, seed, depth)));
+
+  // Only color the actual spike regions
+  float spike = smoothstep(0.02, 0.12, tip);
+
+  // Fade the neon toward the inner base of each spike
+  float fade = 1.0 - smoothstep(0.65, 1.0, depth / amplitude);
+
+  return spike * fade;
+}
 void edge(float along, float m, float seed, float dir, out float d,
           out float mask) {
   float x = along / spikeWidth - time * speed * dir + seed * 11.3;
   float k = floor(x);
   float tip = max(spikeAt(x, k - 1.0, seed, m),
                   max(spikeAt(x, k, seed, m), spikeAt(x, k + 1.0, seed, m)));
-  d = amplitude * (1.0 - clamp(tip * 1, 0.0, 1.0));
+  d = amplitude * (1.0 - clamp(tip, 0.0, 1.0));
   mask = smoothstep(edgeWidth, 0.0, m);
 }
 
@@ -71,13 +86,18 @@ void main() {
   vec2 p = uv * resolution;
 
   float dB, mB, dT, mT, dL, mL, dR, mR;
-  edge(p.x, resolution.y - p.y, 0.0, 1.0, dB, mB);  // bottom
-  edge(p.x, p.y, 1.0, -1.0, dT, mT);                // top
-  edge(p.y, p.x, 2.0, 1.0, dL, mL);                 // left
-  edge(p.y, resolution.x - p.x, 3.0, -1.0, dR, mR); // right
+  edge(p.x, resolution.y - p.y, 0.0, 1.0, dB, mB);
+  edge(p.x, p.y, 1.0, -1.0, dT, mT);
+  edge(p.y, p.x, 2.0, 1.0, dL, mL);
+  edge(p.y, resolution.x - p.x, 3.0, -1.0, dR, mR);
+  float nB = spikeNeon(p.x, resolution.y - p.y, 0.0, 1.0) * mB;
+  float nT = spikeNeon(p.x, p.y, 1.0, -1.0) * mT;
+  float nL = spikeNeon(p.y, p.x, 2.0, 1.0) * mL;
+  float nR = spikeNeon(p.y, resolution.x - p.x, 3.0, -1.0) * mR;
 
-  // sample from toward each edge so content gets pushed inward
+  float neon = max(max(nB, nT), max(nL, nR));
   vec2 disp = vec2(dR * mR - dL * mL, dB * mB - dT * mT);
+
   vec2 duv = uv + disp / resolution;
 
   float cut = clamp((resolution.y - p.y) - dB + 0.5, 0.0, 1.0) *
@@ -85,5 +105,29 @@ void main() {
               clamp(p.x - dL + 0.5, 0.0, 1.0) *
               clamp((resolution.x - p.x) - dR + 0.5, 0.0, 1.0);
 
-  fragColor = texture(source, duv) * cut * qt_Opacity;
+  vec4 color = texture(source, duv);
+  //
+  vec3 colA = vec3(0.65, 0.05, 1.0);
+  vec3 colB = vec3(0.699, 0.0625, 0.0625);
+  vec3 colC = vec3(0.1, 0.8, 0.4);
+
+  // Position in animation cycle
+  float phase = time + (p.x / 150.0);
+
+  // Calculate weights evenly spaced by 120 degrees (2 * PI / 3)
+  float wA = max(0.0, sin(phase));
+  float wB = max(0.0, sin(phase + 2.094395));
+  float wC = max(0.0, sin(phase + 4.188790));
+
+  // Normalize weights so they always sum to 1.0
+  vec3 finalColor = (colA * wA + colB * wB + colC * wC) / (wA + wB + wC);
+  //
+  color.rgb = mix(color.rgb, (finalColor), neon);
+  // color.rgb = mix(color.rgb,
+  //                 mix(vec3(0.65, 0.05, 1.0), vec3(0.69921875, 0.0625,
+  //                 0.0625),
+  //                     hash(vec2(p.x, 10))),
+  //                 neon);
+
+  fragColor = color * cut * qt_Opacity;
 }

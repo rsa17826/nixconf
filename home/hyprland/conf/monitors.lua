@@ -94,6 +94,6 @@ hl.window_rule({
 hl.device({
 	name = "vroot-mouse",
 	region_position = { 2000, 30 },
-	region_size = { 1920, 1051 },
+	region_size = { 1920, 1049 },
 	absolute_region_position = true,
 })
