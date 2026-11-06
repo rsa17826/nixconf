@@ -111,6 +111,15 @@ Singleton {
   function pathJoin(...p) {
     return p.map(e => e.replace(/\/$/)).join("/").replace(/\/$/, '')
   }
+  function setIcon(id, path) {
+    console.log("setIcon", id, path)
+    root.notifs = root.notifs.map(n => n.id === id ? Object.assign({}, n, {
+        appIcon: path
+      }) : n)
+    root.history = root.history.map(h => h.id === id ? Object.assign({}, h, {
+        appIcon: path
+      }) : h)
+  }
   function toggleCenter() {
     root.centerOpen = !root.centerOpen
     if (root.centerOpen) {
@@ -210,7 +219,26 @@ Singleton {
         root.notifs = updated
     }
   }
+  Component {
+    id: iconMover
 
+    Process {
+      required property string dst
+      required property int notifId
+      required property string src
+
+      command: ["sh", "-c", 'if [ -e "$2" ]; then exit 0; fi; mkdir -p "$(dirname "$2")" && mv -- "$1" "$2"', "sh", src, dst]
+      running: true
+
+      onExited: code => {
+        if (code !== 0)
+          console.error("icon move failed:", src)
+        else
+          root.setIcon(notifId, dst)
+        destroy()
+      }
+    }
+  }
   // ── Notification server ──────────────────────────────────────
   NotificationServer {
     id: server
@@ -248,19 +276,23 @@ Singleton {
         })(notif)
 
       if ((Date.now() - loadTime) < 30)
-        loadTime = Date.now();
+        loadTime = Date.now()
 
       // Read transient hint — exposed as notif.transient by QuickShell,
       // but also sent in hints map as --hint=int:transient:1
       const hints = notif.hints || {}
       const isTransient = !!(notif.transient || hints.transient)
-
+      const rawIcon = notif.appIcon || ""
+      const oldIcon = rawIcon.replace(/^file:\/\//, "")
+      const isChromium = oldIcon.startsWith("/tmp/org.chromium.Chromium.scoped_dir")
+      const icon = oldIcon.replace("/tmp/org.chromium", "/tmp/NOT.org.chromium")
+      console.log(icon, "iconicon")
       const entry = {
         id: notif.id,
         summary: notif.summary || "",
         body: notif.body || "",
         appName: notif.appName || "",
-        appIcon: notif.appIcon || "",
+        appIcon: isChromium ? "" : icon,
         urgency: urgencyVal,
         transient: isTransient,
         actions: actions,
@@ -272,6 +304,13 @@ Singleton {
         expired: (Date.now() - loadTime) < 300 || root.centerOpen,
         dismissed: false,
         _expire: expireFn
+      }
+      if (isChromium) {
+        iconMover.createObject(root, {
+          notifId: entry.id,
+          src: oldIcon,
+          dst: icon
+        })
       }
 
       const idx = root.notifs.findIndex(n => n.id === entry.id)

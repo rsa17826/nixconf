@@ -8,16 +8,29 @@ Rectangle {
 
   required property var entry
 
+  anchors.topMargin: 250
   border.color: entry.urgency === 2 ? "#9933cc" : "#1e1e40"
   border.width: 1
   clip: true
   color: entry.urgency === 0 ? "#03030a" : entry.urgency === 1 ? "#0d0d1e" : '#1f0d25'
-  implicitHeight: contentRow.implicitHeight + 24
+  implicitHeight: contentRow.implicitHeight + 34
+  layer.enabled: true
 
   // ── Appear animation ─────────────────────────────────────────
   opacity: 0
   radius: 6
 
+  layer.effect: ShaderEffect {
+    property real amplitude: 10
+    property real edgeWidth: 30
+    property vector2d resolution: Qt.vector2d(root.width, root.height)
+    property real speed: 8
+    property real spikeWidth: 10
+    property real time: barContent.time
+
+    fragmentShader: "shaders/barspike.frag.qsb"
+    vertexShader: "shaders/barspike.vert.qsb"
+  }
   NumberAnimation on opacity {
     duration: Math.max(0, 300 - (Date.now() - root.entry.addedAt))
     from: 0
@@ -69,10 +82,12 @@ Rectangle {
 
     anchors {
       left: parent.left
+      leftMargin: 25
       margins: 12
       right: parent.right
       rightMargin: 8
       top: parent.top
+      topMargin: 16
     }
 
     // App icon
@@ -82,13 +97,12 @@ Rectangle {
       aberration: 0.0025
       glitchAmount: 0.02
       glitchRate: 1.4
-      visible: appIconImg.visible
+      visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
 
       Rectangle {
         color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
         height: 28
         radius: 4
-        visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
         width: 28
 
         Image {
@@ -99,11 +113,14 @@ Rectangle {
           fillMode: Image.PreserveAspectFit
           smooth: true
           source: {
+            console.log(root.entry.appIcon, "root.entry.appIcon")
             const icon = root.entry.appIcon
             if (icon === "")
               return ""
-            if (icon.startsWith("/") || icon.startsWith("file://"))
+            if (icon.startsWith("file://"))
               return icon
+            if (icon.startsWith("/"))
+              return "file://" + icon
             return Quickshell.iconPath(icon, true)
           }
           sourceSize.height: 64
