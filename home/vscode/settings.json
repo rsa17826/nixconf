@@ -918,7 +918,7 @@
   "[gdresource]": {
     "editor.defaultFormatter": "rssaromeo.auto-regex",
   },
-  "formatAllFiles.exclude": "{**/{node_modules,*.rep,.godot,.git,dist,out,build,.vscode-test,.next,coverage,.cache}/**,**/*.{png,jpg,jpeg,webp,jpegxl,tiff,ttf,otf,docx,gd.uid,svg,tres,import,log,cache,scn,mp3,mp4,wav,webm,mkv}}",
+  "formatAllFiles.exclude": "{**/{node_modules,*.rep,.godot,.git,dist,out,build,.vscode-test,.next,coverage,.cache,__pycache__}/**,**/*.{png,jpg,jpeg,webp,jpegxl,tiff,ttf,otf,docx,gd.uid,svg,tres,import,log,cache,scn,mp3,mp4,wav,webm,mkv,dds,wma,bik,tff,gbf,mod,prp,dat,xbx,ff,rfa,ini,db,dmf,bin,bak,tga,sfd,adx,wmv,skn,abc,aix,xbe,gpr,pyc,xdi,rep,mit,tex,gzf,swf}}",
   "diffEditor.hideUnchangedRegions.enabled": true,
   // "formatAllFiles.settleMs": 0,
 }
