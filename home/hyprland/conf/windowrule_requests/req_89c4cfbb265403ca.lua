@@ -8,7 +8,7 @@ hl.window_rule({
 	float = true,
 	no_focus = true,
 	no_initial_focus = true,
-	size = { "958", "220" },
+	size = { "958", "198" },
 	move = { "0", "0" },
 	border_size = 0,
 })

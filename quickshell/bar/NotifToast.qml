@@ -38,6 +38,13 @@ Rectangle {
     to: 1
   }
 
+  MouseArea {
+    acceptedButtons: Qt.RightButton
+    anchors.fill: parent
+
+    onClicked: NotifState.dismiss(root.entry.id)
+  }
+
   // ── 20s countdown bar (only on live popups) ─────────────────
   Rectangle {
     id: timerTrack
