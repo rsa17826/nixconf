@@ -4,7 +4,8 @@ set -euo pipefail
 # --- Config ---
 SRC_URL="https://raw.githubusercontent.com/puckzxz/NotAnotherAnimeTheme/refs/heads/master/NotAnotherAnimeTheme.theme.css"
 BG_IMAGE="${1:-./bg.png}"
-OUT_FILE="${2:-./NotAnotherAnimeTheme.merged.css}"
+A="${2:-0.3}"
+OUT_FILE="${3:-/tmp/NotAnotherAnimeTheme.merged.css}"
 TMP_BASE="$(mktemp)"
 TMP_APPEND="$(mktemp)"
 cat <<'EOF' >>"$TMP_BASE"
@@ -119,7 +120,8 @@ else
   echo "==> WARNING: $BG_IMAGE not found; skipping background image embed."
 fi
 
+sed -i "s#--theme-transparency: rgba(0, 0, 0, 0.8);#--theme-transparency: rgba(0, 0, 0, $A);#g" "$OUT_FILE"
 echo -e "\n}" >>"$OUT_FILE"
-echo "==> Done. Output written to: $OUT_FILE"
+echo "==> Done. Output copied"
 cat "$OUT_FILE" | wl-copy
 rm "$OUT_FILE"
