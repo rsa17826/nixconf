@@ -120,6 +120,15 @@ else
   echo "==> WARNING: $BG_IMAGE not found; skipping background image embed."
 fi
 
+python3 -c '
+import sys
+with open(sys.argv[2], "r") as f:
+  content = f.read()
+
+with open(sys.argv[1], "r") as url:
+  with open(sys.argv[2], "w") as out:
+    out.write(content.replace("var(--theme-background-image)", f"url({url.read().strip()})"))
+' "$TMP_DATAURI" "$OUT_FILE"
 sed -i "s#--theme-transparency: rgba(0, 0, 0, 0.8);#--theme-transparency: rgba(0, 0, 0, $A);#g" "$OUT_FILE"
 echo -e "\n}" >>"$OUT_FILE"
 echo "==> Done. Output copied"

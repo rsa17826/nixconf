@@ -244,7 +244,7 @@
       };
     };
     browser-selector = {
-      url = "github:rsa17826/browserSelector";
+      url = "github:rsa17826/browser-selector";
       inputs = {
         nixpkgs = {
           follows = "nixpkgs";

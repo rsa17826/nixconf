@@ -586,3 +586,8 @@ $1
 @regex -white(\.\w+"; then)
 @replace $1
 @endregex
+
+@file \.nix$
+@regex github:NixOS/nixpkgs/nixos-unstable
+@replace https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst
+@endregex
