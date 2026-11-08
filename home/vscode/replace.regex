@@ -1,3 +1,8 @@
+@file \.gd$
+@regex \t
+@replace   
+@endregex
+
 @file start$
 @regex ^(?:(?!#)|$)
 @flags
@@ -591,3 +596,5 @@ $1
 @regex github:NixOS/nixpkgs/nixos-unstable
 @replace https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst
 @endregex
+
+
