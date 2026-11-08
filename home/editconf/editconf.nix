@@ -9,14 +9,14 @@ configs:
 let
   # ── entries for xdg.configFile or home.file ──────────────────────────────
   mkFile = cfg: f: {
-    name = "${cfg.destDir}/${f}";
+    name = "${lib.removeSuffix "/" cfg.destDir}/${f}";
     value = {
       source = cfg.src + "/${f}";
       force = true;
     };
   };
   mkDir = cfg: d: {
-    name = "${cfg.destDir}/${d}";
+    name = "${lib.removeSuffix "/" cfg.destDir}/${d}";
     value = {
       source = cfg.src + "/${d}";
       # recursive = true;
