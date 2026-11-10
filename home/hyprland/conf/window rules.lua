@@ -380,3 +380,9 @@ hl.window_rule({
 	no_focus = true,
 	workspace = "8 silent",
 })
+hl.window_rule({
+	match = {
+		class = "^srtest$",
+	},
+	no_blur = true,
+})

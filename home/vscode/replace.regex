@@ -1,4 +1,4 @@
-@file \.gd$
+@file \.gd(?:shader)?$
 @regex \t
 @replace   
 @endregex
@@ -164,10 +164,10 @@ GODOT
 @flags gm
 @endregex
 
-! @file \.gd$
-! @name replace print with log.pp
-! @endregex
-! @endregex
+@file \.gd$
+@name replace print with log.pp
+@endregex
+@endregex
 @name extra end spaces
 @file \.gd$
 @regex  +$

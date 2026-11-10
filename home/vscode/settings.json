@@ -22,6 +22,7 @@
   "typos.path": "/etc/profiles/per-user/nyix/bin/typos-lsp",
   "files.exclude": {
     // "addons": true,
+    ".godot": true,
     "**/maps": true,
     // "**/scenes": true,
     // "**/scenes/blocks": true,
@@ -641,7 +642,18 @@
   // "git.autofetch": false
   "rust-analyzer.check.command": "clippy",
   "[gdshader]": {
-    "editor.defaultFormatter": "rssaromeo.4-to-2-formatter",
+    "editor.defaultFormatter": "Jota0222.multi-formatter",
+    "editor.tabSize": 2,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.lightbulb.enabled": "onCode",
+    "editor.linkedEditing": true,
+    "multiFormatter.formatterList": [
+      "rssaromeo.auto-regex",
+      "rssaromeo.4-to-2-formatter",
+      "rssaromeo.auto-regex",
+      "rssaromeo.format-all-files-patient",
+    ],
   },
   "BracketHighlighter.activeInDebugMode": false,
   "BracketHighlighter.outline": "2px dashed blue",
