@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-time=${1:-3h}
+time=${1:-4h}
 cd ~/nixconf || exit 1
 shutdown "$time" &
 (nfu || test -z "$(git status --porcelain)") && update
