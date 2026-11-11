@@ -958,11 +958,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790883019,
-        "narHash": "sha256-J1iFImxJ9WnCx3B9b3vW+Jfr5WA12dOW4D76oT9ryNw=",
+        "lastModified": 1794400012,
+        "narHash": "sha256-EeHxXSJBTJqueoDYlKj7bxNWEzkYlf+LLyI/umzm8L0=",
         "owner": "rsa17826",
         "repo": "macro-recorder",
-        "rev": "f0a3ddb3139817651bafad15da280d9456a42636",
+        "rev": "c3dc69b0fe2d95ecf2020d6b54087c626ac362a7",
         "type": "github"
       },
       "original": {
