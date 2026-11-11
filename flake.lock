@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788899155,
-        "narHash": "sha256-urNdBTsNXQizKHTcKsxLNX3HKrz8KESelAvplY9nxu8=",
+        "lastModified": 1794362235,
+        "narHash": "sha256-96CcHkv2/V9hmR8hvUW0BU4/w40muA9wcN765vTrXiU=",
         "owner": "rsa17826",
         "repo": "alwaysFocusedInputBox",
-        "rev": "b57ce6f3d051c8b071a1dc0c2e5658d061db6ab1",
+        "rev": "ac94e601e9a087e9a4e451397f2cab6f73fd5a8a",
         "type": "github"
       },
       "original": {
