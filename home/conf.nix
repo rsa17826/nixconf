@@ -203,13 +203,19 @@ in
     overlays = [
       (final: prev: {
         portablemc = prev.portablemc.overrideAttrs (old: {
-          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-            final.pkg-config
-          ];
+          unwrapped = old.unwrapped.overrideAttrs (unwrappedOld: {
+            nativeBuildInputs = (unwrappedOld.nativeBuildInputs or [ ]) ++ [
+              final.pkg-config
+            ];
 
-          buildInputs = (old.buildInputs or [ ]) ++ [
-            final.zstd
-          ];
+            buildInputs = (unwrappedOld.buildInputs or [ ]) ++ [
+              final.zstd
+            ];
+
+            PKG_CONFIG_PATH = final.lib.makeSearchPath "lib/pkgconfig" [
+              final.zstd.dev
+            ];
+          });
         });
       })
       (final: prev: {
