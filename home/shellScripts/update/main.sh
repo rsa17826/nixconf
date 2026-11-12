@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
-if [ -f "$HOME/nixconf/updateFailure.log" ]; then
-  if [ -z "$(find "$HOME/nixconf/updateFailure.log" -mmin -60 2>/dev/null)" ]; then
-    echo "[WARNING] last update failed - enter y to continue update"
-    read -r response
-    if [ "$response" != "y" ]; then
-      nom --json <"$HOME/nixconf/updateFailure.log"
-      exit 2
+if [[ "$*" == *"--force"* ]]; then
+  set -- "${@/--force/}"
+else
+  if [ -f "$HOME/nixconf/updateFailure.log" ]; then
+    if [ -z "$(find "$HOME/nixconf/updateFailure.log" -mmin -60 2>/dev/null)" ]; then
+      echo "[WARNING] last update failed - enter y to continue update"
+      read -r response
+      if [ "$response" != "y" ]; then
+        nom --json <"$HOME/nixconf/updateFailure.log"
+        exit 2
+      fi
     fi
   fi
 fi

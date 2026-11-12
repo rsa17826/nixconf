@@ -2,7 +2,7 @@
 time=${1:-4h}
 cd ~/nixconf || exit 1
 shutdown "$time" &
-(nfu || test -z "$(git status --porcelain)") && update
+(nfu || test -z "$(git status --porcelain)") && update --force
 sleep 15 || (
   shutdown -c
   exit 1
