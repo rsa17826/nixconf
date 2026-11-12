@@ -123,6 +123,8 @@ in
           # (pkgFromInp "file-sorter" "default")
           browserSelectorPkg
           browserSelectorDesktop
+
+          android-tools
           # why everything want these?
           icu
           openssl
