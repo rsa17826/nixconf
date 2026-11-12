@@ -202,6 +202,17 @@ in
   nixpkgs = {
     overlays = [
       (final: prev: {
+        portablemc = prev.portablemc.overrideAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+            final.pkg-config
+          ];
+
+          buildInputs = (old.buildInputs or [ ]) ++ [
+            final.zstd
+          ];
+        });
+      })
+      (final: prev: {
         pkgsi686Linux = prev.pkgsi686Linux.extend (
           _: p: {
             openldap = p.openldap.overrideAttrs (_: {
