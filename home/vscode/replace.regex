@@ -594,6 +594,7 @@ $1
 
 @file \.nix$
 @regex github:NixOS/nixpkgs/nixos-unstable
+@flags ig
 @replace https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst
 @endregex
 
