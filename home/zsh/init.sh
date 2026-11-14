@@ -157,3 +157,25 @@ if [[ -n "$PS1" ]] && tty | grep -qv tty; then
     exec termbar
   fi
 fi
+
+e() {
+  local input_path="$1"
+
+  # Extract the project folder name from the current working directory
+  local project_name
+  project_name="$(basename "$(pwd)")"
+
+  # If the path starts with user://, replace it with the real Godot path
+  if [[ "$input_path" == user://* ]]; then
+    # Strip 'user://' off the front
+    local relative_path="${input_path#user://}"
+    # Map to the local share directory
+    input_path="$HOME/.local/share/godot/app_userdata/$project_name/$relative_path"
+  fi
+  if [[ "$input_path" == res://* ]]; then
+    # Strip 'user://' off the front
+    local relative_path="./${input_path#res://}"
+  fi
+
+  codium "$input_path"
+}
