@@ -105,7 +105,7 @@ let
   remaps = map (
     r:
     let
-      https = !!r.httpsPort;
+      https = !!(r.httpsPort or false);
       httpPort = r.httpPort or r.port;
       httpsPort = r.httpsPort or r.port;
     in
