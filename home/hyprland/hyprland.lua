@@ -83,7 +83,7 @@ hl.config({
 
 	misc = {
 		middle_click_paste = false,
-		focus_on_activate = true,
+		-- focus_on_activate = true,
 		force_default_wallpaper = -1,
 		disable_hyprland_logo = false,
 		initial_workspace_tracking = true,

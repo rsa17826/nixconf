@@ -346,9 +346,6 @@ in
         enable = true;
         support32Bit = true;
       };
-      jack = {
-        enable = true;
-      };
     };
     pulseaudio = {
       # Disable PulseAudio itself (optional, safer on NixOS)

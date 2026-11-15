@@ -1,10 +1,27 @@
 { lib, ... }:
 let
-  # Added `access`: "local"  -> nginx only accepts this vhost on 127.0.0.1
-  #                 "public" -> nginx accepts it on 0.0.0.0 (and thus LAN/WAN too)
-  # The backend proxy target is always 127.0.0.1:port regardless - `access`
-  # only controls which nginx *frontend* socket will answer for that name.
-  remaps = [
+  # Per-service options:
+  #   name    - hostname prefix (<name>.localhost)
+  #   port    - default port for both sides
+  #   public  - true -> reachable from LAN/WAN, false -> loopback only
+  #   https   - (optional, default false) also serve over TLS:
+  #               https://<name>.localhost            (port 443, by SNI)
+  #               https://<host>:<httpsPort>            (only meaningful if public)
+  #   httpPort  - (optional, default port) port the backend really listens on
+  #   httpsPort - (optional, default port) port clients use. Without https this is
+  #             the backend port itself (exposed directly through the firewall).
+  #             With https and public, nginx binds 0.0.0.0:httpsPort, so it MUST differ
+  #             from httpPort (otherwise the backend and nginx fight for the port).
+  #
+  # Example:  { name = "ap"; port = 38281; public = true; https = true; httpPort = 38280; httpsPort = 38281; }
+  #           -> backend moves to 38280, https://192.168.1.124:38281 is nginx+TLS.
+  #
+  # The certificate must cover *.localhost and the LAN IP(s) you use, e.g.
+  #   mkcert "*.localhost" localhost 127.0.0.1 ::1 192.168.1.124
+  certFile = ./cws.localhost+3.pem;
+  certKeyFile = ./cws.localhost+3-key.pem;
+
+  rawRemaps = [
     {
       name = "timer";
       port = 8765;
@@ -42,7 +59,8 @@ let
     }
     {
       name = "ap";
-      port = 38281;
+      httpPort = 38281;
+      httpsPort = 38280;
       public = true;
     }
     {
@@ -57,7 +75,8 @@ let
     }
     {
       name = "copyparty";
-      port = 8086;
+      httpsPort = 8087;
+      httpPort = 8086;
       public = true;
     }
     {
@@ -82,10 +101,29 @@ let
     }
   ];
 
+  # Fill in derived fields (https/httpPort/httpsPort are optional in the list above).
+  remaps = map (
+    r:
+    let
+      https = r.https or false;
+      httpPort = r.httpPort or r.port;
+      httpsPort = r.httpsPort or r.port;
+    in
+    assert lib.assertMsg (!(https && r.public && httpPort == httpsPort))
+      "${r.name}: https+public needs httpPort != httpsPort (nginx and the backend can't both bind ${toString httpsPort})";
+    r // { inherit https httpPort httpsPort; }
+  ) rawRemaps;
+
   publicRemaps = builtins.filter (r: r.public) remaps;
 
+  # What the dashboards link to (local dashboard uses the hostname forms).
   listItem =
-    r: "<li><a href=\"//${r.name}.localhost\" data-port=\"${toString r.port}\">${r.name}</a></li>";
+    r:
+    "<li><a href=\"//${r.name}.localhost\" data-port=\"${toString r.httpsPort}\" data-https=\"${if r.https then "1" else "0"}\">${r.name}</a></li>";
+
+  localListItem =
+    r:
+    "<li><a href=\"${if r.https then "https" else "http"}://${r.name}.localhost\">${r.name}</a></li>";
 
   # Local dashboard (served on 127.0.0.1): show everything, since only
   # someone on the machine itself can reach this page in the first place.
@@ -96,7 +134,7 @@ let
       <body>
         <h1>Available Services (local access)</h1>
         <ul>
-          ${lib.concatStringsSep "\n" (map listItem remaps)}
+          ${lib.concatStringsSep "\n" (map localListItem remaps)}
           <li><a href="https://cws.localhost">chromewebstore (CWS)</a></li>
         </ul>
       </body>
@@ -117,12 +155,43 @@ let
         </ul>
         <script>
           document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll("a").forEach(e=>e.href = "//" + window.location.hostname + ":" + e.dataset.port)
+            document.querySelectorAll("a").forEach(e=>e.href = (e.dataset.https == "1" ? "https:" : "http:") + "//" + window.location.hostname + ":" + e.dataset.port)
           });
         </script>
       </body>
     </html>
   '';
+
+  loopback = [
+    "127.0.0.1"
+    "[::1]"
+  ];
+  wildcard = [
+    "0.0.0.0"
+    "[::]"
+  ];
+
+  mkListen =
+    r:
+    let
+      plain = map (addr: {
+        inherit addr;
+        port = 80;
+      }) (if r.public then wildcard ++ loopback else loopback);
+      # https://<name>.localhost on 443 (SNI picks the vhost)
+      tlsHost = map (addr: {
+        inherit addr;
+        port = 443;
+        ssl = true;
+      }) (if r.public then wildcard ++ loopback else loopback);
+      # https://<ip>:<httpsPort>, only for public services
+      tlsPort = map (addr: {
+        inherit addr;
+        port = r.httpsPort;
+        ssl = true;
+      }) wildcard;
+    in
+    plain ++ lib.optionals r.https (tlsHost ++ lib.optionals r.public tlsPort);
 
 in
 {
@@ -138,44 +207,13 @@ in
           map (r: {
             name = "${r.name}.localhost";
             value = {
-              listen =
-                (
-                  public:
-                  if public then
-                    [
-                      {
-                        addr = "0.0.0.0";
-                        port = 80;
-                      }
-                      {
-                        addr = "[::]";
-                        port = 80;
-                      }
-                      {
-                        addr = "127.0.0.1";
-                        port = 80;
-                      }
-                      {
-                        addr = "[::1]";
-                        port = 80;
-                      }
-                    ]
-                  else
-                    [
-                      {
-                        addr = "127.0.0.1";
-                        port = 80;
-                      }
-                      {
-                        addr = "[::1]";
-                        port = 80;
-                      }
-                    ]
-                )
-                  r.public;
+              listen = mkListen r;
+              addSSL = r.https;
+              sslCertificate = lib.mkIf r.https certFile;
+              sslCertificateKey = lib.mkIf r.https certKeyFile;
               locations = {
                 "/" = {
-                  proxyPass = "http://127.0.0.1:${toString r.port}";
+                  proxyPass = "http://127.0.0.1:${toString r.httpPort}";
                   proxyWebsockets = true;
 
                   extraConfig = ''
@@ -204,8 +242,8 @@ in
         // {
           "chromewebstore.google.com" = {
             addSSL = true;
-            sslCertificate = ./cws.localhost+3.pem;
-            sslCertificateKey = ./cws.localhost+3-key.pem;
+            sslCertificate = certFile;
+            sslCertificateKey = certKeyFile;
             locations = {
               "/" = {
                 return = "302 https://cws.localhost$request_uri";
@@ -214,8 +252,8 @@ in
           };
           "cws.localhost" = {
             addSSL = true;
-            sslCertificate = ./cws.localhost+3.pem;
-            sslCertificateKey = ./cws.localhost+3-key.pem;
+            sslCertificate = certFile;
+            sslCertificateKey = certKeyFile;
             locations = {
               "/" = {
                 extraConfig = ''
@@ -303,7 +341,7 @@ in
         80
         443
       ]
-      ++ lib.map (x: x.port) publicRemaps;
+      ++ map (x: x.httpsPort) publicRemaps;
     };
   };
 }
