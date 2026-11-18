@@ -80,6 +80,12 @@ let
       public = true;
     }
     {
+      name = "secret";
+      httpsPort = 4444;
+      httpPort = 1564;
+      public = true;
+    }
+    {
       name = "syncthing";
       port = 8384;
       public = false;
