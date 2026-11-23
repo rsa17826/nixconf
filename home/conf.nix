@@ -14,8 +14,25 @@ let
     "NIXOS_LABEL_VERSION"
     "NIXOS_LABEL"
   ];
+  pwashare-fw = pkgs.writeShellApplication {
+    name = "pwashare-fw";
+    runtimeInputs = [ pkgs.iptables ];
+    text = builtins.readFile ../shellScripts/pwashare/pwashare-fw.sh; # adjust relative path
+  };
 in
 {
+  environment = {
+    systemPackages = [ pwashare-fw ];
+    environment = {
+      variables = {
+        EDITOR = "codium --wait";
+        SOPS_EDITOR = "codium --wait";
+        VISUAL = "codium --wait";
+        HYPRCURSOR_THEME = "mew";
+        # QT_STYLE_OVERRIDE = "adwaita-dark";
+      };
+    };
+  };
   imports = [
     ./alias.nix
 
@@ -162,15 +179,15 @@ in
               options = [ "NOPASSWD" ];
             }
             {
-              command = "/etc/profiles/per-user/${userConfig.uname}/bin/pwashare";
-              options = [ "NOPASSWD" ];
-            }
-            {
               command = "/etc/profiles/per-user/nyx/bin/githubNotifications";
               options = [
                 "NOPASSWD"
                 # "NOEXEC"
               ];
+            }
+            {
+              command = "/run/current-system/sw/bin/pwashare-fw";
+              options = [ "NOPASSWD" ];
             }
           ];
         }
@@ -266,15 +283,6 @@ in
     };
   };
 
-  environment = {
-    variables = {
-      EDITOR = "codium --wait";
-      SOPS_EDITOR = "codium --wait";
-      VISUAL = "codium --wait";
-      HYPRCURSOR_THEME = "mew";
-      # QT_STYLE_OVERRIDE = "adwaita-dark";
-    };
-  };
   console = {
     useXkbConfig = true;
   };

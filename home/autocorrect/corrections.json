@@ -5351,5 +5351,6 @@
   ".s/t": { "replace": "./st", "noEndActionRequired": true },
   "tatic": "tactic",
   "precent": "percent",
-  "baloon": "balloon"
+  "baloon": "balloon",
+  "pyhton": "python"
 }

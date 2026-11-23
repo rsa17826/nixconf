@@ -4,14 +4,13 @@ PORT=1234
 SINK_NAME="VirtualSink"
 # RATE=12000
 RATE=48000
-# TITLE="Audio Streamer"
+TITLE="pwashare"
 
 # Function to clean up on exit or stop
 cleanup() {
   echo "Cleaning up..."
   # Remove firewall rules
-  sudo iptables -D INPUT -p tcp --dport "$PORT" -j DROP 2>/dev/null
-  while sudo iptables -D INPUT -p tcp --dport "$PORT" -j ACCEPT 2>/dev/null; do :; done
+  sudo -n "/run/current-system/sw/bin/pwashare-fw" clear
 
   # Kill processes and unload Pulse modules
   fuser -k "$PORT/tcp" 2>/dev/null
@@ -62,8 +61,7 @@ start)
 
     if [[ -n "$FIRST_IP" ]]; then
       # Apply Firewall Lock
-      sudo iptables -I INPUT -p tcp -s "$FIRST_IP" --dport "$PORT" -j ACCEPT
-      sudo iptables -A INPUT -p tcp --dport "$PORT" -j DROP
+      sudo -n "/run/current-system/sw/bin/pwashare-fw" lock "$FIRST_IP"
 
       echo "Locked to IP: $FIRST_IP"
       notify-send -t 3000 "$TITLE" "Locked to connection from: $FIRST_IP"
