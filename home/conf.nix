@@ -23,14 +23,12 @@ in
 {
   environment = {
     systemPackages = [ pwashare-fw ];
-    environment = {
-      variables = {
-        EDITOR = "codium --wait";
-        SOPS_EDITOR = "codium --wait";
-        VISUAL = "codium --wait";
-        HYPRCURSOR_THEME = "mew";
-        # QT_STYLE_OVERRIDE = "adwaita-dark";
-      };
+    variables = {
+      EDITOR = "codium --wait";
+      SOPS_EDITOR = "codium --wait";
+      VISUAL = "codium --wait";
+      HYPRCURSOR_THEME = "mew";
+      # QT_STYLE_OVERRIDE = "adwaita-dark";
     };
   };
   imports = [
