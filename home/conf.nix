@@ -17,7 +17,7 @@ let
   pwashare-fw = pkgs.writeShellApplication {
     name = "pwashare-fw";
     runtimeInputs = [ pkgs.iptables ];
-    text = builtins.readFile ../shellScripts/pwashare/pwashare-fw.sh; # adjust relative path
+    text = builtins.readFile ./shellScripts/pwashare/pwashare-fw.sh; # adjust relative path
   };
 in
 {
