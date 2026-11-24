@@ -351,11 +351,11 @@
     "ext-vscode-math-on-selected-nums": {
       "flake": false,
       "locked": {
-        "lastModified": 1793212221,
-        "narHash": "sha256-Hva3t7Y7zerGg6xq+yYUQl95gaHRgV3Wn6O1W1JVDvA=",
+        "lastModified": 1795564752,
+        "narHash": "sha256-ReMk52QlnyOUDzwNZATQQqiI3zDeOAVflWPHywMtoDc=",
         "owner": "rsa17826",
         "repo": "vscode-ext---math-on-selected-nums",
-        "rev": "37ed4c01cfde8fdc380dbdcdf72587dccc9a0c3d",
+        "rev": "87be737c715300932b875d568c7f38809f1730d6",
         "type": "github"
       },
       "original": {

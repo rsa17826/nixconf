@@ -5353,5 +5353,11 @@
   "precent": "percent",
   "baloon": "balloon",
   "pusjh": "push",
-  "pyhton": "python"
+  "pyhton": "python",
+  "iong": {
+    "forceCaseMatch": true,
+    "noEndActionRequired": true,
+    "allowTriggeringInsideWords": true,
+    "replace": "ing"
+  }
 }
