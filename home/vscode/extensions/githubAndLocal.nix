@@ -217,7 +217,7 @@ in
               buildInputs = with pkgs; [ libsecret ];
             })
             (buildSimpleExt {
-              src = ans-vis;
+              src = ans-vis-vscode-extension;
               extName = "ansi-text-colors";
               extCreator = "rssaromeo";
             })
