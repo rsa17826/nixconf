@@ -23,6 +23,22 @@
         "type": "github"
       }
     },
+    "ans-vis-vscode-extension": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795875646,
+        "narHash": "sha256-toe5FS6OZ4Y/vE0WG2RiEeLqanEgPszPl0OLxR+cjLI=",
+        "owner": "rsa17826",
+        "repo": "ans-vis-vscode-extension",
+        "rev": "41d286513d5c4695a906d34c6e20c6a7b6d714f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsa17826",
+        "repo": "ans-vis-vscode-extension",
+        "type": "github"
+      }
+    },
     "ap-slot-tracker": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -1221,6 +1237,7 @@
     "root": {
       "inputs": {
         "alwaysFocusedInputBox": "alwaysFocusedInputBox",
+        "ans-vis-vscode-extension": "ans-vis-vscode-extension",
         "ap-slot-tracker": "ap-slot-tracker",
         "audio-manager": "audio-manager",
         "auto-screenshotter": "auto-screenshotter",

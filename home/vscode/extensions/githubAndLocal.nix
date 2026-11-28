@@ -218,6 +218,11 @@ in
             })
             (buildSimpleExt {
               src = vsctextgen;
+              extName = "ansi-text-colors";
+              extCreator = "rssaromeo";
+            })
+            (buildSimpleExt {
+              src = vsctextgen;
               extName = "vsctextgen";
               extCreator = "rssaromeo";
             })
