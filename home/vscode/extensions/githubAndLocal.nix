@@ -217,7 +217,7 @@ in
               buildInputs = with pkgs; [ libsecret ];
             })
             (buildSimpleExt {
-              src = vsctextgen;
+              src = ans-vis;
               extName = "ansi-text-colors";
               extCreator = "rssaromeo";
             })
