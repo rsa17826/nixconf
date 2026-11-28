@@ -5360,5 +5360,15 @@
     "noEndActionRequired": true,
     "allowTriggeringInsideWords": true,
     "replace": "ing"
+  },
+  "p[re": {
+    "forceCaseMatch": true,
+    "noEndActionRequired": true,
+    "replace": "pre"
+  },
+  "fiul": {
+    "forceCaseMatch": true,
+    "noEndActionRequired": true,
+    "replace": "fil"
   }
 }

@@ -26,11 +26,11 @@
     "ans-vis-vscode-extension": {
       "flake": false,
       "locked": {
-        "lastModified": 1795875646,
-        "narHash": "sha256-toe5FS6OZ4Y/vE0WG2RiEeLqanEgPszPl0OLxR+cjLI=",
+        "lastModified": 1795878863,
+        "narHash": "sha256-RUe2fNC49/31q61VrpBBhE+dwOg6MDGebLXLshuAuIs=",
         "owner": "rsa17826",
         "repo": "ans-vis-vscode-extension",
-        "rev": "41d286513d5c4695a906d34c6e20c6a7b6d714f7",
+        "rev": "78b8e09c6d06dd716c3faaedfc6f9a7805d4cd82",
         "type": "github"
       },
       "original": {
@@ -44,11 +44,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1795116005,
-        "narHash": "sha256-i4U4UYSSibNzQDQcfUa3FCcIFmQAlNPuezrqUVGa+6w=",
+        "lastModified": 1795879503,
+        "narHash": "sha256-5QmgT3uNsGFlem1RnNNo7QZ/T3h/2FBcZGl4TDjXsWc=",
         "owner": "rsa17826",
         "repo": "ap-slot-tracker",
-        "rev": "c685f6974141d76f42b9e53b911aa63fa97ff75d",
+        "rev": "7ee05e116e672c764af50f68e0b7b4b731a90264",
         "type": "github"
       },
       "original": {
