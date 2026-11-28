@@ -58,6 +58,31 @@ let
     "grep" = "grep --color=auto";
     "+x" = "chmod +x";
     "mangohud" = "LD_LIBRARY_PATH=/run/opengl-driver/lib mangohud";
+    "clear-yt" = ''
+      nix shell nixpkgs#sqlite -c sh -c "sqlite3 /home/nyix/.config/net.imput.helium/Default/History <<"SQL"
+      BEGIN;
+
+      CREATE TEMP TABLE yt AS
+        SELECT id FROM urls
+        WHERE url GLOB 'http*://youtube.com/*'
+           OR url GLOB 'http*://*.youtube.com/*';
+
+      CREATE TEMP TABLE yv AS
+        SELECT id FROM visits WHERE url IN (SELECT id FROM yt);
+
+      DELETE FROM visit_source        WHERE id IN (SELECT id FROM yv);
+      DELETE FROM content_annotations WHERE visit_id IN (SELECT id FROM yv);
+      DELETE FROM context_annotations WHERE visit_id IN (SELECT id FROM yv);
+      DELETE FROM clusters_and_visits WHERE visit_id IN (SELECT id FROM yv);
+      DELETE FROM keyword_search_terms WHERE url_id IN (SELECT id FROM yt);
+      DELETE FROM segment_usage WHERE segment_id IN (SELECT id FROM segments WHERE url_id IN (SELECT id FROM yt));
+      DELETE FROM segments WHERE url_id IN (SELECT id FROM yt);
+      DELETE FROM visits WHERE url IN (SELECT id FROM yt);
+      DELETE FROM urls   WHERE id  IN (SELECT id FROM yt);
+      COMMIT;
+      VACUUM;
+      SQL"
+    '';
   };
   interactiveShellInit = ''
     alias rm="gio trash"

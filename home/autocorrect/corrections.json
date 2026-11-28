@@ -5354,6 +5354,7 @@
   "baloon": "balloon",
   "pusjh": "push",
   "pyhton": "python",
+  "manafest": "manifest",
   "iong": {
     "forceCaseMatch": true,
     "noEndActionRequired": true,

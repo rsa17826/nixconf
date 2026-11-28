@@ -222,6 +222,12 @@
               hash = "sha256-FvfjPpQsgCsnY1BylhLCM/qDQChf9/iTr3cKkCGfMVI=";
             }
             {
+              name = "undo-go";
+              publisher = "undo";
+              version = "1.0.1";
+              hash = "sha256-FiqKtPMIQXnfDiBbfsY83Q0uFT5ZYc15fK9um7RsL4A=";
+            }
+            {
               name = "godot-tools";
               publisher = "geequlim";
               version = "2.7.1";
