@@ -9,28 +9,27 @@ Rectangle {
   required property var entry
 
   anchors.topMargin: 250
-  border.color: entry.urgency === 2 ? "#9933cc" : "#1e1e40"
-  border.width: 1
+  border.width: 0
   clip: true
-  color: entry.urgency === 0 ? "#03030a" : entry.urgency === 1 ? "#0d0d1e" : '#1f0d25'
+  color: "transparent"
   implicitHeight: contentRow.implicitHeight + 34
-  layer.enabled: true
+  // layer.enabled: true
 
   // ── Appear animation ─────────────────────────────────────────
   opacity: 0
-  radius: 6
+  radius: 0
 
-  layer.effect: ShaderEffect {
-    property real amplitude: 10
-    property real edgeWidth: 30
-    property vector2d resolution: Qt.vector2d(root.width, root.height)
-    property real speed: 8
-    property real spikeWidth: 10
-    property real time: barContent.time
+  // layer.effect: ShaderEffect {
+  //   property real amplitude: 10
+  //   property real edgeWidth: 30
+  //   property vector2d resolution: Qt.vector2d(root.width, root.height)
+  //   property real speed: 8
+  //   property real spikeWidth: 10
+  //   property real time: barContent.time
 
-    fragmentShader: "shaders/barspike.frag.qsb"
-    vertexShader: "shaders/barspike.vert.qsb"
-  }
+  //   fragmentShader: "shaders/barspike.frag.qsb"
+  //   vertexShader: "shaders/barspike.vert.qsb"
+  // }
   NumberAnimation on opacity {
     duration: Math.max(0, 300 - (Date.now() - root.entry.addedAt))
     from: 0
@@ -38,6 +37,10 @@ Rectangle {
     to: 1
   }
 
+  SysFrame {
+    accent: root.entry.urgency === 2 ? "#ff6666" : root.entry.urgency === 0 ? "#2c8aa6" : "#40d9ff"
+    anchors.fill: parent
+  }
   MouseArea {
     acceptedButtons: Qt.RightButton
     anchors.fill: parent
@@ -52,7 +55,7 @@ Rectangle {
     anchors.bottom: parent.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    color: "#08081a"
+    color: "#061020"
     height: 2
     visible: !root.entry.expired
 
@@ -65,8 +68,8 @@ Rectangle {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.top: parent.top
-      color: root.entry.urgency === 2 ? "#9933cc" : root.entry.urgency === 1 ? "#4d6fff" : "#30324a"
-      radius: 1
+      color: root.entry.urgency === 2 ? "#9933cc" : root.entry.urgency === 1 ? "#40d9ff" : "#3a6280"
+      radius: 0
 
       // 2. Set the initial width based on the remaining time fraction
       width: root.width * (remainingDuration / root.entry.stayVisibleFor)
@@ -89,7 +92,7 @@ Rectangle {
 
     anchors {
       left: parent.left
-      leftMargin: 25
+      leftMargin: 18
       margins: 12
       right: parent.right
       rightMargin: 8
@@ -107,9 +110,9 @@ Rectangle {
       visible: root.entry.appIcon !== "" && appIconImg.status === Image.Ready
 
       Rectangle {
-        color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#0a0a18" : "#0d1030"
+        color: root.entry.urgency === 2 ? "#1a0a2e" : root.entry.urgency === 0 ? "#050e1c" : "#0a1d36"
         height: 28
-        radius: 4
+        radius: 0
         width: 28
 
         Image {
@@ -151,12 +154,12 @@ Rectangle {
 
         // App name (subtle, above summary)
         Text {
-          // color: root.dimmed ? "#30324a" : "#6a72a0"
-          color: "#30324a"
+          // color: root.dimmed ? "#3a6280" : "#73b3d9"
+          color: "#3a6280"
           elide: Text.ElideRight
           font.family: "monospace"
           font.pointSize: 8
-          text: Owo.owo(root.entry.appName)
+          text: Owo.owo("◈ " + root.entry.appName)
           visible: root.entry.appName !== ""
           width: textGlitch.width
         }
@@ -170,8 +173,8 @@ Rectangle {
         glitchRate: 1.4
 
         Text {
-          // color: root.dimmed ? "#6a72a0" : "#c4cce8"
-          color: "#6a72a0"
+          // color: root.dimmed ? "#73b3d9" : "#d9f7ff"
+          color: "#73b3d9"
           elide: Text.ElideRight
           font.family: "monospace"
           font.pointSize: 10
@@ -189,7 +192,7 @@ Rectangle {
         glitchRate: 1.4
 
         Text {
-          color: "#30324a"
+          color: "#3a6280"
           elide: Text.ElideRight
           font.family: "monospace"
           font.pointSize: 9
@@ -210,19 +213,16 @@ Rectangle {
           model: root.entry.actions
 
           delegate: Rectangle {
+            readonly property real btnH: actionLbl.implicitHeight + 8
             required property var modelData
+            readonly property real shearPad: Math.ceil(0.06 * btnH) + 1
 
             border.color: "#00000000"
             border.width: 1
             color: "#00000000"
-            implicitHeight: actionLbl.implicitHeight + 8
+            implicitHeight: btnH
             implicitWidth: actionLbl.implicitWidth + 14
 
-            // Only the label is glitched — GlitchEffect renders its
-            // content offscreen (visible: false) and shows a separate
-            // shaded copy, so a MouseArea nested inside it never gets
-            // hit-tested. Keep interactive items (this Rectangle,
-            // MouseArea) outside any GlitchEffect.
             GlitchEffect {
               id: actionGlitch
 
@@ -231,23 +231,34 @@ Rectangle {
               glitchAmount: 0.1
               glitchRate: 1.8
 
-              Rectangle {
-                anchors.centerIn: parent
-                border.color: "#2a3a8a"
-                border.width: 1
-                color: actionMa.containsMouse ? "#12122c" : "transparent"
-                implicitHeight: actionLbl.implicitHeight + 8
-                implicitWidth: actionLbl.implicitWidth + 14
-                radius: 3
+              // Padded wrapper: gives the sheared corners room inside the texture
+              Item {
+                implicitHeight: btnH
+                implicitWidth: actionLbl.implicitWidth + 14 + shearPad * 2
 
-                Text {
-                  id: actionLbl
-
+                Rectangle {
                   anchors.centerIn: parent
-                  color: "#4d6fff"
-                  font.family: "monospace"
-                  font.pointSize: 9
-                  text: Owo.owo(modelData.text)
+                  border.color: "#2f8fd0"
+                  border.width: 1
+                  color: actionMa.containsMouse ? "#0c2340" : "transparent"
+                  implicitHeight: btnH
+                  implicitWidth: actionLbl.implicitWidth + 14
+                  radius: 0
+
+                  // x' = x - 0.12*(y - h/2): shear pivoted on the vertical center
+                  transform: Matrix4x4 {
+                    matrix: Qt.matrix4x4(1, -0.12, 0, 0.06 * btnH, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+                  }
+
+                  Text {
+                    id: actionLbl
+
+                    anchors.centerIn: parent
+                    color: "#40d9ff"
+                    font.family: "monospace"
+                    font.pointSize: 9
+                    text: Owo.owo(modelData.text)
+                  }
                 }
               }
             }
@@ -266,36 +277,39 @@ Rectangle {
     }
 
     // Dismiss button
-    Rectangle {
-      Layout.alignment: Qt.AlignTop
-      color: closeMa.containsMouse ? "#1e1e40" : "transparent"
-      height: 20
-      radius: 3
-      width: 20
+    // Rectangle {
+    //   Layout.alignment: Qt.AlignTop
+    //   color: closeMa.containsMouse ? "#15486f" : "transparent"
+    //   transform: SysShear {}
+    //   border.color: closeMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+    //   border.width: 1
+    //   height: 20
+    //   radius: 0
+    //   width: 20
 
-      GlitchEffect {
-        id: closeGlitch
+    //   GlitchEffect {
+    //     id: closeGlitch
 
-        aberration: 0.0025
-        glitchAmount: 0.02
-        glitchRate: 1.4
+    //     aberration: 0.0025
+    //     glitchAmount: 0.02
+    //     glitchRate: 1.4
 
-        Text {
-          anchors.centerIn: parent
-          color: closeMa.containsMouse ? "#c4cce8" : "#30324a"
-          font.pointSize: 9
-          text: "✕"
-        }
-      }
-      MouseArea {
-        id: closeMa
+    //     Text {
+    //       anchors.centerIn: parent
+    //       color: closeMa.containsMouse ? "#d9f7ff" : "#3a6280"
+    //       font.pointSize: 9
+    //       text: "✕"
+    //     }
+    //   }
+    //   MouseArea {
+    //     id: closeMa
 
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        hoverEnabled: true
+    //     anchors.fill: parent
+    //     cursorShape: Qt.PointingHandCursor
+    //     hoverEnabled: true
 
-        onClicked: NotifState.dismiss(root.entry.id)
-      }
-    }
+    //     onClicked: NotifState.dismiss(root.entry.id)
+    //   }
+    // }
   }
 }

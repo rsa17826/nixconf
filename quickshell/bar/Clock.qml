@@ -36,7 +36,7 @@ Rectangle {
       id: clock
 
       anchors.centerIn: parent
-      color: "#c4cce8"
+      color: "#d9f7ff"
       text: Owo.owo(Time.time)
 
       font {
@@ -80,8 +80,8 @@ Rectangle {
 
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
-    implicitHeight: calendarColumn.implicitHeight + 16
-    implicitWidth: 280
+    implicitHeight: calendarColumn.implicitHeight + 28
+    implicitWidth: 288
     screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: false
 
@@ -95,12 +95,8 @@ Rectangle {
       left: true
       top: true
     }
-    Rectangle {
+    SysFrame {
       anchors.fill: parent
-      border.color: "#1e1e40"
-      border.width: 1
-      color: "#03030a"
-      radius: 6
     }
     Column {
       id: calendarColumn
@@ -109,7 +105,7 @@ Rectangle {
 
       anchors {
         fill: parent
-        margins: 8
+        margins: 14
       }
       TimerCalendar {
         id: calendarWidget

@@ -38,7 +38,7 @@ Scope {
         property real time: 0
 
         anchors.fill: parent
-        layer.enabled: true
+        // layer.enabled: true
 
         layer.effect: ShaderEffect {
           property real amplitude: 5
@@ -58,17 +58,136 @@ Scope {
           onTriggered: barContent.time += frameTime
         }
 
-        // ── Void bar background ──────────────────────────────────
+        // ── System-window bar background ─────────────────────────
         Rectangle {
           anchors.fill: parent
-          color: "#03030a"
 
+          gradient: Gradient {
+            GradientStop {
+              color: "#8c0d52ad"
+              position: 0.0
+            }
+            GradientStop {
+              color: "#d100194d"
+              position: 1.0
+            }
+          }
+
+          // faint grid
+          Repeater {
+            model: Math.floor(barContent.width / 24)
+
+            Rectangle {
+              color: "#1240d9ff"
+              height: barContent.height - 4
+              width: 1
+              x: (index + 1) * 24
+              y: 2
+            }
+          }
+          Rectangle {
+            color: "#1240d9ff"
+            height: 1
+            width: barContent.width - 12
+            x: 6
+            y: 24
+          }
+
+          // glow edge along the bottom
           Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "#1e1e40"
+            color: "#1a40d9ff"
+            height: 6
+          }
+          Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#4740d9ff"
+            height: 3
+          }
+          Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#f2d9faff"
             height: 1
+          }
+
+          // "===" bottom-left
+          Repeater {
+            model: 3
+
+            Rectangle {
+              color: "#e6d9faff"
+              height: 3
+              width: 11
+              x: 18 + index * 16
+              y: barContent.height - 3
+            }
+          }
+
+          // dot-line top-right
+          Rectangle {
+            color: "#d9faff"
+            height: 5
+            radius: 2.5
+            width: 5
+            x: barContent.width - 56
+            y: -1
+          }
+          Rectangle {
+            color: "#e6d9faff"
+            height: 2
+            width: 36
+            x: barContent.width - 56
+            y: 0
+          }
+          Rectangle {
+            color: "#d9faff"
+            height: 5
+            radius: 2.5
+            width: 5
+            x: barContent.width - 20
+            y: -1
+          }
+
+          // light running along the top edge
+          Rectangle {
+            id: scanLight
+
+            property real p: 0
+
+            height: 2
+            width: 120
+            x: p * (barContent.width - 120)
+            y: 0
+
+            gradient: Gradient {
+              orientation: Gradient.Horizontal
+
+              GradientStop {
+                color: "#0040d9ff"
+                position: 0
+              }
+              GradientStop {
+                color: "#e6d9faff"
+                position: 0.5
+              }
+              GradientStop {
+                color: "#0040d9ff"
+                position: 1
+              }
+            }
+
+            NumberAnimation on p {
+              duration: 6000
+              from: 0
+              loops: Animation.Infinite
+              to: 1
+            }
           }
         }
         MediaProgress {

@@ -77,7 +77,7 @@ Rectangle {
   color: error ? "#1a0a2e" : syncthingRemainingData === 0 ? '#2d232d' : '#28122c'
   height: 10
   implicitWidth: Math.max(height, label.implicitWidth + 8)
-  radius: 20
+  radius: 2
 
   anchors {
     right: parent.right

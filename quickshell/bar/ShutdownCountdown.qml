@@ -1,5 +1,5 @@
 // ShutdownCountdown.qml
-// Shows "Shuts Down in 2m23s" when a systemd shutdown is scheduled.
+// Shows "[!] System Shutdown in 2m23s" when a systemd shutdown is scheduled.
 // Reads /run/systemd/shutdown/scheduled via awk every second.
 
 import Quickshell

@@ -15,21 +15,21 @@ Item {
   id: root
 
   property var c: {
-    "bg": "#0d0d1e",
-    "border": "#1e1e40",
-    "divider": "#1e1e40",
-    "hovered": "#12122c",
-    "muted": "#30324a",
-    "text": "#c4cce8",
-    "normal": "#4d6fff"   // more than a day away
+    "bg": "#071426",
+    "border": "#15486f",
+    "divider": "#15486f",
+    "hovered": "#572699ff",
+    "muted": "#3a6280",
+    "text": "#d9f7ff",
+    "normal": "#40d9ff"   // more than a day away
     ,
     "orange": "#e8974d"   // same calendar day, > 3h left
     ,
     "red": "#e84d4d"      // 0h left
     ,
     "expired": "#ff3b3b",
-    "accent": "#4d6fff",
-    "buttonBg": "#1e1e40"
+    "accent": "#40d9ff",
+    "buttonBg": "#291a80f2"
   }
 
   // ── Draft state used while editing in the popup ─────────────────
@@ -289,9 +289,12 @@ Item {
       id: linkBtn
 
       color: linkMa.containsMouse ? c.hovered : "transparent"
+      transform: SysShear {}
+      border.color: linkMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+      border.width: 1
       implicitHeight: 16
       implicitWidth: linkLbl.implicitWidth + 6
-      radius: 3
+      radius: 0
       visible: root.url !== ""
 
       anchors {
@@ -326,9 +329,9 @@ Item {
   Rectangle {
     id: progressTrack
 
-    color: "#08081a"
+    color: "#061020"
     height: 2
-    radius: 1
+    radius: 0
     visible: root.targetTimestamp > 0 && root.startTimestamp > 0 && root.repeatValue <= 0
     width: pill.width
 
@@ -385,8 +388,8 @@ Item {
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
-    implicitHeight: pickerColumn.implicitHeight + 12
-    implicitWidth: 210
+    implicitHeight: pickerColumn.implicitHeight + 28
+    implicitWidth: 222
     screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: false
 
@@ -398,12 +401,8 @@ Item {
       left: true
       top: true
     }
-    Rectangle {
+    SysFrame {
       anchors.fill: parent
-      border.color: c.border
-      border.width: 1
-      color: c.bg
-      radius: 6
     }
     Column {
       id: pickerColumn
@@ -412,21 +411,11 @@ Item {
 
       anchors {
         fill: parent
-        margins: 8
+        margins: 14
       }
-      GlitchEffect {
-        id: settimerGlitch
-
-        aberration: 0.0120
-        glitchAmount: 0.07
-        glitchRate: 1.4
-
-        Text {
-          color: c.accent
-          font.bold: true
-          font.pixelSize: 9
-          text: Owo.owo("Set Countdown")
-        }
+      SysHeader {
+        title: "SET QUEST TIMER"
+        width: parent.width
       }
       Rectangle {
         color: c.divider
@@ -485,9 +474,12 @@ Item {
             id: minusBtn
 
             color: minusArea.containsMouse ? c.hovered : c.buttonBg
+            transform: SysShear {}
+            border.color: minusArea.containsMouse ? "#f2d9faff" : "#b373e0ff"
+            border.width: 1
             implicitHeight: 18
             implicitWidth: 18
-            radius: 4
+            radius: 0
 
             // Only the glyph is glitched — MouseArea must stay outside
             // any GlitchEffect (see NotifToast's action buttons for why:
@@ -540,9 +532,12 @@ Item {
             id: plusBtn
 
             color: plusArea.containsMouse ? c.hovered : c.buttonBg
+            transform: SysShear {}
+            border.color: plusArea.containsMouse ? "#f2d9faff" : "#b373e0ff"
+            border.width: 1
             implicitHeight: 18
             implicitWidth: 18
-            radius: 4
+            radius: 0
 
             GlitchEffect {
               id: plusGlitch
@@ -594,7 +589,7 @@ Item {
           border.width: 1
           color: c.bg
           height: 20
-          radius: 4
+          radius: 0
           width: pickerColumn.width - 38 - 6
 
           TextInput {
@@ -648,9 +643,12 @@ Item {
           id: setBtn
 
           color: setArea.containsMouse ? c.hovered : c.buttonBg
+          transform: SysShear {}
+          border.color: setArea.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           implicitHeight: 22
           implicitWidth: (buttonRow.width - 8) / 2
-          radius: 4
+          radius: 0
 
           GlitchEffect {
             id: setGlitch
@@ -679,9 +677,12 @@ Item {
           id: clearBtn
 
           color: clearArea.containsMouse ? c.hovered : c.buttonBg
+          transform: SysShear {}
+          border.color: clearArea.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           implicitHeight: 22
           implicitWidth: (buttonRow.width - 8) / 2
-          radius: 4
+          radius: 0
 
           GlitchEffect {
             id: clearGlitch

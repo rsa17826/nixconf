@@ -5,16 +5,16 @@ Item {
   id: root
 
   property var c: {
-    "bg": "#0d0d1e",
-    "border": "#1e1e40",
-    "divider": "#1e1e40",
-    "hovered": "#12122c",
-    "text": "#c4cce8",
-    "muted": "#30324a",
-    "accent": "#4d6fff",
-    "markedBg": "#161235",
-    "markedBorder": "#4d2f8a",
-    "selectedBorder": "#4d6fff"
+    "bg": "#291a80f2",
+    "border": "#15486f",
+    "divider": "#15486f",
+    "hovered": "#572699ff",
+    "text": "#d9f7ff",
+    "muted": "#3a6280",
+    "accent": "#40d9ff",
+    "markedBg": "#2a2108",
+    "markedBorder": "#c9a227",
+    "selectedBorder": "#40d9ff"
   }
   property var draft: ({
       h: 9,
@@ -90,14 +90,21 @@ Item {
     spacing: 8
     width: root.implicitWidth
 
+    SysHeader {
+      title: "QUEST LOG"
+      width: parent.width
+    }
     Row {
       spacing: 6
       width: parent.width
 
       Rectangle {
         color: prevMa.containsMouse ? c.hovered : "transparent"
+        transform: SysShear {}
+        border.color: prevMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+        border.width: 1
         height: 20
-        radius: 4
+        radius: 0
         width: 20
 
         Text {
@@ -122,13 +129,16 @@ Item {
         font.bold: true
         font.pixelSize: 10
         horizontalAlignment: Text.AlignHCenter
-        text: Owo.owo(root.monthName(root.viewMonth) + " " + root.viewYear)
+        text: Owo.owo("◈ " + root.monthName(root.viewMonth) + " " + root.viewYear)
         width: parent.width - 48
       }
       Rectangle {
         color: nextMa.containsMouse ? c.hovered : "transparent"
+        transform: SysShear {}
+        border.color: nextMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+        border.width: 1
         height: 20
-        radius: 4
+        radius: 0
         width: 20
 
         Text {
@@ -212,7 +222,7 @@ Item {
               border.width: 1
               color: dayCell.isSelected ? c.hovered : dayCell.hasTimer ? c.markedBg : "transparent"
               height: 20
-              radius: 4
+              radius: 0
               width: 20
 
               Text {
@@ -225,7 +235,7 @@ Item {
               Rectangle {
                 color: c.accent
                 height: 3
-                radius: 1.5
+                radius: 0
                 visible: dayCell.hasTimer
                 width: 3
 
@@ -259,7 +269,7 @@ Item {
       Text {
         color: c.text
         font.pixelSize: 9
-        text: Owo.owo("Set timer for " + root.pad(root.viewMonth) + "/" + root.pad(root.selectedDay))
+        text: Owo.owo("[ NEW QUEST ] " + root.pad(root.viewMonth) + "/" + root.pad(root.selectedDay))
       }
       Row {
         spacing: 6
@@ -273,8 +283,11 @@ Item {
         }
         Rectangle {
           color: hMinusMa.containsMouse ? c.hovered : c.bg
+          transform: SysShear {}
+          border.color: hMinusMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           height: 16
-          radius: 3
+          radius: 0
           width: 16
 
           Text {
@@ -304,8 +317,11 @@ Item {
         }
         Rectangle {
           color: hPlusMa.containsMouse ? c.hovered : c.bg
+          transform: SysShear {}
+          border.color: hPlusMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           height: 16
-          radius: 3
+          radius: 0
           width: 16
 
           Text {
@@ -328,8 +344,11 @@ Item {
         }
         Rectangle {
           color: mMinusMa.containsMouse ? c.hovered : c.bg
+          transform: SysShear {}
+          border.color: mMinusMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           height: 16
-          radius: 3
+          radius: 0
           width: 16
 
           Text {
@@ -352,8 +371,11 @@ Item {
         }
         Rectangle {
           color: mPlusMa.containsMouse ? c.hovered : c.bg
+          transform: SysShear {}
+          border.color: mPlusMa.containsMouse ? "#f2d9faff" : "#b373e0ff"
+          border.width: 1
           height: 16
-          radius: 3
+          radius: 0
           width: 16
 
           Text {
@@ -406,7 +428,7 @@ Item {
 
             color: modeMa.containsMouse ? c.hovered : c.bg
             height: 22
-            radius: 4
+            radius: 0
             width: (col.width - 6) / 2
 
             Text {

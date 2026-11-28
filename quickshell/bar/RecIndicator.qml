@@ -32,20 +32,20 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    border.color: root.warn ? "#e8b93d" : (root.paused ? "#4a4f6a" : "#2a3a8a")
+    border.color: root.warn ? "#e8b93d" : (root.paused ? "#3a6280" : "#2f8fd0")
     border.width: 1
-    color: root.warn ? "#2e2508" : (root.paused ? "#1a1a2e" : "#12122c")
-    radius: 4
+    color: root.warn ? "#2e2508" : (root.paused ? "#0a1626" : "#0c2340")
+    radius: 0
 
     Text {
       id: label
 
       anchors.centerIn: parent
-      color: root.warn ? "#ffcf4d" : (root.paused ? "#8a8fae" : "#c4cce8")
+      color: root.warn ? "#ffcf4d" : (root.paused ? "#73b3d9" : "#d9f7ff")
       font.pixelSize: 11
       text: {
         if (root.warn)
-          return Owo.owo("⚠ " + root.text + " " + (root.neverStarted ? "not running" : root.stalled ? "stalled" : "died"))
+          return Owo.owo("[!] " + root.text + " " + (root.neverStarted ? "not running" : root.stalled ? "stalled" : "died"))
         const h = Math.floor(root.secondsElapsed / 3600)
         const m = Math.floor(root.secondsElapsed / 60) % 60
         const s = root.secondsElapsed % 60

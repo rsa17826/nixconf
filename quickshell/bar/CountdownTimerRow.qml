@@ -14,10 +14,10 @@ Item {
   // "<12h away" gets crossed).
   property real _nowTick: Date.now()
   property var c: {
-    "buttonBg": "#1e1e40",
-    "hovered": "#12122c",
-    "text": "#c4cce8",
-    "border": "#1e1e40"
+    "buttonBg": "#15486f",
+    "hovered": "#0c2340",
+    "text": "#d9f7ff",
+    "border": "#15486f"
   }
   readonly property real dayMs: 24 * 60 * 60 * 1000
   // How wide this row is allowed to grow before it must scroll instead of

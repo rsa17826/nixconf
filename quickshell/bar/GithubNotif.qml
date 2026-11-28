@@ -33,12 +33,12 @@ Rectangle {
     return "just now"
   }
 
-  border.color: ghNotifCount > 0 ? "#2a3a8a" : "#2a3a8a"
+  border.color: ghNotifCount > 0 ? "#2f8fd0" : "#2f8fd0"
   border.width: 1
-  color: ghNotifCount > 0 ? "#12122c" : "#12122c"
+  color: ghNotifCount > 0 ? "#0c2340" : "#0c2340"
   height: 10
   implicitWidth: Math.max(height, ghNotifCountTextItem.implicitWidth + 8)
-  radius: 20
+  radius: 2
 
   MouseArea {
     anchors.fill: parent
@@ -106,7 +106,7 @@ Rectangle {
     id: ghNotifCountTextItem
 
     anchors.centerIn: parent
-    color: "#4d6fff"
+    color: "#40d9ff"
     font.bold: true
     font.pixelSize: 8
     text: Owo.owo(ghNotifCount > 0 ? (`[${ghNotifCount}] ${newestAge}`) : "")

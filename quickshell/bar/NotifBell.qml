@@ -35,7 +35,7 @@ Item {
       id: bellIcon
 
       anchors.verticalCenter: parent.verticalCenter
-      color: NotifState.centerOpen ? "#c4cce8" : NotifState.activeCount > 0 ? "#4d6fff" : NotifState.storedCount > 0 ? "#6a72a0" : "#30324a"
+      color: NotifState.centerOpen ? "#d9f7ff" : NotifState.activeCount > 0 ? "#40d9ff" : NotifState.storedCount > 0 ? "#73b3d9" : "#3a6280"
       font.family: "monospace"
       font.pointSize: 11
       text: NotifState.storedCount > 0 ? "󰂚" : "󰂜"
@@ -50,11 +50,11 @@ Item {
     // Badge — history count
     Rectangle {
       anchors.verticalCenter: parent.verticalCenter
-      border.color: NotifState.centerOpen ? "#4d6fff" : "#2a3a8a"
+      border.color: NotifState.centerOpen ? "#40d9ff" : "#2f8fd0"
       border.width: 1
-      color: NotifState.centerOpen ? "#12122c" : "#0d0d1e"
+      color: NotifState.centerOpen ? "#0c2340" : "#071426"
       height: 13
-      radius: 6
+      radius: 0
       visible: NotifState.storedCount > 0
       width: Math.max(13, badgeText.implicitWidth + 6)
 
@@ -70,7 +70,7 @@ Item {
           id: badgeText
 
           anchors.centerIn: parent
-          color: "#4d6fff"
+          color: "#40d9ff"
           font.bold: true
           font.family: "monospace"
           font.pointSize: 7
@@ -154,8 +154,8 @@ Item {
 
     color: "transparent"
     // grabFocus: true
-    implicitHeight: 520
-    implicitWidth: 400
+    implicitHeight: 548
+    implicitWidth: 428
     screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: NotifState.centerOpen
 
@@ -182,29 +182,31 @@ Item {
     }
     Rectangle {
       anchors.fill: parent
-      border.color: "#1e1e40"
-      border.width: 1
       clip: true
-      color: "#03030a"
-      radius: 6
+      color: "transparent"
+      radius: 0
 
+      SysFrame {
+        anchors.fill: parent
+      }
       ColumnLayout {
         anchors.fill: parent
+        anchors.margins: 14
         spacing: 0
 
         // Header
         Rectangle {
           Layout.fillWidth: true
-          color: "#08081a"
+          color: "transparent"
           height: 40
-          radius: 6
+          radius: 0
 
           // Cover bottom radius
           Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "#08081a"
+            color: "transparent"
             height: 6
           }
 
@@ -213,7 +215,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "#1e1e40"
+            color: "#15486f"
             height: 1
           }
           RowLayout {
@@ -223,34 +225,35 @@ Item {
             spacing: 8
 
             Text {
-              color: "#6a72a0"
+              color: "#73b3d9"
               font.family: "monospace"
               font.pointSize: 10
-              text: Owo.owo("notifications")
+              text: Owo.owo("[ SYSTEM MESSAGES ]")
             }
             Text {
               Layout.fillWidth: true
-              color: "#30324a"
+              color: "#3a6280"
               font.family: "monospace"
               font.pointSize: 9
-              text: Owo.owo(NotifState.storedCount > 0 ? NotifState.storedCount + " stored" : "quiet")
+              text: Owo.owo(NotifState.storedCount > 0 ? NotifState.storedCount + " unread" : "all clear")
             }
 
             // Clear all
             Rectangle {
-              border.color: "#1e1e40"
+              border.color: "#15486f"
               border.width: 1
-              color: clearMa.containsMouse ? "#12122c" : "transparent"
+              color: clearMa.containsMouse ? "#0c2340" : "transparent"
+              transform: SysShear {}
               height: 22
               implicitWidth: clearLbl.implicitWidth + 14
-              radius: 3
+              radius: 0
               visible: NotifState.storedCount > 0
 
               Text {
                 id: clearLbl
 
                 anchors.centerIn: parent
-                color: clearMa.containsMouse ? "#6a72a0" : "#30324a"
+                color: clearMa.containsMouse ? "#73b3d9" : "#3a6280"
                 font.family: "monospace"
                 font.pointSize: 9
                 text: Owo.owo("clear all")
@@ -268,16 +271,17 @@ Item {
 
             // Close
             Rectangle {
-              border.color: "#1e1e40"
+              border.color: "#15486f"
               border.width: 1
-              color: closeCenterMa.containsMouse ? "#12122c" : "transparent"
+              color: closeCenterMa.containsMouse ? "#0c2340" : "transparent"
+              transform: SysShear {}
               height: 22
-              radius: 3
+              radius: 0
               width: 22
 
               Text {
                 anchors.centerIn: parent
-                color: closeCenterMa.containsMouse ? "#c4cce8" : "#30324a"
+                color: closeCenterMa.containsMouse ? "#d9f7ff" : "#3a6280"
                 font.pointSize: 9
                 text: "✕"
               }
@@ -346,17 +350,17 @@ Item {
 
                   Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color: "#30324a"
+                    color: "#3a6280"
                     font.family: "monospace"
                     font.pointSize: 10
-                    text: Owo.owo("the void is quiet")
+                    text: Owo.owo("no system messages")
                   }
                   Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color: "#1e1e40"
+                    color: "#15486f"
                     font.family: "monospace"
                     font.pointSize: 9
-                    text: Owo.owo("no notifications stored")
+                    text: Owo.owo("inbox empty")
                   }
                 }
               }
@@ -379,13 +383,13 @@ Item {
                     // Layouts handle vertical centering automatically if specified,
                     // but keeping this alignment is safe.
                     Layout.alignment: Qt.AlignVCenter
-                    color: "#1e1e40"
+                    color: "#15486f"
                     height: 1
                     width: 16
                   }
                   Text {
                     Layout.alignment: Qt.AlignVCenter
-                    color: "#30324a"
+                    color: "#3a6280"
                     font.family: "monospace"
                     font.pointSize: 8
                     text: Owo.owo("history")
@@ -393,7 +397,7 @@ Item {
                   Rectangle {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillWidth: true
-                    color: "#1e1e40"
+                    color: "#15486f"
                     height: 1
                   }
 
@@ -401,18 +405,19 @@ Item {
                   Rectangle {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.rightMargin: 4
-                    border.color: "#1e1e40"
+                    border.color: "#15486f"
                     border.width: 1
-                    color: clearHistMa.containsMouse ? "#12122c" : "transparent"
+                    color: clearHistMa.containsMouse ? "#0c2340" : "transparent"
+                    transform: SysShear {}
                     height: 18
                     implicitWidth: clearHistLbl.implicitWidth + 10
-                    radius: 3
+                    radius: 0
 
                     Text {
                       id: clearHistLbl
 
                       anchors.centerIn: parent
-                      color: clearHistMa.containsMouse ? "#6a72a0" : "#30324a"
+                      color: clearHistMa.containsMouse ? "#73b3d9" : "#3a6280"
                       font.family: "monospace"
                       font.pointSize: 8
                       text: Owo.owo("clear")

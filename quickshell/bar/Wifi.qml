@@ -9,30 +9,30 @@ Item {
   id: root
 
   property var c: {
-    "bg": "#0d0d1e"   // void surface
+    "bg": "#071426"   // void surface
     ,
-    "border": "#1e1e40"   // void border
+    "border": "#15486f"   // void border
     ,
-    "divider": "#1e1e40"   // matching divider
+    "divider": "#15486f"   // matching divider
     ,
-    "hovered": "#12122c"   // void raised
+    "hovered": "#0c2340"   // void raised
     ,
-    "scanning": "#30324a"   // ghost — muted while scanning
+    "scanning": "#3a6280"   // ghost — muted while scanning
     ,
-    "rescan": "#4d6fff"   // accent blue
+    "rescan": "#40d9ff"   // accent blue
     ,
-    "wifiSelectLogo": "#4d6fff"   // accent blue
+    "wifiSelectLogo": "#40d9ff"   // accent blue
 
     ,
-    "activeWifi": "#4d6fff"   // signal blue for active connection
+    "activeWifi": "#40d9ff"   // signal blue for active connection
     ,
-    "inactiveWifi": "#6a72a0"   // fg1 — muted slate
+    "inactiveWifi": "#73b3d9"   // fg1 — muted slate
     ,
-    "lockColor": "#30324a"   // ghost
+    "lockColor": "#3a6280"   // ghost
     ,
-    "noNetworksFoundText": "#30324a"   // ghost
+    "noNetworksFoundText": "#3a6280"   // ghost
     ,
-    "disconnected": "#30324a"   // ghost
+    "disconnected": "#3a6280"   // ghost
 
     ,
     "goodCon": '#539268'             // Soft blue/indigo for good connection
@@ -166,7 +166,7 @@ Item {
         Text {
           id: ssidText
 
-          color: root.connected ? "#c4cce8" : "#30324a"
+          color: root.connected ? "#d9f7ff" : "#3a6280"
           font.pixelSize: 10
           text: Owo.owo(root.connected ? root.ssid : "no wifi")
 
@@ -207,8 +207,8 @@ Item {
 
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
-    implicitHeight: menuColumn.implicitHeight + 12
-    implicitWidth: 240
+    implicitHeight: menuColumn.implicitHeight + 28
+    implicitWidth: 256
     screen: Quickshell.screens.find(s => s.name === "test_bottom")
     visible: false
 
@@ -221,12 +221,8 @@ Item {
       right: true
       top: true
     }
-    Rectangle {
+    SysFrame {
       anchors.fill: parent
-      border.color: c.border
-      border.width: 1
-      color: c.bg
-      radius: 6
     }
     Column {
       id: menuColumn
@@ -235,7 +231,12 @@ Item {
 
       anchors {
         fill: parent
-        margins: 6
+        margins: 14
+      }
+
+      SysHeader {
+        title: "NETWORK"
+        width: parent.width
       }
 
       // Header row
@@ -247,7 +248,7 @@ Item {
           color: c.wifiSelectLogo
           font.bold: true
           font.pixelSize: 9
-          text: Owo.owo("WiFi")
+          text: Owo.owo("» nearby")
           width: parent.width - rescanButton.width - 6
         }
         Text {
@@ -287,7 +288,7 @@ Item {
           color: hovered ? c.hovered : "transparent"
           implicitHeight: 24
           implicitWidth: parent.width
-          radius: 4
+          radius: 0
 
           MouseArea {
             anchors.fill: parent
@@ -312,7 +313,7 @@ Item {
             color: isActive ? c.activeWifi : "transparent"
             implicitHeight: 5
             implicitWidth: 5
-            radius: 3
+            radius: 0
 
             anchors {
               left: parent.left
